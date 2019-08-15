@@ -1,0 +1,17 @@
+- Create Form for adding medicine to database tables incl (medicine, medicine type,package type).
+- Create Form for adding Medicine to Medince Storage.  
+- Create Form to add medicine from medicine Storage to Desp Storage. 
+These three forms are the basics of the medicine Inventory. 
+This process will cover all the transaction records as well that will be updated at back end. 
+Completing this workflow will complete the phase 1 of inventory. 
+CRUD
+
+The user can now add the medicine to database, to medicine Storage and to disp storage as well. 
+
+The Next phase is to Delete/Remove the medicine from Medicine, Medicine Storage and Dispensory Storage and from the transaction tables as well. 
+
+This will complete the adding and removal of medicine from the database, Medicine Storage and dispensory Storage. 
+
+And Keep all records in check. This will be the basic first cycle completion of inventory system of medicine Category. 
+
+

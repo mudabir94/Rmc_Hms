@@ -1,0 +1,19 @@
+.no-padding{
+    padding-right: 0px !important;
+    padding-left:0px !important;
+}
+.backgroundcss_medToInv{
+    background: darkseagreen !important;
+}
+.custom_hr{
+    height: 1px;
+color: blue;
+background-color: red;
+border: none;
+}
+.custom_input_css{
+    width: inherit;
+}
+.custom_label_css{
+    font-size: small;
+}

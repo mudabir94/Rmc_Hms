@@ -1,0 +1,4 @@
+-->checking medicine batch no in BatchManager table. 
+    - First check- Checking if medicine exsists in BatchManager table. 
+        -if it doesn't then we'll create New Batch no and save all related fields in BatchManager. 
+        
