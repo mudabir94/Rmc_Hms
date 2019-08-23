@@ -251,14 +251,15 @@ def WithStripCalculation(medicineWarehouseStock_obj,medicine_obj):
     medicineWarehouseStock_obj.piece_stored=pieces_in_storage_left
     medicineWarehouseStock_obj.save()
 
-def NoStripCalculation(medicineWarehouseStock_obj,medicine_obj,noofboxes,noofpieces):
+def NoStripCalculation(medicineWarehouseStock_obj,medicineobj,noofboxes,noofpieces):
     numofcartons=0
     numofboxes=noofboxes
     numofstrips=0
     numofpieces=noofpieces
-    
+    medicine_obj=medicineobj
+    print("medcine object",medicine_obj.medicine_name)
     box_per_unit=medicineWarehouseStock_obj.box_unit
-   
+    pieceunit=medicineWarehouseStock_obj.piece_unit
     
 # Packages can be of 4 type, all togather or combos of it. so we can hard code it. 
     # 1. Check how many cartons. 
@@ -268,37 +269,40 @@ def NoStripCalculation(medicineWarehouseStock_obj,medicine_obj,noofboxes,noofpie
     # 
     # if carton not empty 
     numofboxes=numofboxes*box_per_unit
-    total_number_of_req_pieces=numofboxes*medicineWarehouseStock_obj.piece_unit
+    total_number_of_req_pieces=numofboxes*pieceunit
     total_number_of_req_pieces=total_number_of_req_pieces+numofpieces
-    pieces_in_storage_left=float(medicineWarehouseStock_obj.piece_stored)-float(total_number_of_req_pieces)
+    piecesstored_in_stock=medicineWarehouseStock_obj.piece_stored
+    pieces_leftin_stock=float(piecesstored_in_stock)-float(total_number_of_req_pieces)
     all_stock_requested=False
     
-    if pieces_in_storage_left==0:
+    if pieces_leftin_stock==0:
         all_stock_requested=True
         boxes_stored=0
     else:
-        boxes_stored=float(pieces_in_storage_left)/float(medicineWarehouseStock_obj.piece_unit)
+        boxes_stored=float(pieces_leftin_stock)/float(pieceunit)
         boxes_stored= math.ceil(boxes_stored)
     
-
     try:
+        print("pppppppp")
         despStrg_obj=despensoryStock.objects.get(medicine=medicine_obj)
+        box_stored_in_desp=despStrg_obj.box_stored
         if all_stock_requested==True:
             
             despStrg_obj.box_stored=numofboxes
             despStrg_obj.piece_stored=total_number_of_req_pieces
         else:
             
-            numofboxes=(float(despStrg_obj.box_stored)+float(medicineWarehouseStock_obj.box_stored))-float(boxes_stored)
+            numofboxes=(float(box_stored_in_desp)+float(medicineWarehouseStock_obj.box_stored))-float(boxes_stored)
             print("numofboxes",numofboxes)
             # print("CARTON",(despStrg_obj.carton_stored+medicineWarehouseStock_obj.carton_stored)-carton_stored)
-            noofpieces=(float(despStrg_obj.piece_stored)+float(medicineWarehouseStock_obj.piece_stored))-float(pieces_in_storage_left)
+            noofpieces=(float(despStrg_obj.piece_stored)+float(medicineWarehouseStock_obj.piece_stored))-float(pieces_leftin_stock)
 
             despStrg_obj.box_stored=numofboxes
             despStrg_obj.strip_stored=0
             despStrg_obj.piece_stored=noofpieces
             despStrg_obj.save()
-    except:
+    except despensoryStock.DoesNotExist:
+        print("sssssssssssssssssss")
         despStrg_obj=despensoryStock()
         medBatobj=medicineBatches.objects.get(medicine_strg=medicineWarehouseStock_obj)
         despStrg_obj.batch_no=medBatobj.batch_no
@@ -308,7 +312,7 @@ def NoStripCalculation(medicineWarehouseStock_obj,medicine_obj,noofboxes,noofpie
         despStrg_obj.piece_unit=medicineWarehouseStock_obj.piece_unit
         boxes=medicineWarehouseStock_obj.box_stored-boxes_stored
         despStrg_obj.box_stored=boxes
-        despStrg_obj.piece_stored=medicineWarehouseStock_obj.piece_stored-pieces_in_storage_left
+        despStrg_obj.piece_stored=medicineWarehouseStock_obj.piece_stored-pieces_leftin_stock
         despStrg_obj.box_price_unit=medicineWarehouseStock_obj.box_price_unit
         despStrg_obj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
         despStrg_obj.save()
@@ -321,20 +325,20 @@ def NoStripCalculation(medicineWarehouseStock_obj,medicine_obj,noofboxes,noofpie
     despStrgHist_obj.piece_unit=medicineWarehouseStock_obj.piece_unit
     boxes=medicineWarehouseStock_obj.box_stored-boxes_stored
     despStrgHist_obj.box_stored=boxes
-    despStrgHist_obj.piece_stored=medicineWarehouseStock_obj.piece_stored-pieces_in_storage_left
+    despStrgHist_obj.piece_stored=medicineWarehouseStock_obj.piece_stored-pieces_leftin_stock
     despStrgHist_obj.box_price_unit=medicineWarehouseStock_obj.box_price_unit
     despStrgHist_obj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
     despStrgHist_obj.save()
 
     medicineWarehouseStock_obj.box_stored=boxes_stored
-    medicineWarehouseStock_obj.piece_stored=pieces_in_storage_left
+    medicineWarehouseStock_obj.piece_stored=pieces_leftin_stock
     medicineWarehouseStock_obj.save()
 
     medicineWhStockHistory_obj=medicineWhStockHistory()
     medicineWhStockHistory_obj.medicine_wh_stock=medicineWarehouseStock_obj
     medicineWhStockHistory_obj.box_stored=boxes_stored
     medicineWhStockHistory_obj.strip_stored=0
-    medicineWhStockHistory_obj.piece_stored=pieces_in_storage_left
+    medicineWhStockHistory_obj.piece_stored=pieces_leftin_stock
     medicineWhStockHistory_obj.status="Updated"
     medicineWhStockHistory_obj.save()
 
@@ -414,6 +418,88 @@ def retrievePackageTypes(request):
                 "package_type_list":json.dumps(package_type_list),
             }
         return JsonResponse(data)
+def retrieveMedicineGenDataFromStock(request):
+    medicine_in_stock=[]
+    medicine_batch_in_stock_dict={}
+    medicine_batch_in_stock_list=[]
+    if request.method=="GET":
+        mwhs_objs=medicineWarehouseStock.objects.all().distinct()
+        for mwhs_obj in mwhs_objs:
+            # print("mwhs_obj--",mwhs_obj.medicine.medicine_name)
+            medbatch_obj=medicineBatches.objects.get(medicine_strg=mwhs_obj)
+            medbatchno=medbatch_obj.batch_no
+            medname=mwhs_obj.medicine.medicine_name
+            medicine_in_stock.append(medname)
+            medicine_batch_in_stock_list.append([medname,medbatchno])
+            medicine_batch_in_stock_dict[medname]=medbatchno
+        print("medicine_in_stock",medicine_in_stock)
+        print("medicine_batch_in_stock_dict",medicine_batch_in_stock_dict)
+        data={
+            "medicine_in_stock":medicine_in_stock,
+            'medicine_batch_in_stock_dict':json.dumps(medicine_batch_in_stock_dict),
+            "medicine_batch_in_stock_list":medicine_batch_in_stock_list,
+        }
+        return JsonResponse(data)
+def retrieveMedicineStockDataFromStock(request):
+    medstockdatafromstock_allval_dict={}
+    if request.method=="POST":
+        medicine_name=request.POST.get("medicine_name")
+        medicine_obj=Medicine.objects.get(medicine_name=medicine_name)
+        mwhs_objs=medicineWarehouseStock.objects.get(medicine=medicine_obj)
+        
+        boxes=mwhs_objs.box_stored
+        strips=mwhs_objs.strip_stored
+        pieces=mwhs_objs.piece_stored
+        print("boxes",boxes)
+        print("pieces",pieces)
+        medstockdatafromstock_allval_dict["boxes"]=boxes
+        medstockdatafromstock_allval_dict["strips"]=strips
+        medstockdatafromstock_allval_dict["pieces"]=pieces
+
+
+        
+
+
+
+        data={
+            "medstockdatafromstock_allval_dict":json.dumps(medstockdatafromstock_allval_dict),
+            "boxes":boxes,
+            "strips":strips,
+            "pieces":pieces,
+        }
+        return JsonResponse(data)
+        # mwhs_objs=medicineWarehouseStock.objects.get.
+        # for mwhs_obj in mwhs_objs:
+        #     # print("mwhs_obj--",mwhs_obj.medicine.medicine_name)
+        #     medbatch_obj=medicineBatches.objects.get(medicine_strg=mwhs_obj)
+        #     medbatchno=medbatch_obj.batch_no
+        #     medname=mwhs_obj.medicine.medicine_name
+
+def retrieveMedicineTempStockFromTempStock(request):
+    medicine_batch_in_tempstock_list=[]
+
+    if request.method=="POST":
+        medicine_name=request.POST.get("medicine_name")
+        medicine_obj=Medicine.objects.get(medicine_name=medicine_name)
+        tempmedwhstk_objs=tt_tempMedWhStk_Med.objects.filter(medicine=medicine_obj)
+        for tempmedwhstk_obj in tempmedwhstk_objs:
+            templist=[]
+            templist.append(medicine_name)
+            templist.append(tempmedwhstk_obj.batch_no)
+            templist.append(tempmedwhstk_obj.box_stored)
+            templist.append(tempmedwhstk_obj.strip_stored)
+
+            templist.append(tempmedwhstk_obj.piece_stored)
+            medicine_batch_in_tempstock_list.append(templist)
+        data={
+            "medicine_batch_in_tempstock_list":medicine_batch_in_tempstock_list,
+        }
+        return JsonResponse(data)
+
+    
+
+
+
 def sendAjaxReqToSaveMedicineToDb(request):
     if request.method=="POST":
         medicine_name = request.POST.get('medicine_name')
@@ -704,7 +790,10 @@ def saveToDespStock(request):
         medicine_name=request.POST.get("medicine_name")
         batchno=request.POST.get("batch_no")
         noofboxes=request.POST.get("noofboxes")
+        noofboxes=int(noofboxes)
         noofpieces=request.POST.get("noofpieces")
+        noofpieces=int(noofpieces)
+
         print("medicine_name",medicine_name)
         print("batchno",batchno)
         print("noofboxes",noofboxes)

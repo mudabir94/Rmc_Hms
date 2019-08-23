@@ -16,6 +16,10 @@ urlpatterns = [
   path("save_medicine_to_wh_stock",views.saveMedicineToWhStock,name="save_medicine_to_wh_stock"),
   path("save_medicine_to_wh_stock_bottle",views.saveMedicineToWhStockBottle,name="save_medicine_to_wh_stock_bottle"),
   path('save_med_to_db',views.sendAjaxReqToSaveMedicineToDb,name="save_med_to_db"),
-  path('save_to_desp_stock',views.saveToDespStock,name="save_to_desp_stock")
+  path('save_to_desp_stock',views.saveToDespStock,name="save_to_desp_stock"),
+  path("retrieve_medicine_gen_data_from_stock",views.retrieveMedicineGenDataFromStock,name="retrieve_medicine_gen_data_from_stock"),
+  path("retrieve_medicine_stock_data_from_stock",views.retrieveMedicineStockDataFromStock,name="retrieve_medicine_stock_data_from_stock"),
+  path("retrieve_medicine_tempstock_from_tempstock",views.retrieveMedicineTempStockFromTempStock,name="retrieve_medicine_tempstock_from_tempstock"),
+
 
 ]
