@@ -53,7 +53,9 @@ class MedicineController:
         return batchno
     def checkMedInmedicineBatches(self,mid=None,mobj=None):        
         try:
-            batchObj= medicineBatches.objects.get(medicine=mobj)
+            batchObj= medicineBatches.objects.filter(medicine=mobj)
+            
+            
             try:
                 tt_tempMedWhStk_Meddict=tt_tempMedWhStk_Med.objects.filter(medicine=mobj).aggregate(Max('batch_no'))
                 batchno=tt_tempMedWhStk_Meddict['batch_no__max']
@@ -62,10 +64,13 @@ class MedicineController:
 
                 
             except:
-               batchno=batchObj.batch_no
-               batchno=self.retrieveBatchNo(batchObj)
-               batchno=self.incrementBatchNo(batchno)
-               return batchno
+                batchObj=medicineBatches.objects.filter(medicine=mobj).aggregate(Max('batch_no'))
+                batchno=batchObj['batch_no__max']
+                print("batchno",batchno)
+                # batchno=batchObj.batch_no
+                # batchno=self.retrieveBatchNo(batchObj)
+                batchno=self.incrementBatchNo(batchno)
+                return batchno
 
         except:
             batch_no=self.createBatchNo(mid)

@@ -127,7 +127,7 @@ function addMedicineForm(){
     col_one__row_div_one__col_one__row_div_one=$("<div class='col-md-4 '><label>Medicine</label></div>");
     // 
     
-    col_two__row_div_one__col_one__row_div_one=$("<div class='col-md-8 '><input type='text' id='med_name_input'></input>");
+    col_two__row_div_one__col_one__row_div_one=$("<div class='col-md-8 '><input type='text' id='med_name_input' class='form-control'></input>");
     $(row_div_one__col_one__row_div_one).append(col_one__row_div_one__col_one__row_div_one);
     $(row_div_one__col_one__row_div_one).append(col_two__row_div_one__col_one__row_div_one);
    
@@ -136,7 +136,7 @@ function addMedicineForm(){
     row_div_one__col_two__row_div_one=$("<div class='row'></div>");
     $(col_two__row_div_one).append(row_div_one__col_two__row_div_one);
     col_one__row_div_one__col_two__row_div_one=$("<div class='col-md-6 '><label>Medicine Type</label></div>");
-    var select=$("<select id='med_type_sel'></select>");
+    var select=$("<select id='med_type_sel' class='form-control'></select>");
     var option=$("<option selected='selected' id="+medicine_type_list[0]+"-opt value="+medicine_type_list[0]+">"+medicine_type_list[0]+"</option>");
     $(select).append(option);
 
@@ -175,7 +175,7 @@ function addMedicineForm(){
     p__col_one__package_info_row_div=$("<label>Medicine Details</label>");
     col_one__package_info_row_div.append(p__col_one__package_info_row_div);
     col_two__package_info_row_div=$("<div class='col-md-6'></div>");
-    p__col_two__package_info_row_div=$("<input type='textarea' id='med_details'></input>");
+    p__col_two__package_info_row_div=$("<input type='textarea' class='form-control' id='med_details'></input>");
     col_two__package_info_row_div.append(p__col_two__package_info_row_div);
     col_three__package_info_row_div=$("<div class='col-md-4'></div>");
     package_info_row_div.append(col_one__package_info_row_div)
@@ -203,7 +203,7 @@ function addMedicineForm(){
     col_two__row_div_four=$("<div class='col-md-4'></div>");
     
     col_three__row_div_four=$("<div class='col-md-4'></div>");
-    p__col_one__row_div_four=$("<button onclick='saveMedicineToDb()'>Save</button>");
+    p__col_one__row_div_four=$("<button class='btn btn-success' onclick='saveMedicineToDb()'>Save</button>");
     col_two__row_div_four.append(p__col_one__row_div_four);
     row_div_four.append(col_one__row_div_four)
     row_div_four.append(col_two__row_div_four)
@@ -228,9 +228,12 @@ function addMedicineForm(){
 function saveMedicineToDb(){
     medicine_name=$("#med_name_input").val()
     console.log("medicine_name",medicine_name)
+    $("#med_name_input").val("");
     selected_type = $("#med_type_sel").children("option:selected").val();
+    // $("#med_type_sel").children("option:selected").val("Syrup");
     console.log("selected_type",selected_type)
     med_details=$("#med_details").val();
+    $("#med_details").val("");
     console.log("med_details",med_details);
     // firt validate the data then send to DB. 
     // But for now just save the data. 
@@ -257,14 +260,22 @@ function sendAjaxReqToSaveMedicineToDb(medicine_name,selected_type,med_details){
 }
 function addMedicineToWhStockFrom(){
     //  Create MedStorage Form. 
+    retrieveMedicineType();
+    retrieveMedicineNames();
+    retrieveMedicineGenDataFromStock();
+
     $('#main_page_content').empty();
     var main_page_content= $('#main_page_content').append('<div class="container-fluid" id="container-med-dashboard"></div>');
     $("#container-med-dashboard").append("<h2>Add Medicine To Storage</h2>");
     $("#container-med-dashboard").append("<hr class='custom_hr'>");
     var main_row_div= $("<div class='row is-flex'></div>");
     $("#container-med-dashboard").append(main_row_div);
-    var main_col_div=$("<div class='col-md-12' id='medstorage_main_col_div'></div>");
+    var main_col_div=$("<div class='col-md-6' id='medstorage_main_col_div'></div>");
+    var main_col_div1=$("<div class='col-md-6'></div>");
+
     $(main_row_div).append(main_col_div);
+    $(main_row_div).append(main_col_div1);
+
         var row_div_one=$("<div class='row'></div>");
             // Medicine Name
             col_one__row_div_one=$("<div class='col '></div>");
@@ -274,7 +285,7 @@ function addMedicineToWhStockFrom(){
 
                     med_name_label=$("<label for='medicine_name_tag' class='custom_label_css'>Medicine</label>");
                     colmd1.append(med_name_label)
-                    med_name_input=$("<input id='medicine_name_tag' onfocusout='focusOut_medicineName($(this))' class='custom_input_css'>")
+                    med_name_input=$("<input class='form-control' id='medicine_name_tag' onfocusout='focusOut_medicineName($(this))' class='custom_input_css'>")
                     colmd2.append(med_name_input)
                 row__col_one__row_div_one.append(colmd1);
                 row__col_one__row_div_one.append(colmd2);
@@ -287,7 +298,7 @@ function addMedicineToWhStockFrom(){
                     colmd2=$("<div class='col-md-6'></div>")
                     med_type_label=$("<label class='custom_label_css'>Medicine Type:</label>");
                     colmd1.append(med_type_label);
-                    med_type_input=$("<input id='medicine_type_input' class='custom_input_css' ></input>")
+                    med_type_input=$("<input class='form-control' id='medicine_type_input' class='custom_input_css' ></input>")
                     colmd2.append(med_type_input);
 
                 row__col_two__row_div_one.append(colmd1)
@@ -303,7 +314,7 @@ function addMedicineToWhStockFrom(){
                     colmd2=$("<div class='col-md-6'></div>")
                     batchno_label=$("<label class='custom_label_css'>batchno: </label>");
                     colmd1.append(batchno_label)
-                    batchno_input=$("<input id='batchno_input' onfocus='checkBatchNo()' class='custom_input_css'></input>")
+                    batchno_input=$("<input class='form-control' id='batchno_input' onfocus='checkBatchNo()' class='custom_input_css'></input>")
                     colmd2.append(batchno_input)
                 row__col_three__row_div_one.append(colmd1)
                 row__col_three__row_div_one.append(colmd2)
@@ -314,26 +325,14 @@ function addMedicineToWhStockFrom(){
         // Second Row.. 
 
         
-        
-
-                
-
-        
-
-
-
     $(main_col_div).append(row_div_one);
    
-   
-    
-    
-    
       $( "#medicine_name_tag" ).autocomplete({
         source: medicine_name_list
       });
    
 
-     
+      $("#main_col_div1").append();
    
 
 }
@@ -364,8 +363,11 @@ function checkBatchNo(){
 }
 
 function focusOut_medicineName(element){
+    $("#medicine_type_input").val("");
+    $("#batchno_input").val("");
+
+
     // check if input is valid. 
-    console.log("s",$(element).val());
     var medicine_name=$(element).val();
     if (med_name_type_dict[medicine_name]!==undefined){
         $("#medicine_type_input").val(med_name_type_dict[medicine_name]);
@@ -555,7 +557,7 @@ function subPackageHtml(pack_type,sublevel,subpack_type_list){
                  var col_one__row_div=$("<div class='col'  id='subpack_info_col_div_sublevel"+sublevel+"'></div>");
                     var row_one__col_one__row_div=$("<div class='row'></div>");
                             var subpackage_type_label=$("<label>Sub Package Type</label>");
-                            var subpackage_type_select=$("<select onchange='subpackage_typeOnSelect($(this))' id='subpackage_type_select"+pack_type+"'></select>");
+                            var subpackage_type_select=$("<select onchange='subpackage_typeOnSelect($(this))' id='subpackage_type_select"+pack_type+"' class='form-control'></select>");
                             var option=$("<option value='--'>--</option>");
                             $(subpackage_type_select).append(option);
                             
@@ -574,7 +576,7 @@ function subPackageHtml(pack_type,sublevel,subpack_type_list){
 
                     row_two__col_one__row_div=$("<div class='row'></div>");
                         quantity_subpackage_type_label=$("<label>Quantity:</label>");
-                        quantity_subpackage_type_input=$("<input  type='number' placeholder='1.0' step='1.00' min='1 id='sublevel"+sublevel+"' name='sublevel_input'></input>");
+                        quantity_subpackage_type_input=$("<input class='form-control' type='number' placeholder='1.0' step='1.00' min='1 id='sublevel"+sublevel+"' name='sublevel_input'></input>");
                     
                     row_two__col_one__row_div.append(quantity_subpackage_type_label);
                     row_two__col_one__row_div.append(quantity_subpackage_type_input);
@@ -824,95 +826,119 @@ function recursiveFunc(list_length){
 packages_priceandquant_dict={}
 
 function saveMedicineToWhStock(){
-    packages_priceandquant_dict={}
-    var medicine_name=$("#medicine_name_tag").val();
+    $( function() {
+        $( "#dialog-confirm" ).dialog({
+          resizable: false,
+          height: "auto",
+          width: 400,
+          modal: true,
+          buttons: {
+            "Save": function() {
 
-    var batchno=$("#batchno_input").val();
-    var manufactor_date=$("#manudatepicker").val();
-    var purchaserate=$("#main_priceperpack_input").val();
-    console.log("purchaserate",purchaserate);
-    var exp_date=$("#expdatepicker").val();
-    var main_package_type=$("#mainpackage_type_select").val();
-    var main_quantity_input=$("#main_quantity_input").val();
-    packages_priceandquant_dict[main_package_type]=[parseInt(main_quantity_input)];
-    sublev=[];
-    $("[id^=subpack_row_div_sublevel]").map(
-        function(){
-            var selectedoption=$(this).find('select').val()
-            var inputval=$(this).find('input').val();
-            // var inputid=$(this).find('input').attr('id')
-            var temp_list=[];
-            temp_list=[selectedoption,inputval]
-            sublev.push(temp_list)
-        }).get();
-    console.log("sublevel data------",sublev);
-    // For Main Package... 
-    $("#row_sublevels").find($('[id^=sublevelsmainrow]')).map(
-        function(){
-            row=$(this).find('input').attr('id');
-            main_package_unit=$(this).find('input').val();
-            split1=row.split('_');
-            console.log(split1[0]);
-            package_name=split1[0];
-            if  (packages_priceandquant_dict[package_name]!==undefined){
-                packages_priceandquant_dict[package_name].push(parseInt(main_package_unit))
-            }
-
-        }).get();
-    
-    //    For Sub Levl Rows
-    $("#row_sublevels").find($('[id^=sublevelssubrow]')).map(
-        function(){
-            row=$(this).find('input').attr('id');
-            package_name_unit_or_total=$(this).find('input').val();
-            console.log("ROWWW",row)
-            split1=row.split('_');
-            console.log(split1[0]);
-            package_name=split1[0];
-            console.log(split1[1]);
-            split2=split1[1].split('-')
-            console.log(split2[0])
-            console.log(split2[1])
-
-            price_or_quant=split2[1]
+                packages_priceandquant_dict={}
+                var medicine_name=$("#medicine_name_tag").val();
             
+                var batchno=$("#batchno_input").val();
+                var manufactor_date=$("#manudatepicker").val();
+                var purchaserate=$("#main_priceperpack_input").val();
+                console.log("purchaserate",purchaserate);
+                var exp_date=$("#expdatepicker").val();
+                var main_package_type=$("#mainpackage_type_select").val();
+                var main_quantity_input=$("#main_quantity_input").val();
+                packages_priceandquant_dict[main_package_type]=[parseInt(main_quantity_input)];
+                sublev=[];
+                $("[id^=subpack_row_div_sublevel]").map(
+                    function(){
+                        var selectedoption=$(this).find('select').val()
+                        var inputval=$(this).find('input').val();
+                        // var inputid=$(this).find('input').attr('id')
+                        var temp_list=[];
+                        temp_list=[selectedoption,inputval]
+                        sublev.push(temp_list)
+                    }).get();
+                console.log("sublevel data------",sublev);
+                // For Main Package... 
+                $("#row_sublevels").find($('[id^=sublevelsmainrow]')).map(
+                    function(){
+                        row=$(this).find('input').attr('id');
+                        main_package_unit=$(this).find('input').val();
+                        split1=row.split('_');
+                        console.log(split1[0]);
+                        package_name=split1[0];
+                        if  (packages_priceandquant_dict[package_name]!==undefined){
+                            packages_priceandquant_dict[package_name].push(parseInt(main_package_unit))
+                        }
             
-            // total no of pieces
-            if  (packages_priceandquant_dict[package_name]===undefined){
-                packages_priceandquant_dict[package_name]=[parseInt(package_name_unit_or_total)]
-            }
-            else{
-                packages_priceandquant_dict[package_name].push(parseInt(package_name_unit_or_total))
-            }
-        }).get();
-    
-           
+                    }).get();
+                
+                //    For Sub Levl Rows
+                $("#row_sublevels").find($('[id^=sublevelssubrow]')).map(
+                    function(){
+                        row=$(this).find('input').attr('id');
+                        package_name_unit_or_total=$(this).find('input').val();
+                        console.log("ROWWW",row)
+                        split1=row.split('_');
+                        console.log(split1[0]);
+                        package_name=split1[0];
+                        console.log(split1[1]);
+                        split2=split1[1].split('-')
+                        console.log(split2[0])
+                        console.log(split2[1])
+            
+                        price_or_quant=split2[1]
+                        
+                        
+                        // total no of pieces
+                        if  (packages_priceandquant_dict[package_name]===undefined){
+                            packages_priceandquant_dict[package_name]=[parseInt(package_name_unit_or_total)]
+                        }
+                        else{
+                            packages_priceandquant_dict[package_name].push(parseInt(package_name_unit_or_total))
+                        }
+                    }).get();
+                
+                       
+            
+                console.log("sublevel data------",sublev);
+                console.log("data-dict",packages_priceandquant_dict);
+                //  Send the data to view for saving. . . 
+                $.ajax({
+                    type: 'POST',
+                    dataType: "json",
+                    'data': {
+                        "medicine_name":medicine_name,
+                        "batchno":batchno,
+                        "manufactor_date":manufactor_date,
+                        "exp_date":exp_date,
+                        "main_package_type":main_package_type,
+                        "main_quantity_input":main_quantity_input,
+                        'purchaserate':parseInt(purchaserate),
+                        "subleveldata":JSON.stringify(sublev),
+                        "packages_priceandquant_dict":JSON.stringify(packages_priceandquant_dict),
+                        
+                    },
+                    url: '/save_medicine_to_wh_stock',
+                    success: function(data){
+                        console.log(data['Success']);
+                    },
+                  
+                });
+            
 
-    console.log("sublevel data------",sublev);
-    console.log("data-dict",packages_priceandquant_dict);
-    //  Send the data to view for saving. . . 
-    $.ajax({
-        type: 'POST',
-        dataType: "json",
-        'data': {
-            "medicine_name":medicine_name,
-            "batchno":batchno,
-            "manufactor_date":manufactor_date,
-            "exp_date":exp_date,
-            "main_package_type":main_package_type,
-            "main_quantity_input":main_quantity_input,
-            'purchaserate':parseInt(purchaserate),
-            "subleveldata":JSON.stringify(sublev),
-            "packages_priceandquant_dict":JSON.stringify(packages_priceandquant_dict),
-            
-        },
-        url: '/save_medicine_to_wh_stock',
-        success: function(data){
-            console.log(data['Success']);
-        },
+              $( this ).dialog( "close" );
+              addMedicineToWhStockFrom();
+
+            },
+            Cancel: function() {
+              $( this ).dialog( "close" );
+            }
+          }
+        });
+      } );
       
-    });
-
+    
+   
+    
 }
 
 function addRowDivTwo()
@@ -928,11 +954,11 @@ function addRowDivTwo()
 
             row_one__col_one__package_info_row_div=$("<div class='row'></div>");
                 mainpackage_type_label=$("<label>Main Package Type</label>");
-                var mainpackage_type_select=$("<select onchange='package_typeOnSelect($(this))' id='mainpackage_type_select'></select>");
+                var mainpackage_type_select=$("<select class='form-control' onchange='package_typeOnSelect($(this))' id='mainpackage_type_select'></select>");
                 var option=$("<option value='--'>--</option>");
                 $(mainpackage_type_select).append(option);
                 // if medicine type is syrup then populate with this data 
-                package_type_list=['Carton','Box'];
+                package_type_list=['Box'];
                 // else use defualt package type --package_type_list=['Box','Strip','piece'];
                 for (var i=0;i<=package_type_list.length;i++){
                     if (package_type_list[i]!==undefined){
@@ -947,14 +973,14 @@ function addRowDivTwo()
 
             row_two__col_one__package_info_row_div=$("<div class='row'></div>");
                 quantity_mainpackage_type_label=$("<label>Quantity:</label>");
-                quantity_mainpackage_type_input=$("<input type='number' placeholder='1.0' step='1.00' min='1'  id='main_quantity_input' name='main_quantity_input'></input>");
+                quantity_mainpackage_type_input=$("<input class='form-control' type='number' placeholder='1.0' step='1.00' min='1'  id='main_quantity_input' name='main_quantity_input'></input>");
             
             row_two__col_one__package_info_row_div.append(quantity_mainpackage_type_label);
             row_two__col_one__package_info_row_div.append(quantity_mainpackage_type_input);
 
             row_three__col_one__package_info_row_div=$("<div class='row'></div>");
                 priceperpackage_label=$("<label>Total Purchase Rate:</label>");
-                priceperpackage_input=$("<input type='number' placeholder='0.0' step='50.00' min='0'  id='main_priceperpack_input' name='main_priceperpack_input'></input>");
+                priceperpackage_input=$("<input class='form-control' type='number' placeholder='0.0' step='50.00' min='0'  id='main_priceperpack_input' name='main_priceperpack_input'></input>");
             row_three__col_one__package_info_row_div.append(priceperpackage_label)
             row_three__col_one__package_info_row_div.append(priceperpackage_input)
 
@@ -974,7 +1000,7 @@ function addRowDivTwo()
         col_two__package_info_row_div=$("<div class='col' id='calc_res_info_form'></div>");
         col_three__package_info_row_div=$("<div class='col' id='calculate_button_div'></div>");
             row_div=$('<div class="row"></div>');
-            var calculate_button=$('<button onclick="calculateFunc()">Calculate</button>')
+            var calculate_button=$('<button class="btn btn-primary" onclick="calculateFunc()">Calculate</button>')
             row_div.append(calculate_button);
         col_three__package_info_row_div.append(row_div);
 
@@ -998,7 +1024,7 @@ function addRowDivThree(){
         col_one__row_div_three=$("<div class='col'></div>");
                 row_one__col_one__row_div_three=$("<div class='row'></div>");
                     manufact_date_label=$("<label for='from'>Manufactoring Date</label>");
-                    manufact_input=$("<input  id='manudatepicker'>");
+                    manufact_input=$("<input class='form-control' id='manudatepicker'>");
                     // manufact_input=$("<input  id='from'>");
 
                 row_one__col_one__row_div_three.append(manufact_date_label);
@@ -1007,7 +1033,7 @@ function addRowDivThree(){
             col_two__row_div_three=$("<div class='col'></div>");
                 row_one__col_two__row_div_three=$("<div class='row'></div>");
                     exp_date_label=$("<label for='to'>Exp Date</label>");
-                    exp_date_input=$("<input id='expdatepicker'>");
+                    exp_date_input=$("<input class='form-control' id='expdatepicker'>");
                     // exp_date_input=$("<input id='to'>");
 
                      row_one__col_two__row_div_three.append(exp_date_label);
@@ -1066,7 +1092,7 @@ function addRowDivFour(){
             col_two__row_div_four=$("<div class='col'></div>");
             col_three__row_div_four=$("<div class='col'></div>");
                 row_one__col_three__row_div_four=$("<div class='row'></div>");
-                    savetomedstrgForm_button=$('<button onclick="saveMedicineToWhStock()">Save</button>')
+                    savetomedstrgForm_button=$('<button class="btn btn-success "onclick="saveMedicineToWhStock()">Save</button>')
                 row_one__col_three__row_div_four.append(savetomedstrgForm_button);
             col_three__row_div_four.append(row_one__col_three__row_div_four);
         row_div_four.append(col_one__row_div_four);
@@ -1088,7 +1114,7 @@ function addRowDivTwoCustomSyrup(){
             col_one__package_info_row_div=$("<div class='col'  id='package_info_col_div'></div>");
                 row_one__col_one__package_info_row_div=$("<div class='row'></div>");
                     mainpackage_type_label=$("<label>Main Med Package Type</label>");
-                    var mainpackage_type_select=$("<select onchange='customPackage_typeOnSelect($(this))' id='mainpackage_type_select'></select>");
+                    var mainpackage_type_select=$("<select class='form-control' onchange='customPackage_typeOnSelect($(this))' id='mainpackage_type_select'></select>");
                     var option=$("<option value='--'>--</option>");
                     $(mainpackage_type_select).append(option);
                     // if medicine type is syrup then populate with this data 
@@ -1106,20 +1132,20 @@ function addRowDivTwoCustomSyrup(){
 
                     row_two__col_one__package_info_row_div=$("<div class='row main_inputfields_bottle' ></div>");
                         ml_quantity_mainpackage_type_label=$("<label>Amount of ml in Main Package(def-Bottle):</label>");
-                        ml_quantity_mainpackage_type_input=$("<input type='number' placeholder='1.0' step='1.00' min='1'  id='main_ml_quant_input' name='main_ml_quant_input'></input>");
+                        ml_quantity_mainpackage_type_input=$("<input class='form-control' type='number' placeholder='1.0' step='1.00' min='1'  id='main_ml_quant_input' name='main_ml_quant_input'></input>");
                     
                     row_two__col_one__package_info_row_div.append(ml_quantity_mainpackage_type_label);
                     row_two__col_one__package_info_row_div.append(ml_quantity_mainpackage_type_input);
 
                     row_three__col_one__package_info_row_div=$("<div class='row'></div>");
                         priceperpackage_label=$("<label>Total Purchase Rate:</label>");
-                        priceperpackage_input=$("<input type='number' placeholder='0.0' step='50.00' min='0'  id='main_priceperpack_input' name='main_priceperpack_input'></input>");
+                        priceperpackage_input=$("<input class='form-control' type='number' placeholder='0.0' step='50.00' min='0'  id='main_priceperpack_input' name='main_priceperpack_input'></input>");
                     row_three__col_one__package_info_row_div.append(priceperpackage_label)
                     row_three__col_one__package_info_row_div.append(priceperpackage_input)
 
                     row_four__col_one__package_info_row_div=$("<div class='row'></div>");
                         quantityofpackage_label=$("<label>Quantity of Main Package(def-Bottle) :</label>");
-                        quantityofpackage_input=$("<input type='number' placeholder='0.0' step='1.00' min='0'  id='main_quantity_input' name='main_quantity_input'></input>");
+                        quantityofpackage_input=$("<input class='form-control' type='number' placeholder='0.0' step='1.00' min='0'  id='main_quantity_input' name='main_quantity_input'></input>");
                     row_four__col_one__package_info_row_div.append(quantityofpackage_label)
                     row_four__col_one__package_info_row_div.append(quantityofpackage_input)
 
@@ -1139,7 +1165,7 @@ function addRowDivTwoCustomSyrup(){
             col_two__package_info_row_div=$("<div class='col' id='calc_res_info_form'></div>");
             col_three__package_info_row_div=$("<div class='col' id='calculate_button_div'></div>");
                 row_div=$('<div class="row"></div>');
-                var calculate_button=$('<button onclick="calculate_medPriceQuantity_Custom()">Calculate</button>')
+                var calculate_button=$('<button class="btn btn-primary" onclick="calculate_medPriceQuantity_Custom()">Calculate</button>')
                 row_div.append(calculate_button);
             col_three__package_info_row_div.append(row_div);
         
@@ -1165,7 +1191,7 @@ function addRowDivFourCustomSyrup(){
             col_two__row_div_four=$("<div class='col'></div>");
             col_three__row_div_four=$("<div class='col'></div>");
                 row_one__col_three__row_div_four=$("<div class='row'></div>");
-                    savetomedstrgForm_button=$('<button onclick="saveMedicineToWhStock_Bottle()">Save</button>')
+                    savetomedstrgForm_button=$('<button class="btn btn-primary" onclick="saveMedicineToWhStock_Bottle()">Save</button>')
                 row_one__col_three__row_div_four.append(savetomedstrgForm_button);
             col_three__row_div_four.append(row_one__col_three__row_div_four);
         row_div_four.append(col_one__row_div_four);
@@ -1264,7 +1290,7 @@ function subPackageCustomHtml(pack_type,sublevel_custom,subpack_customtype_list)
             var col_one__row_div=$("<div class='col'  id='subpack_custom_info_col_div_sublevel_custom"+sublevel_custom+"'></div>");
                 var row_one__col_one__row_div=$("<div class='row'></div>");
                         var subpack_customtype_label=$("<label>Sub Package Type</label>");
-                        var subpack_customtype_select=$("<select onchange='subpack_customtypeOnSelect($(this))' id='subpack_customtype_select"+pack_type+"'></select>");
+                        var subpack_customtype_select=$("<select class='form-control' onchange='subpack_customtypeOnSelect($(this))' id='subpack_customtype_select"+pack_type+"'></select>");
                         var option=$("<option value='--'>--</option>");
                         $(subpack_customtype_select).append(option);
                         
@@ -1282,13 +1308,13 @@ function subPackageCustomHtml(pack_type,sublevel_custom,subpack_customtype_list)
 
                 row_two__col_one__row_div=$("<div class='row'></div>");
                     quantity_subpack_customtype_label=$("<label>Capicity of Disp Bottle(ml):</label>"); 
-                    quantity_subpack_customtype_input=$("<input  type='number' placeholder='1.0' step='1.00' min='1' id='sublevel"+sublevel_custom+"' name='sublevel_input'></input>");
+                    quantity_subpack_customtype_input=$("<input class='form-control' type='number' placeholder='1.0' step='1.00' min='1' id='sublevel"+sublevel_custom+"' name='sublevel_input'></input>");
                 
                 row_two__col_one__row_div.append(quantity_subpack_customtype_label);
                 row_two__col_one__row_div.append(quantity_subpack_customtype_input);
             col_one__row_div.append(row_two__col_one__row_div)
             
-            var col_two__row_div=$("<div class='col'><button onclick='deleteSubPackCustomdiv($(this))'>Delete</button></div>");
+            var col_two__row_div=$("<div class='col'><button class='btn' onclick='deleteSubPackCustomdiv($(this))'>Delete</button></div>");
             var col_three__row_div=$("<div class='col'></div>");
             row_div.append(col_one__row_div);
             row_div.append(col_two__row_div);
@@ -1462,8 +1488,17 @@ function calculate_medPriceQuantity_Custom(){
 
 }
 var inactive_datatable;
+var medstck_datatable;
 var medicine_batch_in_tempstock_list=[]
 function addMedicineToDespStockForm(){
+    $("#med_in_stock").remove();
+    $("#med_in_temp_stock").remove();
+    if (inactive_datatable!==undefined ){
+        inactive_datatable.destroy();
+    }
+    if (medstck_datatable!==undefined){
+        medstck_datatable.destroy();
+    }
     $('#main_page_content').empty();
     var main_page_content= $('#main_page_content').append('<div class="container-fluid" id="container-med-dashboard"></div>');
     $("#container-med-dashboard").append("<h2>Add Medicine To Despensory</h2>");
@@ -1479,7 +1514,7 @@ function addMedicineToDespStockForm(){
     despMedFormMainColTwo(main_col_div_2);
     $(function(){
 
-    var datatable=$("#med_in_stock").DataTable({
+    medstck_datatable=$("#med_in_stock").DataTable({
         data: medicine_batch_in_stock_list,
         columns: [
             { title: "Medicine" },
@@ -1504,7 +1539,7 @@ function addMedicineToDespStockForm(){
             }
             else {
                 var medicine_name=$(this).find('td').eq(0).text()
-                datatable.$('tr.selected').removeClass('selected');
+                medstck_datatable.$('tr.selected').removeClass('selected');
                 $(this).addClass('selected');
                 // if (inactive_datatable!==undefined){
                 //     inactive_datatable.destroy();
@@ -1549,7 +1584,7 @@ function addMedicineToDespStockForm(){
                                                             boxamount_label=$("<label class='custom_label_css'>No of Boxes Stored:</label>");
                                                         colmd1.append(boxamount_label)
                                                         var colmd2=$("<div class='col-md-6'></div>")
-                                                             boxamount_input=$("<input type='number' id='active_box_input' class='custom_input_css' value='"+boxes+"' disabled> </input>")
+                                                             boxamount_input=$("<input class='form-control' type='number' id='active_box_input' class='custom_input_css' value='"+boxes+"' disabled> </input>")
                                                         colmd2.append(boxamount_input)
                                                         row1__col_one__row_div_two.append(colmd1);
                                                         row1__col_one__row_div_two.append(colmd2);
@@ -1558,7 +1593,7 @@ function addMedicineToDespStockForm(){
                                                                 pieceamount_label=$("<label class='custom_label_css'>No of Strips Stored:</label>");
                                                             colmd1.append(pieceamount_label)
                                                             var colmd2=$("<div class='col-md-6'></div>")
-                                                                pieceamount_input=$("<input type='number' id='active_strip_input' value='"+strips+"'  class='custom_input_css' disabled> </input>")
+                                                                pieceamount_input=$("<input class='form-control' type='number' id='active_strip_input' value='"+strips+"'  class='custom_input_css' disabled> </input>")
                                                             colmd2.append(pieceamount_input)
                                                         row3__col_one__row_div_two.append(colmd1);
                                                         row3__col_one__row_div_two.append(colmd2);
@@ -1568,7 +1603,7 @@ function addMedicineToDespStockForm(){
                                                             pieceamount_label=$("<label class='custom_label_css'>No of Pieces Stored:</label>");
                                                         colmd1.append(pieceamount_label)
                                                         var colmd2=$("<div class='col-md-6'></div>")
-                                                            pieceamount_input=$("<input type='number' id='active_piece_input' value='"+pieces+"'  class='custom_input_css' disabled> </input>")
+                                                            pieceamount_input=$("<input class='form-control' type='number' id='active_piece_input' value='"+pieces+"'  class='custom_input_css' disabled> </input>")
                                                         colmd2.append(pieceamount_input)
                                                     row2__col_one__row_div_two.append(colmd1);
                                                     row2__col_one__row_div_two.append(colmd2);
@@ -1657,7 +1692,7 @@ function despMedFormMainColOne(main_col_div_1){
 
             med_name_label=$("<label for='medicine_name_tag' class='custom_label_css'>Medicine</label>");
             colmd1.append(med_name_label)
-            med_name_input=$("<input id='medicine_name_tag' onfocusout='focusOut_medicineNameDesp($(this))'  class='custom_input_css'>")
+            med_name_input=$("<input class='form-control' id='medicine_name_tag' onfocusout='focusOut_medicineNameDesp($(this))'  class='custom_input_css'>")
             colmd2.append(med_name_input)
         row__col_one__row_div_one.append(colmd1);
         row__col_one__row_div_one.append(colmd2);
@@ -1671,7 +1706,7 @@ function despMedFormMainColOne(main_col_div_1){
             colmd2=$("<div class='col-md-6'></div>")
             batchno_label=$("<label class='custom_label_css'>batchno: </label>");
             colmd1.append(batchno_label)
-            batchno_input=$("<input type='number'  id='batchno_input'  class='custom_input_css'></input>")
+            batchno_input=$("<input class='form-control' type='number'  id='batchno_input'  class='custom_input_css'></input>")
             colmd2.append(batchno_input)
         row__col_three__row_div_one.append(colmd1)
         row__col_three__row_div_one.append(colmd2)
@@ -1684,7 +1719,7 @@ col_one__row_div_four=$("<div class='col-md-10'></div>");
 col_two__row_div_four=$("<div class='col-md-2'></div>");
     row__col_two__row_div_four=$("<div class='row'></div>");
         var colmd1=$("<div class='col-md-12'></div>")
-        var add_button=$("<button>Add All Stock</button>")
+        var add_button=$("<button class='btn btn-outline-primary'>Add All Stock</button>")
         colmd1.append(add_button)
     row__col_two__row_div_four.append(colmd1);
 col_two__row_div_four.append(row__col_two__row_div_four);
@@ -1747,7 +1782,7 @@ function focusOut_medicineNameDesp(element){
                                 var colmd2=$("<div class='col-md-6'></div>")
                                 boxamount_label=$("<label class='custom_label_css'>No of Boxes:</label>");
                                 colmd1.append(boxamount_label)
-                                boxamount_input=$("<input type='number' id='noofboxes_input' class='custom_input_css' value='0'> </input>")
+                                boxamount_input=$("<input class='form-control' type='number' id='noofboxes_input' class='custom_input_css' value='0'> </input>")
                                 colmd2.append(boxamount_input)
                             row1__col_one__row_div_two.append(colmd1);
                             row1__col_one__row_div_two.append(colmd2);
@@ -1757,7 +1792,7 @@ function focusOut_medicineNameDesp(element){
                                 var colmd2=$("<div class='col-md-6'></div>")
                                 pieceamount_label=$("<label class='custom_label_css'>No of Strips:</label>");
                                 colmd1.append(pieceamount_label)
-                                pieceamount_input=$("<input type='number' id='noofstrips_input' value='0'  class='custom_input_css'> </input>")
+                                pieceamount_input=$("<input class='form-control' type='number' id='noofstrips_input' value='0'  class='custom_input_css'> </input>")
                                 colmd2.append(pieceamount_input)
                             row3__col_one__row_div_two.append(colmd1);
                             row3__col_one__row_div_two.append(colmd2);
@@ -1768,7 +1803,7 @@ function focusOut_medicineNameDesp(element){
                                 var colmd2=$("<div class='col-md-6'></div>")
                                 pieceamount_label=$("<label class='custom_label_css'>No of Pieces:</label>");
                                 colmd1.append(pieceamount_label)
-                                pieceamount_input=$("<input type='number' id='noofpieces_input' value='0'  class='custom_input_css'> </input>")
+                                pieceamount_input=$("<input class='form-control' type='number' id='noofpieces_input' value='0'  class='custom_input_css'> </input>")
                                 colmd2.append(pieceamount_input)
                             row2__col_one__row_div_two.append(colmd1);
                             row2__col_one__row_div_two.append(colmd2);
@@ -1797,7 +1832,7 @@ function focusOut_medicineNameDesp(element){
                         col_two__row_div_three=$("<div class='col-md-2'></div>");
                             row__col_two__row_div_three=$("<div class='row'></div>");
                                     var colmd1=$("<div class='col-md-12'></div>")
-                                    var save_button=$("<button onclick='SaveToDespStock()'>Save</button>")
+                                    var save_button=$("<button class='btn btn-success' onclick='SaveToDespStock()'>Save</button>")
                                     colmd1.append(save_button)
                             row__col_two__row_div_three.append(colmd1);
                         col_two__row_div_three.append(row__col_two__row_div_three);
@@ -1819,12 +1854,21 @@ function focusOut_medicineNameDesp(element){
 
 }
 function SaveToDespStock(){
+
     var med_name=$("#medicine_name_tag").val();
     var batch_no=$("#batchno_input").val();
     var noofboxes=$("#noofboxes_input").val();
     var noofpieces=$("#noofpieces_input").val();
+    if($("#noofstrips_input").length){
+        var noofstrips=$("#noofstrips_input").val();
+    }else{
+        var noofstrips=0;
+    }
+
+    
     console.log("med_name",med_name)
     console.log("batch_no",batch_no)
+    console.log("noofstrips",noofstrips)
     console.log("noofboxes",noofboxes)
     console.log("noofpieces",noofpieces)
     $.ajax({
@@ -1834,14 +1878,16 @@ function SaveToDespStock(){
             "medicine_name":med_name,
             "batch_no":batch_no,
             "noofboxes":parseInt(noofboxes),
+            "noofstrips":parseInt(noofstrips),
             "noofpieces":parseInt(noofpieces),
         },
         url:"/save_to_desp_stock",
         success:function (data){
             console.log("data")
+            addMedicineToDespStockForm();
+           
         },
     });
-
 
 
 }
