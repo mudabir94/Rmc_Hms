@@ -1,0 +1,16 @@
+Small Glitch in Despensory Stock
+
+When user add medicine in Despensary- only pieces and no boxes. 
+E.g. 
+Stock - Box=1 , Pieces=20 
+-user requests 10 pieces instead of 20 or instead of 1 complete box. 
+-10 pieces are extracted from the box and save into Despensary. 
+-Problem:: It save this data as 
+    Box- 0, Pieces-5
+
+
+Now Question is should we keep it like this or change it to 
+    Box-1, Pieces-5
+
+
+

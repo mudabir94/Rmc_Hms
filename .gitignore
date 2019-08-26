@@ -4,4 +4,3 @@ rmc_ms/settings.py
 rmcapp/migrations/
 db.sqlite3
 *.sqlite3
-# comment from Real master2
