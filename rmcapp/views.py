@@ -117,11 +117,8 @@ def addMedToDispensory(request):
             
     return render(request,template_path_name)
 
-def WithStripCalculation(medicineWarehouseStock_obj,medicine_obj):
-    numofcartons=0
-    numofboxes=0
-    numofstrips=0
-    numofpieces=1000
+def WithStripCalculation(medicineWarehouseStock_obj,medicineobj,numofboxes,numofstrips,numofpieces):
+  
 
     # Packages can be of 4 type, all togather or combos of it. so we can hard code it. 
         # 1. Check how many cartons. 
@@ -130,135 +127,134 @@ def WithStripCalculation(medicineWarehouseStock_obj,medicine_obj):
         # 4. How Many Pieces
         # 
         # if carton not empty 
-    numofboxes=numofboxes+(numofcartons*medicineWarehouseStock_obj.box_unit)
+    numofboxes=numofboxes*medicineWarehouseStock_obj.box_unit
+    strip_unit=medicineWarehouseStock_obj.strip_unit
+    pieceunit=medicineWarehouseStock_obj.piece_unit
+
     print("numofboxes",numofboxes)
-    totalnumofstrips=numofboxes*medicineWarehouseStock_obj.strip_unit+numofstrips
-    total_number_of_req_pieces=totalnumofstrips*medicineWarehouseStock_obj.piece_unit
-    total_number_of_req_pieces=total_number_of_req_pieces+numofpieces
-
-    pieces_in_storage_left=float(medicineWarehouseStock_obj.piece_stored)-float(total_number_of_req_pieces)
-    all_stock_requested=False
-    # Calculating/Finding how many cartons,boxes,strips and pieces stored. 
-    if pieces_in_storage_left==0:
-        all_stock_requested=True
-        print("all_stock_requesteduested")
-        # so everything will be zero now...
-        # strips_stored=numofcartons*medicineWarehouseStock_obj.strip_unit
-        # boxes_stored=numofcartons*medicineWarehouseStock_obj.box_unit
-        # carton_stored=numofcartons
-        strips_stored=0
+    if numofboxes==medicineWarehouseStock_obj.box_stored:
         boxes_stored=0
-        carton_stored=0
-        
+        strips_stored=0
+        pieces_in_storage_left=0
+        # medicineWarehouseStock_obj.boxw
     else:
-        strips_stored=float(pieces_in_storage_left)/float(medicineWarehouseStock_obj.piece_unit)
-        boxes_stored=float(strips_stored)/float(medicineWarehouseStock_obj.strip_unit)
-        carton_stored=float(boxes_stored)/float(medicineWarehouseStock_obj.box_unit)
-        boxes_stored= math.ceil(boxes_stored)
-        carton_stored= math.ceil(carton_stored)
+        totalnumofstrips=numofboxes*medicineWarehouseStock_obj.strip_unit+numofstrips
+        print("totalnumofstrips",totalnumofstrips)
+        # if medicineWarehouseStock_obj.strip_stored<strip_unit:
+        #     totalnumofstrips=medicineWarehouseStock_obj.strip_stored+numofstrips
 
+        total_number_of_req_pieces=totalnumofstrips*pieceunit+numofpieces
+        if medicineWarehouseStock_obj.piece_stored<pieceunit:
+            total_number_of_req_pieces=medicineWarehouseStock_obj.piece_stored
+        print("total_number_of_req_pieces",total_number_of_req_pieces)
 
-
-    print("carton in storage",carton_stored)
-    print("boxes in storage",boxes_stored)
-    print("strips in storage",strips_stored)
-    print("pieces_in_storage",pieces_in_storage_left)
-    print("------")
-
-    # despStrg_obj=despensoryStock.objects.get(medicine=medicine_obj)
-    # despStrg_obj.carton_stored=0
-    # despStrg_obj.box_stored=0
-    # despStrg_obj.strip_stored=0
-    # despStrg_obj.piece_stored=0
-    # despStrg_obj.save()
-    # if all_stock_requested==True:
-    #     cartons=numofboxes/medicineWarehouseStock_obj.box_unit
-    #     print("Cartons added to desp",carton+despStrg_obj.carton_stored)
-    #     carton_added=carton+despStrg_obj.carton_stored
-    #     print("Boxes added to desp",numofboxes+despStrg_obj.box_stored)
-    #     boxes_added=numofboxes+despStrg_obj.box_stored
-        
-    #     print("Strips added to desp",cartons*medicineWarehouseStock_obj.strip_unit)
-    #     strips_added=cartons*medicineWarehouseStock_obj.strip_unit
-    #     strips_added=despStrg_obj.strip_stored+strips_added
-    #     print("Pieces added to desp",total_number_of_req_pieces+despStrg_obj.piece_stored)
-    #     pieces_added=total_number_of_req_pieces+despStrg_obj.piece_stored
-    # else:
-    #     print("CARTON",(despStrg_obj.carton_stored+medicineWarehouseStock_obj.carton_stored)-carton_stored)
-    #     print("BOX",(float(despStrg_obj.box_stored)+float(medicineWarehouseStock_obj.box_stored))-float(boxes_stored))
-    #     print("STRIP",(float(despStrg_obj.strip_stored)+float(medicineWarehouseStock_obj.strip_stored))-float(strips_stored))
-    #     print("PIECES",(float(despStrg_obj.piece_stored)+float(medicineWarehouseStock_obj.piece_stored))-float(pieces_in_storage_left))
-    try:
-        despStrg_obj=despensoryStock.objects.get(medicine=medicine_obj)
-
-        if all_stock_requested==True:
-            cartons=numofboxes/medicineWarehouseStock_obj.box_unit
-            print("Cartons added to desp",carton+despStrg_obj.carton_stored)
-            carton_added=carton+despStrg_obj.carton_stored
-            despStrg_obj.carton_stored=carton_added
-            print("Boxes added to desp",numofboxes+despStrg_obj.box_stored)
-            
-            boxes_added=numofboxes+despStrg_obj.box_stored
-            despStrg_obj.box_stored=boxes_added
-            print("Strips added to desp",cartons*medicineWarehouseStock_obj.strip_unit)
-            strips_added=cartons*medicineWarehouseStock_obj.strip_unit
-            strips_added=despStrg_obj.strip_stored+strips_added
-            despStrg_obj.strip_stored=strips_added
-            print("Pieces added to desp",total_number_of_req_pieces+despStrg_obj.piece_stored)
-            pieces_added=total_number_of_req_pieces+despStrg_obj.piece_stored
-            despStrg_obj.piece_stored=pieces_added
-            despStrg_obj.save()
-
+        # total_number_of_req_pieces=totalnumofstrips*medicineWarehouseStock_obj.piece_unit
+        # total_number_of_req_pieces=total_number_of_req_pieces+numofpieces
+        pieces_in_storage_left=float(medicineWarehouseStock_obj.piece_stored)-float(total_number_of_req_pieces)
+        print("pieces_in_storage_left",pieces_in_storage_left)
+        # Calculating/Finding how many boxes,strips and pieces stored. 
+        if pieces_in_storage_left==0:
+            strips_stored=0
+            boxes_stored=0
         else:
-            numofboxes=(float(despStrg_obj.box_stored)+float(medicineWarehouseStock_obj.box_stored))-float(boxes_stored)
-            print("numofboxes",numofboxes)
-            carton_added=numofboxes/medicineWarehouseStock_obj.box_unit
-            print("carton",carton_added)
-            # print("CARTON",(despStrg_obj.carton_stored+medicineWarehouseStock_obj.carton_stored)-carton_stored)
-            print("carton_added",carton_added)
-            print("BOX",(float(despStrg_obj.box_stored)+float(medicineWarehouseStock_obj.box_stored))-float(boxes_stored))
-            print("STRIP",(float(despStrg_obj.strip_stored)+float(medicineWarehouseStock_obj.strip_stored))-float(strips_stored))
-            print("PIECES",(float(despStrg_obj.piece_stored)+float(medicineWarehouseStock_obj.piece_stored))-float(pieces_in_storage_left))
-            # despStrg_obj.carton_stored=despStrg_obj.carton_stored+medicineWarehouseStock_obj.carton_stored-carton_stored
-            despStrg_obj.carton_stored=carton_added
-            despStrg_obj.box_stored=float(despStrg_obj.box_stored)+float(medicineWarehouseStock_obj.box_stored)-float(boxes_stored)
-            despStrg_obj.strip_stored=float(despStrg_obj.strip_stored)+float(medicineWarehouseStock_obj.strip_stored)-float(strips_stored)
-            despStrg_obj.piece_stored=float(despStrg_obj.piece_stored)+float(medicineWarehouseStock_obj.piece_stored)-float(pieces_in_storage_left)
-            despStrg_obj.save()
+            strips_stored=float(pieces_in_storage_left)/float(medicineWarehouseStock_obj.piece_unit)
+            boxes_stored=float(strips_stored)/float(medicineWarehouseStock_obj.strip_unit)
+            boxes_stored= math.ceil(boxes_stored)
+
+
+    print("boxes in stock",boxes_stored)
+    
+    print("b",medicineWarehouseStock_obj.box_stored)
+    strips_stored=math.ceil(strips_stored)
+    print("strips in stock",strips_stored)
+    print("pieces_in_stock",pieces_in_storage_left)
+
+    try:
+        despStrg_obj=despensoryStock.objects.get(medicine=medicineobj)
+        despStrg_obj.box_stored=(float(despStrg_obj.box_stored)+float(medicineWarehouseStock_obj.box_stored))-float(boxes_stored)
+        despStrg_obj.strip_stored=float(despStrg_obj.strip_stored)+float(medicineWarehouseStock_obj.strip_stored)-float(strips_stored)
+        despStrg_obj.piece_stored=float(despStrg_obj.piece_stored)+float(medicineWarehouseStock_obj.piece_stored)-float(pieces_in_storage_left)
+
+        # numofboxes=(float(despStrg_obj.box_stored)+float(medicineWarehouseStock_obj.box_stored))-float(boxes_stored)
+        # despStrg_obj.box_stored=float(despStrg_obj.box_stored)+numofboxes
+        # despStrg_obj.strip_stored=float(despStrg_obj.strip_stored)+float(medicineWarehouseStock_obj.strip_stored)-float(strips_stored)
+        # despStrg_obj.piece_stored=float(despStrg_obj.piece_stored)+float(medicineWarehouseStock_obj.piece_stored)-float(pieces_in_storage_left)
+        despStrg_obj.save()
     except:
         despStrg_obj=despensoryStock()
         despStrg_obj.batch_no=1
-        despStrg_obj.medicine=medicine_obj
-        despStrg_obj.carton_unit=medicineWarehouseStock_obj.carton_unit
+        despStrg_obj.medicine=medicineobj
+        despStrg_obj.medicine_strg=medicineWarehouseStock_obj
         despStrg_obj.box_unit=medicineWarehouseStock_obj.box_unit
         despStrg_obj.strip_unit=medicineWarehouseStock_obj.strip_unit
         despStrg_obj.piece_unit=medicineWarehouseStock_obj.piece_unit
+
         boxes=medicineWarehouseStock_obj.box_stored-boxes_stored
-        carton_added=boxes/medicineWarehouseStock_obj.box_unit
-        despStrg_obj.carton_stored=carton_added
         despStrg_obj.box_stored=boxes
         despStrg_obj.strip_stored=medicineWarehouseStock_obj.strip_stored-strips_stored
         despStrg_obj.piece_stored=medicineWarehouseStock_obj.piece_stored-pieces_in_storage_left
-        despStrg_obj.carton_price_unit=medicineWarehouseStock_obj.carton_price_unit
+
         despStrg_obj.box_price_unit=medicineWarehouseStock_obj.box_price_unit
         despStrg_obj.strip_price_unit=medicineWarehouseStock_obj.strip_price_unit
         despStrg_obj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
         despStrg_obj.save()
 
-    medicineWarehouseStock_obj.carton_stored=carton_stored
+    despStrgHist_obj=despensoryStockHistory()
+    despStrgHist_obj.medicine_strg=medicineWarehouseStock_obj
+    despStrgHist_obj.desp_stock=despStrg_obj
+    despStrgHist_obj.medicine=medicineobj
+    despStrgHist_obj.box_unit=medicineWarehouseStock_obj.box_unit
+    despStrgHist_obj.piece_unit=medicineWarehouseStock_obj.piece_unit
+    boxes=medicineWarehouseStock_obj.box_stored-boxes_stored
+    despStrgHist_obj.box_stored=boxes
+    despStrgHist_obj.strip_stored=despStrg_obj.strip_stored
+    despStrgHist_obj.piece_stored=medicineWarehouseStock_obj.piece_stored-pieces_in_storage_left
+    despStrgHist_obj.box_price_unit=medicineWarehouseStock_obj.box_price_unit
+    despStrgHist_obj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
+    despStrgHist_obj.save()
+    if boxes_stored==0 and pieces_in_storage_left==0.0:
+        medicineWarehouseStock_obj.status="Used"
+        medbatch_obj=medicineBatches.objects.get(medicine_strg=medicineWarehouseStock_obj)
+        medbatch_obj.status="Used"
+        medbatch_obj.save()
+        med_name=medicineWarehouseStock_obj.medicine.medicine_name
+        print("med_name",med_name)
+        medObj=Medicine.objects.get(medicine_name=med_name)
+    try:
+        tt_tempMedWhStk_Med.objects.get(medicine=medObj)
+        tempMedWhStk_Med_Obj=tt_tempMedWhStk_Med.objects.get(medicine=medObj)
+        saveMedicineToWhStockFromTempMedStock(tempMedWhStk_Med_Obj,medObj)
+        tempMedWhStk_Med_Obj.delete()
+    except:
+        print("NOT FOUND IN TEMP")
+    
+
     medicineWarehouseStock_obj.box_stored=boxes_stored
     medicineWarehouseStock_obj.strip_stored=strips_stored
     medicineWarehouseStock_obj.piece_stored=pieces_in_storage_left
     medicineWarehouseStock_obj.save()
 
-def NoStripCalculation(medicineWarehouseStock_obj,medicine_obj,noofboxes,noofpieces):
-    numofcartons=0
+    medicineWhStockHistory_obj=medicineWhStockHistory()
+    medicineWhStockHistory_obj.medicine_wh_stock=medicineWarehouseStock_obj
+    medicineWhStockHistory_obj.box_stored=boxes_stored
+    medicineWhStockHistory_obj.strip_stored=strips_stored
+    medicineWhStockHistory_obj.piece_stored=pieces_in_storage_left
+    medicineWhStockHistory_obj.status="Updated"
+    medicineWhStockHistory_obj.save()
+
+    ttmds_obj=tt_Medicine_DespensoryStock()
+    ttmds_obj.medicine=medicineobj
+    ttmds_obj.medicine_strg=medicineWarehouseStock_obj
+    ttmds_obj.desp_stock=despStrg_obj
+    ttmds_obj.save()
+
+def NoStripCalculation(medicineWarehouseStock_obj,medicineobj,noofboxes,noofpieces):
     numofboxes=noofboxes
-    numofstrips=0
     numofpieces=noofpieces
-    
+    medicine_obj=medicineobj
+    print("medcine object",medicine_obj.medicine_name)
     box_per_unit=medicineWarehouseStock_obj.box_unit
-   
+    pieceunit=medicineWarehouseStock_obj.piece_unit
     
 # Packages can be of 4 type, all togather or combos of it. so we can hard code it. 
     # 1. Check how many cartons. 
@@ -268,37 +264,43 @@ def NoStripCalculation(medicineWarehouseStock_obj,medicine_obj,noofboxes,noofpie
     # 
     # if carton not empty 
     numofboxes=numofboxes*box_per_unit
-    total_number_of_req_pieces=numofboxes*medicineWarehouseStock_obj.piece_unit
-    total_number_of_req_pieces=total_number_of_req_pieces+numofpieces
-    pieces_in_storage_left=float(medicineWarehouseStock_obj.piece_stored)-float(total_number_of_req_pieces)
-    all_stock_requested=False
-    
-    if pieces_in_storage_left==0:
-        all_stock_requested=True
-        boxes_stored=0
-    else:
-        boxes_stored=float(pieces_in_storage_left)/float(medicineWarehouseStock_obj.piece_unit)
-        boxes_stored= math.ceil(boxes_stored)
+    print("numofboxes-1",numofboxes)
+    print("numofpieces-1",numofpieces)
+    total_number_of_req_pieces=numofboxes*pieceunit+numofpieces
+
+    if medicineWarehouseStock_obj.piece_stored<pieceunit:
+        total_number_of_req_pieces=medicineWarehouseStock_obj.piece_stored
     
 
+    
+    print("total_number_of_req_pieces-1",total_number_of_req_pieces)
+    piecesstored_in_stock=medicineWarehouseStock_obj.piece_stored
+    pieces_leftin_stock=float(piecesstored_in_stock)-float(total_number_of_req_pieces)
+    print("piecesstored_in_stock",piecesstored_in_stock)
+    print("pieces_leftin_stock",pieces_leftin_stock)
+
+    if pieces_leftin_stock==0:
+        boxes_stored_in_stock=0
+        print("boxes_stored_in_stock-1",boxes_stored_in_stock)
+    else:
+        boxes_stored_in_stock= float(pieces_leftin_stock)/float(pieceunit)
+        boxes_stored_in_stock= math.ceil(boxes_stored_in_stock)
+        print("boxes_stored_in_stock-2",boxes_stored_in_stock)
     try:
         despStrg_obj=despensoryStock.objects.get(medicine=medicine_obj)
-        if all_stock_requested==True:
-            
-            despStrg_obj.box_stored=numofboxes
-            despStrg_obj.piece_stored=total_number_of_req_pieces
-        else:
-            
-            numofboxes=(float(despStrg_obj.box_stored)+float(medicineWarehouseStock_obj.box_stored))-float(boxes_stored)
-            print("numofboxes",numofboxes)
-            # print("CARTON",(despStrg_obj.carton_stored+medicineWarehouseStock_obj.carton_stored)-carton_stored)
-            noofpieces=(float(despStrg_obj.piece_stored)+float(medicineWarehouseStock_obj.piece_stored))-float(pieces_in_storage_left)
+        box_stored_in_desp=despStrg_obj.box_stored
+        
+        numofboxes=(float(box_stored_in_desp)+float(medicineWarehouseStock_obj.box_stored))-float(boxes_stored_in_stock)
+        print("numofboxes",numofboxes)
+        # print("CARTON",(despStrg_obj.carton_stored+medicineWarehouseStock_obj.carton_stored)-carton_stored)
+        noofpieces=(float(despStrg_obj.piece_stored)+float(medicineWarehouseStock_obj.piece_stored))-float(pieces_leftin_stock)
 
-            despStrg_obj.box_stored=numofboxes
-            despStrg_obj.strip_stored=0
-            despStrg_obj.piece_stored=noofpieces
-            despStrg_obj.save()
-    except:
+        despStrg_obj.box_stored=numofboxes
+        despStrg_obj.piece_stored=noofpieces
+        despStrg_obj.save()
+
+    except despensoryStock.DoesNotExist:
+        print("sssssssssssssssssss")
         despStrg_obj=despensoryStock()
         medBatobj=medicineBatches.objects.get(medicine_strg=medicineWarehouseStock_obj)
         despStrg_obj.batch_no=medBatobj.batch_no
@@ -306,9 +308,9 @@ def NoStripCalculation(medicineWarehouseStock_obj,medicine_obj,noofboxes,noofpie
         despStrg_obj.medicine_strg=medicineWarehouseStock_obj
         despStrg_obj.box_unit=medicineWarehouseStock_obj.box_unit
         despStrg_obj.piece_unit=medicineWarehouseStock_obj.piece_unit
-        boxes=medicineWarehouseStock_obj.box_stored-boxes_stored
+        boxes=medicineWarehouseStock_obj.box_stored-boxes_stored_in_stock
         despStrg_obj.box_stored=boxes
-        despStrg_obj.piece_stored=medicineWarehouseStock_obj.piece_stored-pieces_in_storage_left
+        despStrg_obj.piece_stored=medicineWarehouseStock_obj.piece_stored-pieces_leftin_stock
         despStrg_obj.box_price_unit=medicineWarehouseStock_obj.box_price_unit
         despStrg_obj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
         despStrg_obj.save()
@@ -319,22 +321,42 @@ def NoStripCalculation(medicineWarehouseStock_obj,medicine_obj,noofboxes,noofpie
     despStrgHist_obj.medicine=medicine_obj
     despStrgHist_obj.box_unit=medicineWarehouseStock_obj.box_unit
     despStrgHist_obj.piece_unit=medicineWarehouseStock_obj.piece_unit
-    boxes=medicineWarehouseStock_obj.box_stored-boxes_stored
+    boxes=medicineWarehouseStock_obj.box_stored-boxes_stored_in_stock
     despStrgHist_obj.box_stored=boxes
-    despStrgHist_obj.piece_stored=medicineWarehouseStock_obj.piece_stored-pieces_in_storage_left
+    despStrgHist_obj.piece_stored=medicineWarehouseStock_obj.piece_stored-pieces_leftin_stock
     despStrgHist_obj.box_price_unit=medicineWarehouseStock_obj.box_price_unit
     despStrgHist_obj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
     despStrgHist_obj.save()
+    if boxes_stored_in_stock==0 and pieces_leftin_stock==0.0:
+        medicineWarehouseStock_obj.status="Used"
+        medbatch_obj=medicineBatches.objects.get(medicine_strg=medicineWarehouseStock_obj)
+        medbatch_obj.status="Used"
+        medbatch_obj.save()
+        med_name=medicineWarehouseStock_obj.medicine.medicine_name
+        print("med_name",med_name)
+        medObj=Medicine.objects.get(medicine_name=med_name)
+        try:
+            tt_tempMedWhStk_Med.objects.get(medicine=medObj)
+            tempMedWhStk_Med_Obj=tt_tempMedWhStk_Med.objects.get(medicine=medObj)
+            saveMedicineToWhStockFromTempMedStock(tempMedWhStk_Med_Obj,medObj)
+            tempMedWhStk_Med_Obj.delete()
+        except:
+            print("Nothing found in Temp Stock>>>>>>>>>>>>>>>>>>>>>>>>")
 
-    medicineWarehouseStock_obj.box_stored=boxes_stored
-    medicineWarehouseStock_obj.piece_stored=pieces_in_storage_left
+
+
+
+
+       
+    medicineWarehouseStock_obj.box_stored=boxes_stored_in_stock
+    medicineWarehouseStock_obj.piece_stored=pieces_leftin_stock
     medicineWarehouseStock_obj.save()
 
     medicineWhStockHistory_obj=medicineWhStockHistory()
     medicineWhStockHistory_obj.medicine_wh_stock=medicineWarehouseStock_obj
-    medicineWhStockHistory_obj.box_stored=boxes_stored
+    medicineWhStockHistory_obj.box_stored=boxes_stored_in_stock
     medicineWhStockHistory_obj.strip_stored=0
-    medicineWhStockHistory_obj.piece_stored=pieces_in_storage_left
+    medicineWhStockHistory_obj.piece_stored=pieces_leftin_stock
     medicineWhStockHistory_obj.status="Updated"
     medicineWhStockHistory_obj.save()
 
@@ -414,6 +436,92 @@ def retrievePackageTypes(request):
                 "package_type_list":json.dumps(package_type_list),
             }
         return JsonResponse(data)
+def retrieveMedicineGenDataFromStock(request):
+    medicine_in_stock=[]
+    medicine_batch_in_stock_dict={}
+    medicine_batch_in_stock_list=[]
+    if request.method=="GET":
+        mwhs_objs=medicineWarehouseStock.objects.all().distinct()
+        for mwhs_obj in mwhs_objs:
+            # print("mwhs_obj--",mwhs_obj.medicine.medicine_name)
+            medbatch_obj=medicineBatches.objects.get(medicine_strg=mwhs_obj)
+            if medbatch_obj.status=="Active":
+                medbatchno=medbatch_obj.batch_no
+                medname=mwhs_obj.medicine.medicine_name
+                medicine_in_stock.append(medname)
+                medicine_batch_in_stock_list.append([medname,medbatchno])
+                medicine_batch_in_stock_dict[medname]=medbatchno
+        print("medicine_in_stock",medicine_in_stock)
+        print("medicine_batch_in_stock_dict",medicine_batch_in_stock_dict)
+        data={
+            "medicine_in_stock":medicine_in_stock,
+            'medicine_batch_in_stock_dict':json.dumps(medicine_batch_in_stock_dict),
+            "medicine_batch_in_stock_list":medicine_batch_in_stock_list,
+        }
+        return JsonResponse(data)
+def retrieveMedicineStockDataFromStock(request):
+    medstockdatafromstock_allval_dict={}
+    if request.method=="POST":
+        medicine_name=request.POST.get("medicine_name")
+        medicine_obj=Medicine.objects.get(medicine_name=medicine_name)
+        mwhs_objs=medicineWarehouseStock.objects.get(medicine=medicine_obj,status="In Use")
+        
+        boxes=mwhs_objs.box_stored
+        strips=mwhs_objs.strip_stored
+        if strips==None:
+            strips=0
+        pieces=mwhs_objs.piece_stored
+        print("boxes",boxes)
+        print("pieces",pieces)
+        print("strips",strips)
+        medstockdatafromstock_allval_dict["boxes"]=boxes
+        medstockdatafromstock_allval_dict["strips"]=strips
+        medstockdatafromstock_allval_dict["pieces"]=pieces
+
+
+        
+
+
+
+        data={
+            "medstockdatafromstock_allval_dict":json.dumps(medstockdatafromstock_allval_dict),
+            "boxes":boxes,
+            "strips":strips,
+            "pieces":pieces,
+        }
+        return JsonResponse(data)
+        # mwhs_objs=medicineWarehouseStock.objects.get.
+        # for mwhs_obj in mwhs_objs:
+        #     # print("mwhs_obj--",mwhs_obj.medicine.medicine_name)
+        #     medbatch_obj=medicineBatches.objects.get(medicine_strg=mwhs_obj)
+        #     medbatchno=medbatch_obj.batch_no
+        #     medname=mwhs_obj.medicine.medicine_name
+
+def retrieveMedicineTempStockFromTempStock(request):
+    medicine_batch_in_tempstock_list=[]
+
+    if request.method=="POST":
+        medicine_name=request.POST.get("medicine_name")
+        medicine_obj=Medicine.objects.get(medicine_name=medicine_name)
+        tempmedwhstk_objs=tt_tempMedWhStk_Med.objects.filter(medicine=medicine_obj)
+        for tempmedwhstk_obj in tempmedwhstk_objs:
+            templist=[]
+            templist.append(medicine_name)
+            templist.append(tempmedwhstk_obj.batch_no)
+            templist.append(tempmedwhstk_obj.box_stored)
+            templist.append(tempmedwhstk_obj.strip_stored)
+
+            templist.append(tempmedwhstk_obj.piece_stored)
+            medicine_batch_in_tempstock_list.append(templist)
+        data={
+            "medicine_batch_in_tempstock_list":medicine_batch_in_tempstock_list,
+        }
+        return JsonResponse(data)
+
+    
+
+
+
 def sendAjaxReqToSaveMedicineToDb(request):
     if request.method=="POST":
         medicine_name = request.POST.get('medicine_name')
@@ -704,7 +812,12 @@ def saveToDespStock(request):
         medicine_name=request.POST.get("medicine_name")
         batchno=request.POST.get("batch_no")
         noofboxes=request.POST.get("noofboxes")
+        noofboxes=int(noofboxes)
+        noofstrips=request.POST.get("noofstrips")
+        noofstrips=int(noofstrips)
         noofpieces=request.POST.get("noofpieces")
+        noofpieces=int(noofpieces)
+
         print("medicine_name",medicine_name)
         print("batchno",batchno)
         print("noofboxes",noofboxes)
@@ -712,13 +825,13 @@ def saveToDespStock(request):
 
 
         medicine_obj=Medicine.objects.get(medicine_name=medicine_name)
-        medicineWarehouseStock_obj=medicineWarehouseStock.objects.get(medicine=medicine_obj)
+        medicineWarehouseStock_obj=medicineWarehouseStock.objects.get(medicine=medicine_obj,status="In Use")
         if medicineWarehouseStock_obj:
-            if(medicineWarehouseStock_obj.strip_stored==0):
+            if(medicineWarehouseStock_obj.strip_stored==0 or medicineWarehouseStock_obj.strip_stored==None ):
                 NoStripCalculation(medicineWarehouseStock_obj,medicine_obj,noofboxes,noofpieces)
 
             else:
-                WithStripCalculation(medicineWarehouseStock_obj,medicine_obj)
+                WithStripCalculation(medicineWarehouseStock_obj,medicine_obj,noofboxes,noofstrips,noofpieces)
             
 
 
@@ -726,6 +839,53 @@ def saveToDespStock(request):
 
         data={}
         return JsonResponse(data)
+def saveMedicineToWhStockFromTempMedStock(tempMedWhStk_Med_Obj,medObj):
+    # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    mwh_stock_obj=medicineWarehouseStock()
+    mwh_stock_obj.medicine=medObj
+    mwh_stock_obj.status="In Use"
+    mwh_stock_obj.purchase_rate=tempMedWhStk_Med_Obj.purchase_rate
+    mwh_stock_obj.box_unit=tempMedWhStk_Med_Obj.box_unit
+    mwh_stock_obj.strip_unit=tempMedWhStk_Med_Obj.strip_unit
+    mwh_stock_obj.piece_unit=tempMedWhStk_Med_Obj.piece_unit
+    mwh_stock_obj.box_stored=tempMedWhStk_Med_Obj.box_stored
+    mwh_stock_obj.strip_stored=tempMedWhStk_Med_Obj.strip_stored
+    mwh_stock_obj.piece_stored=tempMedWhStk_Med_Obj.piece_stored
+    mwh_stock_obj.box_price_unit=tempMedWhStk_Med_Obj.box_price_unit
+    mwh_stock_obj.strip_price_unit=tempMedWhStk_Med_Obj.strip_price_unit
+    mwh_stock_obj.piece_price_unit=tempMedWhStk_Med_Obj.piece_price_unit
+    mwh_stock_obj.exp_date=tempMedWhStk_Med_Obj.exp_date
+    mwh_stock_obj.save()
+    # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    mwh_stock_history_obj=medicineWhStockHistory()
+    mwh_stock_history_obj.medicine_wh_stock=mwh_stock_obj
+    mwh_stock_history_obj.status="Added"
+    mwh_stock_history_obj.purchase_rate=tempMedWhStk_Med_Obj.purchase_rate
+    mwh_stock_history_obj.box_unit=tempMedWhStk_Med_Obj.box_unit
+    mwh_stock_history_obj.strip_unit=tempMedWhStk_Med_Obj.strip_unit
+    mwh_stock_history_obj.piece_unit=tempMedWhStk_Med_Obj.piece_unit
+    mwh_stock_history_obj.box_stored=tempMedWhStk_Med_Obj.box_stored
+    mwh_stock_history_obj.strip_stored=tempMedWhStk_Med_Obj.strip_stored
+    mwh_stock_history_obj.piece_stored=tempMedWhStk_Med_Obj.piece_stored
+    mwh_stock_history_obj.box_price_unit=tempMedWhStk_Med_Obj.box_price_unit
+    mwh_stock_history_obj.strip_price_unit=tempMedWhStk_Med_Obj.strip_price_unit
+    mwh_stock_history_obj.piece_price_unit=tempMedWhStk_Med_Obj.piece_price_unit
+    mwh_stock_history_obj.exp_date=tempMedWhStk_Med_Obj.exp_date
+    mwh_stock_history_obj.save()
+    # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    medBatch_obj=medicineBatches()
+    medBatch_obj.batch_no=tempMedWhStk_Med_Obj.batch_no
+    medBatch_obj.medicine=medObj
+    medBatch_obj.medicine_strg=mwh_stock_obj
+    medBatch_obj.status="Active"
+    medBatch_obj.save()
+    # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    obj=tt_MedicineMedWhStock()
+    obj.medicine=medObj
+    obj.mwhs=mwh_stock_obj
+    obj.save()
+
+
 
 
 

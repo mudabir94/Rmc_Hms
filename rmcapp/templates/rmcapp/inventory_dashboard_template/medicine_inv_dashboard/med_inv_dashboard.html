@@ -12,15 +12,18 @@
     <link href="{% static 'rmcapp/mainhomepage_static/css/MedicineInvCss/medicineinv.css' %}" rel="stylesheet">
     <!-- <link href="{% static 'rmcapp/mainhomepage_static/css/MedicineInvCss/jquery-ui.css' %}" type="text/css" rel="stylesheet"  /> -->
     <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 
-
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 
     <!-- <script src="http://code.jquery.com/jquery-latest.min.js"></script> -->
     
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -155,14 +158,18 @@
 <input type="text" id="from" name="from">
 <label for="to">to</label>
 <input type="text" id="to" name="to"> -->
+<div id="dialog-confirm" title="Empty the recycle bin?">
+  <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>Do you want to Save?</p>
+</div>
   <main class="page-content" id="main_page_content">
 
     <div class="container-fluid">
       <h2>Medicine Dashboard</h2>
       <hr>
+      
       <div class="row">
         <div class="form-group col-md-12">
-        
+         
                 
           <p>
             Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
