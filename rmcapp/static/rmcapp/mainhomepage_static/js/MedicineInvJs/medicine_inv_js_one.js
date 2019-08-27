@@ -1787,7 +1787,7 @@ function focusOut_medicineNameDesp(element){
                             row1__col_one__row_div_two.append(colmd1);
                             row1__col_one__row_div_two.append(colmd2);
                         if (strips!==0){
-                            row3__col_one__row_div_two=$("<div class='row '></div>")
+                            row3__col_one__row_div_two=$("<div class='row desp_col_div_rows'></div>")
                                 var colmd1=$("<div class='col-md-6'></div>")
                                 var colmd2=$("<div class='col-md-6'></div>")
                                 pieceamount_label=$("<label class='custom_label_css'>No of Strips:</label>");
