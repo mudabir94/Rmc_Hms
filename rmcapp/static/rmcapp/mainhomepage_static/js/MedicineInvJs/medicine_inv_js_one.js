@@ -1719,7 +1719,7 @@ col_one__row_div_four=$("<div class='col-md-10'></div>");
 col_two__row_div_four=$("<div class='col-md-2'></div>");
     row__col_two__row_div_four=$("<div class='row'></div>");
         var colmd1=$("<div class='col-md-12'></div>")
-        var add_button=$("<button class='btn btn-outline-primary'>Add All Stock</button>")
+        var add_button=$("<button class='add_all_stk'>Add All Stock</button>")
         colmd1.append(add_button)
     row__col_two__row_div_four.append(colmd1);
 col_two__row_div_four.append(row__col_two__row_div_four);
