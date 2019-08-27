@@ -1683,7 +1683,7 @@ function addMedicineToDespStockForm(){
 
 }
 function despMedFormMainColOne(main_col_div_1){
-    var row_div_one=$("<div class='row'></div>");
+    var row_div_one=$("<div class='row desp_col_div_rows'></div>");
     // Medicine Name
     col_one__row_div_one=$("<div class='col '></div>");
         row__col_one__row_div_one=$("<div class='row'></div>");
@@ -1714,7 +1714,7 @@ function despMedFormMainColOne(main_col_div_1){
 $(row_div_one).append(col_one__row_div_one);
 $(row_div_one).append(col_three__row_div_one);
 // Second Row.. 
-var row_div_four=$("<div class='row'></div>");
+var row_div_four=$("<div class='row desp_col_div_rows'></div>");
 col_one__row_div_four=$("<div class='col-md-10'></div>");
 col_two__row_div_four=$("<div class='col-md-2'></div>");
     row__col_two__row_div_four=$("<div class='row'></div>");
@@ -1777,7 +1777,7 @@ function focusOut_medicineNameDesp(element){
                 var despstorage_first_col_div=$("#despstorage_first_col_div")
                     var row_div_two=$("<div class='row' id='row_div_two'></div>");
                         col_one__row_div_two=$("<div class='col-md-10'></div>");
-                            row1__col_one__row_div_two=$("<div class='row'></div>");
+                            row1__col_one__row_div_two=$("<div class='row desp_col_div_rows'></div>");
                                 var colmd1=$("<div class='col-md-6'></div>")
                                 var colmd2=$("<div class='col-md-6'></div>")
                                 boxamount_label=$("<label class='custom_label_css'>No of Boxes:</label>");
@@ -1787,7 +1787,7 @@ function focusOut_medicineNameDesp(element){
                             row1__col_one__row_div_two.append(colmd1);
                             row1__col_one__row_div_two.append(colmd2);
                         if (strips!==0){
-                            row3__col_one__row_div_two=$("<div class='row'></div>");
+                            row3__col_one__row_div_two=$("<div class='row '></div>")
                                 var colmd1=$("<div class='col-md-6'></div>")
                                 var colmd2=$("<div class='col-md-6'></div>")
                                 pieceamount_label=$("<label class='custom_label_css'>No of Strips:</label>");
@@ -1798,7 +1798,7 @@ function focusOut_medicineNameDesp(element){
                             row3__col_one__row_div_two.append(colmd2);
                         }
 
-                            row2__col_one__row_div_two=$("<div class='row'></div>");
+                            row2__col_one__row_div_two=$("<div class='row desp_col_div_rows'></div>");
                                 var colmd1=$("<div class='col-md-6'></div>")
                                 var colmd2=$("<div class='col-md-6'></div>")
                                 pieceamount_label=$("<label class='custom_label_css'>No of Pieces:</label>");
@@ -1826,7 +1826,7 @@ function focusOut_medicineNameDesp(element){
                     row_div_two.append(col_two__row_div_two);
 
 
-                    var row_div_three=$("<div class='row' id='row_div_three'></div>");
+                    var row_div_three=$("<div class='row desp_col_div_rows' id='row_div_three'></div>");
                         col_one__row_div_three=$("<div class='col-md-10'></div>");
 
                         col_two__row_div_three=$("<div class='col-md-2'></div>");
