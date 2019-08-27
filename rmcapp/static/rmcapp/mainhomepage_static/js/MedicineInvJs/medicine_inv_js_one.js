@@ -226,19 +226,35 @@ function addMedicineForm(){
 }
 
 function saveMedicineToDb(){
-    medicine_name=$("#med_name_input").val()
-    console.log("medicine_name",medicine_name)
-    $("#med_name_input").val("");
-    selected_type = $("#med_type_sel").children("option:selected").val();
-    // $("#med_type_sel").children("option:selected").val("Syrup");
-    console.log("selected_type",selected_type)
-    med_details=$("#med_details").val();
-    $("#med_details").val("");
-    console.log("med_details",med_details);
-    // firt validate the data then send to DB. 
-    // But for now just save the data. 
-    sendAjaxReqToSaveMedicineToDb(medicine_name,selected_type,med_details);
+    $( function() {
+        $( "#dialog-confirm" ).dialog({
+          resizable: false,
+          height: "auto",
+          width: 400,
+          modal: true,
+          buttons: {
+            "Save": function() {
+                medicine_name=$("#med_name_input").val()
+                console.log("medicine_name",medicine_name)
+                $("#med_name_input").val("");
+                selected_type = $("#med_type_sel").children("option:selected").val();
+                // $("#med_type_sel").children("option:selected").val("Syrup");
+                console.log("selected_type",selected_type)
+                med_details=$("#med_details").val();
+                $("#med_details").val("");
+                console.log("med_details",med_details);
+                // first validate the data then send to DB. 
+                // But for now just save the data. 
+                sendAjaxReqToSaveMedicineToDb(medicine_name,selected_type,med_details);
+                $( this ).dialog( "close" );
 
+            },
+            "Cancel": function() {
+              $( this ).dialog( "close" );
+            }
+          }
+        });
+      } );
 }
 function sendAjaxReqToSaveMedicineToDb(medicine_name,selected_type,med_details){
     console.log("selected_type",selected_type)
