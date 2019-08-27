@@ -23,3 +23,26 @@ border: none;
 .despstorage_second_col_div_three_rows{
     padding-bottom: 30px;
 }
+.add_all_stk{
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: inherit;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    background: whitesmoke;
+    border-color: lightsalmon;
+}
+.add_all_stk:hover{
+    background: white;
+
+}
