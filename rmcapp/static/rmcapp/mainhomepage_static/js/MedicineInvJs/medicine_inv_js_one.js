@@ -842,116 +842,133 @@ function recursiveFunc(list_length){
 packages_priceandquant_dict={}
 
 function saveMedicineToWhStock(){
-    $( function() {
-        $( "#dialog-confirm" ).dialog({
-          resizable: false,
-          height: "auto",
-          width: 400,
-          modal: true,
-          buttons: {
-            "Save": function() {
-
-                packages_priceandquant_dict={}
-                var medicine_name=$("#medicine_name_tag").val();
-            
-                var batchno=$("#batchno_input").val();
-                var manufactor_date=$("#manudatepicker").val();
-                var purchaserate=$("#main_priceperpack_input").val();
-                console.log("purchaserate",purchaserate);
-                var exp_date=$("#expdatepicker").val();
-                var main_package_type=$("#mainpackage_type_select").val();
-                var main_quantity_input=$("#main_quantity_input").val();
-                packages_priceandquant_dict[main_package_type]=[parseInt(main_quantity_input)];
-                sublev=[];
-                $("[id^=subpack_row_div_sublevel]").map(
-                    function(){
-                        var selectedoption=$(this).find('select').val()
-                        var inputval=$(this).find('input').val();
-                        // var inputid=$(this).find('input').attr('id')
-                        var temp_list=[];
-                        temp_list=[selectedoption,inputval]
-                        sublev.push(temp_list)
-                    }).get();
-                console.log("sublevel data------",sublev);
-                // For Main Package... 
-                $("#row_sublevels").find($('[id^=sublevelsmainrow]')).map(
-                    function(){
-                        row=$(this).find('input').attr('id');
-                        main_package_unit=$(this).find('input').val();
-                        split1=row.split('_');
-                        console.log(split1[0]);
-                        package_name=split1[0];
-                        if  (packages_priceandquant_dict[package_name]!==undefined){
-                            packages_priceandquant_dict[package_name].push(parseInt(main_package_unit))
-                        }
-            
-                    }).get();
-                
-                //    For Sub Levl Rows
-                $("#row_sublevels").find($('[id^=sublevelssubrow]')).map(
-                    function(){
-                        row=$(this).find('input').attr('id');
-                        package_name_unit_or_total=$(this).find('input').val();
-                        console.log("ROWWW",row)
-                        split1=row.split('_');
-                        console.log(split1[0]);
-                        package_name=split1[0];
-                        console.log(split1[1]);
-                        split2=split1[1].split('-')
-                        console.log(split2[0])
-                        console.log(split2[1])
-            
-                        price_or_quant=split2[1]
-                        
-                        
-                        // total no of pieces
-                        if  (packages_priceandquant_dict[package_name]===undefined){
-                            packages_priceandquant_dict[package_name]=[parseInt(package_name_unit_or_total)]
-                        }
-                        else{
-                            packages_priceandquant_dict[package_name].push(parseInt(package_name_unit_or_total))
-                        }
-                    }).get();
-                
-                       
-            
-                console.log("sublevel data------",sublev);
-                console.log("data-dict",packages_priceandquant_dict);
-                //  Send the data to view for saving. . . 
-                $.ajax({
-                    type: 'POST',
-                    dataType: "json",
-                    'data': {
-                        "medicine_name":medicine_name,
-                        "batchno":batchno,
-                        "manufactor_date":manufactor_date,
-                        "exp_date":exp_date,
-                        "main_package_type":main_package_type,
-                        "main_quantity_input":main_quantity_input,
-                        'purchaserate':parseInt(purchaserate),
-                        "subleveldata":JSON.stringify(sublev),
-                        "packages_priceandquant_dict":JSON.stringify(packages_priceandquant_dict),
-                        
-                    },
-                    url: '/save_medicine_to_wh_stock',
-                    success: function(data){
-                        console.log(data['Success']);
-                    },
-                  
-                });
-            
-
-              $( this ).dialog( "close" );
-              addMedicineToWhStockFrom();
-
-            },
-            Cancel: function() {
-              $( this ).dialog( "close" );
+    if ($('#calc_res_info_form').is(':empty')){
+        alert("Please Calculate")
+    }
+    else{
+        var flag=true
+        $('#calc_res_info_form input').each(function() {
+            console.log("sss",$(this).val())
+            if ($(this).val()==="NaN"){
+                flag=false;
+                alert("Please Correct your calcs")
+                return;
             }
-          }
-        });
-      } );
-      
+       });
+    }
+    if (flag===true){
+                $( function() {
+                    $( "#dialog-confirm" ).dialog({
+                    resizable: false,
+                    height: "auto",
+                    width: 400,
+                    modal: true,
+                    buttons: {
+                        "Save": function() {
+        
+                            packages_priceandquant_dict={}
+                            var medicine_name=$("#medicine_name_tag").val();
+                        
+                            var batchno=$("#batchno_input").val();
+                            var manufactor_date=$("#manudatepicker").val();
+                            var purchaserate=$("#main_priceperpack_input").val();
+                            console.log("purchaserate",purchaserate);
+                            var exp_date=$("#expdatepicker").val();
+                            var main_package_type=$("#mainpackage_type_select").val();
+                            var main_quantity_input=$("#main_quantity_input").val();
+                            packages_priceandquant_dict[main_package_type]=[parseInt(main_quantity_input)];
+                            sublev=[];
+                            $("[id^=subpack_row_div_sublevel]").map(
+                                function(){
+                                    var selectedoption=$(this).find('select').val()
+                                    var inputval=$(this).find('input').val();
+                                    // var inputid=$(this).find('input').attr('id')
+                                    var temp_list=[];
+                                    temp_list=[selectedoption,inputval]
+                                    sublev.push(temp_list)
+                                }).get();
+                            console.log("sublevel data------",sublev);
+                            // For Main Package... 
+                            $("#row_sublevels").find($('[id^=sublevelsmainrow]')).map(
+                                function(){
+                                    row=$(this).find('input').attr('id');
+                                    main_package_unit=$(this).find('input').val();
+                                    split1=row.split('_');
+                                    console.log(split1[0]);
+                                    package_name=split1[0];
+                                    if  (packages_priceandquant_dict[package_name]!==undefined){
+                                        packages_priceandquant_dict[package_name].push(parseInt(main_package_unit))
+                                    }
+                        
+                                }).get();
+                            
+                            //    For Sub Levl Rows
+                            $("#row_sublevels").find($('[id^=sublevelssubrow]')).map(
+                                function(){
+                                    row=$(this).find('input').attr('id');
+                                    package_name_unit_or_total=$(this).find('input').val();
+                                    console.log("ROWWW",row)
+                                    split1=row.split('_');
+                                    console.log(split1[0]);
+                                    package_name=split1[0];
+                                    console.log(split1[1]);
+                                    split2=split1[1].split('-')
+                                    console.log(split2[0])
+                                    console.log(split2[1])
+                        
+                                    price_or_quant=split2[1]
+                                    
+                                    
+                                    // total no of pieces
+                                    if  (packages_priceandquant_dict[package_name]===undefined){
+                                        packages_priceandquant_dict[package_name]=[parseInt(package_name_unit_or_total)]
+                                    }
+                                    else{
+                                        packages_priceandquant_dict[package_name].push(parseInt(package_name_unit_or_total))
+                                    }
+                                }).get();
+                            
+                                
+                        
+                            console.log("sublevel data------",sublev);
+                            console.log("data-dict",packages_priceandquant_dict);
+                            //  Send the data to view for saving. . . 
+                            $.ajax({
+                                type: 'POST',
+                                dataType: "json",
+                                'data': {
+                                    "medicine_name":medicine_name,
+                                    "batchno":batchno,
+                                    "manufactor_date":manufactor_date,
+                                    "exp_date":exp_date,
+                                    "main_package_type":main_package_type,
+                                    "main_quantity_input":main_quantity_input,
+                                    'purchaserate':parseInt(purchaserate),
+                                    "subleveldata":JSON.stringify(sublev),
+                                    "packages_priceandquant_dict":JSON.stringify(packages_priceandquant_dict),
+                                    
+                                },
+                                url: '/save_medicine_to_wh_stock',
+                                success: function(data){
+                                    console.log(data['Success']);
+                                },
+                            
+                            });
+                        
+        
+                        $( this ).dialog( "close" );
+                        addMedicineToWhStockFrom();
+        
+                        },
+                        Cancel: function() {
+                        $( this ).dialog( "close" );
+                        }
+                    }
+                    });
+                } );
+        }  
+    
+        
     
    
     
@@ -1108,7 +1125,7 @@ function addRowDivFour(){
             col_two__row_div_four=$("<div class='col'></div>");
             col_three__row_div_four=$("<div class='col'></div>");
                 row_one__col_three__row_div_four=$("<div class='row'></div>");
-                    savetomedstrgForm_button=$('<button class="btn btn-success "onclick="saveMedicineToWhStock()">Save</button>')
+                    savetomedstrgForm_button=$('<button class="btn btn-success" onclick="saveMedicineToWhStock()">Save</button>')
                 row_one__col_three__row_div_four.append(savetomedstrgForm_button);
             col_three__row_div_four.append(row_one__col_three__row_div_four);
         row_div_four.append(col_one__row_div_four);
@@ -1735,7 +1752,7 @@ col_one__row_div_four=$("<div class='col-md-10'></div>");
 col_two__row_div_four=$("<div class='col-md-2'></div>");
     row__col_two__row_div_four=$("<div class='row'></div>");
         var colmd1=$("<div class='col-md-12'></div>")
-        var add_button=$("<button class='add_all_stk'>Add All Stock</button>")
+        var add_button=$("<button class='add_all_stk' onclick='addAllstck()' >Add All Stock</button>")
         colmd1.append(add_button)
     row__col_two__row_div_four.append(colmd1);
 col_two__row_div_four.append(row__col_two__row_div_four);
@@ -1753,6 +1770,17 @@ $(main_col_div_1).append(row_div_four);
       });
 
 }
+function addAllstck(){
+        var abc = $("#active_box_input").val()
+        if (abc === undefined){
+            alert("Please select a medicine")
+        }
+        else{
+            console.log("oooo", $("#active_box_input").val())
+            $("#noofboxes_input").val($("#active_box_input").val())    
+        }
+}
+
 function despMedFormMainColTwo(main_col_div_2){
     var row_div_one=$("<div class='row despstorage_second_col_div_three_rows' id='med_in_stock_table_row'></div>");
         col_one__row_div_one=$("<div class='col '></div>");
