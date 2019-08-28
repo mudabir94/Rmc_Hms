@@ -9,6 +9,7 @@ var package_type_list=[];
 var medicine_batch_in_stock_dict={}
 var medicine_in_stock=[];
 var medicine_batch_in_stock_list=[];
+var medicine_name_type_list=[];
 
 $( document ).ready(function() {
     retrieveMedicineType();
@@ -63,6 +64,7 @@ function retrieveMedicineNames(){
 
             medicine_name_list=data["medicine_name_list"];
             med_name_type_dict=JSON.parse(data["med_name_type_dict"]);
+            medicine_name_type_list=data['medicine_name_type_list'];
             console.log("med_name_type_dict",med_name_type_dict)
             console.log("success",medicine_name_list);
         },
@@ -112,10 +114,14 @@ function addMedicineForm(){
 
     $("#container-med-dashboard").append("<h2>Add Medicine To Inventory</h2>");
     $("#container-med-dashboard").append("<hr>");
-    var main_row_div= $("<div class='row is-flex backgroundcss_medToInv' ></div>");
+    var main_row_div= $("<div class='row is-flex backgroundcss_medToInv'></div>");
     $("#container-med-dashboard").append(main_row_div);
-    var main_col_div=$("<div class='col-md-12'></div>");
+    var main_col_div=$("<div class='col-md-8'></div>");
+    var main_col2_div=$("<div class='col-md-4'></div>");
+
     $(main_row_div).append(main_col_div);
+    $(main_row_div).append(main_col2_div);
+
     var row_div_one=$("<div class='row'></div>");
     var package_info_row_div=$("<div class='row'></div>");
     var row_div_three=$("<div class='row'></div>");
@@ -223,7 +229,31 @@ function addMedicineForm(){
     $(main_col_div).append(row_div_four);
     $(main_col_div).append("<hr>")
 
+    var row_two__col_one__row_div_one=$("<div class='row'></div>");
+        var table=$('<table id="med_table" class="display" width="100%"></table>')
+    row_two__col_one__row_div_one.append(table)
+    $(main_col2_div).append(row_two__col_one__row_div_one)
+    $(function(){
+
+        med_table_datatable=$("#med_table").DataTable({
+            data: medicine_name_type_list,
+            columns: [
+                { title: "Medicine" },
+                { title: "Type" },
+                ],
+                paging: false,
+                scrollY: 200,
+                scrollX: true,
+                ordering: true,
+                info:false,
+    
+            });
+        });
+
+
 }
+
+
 
 function saveMedicineToDb(){
     $( function() {
@@ -286,9 +316,9 @@ function addMedicineToWhStockFrom(){
     $("#container-med-dashboard").append("<hr class='custom_hr'>");
     var main_row_div= $("<div class='row is-flex'></div>");
     $("#container-med-dashboard").append(main_row_div);
-    var main_col_div=$("<div class='col-md-9' id='medstorage_main_col_div'></div>");
-    var main_col_div1=$("<div class='col-md-3'></div>");
-
+    var main_col_div=$("<div class='col-md-6' id='medstorage_main_col_div'></div>");
+    var main_col_div1=$("<div class='col-md-6'></div>");
+       
     $(main_row_div).append(main_col_div);
     $(main_row_div).append(main_col_div1);
 
@@ -349,7 +379,49 @@ function addMedicineToWhStockFrom(){
    
 
       $("#main_col_div1").append();
-   
+
+      var row_two__col_one__row_div_one=$("<div class='row'></div>");
+        var table=$('<table id="med_table" class="display" width="100%"></table>')
+      row_two__col_one__row_div_one.append(table)
+      $(main_col_div1).append(row_two__col_one__row_div_one)
+
+      var row_one__col_one__row_div_one=$("<div class='row'></div>");
+      var table=$('<table id="med_in_stock" class="display" width="100%"></table>')
+      row_one__col_one__row_div_one.append(table)
+      $(main_col_div1).append(row_one__col_one__row_div_one)
+      console.log("medicine_name_list",medicine_name_list)
+      $(function(){
+
+        med_table_datatable=$("#med_table").DataTable({
+            data: medicine_name_type_list,
+            columns: [
+                { title: "Medicine" },
+                { title: "Type" },
+                ],
+                paging: false,
+                scrollY: 200,
+                scrollX: true,
+                ordering: true,
+                info:false,
+
+            });
+
+        medstck_datatable=$("#med_in_stock").DataTable({
+            data: medicine_batch_in_stock_list,
+            columns: [
+                { title: "Medicine" },
+                { title: "BatchNo" },
+            
+                ],
+                paging: false,
+                scrollY: 200,
+                scrollX: true,
+                ordering: true,
+                info:false,
+
+            });
+
+    });
 
 }
 function checkBatchNo(){
@@ -1563,6 +1635,7 @@ function addMedicineToDespStockForm(){
     $(main_row_div).append(main_col_div_2);
     despMedFormMainColOne(main_col_div_1);
     despMedFormMainColTwo(main_col_div_2);
+    console.log("medicine_batch_in_stock_list",medicine_batch_in_stock_list)
     $(function(){
 
     medstck_datatable=$("#med_in_stock").DataTable({

@@ -419,13 +419,16 @@ def retrieveMedicineName(request):
         print(Medicine.objects.all().values_list('medicine_name',"medicine_type_id__medicine_type_name"))
         medicine_name_list=list(Medicine.objects.all().values_list('medicine_name',flat=True))
         medicine_name_type_list=list(Medicine.objects.all().values_list('medicine_name',"medicine_type_id__medicine_type_name"))
+        print("medicine_name_type_list",medicine_name_type_list)
+        
         mcobj=MedicineController(med_name_type_list=medicine_name_type_list)
         med_name_type_dict=mcobj.createMedNameTypeDict()
         print("med_name_type_dict",med_name_type_dict)
         print("medicine_name_type_list",medicine_name_type_list)
         data={
             "medicine_name_list":medicine_name_list,
-            "med_name_type_dict":json.dumps(med_name_type_dict)
+            "med_name_type_dict":json.dumps(med_name_type_dict),
+            "medicine_name_type_list":medicine_name_type_list,
             }
         return JsonResponse(data)
 
