@@ -1065,7 +1065,7 @@ function addRowDivThree(){
 
     var row_div_three=$("<div class='row' id='dates_row_div'></div>");
     
-        col_one__row_div_three=$("<div class='col'></div>");
+        col_one__row_div_three=$("<div class='col-md-5'></div>");
                 row_one__col_one__row_div_three=$("<div class='row'></div>");
                     manufact_date_label=$("<label for='from'>Manufactoring Date</label>");
                     manufact_input=$("<input class='form-control' id='manudatepicker'>");
@@ -1074,7 +1074,7 @@ function addRowDivThree(){
                 row_one__col_one__row_div_three.append(manufact_date_label);
                 row_one__col_one__row_div_three.append(manufact_input);
             col_one__row_div_three.append(row_one__col_one__row_div_three);
-            col_two__row_div_three=$("<div class='col'></div>");
+            col_two__row_div_three=$("<div class='col-md-5'></div>");
                 row_one__col_two__row_div_three=$("<div class='row'></div>");
                     exp_date_label=$("<label for='to'>Exp Date</label>");
                     exp_date_input=$("<input class='form-control' id='expdatepicker'>");
@@ -1132,11 +1132,11 @@ function addRowDivFour(){
 
     var row_div_four=$("<div class='row' id='row_div_four_save_box'></div>");
 
-        col_one__row_div_four=$("<div class='col'></div>");
-            col_two__row_div_four=$("<div class='col'></div>");
-            col_three__row_div_four=$("<div class='col'></div>");
+        col_one__row_div_four=$("<div class='col-md-12'></div>");
+            col_two__row_div_four=$("<div class='col-md-12'></div>");
+            col_three__row_div_four=$("<div class='col-md-12'></div>");
                 row_one__col_three__row_div_four=$("<div class='row'></div>");
-                    savetomedstrgForm_button=$('<button class="btn btn-success" onclick="saveMedicineToWhStock()">Save</button>')
+                    savetomedstrgForm_button=$('<button class="btn btn-success btn-sm btn-block" onclick="saveMedicineToWhStock()">Save</button>')
                 row_one__col_three__row_div_four.append(savetomedstrgForm_button);
             col_three__row_div_four.append(row_one__col_three__row_div_four);
         row_div_four.append(col_one__row_div_four);
