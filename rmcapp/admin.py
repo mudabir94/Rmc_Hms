@@ -17,7 +17,6 @@ medicineBatches,Patient,Doctor,tokenRecords,patientBillRecords,patientMedRecords
 
 
 
-
 class MedicineResource(resources.ModelResource):
     class meta:
         model=Medicine
