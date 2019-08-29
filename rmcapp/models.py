@@ -19,7 +19,7 @@ class Role(models.Model):
         ordering=['pk']
 class User(AbstractUser):
     
-    role_id = models.ForeignKey(Role, on_delete=models.CASCADE,default=None,null=True)
+    role = models.ForeignKey(Role, on_delete=models.CASCADE,default=None,null=True)
     # def __str__(self):
     #     userStr =self.username
     #     return userStr

@@ -10,13 +10,15 @@ medicineType,
 Medicine,medicineCategory,Category,
 medicineWarehouseStock,medicineWhStockHistory,
 tt_MedicineMedWhStock,tt_tempMedWhStk_Med,
-packageType,
+packageType,User,Role,
 despensoryStock,despensoryStockHistory,tt_Medicine_DespensoryStock,tempDespensoryStock,despensoryMedincineBatch,
 medicineBatches,Patient,Doctor,tokenRecords,patientBillRecords,patientMedRecords)
 
 
-
-
+class RoleAdmin (admin.ModelAdmin):
+    pass
+class UserAdmin (admin.ModelAdmin):
+    pass
 class MedicineResource(resources.ModelResource):
     class meta:
         model=Medicine
@@ -124,6 +126,10 @@ admin.site.register(Doctor, doctorAdmin)
 admin.site.register(tokenRecords, tokenRecordsAdmin)
 admin.site.register(patientBillRecords, patientBillRecordsAdmin)
 admin.site.register(patientMedRecords, patientMedRecordsAdmin)
+admin.site.register(User, UserAdmin)
+admin.site.register(Role, RoleAdmin)
+
+
 
 
 
