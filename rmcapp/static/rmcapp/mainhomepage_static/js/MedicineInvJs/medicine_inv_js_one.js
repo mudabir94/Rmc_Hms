@@ -134,6 +134,7 @@ function addMedicineForm(){
     // 
     
     col_two__row_div_one__col_one__row_div_one=$("<div class='col-md-8 '><input type='text' id='med_name_input' class='form-control'></input>");
+       
     $(row_div_one__col_one__row_div_one).append(col_one__row_div_one__col_one__row_div_one);
     $(row_div_one__col_one__row_div_one).append(col_two__row_div_one__col_one__row_div_one);
    
@@ -249,42 +250,61 @@ function addMedicineForm(){
     
             });
         });
-
-
-}
-
-
-
+    }
 function saveMedicineToDb(){
-    $( function() {
-        $( "#dialog-confirm" ).dialog({
-          resizable: false,
-          height: "auto",
-          width: 400,
-          modal: true,
-          buttons: {
-            "Save": function() {
-                medicine_name=$("#med_name_input").val()
-                console.log("medicine_name",medicine_name)
-                $("#med_name_input").val("");
-                selected_type = $("#med_type_sel").children("option:selected").val();
-                // $("#med_type_sel").children("option:selected").val("Syrup");
-                console.log("selected_type",selected_type)
-                med_details=$("#med_details").val();
-                $("#med_details").val("");
-                console.log("med_details",med_details);
-                // first validate the data then send to DB. 
-                // But for now just save the data. 
-                sendAjaxReqToSaveMedicineToDb(medicine_name,selected_type,med_details);
-                $( this ).dialog( "close" );
+    console.log("medicine_name_type_list",medicine_name_type_list)
+    var med_name= $("#med_name_input").val()
+    var med_type= $("#med_type_sel").val()
+    var med_lst= []
+    med_lst.push(med_name)
+    med_lst.push(med_type)
+    same_med_found_flag=false
+// For checkinng medicine name and type in db.. 
+    for (lst in medicine_name_type_list){
+        console.log("lst",medicine_name_type_list[lst])
+        if(JSON.stringify(med_lst)==JSON.stringify(medicine_name_type_list[lst])) {
+            alert("found")
+            same_med_found_flag=true
+            break
+        }
+}
+    if (same_med_found_flag===true){
+        return;
+    }
+    else {
+            $( function() {
 
-            },
-            "Cancel": function() {
-              $( this ).dialog( "close" );
+            $( "#dialog-confirm" ).dialog({
+            resizable: false,
+            height: "auto",
+            width: 400,
+            modal: true,
+            buttons: {
+                "Save": function() {
+                    medicine_name=$("#med_name_input").val()
+                    console.log("medicine_name",medicine_name)
+                    $("#med_name_input").val("");
+                    selected_type = $("#med_type_sel").children("option:selected").val();
+                    // $("#med_type_sel").children("option:selected").val("Syrup");
+                    console.log("selected_type",selected_type)
+                    med_details=$("#med_details").val();
+                    $("#med_details").val("");
+                    console.log("med_details",med_details);
+                    // first validate the data then send to DB. 
+                    // But for now just save the data. 
+                    sendAjaxReqToSaveMedicineToDb(medicine_name,selected_type,med_details);
+                    $( this ).dialog( "close" );
+
+                },
+                "Cancel": function() {
+                $( this ).dialog( "close" );
+                }
             }
-          }
-        });
-      } );
+            });
+        } );
+    }
+    
+    
 }
 function sendAjaxReqToSaveMedicineToDb(medicine_name,selected_type,med_details){
     console.log("selected_type",selected_type)
