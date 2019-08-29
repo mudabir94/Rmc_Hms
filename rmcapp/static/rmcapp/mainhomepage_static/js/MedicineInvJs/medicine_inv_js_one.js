@@ -131,12 +131,12 @@ function addMedicineForm(){
     row_div_one__col_one__row_div_one=$("<div class='row'></div>");
     $(col_one__row_div_one).append(row_div_one__col_one__row_div_one);
     col_one__row_div_one__col_one__row_div_one=$("<div class='col-md-4 '><label>Medicine</label></div>");
-    // 
     
-    col_two__row_div_one__col_one__row_div_one=$("<div class='col-md-8 '><input type='text' id='med_name_input' class='form-control'></input>");
-       
+    col_two__row_div_one__col_one__row_div_one=$("<div class='col-md-8' onfocusout='focusOut_medicineNameAddMedForm($(this))'id='med_name_input_div'><input type='text' id='med_name_input' class='form-control'></input></div>");
+
     $(row_div_one__col_one__row_div_one).append(col_one__row_div_one__col_one__row_div_one);
     $(row_div_one__col_one__row_div_one).append(col_two__row_div_one__col_one__row_div_one);
+
    
    
     col_two__row_div_one=$("<div class='col-md-4'></div>");
@@ -149,7 +149,6 @@ function addMedicineForm(){
 
     for (var i=1;i<=medicine_type_list.length;i++){
         if (medicine_type_list[i]!==undefined){
-            console.log("asas",medicine_type_list[i])
             var option=$("<option id="+medicine_type_list[i]+"-opt value="+medicine_type_list[i]+">"+medicine_type_list[i]+"</option>");
             $(select).append(option);
         }
@@ -252,6 +251,13 @@ function addMedicineForm(){
         });
     }
 function saveMedicineToDb(){
+    med_name_input_div= $("#med_name_input_div")
+    if ($("#med_name_input").is(':empty')){
+        var div=$("<div id='empty_name_check_div'><span  class='glyphicon' style='color:red'>&#x2a;Required</span></div>")
+        $("#med_name_input_div").append(div)
+        alert("Medicine name empty")
+        return;
+    }
     console.log("medicine_name_type_list",medicine_name_type_list)
     var med_name= $("#med_name_input").val()
     var med_type= $("#med_type_sel").val()
@@ -260,6 +266,7 @@ function saveMedicineToDb(){
     med_lst.push(med_type)
     same_med_found_flag=false
 // For checkinng medicine name and type in db.. 
+   
     for (lst in medicine_name_type_list){
         console.log("lst",medicine_name_type_list[lst])
         if(JSON.stringify(med_lst)==JSON.stringify(medicine_name_type_list[lst])) {
@@ -2047,6 +2054,10 @@ function SaveToDespStock(){
 
 }
 
+
+function focusOut_medicineNameAddMedForm(element){
+    $("#empty_name_check_div").remove()
+}
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== "") {
