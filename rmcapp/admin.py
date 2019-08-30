@@ -1,5 +1,7 @@
 from django.contrib import admin
-
+from import_export import resources
+from import_export.admin import ImportExportActionModelAdmin
+from import_export.admin import ImportExportModelAdmin
 # Register your models here.
 from .models import (medicineType,
 Medicine,medicineCategory,Category,
@@ -11,8 +13,10 @@ medicineBatches,
 )
 
 
-
-class MedicineAdmin(admin.ModelAdmin):
+class MedicineResource(resources.ModelResource):
+    class meta:
+        model=Medicine
+class MedicineAdmin(ImportExportActionModelAdmin):
     list_display= ("id","medicine_name",'medicine_type_id','medicine_details','created_at','update_at')
 class medicineTypeAdmin(admin.ModelAdmin):
     list_display= ("id",'medicine_type_name','created_at','update_at')
