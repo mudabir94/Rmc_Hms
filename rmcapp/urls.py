@@ -6,6 +6,8 @@ urlpatterns = [
   path('', views.mainHome.as_view(), name='mainhomepage'),
   path("maindashboard",views.mainDashBoard.as_view(),name="main_dashboard"),
   path("inventorydashboard",views.inventoryDashBoard.as_view(),name="inventory_dashboard"),
+  path("staff_dashboard",views.staffDashboard.as_view(),name="staff_dashboard"),
+
   path("medicinedashboard",views.medicineDashBoard.as_view(),name="medicine_dashboard"),
   path("addmedtostorage",views.addMedToStorage,name="addmedtostorage"),
   path("addmedtodispensory",views.addMedToDispensory,name="addmedtodispensory"),
