@@ -20,9 +20,10 @@ class Role(models.Model):
 class User(AbstractUser):
     
     role = models.ForeignKey(Role, on_delete=models.CASCADE,default=None,null=True)
-    # def __str__(self):
-    #     userStr =self.username
-    #     return userStr
+    def __str__(self):
+        userStr =self.username
+        return userStr
+    
 class medicineType(models.Model):
     medicine_type_name=models.CharField(max_length=45)
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
@@ -293,24 +294,31 @@ class Patient(models.Model):
         verbose_name_plural="Patient"
         ordering=['pk']
     
+class employeeType(models.Model):
+    type_name=models.CharField(max_length=50,null=True,blank=True)
+    def __str__(self):
+        return str(self.type_name)
+    class Meta:
+        verbose_name_plural="Employee Type"
+        ordering=['pk']
 
 
-class Doctor(models.Model):
-    doc_name=models.CharField(max_length=50,null=True,blank=True)
+class Employee(models.Model):
+    user=models.ForeignKey(User, on_delete=models.CASCADE,default=None,null=True)
+    name=models.CharField(max_length=50,null=True,blank=True)
     dob=models.DateField(null=True,blank=True)
     gender=models.CharField(max_length=20,null=True,blank=True)
     phone_no=models.CharField(max_length=20,null=True,blank=True)
     address=models.CharField(max_length=300,null=True,blank=True)
+    qualification=models.CharField(max_length=300,null=True,blank=True)
     email_address=models.CharField(max_length=20,null=True,blank=True)
-    specialization=models.CharField(max_length=50,null=True,blank=True)
-    created_at = models.DateTimeField(auto_now_add=True, blank=True)
-    update_at = models.DateTimeField(auto_now_add=True, blank=True)
+    employee_type=models.ForeignKey(employeeType, on_delete=models.CASCADE,default=None,null=True)
     def __str__(self):
-        return str(self.doc_name)
+        return str(self.name)
     class Meta:
-        verbose_name_plural="Doctor"
+        verbose_name_plural="Employee"
         ordering=['pk']
-    
+
 
 
 class tokenRecords(models.Model):
@@ -343,7 +351,7 @@ class patientBillRecords(models.Model):
 
 class patientMedRecords(models.Model):
     patient=models.ForeignKey(Patient, on_delete=models.CASCADE,default=None,null=True,blank=True)
-    docter=models.ForeignKey(Doctor, on_delete=models.CASCADE,default=None,null=True,blank=True)
+    emp_doc=models.ForeignKey(Employee, on_delete=models.CASCADE,default=None,null=True,blank=True)
     blood_pressure=models.CharField(max_length=50,null=True,blank=True)
     prescription=ListCharField(
         base_field=models.CharField(max_length=20),

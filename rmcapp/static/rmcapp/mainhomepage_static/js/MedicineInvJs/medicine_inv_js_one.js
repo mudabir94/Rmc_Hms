@@ -10,6 +10,7 @@ var medicine_batch_in_stock_dict={}
 var medicine_in_stock=[];
 var medicine_batch_in_stock_list=[];
 var medicine_name_type_list=[];
+var med_table_datatable;
 
 $( document ).ready(function() {
     retrieveMedicineType();
@@ -61,10 +62,10 @@ function retrieveMedicineNames(){
         },
         url: '/retrieve_medicine_name',
         success: function(data){
-
+            medicine_name_type_list=[]
             medicine_name_list=data["medicine_name_list"];
             med_name_type_dict=JSON.parse(data["med_name_type_dict"]);
-            medicine_name_type_list=data['medicine_name_type_list'];
+            medicine_name_type_list=JSON.parse(JSON.stringify(data['medicine_name_type_list']));
             console.log("med_name_type_dict",med_name_type_dict)
             console.log("success",medicine_name_list);
         },
@@ -233,32 +234,19 @@ function addMedicineForm(){
         var table=$('<table id="med_table" class="display" width="100%"></table>')
     row_two__col_one__row_div_one.append(table)
     $(main_col2_div).append(row_two__col_one__row_div_one)
-    $(function(){
+    medicineDataTableGenerator(medicine_name_type_list)
 
-        med_table_datatable=$("#med_table").DataTable({
-            data: medicine_name_type_list,
-            columns: [
-                { title: "Medicine" },
-                { title: "Type" },
-                ],
-                paging: false,
-                scrollY: 200,
-                scrollX: true,
-                ordering: true,
-                info:false,
-    
-            });
-        });
-    }
+}
 function saveMedicineToDb(){
-    med_name_input_div= $("#med_name_input_div")
-    if ($("#med_name_input").is(':empty')){
+    alert($("#med_name_input").val())
+   
+    console.log("med_name_input",$("#med_name_input").val())
+    if ($("#med_name_input").val()===""){
         var div=$("<div id='empty_name_check_div'><span  class='glyphicon' style='color:red'>&#x2a;Required</span></div>")
         $("#med_name_input_div").append(div)
         alert("Medicine name empty")
         return;
     }
-    console.log("medicine_name_type_list",medicine_name_type_list)
     var med_name= $("#med_name_input").val()
     var med_type= $("#med_type_sel").val()
     var med_lst= []
@@ -288,6 +276,9 @@ function saveMedicineToDb(){
             modal: true,
             buttons: {
                 "Save": function() {
+                    med_table_datatable.destroy();
+                    $("#med_table").remove();
+        
                     medicine_name=$("#med_name_input").val()
                     console.log("medicine_name",medicine_name)
                     $("#med_name_input").val("");
@@ -297,11 +288,12 @@ function saveMedicineToDb(){
                     med_details=$("#med_details").val();
                     $("#med_details").val("");
                     console.log("med_details",med_details);
-                    // first validate the data then send to DB. 
-                    // But for now just save the data. 
-                    sendAjaxReqToSaveMedicineToDb(medicine_name,selected_type,med_details);
-                    $( this ).dialog( "close" );
 
+                    sendAjaxReqToSaveMedicineToDb(medicine_name,selected_type,med_details);
+
+                    $( this ).dialog( "close" );
+                    medicine_name_type_list=[]
+                    console.log("medicine_name_type_list---",medicine_name_type_list)
                 },
                 "Cancel": function() {
                 $( this ).dialog( "close" );
@@ -321,16 +313,42 @@ function sendAjaxReqToSaveMedicineToDb(medicine_name,selected_type,med_details){
         // the ajax call is sent to  url name in the post function.  
         url: '/save_med_to_db',
         'data': {
+            
             "medicine_name":JSON.stringify(medicine_name),
             "selected_type":JSON.stringify(selected_type),
             "med_details":JSON.stringify(med_details),
         },
         
         success: function(data){
+            medicine_name_type_list=JSON.parse(JSON.stringify(data['medicine_name_type_list']))
+            console.log("PPPPPPPPP",medicine_name_type_list)
+            addMedicineForm();
+            // med_table_datatable.destroy();
+            // $("#med_table").remove();
+            // medicineDataTableGenerator(medicine_name_type_list)
+
 
         },
     });
 }
+function medicineDataTableGenerator(list){
+    $(function(){
+        med_table_datatable=$("#med_table").DataTable({
+            data: list,
+            columns: [
+                { title: "Medicine" },
+                { title: "Type" },
+                ],
+                paging: false,
+                scrollY: 200,
+                scrollX: true,
+                ordering: true,
+                info:false,
+    
+            });
+        });
+    }
+
 function addMedicineToWhStockFrom(){
     //  Create MedStorage Form. 
     retrieveMedicineType();

@@ -10,9 +10,9 @@ medicineType,
 Medicine,medicineCategory,Category,
 medicineWarehouseStock,medicineWhStockHistory,
 tt_MedicineMedWhStock,tt_tempMedWhStk_Med,
-packageType,User,Role,
+packageType,User,Role,employeeType,
 despensoryStock,despensoryStockHistory,tt_Medicine_DespensoryStock,tempDespensoryStock,despensoryMedincineBatch,
-medicineBatches,Patient,Doctor,tokenRecords,patientBillRecords,patientMedRecords)
+medicineBatches,Patient,Employee,tokenRecords,patientBillRecords,patientMedRecords)
 
 
 class RoleAdmin (admin.ModelAdmin):
@@ -86,18 +86,17 @@ class despensoryMedincineBatchAdmin(admin.ModelAdmin):
 class patientAdmin(admin.ModelAdmin):
     list_display=("id","pat_name","phone_no","gender","guardian","dob","bloodgroup",\
     "address","email_address")
-class doctorAdmin(admin.ModelAdmin):
-    list_display=("id","doc_name","phone_no","gender","specialization","dob","address","email_address")
+class EmployeeAdmin(admin.ModelAdmin):
+    list_display=("id","user","name","employee_type","phone_no","gender","qualification","dob","address","email_address")
 class tokenRecordsAdmin(admin.ModelAdmin):
     list_display=("id","patient","token_no")
 class patientBillRecordsAdmin(admin.ModelAdmin):
     list_display=("id","patient","desp","boxes_stored","strips_stored","pieces_stored","datevisited")
 class patientMedRecordsAdmin(admin.ModelAdmin):
-    list_display=("id","patient","docter","blood_pressure","prescription","datevisited")
+    list_display=("id","patient","emp_doc","blood_pressure","prescription","datevisited")
 
-
-
-
+class employeeTypeAdmin(admin.ModelAdmin):
+    list_display=("id","type_name")
 
 
 
@@ -122,7 +121,8 @@ admin.site.register(tt_Medicine_DespensoryStock, tt_Medicine_DespensoryStockAdmi
 
 
 admin.site.register(Patient, patientAdmin)
-admin.site.register(Doctor, doctorAdmin)
+admin.site.register(Employee, EmployeeAdmin)
+admin.site.register(employeeType, employeeTypeAdmin)
 admin.site.register(tokenRecords, tokenRecordsAdmin)
 admin.site.register(patientBillRecords, patientBillRecordsAdmin)
 admin.site.register(patientMedRecords, patientMedRecordsAdmin)
