@@ -13,6 +13,7 @@ from rmcapp.models import (
 )
 from django.http import HttpResponse, JsonResponse
 from .Controllers.MedControllers.MedController import MedicineController  
+from django.db import connection
 
 
 # Create your views here.
