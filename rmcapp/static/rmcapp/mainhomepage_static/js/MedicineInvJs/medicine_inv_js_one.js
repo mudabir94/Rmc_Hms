@@ -262,7 +262,7 @@ function saveMedicineToDb(){
             same_med_found_flag=true
             break
         }
-}
+    }  
     if (same_med_found_flag===true){
         return;
     }

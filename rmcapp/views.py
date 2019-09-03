@@ -10,6 +10,7 @@ from rmcapp.models import (
     despensoryStock,despensoryStockHistory,tt_Medicine_DespensoryStock,
     medicineBatches,
     packageType,
+    employeeType,
 )
 from django.http import HttpResponse, JsonResponse
 from .Controllers.MedControllers.MedController import MedicineController  
@@ -421,6 +422,13 @@ def retrieveMedicineType(request):
         medicine_type_list=list(medicineType.objects.all().values_list('medicine_type_name',flat=True))
         data={"medicine_type_list":medicine_type_list}
         return JsonResponse(data)
+def retrieveEmployeeType(request):
+    if request.method=="GET":
+        print(employeeType.objects.all().values_list('type_name',flat=True))
+        employee_type_list=list(employeeType.objects.all().values_list('type_name',flat=True))
+        data={'employee_type_list':employee_type_list}
+        return JsonResponse(data)
+
 def retrieveMedicineName(request):
     if request.method=="GET":
         # Retrieve Medicine Type list from the model Medicine Type
