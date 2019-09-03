@@ -13,6 +13,7 @@ from rmcapp.models import (
 )
 from django.http import HttpResponse, JsonResponse
 from .Controllers.MedControllers.MedController import MedicineController  
+from django.db import connection
 
 
 # Create your views here.
@@ -44,6 +45,14 @@ class medicineDashBoard(TemplateView):
         return render(request,self.template_path_name)
     def post(self,request):
         pass
+class staffDashboard(TemplateView):
+    template_path_name="rmcapp/staff_dashboard_template/staff_dashboard.html"
+    def get(self,request):
+        return render(request,self.template_path_name)
+    def post(self,request):
+        pass
+
+
 def addMedToStorage(request):
     print("ADDING MED TO STORAGE")
     template_path_name="rmcapp/inventory_dashboard_template/medicine_inv_dashboard/med_inv_dashboard.html"
@@ -543,7 +552,11 @@ def sendAjaxReqToSaveMedicineToDb(request):
         med_obj.medicine_name=medicine_name
         med_obj.medicine_details=med_details
         med_obj.save()
-        data={}
+        medicine_name_type_list=list(Medicine.objects.all().values_list('medicine_name',"medicine_type_id__medicine_type_name"))
+
+        data={
+        "medicine_name_type_list":medicine_name_type_list,
+        }
         return JsonResponse(data)
 def checkMedicineInmedicineBatches(request):
     if request.method=="POST":
