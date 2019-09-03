@@ -71,6 +71,7 @@ function addEmployee(){
                             colmd1.append(emp_name_label)
                             emp_name_input=$("<input class='form-control' id='gender_select' class='custom_input_css'>")
                             colmd2.append(emp_name_input)
+                // DOB
                             contact_type_label=$("<label class='custom_label_css'>DOB</label>");
                             colmd3.append(contact_type_label);
                             contact_type_input=$("<input class='form-control' id='DOB_input' class='custom_input_css' ></input>")
@@ -83,20 +84,6 @@ function addEmployee(){
 
                     col_one__row_div_two.append(row__col_one__row_div_two);
 
-                    // // DOB
-                    // col_two__row_div_two=$("<div class='col-md-3'></div>");
-                    //     row__col_two__row_div_two=$("<div class='row'></div>");
-                    //         colmd1=$("<div class='col-md-4'   style='margin-left: -38px' ></div>")
-                    //         colmd2=$("<div class='col-md-6'></div>")
-
-                    //         contact_type_label=$("<label class='custom_label_css'>DOB</label>");
-                    //         colmd1.append(contact_type_label);
-                    //         contact_type_input=$("<input class='form-control' id='DOB_input' class='custom_input_css' ></input>")
-                    //         colmd2.append(contact_type_input);
-
-                    //     row__col_two__row_div_two.append(colmd1)
-                    //     row__col_two__row_div_two.append(colmd2)
-                    // col_two__row_div_two.append(row__col_two__row_div_two)
                 // CNIC
                 var col_three__row_div_two=$("<div class='col-md-6'></div>");//
                     var row__col_three__row_div_two=$("<div class='row'></div>");
