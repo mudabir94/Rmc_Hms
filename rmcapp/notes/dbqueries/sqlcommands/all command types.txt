@@ -18,9 +18,11 @@ DQL-
 
 DML-
 1.Insert
+    INSERT INTO rmcapp_medicinetype (id, medicine_type_name, created_at, update_at) VALUES ('2', 'tablet', '2019-9-03 00:00:01', '2019-9-03 00:00:01');
 2.Update
+    UPDATE rmcapp_medicinetype SET created_at = '2019-9-04 00:00:01' WHERE ID = 2;
 3.Delete
-4.Merge
+    DELETE FROM rmcapp_medicinetypeWHERE ID = 4;4.Merge
 5.Call
 6.Explain Plan
 7.Lock Table
