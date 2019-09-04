@@ -10,7 +10,7 @@ from rmcapp.models import (
     despensoryStock,despensoryStockHistory,tt_Medicine_DespensoryStock,
     medicineBatches,
     packageType,
-    employeeType,Employee,
+    employeeType,Employee,Patient
 )
 from django.http import HttpResponse, JsonResponse
 from .Controllers.MedControllers.MedController import MedicineController  
@@ -537,6 +537,55 @@ def retrieveMedicineTempStockFromTempStock(request):
             "medicine_batch_in_tempstock_list":medicine_batch_in_tempstock_list,
         }
         return JsonResponse(data)
+
+def savePatientData(request):
+    if request.method=="POST":
+        name = request.POST.get('name')
+        print(name)
+        dob = request.POST.get('dob')
+
+        gender = request.POST.get('gender')
+        phone_number = request.POST.get('phone_number')
+        address = request.POST.get('address')
+        guardian = request.POST.get('guardian')
+        email_address = request.POST.get('email_address')
+        cnic = request.POST.get('cnic')
+        blood_group = request.POST.get('blood_group')
+
+        name = json.loads(name)
+        dob = json.loads(dob)
+        gender = json.loads(gender)
+        phone_number = json.loads(phone_number)
+        address = json.loads(address)
+        guardian = json.loads(guardian)
+        email_address = json.loads(email_address)
+        cnic = json.loads(cnic)
+        blood_group = json.loads(blood_group)
+
+
+
+
+        print(name)
+        print(gender)
+        print(email_address)
+        
+        pat_obj=Patient()
+        pat_obj.guardian=guardian
+        pat_obj.pat_name=name
+        pat_obj.dob=dob
+        pat_obj.gender=gender
+        pat_obj.phone_no=phone_number
+        pat_obj.address=address
+        pat_obj.bloodgroup=blood_group
+        pat_obj.email_address=email_address
+
+        pat_obj.save()
+
+        data={
+            'success':"success"
+        }
+        return JsonResponse(data)
+
 
 def saveEmployeeData(request):
     if request.method=="POST":

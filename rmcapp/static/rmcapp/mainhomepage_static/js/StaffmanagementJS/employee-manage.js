@@ -1,5 +1,5 @@
 // Functions for populating html to employee page content.
-var employee_type_list=[]
+var employee_type_list=[];
 
 $( document ).ready(function() {
     retrieveEmployeeType();
