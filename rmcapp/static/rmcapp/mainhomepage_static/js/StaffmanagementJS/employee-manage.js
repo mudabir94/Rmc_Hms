@@ -1,3 +1,4 @@
+// Functions for populating html to employee page content.
 var employee_type_list=[]
 
 $( document ).ready(function() {
@@ -10,7 +11,7 @@ function addEmployee(){
     var container_empl_dashboard= $('#main_page_content').append('<div class="container-fluid" id="container-empl-dashboard"></div>');
     $("#container-empl-dashboard").append("<h2 class ='text-center'>Employee Information</h2>");
     $("#container-empl-dashboard").append("<hr class='custom_hr'>");
-    $("#container-empl-dashboard").append("<h4>Please fill out the information</h4>");
+    $("#container-empl-dashboard").append("<h5>Please fill in the form below</h5>");
     var main_row_div= $("<div class='row is-flex'></div>");
 
     $(container_empl_dashboard).append(main_row_div);
@@ -29,7 +30,7 @@ function addEmployee(){
 
                     emp_name_label=$("<label for='emp_name_tag' class='custom_label_css'>Employee Name</label>");
                     colmd1.append(emp_name_label)
-                    emp_name_input=$("<input class='form-control' id='emp_name_tag' class='custom_input_css'>")
+                    emp_name_input=$("<input class='form-control' id='emp_name_input' class='custom_input_css'>")
                     colmd2.append(emp_name_input)
 
                 row__col_one__row_div_one.append(colmd1);
@@ -46,7 +47,7 @@ function addEmployee(){
 
                     contact_type_label=$("<label class='custom_label_css'>Contact Number</label>");
                     colmd1.append(contact_type_label);
-                    contact_type_input=$("<input class='form-control' id='contact_type_input' class='custom_input_css' placeholder='0312-3456789'></input>")
+                    contact_type_input=$("<input class='form-control' id='contact_numb_input' class='custom_input_css' placeholder='0312-3456789'></input>")
                     colmd2.append(contact_type_input);
 
                 row__col_two__row_div_one.append(colmd1)
@@ -74,7 +75,7 @@ function addEmployee(){
                 // DOB
                             contact_type_label=$("<label class='custom_label_css'>DOB</label>");
                             colmd3.append(contact_type_label);
-                            contact_type_input=$("<input class='form-control' id='DOB_input' class='custom_input_css' ></input>")
+                            contact_type_input=$("<input class='form-control' id='dob_input' class='custom_input_css' ></input>")
                             colmd4.append(contact_type_input);
 
                         row__col_one__row_div_two.append(colmd1);
@@ -92,7 +93,7 @@ function addEmployee(){
 
                         contact_type_label=$("<label class='custom_label_css'>CNIC</label>");
                         colmd1.append(contact_type_label);
-                        contact_type_input=$("<input class='form-control' id='contact_type_input' class='custom_input_css' placeholder='xxxxx-xxxxxxx-x' ></input>")
+                        contact_type_input=$("<input class='form-control' id='cnic_input' class='custom_input_css' placeholder='xxxxx-xxxxxxx-x' ></input>")
                         colmd2.append(contact_type_input);
 
                     row__col_three__row_div_two.append(colmd1)
@@ -106,10 +107,10 @@ function addEmployee(){
 
         var row_div_three=$("<div class='row' style='padding-bottom: 15px;''></div>");
                 // Employee Type
-                var col_one__row_div_three=$("<div class='col-md-12'></div>");
+                var col_one__row_div_three=$("<div class='col-md-6'></div>");
                     row__col_one__row_div_three=$("<div class='row'></div>");
-                        colmd1=$("<div class='col-md-2'></div>")
-                        colmd2=$("<div class='col-md-3'></div>")
+                        colmd1=$("<div class='col-md-4'></div>")
+                        colmd2=$("<div class='col-md-6'></div>")
     
                         emp_type_label=$("<label for='emp_name_tag' class='custom_label_css'>Employee Type</label>");
                         colmd1.append(emp_type_label)
@@ -129,8 +130,26 @@ function addEmployee(){
                     row__col_one__row_div_three.append(colmd1);
                     row__col_one__row_div_three.append(colmd2);
                  col_one__row_div_three.append(row__col_one__row_div_three);
-            $(row_div_three).append(col_one__row_div_three);
             
+                // Address
+                var col_two__row_div_three=$("<div class='col-md-6'></div>");
+                 row__col_two__row_div_three=$("<div class='row'></div>");
+                        colmd1=$("<div class='col-md-4'></div>")
+                        colmd2=$("<div class='col-md-6'></div>")
+    
+                        address_label=$("<label for='emp_address_tag' class='custom_label_css'>Address</label>");
+                        colmd1.append(address_label)
+                        emp_address_input=$("<input class='form-control' id='emp_address_input' class='custom_input_css'>")
+                        colmd2.append(emp_address_input)
+    
+                        row__col_two__row_div_three.append(colmd1);
+                        row__col_two__row_div_three.append(colmd2);
+                    col_two__row_div_three.append(row__col_two__row_div_three);
+            
+            
+             $(row_div_three).append(col_one__row_div_three);
+             $(row_div_three).append(col_two__row_div_three);
+
                          
         var row_div_four=$("<div class='row'></div>");
                     // Qualification
@@ -168,17 +187,40 @@ function addEmployee(){
                 $(row_div_four).append(col_one__row_div_four);
                 $(row_div_four).append(col_two__row_div_four);
     
+        var row_div_five=$("<div class='row' style='padding-top: 15px;'></div>");
+
+                var col_two__row_div_five=$("<div class='col-md-12'></div>");
+                            var row__col_two__row_div_five=$("<div class='row'></div>");
+                                colmd1=$("<div class='col-md-2'></div>")
+                                colmd2=$("<div class='col-md-8'></div>")
+                                colmd3=$("<div class='col-md-2'></div>")
+
+                                saveEmployeedataForm_button=$('<button class="btn btn-success btn-sm btn-block" onclick="saveEmployeeData()">Save</button>')
+                                colmd2.append(saveEmployeedataForm_button)
+                                
+                                row__col_two__row_div_five.append(colmd1)
+                                row__col_two__row_div_five.append(colmd2)
+                                row__col_two__row_div_five.append(colmd3)
+                        col_two__row_div_five.append(row__col_two__row_div_five)
+
+                    $(row_div_five).append(col_two__row_div_five);
+                        
+
 
 
 $(main_col_div).append(row_div_one);
 $(main_col_div).append(row_div_two);
 $(main_col_div).append(row_div_three);
 $(main_col_div).append(row_div_four);
+$(main_col_div).append(row_div_five);
 
 
-        $( "#DOB_input" ).datepicker({
+
+        $( "#dob_input" ).datepicker({
             changeMonth: true,
-            changeYear: true
+            changeYear: true,
+            dateFormat: "yy-mm-dd",
+
             });
         
             var availableTags = [
@@ -208,5 +250,76 @@ function   retrieveEmployeeType(){
       
     });
    
+}
+
+function saveEmployeeData(){
+    var employee_name=$("#emp_name_input").val();
+    console.log("employee_name", employee_name);
+
+    var contact_number=$("#contact_numb_input").val();
+    var gender=$("#gender_select").val();
+    console.log("gender", gender);
+    var dob=$("#dob_input").val();
+    var cnic=$("#cnic_input").val();
+    var employee_type=$("#select_emp_type").val();
+    console.log("employee_type", employee_type)
+    var qualification=$("#emp_qualif_input").val();
+    var emial_id=$("#email_id_input").val();
+    var address=$("#emp_address_input").val();
+    console.log("emial_id",emial_id);
+
+    alert("sss")
+    $.ajax({
+        type: 'POST',
+        dataType: "json",
+        'data': {
+            "name":JSON.stringify(employee_name),
+            "dob":JSON.stringify(dob),
+            "gender":JSON.stringify(gender),
+            "employee_type":JSON.stringify(employee_type),
+            "phone_number":JSON.stringify(contact_number),
+            "address":JSON.stringify(address),
+            "qualification":JSON.stringify(qualification),
+            'email_address':JSON.stringify(emial_id),
+            "cnic":JSON.stringify(cnic),
+        },
+        url: '/save_employee_data',
+        success: function(data){
+            console.log(data['Success']);
+        },
+    
+    });
 
 }
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Check if this cookie string begin with the name we want
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+             }
+         }
+    }
+    return cookieValue;
+}
+
+
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));
+        }
+    }
+});
+
+
+   
+   
