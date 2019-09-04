@@ -25,6 +25,7 @@ urlpatterns = [
   path("retrieve_medicine_tempstock_from_tempstock",views.retrieveMedicineTempStockFromTempStock,name="retrieve_medicine_tempstock_from_tempstock"),
   path('retrieve_employee_type',views.retrieveEmployeeType,name="retrieve_employee_type"),
   path('save_employee_data',views.saveEmployeeData,name="save_employee_data"),
+  path("save_patient_data",views.savePatientData,name="save_patient_data"),
 
 
 
