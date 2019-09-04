@@ -578,6 +578,7 @@ def savePatientData(request):
         pat_obj.address=address
         pat_obj.bloodgroup=blood_group
         pat_obj.email_address=email_address
+        pat_obj.cnic=cnic
 
         pat_obj.save()
 
@@ -1019,6 +1020,14 @@ def retirevePatientInfo(request):
         patient_info_dict={}
         patient_info_dict['name']=pat_obj.pat_name
         patient_info_dict['contact_no']=pat_obj.phone_no
+        patient_info_dict['gender']=pat_obj.gender
+        patient_info_dict['dob']=str(pat_obj.dob)
+        patient_info_dict['cnic']=pat_obj.cnic
+        patient_info_dict['guardian']=pat_obj.guardian
+        patient_info_dict['address']=pat_obj.address
+        patient_info_dict['bloodgroup']=pat_obj.bloodgroup
+        patient_info_dict['email']=pat_obj.email_address
+
         print(patient_info_dict)
 
 
