@@ -626,6 +626,7 @@ def saveEmployeeData(request):
         emp_obj.address=address
         emp_obj.qualification=qualification
         emp_obj.email_address=email_address
+        emp_obj.cnic=cnic
 
         emp_obj.save()
 
@@ -1011,9 +1012,22 @@ class patientDashboard(TemplateView):
         pass
 
 
+def retirevePatientInfo(request):
+    if request.method=="GET":
+        pat_obj=Patient.objects.get(id=1)
+        print("pat_obj",pat_obj)
+        patient_info_dict={}
+        patient_info_dict['name']=pat_obj.pat_name
+        patient_info_dict['contact_no']=pat_obj.phone_no
+        print(patient_info_dict)
 
 
-        
+
+        data={
+            "patient_info_dict":json.dumps(patient_info_dict),
+        }
+        return JsonResponse(data)
+
         
 
         
