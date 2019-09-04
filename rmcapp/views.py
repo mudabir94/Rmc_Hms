@@ -954,9 +954,12 @@ def saveMedicineToWhStockFromTempMedStock(tempMedWhStk_Med_Obj,medObj):
     obj.mwhs=mwh_stock_obj
     obj.save()
 
-
-
-
+class patientDashboard(TemplateView):
+    template_path_name="rmcapp/patient_dashboard_template/patient_dashboard.html"
+    def get(self,request):
+        return render(request,self.template_path_name)
+    def post(self,request):
+        pass
 
 
 
