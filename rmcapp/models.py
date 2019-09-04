@@ -311,7 +311,7 @@ class Employee(models.Model):
     phone_no=models.CharField(max_length=20,null=True,blank=True)
     address=models.CharField(max_length=300,null=True,blank=True)
     qualification=models.CharField(max_length=300,null=True,blank=True)
-    email_address=models.CharField(max_length=20,null=True,blank=True)
+    email_address=models.CharField(max_length=60,null=True,blank=True)
     employee_type=models.ForeignKey(employeeType, on_delete=models.CASCADE,default=None,null=True)
     def __str__(self):
         return str(self.name)
