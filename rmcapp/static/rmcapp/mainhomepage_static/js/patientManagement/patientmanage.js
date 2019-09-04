@@ -1,7 +1,8 @@
 // Functions for populating html to employee page content.
 var blood_group_list=['A+ve','A-ve', 'B+ve','B-ve','O+ve','O-ve','AB+ve','AB-ve'];
-
+var patient_info_dict={}
 $( document ).ready(function() {
+    retrievePatientInfo();
     });
 
 
@@ -266,8 +267,77 @@ function savePatientData(){
     });
 
 }
+function EditPatient(){
+
+    $('#main_page_content').empty()
+    var container_patient_dashboard= $('#main_page_content').append('<div class="container-fluid" id="container-patient-dashboard"></div>');
+    $("#container-patient-dashboard").append("<h2 class ='text-center'>Patient Information</h2>");
+    $("#container-patient-dashboard").append("<hr class='custom_hr'>");
+    $("#container-patient-dashboard").append("<h5>Please fill in the form below</h5>");
+    var main_row_div= $("<div class='row is-flex'></div>");
+
+    $(container_patient_dashboard).append(main_row_div);
+    var main_col_div=$("<div class='col-md-12' id=''></div>");
+       
+    $(main_row_div).append(main_col_div);
+
+    var row_div_one=$("<div class='row'></div>");
+            // Patient Name
+            var col_one__row_div_one=$("<div class='col-md-6'></div>");
+                row__col_one__row_div_one=$("<div class='row'></div>");
+                    colmd1=$("<div class='col-md-4'></div>")
+                    colmd2=$("<div class='col-md-6'></div>")
+
+                    pat_name_label=$("<label for='emp_name_tag' class='custom_label_css'>Patient Name</label>");
+                    colmd1.append(pat_name_label)
+                    pat_name_input=$("<input class='form-control' id='pat_name_input' class='custom_input_css' value="+patient_info_dict['name']+" diasble>")
+                    colmd2.append(pat_name_input)
+
+                row__col_one__row_div_one.append(colmd1);
+                row__col_one__row_div_one.append(colmd2);
+            col_one__row_div_one.append(row__col_one__row_div_one);
 
 
+            // Contact Number
+
+            var col_two__row_div_one=$("<div class='col-md-6'></div>");
+                var row__col_two__row_div_one=$("<div class='row'></div>");
+                    colmd1=$("<div class='col-md-4'></div>")
+                    colmd2=$("<div class='col-md-6'></div>")
+
+                    contact_type_label=$("<label class='custom_label_css'>Contact Number</label>");
+                    colmd1.append(contact_type_label);
+                    contact_type_input=$("<input class='form-control' id='contact_numb_input' class='custom_input_css' placeholder='0312-3456789' value="+patient_info_dict['contact_no']+"></input>")
+                    colmd2.append(contact_type_input);
+
+                row__col_two__row_div_one.append(colmd1)
+                row__col_two__row_div_one.append(colmd2)
+            col_two__row_div_one.append(row__col_two__row_div_one)
+
+
+            $(row_div_one).append(col_one__row_div_one);
+            $(row_div_one).append(col_two__row_div_one);
+
+    
+$(main_col_div).append(row_div_one);
+
+}
+function retrievePatientInfo(){
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        'data': {
+          
+        },
+        url: '/retireve_patient_info',
+        success: function(data){
+            patient_info_dict=JSON.parse(data["patient_info_dict"])
+            console.log("patient_info_dict",patient_info_dict);
+        },
+    
+    });
+  
+}
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== "") {
