@@ -23,6 +23,8 @@ urlpatterns = [
   path("retrieve_medicine_stock_data_from_stock",views.retrieveMedicineStockDataFromStock,name="retrieve_medicine_stock_data_from_stock"),
   path("retrieve_medicine_tempstock_from_tempstock",views.retrieveMedicineTempStockFromTempStock,name="retrieve_medicine_tempstock_from_tempstock"),
   path('retrieve_employee_type',views.retrieveEmployeeType,name="retrieve_employee_type"),
+  path('save_employee_data',views.saveEmployeeData,name="save_employee_data"),
+
 
 
 ]

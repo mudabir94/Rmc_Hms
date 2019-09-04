@@ -470,7 +470,7 @@ function addMedicineToWhStockFrom(){
 
 }
 function checkBatchNo(){
-    medicine_name=$("#medicine_name_tag").val()
+    var medicine_name=$("#medicine_name_tag").val()
     console.log("SSSSSSs",$('#batchno_input').val())
     if($('#batchno_input').val().length!==0){
        

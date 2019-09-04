@@ -10,7 +10,7 @@ from rmcapp.models import (
     despensoryStock,despensoryStockHistory,tt_Medicine_DespensoryStock,
     medicineBatches,
     packageType,
-    employeeType,
+    employeeType,Employee,
 )
 from django.http import HttpResponse, JsonResponse
 from .Controllers.MedControllers.MedController import MedicineController  
@@ -538,7 +538,52 @@ def retrieveMedicineTempStockFromTempStock(request):
         }
         return JsonResponse(data)
 
-    
+def saveEmployeeData(request):
+    if request.method=="POST":
+        name = request.POST.get('name')
+        print(name)
+        dob = request.POST.get('dob')
+        employee_type = request.POST.get('employee_type')
+        print("employee_type",employee_type)
+
+        gender = request.POST.get('gender')
+        phone_number = request.POST.get('phone_number')
+        address = request.POST.get('address')
+        qualification = request.POST.get('qualification')
+        email_address = request.POST.get('email_address')
+        cnic = request.POST.get('cnic')
+
+        name = json.loads(name)
+        dob = json.loads(dob)
+        gender = json.loads(gender)
+        phone_number = json.loads(phone_number)
+        address = json.loads(address)
+        qualification = json.loads(qualification)
+        email_address = json.loads(email_address)
+        cnic = json.loads(cnic)
+
+
+        print(name)
+        print(gender)
+        print(email_address)
+        print("employee_type",employee_type)
+        
+        emp_obj=Employee()
+        emp_obj.employee_type=employeeType.objects.get(type_name="Doctor")
+        emp_obj.name=name
+        emp_obj.dob=dob
+        emp_obj.gender=gender
+        emp_obj.phone_no=phone_number
+        emp_obj.address=address
+        emp_obj.qualification=qualification
+        emp_obj.email_address=email_address
+
+        emp_obj.save()
+
+        data={
+            'success':"success"
+        }
+        return JsonResponse(data)
 
 
 
