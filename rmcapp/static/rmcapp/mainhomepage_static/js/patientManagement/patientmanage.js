@@ -293,47 +293,247 @@ function EditPatient(){
             $(row_div_one).append(col_one__row_div_one);
             $(row_div_one).append(col_two__row_div_one);
             $(row_div_one).append(col_three__row_div_one);
-    var row_div_two=$("<div class='row'></div>");
+
+        var row_div_two=$("<div class='row'></div>");
+            var col_one__row_div_two=$("<div class='col-md-4'></div>");
+            var col_two__row_div_two=$("<div class='col-md-4'></div>");
+            var col_three__row_div_two=$("<div class='col-md-4'></div>");
+                var row__col_three__row_div_two=$("<div class='row'></div>");
+                    var colmd1=$("<div class='col-md-12'></div>")
+                        var search_button=$('<button>Search Patient</button>')
+                    colmd1.append(search_button)
+                row__col_three__row_div_two.append(colmd1);
+            col_three__row_div_two.append(row__col_three__row_div_two)
+
+        row_div_two.append(col_one__row_div_two)
+        row_div_two.append(col_two__row_div_two)
+        row_div_two.append(col_three__row_div_two)
+
+    var row_div_three=$("<div class='row'></div>");
     // Datatable Name
-        var col_one__row_div_two=$("<div class='col-md-12'></div>");
-            var row__col_one__row_div_two=$("<div class='row'></div>");
+        var col_one__row_div_three=$("<div class='col-md-12'></div>");
+            var row__col_one__row_div_three=$("<div class='row'></div>");
                 var colmd1=$("<div class='col-md-12'></div>")
                     var table=$('<table id="patient_table" class="display" width="100%"></table>')
                 colmd1.append(table)
-            row__col_one__row_div_two.append(colmd1);
-        col_one__row_div_two.append(row__col_one__row_div_two);
-    $(row_div_two).append(col_one__row_div_two);
+            row__col_one__row_div_three.append(colmd1);
+        col_one__row_div_three.append(row__col_one__row_div_three);
+    $(row_div_three).append(col_one__row_div_three);
+    var row_div_four=$("<div class='row' id='row_div_four'></div>");
 
 
-$(main_col_div).append(row_div_one);
-$(main_col_div).append(row_div_two);
-$(function(){
-        pat_datatable=$("#patient_table").DataTable({
-            data: [["1","Ali","03009420002","35202-0000122-1","Lahore"],["2","Ahmad","03119420002","35202-7268122-1","Lahore"]] ,
-            columns: [
-                { title: "Id" },
-                { title: "Patient Name" },
-                { title: "Contact" },
-                { title: "CNIC" },
-                { title: "Address" },
-                ],
-                paging: false,
-                scrollY: 200,
-                scrollX: true,
-                ordering: true,
-                info:false,
-    
-            });
-            $('#patient_table tbody').on( 'click', 'tr', function () {
-                if ( $(this).hasClass('selected') ) {
-                    alert("clicked same entry")
-                }
-                else{
+
+    $(main_col_div).append(row_div_one);
+    $(main_col_div).append(row_div_two);
+    $(main_col_div).append(row_div_three);
+    $(main_col_div).append(row_div_four);
+
+    $(function(){
+            pat_datatable=$("#patient_table").DataTable({
+                data: [["1","Ali","03009420002","35202-0000122-1","Lahore"],["2","Ahmad","03119420002","35202-7268122-1","Lahore"]] ,
+                columns: [
+                    { title: "Id" },
+                    { title: "Patient Name" },
+                    { title: "Contact" },
+                    { title: "CNIC" },
+                    { title: "Address" },
+                    ],
+                    paging: false,
+                    scrollY: 200,
+                    scrollX: true,
+                    ordering: true,
+                    info:false,
+        
+                });
+                $('#patient_table tbody').on( 'click', 'tr', function () {
+                    if ( $(this).hasClass('selected') ) {
+                        alert("clicked same entry")
+                    }
+                    else{
+                        $("#row_div_four").empty();
+                        pat_datatable.$('tr.selected').removeClass('selected');
+                        $(this).addClass('selected');
+                        var row_div_four=$("#row_div_four");
+                            var main_subcol=$("<div class='col-md-12'></div>");
+
+                                var subrow_one=$("<div class='row'></div>")
+
+
+                                        var col_one__subrow_one=$("<div class='col-md-6'></div>");
+                                                row__col_one__subrow_one=$("<div class='row'></div>");
+                                                    var colmd1=$("<div class='col-md-4'></div>")
+                                                    var colmd2=$("<div class='col-md-6'></div>")
+                                                        var pat_name_label=$("<label for='emp_name_tag' class='custom_label_css'>Patient Name</label>");
+                                                        var pat_name_input=$("<input class='form-control' id='pat_name_input' class='custom_input_css' value="+patient_info_dict['name']+" disabled>")
+                                                    colmd2.append(pat_name_input)
+                                                    colmd1.append(pat_name_label)
+                                                row__col_one__subrow_one.append(colmd1);
+                                                row__col_one__subrow_one.append(colmd2);
+                                            col_one__subrow_one.append(row__col_one__subrow_one);
+
+
+                                        var col_two__subrow_one=$("<div class='col-md-6'></div>");
+                                            var row__col_two__subrow_one=$("<div class='row'></div>");
+                                                var colmd1=$("<div class='col-md-4'></div>")
+                                                var colmd2=$("<div class='col-md-6'></div>")
+                                                    var contact_type_label=$("<label class='custom_label_css'>Contact Number</label>");
+                                                    var contact_type_input=$("<input class='form-control' id='contact_numb_input' class='custom_input_css' placeholder='0312-3456789' value="+patient_info_dict['contact_no']+"></input>")
+                                                colmd1.append(contact_type_label);
+                                                colmd2.append(contact_type_input);
+                            
+                                            row__col_two__subrow_one.append(colmd1)
+                                            row__col_two__subrow_one.append(colmd2)
+                                        col_two__subrow_one.append(row__col_two__subrow_one)
+
+
+                                 
+
+                                subrow_one.append(col_one__subrow_one)
+                                subrow_one.append(col_two__subrow_one)
+
+
+                            var subrow_two=$("<div class='row'></div>")
+                                var col_one_subrow_two=$("<div class='col-md-6'></div>");
+                                    var row__col_one_subrow_two=$("<div class='row'></div>");
+                                        colmd1=$("<div class='col-md-2'></div>")
+                                        colmd2=$("<div class='col-md-3'></div>")
+                                        colmd3=$("<div class='col-md-2'></div>")
+                                        colmd4=$("<div class='col-md-3'></div>")
+                            
+                                            var pat_name_label=$("<label class='custom_label_css'>Gender</label>");
+                                            var pat_name_input=$("<input class='form-control' id='gender_select' class='custom_input_css' value="+patient_info_dict['gender']+" disabled>")
+                                        // DOB
+                                            var dob_label=$("<label class='custom_label_css'>DOB</label>");
+                                            var dob_input=$("<input class='form-control' id='dob_input' class='custom_input_css' value="+patient_info_dict['dob']+" ></input>")
+                                        colmd1.append(pat_name_label)
+                                        colmd2.append(pat_name_input)
+                                        colmd3.append(dob_label);
+                                        colmd4.append(dob_input);
+                            
+                                    row__col_one_subrow_two.append(colmd1);
+                                    row__col_one_subrow_two.append(colmd2);
+                                    row__col_one_subrow_two.append(colmd3);
+                                    row__col_one_subrow_two.append(colmd4);
+                            
+                                col_one_subrow_two.append(row__col_one_subrow_two);
+                            
+                                            // CNIC
+                                var col_two_subrow_two=$("<div class='col-md-6'></div>");//
+                                    var row__col_two_subrow_two=$("<div class='row'></div>");
+                                        var colmd1=$("<div class='col-md-4'></div>")
+                                        var colmd2=$("<div class='col-md-6'></div>")
+                                            var cnic_label=$("<label class='custom_label_css'>CNIC/Guardian CNIC</label>");
+                                            var cnic_input=$("<input class='form-control' id='cnic_input' class='custom_input_css' placeholder='xxxxx-xxxxxxx-x' value="+patient_info_dict['cnic']+" disabled></input>")
+                                        colmd1.append(cnic_label);
+                                        colmd2.append(cnic_input);
+                
+                                    row__col_two_subrow_two.append(colmd1)
+                                    row__col_two_subrow_two.append(colmd2)
+                                col_two_subrow_two.append(row__col_two_subrow_two)
+
+                            subrow_two.append(col_one_subrow_two)
+                            subrow_two.append(col_two_subrow_two)
+
+                            var subrow_three=$("<div class='row'></div>")
+                                var col_one__subrow_three=$("<div class='col-md-6'></div>");
+                                    var row__col_one__subrow_three=$("<div class='row'></div>");
+                                        var colmd1=$("<div class='col-md-4'></div>")
+                                        var colmd2=$("<div class='col-md-6'></div>")
+                                    
+                                            var guardian_name_label=$("<label for='emp_name_tag' class='custom_label_css'>Guardian Name</label>");
+                                            var guardian_name_input=$("<input class='form-control' id='guardian_input' class='custom_input_css' value="+patient_info_dict['guardian']+" ></input>")
+                                        colmd1.append(guardian_name_label)
+                                        colmd2.append(guardian_name_input);
+                                
+                                        row__col_one__subrow_three.append(colmd1);
+                                        row__col_one__subrow_three.append(colmd2);
+                                col_one__subrow_three.append(row__col_one__subrow_three);
+
+                                var col_two__subrow_three=$("<div class='col-md-6'></div>");
+                                    var row__col_two__subrow_three=$("<div class='row'></div>");
+                                        var colmd1=$("<div class='col-md-4'></div>")
+                                        var colmd2=$("<div class='col-md-6'></div>")
+                                            var address_label=$("<label for='pat_address_tag' class='custom_label_css'>Address</label>");
+                                            var pat_address_input=$("<input class='form-control' id='pat_address_input' class='custom_input_css' value="+patient_info_dict['address']+">")
+                                        colmd1.append(address_label)
+                                        colmd2.append(pat_address_input)
+                        
+                                    row__col_two__subrow_three.append(colmd1);
+                                    row__col_two__subrow_three.append(colmd2);
+                                col_two__subrow_three.append(row__col_two__subrow_three);
+
+                            subrow_three.append(col_one__subrow_three)
+                            subrow_three.append(col_two__subrow_three)
+
+                            var subrow_four=$("<div class='row'></div>")
+                            // Blood group
+                                var col_one__subrow_four=$("<div class='col-md-6'></div>");
+                                    var row__col_one__subrow_four=$("<div class='row'></div>");
+                                        var colmd1=$("<div class='col-md-4'></div>")
+                                        var colmd2=$("<div class='col-md-6'></div>")
+                
+                                            blood_group_label=$("<label for='blood_group_tag' class='custom_label_css'>Blood group</label>");
+                                            bloodgroup_input=$("<input class='form-control' id='blood_group_input' class='custom_input_css' value="+patient_info_dict['bloodgroup']+" disabled>")
+                                        colmd1.append(blood_group_label)
+                                        colmd2.append(bloodgroup_input) 
+                
+                                    row__col_one__subrow_four.append(colmd1);
+                                    row__col_one__subrow_four.append(colmd2);
+                                col_one__subrow_four.append(row__col_one__subrow_four);
+                                var col_two__subrow_four=$("<div class='col-md-6'></div>");
+                                    var row__col_two__subrow_four=$("<div class='row'></div>");
+                                        var colmd1=$("<div class='col-md-4'></div>")
+                                        var colmd2=$("<div class='col-md-6'></div>")
                     
-                }
-    
+                                            var email_id_label=$("<label class='custom_label_css'>Email Address</label>");
+                                            var email_id_input=$("<input class='form-control' id='email_id_input' class='custom_input_css' value="+patient_info_dict['email']+" disabled></input>")
+                                        colmd1.append(email_id_label);
+                                        colmd2.append(email_id_input);
+                    
+                                    row__col_two__subrow_four.append(colmd1)
+                                    row__col_two__subrow_four.append(colmd2)
+                                col_two__subrow_four.append(row__col_two__subrow_four)
+
+                            subrow_four.append(col_one__subrow_four);
+                            subrow_four.append(col_two__subrow_four);
+
+                            var subrow_five=$("<div class='row'>")
+                                var col_one__subrow_five=$("<div class='col-md-12'></div>");
+                                    var row__col_one__subrow_five=$("<div class='row'></div>");
+                                        var colmd1=$("<div class='col-md-2'></div>")
+                                        var colmd2=$("<div class='col-md-8'></div>")
+                                        var colmd3=$("<div class='col-md-2'></div>")
+
+                                            var updatePatientdataForm_button=$('<button class="btn btn-success btn-sm btn-block" onclick="updatePatientData()">Update</button>')
+                                        colmd2.append(updatePatientdataForm_button)
+                                        
+                                    row__col_one__subrow_five.append(colmd1)
+                                    row__col_one__subrow_five.append(colmd2)
+                                    row__col_one__subrow_five.append(colmd3)
+                                col_one__subrow_five.append(row__col_one__subrow_five)
+                            subrow_five.append(col_one__subrow_five);
+
+                            
+
+
+
+
+
+                        main_subcol.append(subrow_one)
+                        main_subcol.append(subrow_two)
+                        main_subcol.append(subrow_three)
+                        main_subcol.append(subrow_four)
+                        main_subcol.append(subrow_five)
+
+
+
+                    row_div_four.append(main_subcol)
+
+                      
+                    }
+        
+                });
             });
-        });
 
 
 }
