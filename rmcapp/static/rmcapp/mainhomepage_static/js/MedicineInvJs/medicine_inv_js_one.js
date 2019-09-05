@@ -1,5 +1,5 @@
 // Functions for populating html to main page content.
-var medicine_type_list=["S","T"]
+var medicine_type_list=[]
 var medicine_name;
 var selected_type;
 var med_details;
@@ -41,7 +41,6 @@ function retrieveMedicineType(){
         },
         url: '/retrieve_medicine_type',
         success: function(data){
-            console.log(data['Success'])
            
             medicine_type_list=data["medicine_type_list"];
             console.log("success",medicine_type_list);
@@ -835,15 +834,15 @@ function calculateFunc(){
                 row_div_two.append(col_one__row_div);
                 var row_div_three=$("<div class='row'  id='sublevelssubrowprice_Piece'></div>");
                     var col_one__row_div=$("<div class='col-md-12'></div>");
-                        var row1_col_one__row_div=$("<div class='row'></div>");
-                            var col_row1_col_one__row_div=$("<div class='col-md-12'></div>");
+                        var row2_col_one__row_div=$("<div class='row'></div>");
+                            var col_row2_col_one__row_div=$("<div class='col-md-12'></div>");
 
-                                prieceofonepiece_label=$("<label id='Piece_unit-label ' value='Piece' >Price of Piece:</label>");
-                                prieceofonepiece_input=$("<input id='Piece_unit-price' value="+priceof1piece+" disabled ></input>");
-                            col_row1_col_one__row_div.append(prieceofonepiece_label);
-                            col_row1_col_one__row_div.append(prieceofonepiece_input);
-                        row1_col_one__row_div.append(col_row1_col_one__row_div);
-                    col_one__row_div.append(row1_col_one__row_div)
+                                var prieceofonepiece_label=$("<label id='Piece_unit-label ' value='Piece' >Price of Piece:</label>");
+                                var prieceofonepiece_input=$("<input id='Piece_unit-price' value="+priceof1piece+" disabled ></input>");
+                            col_row2_col_one__row_div.append(prieceofonepiece_label);
+                            col_row2_col_one__row_div.append(prieceofonepiece_input);
+                        row2_col_one__row_div.append(col_row2_col_one__row_div);
+                    col_one__row_div.append(row2_col_one__row_div)
                 row_div_three.append(col_one__row_div);
 
                 
@@ -897,14 +896,14 @@ function recursiveFunc(list_length){
 
             var row_div_two=$("<div class='row' id='sublevelssubrowprice_"+package_name+"'></div>");
                 var col_one__row_div=$("<div class='col-md-12'></div>");
-                    var row1_col_one__row_div=$("<div class='row'></div>");
-                        var col_row1_col_one__row_div=$("<div class='col-md-12'></div>");
-                            priceofonepack_label=$("<label id='"+package_name+"_unit-label'>price  of one"+package_name +":</label>");
-                            priceofonepack_input=$("<input id='"+package_name+"_unit-price' value="+priceof1sublevel+" disabled ></input>");
-                        col_row1_col_one__row_div.append(priceofonepack_label)
-                        col_row1_col_one__row_div.append(priceofonepack_input)
-                    row1_col_one__row_div.append(col_row1_col_one__row_div);
-                col_one__row_div.append(row1_col_one__row_div)
+                    var row2_col_one__row_div=$("<div class='row'></div>");
+                        var col_row2_col_one__row_div=$("<div class='col-md-12'></div>");
+                            var priceofonepack_label=$("<label id='"+package_name+"_unit-label'>price  of one"+package_name +":</label>");
+                            var priceofonepack_input=$("<input id='"+package_name+"_unit-price' value="+priceof1sublevel+" disabled ></input>");
+                        col_row2_col_one__row_div.append(priceofonepack_label)
+                        col_row2_col_one__row_div.append(priceofonepack_input)
+                        row2_col_one__row_div.append(col_row2_col_one__row_div);
+                col_one__row_div.append(row2_col_one__row_div)
             row_div_two.append(col_one__row_div);
 
         $('#row_sublevels').append(row_div_one);
@@ -943,15 +942,15 @@ function recursiveFunc(list_length){
             row_div_one.append(col_one__row_div);
             var row_div_two=$("<div class='row' id='sublevelssubrowprice_"+package_name1+"'></div>");
                 var col_one__row_div=$("<div class='col-md-12'></div>");
-                    row1_col_one__row_div=$("<div class='row'></div>");
-                        var col_one__row_div=$("<div class='col-md-12'></div>");
+                    var row2_col_one__row_div=$("<div class='row'></div>");
+                        var col_row2_col_one__row_div=$("<div class='col-md-12'></div>");
 
-                            priceofonepack_label=$("<label id='"+package_name1+"_unit-label' >price  of one"+package_name1 +":</label>");
-                            priceofonepack_input=$("<input id='"+package_name1+"_unit-price' value="+price+" disabled></input>");
-                        col_row1_col_one__row_div.append(priceofonepack_label)
-                        col_row1_col_one__row_div.append(priceofonepack_input)
-                    row1_col_one__row_div.append(col_row1_col_one__row_div);
-                col_one__row_div.append(row1_col_one__row_div)
+                            var priceofonepack_label=$("<label id='"+package_name1+"_unit-label' >price  of one"+package_name1 +":</label>");
+                            var priceofonepack_input=$("<input id='"+package_name1+"_unit-price' value="+price+" disabled></input>");
+                        col_row2_col_one__row_div.append(priceofonepack_label)
+                        col_row2_col_one__row_div.append(priceofonepack_input)
+                        row2_col_one__row_div.append(col_row2_col_one__row_div);
+                col_one__row_div.append(row2_col_one__row_div)
             row_div_two.append(col_one__row_div);
         $('#row_sublevels').append(row_div_one);
         $('#row_sublevels').append(row_div_two);
@@ -1034,7 +1033,10 @@ function saveMedicineToWhStock(){
                             $("#row_sublevels").find($('[id^=sublevelssubrow]')).map(
                                 function(){
                                     row=$(this).find('input').attr('id');
+                                    console.log("row",row)
                                     package_name_unit_or_total=$(this).find('input').val();
+                                    console.log("package_name_unit_or_total",package_name_unit_or_total)
+
                                     console.log("ROWWW",row)
                                     split1=row.split('_');
                                     console.log(split1[0]);

@@ -354,6 +354,8 @@ class patientBillRecords(models.Model):
 class patientMedRecords(models.Model):
     patient=models.ForeignKey(Patient, on_delete=models.CASCADE,default=None,null=True,blank=True)
     emp_doc=models.ForeignKey(Employee, on_delete=models.CASCADE,default=None,null=True,blank=True)
+    medicine=models.ForeignKey(Medicine, on_delete=models.CASCADE,default=None,null=True,blank=True)
+
     blood_pressure=models.CharField(max_length=50,null=True,blank=True)
     prescription=ListCharField(
         base_field=models.CharField(max_length=20),
