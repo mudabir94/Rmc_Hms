@@ -357,7 +357,6 @@ function EditPatient(){
             
              $(row_div_three).append(col_one__row_div_three);
              $(row_div_three).append(col_two__row_div_three);
-
                          
         var row_div_four=$("<div class='row'></div>");
                     // Blood group
@@ -406,7 +405,7 @@ function EditPatient(){
                                 colmd2=$("<div class='col-md-8'></div>")
                                 colmd3=$("<div class='col-md-2'></div>")
 
-                                savePatientdataForm_button=$('<button class="btn btn-success btn-sm btn-block" onclick="savePatientData()">Save</button>')
+                                savePatientdataForm_button=$('<button class="btn btn-success btn-sm btn-block" onclick="savePatientData()">Update</button>')
                                 colmd2.append(savePatientdataForm_button)
                                 
                                 row__col_two__row_div_five.append(colmd1)

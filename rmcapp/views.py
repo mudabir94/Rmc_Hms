@@ -952,10 +952,6 @@ def saveToDespStock(request):
 
             else:
                 WithStripCalculation(medicineWarehouseStock_obj,medicine_obj,noofboxes,noofstrips,noofpieces)
-            
-
-
-
 
         data={}
         return JsonResponse(data)
@@ -1034,6 +1030,29 @@ def retirevePatientInfo(request):
 
         data={
             "patient_info_dict":json.dumps(patient_info_dict),
+        }
+        return JsonResponse(data)
+
+def retrieveEmployeeInfo(request):
+    if request.method=="GET":
+        emp_obj=Employee.objects.get(id=1)
+        print("emp_obj",emp_obj)
+        employee_info_dict={}
+        employee_info_dict['name']=emp_obj.name
+        employee_info_dict['dob']=str(emp_obj.dob)
+        employee_info_dict['gender']=emp_obj.gender
+        employee_info_dict['phone']=emp_obj.phone_no
+        employee_info_dict['address']=emp_obj.address
+        employee_info_dict['qualification']=emp_obj.qualification
+        employee_info_dict['email']=emp_obj.email_address
+        employee_info_dict['employee_type']="Doctor"
+        employee_info_dict['cnic']=emp_obj.cnic
+
+
+        print(employee_info_dict)
+
+        data={
+            "employee_info_dict":json.dumps(employee_info_dict),
         }
         return JsonResponse(data)
 
