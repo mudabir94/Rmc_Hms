@@ -324,7 +324,7 @@ $(function(){
                 ordering: true,
                 info:false,
     
-
+            });
             $('#patient_table tbody').on( 'click', 'tr', function () {
                 if ( $(this).hasClass('selected') ) {
                     alert("clicked same entry")
