@@ -229,6 +229,112 @@ $(main_col_div).append(row_div_five);
 
 }
 function EditPatient(){
+    $('#main_page_content').empty()
+    var container_patient_dashboard= $('#main_page_content').append('<div class="container-fluid" id="container-patient-dashboard"></div>');
+    $("#container-patient-dashboard").append("<h2 class ='text-center'>Edit Patient Information</h2>");
+    $("#container-patient-dashboard").append("<hr class='custom_hr'>");
+    var main_row_div= $("<div class='row is-flex'></div>");
+
+    $(container_patient_dashboard).append(main_row_div);
+    var main_col_div=$("<div class='col-md-12' id=''></div>");
+       
+    $(main_row_div).append(main_col_div);
+
+    var row_div_one=$("<div class='row'></div>");
+            // Patient Name
+            var col_one__row_div_one=$("<div class='col-md-4'></div>");
+                row__col_one__row_div_one=$("<div class='row'></div>");
+                    colmd1=$("<div class='col-md-4'></div>")
+                    colmd2=$("<div class='col-md-6'></div>")
+
+                    pat_name_label=$("<label for='emp_name_tag' class='custom_label_css'>Patient Name</label>");
+                    colmd1.append(pat_name_label)
+
+                    pat_name_input=$("<input class='form-control' id='search_pat_name_input' class='custom_input_css'>")
+
+                    colmd2.append(pat_name_input)
+
+                row__col_one__row_div_one.append(colmd1);
+                row__col_one__row_div_one.append(colmd2);
+            col_one__row_div_one.append(row__col_one__row_div_one);
+
+
+            // Contact Number
+
+            var col_two__row_div_one=$("<div class='col-md-4'></div>");
+                var row__col_two__row_div_one=$("<div class='row'></div>");
+                    colmd1=$("<div class='col-md-4'></div>")
+                    colmd2=$("<div class='col-md-6'></div>")
+
+                    contact_type_label=$("<label class='custom_label_css'>Contact Number</label>");
+                    colmd1.append(contact_type_label);
+                    contact_type_input=$("<input class='form-control custom_input_css' id='search_contact_numb_input'  placeholder='0312-3456789'></input>")
+                    colmd2.append(contact_type_input);
+
+                row__col_two__row_div_one.append(colmd1)
+                row__col_two__row_div_one.append(colmd2)
+            col_two__row_div_one.append(row__col_two__row_div_one)
+
+            var col_three__row_div_one=$("<div class='col-md-4'></div>");
+                var row__col_three__row_div_one=$("<div class='row'></div>");
+                    var colmd1=$("<div class='col-md-4'></div>")
+                    var colmd2=$("<div class='col-md-6'></div>")
+                        var cnic_label=$("<label class='custom_label_css'>CNIC</label>");
+                       
+                        var cnic_input=$("<input class='form-control custom_input_css' id='search_cnic_numb_input'></input>")
+                        colmd1.append(cnic_label);
+                        colmd2.append(cnic_input);
+
+                row__col_three__row_div_one.append(colmd1)
+                row__col_three__row_div_one.append(colmd2)
+            col_three__row_div_one.append(row__col_three__row_div_one)
+
+
+            $(row_div_one).append(col_one__row_div_one);
+            $(row_div_one).append(col_two__row_div_one);
+            $(row_div_one).append(col_three__row_div_one);
+    var row_div_two=$("<div class='row'></div>");
+    // Datatable Name
+        var col_one__row_div_two=$("<div class='col-md-12'></div>");
+            var row__col_one__row_div_two=$("<div class='row'></div>");
+                var colmd1=$("<div class='col-md-12'></div>")
+                    var table=$('<table id="patient_table" class="display" width="100%"></table>')
+                colmd1.append(table)
+            row__col_one__row_div_two.append(colmd1);
+        col_one__row_div_two.append(row__col_one__row_div_two);
+    $(row_div_two).append(col_one__row_div_two);
+
+
+$(main_col_div).append(row_div_one);
+$(main_col_div).append(row_div_two);
+$(function(){
+        pat_datatable=$("#patient_table").DataTable({
+            data: [["1","Ali","03009420002","35202-0000122-1","Lahore"],["2","Ahmad","03119420002","35202-7268122-1","Lahore"]] ,
+            columns: [
+                { title: "Id" },
+                { title: "Patient Name" },
+                { title: "Contact" },
+                { title: "CNIC" },
+                { title: "Address" },
+                ],
+                paging: false,
+                scrollY: 200,
+                scrollX: true,
+                ordering: true,
+                info:false,
+    
+            });
+            $('#patient_table tbody').on( 'click', 'tr', function () {
+                if ( $(this).hasClass('selected') ) {
+                    alert("clicked same entry")
+                }
+                else{
+                    
+                }
+    
+            });
+        });
+
 
 }
 function savePatientData(){
@@ -266,10 +372,10 @@ function savePatientData(){
         success: function(data){
             console.log(data['Success']);
         },
-    
     });
-
 }
+
+   
 function retrievePatientInfo(){
     $.ajax({
         type: 'GET',
