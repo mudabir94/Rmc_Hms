@@ -228,52 +228,12 @@ $(main_col_div).append(row_div_five);
               });
 
 }
-function savePatientData(){
-    var patient_name=$("#pat_name_input").val();
-    console.log("patient_name", patient_name);
-
-    var contact_number=$("#contact_numb_input").val();
-    var gender=$("#gender_select").val();
-    console.log("gender", gender);
-    var dob=$("#dob_input").val();
-    var cnic=$("#cnic_input").val();
-    var guardian=$("#guardian_input").val();
-    console.log("guardian", guardian)
-    var blood_group=$("#blood_group_input").val();
-    var emial_id=$("#email_id_input").val();
-    var address=$("#pat_address_input").val();
-    console.log("emial_id",emial_id);
-
-    alert("sss")
-    $.ajax({
-        type: 'POST',
-        dataType: "json",
-        'data': {
-            "name":JSON.stringify(patient_name),
-            "dob":JSON.stringify(dob),
-            "gender":JSON.stringify(gender),
-            "guardian":JSON.stringify(guardian),
-            "phone_number":JSON.stringify(contact_number),
-            "address":JSON.stringify(address),
-            "blood_group":JSON.stringify(blood_group),
-            'email_address':JSON.stringify(emial_id),
-            "cnic":JSON.stringify(cnic),
-        },
-        url: '/save_patient_data',
-        success: function(data){
-            console.log(data['Success']);
-        },
-    
-    });
-
-}
 function EditPatient(){
 
     $('#main_page_content').empty()
     var container_patient_dashboard= $('#main_page_content').append('<div class="container-fluid" id="container-patient-dashboard"></div>');
-    $("#container-patient-dashboard").append("<h2 class ='text-center'>Patient Information</h2>");
+    $("#container-patient-dashboard").append("<h2 class ='text-center'>Edit Patient Information</h2>");
     $("#container-patient-dashboard").append("<hr class='custom_hr'>");
-    $("#container-patient-dashboard").append("<h5>Please fill in the form below</h5>");
     var main_row_div= $("<div class='row is-flex'></div>");
 
     $(container_patient_dashboard).append(main_row_div);
@@ -290,7 +250,9 @@ function EditPatient(){
 
                     pat_name_label=$("<label for='emp_name_tag' class='custom_label_css'>Patient Name</label>");
                     colmd1.append(pat_name_label)
+
                     pat_name_input=$("<input class='form-control' id='search_pat_name_input' class='custom_input_css'>")
+
                     colmd2.append(pat_name_input)
 
                 row__col_one__row_div_one.append(colmd1);
@@ -343,6 +305,7 @@ function EditPatient(){
         col_one__row_div_two.append(row__col_one__row_div_two);
     $(row_div_two).append(col_one__row_div_two);
 
+
 $(main_col_div).append(row_div_one);
 $(main_col_div).append(row_div_two);
 $(function(){
@@ -376,7 +339,7 @@ $(function(){
             });
 
         });
-    
+
 
 }
 function retrievePatientInfo(){
