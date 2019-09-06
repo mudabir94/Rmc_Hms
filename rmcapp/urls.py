@@ -33,6 +33,8 @@ urlpatterns = [
   path('retrieve_employee_info',views.retrieveEmployeeInfo,name="retrieve_employee_info"),
   
   path('view_patient_history',views.viewPatientHistory,name="view_patient_history"),
+  
+  path('update_patient_data',views.updatePatientData,name="update_patient_data"),
 
 
 
