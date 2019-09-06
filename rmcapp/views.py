@@ -10,7 +10,7 @@ from rmcapp.models import (
     despensoryStock,despensoryStockHistory,tt_Medicine_DespensoryStock,
     medicineBatches,
     packageType,
-    employeeType,Employee,Patient
+    employeeType,Employee,Patient,
 )
 from django.http import HttpResponse, JsonResponse
 from .Controllers.MedControllers.MedController import MedicineController  
@@ -604,6 +604,7 @@ def saveEmployeeData(request):
         email_address = request.POST.get('email_address')
         cnic = request.POST.get('cnic')
 
+
         name = json.loads(name)
         dob = json.loads(dob)
         gender = json.loads(gender)
@@ -614,13 +615,14 @@ def saveEmployeeData(request):
         cnic = json.loads(cnic)
 
 
+
         print(name)
         print(gender)
         print(email_address)
         print("employee_type",employee_type)
         
         emp_obj=Employee()
-        emp_obj.employee_type=employeeType.objects.get(type_name="Doctor")
+        emp_obj.employee_type=employee_type.objects.get(type_name="Doctor")
         emp_obj.name=name
         emp_obj.dob=dob
         emp_obj.gender=gender
@@ -1066,6 +1068,38 @@ def retrieveEmployeeInfo(request):
         }
         return JsonResponse(data)
 
+def viewPatientHistory(request):
+    if request.method=="GET":
+        # pat_name=request.GET.get("pat_name")
+        # contact_no=request.GET.get("contact_no")
+        # cnic=request.GET.get("cnic")
+
+        # #phone_no=contact_no,cnic=cnic_no
+        # pat_objs=Patient.objects.filter(Q(pat_name=pat_name) | Q(phone_no=contact_no) | Q(cnic=cnic))
+        # # pat_obj=Patient.objects.get(id=1)
+        # print("pat_objs",pat_objs)
+        # patient_dict={}
+        # for pat_obj in pat_objs:
+        #     patient_info_dict={}
+        #     patient_info_dict['name']=pat_obj.pat_name
+        #     patient_info_dict['contact_no']=pat_obj.phone_no
+        #     patient_info_dict['gender']=pat_obj.gender
+        #     patient_info_dict['dob']=str(pat_obj.dob)
+        #     patient_info_dict['cnic']=pat_obj.cnic
+        #     patient_info_dict['guardian']=pat_obj.guardian
+        #     patient_info_dict['address']=pat_obj.address
+        #     patient_info_dict['bloodgroup']=pat_obj.bloodgroup
+        #     patient_info_dict['email']=pat_obj.email_address
+        #     patient_dict[pat_obj.id]=[]
+        #     patient_dict[pat_obj.id]=patient_info_dict
+        # print(patient_dict)
+
+
+
+        # data={
+        #     "patient_dict":json.dumps(patient_dict),
+        # }
+        return JsonResponse(data)
         
 def updatePatientData(request):
     if request.method=="POST":

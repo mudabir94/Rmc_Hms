@@ -339,6 +339,8 @@ class tokenRecords(models.Model):
 class patientBillRecords(models.Model):
     patient=models.ForeignKey(Patient, on_delete=models.CASCADE,default=None,null=True,blank=True)
     desp=models.ForeignKey(despensoryStock, on_delete=models.CASCADE,default=None,null=True,blank=True)
+    medicine=models.ForeignKey(Medicine, on_delete=models.CASCADE,default=None,null=True)
+
     boxes_stored=models.FloatField(null=True,blank=True)
     strips_stored=models.FloatField(null=True,blank=True)
     pieces_stored=models.FloatField(null=True,blank=True)

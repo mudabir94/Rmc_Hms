@@ -34,6 +34,7 @@ urlpatterns = [
   
   
   path('update_patient_data',views.updatePatientData,name="update_patient_data"),
+  path('view_patient_history',views.viewPatientHistory,name="view_patient_history"),
 
 
 
