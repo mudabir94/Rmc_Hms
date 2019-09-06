@@ -1034,7 +1034,7 @@ def retirevePatientInfo(request):
             patient_info_dict['email']=pat_obj.email_address
             patient_dict[pat_obj.id]=[]
             patient_dict[pat_obj.id]=patient_info_dict
-        print(patient_dict)
+        print("patient_dict",patient_dict)
 
 
 

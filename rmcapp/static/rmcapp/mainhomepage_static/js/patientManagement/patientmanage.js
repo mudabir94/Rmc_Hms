@@ -2,6 +2,8 @@
 var blood_group_list=['A+ve','A-ve', 'B+ve','B-ve','O+ve','O-ve','AB+ve','AB-ve'];
 var patient_info_dict={}
 var pat_datatable;
+var patient_id_selected=0;
+var patient_dict={};
 $( document ).ready(function() {
     });
 
@@ -342,10 +344,8 @@ function searchPatient(){
     
     if (pat_datatable!==undefined){
         pat_datatable.destroy();
-        createPatientDataTable()
-
-
     }
+
 }
 function createPatientDataTable(){
     console.log("datatable_list",datatable_list)
@@ -379,6 +379,8 @@ function createPatientDataTable(){
                     alert("clicked same entry")
                 }
                 else{
+                    patient_id_selected=$(this).find('td').eq(0).text()
+
                     $("#row_div_four").empty();
                     pat_datatable.$('tr.selected').removeClass('selected');
                     $(this).addClass('selected');
@@ -393,7 +395,7 @@ function createPatientDataTable(){
                                                 var colmd1=$("<div class='col-md-4'></div>")
                                                 var colmd2=$("<div class='col-md-6'></div>")
                                                     var pat_name_label=$("<label for='emp_name_tag' class='custom_label_css'>Patient Name</label>");
-                                                    var pat_name_input=$("<input class='form-control' id='pat_name_input' class='custom_input_css' value="+patient_info_dict['name']+" disabled>")
+                                                    var pat_name_input=$("<input class='form-control' id='pat_name_input' class='custom_input_css' value="+patient_dict[patient_id_selected]['name']+" disabled>")
                                                 colmd2.append(pat_name_input)
                                                 colmd1.append(pat_name_label)
                                             row__col_one__subrow_one.append(colmd1);
@@ -406,7 +408,7 @@ function createPatientDataTable(){
                                             var colmd1=$("<div class='col-md-4'></div>")
                                             var colmd2=$("<div class='col-md-6'></div>")
                                                 var contact_type_label=$("<label class='custom_label_css'>Contact Number</label>");
-                                                var contact_type_input=$("<input class='form-control' id='contact_numb_input' class='custom_input_css' placeholder='0312-3456789' value="+patient_info_dict['contact_no']+"></input>")
+                                                var contact_type_input=$("<input class='form-control' id='contact_numb_input' class='custom_input_css' placeholder='0312-3456789' value="+patient_dict[patient_id_selected]['contact_no']+"></input>")
                                             colmd1.append(contact_type_label);
                                             colmd2.append(contact_type_input);
                         
@@ -430,10 +432,10 @@ function createPatientDataTable(){
                                     colmd4=$("<div class='col-md-3'></div>")
                         
                                         var pat_name_label=$("<label class='custom_label_css'>Gender</label>");
-                                        var pat_name_input=$("<input class='form-control' id='gender_select' class='custom_input_css' value="+patient_info_dict['gender']+" disabled>")
+                                        var pat_name_input=$("<input class='form-control' id='gender_select' class='custom_input_css' value="+patient_dict[patient_id_selected]['gender']+" disabled>")
                                     // DOB
                                         var dob_label=$("<label class='custom_label_css'>DOB</label>");
-                                        var dob_input=$("<input class='form-control' id='dob_input' class='custom_input_css' value="+patient_info_dict['dob']+" ></input>")
+                                        var dob_input=$("<input class='form-control' id='dob_input' class='custom_input_css' value="+patient_dict[patient_id_selected]['dob']+" ></input>")
                                     colmd1.append(pat_name_label)
                                     colmd2.append(pat_name_input)
                                     colmd3.append(dob_label);
@@ -452,7 +454,7 @@ function createPatientDataTable(){
                                     var colmd1=$("<div class='col-md-4'></div>")
                                     var colmd2=$("<div class='col-md-6'></div>")
                                         var cnic_label=$("<label class='custom_label_css'>CNIC/Guardian CNIC</label>");
-                                        var cnic_input=$("<input class='form-control' id='cnic_input' class='custom_input_css' placeholder='xxxxx-xxxxxxx-x' value="+patient_info_dict['cnic']+" disabled></input>")
+                                        var cnic_input=$("<input class='form-control' id='cnic_input' class='custom_input_css' placeholder='xxxxx-xxxxxxx-x' value="+patient_dict[patient_id_selected]['cnic']+" disabled></input>")
                                     colmd1.append(cnic_label);
                                     colmd2.append(cnic_input);
             
@@ -470,7 +472,7 @@ function createPatientDataTable(){
                                     var colmd2=$("<div class='col-md-6'></div>")
                                 
                                         var guardian_name_label=$("<label for='emp_name_tag' class='custom_label_css'>Guardian Name</label>");
-                                        var guardian_name_input=$("<input class='form-control' id='guardian_input' class='custom_input_css' value="+patient_info_dict['guardian']+" ></input>")
+                                        var guardian_name_input=$("<input class='form-control' id='guardian_input' class='custom_input_css' value="+patient_dict[patient_id_selected]['guardian']+" ></input>")
                                     colmd1.append(guardian_name_label)
                                     colmd2.append(guardian_name_input);
                             
@@ -483,7 +485,7 @@ function createPatientDataTable(){
                                     var colmd1=$("<div class='col-md-4'></div>")
                                     var colmd2=$("<div class='col-md-6'></div>")
                                         var address_label=$("<label for='pat_address_tag' class='custom_label_css'>Address</label>");
-                                        var pat_address_input=$("<input class='form-control' id='pat_address_input' class='custom_input_css' value="+patient_info_dict['address']+">")
+                                        var pat_address_input=$("<input class='form-control' id='pat_address_input' class='custom_input_css' value="+patient_dict[patient_id_selected]['address']+">")
                                     colmd1.append(address_label)
                                     colmd2.append(pat_address_input)
                     
@@ -502,7 +504,7 @@ function createPatientDataTable(){
                                     var colmd2=$("<div class='col-md-6'></div>")
             
                                         blood_group_label=$("<label for='blood_group_tag' class='custom_label_css'>Blood group</label>");
-                                        bloodgroup_input=$("<input class='form-control' id='blood_group_input' class='custom_input_css' value="+patient_info_dict['bloodgroup']+" disabled>")
+                                        bloodgroup_input=$("<input class='form-control' id='blood_group_input' class='custom_input_css' value="+patient_dict[patient_id_selected]['bloodgroup']+" disabled>")
                                     colmd1.append(blood_group_label)
                                     colmd2.append(bloodgroup_input) 
             
@@ -515,7 +517,7 @@ function createPatientDataTable(){
                                     var colmd2=$("<div class='col-md-6'></div>")
                 
                                         var email_id_label=$("<label class='custom_label_css'>Email Address</label>");
-                                        var email_id_input=$("<input class='form-control' id='email_id_input' class='custom_input_css' value="+patient_info_dict['email']+" disabled></input>")
+                                        var email_id_input=$("<input class='form-control' id='email_id_input' class='custom_input_css' value="+patient_dict[patient_id_selected]['email']+" disabled></input>")
                                     colmd1.append(email_id_label);
                                     colmd2.append(email_id_input);
                 
@@ -616,6 +618,8 @@ function retrievePatientInfo(pat_name,contact_no,cnic_no){
         },
         url: '/retireve_patient_info',
         success: function(data){
+            console.log("patient_dict",data["patient_dict"])
+
             patient_dict=JSON.parse(data["patient_dict"])
             for (pat in patient_dict){
                 templist=[]
@@ -632,7 +636,8 @@ function retrievePatientInfo(pat_name,contact_no,cnic_no){
                 templist.push(patient_dict[pat]['email']);
                 datatable_list.push(templist)
             }
-            
+            createPatientDataTable()
+
             console.log("patient_dict",patient_dict);
             console.log(datatable_list)
         },
