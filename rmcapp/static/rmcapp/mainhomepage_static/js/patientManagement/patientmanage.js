@@ -639,6 +639,81 @@ function retrievePatientInfo(pat_name,contact_no,cnic_no){
     }); 
 
 }
+
+function viewPatientHistory(){
+    $('#main_page_content').empty()
+    var container_patient_dashboard= $('#main_page_content').append('<div class="container-fluid" id="container-patient-dashboard"></div>');
+    $("#container-patient-dashboard").append("<h2 class ='text-center'>Patient Information</h2>");
+    $("#container-patient-dashboard").append("<hr class='custom_hr'>");
+
+    var main_row_div= $("<div class='row is-flex'></div>");
+    $(container_patient_dashboard).append(main_row_div);
+
+    var main_col_div=$("<div class='col-md-12' id=''></div>");
+       
+    $(main_row_div).append(main_col_div);
+
+    var row_div_one=$("<div class='row'></div>");
+            // Patient Name
+            var col_one__row_div_one=$("<div class='col-md-6'></div>");
+                var row__col_one__row_div_one=$("<div class='row'></div>");
+                    colmd1=$("<div class='col-md-3'></div>")
+                    colmd2=$("<div class='col-md-6'></div>")
+
+                    pat_id_label=$("<label for='pat_id_tag' class='custom_label_css'>Patient ID</label>");
+                    colmd1.append(pat_id_label)
+                    pat_id_input=$("<input class='form-control' id='pat_id_input' class='custom_input_css'>")
+                    colmd2.append(pat_id_input)
+
+                row__col_one__row_div_one.append(colmd1);
+                row__col_one__row_div_one.append(colmd2);
+            col_one__row_div_one.append(row__col_one__row_div_one);
+
+            var col_two__row_div_one=$("<div class='col-md-6'></div>");
+                var row__col_two__row_div_one=$("<div class='row'></div>");
+                    colmd1=$("<div class='col-md-4'></div>")
+                    colmd2=$("<div class='col-md-6'></div>")
+
+                    var search_button=$('<button>Search Patient</button>')
+
+                    colmd1.append(search_button)
+
+                    row__col_two__row_div_one.append(colmd1);
+                col_two__row_div_one.append(row__col_two__row_div_one);
+        
+        $(row_div_one).append(col_one__row_div_one);
+        $(row_div_one).append(col_two__row_div_one);
+
+        var row_div_two=$("<div class='row' style='padding-top: 15px; padding-bottom: 15px;'></div>");
+                // last visit
+                    var col_one__row_div_two=$("<div class='col-md-6'></div>");
+                        var row__col_one__row_div_two=$("<div class='row'></div>");
+                            colmd1=$("<div class='col-md-2'></div>")
+                            colmd2=$("<div class='col-md-3'></div>")
+                           
+                            date_visit_label=$("<label class='custom_label_css'>Last Visit</label>");
+                            colmd1.append(date_visit_label)
+                            date_visit_input=$("<label class='form-control' id='gender_select' class='custom_input_css'>")
+                            colmd2.append(date_visit_input)
+                
+
+                        row__col_one__row_div_two.append(colmd1);
+                        row__col_one__row_div_two.append(colmd2);
+
+                    col_one__row_div_two.append(row__col_one__row_div_two);
+
+
+            $(row_div_two).append(col_one__row_div_two);
+
+
+$(main_col_div).append(row_div_one);
+$(main_col_div).append(row_div_two);
+
+
+
+    
+}
+
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== "") {
@@ -654,7 +729,6 @@ function getCookie(name) {
     }
     return cookieValue;
 }
-
 
 function csrfSafeMethod(method) {
     // these HTTP methods do not require CSRF protection

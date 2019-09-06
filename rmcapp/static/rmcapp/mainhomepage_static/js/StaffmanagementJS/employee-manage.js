@@ -23,7 +23,6 @@ function addEmployee(){
        
     $(main_row_div).append(main_col_div);
     //$(main_row_div).append(main_col_div1);
-
     var row_div_one=$("<div class='row'></div>");
             // Employee Name
             var col_one__row_div_one=$("<div class='col-md-6'></div>");
@@ -199,6 +198,9 @@ function addEmployee(){
 
                                 saveEmployeedataForm_button=$('<button class="btn btn-success btn-sm btn-block" onclick="saveEmployeeData()">Save</button>')
                                 colmd2.append(saveEmployeedataForm_button)
+
+
+
                                 
                                 row__col_two__row_div_five.append(colmd1)
                                 row__col_two__row_div_five.append(colmd2)
@@ -206,10 +208,8 @@ function addEmployee(){
                         col_two__row_div_five.append(row__col_two__row_div_five)
 
                     $(row_div_five).append(col_two__row_div_five);
-                        
-
-
-
+                
+                
 $(main_col_div).append(row_div_one);
 $(main_col_div).append(row_div_two);
 $(main_col_div).append(row_div_three);
@@ -590,7 +590,6 @@ function updateEmployeeData(){
     
 }
 
-
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== "") {
@@ -619,7 +618,3 @@ $.ajaxSetup({
         }
     }
 });
-
-
-   
-   
