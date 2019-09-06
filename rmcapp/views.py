@@ -1067,8 +1067,50 @@ def retrieveEmployeeInfo(request):
         return JsonResponse(data)
 
         
+def updatePatientData(request):
+    if request.method=="POST":
+        patient_id=request.POST.get('patient_id')
+        patient_id=json.loads(patient_id)
+        patient_id=int(patient_id)
 
-        
-        
-             
+        patient_name=request.POST.get('patient_name')
+        patient_name=json.loads(patient_name)
 
+        gender=request.POST.get('gender')
+        gender=json.loads(gender)
+
+        guardian=request.POST.get('guardian')
+        guardian=json.loads(guardian)
+
+        phone_number=request.POST.get('phone_number')
+        phone_number=json.loads(phone_number)
+
+        address=request.POST.get('address')
+        address=json.loads(address)
+
+        blood_group=request.POST.get('blood_group')
+        blood_group=json.loads(blood_group)
+        
+        email_address=request.POST.get('email_address')
+        email_address=json.loads(email_address)
+
+        cnic=request.POST.get('cnic')
+        cnic=json.loads(cnic)
+       
+        dob=request.POST.get('dob')
+        dob=json.loads(dob)
+
+
+        pat_obj=Patient.objects.get(id=patient_id)
+        # if pat_obj.pat_name!=patient_name:
+        pat_obj.pat_name=patient_name
+        pat_obj.phone_no=phone_number
+        pat_obj.gender=gender
+        pat_obj.guardian=guardian
+        pat_obj.dob=dob
+        pat_obj.address=address
+        pat_obj.email_address=email_address
+        pat_obj.bloodgroup=blood_group
+        pat_obj.cnic=cnic
+        pat_obj.save()
+        return JsonResponse({})

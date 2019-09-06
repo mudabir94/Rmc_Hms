@@ -605,7 +605,41 @@ function savePatientData(){
         },
     });
 }
+function updatePatientData(){
+    var patient_id=patient_id_selected;
+    var patient_name=$("#pat_name_input").val();
+    var contact_number=$("#contact_numb_input").val();
+    var gender=$("#gender_select").val();
+    var dob=$("#dob_input").val();
+    var cnic=$("#cnic_input").val();
+    var guardian=$("#guardian_input").val();
+    var address=$("#pat_address_input").val();
+    var blood_group=$("#blood_group_input").val();
+    var emial_id=$("#email_id_input").val();
+    $.ajax({
+        type: 'POST',
+        dataType: "json",
+        'data': {
+            "patient_id":JSON.stringify(patient_id),
+            "patient_name":JSON.stringify(patient_name),
+            "dob":JSON.stringify(dob),
+            "gender":JSON.stringify(gender),
+            "guardian":JSON.stringify(guardian),
+            "phone_number":JSON.stringify(contact_number),
+            "address":JSON.stringify(address),
+            "blood_group":JSON.stringify(blood_group),
+            'email_address':JSON.stringify(emial_id),
+            "cnic":JSON.stringify(cnic),
+        },
+        url: '/update_patient_data',
+        success: function(data){
+            console.log(data['Success']);
+        },
+    });
 
+
+    
+}
    
 function retrievePatientInfo(pat_name,contact_no,cnic_no){
     datatable_lst=[];

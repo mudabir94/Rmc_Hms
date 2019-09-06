@@ -31,6 +31,9 @@ urlpatterns = [
   path('retrieve_employee_type',views.retrieveEmployeeType,name="retrieve_employee_type"),
   path('retireve_patient_info',views.retirevePatientInfo,name="retireve_patient_info"),
   path('retrieve_employee_info',views.retrieveEmployeeInfo,name="retrieve_employee_info"),
+  
+  
+  path('update_patient_data',views.updatePatientData,name="update_patient_data"),
 
 
 
