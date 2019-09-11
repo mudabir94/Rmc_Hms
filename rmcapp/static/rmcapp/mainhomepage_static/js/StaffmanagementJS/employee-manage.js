@@ -255,17 +255,14 @@ function   retrieveEmployeeType(){
 }
 function editEmployee(){
     $('#main_page_content').empty()
-    var container_empl_dashboard= $('#main_page_content').append('<div class="container-fluid" id="container-empl-dashboard"></div>');
-    $("#container-empl-dashboard").append("<h2 class ='text-center'>Edit Employee Information</h2>");
-    $("#container-empl-dashboard").append("<hr class='custom_hr'>");
+    var container_empl_dashboard=$('<div class="container" id="container-empl-dashboard"></div>')
+    $('#main_page_content').append(container_empl_dashboard);
+    $(container_empl_dashboard).append("<h2 class ='text-center'>Edit Employee Information</h2>");
+    $(container_empl_dashboard).append("<hr class='custom_hr'>");
     var main_row_div= $("<div class='row is-flex'></div>");
-
-    $(container_empl_dashboard).append(main_row_div);
-    var main_col_div=$("<div class='col-md-12' id='main_col_div'></div>");
-    //var main_col_div1=$("<div class='col-md-6'></div>");
-       
-    $(main_row_div).append(main_col_div);
-    //$(main_row_div).append(main_col_div1);
+    container_empl_dashboard.append(main_row_div);
+    var main_col_div=$("<div class='col-md-12' id='main_col_div'></div>");       
+    main_row_div.append(main_col_div);
 
     var row_div_one=$("<div class='row'></div>");
             // Employee Name
@@ -442,6 +439,24 @@ function editEmployee(){
                         col_two__row_div_five.append(row__col_two__row_div_five)
 
                     $(row_div_five).append(col_two__row_div_five);
+
+        var row_div_six=$("<div class='row' style='padding-top: 15px;'></div>");
+            //update button
+                var col_two__row_div_six=$("<div class='col-md-12'></div>");
+                            var col_two__row_div_six=$("<div class='row'></div>");
+                                colmd1=$("<div class='col-md-2'></div>")
+                                colmd2=$("<div class='col-md-8'></div>")
+                                colmd3=$("<div class='col-md-2'></div>")
+
+                                print_button=$('<button class="btn btn-success btn-sm btn-block"  id="printbtn" onclick="printData()">print</button>')
+                                colmd2.append(print_button)
+                                
+                                col_two__row_div_six.append(colmd1)
+                                col_two__row_div_six.append(colmd2)
+                                col_two__row_div_six.append(colmd3)
+                                col_two__row_div_six.append(col_two__row_div_six)
+
+                    $(row_div_six).append(col_two__row_div_six);
                         
 
 
@@ -451,6 +466,7 @@ $(main_col_div).append(row_div_two);
 $(main_col_div).append(row_div_three);
 $(main_col_div).append(row_div_four);
 $(main_col_div).append(row_div_five);
+$(main_col_div).append(row_div_six);
 
 
 
@@ -472,6 +488,11 @@ $(main_col_div).append(row_div_five);
 
 
 }
+function printData()
+{
+
+}
+
 
 function saveEmployeeData(){
     var employee_name=$("#emp_name_input").val();
