@@ -32,15 +32,11 @@ urlpatterns = [
   path('retireve_patient_info',views.retirevePatientInfo,name="retireve_patient_info"),
   path('retrieve_employee_info',views.retrieveEmployeeInfo,name="retrieve_employee_info"),
   
-<<<<<<< HEAD
   path('view_patient_history',views.viewPatientHistory,name="view_patient_history"),
   
   path('update_patient_data',views.updatePatientData,name="update_patient_data"),
-=======
   
-  path('update_patient_data',views.updatePatientData,name="update_patient_data"),
   path('view_patient_history',views.viewPatientHistory,name="view_patient_history"),
->>>>>>> 083d639ca8bdd155fd74615564693fc76fec00c0
 
 
 
