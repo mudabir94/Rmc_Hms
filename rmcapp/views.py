@@ -10,7 +10,7 @@ from rmcapp.models import (
     despensoryStock,despensoryStockHistory,tt_Medicine_DespensoryStock,
     medicineBatches,
     packageType,
-    employeeType,Employee,Patient,
+    employeeType,Employee,Patient,patientMedRecords,
 )
 from django.http import HttpResponse, JsonResponse
 from .Controllers.MedControllers.MedController import MedicineController  
@@ -835,8 +835,18 @@ def saveMedicineToWhStock(request):
 
 
 
-
-        data={}
+        mwhs_objs=medicineWarehouseStock.objects.all().distinct()
+        medicine_batch_in_stock_list=[]
+        for mwhs_obj in mwhs_objs:
+            # print("mwhs_obj--",mwhs_obj.medicine.medicine_name)
+            medbatch_obj=medicineBatches.objects.get(medicine_strg=mwhs_obj)
+            if medbatch_obj.status=="Active":
+                medbatchno=medbatch_obj.batch_no
+                medname=mwhs_obj.medicine.medicine_name
+                medicine_batch_in_stock_list.append([medname,medbatchno])
+        data={
+            'medicine_batch_in_stock_list':medicine_batch_in_stock_list,
+        }
         return JsonResponse(data)
 
 def saveMedicineToWhStockBottle(request):
@@ -1148,3 +1158,33 @@ def updatePatientData(request):
         pat_obj.cnic=cnic
         pat_obj.save()
         return JsonResponse({})
+
+def retirevePatientMedHistory(request):
+    if request.method=="POST":
+        patient_id=request.POST.get('patient_id')
+        patient_id=int(patient_id)
+        # from patient med record 
+        # retrieve patient medical records where date is distinct and id=1
+        datelist=[]
+        pat_med_history_dict={}
+        pmr_objs=patientMedRecords.objects.filter(patient=patient_id)
+        for pmr_obj in pmr_objs:
+            temp_dict={}
+            datelist.append(str(pmr_obj.datevisited))
+            
+            temp_dict['blood_pressure']=pmr_obj.blood_pressure
+            prescription = [ int(x) for x in pmr_obj.prescription ]
+            med_obj=Medicine.objects.filter(id__in=prescription)
+            med_list=list(med_obj.values_list("medicine_name","weight"))
+            print("Med list",med_list)
+            temp_dict['prescription']=med_list
+          
+
+            pat_med_history_dict[str(pmr_obj.datevisited)]=temp_dict
+        print("pmr_objs",pmr_objs)
+        print("datelist",datelist)
+        data={
+            'datelist':datelist,
+            'pat_med_history_dict':pat_med_history_dict
+        }
+        return JsonResponse(data)

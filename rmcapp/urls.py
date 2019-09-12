@@ -30,6 +30,8 @@ urlpatterns = [
   path("retrieve_medicine_tempstock_from_tempstock",views.retrieveMedicineTempStockFromTempStock,name="retrieve_medicine_tempstock_from_tempstock"),
   path('retrieve_employee_type',views.retrieveEmployeeType,name="retrieve_employee_type"),
   path('retireve_patient_info',views.retirevePatientInfo,name="retireve_patient_info"),
+  path('retireve_patient_med_history',views.retirevePatientMedHistory,name="retireve_patient_med_history"),
+
   path('retrieve_employee_info',views.retrieveEmployeeInfo,name="retrieve_employee_info"),
   
   path('view_patient_history',views.viewPatientHistory,name="view_patient_history"),

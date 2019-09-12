@@ -11,6 +11,9 @@ var medicine_in_stock=[];
 var medicine_batch_in_stock_list=[];
 var medicine_name_type_list=[];
 var med_table_datatable;
+var medstck_datatable;
+var inactive_datatable;
+var medicine_batch_in_tempstock_list=[]
 
 $( document ).ready(function() {
     retrieveMedicineType();
@@ -43,7 +46,7 @@ function retrieveMedicineType(){
         success: function(data){
            
             medicine_type_list=data["medicine_type_list"];
-            console.log("success",medicine_type_list);
+            console.log("medicine_type_list",medicine_type_list);
         },
       
     });
@@ -101,7 +104,7 @@ function retrieveMedicineGenDataFromStock(){
             medicine_batch_in_stock_dict=JSON.parse(data["medicine_batch_in_stock_dict"])
             medicine_in_stock=data["medicine_in_stock"]
             medicine_batch_in_stock_list=data["medicine_batch_in_stock_list"]
-            console.log("medicine_batch_in_stock_list",medicine_batch_in_stock_list)
+            console.log("medicine_batch_in_stock_list***",medicine_batch_in_stock_list)
             console.log("medicine_batch_in_stock_dict",medicine_batch_in_stock_dict);
             console.log("medicine_in_stock",medicine_in_stock);
         },
@@ -449,7 +452,7 @@ function addMedicineToWhStockFrom(){
                 info:false,
 
             });
-
+console.log("ENter in DAta table",medicine_batch_in_stock_list)
         medstck_datatable=$("#med_in_stock").DataTable({
             data: medicine_batch_in_stock_list,
             columns: [
@@ -514,7 +517,7 @@ function focusOut_medicineName(element){
 
         $("#dates_row_div").remove();
 
-        if (med_name_type_dict[medicine_name]!=="Custom Syrup"){
+        if (med_name_type_dict[medicine_name]!=="CustomSyrup"){
             
             addRowDivTwo();
             addRowDivThree();
@@ -1080,13 +1083,15 @@ function saveMedicineToWhStock(){
                                 },
                                 url: '/save_medicine_to_wh_stock',
                                 success: function(data){
-                                    console.log(data['Success']);
+                                    medicine_batch_in_stock_list=data['medicine_batch_in_stock_list']
+                                    // retrieveMedicineGenDataFromStock()
                                 },
                             
                             });
                         
         
                         $( this ).dialog( "close" );
+
                         addMedicineToWhStockFrom();
         
                         },
@@ -1657,18 +1662,19 @@ function calculate_medPriceQuantity_Custom(){
 
 
 }
-var inactive_datatable;
-var medstck_datatable;
-var medicine_batch_in_tempstock_list=[]
+
 function addMedicineToDespStockForm(){
-    $("#med_in_stock").remove();
-    $("#med_in_temp_stock").remove();
+    retrieveMedicineType();
+    retrieveMedicineNames();
+    retrieveMedicineGenDataFromStock();
+    // $("#med_in_stock").remove();
+    // $("#med_in_temp_stock").remove();
+    console.log("medicine_batch_in_stock_list---",medicine_batch_in_stock_list)
+
     if (inactive_datatable!==undefined ){
         inactive_datatable.destroy();
     }
-    if (medstck_datatable!==undefined){
-        medstck_datatable.destroy();
-    }
+    
     $('#main_page_content').empty();
     var main_page_content= $('#main_page_content').append('<div class="container-fluid" id="container-med-dashboard"></div>');
     $("#container-med-dashboard").append("<h2>Add Medicine To Despensory</h2>");
@@ -1681,8 +1687,8 @@ function addMedicineToDespStockForm(){
     $(main_row_div).append(main_col_div_1);
     $(main_row_div).append(main_col_div_2);
     despMedFormMainColOne(main_col_div_1);
+
     despMedFormMainColTwo(main_col_div_2);
-    console.log("medicine_batch_in_stock_list",medicine_batch_in_stock_list)
     $(function(){
 
     medstck_datatable=$("#med_in_stock").DataTable({
@@ -1697,8 +1703,6 @@ function addMedicineToDespStockForm(){
             scrollX: true,
             ordering: true,
             info:false,
-
-
 
         });
 
@@ -1921,11 +1925,9 @@ function addAllstck(){
 
 function despMedFormMainColTwo(main_col_div_2){
     var row_div_one=$("<div class='row despstorage_second_col_div_three_rows' id='med_in_stock_table_row'></div>");
-        col_one__row_div_one=$("<div class='col '></div>");
-            row__col_one__row_div_one=$("<div class='row'></div>");
-                table=$('<table id="med_in_stock" class="display" width="100%"></table>')
-                
-                
+        var col_one__row_div_one=$("<div class='col '></div>");
+            var row__col_one__row_div_one=$("<div class='row'></div>");
+                var table=$('<table id="med_in_stock" class="display" width="100%"></table>')
                 
             row__col_one__row_div_one.append(table)
         col_one__row_div_one.append(row__col_one__row_div_one);         

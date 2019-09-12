@@ -260,11 +260,100 @@ function editEmployee(){
     $(container_empl_dashboard).append("<h2 class ='text-center'>Edit Employee Information</h2>");
     $(container_empl_dashboard).append("<hr class='custom_hr'>");
     var main_row_div= $("<div class='row is-flex'></div>");
-    container_empl_dashboard.append(main_row_div);
-    var main_col_div=$("<div class='col-md-12' id='main_col_div'></div>");       
-    main_row_div.append(main_col_div);
 
+    $(container_empl_dashboard).append(main_row_div);
+    var main_col_div=$("<div class='col-md-12' id='main_col_div'></div>");
+    //var main_col_div1=$("<div class='col-md-6'></div>");
+       
+    $(main_row_div).append(main_col_div);
+    //$(main_row_div).append(main_col_div1);
     var row_div_one=$("<div class='row'></div>");
+            // Patient Name
+            var col_one__row_div_one=$("<div class='col-md-4'></div>");
+                row__col_one__row_div_one=$("<div class='row'></div>");
+                    colmd1=$("<div class='col-md-4'></div>")
+                    colmd2=$("<div class='col-md-6'></div>")
+
+                    pat_name_label=$("<label for='emp_name_tag' class='custom_label_css'>Emplyee Name</label>");
+                    colmd1.append(pat_name_label)
+
+                    pat_name_input=$("<input class='form-control' id='search_emp_name_input' class='custom_input_css'>")
+
+                    colmd2.append(pat_name_input)
+
+                row__col_one__row_div_one.append(colmd1);
+                row__col_one__row_div_one.append(colmd2);
+            col_one__row_div_one.append(row__col_one__row_div_one);
+
+
+            // Contact Number
+
+            var col_two__row_div_one=$("<div class='col-md-4'></div>");
+                var row__col_two__row_div_one=$("<div class='row'></div>");
+                    colmd1=$("<div class='col-md-4'></div>")
+                    colmd2=$("<div class='col-md-6'></div>")
+
+                    contact_type_label=$("<label class='custom_label_css'>Contact Number</label>");
+                    colmd1.append(contact_type_label);
+                    contact_type_input=$("<input class='form-control custom_input_css' id='search_contact_numb_input'  placeholder='0312-3456789'></input>")
+                    colmd2.append(contact_type_input);
+
+                row__col_two__row_div_one.append(colmd1)
+                row__col_two__row_div_one.append(colmd2)
+            col_two__row_div_one.append(row__col_two__row_div_one)
+
+            var col_three__row_div_one=$("<div class='col-md-4'></div>");
+                var row__col_three__row_div_one=$("<div class='row'></div>");
+                    var colmd1=$("<div class='col-md-4'></div>")
+                    var colmd2=$("<div class='col-md-6'></div>")
+                        var cnic_label=$("<label class='custom_label_css'>CNIC</label>");
+                       
+                        var cnic_input=$("<input class='form-control custom_input_css' id='search_cnic_numb_input'></input>")
+                        colmd1.append(cnic_label);
+                        colmd2.append(cnic_input);
+
+                row__col_three__row_div_one.append(colmd1)
+                row__col_three__row_div_one.append(colmd2)
+            col_three__row_div_one.append(row__col_three__row_div_one)
+
+
+            $(row_div_one).append(col_one__row_div_one);
+            $(row_div_one).append(col_two__row_div_one);
+            $(row_div_one).append(col_three__row_div_one);
+
+        var row_div_two=$("<div class='row'></div>");
+            var col_one__row_div_two=$("<div class='col-md-4'></div>");
+            var col_two__row_div_two=$("<div class='col-md-4'></div>");
+            var col_three__row_div_two=$("<div class='col-md-4'></div>");
+                var row__col_three__row_div_two=$("<div class='row'></div>");
+                    var colmd1=$("<div class='col-md-12'></div>")
+                        var search_button=$('<button onclick="searchEmployee()">Search Emplyee</button>')
+                    colmd1.append(search_button)
+                row__col_three__row_div_two.append(colmd1);
+            col_three__row_div_two.append(row__col_three__row_div_two)
+
+        row_div_two.append(col_one__row_div_two)
+        row_div_two.append(col_two__row_div_two)
+        row_div_two.append(col_three__row_div_two)
+
+   
+
+
+
+    $(main_col_div).append(row_div_one);
+    $(main_col_div).append(row_div_two);
+
+
+  
+
+}
+function searchEmployee(){
+    $("#form-row").remove();
+   var form_row=$("<div class='row' id='form-row'></div>")
+        var form_col=$("<div class='col-md-12'></div>");
+    form_row.append(form_col)
+
+    var row_div_one=$("<div class='row' id='row_div_three_editpat'></div>");
             // Employee Name
             var col_one__row_div_one=$("<div class='col-md-6'></div>");
                 row__col_one__row_div_one=$("<div class='row'></div>");
@@ -301,7 +390,7 @@ function editEmployee(){
             $(row_div_one).append(col_one__row_div_one);
             $(row_div_one).append(col_two__row_div_one);
 
-        var row_div_two=$("<div class='row' style='padding-top: 15px; padding-bottom: 15px;'></div>");
+        var row_div_two=$("<div class='row' id='row_div_four_editpat' style='padding-top: 15px; padding-bottom: 15px;'></div>");
                 // Gender
                     var col_one__row_div_two=$("<div class='col-md-6'></div>");
                         var row__col_one__row_div_two=$("<div class='row'></div>");
@@ -347,7 +436,7 @@ function editEmployee(){
             $(row_div_two).append(col_three__row_div_two);
 
 
-        var row_div_three=$("<div class='row' style='padding-bottom: 15px;''></div>");
+        var row_div_three=$("<div class='row' id='row_div_five_editpat' style='padding-bottom: 15px;''></div>");
                 // Employee Type
                 var col_one__row_div_three=$("<div class='col-md-6'></div>");
                     row__col_one__row_div_three=$("<div class='row'></div>");
@@ -386,7 +475,7 @@ function editEmployee(){
              $(row_div_three).append(col_two__row_div_three);
 
                          
-        var row_div_four=$("<div class='row'></div>");
+        var row_div_four=$("<div class='row' id='row_div_six_editpat'></div>");
                     // Qualification
                     var col_one__row_div_four=$("<div class='col-md-6'></div>");
                         row__col_one__row_div_four=$("<div class='row'></div>");
@@ -422,7 +511,7 @@ function editEmployee(){
                 $(row_div_four).append(col_one__row_div_four);
                 $(row_div_four).append(col_two__row_div_four);
     
-        var row_div_five=$("<div class='row' style='padding-top: 15px;'></div>");
+        var row_div_five=$("<div class='row' id='row_div_seven_editpat'style='padding-top: 15px;'></div>");
             //update button
                 var col_two__row_div_five=$("<div class='col-md-12'></div>");
                             var row__col_two__row_div_five=$("<div class='row'></div>");
@@ -438,62 +527,37 @@ function editEmployee(){
                                 row__col_two__row_div_five.append(colmd3)
                         col_two__row_div_five.append(row__col_two__row_div_five)
 
-                    $(row_div_five).append(col_two__row_div_five);
+        $(row_div_five).append(col_two__row_div_five);
+                    
 
-        var row_div_six=$("<div class='row' style='padding-top: 15px;'></div>");
-            //update button
-                var col_two__row_div_six=$("<div class='col-md-12'></div>");
-                            var col_two__row_div_six=$("<div class='row'></div>");
-                                colmd1=$("<div class='col-md-2'></div>")
-                                colmd2=$("<div class='col-md-8'></div>")
-                                colmd3=$("<div class='col-md-2'></div>")
 
-                                print_button=$('<button class="btn btn-success btn-sm btn-block"  id="printbtn" onclick="printData()">print</button>')
-                                colmd2.append(print_button)
-                                
-                                col_two__row_div_six.append(colmd1)
-                                col_two__row_div_six.append(colmd2)
-                                col_two__row_div_six.append(colmd3)
-                                col_two__row_div_six.append(col_two__row_div_six)
-
-                    $(row_div_six).append(col_two__row_div_six);
-                        
+var main_col_div=$("#main_col_div")
+form_col.append(row_div_one);
+form_col.append(row_div_two);
+form_col.append(row_div_three);
+form_col.append(row_div_four);
+form_col.append(row_div_five);
+main_col_div.append(form_row)
 
 
 
-$(main_col_div).append(row_div_one);
-$(main_col_div).append(row_div_two);
-$(main_col_div).append(row_div_three);
-$(main_col_div).append(row_div_four);
-$(main_col_div).append(row_div_five);
-$(main_col_div).append(row_div_six);
+$( "#dob_input" ).datepicker({
+    changeMonth: true,
+    changeYear: true,
+    dateFormat: "yy-mm-dd",
 
+    });
 
-
-        $( "#dob_input" ).datepicker({
-            changeMonth: true,
-            changeYear: true,
-            dateFormat: "yy-mm-dd",
-
-            });
-        
-            available_tags = [
-                "Male",
-                "Female",
-                "Other"
-              ];
-              $( "#gender_input" ).autocomplete({
-                source: available_tags
-              });
-
+    available_tags = [
+        "Male",
+        "Female",
+        "Other"
+      ];
+      $( "#gender_input" ).autocomplete({
+        source: available_tags
+      });
 
 }
-function printData()
-{
-
-}
-
-
 function saveEmployeeData(){
     var employee_name=$("#emp_name_input").val();
     var inputs = $("#main_col_div").find($("input") );
