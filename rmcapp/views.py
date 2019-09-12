@@ -1188,3 +1188,10 @@ def retirevePatientMedHistory(request):
             'pat_med_history_dict':pat_med_history_dict
         }
         return JsonResponse(data)
+
+class printPatientPrescription(TemplateView):
+    template_path_name="rmcapp/patient_dashboard_template/patient_pres.html"
+    def get(self,request):
+        return render(request,self.template_path_name)
+    def post(self,request):
+        pass
