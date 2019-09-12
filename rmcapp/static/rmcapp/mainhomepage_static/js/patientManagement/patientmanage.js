@@ -894,6 +894,46 @@ function searchPatientMedHistory(){
         }
     });
 }
+function printPatientPrescription(){
+    $('#main_page_content').empty()
+    var container_patient_prescription= $('#main_page_content').append('<div class="container-fluid" id="container-patient-prescription"></div>');
+    $("#container-patient-prescription").append("<h2 class ='text-center'>R M C</h2>");
+    $("#container-patient-prescription").append("<hr class='custom_hr'>");
+
+    var main_row_div= $("<div class='row is-flex'></div>");
+
+    $(container_patient_prescription).append(main_row_div);
+    var main_col_div=$("<div class='col-md-12' id=''></div>");
+       
+    $(main_row_div).append(main_col_div);
+
+    var row_div_one=$("<div class='row'></div>");
+            // Print button
+            var col_one__row_div_one=$("<div class='col-md-6'></div>");
+                row__col_one__row_div_one=$("<div class='row'></div>");
+                    colmd1=$("<div class='col-md-4'></div>")
+                    colmd2=$("<div class='col-md-4'></div>")
+                    colmd3=$("<div class='col-md-4'></div>")
+
+
+                    print_patient_pres_a=$("<a>print</a>")
+                    print_patient_pres_a.attr('href','/print_patient_prescription')
+                    colmd2.append(print_patient_pres_a)
+
+                row__col_one__row_div_one.append(colmd2);
+            col_one__row_div_one.append(row__col_one__row_div_one);
+
+    $(row_div_one).append(col_one__row_div_one);
+
+$(main_col_div).append(row_div_one);
+
+}
+
+function printPatientPres(){
+    
+    
+
+}
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== "") {
