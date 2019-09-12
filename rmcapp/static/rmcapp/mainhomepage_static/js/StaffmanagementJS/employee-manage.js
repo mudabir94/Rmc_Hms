@@ -255,9 +255,10 @@ function   retrieveEmployeeType(){
 }
 function editEmployee(){
     $('#main_page_content').empty()
-    var container_empl_dashboard= $('#main_page_content').append('<div class="container-fluid" id="container-empl-dashboard"></div>');
-    $("#container-empl-dashboard").append("<h2 class ='text-center'>Edit Employee Information</h2>");
-    $("#container-empl-dashboard").append("<hr class='custom_hr'>");
+    var container_empl_dashboard=$('<div class="container" id="container-empl-dashboard"></div>')
+    $('#main_page_content').append(container_empl_dashboard);
+    $(container_empl_dashboard).append("<h2 class ='text-center'>Edit Employee Information</h2>");
+    $(container_empl_dashboard).append("<hr class='custom_hr'>");
     var main_row_div= $("<div class='row is-flex'></div>");
 
     $(container_empl_dashboard).append(main_row_div);
@@ -689,7 +690,6 @@ function getCookie(name) {
     }
     return cookieValue;
 }
-
 
 function csrfSafeMethod(method) {
     // these HTTP methods do not require CSRF protection
