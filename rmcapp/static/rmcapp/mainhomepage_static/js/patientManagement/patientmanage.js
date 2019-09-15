@@ -8,6 +8,8 @@ var patient_dict={};
 var datelist=[]
 var pat_med_history_dict={}
 var prescription_datatable;
+var datatable_list=[]
+
 $( document ).ready(function() {
 });
 
@@ -324,7 +326,6 @@ function EditPatient(){
 
   
 }
-var datatable_list=[]
 function editPatientRowDivThreeCreation(){
     var main_col_div=$("#main_col_div");
     var row_div_three=$("<div class='row' id='row_div_three'></div>");
@@ -466,7 +467,7 @@ function createPatientDataTable(){
                                     var colmd1=$("<div class='col-md-4'></div>")
                                     var colmd2=$("<div class='col-md-6'></div>")
                                         var cnic_label=$("<label class='custom_label_css'>CNIC/Guardian CNIC</label>");
-                                        var cnic_input=$("<input class='form-control' id='cnic_input' class='custom_input_css' placeholder='xxxxx-xxxxxxx-x' value='"+patient_dict[patient_id_selected]['cnic']+"' disabled></input>")
+                                        var cnic_input=$("<input class='form-control' id='cnic_input' class='custom_input_css' placeholder='xxxxx-xxxxxxx-x' value='"+patient_dict[patient_id_selected]['cnic']+"'></input>")
                                     colmd1.append(cnic_label);
                                     colmd2.append(cnic_input);
             
@@ -518,7 +519,7 @@ function createPatientDataTable(){
                                     var colmd2=$("<div class='col-md-6'></div>")
             
                                         blood_group_label=$("<label for='blood_group_tag' class='custom_label_css'>Blood group</label>");
-                                        bloodgroup_input=$("<input class='form-control' id='blood_group_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['bloodgroup']+"' disabled>")
+                                        bloodgroup_input=$("<input class='form-control' id='blood_group_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['bloodgroup']+"'>")
                                     colmd1.append(blood_group_label)
                                     colmd2.append(bloodgroup_input) 
             
@@ -531,7 +532,7 @@ function createPatientDataTable(){
                                     var colmd2=$("<div class='col-md-6'></div>")
                 
                                         var email_id_label=$("<label class='custom_label_css'>Email Address</label>");
-                                        var email_id_input=$("<input class='form-control' id='email_id_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['email']+"' disabled></input>")
+                                        var email_id_input=$("<input class='form-control' id='email_id_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['email']+"'></input>")
                                     colmd1.append(email_id_label);
                                     colmd2.append(email_id_input);
                 

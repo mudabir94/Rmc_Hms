@@ -49,3 +49,9 @@ border: none;
 .desp_col_div_rows{
     padding-bottom: 10px;
 }
+
+.dashboard-icons{
+    width:500px;
+    height:500px;
+    background:grey;
+}

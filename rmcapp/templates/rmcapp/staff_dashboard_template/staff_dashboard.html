@@ -36,9 +36,26 @@
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
  
     <script src="{% static 'rmcapp/mainhomepage_static/js/StaffmanagementJS/employee-manage.js' %}"></script>
-    <script src="{% static 'rmcapp/mainhomepage_static/js/jsprint/jQuery.print.js' %}"></script>
+    <!-- <script src="{% static 'rmcapp/mainhomepage_static/js/jsprint/jQuery.print.js' %}"></script> -->
 
     <!-- <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script> -->
+    <style>
+    
+    .dashboard-icons{
+            width:100%;
+            border-radius: 2px;
+            height:200px;
+            background:#b0b0b0;
+            box-shadow: 0 0 5px 3px #555;
+        }
+        .dashboard-icon-rows{
+          padding:10px;
+        }
+        .dashboard-icons:hover{
+          background:grey;
+
+        }
+    </style>
 </head>
 
 <body>
@@ -176,6 +193,35 @@
             It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
             It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
             and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
+        </div>
+      </div>
+      
+      <div class="row">
+          <div class="col-md-12">
+        
+            <div class="row dashboard-icon-rows">
+                <div class="col-md-4" >
+                    <div class="dashboard-icons"></div>
+                </div>
+                <div class="col-md-4">
+                  <div class='dashboard-icons'></div>
+                </div>
+                <div class="col-md-4">
+                  <div class='dashboard-icons'></div>
+                </div>
+            </div>
+
+            <div class="row dashboard-icon-rows" >
+                <div class="col-md-4" >
+                    <div class="dashboard-icons" ></div>
+                </div>
+                <div class="col-md-4">
+                  <div class='dashboard-icons'></div>
+                </div>
+                <div class="col-md-4">
+                  <div class='dashboard-icons'></div>
+                </div>
+            </div>
         </div>
       </div>
    

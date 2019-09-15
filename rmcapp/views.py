@@ -611,6 +611,8 @@ def saveEmployeeData(request):
         phone_number = json.loads(phone_number)
         address = json.loads(address)
         qualification = json.loads(qualification)
+        employee_type = json.loads(employee_type)
+
         email_address = json.loads(email_address)
         cnic = json.loads(cnic)
 
@@ -622,7 +624,8 @@ def saveEmployeeData(request):
         print("employee_type",employee_type)
         
         emp_obj=Employee()
-        emp_obj.employee_type=employee_type.objects.get(type_name="Doctor")
+        emptype_obj=employeeType.objects.get(type_name=employee_type)
+        emp_obj.employee_type=emptype_obj
         emp_obj.name=name
         emp_obj.dob=dob
         emp_obj.gender=gender
@@ -1055,28 +1058,6 @@ def retirevePatientInfo(request):
         }
         return JsonResponse(data)
 
-def retrieveEmployeeInfo(request):
-    if request.method=="GET":
-        emp_obj=Employee.objects.get(id=1)
-        print("emp_obj",emp_obj)
-        employee_info_dict={}
-        employee_info_dict['name']=emp_obj.name
-        employee_info_dict['dob']=str(emp_obj.dob)
-        employee_info_dict['gender']=emp_obj.gender
-        employee_info_dict['phone']=emp_obj.phone_no
-        employee_info_dict['address']=emp_obj.address
-        employee_info_dict['qualification']=emp_obj.qualification
-        employee_info_dict['email']=emp_obj.email_address
-        employee_info_dict['employee_type']="Doctor"
-        employee_info_dict['cnic']=emp_obj.cnic
-
-
-        print(employee_info_dict)
-
-        data={
-            "employee_info_dict":json.dumps(employee_info_dict),
-        }
-        return JsonResponse(data)
 
 def viewPatientHistory(request):
     if request.method=="GET":
@@ -1195,3 +1176,91 @@ class printPatientPrescription(TemplateView):
         return render(request,self.template_path_name)
     def post(self,request):
         pass
+
+
+
+def retrieveEmployeeInfo(request):
+    if request.method=="GET":
+
+        emp_name=request.GET.get("emp_name")
+        # contact_no=request.GET.get("contact_no")
+        # cnic=request.GET.get("cnic_no")
+        
+        # contact_no=""
+        # cnic=""
+        emp_objs=Employee.objects.filter(name__icontains=emp_name)
+
+
+        print("emp_objs",emp_objs)
+        employee_dict={}
+        for emp_obj in emp_objs:
+            employee_info_dict={}
+            employee_info_dict['name']=emp_obj.name
+            employee_info_dict['dob']=str(emp_obj.dob)
+            employee_info_dict['gender']=emp_obj.gender
+            employee_info_dict['phone']=emp_obj.phone_no
+            employee_info_dict['address']=emp_obj.address
+            employee_info_dict['qualification']=emp_obj.qualification
+            employee_info_dict['email']=emp_obj.email_address
+            employee_info_dict['employee_type']="Doctor"
+            employee_info_dict['cnic']=emp_obj.cnic
+            employee_dict[emp_obj.id]=[]
+            employee_dict[emp_obj.id]=employee_info_dict
+
+        print(employee_dict)
+
+        data={
+            "employee_dict":json.dumps(employee_dict),
+        }
+        return JsonResponse(data)
+
+
+
+def updateEmployeeData(request):
+    if request.method=="POST":
+        employee_id=request.POST.get('employee_id')
+        employee_id=json.loads(employee_id)
+        employee_id=int(employee_id)
+        print("employee_id",employee_id)
+
+        employee_name=request.POST.get('employee_name')
+        employee_name=json.loads(employee_name)
+
+        gender=request.POST.get('gender')
+        gender=json.loads(gender)
+
+        employee_type=request.POST.get('employee_type')
+        employee_type=json.loads(employee_type)
+
+        phone_number=request.POST.get('phone_number')
+        phone_number=json.loads(phone_number)
+
+        address=request.POST.get('address')
+        address=json.loads(address)
+
+        qualification=request.POST.get('qualification')
+        qualification=json.loads(qualification)
+        
+        email_address=request.POST.get('email_address')
+        email_address=json.loads(email_address)
+
+        cnic=request.POST.get('cnic')
+        cnic=json.loads(cnic)
+       
+        dob=request.POST.get('dob')
+        dob=json.loads(dob)
+
+
+        emp_obj=Employee.objects.get(id=employee_id)
+        emp_obj.name=employee_name
+        emp_obj.phone_no=phone_number
+        emp_obj.gender=gender
+        emptype_obj=employeeType.objects.get(type_name=employee_type)
+        emp_obj.employee_type=emptype_obj
+        emp_obj.dob=dob
+        emp_obj.address=address
+        emp_obj.email_address=email_address
+        emp_obj.qualification=qualification
+        emp_obj.cnic=cnic
+        emp_obj.save()
+        return JsonResponse({})
