@@ -1409,7 +1409,92 @@ function generatePrescription(){
     $(main_col_div).append(row_div_two);
 }
 
-
+function createPatientBill(){
+        $('#main_page_content').empty()
+        var container_patient_prescription= $('#main_page_content').append('<div class="container-fluid" id="container-patient-bill"></div>');
+        $("#container-patient-bill").append("<h2 class ='text-center'>Pateint Bill</h2>");
+        $("#container-patient-bill").append("<hr class='custom_hr'>");
+    
+        var main_row_div= $("<div class='row is-flex'></div>");
+    
+        $(container_patient_prescription).append(main_row_div);
+        var main_col_div=$("<div class='col-md-12' id='main_col_div'></div>");
+           
+        $(main_row_div).append(main_col_div);
+    
+        var row_div_one=$("<div class='row'></div>");
+            // Patient Name
+            var col_one__row_div_one=$("<div class='col-md-4'></div>");
+            row__col_one__row_div_one=$("<div class='row'></div>");
+                colmd1=$("<div class='col-md-4'></div>")
+                colmd2=$("<div class='col-md-6'></div>")
+                
+                colmd3=$("<div class='col-md-2'></div>")
+    
+    
+                pat_id_label=$("<label for='emp_name_tag' class='custom_label_css'>Patient id</label>");
+                colmd1.append(pat_id_label)
+    
+                pat_id_input=$("<input class='form-control' id='search_patient_id' class='custom_input_css'>")
+    
+                colmd2.append(pat_id_input);
+                var search_button=$('<button onclick="searchPatientInCreateBill()">Search Patient</button>');
+                colmd3.append(search_button);
+    
+    
+            row__col_one__row_div_one.append(colmd1);
+            row__col_one__row_div_one.append(colmd2);
+            row__col_one__row_div_one.append(colmd3);
+    
+            col_one__row_div_one.append(row__col_one__row_div_one);
+        row_div_one.append(col_one__row_div_one);
+    $(main_col_div).append(row_div_one);
+    
+    
+    
+    
+    
+    }
+    
+    function searchPatientInCreateBill(){
+            retrievePatientInfoInCreateBill("","","","1")    
+    }
+    function retrievePatientInfoInCreateBill(pat_name,contact_no,cnic_no,id){
+        datatable_lst=[];
+        $.ajax({
+            type: 'GET',
+            dataType: "json",
+            'data': {
+              "id":id,
+            },
+            url: '/retrieve_patient_info_in_createbill',
+            success: function(data){
+                console.log("patient_dict",data["patient_dict"])
+                patient_dict={};
+                patient_dict=JSON.parse(data["patient_dict"])
+                patient_id_selected=JSON.parse(data["id"])
+                for (pat in patient_dict){
+                    templist=[]
+                    console.log("pat",pat);
+                    templist.push(pat)
+                    templist.push(patient_dict[pat]['name'])
+                    templist.push(patient_dict[pat]['contact_no'])
+                   templist.push(patient_dict[pat]['gender'])
+                    templist.push(patient_dict[pat]['dob'])
+                     templist.push(patient_dict[pat]['cnic'])
+                    templist.push(patient_dict[pat]['guardian'])
+                    templist.push(patient_dict[pat]['address'])
+                    templist.push(patient_dict[pat]['bloodgroup'])
+                    templist.push(patient_dict[pat]['email']);
+                    datatable_list.push(templist)
+                }
+                console.log("patient_dict",patient_dict[patient_id_selected]);
+                console.log(datatable_list);
+                createPatientDetailsHtmlInCreateBill();
+            },
+        }); 
+    
+    }
 function createPatientDetailsHtmlInCreateBill(){
     var row_div_two=$("<div class='row' id='row_div_two'></div>");
         var main_subcol=$("<div class='col-md-12'></div>");

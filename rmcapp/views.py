@@ -1094,10 +1094,41 @@ def retirevePatientInfo(request):
 
         data={
             "patient_dict":json.dumps(patient_dict),
-            'id':str(id),
+            # 'id':str(id),
         }
         return JsonResponse(data)
 
+
+def retrievePatientInfoInPatientBill(request):
+   if request.method=="GET":
+      
+        id=request.GET.get("id")
+
+      
+        pat_obj=Patient.objects.get(id=1)
+    
+        patient_dict={}
+        patient_info_dict={}
+        patient_info_dict['name']=pat_obj.pat_name
+        patient_info_dict['contact_no']=pat_obj.phone_no
+        patient_info_dict['gender']=pat_obj.gender
+        patient_info_dict['dob']=str(pat_obj.dob)
+        patient_info_dict['cnic']=pat_obj.cnic
+        patient_info_dict['guardian']=pat_obj.guardian
+        patient_info_dict['address']=pat_obj.address
+        patient_info_dict['bloodgroup']=pat_obj.bloodgroup
+        patient_info_dict['email']=pat_obj.email_address
+        patient_dict[pat_obj.id]=[]
+        patient_dict[pat_obj.id]=patient_info_dict
+        print("patient_dict",patient_dict)
+
+
+
+        data={
+            "patient_dict":json.dumps(patient_dict),
+            'id':str(id),
+        }
+        return JsonResponse(data)
 
 def viewPatientHistory(request):
     if request.method=="GET":
@@ -1366,7 +1397,6 @@ def retrieveMedicineFromDesp(request):
             'dspstck_dict':json.dumps(dspstck_dict),
         }
         return JsonResponse(data)
-
 
 
 

@@ -51,5 +51,7 @@ urlpatterns = [
   path('update_employee_data',views.updateEmployeeData,name="update_employee_data"),
   
   path('retireve_patient_info_in_pres_form',views.retrievePatientInfoInPresForm,name='retireve_patient_info_in_pres_form'),
+  path('retrieve_patient_info_in_createbill',views.retrievePatientInfoInPatientBill,name='retrieve_patient_info_in_createbill'),
+
 
 ]
