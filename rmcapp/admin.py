@@ -11,8 +11,15 @@ Medicine,medicineCategory,Category,
 medicineWarehouseStock,medicineWhStockHistory,
 tt_MedicineMedWhStock,tt_tempMedWhStk_Med,
 packageType,User,Role,employeeType,
-despensoryStock,despensoryStockHistory,tt_Medicine_DespensoryStock,tempDespensoryStock,despensoryMedincineBatch,
-medicineBatches,Patient,Employee,tokenRecords,patientBillRecords,patientMedRecords)
+despensoryStock,despensoryStockHistory,
+tt_Medicine_DespensoryStock,
+tempDespensoryStock,despensoryMedincineBatch,
+medicineBatches,Patient,
+Employee,tokenRecords,patientBillRecords,
+patientMedRecords,patientType,patPrescriptionBill,
+patientAddChargesBill,patientBillSummary,
+Rooms,patientRoomsBill,Ward,patientWardBill,
+patientVisitSummary)
 
 
 class RoleAdmin (admin.ModelAdmin):
@@ -91,15 +98,34 @@ class EmployeeAdmin(admin.ModelAdmin):
 class tokenRecordsAdmin(admin.ModelAdmin):
     list_display=("id","patient","token_no")
 class patientBillRecordsAdmin(admin.ModelAdmin):
-    list_display=("id","patient","desp","boxes_stored","strips_stored","pieces_stored","datevisited")
+    list_display=("id","patient","desp","boxes_stored","strips_stored","pieces_stored",'amount',"datevisited")
 class patientMedRecordsAdmin(admin.ModelAdmin):
     list_display=("id","patient","emp_doc","blood_pressure","prescription","datevisited")
 
 class employeeTypeAdmin(admin.ModelAdmin):
     list_display=("id","type_name")
-
-
-
+class patientTypeAdmin(admin.ModelAdmin):
+    list_display=('id','patient_type','charges')
+class patPrescriptionBillAdmin(admin.ModelAdmin):
+    list_display=('id','patient','patient_type','doc','discount','discount_percentage',\
+        'amount_due','patient_paid','patient_change')
+class patientAddChargesBillAdmin(admin.ModelAdmin):
+    list_display=('id','patient','patient_type','amount')
+class patientBillSummaryAdmin(admin.ModelAdmin):
+    list_display=('id','patient','patient_type','despcharge_bill',\
+        'addcharge_bill','total_med_bill','actual_med_bill','pres_plus_totalmedbill',\
+        'amount_due','profit_or_loss','patient_paid','patient_change')
+class RoomsAdmin(admin.ModelAdmin):
+    list_display=('id','floor','room_no','charge_per_day','ac_charge_per_day','status')
+class patientRoomsBillAdmin(admin.ModelAdmin):
+    list_display=('id','patient','floor','room_no','charge_per_day','ac_charge_per_day',\
+        'checkin','checkout','amount')
+class WardAdmin(admin.ModelAdmin):
+    list_display=('id','ward_no','bed_no','charge_per_day','status')
+class patientWardBillAdmin(admin.ModelAdmin):
+    list_display=('id','patient','ward_no','bed_no','charge_per_day','amount')
+class patientVisitSummaryAdmin(admin.ModelAdmin):
+    list_display=('id','pmr','pbr','checkin','checkout','illness','consultant')
 
 admin.site.register(medicineType, medicineTypeAdmin)
 admin.site.register(packageType, packageTypeAdmin)
@@ -111,15 +137,11 @@ admin.site.register(medicineWhStockHistory, medicineWhStockHistoryAdmin)
 admin.site.register(tt_MedicineMedWhStock, tt_MedicineMedWhStockAdmin)
 admin.site.register(tt_tempMedWhStk_Med, tt_tempMedWhStk_MedAdmin)
 admin.site.register(medicineBatches, medicineBatchesAdmin)
-
-
 admin.site.register(despensoryStock, despensoryStockAdmin)
 admin.site.register(despensoryStockHistory, despensoryStockHistoryAdmin)
 admin.site.register(tempDespensoryStock, tempDespensoryStockAdmin)
 admin.site.register(despensoryMedincineBatch, despensoryMedincineBatchAdmin)
 admin.site.register(tt_Medicine_DespensoryStock, tt_Medicine_DespensoryStockAdmin)
-
-
 admin.site.register(Patient, patientAdmin)
 admin.site.register(Employee, EmployeeAdmin)
 admin.site.register(employeeType, employeeTypeAdmin)
@@ -128,6 +150,17 @@ admin.site.register(patientBillRecords, patientBillRecordsAdmin)
 admin.site.register(patientMedRecords, patientMedRecordsAdmin)
 admin.site.register(User, UserAdmin)
 admin.site.register(Role, RoleAdmin)
+admin.site.register(patientType, patientTypeAdmin)
+admin.site.register(patPrescriptionBill, patPrescriptionBillAdmin)
+admin.site.register(patientAddChargesBill, patientAddChargesBillAdmin)
+admin.site.register(patientBillSummary, patientBillSummaryAdmin)
+admin.site.register(Rooms, RoomsAdmin)
+admin.site.register(patientRoomsBill, patientRoomsBillAdmin)
+admin.site.register(Ward, WardAdmin)
+admin.site.register(patientWardBill, patientWardBillAdmin)
+
+
+
 
 
 

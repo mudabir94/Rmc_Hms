@@ -1030,9 +1030,10 @@ def retirevePatientInfo(request):
         pat_name=request.GET.get("pat_name")
         contact_no=request.GET.get("contact_no")
         cnic=request.GET.get("cnic")
-
+        id=request.GET.get("id")
+        id=int(id)
         #phone_no=contact_no,cnic=cnic_no
-        pat_objs=Patient.objects.filter(Q(pat_name=pat_name) | Q(phone_no=contact_no) | Q(cnic=cnic))
+        pat_objs=Patient.objects.filter(Q(pat_name=pat_name) | Q(phone_no=contact_no) | Q(cnic=cnic)| Q(id=id))
         # pat_obj=Patient.objects.get(id=1)
         print("pat_objs",pat_objs)
         patient_dict={}
@@ -1055,6 +1056,7 @@ def retirevePatientInfo(request):
 
         data={
             "patient_dict":json.dumps(patient_dict),
+            'id':str(id),
         }
         return JsonResponse(data)
 
@@ -1264,3 +1266,65 @@ def updateEmployeeData(request):
         emp_obj.cnic=cnic
         emp_obj.save()
         return JsonResponse({})
+
+
+def retireveAllDespMed(request):
+    if request.method=="GET":
+        dspstckobjs=despensoryStock.objects.filter(status='In Use')
+        print("despensoryStock",dspstckobjs)
+        dspstck_dict={}
+        for dspstck in dspstckobjs:
+            tempdspstck_dict={}
+            tempdspstck_dict['name']=dspstck.medicine.medicine_name
+            tempdspstck_dict['boxes_stored']=dspstck.box_stored
+            tempdspstck_dict['strip_stored']=dspstck.strip_stored
+            tempdspstck_dict['piece_stored']=dspstck.piece_stored
+            tempdspstck_dict['piece_price_unit']=dspstck.piece_price_unit
+            dspstck_dict[dspstck.id]=[]
+            dspstck_dict[dspstck.id]=tempdspstck_dict
+        data={
+            'dspstck_dict':json.dumps(dspstck_dict),
+        }
+
+        print("dspstck_dict",dspstck_dict)
+        return JsonResponse(data)
+
+def retrieveMedicineFromDesp(request):
+    if request.method=='GET':
+        medid=request.GET.get('medicine_id')
+        pieces_wanted=request.GET.get('pieces_wanted')
+        medObj=Medicine.objects.get(id=3)
+        # if medObj.AddCharge=='No' then add zero to amount
+        despstckObj=despensoryStock.objects.get(medicine=medObj)
+        desp_piece=despstckObj.piece_stored
+        pieces_wanted=int(pieces_wanted)
+        
+        despstckObj.piece_stored=desp_piece-pieces_wanted
+        price=despstckObj.piece_price_unit*pieces_wanted
+        amount=0
+        despstckObj.save()
+
+        main_list=['1',medObj.medicine_name,'0','0',pieces_wanted,price,amount]
+        dspstckobjs=despensoryStock.objects.filter(status='In Use')
+        print("despensoryStock",dspstckobjs)
+        dspstck_dict={}
+        for dspstck in dspstckobjs:
+            tempdspstck_dict={}
+            tempdspstck_dict['name']=dspstck.medicine.medicine_name
+            tempdspstck_dict['boxes_stored']=dspstck.box_stored
+            tempdspstck_dict['strip_stored']=dspstck.strip_stored
+            tempdspstck_dict['piece_stored']=dspstck.piece_stored
+            tempdspstck_dict['piece_price_unit']=dspstck.piece_price_unit
+            dspstck_dict[dspstck.id]=[]
+            dspstck_dict[dspstck.id]=tempdspstck_dict
+
+        data={
+            'main_list':main_list,
+            'dspstck_dict':json.dumps(dspstck_dict),
+        }
+        return JsonResponse(data)
+
+
+
+
+

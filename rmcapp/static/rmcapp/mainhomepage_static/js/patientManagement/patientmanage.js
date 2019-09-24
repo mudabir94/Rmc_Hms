@@ -353,7 +353,8 @@ function searchPatient(){
     if (pat_datatable!==undefined){
         pat_datatable.destroy();
     }
-    retrievePatientInfo(pat_name,contact_no,cnic_no)
+    id=""
+    retrievePatientInfo(pat_name,contact_no,cnic_no,id)
     // list= [["1","Ali","03009420002","35202-0000122-1","Lahore"],["2","Ahmad","03119420002","35202-7268122-1","Lahore"]] 
 
     
@@ -665,7 +666,7 @@ function updatePatientData(){
     
 }
    
-function retrievePatientInfo(pat_name,contact_no,cnic_no){
+function retrievePatientInfo(pat_name,contact_no,cnic_no,id){
     datatable_lst=[];
 
     $.ajax({
@@ -673,6 +674,7 @@ function retrievePatientInfo(pat_name,contact_no,cnic_no){
         dataType: "json",
         'data': {
           "pat_name":pat_name,
+          "id":id,
         },
         url: '/retireve_patient_info',
         success: function(data){
@@ -702,6 +704,8 @@ function retrievePatientInfo(pat_name,contact_no,cnic_no){
     }); 
 
 }
+
+
 
 function viewPatientHistory(){
     $('#main_page_content').empty()
@@ -930,10 +934,490 @@ $(main_col_div).append(row_div_one);
 
 }
 
-function printPatientPres(){
-    
-    
 
+
+function createPatientBill(){
+    $('#main_page_content').empty()
+    var container_patient_prescription= $('#main_page_content').append('<div class="container-fluid" id="container-patient-bill"></div>');
+    $("#container-patient-bill").append("<h2 class ='text-center'>Pateint Bill</h2>");
+    $("#container-patient-bill").append("<hr class='custom_hr'>");
+
+    var main_row_div= $("<div class='row is-flex'></div>");
+
+    $(container_patient_prescription).append(main_row_div);
+    var main_col_div=$("<div class='col-md-12' id='main_col_div'></div>");
+       
+    $(main_row_div).append(main_col_div);
+
+    var row_div_one=$("<div class='row'></div>");
+        // Patient Name
+        var col_one__row_div_one=$("<div class='col-md-4'></div>");
+        row__col_one__row_div_one=$("<div class='row'></div>");
+            colmd1=$("<div class='col-md-4'></div>")
+            colmd2=$("<div class='col-md-6'></div>")
+            
+            colmd3=$("<div class='col-md-2'></div>")
+
+
+            pat_id_label=$("<label for='emp_name_tag' class='custom_label_css'>Patient id</label>");
+            colmd1.append(pat_id_label)
+
+            pat_id_input=$("<input class='form-control' id='search_patient_id' class='custom_input_css'>")
+
+            colmd2.append(pat_id_input);
+            var search_button=$('<button onclick="searchPatientInCreateBill()">Search Patient</button>');
+            colmd3.append(search_button);
+
+
+        row__col_one__row_div_one.append(colmd1);
+        row__col_one__row_div_one.append(colmd2);
+        row__col_one__row_div_one.append(colmd3);
+
+        col_one__row_div_one.append(row__col_one__row_div_one);
+    row_div_one.append(col_one__row_div_one);
+$(main_col_div).append(row_div_one);
+
+
+
+
+
+}
+
+function searchPatientInCreateBill(){
+        retrievePatientInfoInCreateBill("","","","1")    
+}
+function retrievePatientInfoInCreateBill(pat_name,contact_no,cnic_no,id){
+    datatable_lst=[];
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        'data': {
+          "id":id,
+        },
+        url: '/retireve_patient_info',
+        success: function(data){
+            console.log("patient_dict",data["patient_dict"])
+            patient_dict={};
+            patient_dict=JSON.parse(data["patient_dict"])
+            patient_id_selected=JSON.parse(data["id"])
+            for (pat in patient_dict){
+                templist=[]
+                console.log("pat",pat);
+                templist.push(pat)
+                templist.push(patient_dict[pat]['name'])
+                templist.push(patient_dict[pat]['contact_no'])
+                templist.push(patient_dict[pat]['gender'])
+                templist.push(patient_dict[pat]['dob'])
+                templist.push(patient_dict[pat]['cnic'])
+                templist.push(patient_dict[pat]['guardian'])
+                templist.push(patient_dict[pat]['address'])
+                templist.push(patient_dict[pat]['bloodgroup'])
+                templist.push(patient_dict[pat]['email']);
+                datatable_list.push(templist)
+            }
+            console.log("patient_dict",patient_dict[patient_id_selected]);
+            console.log(datatable_list);
+            createPatientDetailsHtmlInCreateBill();
+        },
+    }); 
+
+}
+
+
+function createPatientDetailsHtmlInCreateBill(){
+    var row_div_two=$("<div class='row' id='row_div_two'></div>");
+        var main_subcol=$("<div class='col-md-12'></div>");
+
+            var subrow_one=$("<div class='row'></div>")
+
+
+                    var col_one__subrow_one=$("<div class='col-md-6'></div>");
+                            row__col_one__subrow_one=$("<div class='row'></div>");
+                                var colmd1=$("<div class='col-md-4'></div>")
+                                var colmd2=$("<div class='col-md-6'></div>")
+                                    var pat_name_label=$("<label for='emp_name_tag' class='custom_label_css'>Patient Name</label>");
+                                    var pat_name_input=$("<input class='form-control' id='pat_name_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['name']+"' disabled>")
+                                colmd2.append(pat_name_input)
+                                colmd1.append(pat_name_label)
+                            row__col_one__subrow_one.append(colmd1);
+                            row__col_one__subrow_one.append(colmd2);
+                        col_one__subrow_one.append(row__col_one__subrow_one);
+
+
+                    var col_two__subrow_one=$("<div class='col-md-6'></div>");
+                        var row__col_two__subrow_one=$("<div class='row'></div>");
+                            var colmd1=$("<div class='col-md-4'></div>")
+                            var colmd2=$("<div class='col-md-6'></div>")
+                                var contact_type_label=$("<label class='custom_label_css'>Contact Number</label>");
+                                var contact_type_input=$("<input class='form-control' id='contact_numb_input' class='custom_input_css' placeholder='0312-3456789' value='"+patient_dict[patient_id_selected]['contact_no']+"'></input>")
+                            colmd1.append(contact_type_label);
+                            colmd2.append(contact_type_input);
+        
+                        row__col_two__subrow_one.append(colmd1)
+                        row__col_two__subrow_one.append(colmd2)
+                    col_two__subrow_one.append(row__col_two__subrow_one)
+
+
+            
+
+            subrow_one.append(col_one__subrow_one)
+            subrow_one.append(col_two__subrow_one)
+
+
+        var subrow_two=$("<div class='row'></div>")
+            var col_one_subrow_two=$("<div class='col-md-6'></div>");
+                var row__col_one_subrow_two=$("<div class='row'></div>");
+                    colmd1=$("<div class='col-md-2'></div>")
+                    colmd2=$("<div class='col-md-3'></div>")
+                    colmd3=$("<div class='col-md-2'></div>")
+                    colmd4=$("<div class='col-md-3'></div>")
+        
+                        var pat_name_label=$("<label class='custom_label_css'>Gender</label>");
+                        var pat_name_input=$("<input class='form-control' id='gender_select' class='custom_input_css' value='"+patient_dict[patient_id_selected]['gender']+"' disabled>")
+                    // DOB
+                        var dob_label=$("<label class='custom_label_css'>DOB</label>");
+                        var dob_input=$("<input class='form-control' id='dob_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['dob']+"' ></input>")
+                    colmd1.append(pat_name_label)
+                    colmd2.append(pat_name_input)
+                    colmd3.append(dob_label);
+                    colmd4.append(dob_input);
+        
+                row__col_one_subrow_two.append(colmd1);
+                row__col_one_subrow_two.append(colmd2);
+                row__col_one_subrow_two.append(colmd3);
+                row__col_one_subrow_two.append(colmd4);
+        
+            col_one_subrow_two.append(row__col_one_subrow_two);
+        
+                        // CNIC
+            var col_two_subrow_two=$("<div class='col-md-6'></div>");//
+                var row__col_two_subrow_two=$("<div class='row'></div>");
+                    var colmd1=$("<div class='col-md-4'></div>")
+                    var colmd2=$("<div class='col-md-6'></div>")
+                        var cnic_label=$("<label class='custom_label_css'>CNIC/Guardian CNIC</label>");
+                        var cnic_input=$("<input class='form-control' id='cnic_input' class='custom_input_css' placeholder='xxxxx-xxxxxxx-x' value='"+patient_dict[patient_id_selected]['cnic']+"'></input>")
+                    colmd1.append(cnic_label);
+                    colmd2.append(cnic_input);
+
+                row__col_two_subrow_two.append(colmd1)
+                row__col_two_subrow_two.append(colmd2)
+            col_two_subrow_two.append(row__col_two_subrow_two)
+
+        subrow_two.append(col_one_subrow_two)
+        subrow_two.append(col_two_subrow_two)
+
+        var subrow_three=$("<div class='row'></div>")
+            var col_one__subrow_three=$("<div class='col-md-6'></div>");
+                var row__col_one__subrow_three=$("<div class='row'></div>");
+                    var colmd1=$("<div class='col-md-4'></div>")
+                    var colmd2=$("<div class='col-md-6'></div>")
+                    var guradian_name=patient_dict[patient_id_selected]['guardian']
+                    console.log("selected guardian",guradian_name)
+
+                        var guardian_name_label=$("<label  class='custom_label_css'>Guardian Name</label>");
+                        var guardian_name_input=$("<input class='form-control' id='guardian_input' class='custom_input_css' value='"+guradian_name+"' ></input>")
+                    colmd1.append(guardian_name_label)
+                    colmd2.append(guardian_name_input);
+            
+                    row__col_one__subrow_three.append(colmd1);
+                    row__col_one__subrow_three.append(colmd2);
+            col_one__subrow_three.append(row__col_one__subrow_three);
+
+            var col_two__subrow_three=$("<div class='col-md-6'></div>");
+                var row__col_two__subrow_three=$("<div class='row'></div>");
+                    var colmd1=$("<div class='col-md-4'></div>")
+                    var colmd2=$("<div class='col-md-6'></div>")
+                        var address_label=$("<label for='pat_address_tag' class='custom_label_css'>Address</label>");
+                        var pat_address_input=$("<input class='form-control' id='pat_address_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['address']+"'>")
+                    colmd1.append(address_label)
+                    colmd2.append(pat_address_input)
+
+                row__col_two__subrow_three.append(colmd1);
+                row__col_two__subrow_three.append(colmd2);
+            col_two__subrow_three.append(row__col_two__subrow_three);
+
+        subrow_three.append(col_one__subrow_three)
+        subrow_three.append(col_two__subrow_three)
+
+        var subrow_four=$("<div class='row'></div>")
+        // Blood group
+            var col_one__subrow_four=$("<div class='col-md-6'></div>");
+                var row__col_one__subrow_four=$("<div class='row'></div>");
+                    var colmd1=$("<div class='col-md-4'></div>")
+                    var colmd2=$("<div class='col-md-6'></div>")
+
+                        blood_group_label=$("<label for='blood_group_tag' class='custom_label_css'>Blood group</label>");
+                        bloodgroup_input=$("<input class='form-control' id='blood_group_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['bloodgroup']+"'>")
+                    colmd1.append(blood_group_label)
+                    colmd2.append(bloodgroup_input) 
+
+                row__col_one__subrow_four.append(colmd1);
+                row__col_one__subrow_four.append(colmd2);
+            col_one__subrow_four.append(row__col_one__subrow_four);
+            var col_two__subrow_four=$("<div class='col-md-6'></div>");
+                var row__col_two__subrow_four=$("<div class='row'></div>");
+                    var colmd1=$("<div class='col-md-4'></div>")
+                    var colmd2=$("<div class='col-md-6'></div>")
+
+                        var email_id_label=$("<label class='custom_label_css'>Email Address</label>");
+                        var email_id_input=$("<input class='form-control' id='email_id_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['email']+"'></input>")
+                    colmd1.append(email_id_label);
+                    colmd2.append(email_id_input);
+
+                row__col_two__subrow_four.append(colmd1)
+                row__col_two__subrow_four.append(colmd2)
+            col_two__subrow_four.append(row__col_two__subrow_four)
+
+        subrow_four.append(col_one__subrow_four);
+        subrow_four.append(col_two__subrow_four);
+
+        
+        main_subcol.append(subrow_one)
+        main_subcol.append(subrow_two)
+        main_subcol.append(subrow_three)
+        main_subcol.append(subrow_four)
+
+    row_div_two.append(main_subcol)
+    var main_col_div=$("#main_col_div");
+main_col_div.append(row_div_two);
+retrieveDespMedicine();
+
+}
+var datatable_desp_med_list=[];
+var datatable_patient_billlist=[];
+var despid='';
+var bill_datatable;
+var despmed_datatable;
+function retrieveDespMedicine(){
+    datatable_desp_med_list=[];
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        'data': {
+        },
+        url: '/retireve_all_desp_med',
+        success: function(data){
+            createDespensoryMedTable();
+            dspstck_dict={}
+            dspstck_dict=JSON.parse(data["dspstck_dict"])
+            for (dspstck in dspstck_dict){
+                templist=[]
+                console.log("dspstck",dspstck);
+                templist.push(dspstck);
+                templist.push(dspstck_dict[dspstck]['name']);
+                templist.push(dspstck_dict[dspstck]['boxes_stored']);
+                templist.push(dspstck_dict[dspstck]['strip_stored']);
+                templist.push(dspstck_dict[dspstck]['piece_stored']);
+                templist.push(dspstck_dict[dspstck]['piece_price_unit']);               
+                datatable_desp_med_list.push(templist);
+            }
+            createDespDataTable();
+            createRowDivFourBill();
+
+            console.log("datatable_desp_med_list",datatable_desp_med_list);
+        }
+    });
+}
+function createDespDataTable(){
+    $(function(){
+        despmed_datatable=$("#desp-med-table").DataTable({
+            data:datatable_desp_med_list,
+            columns: [
+                { title: "Id" },
+                { title: "Medicine Name" },
+                { title: "Box Stored" },
+                { title: 'Strips Stored' },
+                { title: "Pieces Stored" },
+                { title: "piece_price_unit" },
+            
+
+                ],
+                paging: false,
+                scrollY: 200,
+                scrollX: true,
+                ordering: true,
+                info:false,
+    
+            });
+            $('#desp-med-table tbody').on( 'click', 'tr', function () {
+                if ( $(this).hasClass('selected') ) {
+                    alert("clicked same entry")
+                }
+                else{
+                    despid=$(this).find('td').eq(0).text()
+                    despmed_datatable.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                    createMedQtyForm(despid);
+                    
+                }
+            });
+    });
+}
+function billDataTable(){
+    $(function(){
+        bill_datatable=$("#bill_table").DataTable({
+            data:datatable_patient_billlist,
+            columns: [
+                { title: "Id" },
+                { title: "Medicine Name" },
+                { title: "Boxes" },
+                { title: 'Strips' },
+                { title: "Pieces" },
+                { title: "Price" },
+                { title: "Amount" },
+                ],
+                paging: false,
+                scrollY: 200,
+                scrollX: true,
+                ordering: true,
+                info:false,
+                searching:false,
+            });
+            $('#bill_table tbody').on( 'click', 'tr', function () {
+                if ( $(this).hasClass('selected') ) {
+                    alert("clicked same entry")
+                }
+                else{
+                    rowid=$(this).find('td').eq(0).text()
+                    bill_datatable.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                    
+                }
+            });
+    });
+}
+function createDespensoryMedTable(){
+    var row_div_three=$("<div class='row'></div>");
+    var col_one__row_div_three=$("<div class='col-md-12'></div>");
+        row__col_one__row_div_three=$("<div class='row'></div>");
+            colmd1=$("<div class='col-md-12'></div>")
+            var table=$('<table id="desp-med-table" class="display" width="100%"></table>')
+            colmd1.append(table);
+        row__col_one__row_div_three.append(colmd1);
+        col_one__row_div_three.append(row__col_one__row_div_three);
+    row_div_three.append(col_one__row_div_three);
+    $(main_col_div).append(row_div_three);
+}
+function createRowDivFourBill(){
+    var main_col_div=$("#main_col_div");
+    var row_div_four=$("<div class='row'></div>");
+        var col_one__row_div_four=$("<div class='col-md-12'></div>");
+            row__col_one__row_div_four=$("<div class='row'></div>");
+                colmd1=$("<div class='col-md-12'></div>");
+                    var row=$("<div class='row'></div>");
+                        var col1=$("<div class='col-md-4' id='desp-med-qty-form'>");
+                        var col2=$("<div class='col-md-8' id='medicine-addedto-form'>");
+                            table=$('<table id="bill_table" class="display" width="100%"></table>');
+                        col2.append(table)
+                    row.append(col1);
+                    row.append(col2);
+                colmd1.append(row);
+            
+            row__col_one__row_div_four.append(colmd1);
+        col_one__row_div_four.append(row__col_one__row_div_four);
+    row_div_four.append(col_one__row_div_four);
+main_col_div.append(row_div_four);
+billDataTable()
+
+}
+function createMedQtyForm(despid){
+$("#desp-med-qty-form").empty();
+var col1=$("#desp-med-qty-form")
+    var sub_row=$("<div class='row'></div>");
+        var sub_col=$("<div class='col-md-12'></div>")
+            var sub_sub_row1=$("<div class='row'></div>");
+                var col1_sub_sub_row1=$("<div class='col-md-4'></div>");
+                    var label=$("<label>Medicine Name</label>")
+                col1_sub_sub_row1.append(label);
+                var col2_sub_sub_row1=$("<div class='col-md-4'></div>");
+                    var input=$("<input id='desp-med-name' value='"+dspstck_dict[despid]['name']+"'></input>")
+                col2_sub_sub_row1.append(input);
+            sub_sub_row1.append(col1_sub_sub_row1);
+            sub_sub_row1.append(col2_sub_sub_row1);
+
+            var sub_sub_row2=$("<div class='row'></div>");
+                var col1_sub_sub_row2=$("<div class='col-md-4'></div>");
+                    var label=$("<label>Boxes</label>")
+                col1_sub_sub_row2.append(label);
+                var col2_sub_sub_row2=$("<div class='col-md-4'></div>");
+                    var input=$("<input id='boxes_stored' placeholder='"+dspstck_dict[despid]['boxes_stored']+"'></input>")
+                col2_sub_sub_row2.append(input);
+            sub_sub_row2.append(col1_sub_sub_row2);
+            sub_sub_row2.append(col2_sub_sub_row2);
+            var strip_stored=dspstck_dict[1]['strip_stored'];
+            console.log("strip_stored",strip_stored);
+            if (strip_stored!=null){
+            var sub_sub_row3=$("<div class='row'></div>");
+                var col1_sub_sub_row3=$("<div class='col-md-4'></div>");
+                    var label=$("<label>Total Strips</label>")
+                col1_sub_sub_row3.append(label);
+                var col2_sub_sub_row3=$("<div class='col-md-4'></div>");
+                    var input=$("<input id='strips_stored' placholder='"+dspstck_dict[despid]['strip_stored']+"'></input>")
+                col2_sub_sub_row3.append(input);
+            sub_sub_row3.append(col1_sub_sub_row3);
+            sub_sub_row3.append(col2_sub_sub_row3);
+            }
+            var sub_sub_row4=$("<div class='row'></div>");
+                var col1_sub_sub_row4=$("<div class='col-md-4'></div>");
+                    var label=$("<label>Total Pieces</label>")
+                col1_sub_sub_row4.append(label);
+                var col2_sub_sub_row4=$("<div class='col-md-4'></div>");
+                    var input=$("<input id='pieces_stored' placeholder='"+dspstck_dict[despid]['piece_stored']+"'></input>")
+                col2_sub_sub_row4.append(input);
+            sub_sub_row4.append(col1_sub_sub_row4);
+            sub_sub_row4.append(col2_sub_sub_row4);
+            var sub_sub_row5=$("<div class='row'></div>");
+                var col1_sub_sub_row5=$("<div class='col-md-4'></div>");
+                var col2_sub_sub_row5=$("<div class='col-md-4'></div>");
+                    var button=$("<button id='add_med_desp' onclick='addMedicineToPatientBill()'>Add</button>")
+                col2_sub_sub_row5.append(button);
+            sub_sub_row5.append(col1_sub_sub_row5);
+            sub_sub_row5.append(col2_sub_sub_row5);
+        sub_col.append(sub_sub_row1);
+        sub_col.append(sub_sub_row2);
+        if (strip_stored!=null){
+        sub_col.append(sub_sub_row3);
+        }
+        sub_col.append(sub_sub_row4);
+        sub_col.append(sub_sub_row5);
+
+    sub_row.append(sub_col);
+col1.append(sub_row);
+}
+function addMedicineToPatientBill(){
+    var pieces_wanted=$("#pieces_stored").val();
+    var medicine_id="1";
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        'data': {
+         'medicine_id':medicine_id,
+         "pieces_wanted":pieces_wanted,
+        },
+        url: '/retrieve_medicine_from_desp',
+        success: function(data){
+            dspstck_dict={}
+            datatable_desp_med_list=[]
+            dspstck_dict=JSON.parse(data["dspstck_dict"])
+            for (dspstck in dspstck_dict){
+                templist=[]
+                console.log("dspstck",dspstck);
+                templist.push(dspstck);
+                templist.push(dspstck_dict[dspstck]['name']);
+                templist.push(dspstck_dict[dspstck]['boxes_stored']);
+                templist.push(dspstck_dict[dspstck]['strip_stored']);
+                templist.push(dspstck_dict[dspstck]['piece_stored']);
+                templist.push(dspstck_dict[dspstck]['piece_price_unit']);               
+                datatable_desp_med_list.push(templist);
+            } 
+            datatable_patient_billlist.push(data['main_list']);
+            despmed_datatable.destroy();        
+            createDespDataTable();
+            bill_datatable.destroy();
+            billDataTable();
+
+        }
+    });
 }
 function getCookie(name) {
     var cookieValue = null;

@@ -323,6 +323,7 @@ class Employee(models.Model):
 
 
 
+
 class tokenRecords(models.Model):
     patient=models.ForeignKey(Patient, on_delete=models.CASCADE,default=None,null=True,blank=True)
     token_no=models.IntegerField(null=True,blank=True)
@@ -345,6 +346,7 @@ class patientBillRecords(models.Model):
     strips_stored=models.FloatField(null=True,blank=True)
     pieces_stored=models.FloatField(null=True,blank=True)
     datevisited=models.DateField(null=True,blank=True)
+    amount=models.IntegerField(null=True,blank=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
     update_at = models.DateTimeField(auto_now_add=True, blank=True)
     def __str__(self):
@@ -374,5 +376,114 @@ class patientMedRecords(models.Model):
     class Meta:
         verbose_name_plural="Patient Medicine Records"
         ordering=['pk']
+
+class patientType(models.Model):
+    patient_type=models.CharField(max_length=50,null=True,blank=True)
+    charges=models.IntegerField(null=True,blank=True)
+    def __str__(self):
+        return str(self.patient_type)
+    class Meta:
+        verbose_name_plural="Patient Type"
+        ordering=['pk']
+class patPrescriptionBill(models.Model):
+    patient=models.ForeignKey(Patient, on_delete=models.CASCADE,default=None,null=True,blank=True)
+    patient_type=models.ForeignKey(patientType, on_delete=models.CASCADE,default=None,null=True,blank=True)
+    doc=models.ForeignKey(Employee, on_delete=models.CASCADE,default=None,null=True,blank=True)
+    discount=models.IntegerField(null=True,blank=True)
+    discount_percentage=models.FloatField(null=True,blank=True)
+    amount_due=models.IntegerField(null=True,blank=True)
+    patient_paid=models.IntegerField(null=True,blank=True)
+    patient_change=models.IntegerField(null=True,blank=True)
+    def __str__(self):
+        return str(self.id)
+    class Meta:
+        verbose_name_plural="Patient Prescription Bill"
+        ordering=['pk']
+class patientAddChargesBill(models.Model):
+    patient=models.ForeignKey(Patient, on_delete=models.CASCADE,default=None,null=True,blank=True)
+    patient_type=models.ForeignKey(patientType, on_delete=models.CASCADE,default=None,null=True,blank=True)
+    amount=models.IntegerField(null=True,blank=True)
+    def __str__(self):
+        return str(self.id)
+    class Meta:
+        verbose_name_plural="Patient Additional Charge Bill"
+        ordering=['pk']
+class patientBillSummary(models.Model):
+    patient=models.ForeignKey(Patient, on_delete=models.CASCADE,default=None,null=True,blank=True)
+    patient_type=models.ForeignKey(patientType, on_delete=models.CASCADE,default=None,null=True,blank=True)
+    despcharge_bill=models.FloatField(null=True,blank=True)
+    addcharge_bill=models.IntegerField(null=True,blank=True)
+    total_med_bill=models.IntegerField(null=True,blank=True)
+    actual_med_bill=models.IntegerField(null=True,blank=True)
+    pres_plus_totalmedbill=models.IntegerField(null=True,blank=True)
+    amount_due=models.IntegerField(null=True,blank=True)
+    profit_or_loss=models.IntegerField(null=True,blank=True)
+    patient_paid=models.IntegerField(null=True,blank=True)
+    patient_change=models.IntegerField(null=True,blank=True)
+    def __str__(self):
+        return str(self.id)
+    class Meta:
+        verbose_name_plural="Patient Bill Summary"
+        ordering=['pk']
+class Rooms(models.Model):
+    floor=models.IntegerField(null=True,blank=True,default=1)
+    room_no=models.IntegerField(null=True,blank=True,default=1)
+    charge_per_day=models.IntegerField(null=True,blank=True,default=500)
+    ac_charge_per_day=models.IntegerField(null=True,blank=True,default=500)
+    status=models.CharField(max_length=50,null=True,blank=True,default='Available')
+    def __str__(self):
+        return str(self.id)
+    class Meta:
+        verbose_name_plural="Rooms"
+        ordering=['pk']
+class patientRoomsBill(models.Model):
+    patient=models.ForeignKey(Patient, on_delete=models.CASCADE,default=None,null=True,blank=True)
+    floor=models.IntegerField(null=True,blank=True,default=1)
+    room_no=models.IntegerField(null=True,blank=True,default=1)
+    charge_per_day=models.IntegerField(null=True,blank=True,default=500)
+    ac_charge_per_day=models.IntegerField(null=True,blank=True,default=500)
+    checkin=models.DateTimeField(auto_now_add=True, blank=True)
+    checkout=models.DateTimeField(auto_now_add=True, blank=True)
+    amount=models.IntegerField(null=True,blank=True,default=0)
+    
+    def __str__(self):
+        return str(self.id)
+    class Meta:
+        verbose_name_plural="Patient Room bill"
+        ordering=['pk']
+class Ward(models.Model):
+    ward_no=models.IntegerField(null=True,blank=True,default=1)
+    bed_no=models.IntegerField(null=True,blank=True,default=1)
+    charge_per_day=models.IntegerField(null=True,blank=True,default=200)
+    status=models.CharField(max_length=50,null=True,blank=True,default='Available')
+    def __str__(self):
+        return str(self.id)
+    class Meta:
+        verbose_name_plural="Ward"
+        ordering=['pk']
+class patientWardBill(models.Model):
+    patient=models.ForeignKey(Patient, on_delete=models.CASCADE,default=None,null=True,blank=True)
+    ward_no=models.IntegerField(null=True,blank=True,default=1)
+    bed_no=models.IntegerField(null=True,blank=True,default=1)
+    charge_per_day=models.IntegerField(null=True,blank=True,default=200)
+    amount=models.IntegerField(null=True,blank=True,default=0)
+    def __str__(self):
+        return str(self.id)
+    class Meta:
+        verbose_name_plural="Pateint Ward Bill"
+        ordering=['pk']
+class patientVisitSummary(models.Model):
+    pmr=models.ForeignKey(patientMedRecords, on_delete=models.CASCADE,default=None,null=True,blank=True)
+    pbr=ListCharField(
+        base_field=models.CharField(max_length=20),
+        size=10,
+        max_length=(10*21),
+        null=True,
+        blank=True
+    )
+    checkin=models.DateTimeField(auto_now_add=True, blank=True)
+    checkout=models.DateTimeField(auto_now_add=True, blank=True)
+    illness=models.TextField()
+    consultant=models.ForeignKey(Employee, on_delete=models.CASCADE,default=None,null=True,blank=True)
 
 
