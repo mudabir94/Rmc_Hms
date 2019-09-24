@@ -1024,17 +1024,55 @@ class patientDashboard(TemplateView):
     def post(self,request):
         pass
 
-
-def retirevePatientInfo(request):
+def retrievePatientInfoInPresForm(request):
     if request.method=="GET":
         pat_name=request.GET.get("pat_name")
         contact_no=request.GET.get("contact_no")
         cnic=request.GET.get("cnic")
-        id=request.GET.get("id")
-        id=int(id)
+        contact_no=""
+        cnic=""
+
+        # pat_objs=Patient.objects.filter(Q(pat_name=pat_name) | Q(phone_no=contact_no) | Q(cnic=cnic)| Q(id=id))
+        pat_objs=Patient.objects.filter(Q(pat_name=pat_name) | Q(phone_no=contact_no) | Q(cnic=cnic))
+
+        # pat_objs=Patient.objects.get(id=1)
+        print("pat_objs",pat_objs)
+        patient_dict={}
+        for pat_obj in pat_objs:
+            patient_info_dict={}
+            patient_info_dict['name']=pat_obj.pat_name
+            patient_info_dict['contact_no']=pat_obj.phone_no
+            patient_info_dict['gender']=pat_obj.gender
+            patient_info_dict['dob']=str(pat_obj.dob)
+            patient_info_dict['cnic']=pat_obj.cnic
+            patient_info_dict['guardian']=pat_obj.guardian
+            patient_info_dict['address']=pat_obj.address
+            patient_info_dict['bloodgroup']=pat_obj.bloodgroup
+            patient_info_dict['email']=pat_obj.email_address
+            patient_dict[pat_obj.id]=[]
+            patient_dict[pat_obj.id]=patient_info_dict
+        print("patient_dict",patient_dict)
+
+
+
+        data={
+            "patient_dict":json.dumps(patient_dict),
+        }
+        return JsonResponse(data)
+
+def retirevePatientInfo(request):
+    if request.method=="GET":
+        pat_name=request.GET.get("pat_name")
+        # contact_no=request.GET.get("contact_no")
+        # cnic=request.GET.get("cnic")
+        contact_no=""
+        cnic=""
         #phone_no=contact_no,cnic=cnic_no
-        pat_objs=Patient.objects.filter(Q(pat_name=pat_name) | Q(phone_no=contact_no) | Q(cnic=cnic)| Q(id=id))
-        # pat_obj=Patient.objects.get(id=1)
+
+        # pat_objs=Patient.objects.filter(Q(pat_name=pat_name) | Q(phone_no=contact_no) | Q(cnic=cnic)| Q(id=id))
+        pat_objs=Patient.objects.filter(Q(pat_name=pat_name) | Q(phone_no=contact_no) | Q(cnic=cnic))
+
+        # pat_objs=Patient.objects.get(id=1)
         print("pat_objs",pat_objs)
         patient_dict={}
         for pat_obj in pat_objs:
@@ -1178,6 +1216,11 @@ class printPatientPrescription(TemplateView):
         return render(request,self.template_path_name)
     def post(self,request):
         pass
+
+def generatePrescription():
+    if request.method=="GET":
+        pass
+
 
 
 
