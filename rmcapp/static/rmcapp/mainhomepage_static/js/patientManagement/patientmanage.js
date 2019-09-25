@@ -45,7 +45,6 @@ function addPatient(){
                 row__col_one__row_div_one.append(colmd2);
             col_one__row_div_one.append(row__col_one__row_div_one);
 
-
             // Contact Number
 
             var col_two__row_div_one=$("<div class='col-md-6'></div>");
@@ -61,7 +60,6 @@ function addPatient(){
                 row__col_two__row_div_one.append(colmd1)
                 row__col_two__row_div_one.append(colmd2)
             col_two__row_div_one.append(row__col_two__row_div_one)
-
 
             $(row_div_one).append(col_one__row_div_one);
             $(row_div_one).append(col_two__row_div_one);
@@ -110,7 +108,6 @@ function addPatient(){
             $(row_div_two).append(col_one__row_div_two);
             $(row_div_two).append(col_two__row_div_two);
 
-
         var row_div_three=$("<div class='row' style='padding-bottom: 15px;''></div>");
                 // Guardian
                 var col_one__row_div_three=$("<div class='col-md-6'></div>");
@@ -140,13 +137,11 @@ function addPatient(){
     
                         row__col_two__row_div_three.append(colmd1);
                         row__col_two__row_div_three.append(colmd2);
-                    col_two__row_div_three.append(row__col_two__row_div_three);
-            
+                    col_two__row_div_three.append(row__col_two__row_div_three);           
             
              $(row_div_three).append(col_one__row_div_three);
              $(row_div_three).append(col_two__row_div_three);
-
-                         
+                       
         var row_div_four=$("<div class='row'></div>");
                     // Blood group
                     var col_one__row_div_four=$("<div class='col-md-6'></div>");
@@ -171,8 +166,7 @@ function addPatient(){
                         row__col_one__row_div_four.append(colmd1);
                         row__col_one__row_div_four.append(colmd2);
                     col_one__row_div_four.append(row__col_one__row_div_four);
-        
-        
+
                     // email ID
         
                     var col_two__row_div_four=$("<div class='col-md-6'></div>");
@@ -209,17 +203,12 @@ function addPatient(){
                         col_two__row_div_five.append(row__col_two__row_div_five)
 
                     $(row_div_five).append(col_two__row_div_five);
-                        
-
-
 
 $(main_col_div).append(row_div_one);
 $(main_col_div).append(row_div_two);
 $(main_col_div).append(row_div_three);
 $(main_col_div).append(row_div_four);
 $(main_col_div).append(row_div_five);
-
-
 
         $( "#dob_input" ).datepicker({
             changeMonth: true,
@@ -236,7 +225,6 @@ $(main_col_div).append(row_div_five);
               $( "#gender_select" ).autocomplete({
                 source: availableTags
               });
-
 }
 function EditPatient(){
     $('#main_page_content').empty()
@@ -355,7 +343,8 @@ function searchPatient(){
     if (pat_datatable!==undefined){
         pat_datatable.destroy();
     }
-    retrievePatientInfo(pat_name,contact_no,cnic_no)
+    id="1"
+    retrievePatientInfo(pat_name,contact_no,cnic_no,id)
     // list= [["1","Ali","03009420002","35202-0000122-1","Lahore"],["2","Ahmad","03119420002","35202-7268122-1","Lahore"]] 
 
 }
@@ -375,8 +364,6 @@ function createPatientDataTable(){
                 { title: "Address" },
                 { title: "bloodgroup" },
                 { title: "email" },
-               
-
 
                 ],
                 paging: false,
@@ -402,7 +389,6 @@ function createPatientDataTable(){
 
                             var subrow_one=$("<div class='row'></div>")
 
-
                                     var col_one__subrow_one=$("<div class='col-md-6'></div>");
                                             row__col_one__subrow_one=$("<div class='row'></div>");
                                                 var colmd1=$("<div class='col-md-4'></div>")
@@ -427,10 +413,7 @@ function createPatientDataTable(){
                         
                                         row__col_two__subrow_one.append(colmd1)
                                         row__col_two__subrow_one.append(colmd2)
-                                    col_two__subrow_one.append(row__col_two__subrow_one)
-
-
-                             
+                                    col_two__subrow_one.append(row__col_two__subrow_one)                   
 
                             subrow_one.append(col_one__subrow_one)
                             subrow_one.append(col_two__subrow_one)
@@ -660,18 +643,17 @@ function updatePatientData(){
             console.log(data['Success']);
         },
     });
-
-
-    
 }
-function retrievePatientInfo(pat_name,contact_no,cnic_no){
+   
+function retrievePatientInfo(pat_name,contact_no,cnic_no,id){
     datatable_lst=[];
-
+    console.log("id",id)
     $.ajax({
         type: 'GET',
         dataType: "json",
         'data': {
           "pat_name":pat_name,
+          'id':id,
         },
         url: '/retireve_patient_info',
         success: function(data){
@@ -698,7 +680,6 @@ function retrievePatientInfo(pat_name,contact_no,cnic_no){
             console.log(datatable_list)
         },
     }); 
-
 }
 function viewPatientHistory(){
     $('#main_page_content').empty()
@@ -927,7 +908,6 @@ $(main_col_div).append(row_div_one);
 
 }
 
-
 function createPatientDataTableInGenPres(){
     console.log("datatable_list",datatable_list)
     $(function(){
@@ -942,12 +922,12 @@ function createPatientDataTableInGenPres(){
                 { title: "cnic" },
                 { title: "guardian" },
                 { title: "Address" },
-                ],
-                paging: false,
-                scrollY: 200,
-                scrollX: true,
-                ordering: true,
-                info:false,
+            ],
+            paging: false,
+            scrollY: 200,
+            scrollX: true,
+            ordering: true,
+            info:false,     
     
             });
             $('#patient_table tbody').on( 'click', 'tr', function () {
@@ -1012,7 +992,6 @@ function createPatientDataTableInGenPres(){
                 main_col_div.append(row_div_four)
                   
                 }
-    
             });
         });
 }
@@ -1123,9 +1102,6 @@ function pat_type_OnSelect(element){
             main_col__row_five.append(row_three)
             main_col__row_five.append(row_four)
 
-
-
-
         row_div_five.append(main_col__row_five)
     main_col_div.append(row_div_five)
     
@@ -1231,9 +1207,6 @@ function pat_type_OnSelect(element){
             main_col__row_five.append(row_three)
             main_col__row_five.append(row_four)
 
-
-
-
         row_div_five.append(main_col__row_five)
     main_col_div.append(row_div_five)
     
@@ -1281,8 +1254,6 @@ function pat_type_OnSelect(element){
         $('#row_div_five').remove();
 
     }
-
-
 }
 
 function retrievePatientInfoInGenPres(pat_name,contact_no,cnic_no){
@@ -1294,13 +1265,13 @@ function retrievePatientInfoInGenPres(pat_name,contact_no,cnic_no){
         'data': {
           "pat_name":pat_name,
         },
-        url: '/retireve_patient_info',
+        url: '/retireve_patient_info_in_pres_form',
         success: function(data){
-            console.log("patient_dict",data["patient_dict"])
-            patient_dict={}
+            console.log("patient_dict",data["patient_dict"]);
+            patient_dict={};
             patient_dict=JSON.parse(data["patient_dict"])
             for (pat in patient_dict){
-                templist=[]
+                templist=[];
                 console.log("pat",pat);
                 templist.push(pat)
                 templist.push(patient_dict[pat]['name'])
@@ -1352,6 +1323,7 @@ function searchPatientInGenPres(){
     // list= [["1","Ali","03009420002","35202-0000122-1","Lahore"],["2","Ahmad","03119420002","35202-7268122-1","Lahore"]] 
 
 }
+
 function generatePrescription(){
     $('#main_page_content').empty()
     var generate_prescription_div=$("#main_page_content").append('<div class="container-fluid" id="container-generate-prescription"></div>');
@@ -1436,8 +1408,6 @@ function generatePrescription(){
     $(main_col_div).append(row_div_one);
     $(main_col_div).append(row_div_two);
 }
-    
-
 
 function getCookie(name) {
     var cookieValue = null;
@@ -1466,5 +1436,3 @@ $.ajaxSetup({
         }
     }
 });
-
-

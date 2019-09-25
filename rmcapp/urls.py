@@ -32,7 +32,11 @@ urlpatterns = [
   path('retireve_patient_info',views.retirevePatientInfo,name="retireve_patient_info"),
   path('retireve_patient_med_history',views.retirevePatientMedHistory,name="retireve_patient_med_history"),
 
+  path('retrieve_medicine_from_desp',views.retrieveMedicineFromDesp,name="retrieve_medicine_from_desp"),
+
   path('retrieve_employee_info',views.retrieveEmployeeInfo,name="retrieve_employee_info"),
+  
+  path("retireve_all_desp_med",views.retireveAllDespMed,name='retireve_all_desp_med'),
   
   path('view_patient_history',views.viewPatientHistory,name="view_patient_history"),
   
@@ -45,4 +49,7 @@ urlpatterns = [
   path('generate_prescription',views.generatePrescription,name="generate_prescription"),
 
   path('update_employee_data',views.updateEmployeeData,name="update_employee_data"),
+  
+  path('retireve_patient_info_in_pres_form',views.retrievePatientInfoInPresForm,name='retireve_patient_info_in_pres_form'),
+
 ]
