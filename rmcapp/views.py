@@ -1103,7 +1103,7 @@ def retrievePatientInfoInPatientBill(request):
    if request.method=="GET":
       
         id=request.GET.get("id")
-
+        id=int(id)
       
         pat_obj=Patient.objects.get(id=1)
     
@@ -1366,8 +1366,9 @@ def retireveAllDespMed(request):
 def retrieveMedicineFromDesp(request):
     if request.method=='GET':
         medid=request.GET.get('medicine_id')
+        medid=int(medid)
         pieces_wanted=request.GET.get('pieces_wanted')
-        medObj=Medicine.objects.get(id=3)
+        medObj=Medicine.objects.get(id=medid)
         # if medObj.AddCharge=='No' then add zero to amount
         despstckObj=despensoryStock.objects.get(medicine=medObj)
         desp_piece=despstckObj.piece_stored
@@ -1377,6 +1378,7 @@ def retrieveMedicineFromDesp(request):
         price=despstckObj.piece_price_unit*pieces_wanted
         amount=0
         despstckObj.save()
+    
 
         main_list=['1',medObj.medicine_name,'0','0',pieces_wanted,price,amount]
         dspstckobjs=despensoryStock.objects.filter(status='In Use')
@@ -1391,7 +1393,8 @@ def retrieveMedicineFromDesp(request):
             tempdspstck_dict['piece_price_unit']=dspstck.piece_price_unit
             dspstck_dict[dspstck.id]=[]
             dspstck_dict[dspstck.id]=tempdspstck_dict
-
+        if despstckObj.pieces_stored==0:
+            despstckObj.delete()
         data={
             'main_list':main_list,
             'dspstck_dict':json.dumps(dspstck_dict),

@@ -1857,7 +1857,8 @@ col1.append(sub_row);
 }
 function addMedicineToPatientBill(){
     var pieces_wanted=$("#pieces_stored").val();
-    var medicine_id="1";
+    var medicine_id=despid;
+    alert(medicine_id)
     $.ajax({
         type: 'GET',
         dataType: "json",
