@@ -10,7 +10,7 @@ from rmcapp.models import (
     despensoryStock,despensoryStockHistory,tt_Medicine_DespensoryStock,
     medicineBatches,
     packageType,
-    employeeType,Employee,Patient,patientMedRecords,
+    employeeType,Employee,Patient,patientMedRecords,Rooms,Ward,patientRoomsBill,
 )
 from django.http import HttpResponse, JsonResponse
 from .Controllers.MedControllers.MedController import MedicineController  
@@ -1057,6 +1057,48 @@ def retrievePatientInfoInPresForm(request):
 
         data={
             "patient_dict":json.dumps(patient_dict),
+        }
+        return JsonResponse(data)
+
+def retrieveRoomInfoInRoomWard(request):
+    if request.method=="GET":
+
+        room_objs=Rooms.objects.filter(status='Available')
+        print("room_objs",room_objs)
+
+        room_dict={}
+        for room_obj in room_objs:
+            room_info_dict={}
+            room_info_dict['floor_no']=room_obj.floor
+            room_info_dict['room_no']=room_obj.room_no
+            room_info_dict['charge_per_day']=room_obj.charge_per_day
+            room_info_dict['ac_charge_per_day']=room_obj.ac_charge_per_day
+            room_dict[room_obj.id]=[]
+            room_dict[room_obj.id]=room_info_dict
+        print("room_dict", room_dict)
+
+        data={
+            "room_dict":json.dumps(room_dict),
+        }
+        return JsonResponse(data)
+
+def retrieveWardInfoInRoomWard(request):
+    if request.method=="GET":
+
+        ward_objs=Ward.objects.filter(status='Available')
+        ward_dict={}
+        for ward_obj in ward_objs:
+            ward_info_dict={}
+            ward_info_dict['ward_no']=ward_obj.ward_no
+            ward_info_dict['bed_no']=ward_obj.bed_no
+            ward_info_dict['charge_per_day']=ward_obj.charge_per_day
+            ward_dict[room_obj.id]=[]
+            ward_dict[room_obj.id]=ward_info_dict
+        print("ward_dict", ward_dict)
+
+
+        data={
+            "ward_dict":json.dumps(ward_dict),
         }
         return JsonResponse(data)
 
