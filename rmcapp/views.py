@@ -1177,6 +1177,11 @@ class printPatientPrescription(TemplateView):
     def post(self,request):
         pass
 
+def generatePrescription():
+    if request.method=="GET":
+        pass
+
+
 
 
 def retrieveEmployeeInfo(request):

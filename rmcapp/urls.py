@@ -41,6 +41,8 @@ urlpatterns = [
   path('view_patient_history',views.viewPatientHistory,name="view_patient_history"),
   
   path('print_patient_prescription',views.printPatientPrescription.as_view(),name="print_patient_prescription"),
+  
+  path('generate_prescription',views.generatePrescription,name="generate_prescription"),
 
   path('update_employee_data',views.updateEmployeeData,name="update_employee_data"),
 ]
