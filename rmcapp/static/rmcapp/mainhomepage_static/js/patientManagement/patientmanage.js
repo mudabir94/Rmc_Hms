@@ -1514,7 +1514,7 @@ function createWardDataTable(){
                                                     var wardNo_label=$("<label for='wardNo_label' class='custom_label_css'>Ward No</label>");
                                                     var wardNo_input=$("<input  id='wardNo_input' class='custom_input_css' value='"+ward_dict[ward_id_selected]['ward_no']+"' disabled>")
 
-                                                    var bedNo_label=$("<label for='bedNo_label' class='custom_label_css'>Ward No</label>");
+                                                    var bedNo_label=$("<label for='bedNo_label' class='custom_label_css'>Bed No</label>");
                                                     var BedNo_input=$("<input  id='bedNo_input' class='custom_input_css' value='"+ward_dict[ward_id_selected]['bed_no']+"' disabled>")
                                                     
                                                 colmd1.append(wardNo_label)
