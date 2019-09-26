@@ -377,42 +377,6 @@ def NoStripCalculation(medicineWarehouseStock_obj,medicineobj,noofboxes,noofpiec
     ttmds_obj.desp_stock=despStrg_obj
     ttmds_obj.save()
 
-
-
-
-
-    # Workflow ... 
-    # 
-    #
-    # check the medicine in the storage. if the medicine exsists 
-    # fetch the quantity of carton, box, strip and pieces. 
-    # subtract the quantity with the request quantity from despensory. 
-    # Add the requested amount to the despStorage. 
-    # At this point, transaction btw MedStrg and DspStrg Took place. So in Transaction table (MedStrgToDspStrgTransaction)
-    # -save the amount given to disp. 
-    # -Who Made the Transaction. 
-    # -Time and Date. 
-    # 
-    # So First Get The Requested Medicine. See if it Exsists in the Storage. 
-    # Check which package type quantity is requested from the disp. There Can be Multiple Possibilities. 
-    # - 1 carton of med or multiple.
-    # - 1 box of med or multiple. 
-    # - 1 strip of med or multiple.
-    # - 1 piece of med or multiple.
-    # - 1 box of med and mutlipe strips or pieces.
-    # In order to control all these scenrios we'll need to start from the most granular level which is the pieces. 
-    # We'll have the total amount of pieces requested, so it'll not matter if its cartons,boxes or strips we'll simply convert it to pieces. 
-    # Now, We'll Get the Total Amount of Pieces in Stored in MedStorage, subtract it with Requested Pieces. 
-    # Now According to the remaining amount, we'll see the per unit quantity of package types if any one package is null we'll not consider
-    #  it for calculation. 
-    # In Theory we'll use the amount of pieces For calculation and distribute the quantity according to units that are set. 
-    # Once Calculation is complele we'll update the MedStorage and DespStorage. 
-    # Records will be saved in Transaction Tables. 
-    # Similar Process will be done for addition and reduction in desp Storage....
-    # And Similar Process for Any Kind of Reduction from the  tables such as in case of expiration..
-    # All This process will complete The flow of medicine into the warehouse and to the dispensory. 
-    # Another Table will be off Purchasing goods. Whose Transaction tables will be made seperatly. 
-    # Doing this will Complete All of the basic backend work for Medicine Inventory. 
     
 def retrieveMedicineType(request):
     if request.method=="GET":
@@ -1092,8 +1056,8 @@ def retrieveWardInfoInRoomWard(request):
             ward_info_dict['ward_no']=ward_obj.ward_no
             ward_info_dict['bed_no']=ward_obj.bed_no
             ward_info_dict['charge_per_day']=ward_obj.charge_per_day
-            ward_dict[room_obj.id]=[]
-            ward_dict[room_obj.id]=ward_info_dict
+            ward_dict[ward_obj.id]=[]
+            ward_dict[ward_obj.id]=ward_info_dict
         print("ward_dict", ward_dict)
 
 
@@ -1145,7 +1109,7 @@ def retrievePatientInfoInPatientBill(request):
    if request.method=="GET":
       
         id=request.GET.get("id")
-
+        id=int(id)
       
         pat_obj=Patient.objects.get(id=1)
     
@@ -1408,19 +1372,27 @@ def retireveAllDespMed(request):
 def retrieveMedicineFromDesp(request):
     if request.method=='GET':
         medid=request.GET.get('medicine_id')
+        medid=int(medid)
         pieces_wanted=request.GET.get('pieces_wanted')
-        medObj=Medicine.objects.get(id=3)
+        strips_wanted=1
+        boxes_wanted=request.GET.get('boxes_wanted')
+
+        medObj=Medicine.objects.get(id=medid)
+        
+
         # if medObj.AddCharge=='No' then add zero to amount
         despstckObj=despensoryStock.objects.get(medicine=medObj)
-        desp_piece=despstckObj.piece_stored
-        pieces_wanted=int(pieces_wanted)
-        
-        despstckObj.piece_stored=desp_piece-pieces_wanted
-        price=despstckObj.piece_price_unit*pieces_wanted
-        amount=0
-        despstckObj.save()
+        if despstckObj:
+            if(despstckObj.strip_unit==None ):
+                lst=NoStripCalculationDespToPat(despstckObj,medObj,boxes_wanted,pieces_wanted)
 
-        main_list=['1',medObj.medicine_name,'0','0',pieces_wanted,price,amount]
+            else:
+                WithStripCalculationDespToPat(despstckObj,medObj,boxes_wanted,strips_wanted,pieces_wanted)
+        print("lst",lst)
+       
+    
+
+        main_list=['1',medObj.medicine_name,str(list[0]),'0',str(list[1]),str(lst[2]),str(lst[3])]
         dspstckobjs=despensoryStock.objects.filter(status='In Use')
         print("despensoryStock",dspstckobjs)
         dspstck_dict={}
@@ -1433,7 +1405,8 @@ def retrieveMedicineFromDesp(request):
             tempdspstck_dict['piece_price_unit']=dspstck.piece_price_unit
             dspstck_dict[dspstck.id]=[]
             dspstck_dict[dspstck.id]=tempdspstck_dict
-
+        if despstckObj.pieces_stored==0:
+            despstckObj.delete()
         data={
             'main_list':main_list,
             'dspstck_dict':json.dumps(dspstck_dict),
@@ -1443,3 +1416,55 @@ def retrieveMedicineFromDesp(request):
 
 
 
+def NoStripCalculationDespToPat(despensoryStock,medicineobj,boxes_wanted,pieces_wanted):
+   
+    box_unit=despensoryStock.box_unit
+    piece_unit=despensoryStock.piece_unit
+
+    boxes_wanted=boxes_wanted*box_unit
+    total_number_of_req_pieces=boxes_wanted*piece_unit+pieces_wanted
+
+    if despensoryStock.piece_stored<piece_unit:
+        total_number_of_req_pieces=despensoryStock.piece_stored
+    
+    pieces_stored_in_stock=despensoryStock.piece_stored
+    pieces_leftin_stock=float(pieces_stored_in_stock)-float(total_number_of_req_pieces)
+
+    if pieces_leftin_stock==0:
+        boxes_stored_in_stock=0
+    else:
+        boxes_stored_in_stock= float(pieces_leftin_stock)/float(piece_unit)
+        boxes_stored_in_stock= math.ceil(boxes_stored_in_stock)
+    
+    if boxes_stored_in_stock==0 and pieces_leftin_stock==0.0:
+        despensoryStock.status="Used"
+
+    despensoryStock.box_stored=boxes_stored_in_stock
+    despensoryStock.piece_stored=pieces_leftin_stock
+    despensoryStock.save()
+    
+    boxes_stored_in_desp=despensoryStock.box_stored
+
+    boxes_wanted=boxes_stored_in_desp-boxes_stored_in_stock
+    pieces_wanted=despensoryStock.piece_stored-pieces_leftin_stock
+    
+    price=despensoryStock.piece_price_unit*pieces_wanted
+    amount=0
+    
+    lst=[]
+    lst.append(boxes_wanted)
+    lst.append(pieces_wanted)
+    lst.append(price)
+    lst.append(amount)
+    print("LIST",lst)
+
+    
+
+    return lst
+
+
+    
+        
+    
+
+    

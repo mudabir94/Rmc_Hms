@@ -393,6 +393,8 @@ function createPatientDataTable(){
                     patient_id_selected=$(this).find('td').eq(0).text()
 
                     $("#row_div_four").remove();
+                  
+                    
                     pat_datatable.$('tr.selected').removeClass('selected');
                     $(this).addClass('selected');
                     console.log("Patient dict on click",patient_dict);
@@ -950,6 +952,13 @@ function createPatientDataTableInGenPres(){
 
                     $("#row_div_four").remove();
                     $('#row_div_five').remove();
+                    $("#row_div_six").remove();
+                    if (room_datatable!==undefined){
+                        room_datatable.destroy();
+                    }
+                    if (ward_datatable!==undefined){
+                        ward_datatable.destroy();
+                    }
                     pat_datatable.$('tr.selected').removeClass('selected');
                     $(this).addClass('selected');
                     console.log("Patient dict on click",patient_dict);
@@ -1018,6 +1027,7 @@ function retrieveRoomInfoInRoomWard(){
         success: function(data){
             console.log("room_dict",data["room_dict"]);
             room_dict={};
+            room_list=[]
             room_dict=JSON.parse(data["room_dict"])
             for (room in room_dict){
                 templist=[];
@@ -1031,6 +1041,7 @@ function retrieveRoomInfoInRoomWard(){
             }
             console.log("room_dict",room_dict);
             console.log(room_list)
+
             createRoomDataTable()
 
         },
@@ -1048,6 +1059,7 @@ function retrieveWardInfoInRoomWard(){
         success: function(data){
             console.log("ward_dict",data["ward_dict"]);
             ward_dict={};
+            ward_list=[]
             ward_dict=JSON.parse(data["ward_dict"])
             for (ward in ward_dict){
                 templist=[];
@@ -1060,6 +1072,8 @@ function retrieveWardInfoInRoomWard(){
             }
             console.log("ward_dict",ward_dict);
             console.log(ward_list)
+            $('#available_ward_table').show()
+
             createWardDataTable()
 
 
@@ -1075,6 +1089,19 @@ function pat_type_OnSelect(element){
 
     if (optionSelected==='Outdoor'){
         $('#row_div_five').remove();
+        if (room_datatable!==undefined){
+            room_datatable.destroy();
+            $("#row_div_six").remove();
+            $("#row_div_seven").remove();
+
+        }
+        else if (ward_datatable!==undefined){
+
+            ward_datatable.destroy();
+            $("#row_div_six").remove();
+            $("#row_div_seven").remove();
+
+        }
         var main_col_div=$('#main_col_div')
         var row_div_five=$("<div class='row' id='row_div_five'></div>");
 
@@ -1332,7 +1359,7 @@ function pat_type_OnSelect(element){
 function createRoomDataTable(){
     console.log("room_list----------",room_list)
     $(function(){
-        room_datatable=$("#available_room_ward_table").DataTable({
+        room_datatable=$("#available_room_table").DataTable({
             data:room_list,
             columns: [
                 { title: "Id" },
@@ -1349,7 +1376,7 @@ function createRoomDataTable(){
                 info:false,
     
             });
-            $('#available_room_ward_table tbody').on( 'click', 'tr', function () {
+            $('#available_room_table tbody').on( 'click', 'tr', function () {
                 if ( $(this).hasClass('selected') ) {
                     alert("clicked same entry")
                 }
@@ -1359,8 +1386,9 @@ function createRoomDataTable(){
                     room_datatable.$('tr.selected').removeClass('selected');
                     $(this).addClass('selected');
                     console.log("room dict on click",room_dict);
-                    $("#row_div_four").remove();
-                    var row_div_four=$("<div class='row' id='row_div_four'></div>");
+                    $("#row_div_seven").remove();
+
+                    var row_div_seven=$("<div class='row' id='row_div_seven'></div>");
                         var main_subcol=$("<div class='col-md-12'></div>");
 
                             var subrow_one=$("<div class='row'></div>")
@@ -1370,7 +1398,7 @@ function createRoomDataTable(){
                                                 var colmd1=$("<div class='col-md-4'></div>")
                                                 var colmd2=$("<div class='col-md-2'></div>")
                                                     var roomNo_label=$("<label for='roomNo_label' class='custom_label_css'>Room Number</label>");
-                                                    var roomNo_input=$("<input class='form-control' id='roomNo_input' class='custom_input_css' value='"+room_dict[room_id_selected]['room_no']+"' disabled>")
+                                                    var roomNo_input=$("<input  id='roomNo_input' class='custom_input_css' value='"+room_dict[room_id_selected]['room_no']+"' disabled>")
                                                 colmd1.append(roomNo_label)
                                                 colmd2.append(roomNo_input)
                                             row__col_one__subrow_one.append(colmd1);
@@ -1386,7 +1414,7 @@ function createRoomDataTable(){
                                     colmd2=$("<div class='col-md-9'></div>")
 
                                         var admit_reason_label=$("<label class='custom_label_css'>Admit Reason</label>");
-                                        var admit_reason_input=$("<input class='form-control' id='admit_reason_input' class='custom_input_css'>")
+                                        var admit_reason_input=$("<input  id='admit_reason_input' class='custom_input_css'>")
 
                                     colmd1.append(admit_reason_label)
                                     colmd2.append(admit_reason_input)
@@ -1404,7 +1432,7 @@ function createRoomDataTable(){
                                     var colmd2=$("<div class='col-md-6'></div>")
                                     
                                         var Doctor_onDuty_label=$("<label  class='custom_label_css'>Doctor on Duty</label>");
-                                        var Doctor_onDuty_input=$("<input class='form-control' id='Doctor_onDuty_input' class='custom_input_css' ></input>")
+                                        var Doctor_onDuty_input=$("<input id='Doctor_onDuty_input' class='custom_input_css' ></input>")
                                     colmd1.append(Doctor_onDuty_label)
                                     colmd2.append(Doctor_onDuty_input);
                             
@@ -1417,7 +1445,7 @@ function createRoomDataTable(){
                                     var colmd1=$("<div class='col-md-4'></div>")
                                     var colmd2=$("<div class='col-md-6'></div>")
                                         var Consultant_label=$("<label for='Consultant_label' class='custom_label_css'>Consultant</label>");
-                                        var consultant_input=$("<input class='form-control' id='consultant_input' class='custom_input_css'>")
+                                        var consultant_input=$("<input  id='consultant_input' class='custom_input_css'>")
                                     colmd1.append(Consultant_label)
                                     colmd2.append(consultant_input)
                     
@@ -1433,9 +1461,9 @@ function createRoomDataTable(){
                     main_subcol.append(subrow_two)
                     main_subcol.append(subrow_three)
 
-                row_div_four.append(main_subcol)
+                row_div_seven.append(main_subcol)
             var main_col_div=$("#main_col_div");
-            main_col_div.append(row_div_four)
+            main_col_div.append(row_div_seven)
                   
                 }
             });
@@ -1444,7 +1472,7 @@ function createRoomDataTable(){
 function createWardDataTable(){
     console.log("ward_list",ward_list)
     $(function(){
-        ward_datatable=$("#available_room_ward_table").DataTable({
+        ward_datatable=$("#available_room_table").DataTable({
             data:ward_list,
             columns: [
                 { title: "Id" },
@@ -1460,7 +1488,7 @@ function createWardDataTable(){
                 info:false,
     
             });
-            $('#available_room_ward_table tbody').on( 'click', 'tr', function () {
+            $('#available_room_table tbody').on( 'click', 'tr', function () {
                 if ( $(this).hasClass('selected') ) {
                     alert("clicked same entry")
                 }
@@ -1470,8 +1498,8 @@ function createWardDataTable(){
                     ward_datatable.$('tr.selected').removeClass('selected');
                     $(this).addClass('selected');
                     console.log("ward dict on click",ward_dict);
-                    $("#row_div_four").remove();
-                    var row_div_four=$("<div class='row' id='row_div_four'></div>");
+                    $("#row_div_seven").remove();
+                    var row_div_seven=$("<div class='row' id='row_div_seven'></div>");
                         var main_subcol=$("<div class='col-md-12'></div>");
 
                             var subrow_one=$("<div class='row'></div>")
@@ -1484,10 +1512,10 @@ function createWardDataTable(){
                                                 var colmd4=$("<div class='col-md-2'></div>")
 
                                                     var wardNo_label=$("<label for='wardNo_label' class='custom_label_css'>Ward No</label>");
-                                                    var wardNo_input=$("<input class='form-control' id='wardNo_input' class='custom_input_css' value='"+ward_dict[ward_id_selected]['ward_no']+"' disabled>")
+                                                    var wardNo_input=$("<input  id='wardNo_input' class='custom_input_css' value='"+ward_dict[ward_id_selected]['ward_no']+"' disabled>")
 
                                                     var bedNo_label=$("<label for='bedNo_label' class='custom_label_css'>Ward No</label>");
-                                                    var BedNo_input=$("<input class='form-control' id='bedNo_input' class='custom_input_css' value='"+ward_dict[ward_id_selected]['bed_no']+"' disabled>")
+                                                    var BedNo_input=$("<input  id='bedNo_input' class='custom_input_css' value='"+ward_dict[ward_id_selected]['bed_no']+"' disabled>")
                                                     
                                                 colmd1.append(wardNo_label)
                                                 colmd2.append(wardNo_input)
@@ -1510,7 +1538,7 @@ function createWardDataTable(){
                                     colmd2=$("<div class='col-md-9'></div>")
 
                                         var admit_reason_label=$("<label class='custom_label_css'>Admit reason</label>");
-                                        var admit_reason_input=$("<input class='form-control' id='admit_reason_input' class='custom_input_css'")
+                                        var admit_reason_input=$("<input  id='admit_reason_input' class='custom_input_css'>")
 
                                     colmd1.append(admit_reason_label)
                                     colmd2.append(admit_reason_input)
@@ -1528,7 +1556,7 @@ function createWardDataTable(){
                                     var colmd2=$("<div class='col-md-6'></div>")
                                    
                                         var Doctor_onDuty_label=$("<label  class='custom_label_css'>Doctor on Duty</label>");
-                                        var Doctor_onDuty_input=$("<input class='form-control' id='Doctor_onDuty_input' class='custom_input_css' ></input>")
+                                        var Doctor_onDuty_input=$("<input id='Doctor_onDuty_input' class='custom_input_css' ></input>")
                                     colmd1.append(Doctor_onDuty_label)
                                     colmd2.append(Doctor_onDuty_input);
                             
@@ -1541,7 +1569,7 @@ function createWardDataTable(){
                                     var colmd1=$("<div class='col-md-4'></div>")
                                     var colmd2=$("<div class='col-md-6'></div>")
                                         var Consultant_label=$("<label for='Consultant_label' class='custom_label_css'>Consultant</label>");
-                                        var consultant_input=$("<input class='form-control' id='consultant_input' class='custom_input_css'>")
+                                        var consultant_input=$("<input  id='consultant_input' class='custom_input_css'>")
                                     colmd1.append(Consultant_label)
                                     colmd2.append(consultant_input)
                     
@@ -1557,9 +1585,9 @@ function createWardDataTable(){
                     main_subcol.append(subrow_two)
                     main_subcol.append(subrow_three)
 
-                row_div_four.append(main_subcol)
+                row_div_seven.append(main_subcol)
             var main_col_div=$("#main_col_div");
-            main_col_div.append(row_div_four)
+            main_col_div.append(row_div_seven)
                   
                 }
             });
@@ -1572,8 +1600,12 @@ function availableRoomWardRowDivSixCreation(){
         var col_one__row_div_six=$("<div class='col-md-12'></div>");
             var row__col_one__row_div_six=$("<div class='row'></div>");
                 var colmd1=$("<div class='col-md-12'></div>")
-                    var available_room_ward_table=$('<table id="available_room_ward_table" class="display" width="100%"></table>')
-                colmd1.append(available_room_ward_table)
+                    var available_room_table=$('<table id="available_room_table" class="display" width="100%"></table>')
+                    // var available_ward_table=$('<table id="available_ward_table" class="display" width="100%"></table>')
+
+                colmd1.append(available_room_table)
+                // colmd1.append(available_ward_table)
+
             row__col_one__row_div_six.append(colmd1);
         col_one__row_div_six.append(row__col_one__row_div_six);
     $(row_div_six).append(col_one__row_div_six);
@@ -1585,26 +1617,74 @@ function onSelectWardRoom(element){
     console.log("Room_WardSelected",Room_WardSelected)
     // $('#available_room_ward_table').empty()
     if (Room_WardSelected==='Room'){
+        $("#row_div_seven").remove();
+
         if (room_datatable!==undefined){
+            
             room_datatable.destroy();
+            $("#row_div_six").remove();
+            
+            availableRoomWardRowDivSixCreation()
+            retrieveRoomInfoInRoomWard()
+
+
         }
-        if (ward_datatable!==undefined){
+        else if (ward_datatable!==undefined){
+
             ward_datatable.destroy();
+            $("#row_div_six").remove();
+
+            availableRoomWardRowDivSixCreation()
+            retrieveRoomInfoInRoomWard()
+
         }
-        retrieveRoomInfoInRoomWard()
+        else{
+            availableRoomWardRowDivSixCreation()
+            retrieveRoomInfoInRoomWard()
+        }
+        
     }
     else if (Room_WardSelected==='Ward'){
+        $("#row_div_seven").remove();
+
         if (room_datatable!==undefined){
             room_datatable.destroy();
+            $("#row_div_six").remove();
+
+            availableRoomWardRowDivSixCreation()
+            retrieveWardInfoInRoomWard()
+
         }
-        if (ward_datatable!==undefined){
+        else if (ward_datatable!==undefined){
+
             ward_datatable.destroy();
+            $("#row_div_six").remove();
+
+            availableRoomWardRowDivSixCreation()
+            retrieveWardInfoInRoomWard()
+
         }
-        retrieveRoomInfoInRoomWard()
+        else{
+            availableRoomWardRowDivSixCreation()
+            retrieveWardInfoInRoomWard()
+        }
+        
 
     }
     else{
-        
+        $("#row_div_seven").remove();
+        if (room_datatable!==undefined){
+            room_datatable.destroy();
+            $("#row_div_six").remove();
+
+         
+        }
+        else if (ward_datatable!==undefined){
+
+            ward_datatable.destroy();
+            $("#row_div_six").remove();
+        }
+
     }
 
 }
@@ -2199,22 +2279,25 @@ var col1=$("#desp-med-qty-form")
 col1.append(sub_row);
 }
 function addMedicineToPatientBill(){
+    var box_wanted=$("#boxes_stored").val();
     var pieces_wanted=$("#pieces_stored").val();
-    var medicine_id="1";
+    var medicine_id=despid;
+    alert(medicine_id);
     $.ajax({
         type: 'GET',
         dataType: "json",
         'data': {
          'medicine_id':medicine_id,
          "pieces_wanted":pieces_wanted,
+         'boxes_wanted':box_wanted,
         },
         url: '/retrieve_medicine_from_desp',
         success: function(data){
-            dspstck_dict={}
-            datatable_desp_med_list=[]
-            dspstck_dict=JSON.parse(data["dspstck_dict"])
+            dspstck_dict={};
+            datatable_desp_med_list=[];
+            dspstck_dict=JSON.parse(data["dspstck_dict"]);
             for (dspstck in dspstck_dict){
-                templist=[]
+                templist=[];
                 console.log("dspstck",dspstck);
                 templist.push(dspstck);
                 templist.push(dspstck_dict[dspstck]['name']);
@@ -2229,7 +2312,6 @@ function addMedicineToPatientBill(){
             createDespDataTable();
             bill_datatable.destroy();
             billDataTable();
-
         }
     });
 }
