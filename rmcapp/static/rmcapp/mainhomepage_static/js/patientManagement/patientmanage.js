@@ -952,13 +952,8 @@ function createPatientDataTableInGenPres(){
 
                     $("#row_div_four").remove();
                     $('#row_div_five').remove();
-                    $("#row_div_six").remove();
-                    if (room_datatable!==undefined){
-                        room_datatable.destroy();
-                    }
-                    if (ward_datatable!==undefined){
-                        ward_datatable.destroy();
-                    }
+                    $('#row_div_six').remove();
+
                     pat_datatable.$('tr.selected').removeClass('selected');
                     $(this).addClass('selected');
                     console.log("Patient dict on click",patient_dict);
@@ -1349,7 +1344,6 @@ function pat_type_OnSelect(element){
         row_div_five.append(main_col__row_five)
         
     main_col_div.append(row_div_five)
-    availableRoomWardRowDivSixCreation();
     }
     else{
         $('#row_div_five').remove();
