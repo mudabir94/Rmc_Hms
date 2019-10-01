@@ -26,6 +26,8 @@ var room_dict;
 var room_id_selected=0;
 var room_list=[]
 var presData={}
+var token_Number;
+
 $(document).ready(function() {
 });
 
@@ -992,7 +994,6 @@ function createPatientDataTableInGenPres(){
                                                 
                                                 var tokenNumber_label=$("<label id='tokenNumber_label' class='custom_label_css'>Token Number</label>");
                                                 colmd3.append(tokenNumber_label)
-            
                                                 tokenNumber_disp=$("<input class='form-control custom_input_css' id='tokenNumber_disp'  value= '"+token_Number+"' disabled> </input>")
                                                 colmd4.append(tokenNumber_disp)
 
