@@ -10,7 +10,7 @@ from rmcapp.models import (
     despensoryStock,despensoryStockHistory,tt_Medicine_DespensoryStock,
     medicineBatches,
     packageType,
-    employeeType,Employee,Patient,patientMedRecords,Rooms,Ward,patientRoomsBill,tokenRecords,
+    employeeType,Employee,Patient,patientMedRecords,patientBillRecords,Rooms,Ward,patientRoomsBill,tokenRecords,
 )
 from django.http import HttpResponse, JsonResponse
 from .Controllers.MedControllers.MedController import MedicineController  
@@ -1246,17 +1246,34 @@ def retirevePatientMedHistory(request):
             'pat_med_history_dict':pat_med_history_dict
         }
         return JsonResponse(data)
-
+presData={}
 class printPatientPrescription(TemplateView):
     template_path_name="rmcapp/patient_dashboard_template/patient_pres.html"
+    global presData
     def get(self,request):
-        return render(request,self.template_path_name)
+        if request.is_ajax():
+            print("presData",presData)
+            data={
+                'presData':json.dumps(presData),
+            }
+            return JsonResponse(data)
+        else:
+            return render(request,self.template_path_name)
     def post(self,request):
-        pass
+      
+        data={}
+        return JsonResponse(data)
 
-def generatePrescription():
-    if request.method=="GET":
-        pass
+def generatePrescription(request):
+    global presData
+
+    if request.method=="POST":
+        presData=request.POST.get('presData')
+        presData=json.loads(presData)
+        print("presData",presData)
+        data={}
+        return JsonResponse(data)
+
 
 # def outPrescform():
 #     if request.method=="POST":
@@ -1395,96 +1412,164 @@ def retireveAllDespMed(request):
 
 def retrieveMedicineFromDesp(request):
     if request.method=='GET':
-        medid=request.GET.get('medicine_id')
-        medid=int(medid)
+        despid=request.GET.get('despid')
+        print("despid",despid)
+        despid=int(despid)
+        patientid=request.GET.get('patientid')
+        print("pateintid",patientid)
+        patientid=int(patientid)
         pieces_wanted=request.GET.get('pieces_wanted')
         strips_wanted=1
         boxes_wanted=request.GET.get('boxes_wanted')
+        pieces_wanted=int(pieces_wanted)
+        boxes_wanted=int(boxes_wanted)
+        despStckDict=request.GET.get('despStckDict')
+        despStckDict=json.loads(despStckDict)
+        pbr_dict=request.GET.get('pbr_dict')
+        pbr_dict=json.loads(pbr_dict)
 
-        medObj=Medicine.objects.get(id=medid)
-        
+       
 
         # if medObj.AddCharge=='No' then add zero to amount
-        despstckObj=despensoryStock.objects.get(medicine=medObj)
+        despstckObj=despensoryStock.objects.get(id=despid)
+        medObj=despstckObj.medicine
         if despstckObj:
             if(despstckObj.strip_unit==None ):
-                lst=NoStripCalculationDespToPat(despstckObj,medObj,boxes_wanted,pieces_wanted)
+                finaldata=NoStripCalculationDespToPat(despstckObj,patientid,medObj,boxes_wanted,pieces_wanted,despStckDict,pbr_dict,despid)
 
             else:
                 WithStripCalculationDespToPat(despstckObj,medObj,boxes_wanted,strips_wanted,pieces_wanted)
-        print("lst",lst)
-       
-    
+        print("Desp Stock Dict",finaldata[0])
+        print("Pbr dict",finaldata[1])
+        despStckDict={}
+        pbr_dict={}
+        despStckDict=finaldata[0]
+        pbr_dict=finaldata[1]
 
-        main_list=['1',medObj.medicine_name,str(list[0]),'0',str(list[1]),str(lst[2]),str(lst[3])]
-        dspstckobjs=despensoryStock.objects.filter(status='In Use')
-        print("despensoryStock",dspstckobjs)
-        dspstck_dict={}
-        for dspstck in dspstckobjs:
-            tempdspstck_dict={}
-            tempdspstck_dict['name']=dspstck.medicine.medicine_name
-            tempdspstck_dict['boxes_stored']=dspstck.box_stored
-            tempdspstck_dict['strip_stored']=dspstck.strip_stored
-            tempdspstck_dict['piece_stored']=dspstck.piece_stored
-            tempdspstck_dict['piece_price_unit']=dspstck.piece_price_unit
-            dspstck_dict[dspstck.id]=[]
-            dspstck_dict[dspstck.id]=tempdspstck_dict
-        if despstckObj.pieces_stored==0:
-            despstckObj.delete()
+        
+        # medicine_list=['1',medObj.medicine_name,str(mainlist[0]),'0',str(mainlist[1]),str(mainlist[2]),str(mainlist[3])]
+        
+      
         data={
-            'main_list':main_list,
-            'dspstck_dict':json.dumps(dspstck_dict),
+            'despStckDict':json.dumps(despStckDict),
+            'pbr_dict':json.dumps(pbr_dict),
+            # 'main_list':medicine_list,
+            # 'dspstck_dict':json.dumps(dspstck_dict),
         }
         return JsonResponse(data)
 
 
 
-
-def NoStripCalculationDespToPat(despensoryStock,medicineobj,boxes_wanted,pieces_wanted):
-   
+def NoStripCalculationDespToPat(despensoryStock,patientid,medicineobj,boxes_wanted,pieces_wanted,despStckDict,pbr_dict,despid):
+    despid=str(despid)
+    print("PBR",pbr_dict)
+    desp_BoxesStored=despStckDict[despid]['boxes_stored']
     box_unit=despensoryStock.box_unit
     piece_unit=despensoryStock.piece_unit
-
     boxes_wanted=boxes_wanted*box_unit
-    total_number_of_req_pieces=boxes_wanted*piece_unit+pieces_wanted
+    pieces_wanted=boxes_wanted*piece_unit+pieces_wanted
+    # pieces_stored_in_desp ==> psd
+    # Replace this, by get the piece_stored in despStckdict againts the desp id .. 
+    # psd=despensoryStock.piece_stored
+    print("pieceStored:::",despStckDict[despid]['piece_stored'])
+    psd=despStckDict[despid]['piece_stored']
+    # if psd<piece_unit:
+    #     pieces_wanted=psd
 
-    if despensoryStock.piece_stored<piece_unit:
-        total_number_of_req_pieces=despensoryStock.piece_stored
-    
-    pieces_stored_in_stock=despensoryStock.piece_stored
-    pieces_leftin_stock=float(pieces_stored_in_stock)-float(total_number_of_req_pieces)
+    # Replace this, by get the piece_stored in despStckdict againts the desp id .. 
+    # psd=despensoryStock.piece_stored
+    psd=despStckDict[despid]['piece_stored']
 
-    if pieces_leftin_stock==0:
-        boxes_stored_in_stock=0
+    #pieces_leftin_stock ==> lps
+    lps=float(psd)-float(pieces_wanted)
+    # boxes_stored_in_stock==> bss
+    if lps==0:
+        bss=0
+        print("BSS1",bss)
+
     else:
-        boxes_stored_in_stock= float(pieces_leftin_stock)/float(piece_unit)
-        boxes_stored_in_stock= math.ceil(boxes_stored_in_stock)
-    
-    if boxes_stored_in_stock==0 and pieces_leftin_stock==0.0:
-        despensoryStock.status="Used"
+        bss= float(lps)/float(piece_unit)
+        bss= math.ceil(bss)
+        print("BSS2",bss)
 
-    despensoryStock.box_stored=boxes_stored_in_stock
-    despensoryStock.piece_stored=pieces_leftin_stock
-    despensoryStock.save()
-    
-    boxes_stored_in_desp=despensoryStock.box_stored
+    # Now, We wont be saving it in despStock table so we'll update the despStckDict against the id. 
 
-    boxes_wanted=boxes_stored_in_desp-boxes_stored_in_stock
-    pieces_wanted=despensoryStock.piece_stored-pieces_leftin_stock
-    
-    price=despensoryStock.piece_price_unit*pieces_wanted
-    amount=0
-    
-    lst=[]
-    lst.append(boxes_wanted)
-    lst.append(pieces_wanted)
-    lst.append(price)
-    lst.append(amount)
-    print("LIST",lst)
+    # despensoryStock.boxes_stored=bss
+    # despensoryStock.piece_stored=lps
+    despStckDict[despid]['boxes_stored']=bss
+    despStckDict[despid]['piece_stored']=lps
+    if bss==0 and lps==0:
+        # In this case we'll simply add zero in DespStckDict piece and box stored
+        despStckDict[despid]['boxes_stored']=bss
+        despStckDict[despid]['piece_stored']=lps
+        # despensoryStock.status="Used"
+
+
+
+    # despensoryStock.save()
+
 
     
+    
+   
+    
+    # check if this medicine is already present in pbr dict or not. 
+    key=despStckDict[despid]['name']
 
-    return lst
+    print("KEY",key)
+    if key in pbr_dict.keys():
+        print("Key Found")
+        pbr_boxstored=pbr_dict[key]['boxes']
+
+        print("pbr_boxstored",pbr_dict)
+        boxes_wanted=(pbr_boxstored+desp_BoxesStored)-bss
+        print("Final Boxes For patient bill",boxes_wanted)
+        if boxes_wanted<0:
+            boxes_wanted=0
+        # if pieces_wanted%piece_unit==0:
+        #     boxes_wanted=pieces_wanted/piece_unit
+        #     print("boxes_Wanted",boxes_wanted)
+        # else:
+        #     boxes_wanted=boxes_wanted+int(pbr_dict[key]['boxes'])
+
+
+        pbr_dict[key]['boxes']=boxes_wanted
+        pieces_wanted=pieces_wanted+int(pbr_dict[key]['pieces'])
+        pbr_dict[key]['pieces']=pieces_wanted
+        price=int(despensoryStock.piece_price_unit)*pieces_wanted
+
+        pbr_dict[key]['price']=price+pbr_dict[key]['price']
+   
+        print(pbr_dict)
+    else:
+        print("Key Not Found")
+
+        tempdict={}
+        tempdict['pieces']=pieces_wanted
+        print("pieces_wanted%piece_unit",pieces_wanted%piece_unit)
+        if pieces_wanted%piece_unit==0:
+            boxes_wanted=pieces_wanted/piece_unit
+        tempdict['boxes']=boxes_wanted
+        tempdict['strips']=0
+
+        price=int(despensoryStock.piece_price_unit)*pieces_wanted
+
+        tempdict['price']=price
+        amount=0
+        tempdict['amount']=0
+        tempdict['despid']=despensoryStock.id
+        tempdict['priceperpiece']=piece_unit
+        tempdict['patientid']=patientid
+
+        pbr_dict[key]=tempdict
+    
+    finaldata=[]
+    finaldata.append(despStckDict)
+    finaldata.append(pbr_dict)
+    return finaldata
+
+
+
 
 def maxTokenNo(request):
     if request.method=="GET":
@@ -1498,5 +1583,48 @@ def maxTokenNo(request):
 
         return JsonResponse(data)
 
+    
+
+
+def savePatientBill(request):
+    if request.method=='POST':
+        despStckDict=request.POST.get('despStckDict')
+        despStckDict=json.loads(despStckDict)
+        pbr_dict=request.POST.get('pbr_dict')
+        pbr_dict=json.loads(pbr_dict)
+        for id in despStckDict:
+            despObj=despensoryStock.objects.get(id=id)
+            print("despObj Medicine name",despObj.medicine.medicine_name)
+            despObj.box_stored=despStckDict[id]['boxes_stored']
+            despObj.strip_stored=despStckDict[id]['strip_stored']
+            despObj.piece_stored=despStckDict[id]['piece_stored']
+            if despStckDict[id]['boxes_stored'] ==0 and despStckDict[id]['piece_stored']==0:
+                despObj.status='Used'
+            despObj.save()
+        for medname in pbr_dict:
+            despid=int(pbr_dict[medname]['despid'])
+            despObj=despensoryStock.objects.get(id=despid)
+            patientid=int(pbr_dict[medname]['patientid'])
+            patObj=Patient.objects.get(id=patientid)
+            pbrObj=patientBillRecords()
+            pbrObj.patient=patObj
+            pbrObj.desp=despObj
+            pbrObj.boxes_stored=int(pbr_dict[medname]['boxes'])
+            pbrObj.strips_stored=int(pbr_dict[medname]['strips'])
+            pbrObj.pieces_stored=int(pbr_dict[medname]['pieces'])
+            pbrObj.amount=int(pbr_dict[medname]['amount'])
+            pbrObj.save()
+
+
+        
+        data={}
+        return JsonResponse(data)
+        
+        
+
+
+
+        
+    
 
     

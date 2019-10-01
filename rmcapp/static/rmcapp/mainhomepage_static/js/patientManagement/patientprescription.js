@@ -1,4 +1,17 @@
+var presData={}
+
 $( document ).ready(function() {
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        'data': { 
+        },
+        url: '/print_patient_prescription',
+        success: function(data){
+            console.log("presData----",JSON.parse(data['presData']));
+
+        },
+    });
     loadPresForm();
 });
 function loadPresForm(){
