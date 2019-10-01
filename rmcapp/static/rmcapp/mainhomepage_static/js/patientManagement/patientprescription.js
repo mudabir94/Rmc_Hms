@@ -137,8 +137,6 @@ function loadPresForm(){
 
     $(row_div_four).append(col_one__row_div_four);
 
-$("#container-patient-dashboard").append("<hr class='hl'>");
-
 
 // footer
     var row_div_five=$("<div class='row'></div>");
