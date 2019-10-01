@@ -55,6 +55,6 @@ urlpatterns = [
  
   path('retireve_room_info_in_room_ward',views.retrieveRoomInfoInRoomWard,name='retireve_room_info_in_room_ward'),
   path('retireve_ward_info_in_room_ward',views.retrieveWardInfoInRoomWard,name='retireve_ward_info_in_room_ward'),
-
+  path('save_patient_bill',views.savePatientBill,name='save_patient_bill' )
 
 ]
