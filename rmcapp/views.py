@@ -10,7 +10,7 @@ from rmcapp.models import (
     despensoryStock,despensoryStockHistory,tt_Medicine_DespensoryStock,
     medicineBatches,
     packageType,
-    employeeType,Employee,Patient,patientMedRecords,patientBillRecords,Rooms,Ward,patientRoomsBill,
+    employeeType,Employee,Patient,patientMedRecords,patientBillRecords,Rooms,Ward,patientRoomsBill,tokenRecords,
 )
 from django.http import HttpResponse, JsonResponse
 from .Controllers.MedControllers.MedController import MedicineController  
@@ -1258,20 +1258,44 @@ def generatePrescription():
     if request.method=="GET":
         pass
 
+# def outPrescform():
+#     if request.method=="POST":
+#         print("SSS")
+#         outpatient_name=request.POST.get('name')
+#         gender=request.POST.get('gender')
+#         fee=request.POST.get('fee')
+#         discount=request.POST.get('discount')
+#         reason =request.POST.get('reason')
+#         discount_percentage=request.POST.get('discount_percent')
+
+#         print("outpatient_name",outpatient_name)
+#         print("discount",discount)
+#         print("reason",reason)
+#         print("discount_percentage",discount_percentage)
 
 
+#         name = json.loads(outpatient_name)
+#         gender = json.loads(gender)
+#         fee = json.loads(fee)
+#         discount = json.loads(discount)
+#         reason = json.loads(reason)
+#         discount_percentage = json.loads(discount_percentage)
+
+#         print(name)
+#         print(gender)
+#         print(fee)
+
+#         # print("employee_type",employee_type)
+
+#         data={
+#             'success':"success"
+#         }
+#         return JsonResponse(data)
 
 def retrieveEmployeeInfo(request):
     if request.method=="GET":
 
-        emp_name=request.GET.get("emp_name")
-        # contact_no=request.GET.get("contact_no")
-        # cnic=request.GET.get("cnic_no")
-        
-        # contact_no=""
-        # cnic=""
-        emp_objs=Employee.objects.filter(name__icontains=emp_name)
-
+    
 
         print("emp_objs",emp_objs)
         employee_dict={}
@@ -1525,13 +1549,25 @@ def NoStripCalculationDespToPat(despensoryStock,patientid,medicineobj,boxes_want
     finaldata=[]
     finaldata.append(despStckDict)
     finaldata.append(pbr_dict)
+    return finaldata
 
 
 
+
+def maxTokenNo(request):
+    if request.method=="GET":
+         
+        # Retrieve token no from the model Token
+        tokRecObj=tokenRecords.objects.latest('token_no')
+        print("tokRecObj",tokRecObj.token_no)
+        maxTokenNumber=tokRecObj.token_no
+        tokenNumber=int(maxTokenNumber)
+        data={"tokenNo":tokenNumber}
+
+        return JsonResponse(data)
 
     
 
-    return finaldata
 
 def savePatientBill(request):
     if request.method=='POST':

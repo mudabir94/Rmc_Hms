@@ -57,4 +57,8 @@ urlpatterns = [
   path('retireve_ward_info_in_room_ward',views.retrieveWardInfoInRoomWard,name='retireve_ward_info_in_room_ward'),
   path('save_patient_bill',views.savePatientBill,name='save_patient_bill' )
 
+    path('retireve_ward_info_in_room_ward',views.retrieveWardInfoInRoomWard,name='retireve_ward_info_in_room_ward'),
+
+  path('max_token_no',views.maxTokenNo,name="max_token_no"),
+  # path('out_presc_form',views.outPrescform,name="out_presc_form"),
 ]
