@@ -25,9 +25,9 @@ var room_datatable;
 var room_dict;
 var room_id_selected=0;
 var room_list=[]
-$( document ).ready(function() {
+var presData={}
+$(document).ready(function() {
 });
-
 
 function addPatient(){
     $('#main_page_content').empty()
@@ -993,7 +993,7 @@ function createPatientDataTableInGenPres(){
                                                 var tokenNumber_label=$("<label id='tokenNumber_label' class='custom_label_css'>Token Number</label>");
                                                 colmd3.append(tokenNumber_label)
             
-                                                tokenNumber_disp=$("<input class='form-control custom_input_css' id='tokenNumber_disp' disabled> </input>")
+                                                tokenNumber_disp=$("<input class='form-control custom_input_css' id='tokenNumber_disp'  value= '"+token_Number+"' disabled> </input>")
                                                 colmd4.append(tokenNumber_disp)
 
                                             row__col_one__subrow_one.append(colmd1);
@@ -1008,7 +1008,8 @@ function createPatientDataTableInGenPres(){
                     row_div_four.append(main_subcol)
                 var main_col_div=$("#main_col_div");
                 main_col_div.append(row_div_four)
-                  
+                maxTokenNo()
+
                 }
             });
         });
@@ -1443,11 +1444,71 @@ function printPrescriptionForm(){
     var pat_type= $("#pat_type_input").val();
     var ward_type= $("#ward_type_input").val();
 
-    var outpatient_name=patient_dict[patient_id_selected]['name'];
-    console.log("outpatient_name", outpatient_name);
-    
-    var outpatient_gender=patient_dict[patient_id_selected]['gender'];
-    console.log("outpatient_gender", outpatient_gender);
+    var patient_name=patient_dict[patient_id_selected]['name'];
+    console.log("patient_name", patient_name);
+
+    var pat_id= patient_id_selected
+    console.log("patient id", pat_id);
+
+    var patient_gender=patient_dict[patient_id_selected]['gender'];
+    console.log("patient_gender", patient_gender);
+
+    var today = new Date();
+    var DOB = patient_dict[patient_id_selected]['dob']
+    var DOB = new Date(DOB);
+    var totalMonths = (today.getFullYear() - DOB.getFullYear()) * 12 + today.getMonth() - DOB.getMonth();
+    totalMonths += today.getDay() < DOB.getDay() ? -1 : 0;
+    var years = today.getFullYear() - DOB.getFullYear();
+    if (DOB.getMonth() > today.getMonth())
+        years = years - 1;
+    else if (DOB.getMonth() === today.getMonth())
+        if (DOB.getDate() > today.getDate())
+            years = years - 1;
+
+    var days;
+    var months;
+
+    if (DOB.getDate() > today.getDate()) {
+        months = (totalMonths % 12);
+        if (months == 0)
+            months = 11;
+        var x = today.getMonth();
+        switch (x) {
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12: {
+                var a = DOB.getDate() - today.getDate();
+                days = 31 - a;
+                break;
+            }
+            default: {
+                var a = DOB.getDate() - today.getDate();
+                days = 30 - a;
+                break;
+            }
+        }
+    }
+    else {
+        days = today.getDate() - DOB.getDate();
+        if (DOB.getMonth() === today.getMonth())
+            months = (totalMonths % 12);
+        else
+            months = (totalMonths % 12) + 1;
+    }
+
+    if(years>1){
+        var age = years + ' years ';
+    }
+    if (years<1 && months>1){
+        var age= months + ' months ';
+    }
+    else{
+        var age=  days + ' days';
+    }
 
     if (pat_type==='Outdoor'){
         var outdooramount=$("#outdooramount_input").val();
@@ -1455,6 +1516,10 @@ function printPrescriptionForm(){
         $("#outdooramount_input").val("")
 
         var discountamount=$("#discountamount_input").val();
+        console.log("discountamount", discountamount);
+        $("#discountamount_input").val("")
+
+        var tokenNo = $("#tokenNumber_disp").val();
         console.log("discountamount", discountamount);
         $("#discountamount_input").val("")
 
@@ -1470,24 +1535,30 @@ function printPrescriptionForm(){
         console.log("doctor_visited", doctor_visited);
         $("#selecteddoctor").val("")
 
+        var presData={}
+        presData["id"]= pat_id;
+        presData["name"]= patient_name;
+        presData["token" ]= tokenNo;
+        presData["age"]= age;
+        presData["gender"]= patient_gender;
+        presData["discount"]= discountamount;
+        presData["discount_percent"]= discountPercent;
+        presData["discount_reason"]= discount_reason;
+        presData["doctor"]= doctor_visited;
 
+        console.log("presData", presData)
 
-        // $.ajax({
-        //     type: 'POST',
-        //     dataType: "json",
-        //     'data': {
-        //         "name":JSON.stringify(outpatient_name),
-        //         "gender":JSON.stringify(outpatient_gender),
-        //         "fee":JSON.stringify(outdooramount),
-        //         "discount":JSON.stringify(discountamount),
-        //         "discount_percent":JSON.stringify(discountPercent),
-        //         'reason':JSON.stringify(discount_reason),
-        //     },
-        //     // url: '/out_presc_form',
-        //     success: function(data){
-        //         console.log(data['Success']);
-        //     },
-        // });
+        $.ajax({
+            type: 'POST',
+            dataType: "json",
+            'data': { 
+                'presData':JSON.stringify(presData),
+            },
+            url: '/save_patient_data',
+            success: function(data){
+                console.log(data['Success']);
+            },
+        });
     }
     else if (pat_type==='Emergency'){
         var outdooramount=$("#outdooramount_input").val();
@@ -1506,40 +1577,47 @@ function printPrescriptionForm(){
         console.log("discount_reason", discount_reason);
         $("#discount_reason_input").val("")
 
+        var tokenNo = $("#tokenNumber_disp").val();
+        console.log("discountamount", discountamount);
+        $("#discountamount_input").val("")
+
         var doctor_visited = $("#selecteddoctor").val()
         console.log("doctor_visited", doctor_visited);
         $("#selecteddoctor").val("")
 
+        var presData={}
+        presData["id"]= pat_id;
+        presData["name"]= patient_name;
+        presData["token" ]= tokenNo;
+        presData["age"]= age;
+        presData["gender"]= patient_gender;
+        presData["discount"]= discountamount;
+        presData["discount_percent"]= discountPercent;
+        presData["discount_reason"]= discount_reason;
+        presData["doctor"]= doctor_visited;
 
+        console.log("presData", presData)
 
-        // Age, BP, token No, amount/fee, discount amount, discount reason
-
-
-        // $.ajax({
-        //     type: 'POST',
-        //     dataType: "json",
-        //     'data': {
-        //         "name":JSON.stringify(outpatient_name),
-        //         "gender":JSON.stringify(outpatient_gender),
-        //         "fee":JSON.stringify(outdooramount),
-        //         "discount":JSON.stringify(discountamount),
-        //         "discount_percent":JSON.stringify(discountPercent),
-        //         'reason':JSON.stringify(discount_reason),
-        //     },
-        //     // url: '/out_presc_form',
-        //     success: function(data){
-        //         console.log(data['Success']);
-        //     },
-        // });
+        $.ajax({
+            type: 'POST',
+            dataType: "json",
+            'data': { 
+                'presData':JSON.stringify(presData),
+            },
+            // url: '/save_patient_data',
+            success: function(data){
+                console.log(data['Success']);
+            },
+        });
     }
-    else{
+    else{     
         if (ward_type==='Ward'){
 
-            var RoomNumber=ward_dict[ward_id_selected]['ward_no']
-            console.log("RoomNumber", RoomNumber);
+            var wardNumber=ward_dict[ward_id_selected]['ward_no']
+            console.log("Ward Number", wardNumber);
 
-            var RoomNumber=ward_dict[ward_id_selected]['bed_no']
-            console.log("RoomNumber", RoomNumber);
+            var bedNumber=ward_dict[ward_id_selected]['bed_no']
+            console.log("bed Number", bedNumber);
 
             var admitreason=$("#admit_reason_input").val();
             console.log("admitreason", admitreason);
@@ -1553,11 +1631,35 @@ function printPrescriptionForm(){
             console.log("consultant", consultant);
             $("#consultant_input").val("")
 
+            var presData={}
+            presData["id"]= pat_id;
+            presData["name"]= patient_name;
+            presData["age"]= age;
+            presData["gender"]= patient_gender;
+            presData["ward"]= wardNumber;
+            presData["bed"]= bedNumber;
+            presData["Consultant"]= consultant;
+            presData["doctor"]= Doctor;
+            presData["admitreason"]= admitreason;
+
+            console.log("presData", presData)
+
+            $.ajax({
+                type: 'POST',
+                dataType: "json",
+                'data': { 
+                    'presData':JSON.stringify(presData),
+                },
+                // url: '/save_patient_data',
+                success: function(data){
+                    console.log(data['Success']);
+                },
+            });
         }
         else if (ward_type==='Room'){
 
-            var RoomNumber=room_dict[room_id_selected]['room_no']
-            console.log("RoomNumber", RoomNumber);
+            var roomNumber=room_dict[room_id_selected]['room_no']
+            console.log("RoomNumber", roomNumber);
 
             var admitreason=$("#admit_reason_input").val();
             console.log("admitreason", admitreason);
@@ -1570,147 +1672,33 @@ function printPrescriptionForm(){
             var consultant=$("#consultant_input").val();
             console.log("consultant", consultant);
             $("#consultant_input").val("")
-        }
-        else{
 
+            var presData={}
+            presData["id"]= pat_id;
+            presData["name"]= patient_name;
+            presData["age"]= age;
+            presData["gender"]= patient_gender;
+            presData["roomNo"]= roomNumber;
+            presData["Consultant"]= consultant;
+            presData["doctor"]= Doctor;
+            presData["admitreason"]= admitreason;
+
+            console.log("presData", presData)
+
+            $.ajax({
+                type: 'POST',
+                dataType: "json",
+                'data': { 
+                    'presData':JSON.stringify(presData),
+                },
+                url: '/save_patient_data',
+                success: function(data){
+                    console.log(data['Success']);
+                },
+            });
         }
     }
-
-}
-
-function createRoomDataTable(){
-    console.log("room_list----------",room_list)
-    $(function(){
-        room_datatable=$("#available_room_table").DataTable({
-            data:room_list,
-            columns: [
-                { title: "Id" },
-                { title: "Floor" },
-                { title: "Room Number" },
-                { title: 'Charge Per Day' },
-                { title: "AC Charge Per Day" },
-
-                ],
-                paging: false,
-                scrollY: 200,
-                scrollX: true,
-                ordering: true,
-                info:false,
-    
-            });
-            $('#available_room_table tbody').on( 'click', 'tr', function () {
-                if ( $(this).hasClass('selected') ) {
-                    alert("clicked same entry")
-                }
-                else{
-                    room_id_selected=$(this).find('td').eq(0).text()
-                    console.log("room_id_selected",room_id_selected)
-                    room_datatable.$('tr.selected').removeClass('selected');
-                    $(this).addClass('selected');
-                    console.log("room dict on click",room_dict);
-                    $("#row_div_seven").remove();
-
-                    var row_div_seven=$("<div class='row' id='row_div_seven'></div>");
-                        var main_subcol=$("<div class='col-md-12'></div>");
-
-                            var subrow_one=$("<div class='row'></div>")
-
-                                    var col_one__subrow_one=$("<div class='col-md-6'></div>");
-                                            row__col_one__subrow_one=$("<div class='row'></div>");
-                                                var colmd1=$("<div class='col-md-4'></div>")
-                                                var colmd2=$("<div class='col-md-2'></div>")
-                                                    var roomNo_label=$("<label for='roomNo_label' class='custom_label_css'>Room Number</label>");
-                                                    var roomNo_input=$("<input  id='roomNo_input' class='custom_input_css' value='"+room_dict[room_id_selected]['room_no']+"' disabled>")
-                                                colmd1.append(roomNo_label)
-                                                colmd2.append(roomNo_input)
-                                            row__col_one__subrow_one.append(colmd1);
-                                            row__col_one__subrow_one.append(colmd2);
-                                        col_one__subrow_one.append(row__col_one__subrow_one);
-
-                            subrow_one.append(col_one__subrow_one)
-
-                        var subrow_two=$("<div class='row'></div>")
-                            var col_one_subrow_two=$("<div class='col-md-12'></div>");
-                                var row__col_one_subrow_two=$("<div class='row'></div>");
-                                    colmd1=$("<div class='col-md-2'></div>")
-                                    colmd2=$("<div class='col-md-9'></div>")
-
-                                        var admit_reason_label=$("<label class='custom_label_css'>Admit Reason</label>");
-                                        var admit_reason_input=$("<input  id='admit_reason_input' class='custom_input_css'>")
-
-                                    colmd1.append(admit_reason_label)
-                                    colmd2.append(admit_reason_input)
-                        
-                                row__col_one_subrow_two.append(colmd1);
-                                row__col_one_subrow_two.append(colmd2);
-                        
-                            col_one_subrow_two.append(row__col_one_subrow_two);
-                        subrow_two.append(col_one_subrow_two)
-
-                        var subrow_three=$("<div class='row'></div>")
-                            var col_one__subrow_three=$("<div class='col-md-6'></div>");
-                                var row__col_one__subrow_three=$("<div class='row'></div>");
-                                    var colmd1=$("<div class='col-md-4'></div>")
-                                    var colmd2=$("<div class='col-md-6'></div>")
-                                    
-                                        var Doctor_onDuty_label=$("<label  class='custom_label_css'>Doctor on Duty</label>");
-                                        var Doctor_onDuty_input=$("<input id='Doctor_onDuty_input' class='custom_input_css' ></input>")
-                                    colmd1.append(Doctor_onDuty_label)
-                                    colmd2.append(Doctor_onDuty_input);
-                            
-                                    row__col_one__subrow_three.append(colmd1);
-                                    row__col_one__subrow_three.append(colmd2);
-                            col_one__subrow_three.append(row__col_one__subrow_three);
-
-                            var col_two__subrow_three=$("<div class='col-md-6'></div>");
-                                var row__col_two__subrow_three=$("<div class='row'></div>");
-                                    var colmd1=$("<div class='col-md-4'></div>")
-                                    var colmd2=$("<div class='col-md-6'></div>")
-                                        var Consultant_label=$("<label for='Consultant_label' class='custom_label_css'>Consultant</label>");
-                                        var consultant_input=$("<input  id='consultant_input' class='custom_input_css'>")
-                                    colmd1.append(Consultant_label)
-                                    colmd2.append(consultant_input)
-                    
-                                row__col_two__subrow_three.append(colmd1);
-                                row__col_two__subrow_three.append(colmd2);
-                            col_two__subrow_three.append(row__col_two__subrow_three);
-
-                        subrow_three.append(col_one__subrow_three)
-                        subrow_three.append(col_two__subrow_three)
-
-                        var subrow_four=$("<div class='row'></div>")
-                            var col_one__subrow_four=$("<div class='col-md-12'></div>");
-                                var row__col_one__subrow_four=$("<div class='row'></div>");
-                                    var colmd1=$("<div class='col-md-3'></div>")
-                                    var colmd2=$("<div class='col-md-6'></div>")
-                                    var colmd3=$("<div class='col-md-3'></div>")
-                                    
-                                        var printPres_button=$('<button class="btn btn-success btn-sm btn-block" onclick="printPrescriptionForm()">Pint Prescription</button>')
-                                        colmd2.append(printPres_button);
-                            
-                                    row__col_one__subrow_four.append(colmd1);
-                                    row__col_one__subrow_four.append(colmd2);
-                                    row__col_one__subrow_four.append(colmd3);
-
-                            col_one__subrow_four.append(row__col_one__subrow_four);
-
-
-                        subrow_four.append(col_one__subrow_four)
-
-                        
-                    main_subcol.append(subrow_one)
-                    main_subcol.append(subrow_two)
-                    main_subcol.append(subrow_three)
-                    main_subcol.append(subrow_four)
-
-
-                row_div_seven.append(main_subcol)
-            var main_col_div=$("#main_col_div");
-            main_col_div.append(row_div_seven)
-                  
-                }
-            });
-        });
+    window.location.replace("/print_patient_prescription")
 }
 function createWardDataTable(){
     console.log("ward_list",ward_list)
@@ -2102,26 +2090,159 @@ function generatePrescription(){
     $(main_col_div).append(row_div_one);
     $(main_col_div).append(row_div_two);
 }
+function createRoomDataTable(){
+    console.log("room_list----------",room_list)
+    $(function(){
+        room_datatable=$("#available_room_table").DataTable({
+            data:room_list,
+            columns: [
+                { title: "Id" },
+                { title: "Floor" },
+                { title: "Room Number" },
+                { title: 'Charge Per Day' },
+                { title: "AC Charge Per Day" },
 
-// function maxTokenNo(){
-    
-//     $.ajax({
-//         type: 'GET',
-//         dataType: "json",
-//         // the ajax call is sent to  url name in the get function.  
-//         url: '/max_token_no',
-//         'data': {
-//             "tokenNumber":tokenNumber,
-//         },
+                ],
+                paging: false,
+                scrollY: 200,
+                scrollX: true,
+                ordering: true,
+                info:false,
+
+            });
+            $('#available_room_table tbody').on( 'click', 'tr', function () {
+                if ( $(this).hasClass('selected') ) {
+                    alert("clicked same entry")
+                }
+                else{
+                    room_id_selected=$(this).find('td').eq(0).text()
+                    console.log("room_id_selected",room_id_selected)
+                    room_datatable.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                    console.log("room dict on click",room_dict);
+                    $("#row_div_seven").remove();
+
+                    var row_div_seven=$("<div class='row' id='row_div_seven'></div>");
+                        var main_subcol=$("<div class='col-md-12'></div>");
+
+                            var subrow_one=$("<div class='row'></div>")
+
+                                    var col_one__subrow_one=$("<div class='col-md-6'></div>");
+                                            row__col_one__subrow_one=$("<div class='row'></div>");
+                                                var colmd1=$("<div class='col-md-4'></div>")
+                                                var colmd2=$("<div class='col-md-2'></div>")
+                                                    var roomNo_label=$("<label for='roomNo_label' class='custom_label_css'>Room Number</label>");
+                                                    var roomNo_input=$("<input  id='roomNo_input' class='custom_input_css' value='"+room_dict[room_id_selected]['room_no']+"' disabled>")
+                                                colmd1.append(roomNo_label)
+                                                colmd2.append(roomNo_input)
+                                            row__col_one__subrow_one.append(colmd1);
+                                            row__col_one__subrow_one.append(colmd2);
+                                        col_one__subrow_one.append(row__col_one__subrow_one);
+
+                            subrow_one.append(col_one__subrow_one)
+
+                        var subrow_two=$("<div class='row'></div>")
+                            var col_one_subrow_two=$("<div class='col-md-12'></div>");
+                                var row__col_one_subrow_two=$("<div class='row'></div>");
+                                    colmd1=$("<div class='col-md-2'></div>")
+                                    colmd2=$("<div class='col-md-9'></div>")
+
+                                        var admit_reason_label=$("<label class='custom_label_css'>Admit Reason</label>");
+                                        var admit_reason_input=$("<input  id='admit_reason_input' class='custom_input_css'>")
+
+                                    colmd1.append(admit_reason_label)
+                                    colmd2.append(admit_reason_input)
+                        
+                                row__col_one_subrow_two.append(colmd1);
+                                row__col_one_subrow_two.append(colmd2);
+                        
+                            col_one_subrow_two.append(row__col_one_subrow_two);
+                        subrow_two.append(col_one_subrow_two)
+
+                        var subrow_three=$("<div class='row'></div>")
+                            var col_one__subrow_three=$("<div class='col-md-6'></div>");
+                                var row__col_one__subrow_three=$("<div class='row'></div>");
+                                    var colmd1=$("<div class='col-md-4'></div>")
+                                    var colmd2=$("<div class='col-md-6'></div>")
+                                    
+                                        var Doctor_onDuty_label=$("<label  class='custom_label_css'>Doctor on Duty</label>");
+                                        var Doctor_onDuty_input=$("<input id='Doctor_onDuty_input' class='custom_input_css' ></input>")
+                                    colmd1.append(Doctor_onDuty_label)
+                                    colmd2.append(Doctor_onDuty_input);
+                            
+                                    row__col_one__subrow_three.append(colmd1);
+                                    row__col_one__subrow_three.append(colmd2);
+                            col_one__subrow_three.append(row__col_one__subrow_three);
+
+                            var col_two__subrow_three=$("<div class='col-md-6'></div>");
+                                var row__col_two__subrow_three=$("<div class='row'></div>");
+                                    var colmd1=$("<div class='col-md-4'></div>")
+                                    var colmd2=$("<div class='col-md-6'></div>")
+                                        var Consultant_label=$("<label for='Consultant_label' class='custom_label_css'>Consultant</label>");
+                                        var consultant_input=$("<input  id='consultant_input' class='custom_input_css'>")
+                                    colmd1.append(Consultant_label)
+                                    colmd2.append(consultant_input)
+                    
+                                row__col_two__subrow_three.append(colmd1);
+                                row__col_two__subrow_three.append(colmd2);
+                            col_two__subrow_three.append(row__col_two__subrow_three);
+
+                        subrow_three.append(col_one__subrow_three)
+                        subrow_three.append(col_two__subrow_three)
+
+                        var subrow_four=$("<div class='row'></div>")
+                            var col_one__subrow_four=$("<div class='col-md-12'></div>");
+                                var row__col_one__subrow_four=$("<div class='row'></div>");
+                                    var colmd1=$("<div class='col-md-3'></div>")
+                                    var colmd2=$("<div class='col-md-6'></div>")
+                                    var colmd3=$("<div class='col-md-3'></div>")
+                                    
+                                        var printPres_button=$('<button class="btn btn-success btn-sm btn-block" onclick="printPrescriptionForm()">Pint Prescription</button>')
+                                        colmd2.append(printPres_button);
+                            
+                                    row__col_one__subrow_four.append(colmd1);
+                                    row__col_one__subrow_four.append(colmd2);
+                                    row__col_one__subrow_four.append(colmd3);
+
+                            col_one__subrow_four.append(row__col_one__subrow_four);
+
+
+                        subrow_four.append(col_one__subrow_four)
+
+                        
+                    main_subcol.append(subrow_one)
+                    main_subcol.append(subrow_two)
+                    main_subcol.append(subrow_three)
+                    main_subcol.append(subrow_four)
+
+
+                row_div_seven.append(main_subcol)
+            var main_col_div=$("#main_col_div");
+            main_col_div.append(row_div_seven)
+                    
+                }
+            });
+        });
+}
+
+function maxTokenNo(){
+    alert("MAxTorken")
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        // the ajax call is sent to  url name in the get function.  
+        url: '/max_token_no',
+        'data': {
+        },
         
-//         success: function(data){
-//             token_Number=data['tokenNumber']
-//             console.log("33333333333",token_Number)
-//             $('#tokenNumber_disp').val(token_Number);
-//             // $("#tokenNumber_disp").prop('disabled',true)
-//         },
-//     });
-// }
+        success: function(data){
+            token_Number=data['tokenNo'];
+            token_Number=token_Number+1
+            $('#tokenNumber_disp').val(token_Number);
+            // $("#tokenNumber_disp").prop('disabled',true)
+        },
+    });
+}
 function createPatientBill(){
         $('#main_page_content').empty()
         var container_patient_prescription= $('#main_page_content').append('<div class="container-fluid" id="container-patient-bill"></div>');
@@ -2190,7 +2311,7 @@ function retrievePatientInfoInCreateBill(pat_name,contact_no,cnic_no,id){
                 templist.push(patient_dict[pat]['contact_no'])
                 templist.push(patient_dict[pat]['gender'])
                 templist.push(patient_dict[pat]['dob'])
-                    templist.push(patient_dict[pat]['cnic'])
+                templist.push(patient_dict[pat]['cnic'])
                 templist.push(patient_dict[pat]['guardian'])
                 templist.push(patient_dict[pat]['address'])
                 templist.push(patient_dict[pat]['bloodgroup'])
@@ -2596,7 +2717,6 @@ function addMedicineToPatientBill(){
         }
     });
 }
-
 
 function getCookie(name) {
     var cookieValue = null;

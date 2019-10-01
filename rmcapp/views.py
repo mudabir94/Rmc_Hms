@@ -1490,17 +1490,13 @@ def maxTokenNo(request):
     if request.method=="GET":
          
         # Retrieve token no from the model Token
-        maxTokenNumber=tokenRecords.objects.all().aggregate(Max('token_no'))
-        tokenNumber=maxTokenNumber['token_no__max']
-        tokenNumber=int(tokenNumber)
-        print("tokenNo1111111111", tokenNumber)
+        tokRecObj=tokenRecords.objects.latest('token_no')
+        print("tokRecObj",tokRecObj.token_no)
+        maxTokenNumber=tokRecObj.token_no
+        tokenNumber=int(maxTokenNumber)
         data={"tokenNo":tokenNumber}
 
         return JsonResponse(data)
 
-
-    
-        
-    
 
     
