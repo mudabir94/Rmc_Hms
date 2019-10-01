@@ -27,6 +27,7 @@ var room_id_selected=0;
 var room_list=[]
 var dspstck_dict={}
 var presData={}
+var token_Number;
 $(document).ready(function() {
 });
 
@@ -1549,17 +1550,7 @@ function printPrescriptionForm(){
 
         console.log("presData", presData)
 
-        $.ajax({
-            type: 'POST',
-            dataType: "json",
-            'data': { 
-                'presData':JSON.stringify(presData),
-            },
-            url: '/save_patient_data',
-            success: function(data){
-                console.log(data['Success']);
-            },
-        });
+    
     }
     else if (pat_type==='Emergency'){
         var outdooramount=$("#outdooramount_input").val();
@@ -1599,17 +1590,7 @@ function printPrescriptionForm(){
 
         console.log("presData", presData)
 
-        $.ajax({
-            type: 'POST',
-            dataType: "json",
-            'data': { 
-                'presData':JSON.stringify(presData),
-            },
-            // url: '/save_patient_data',
-            success: function(data){
-                console.log(data['Success']);
-            },
-        });
+    
     }
     else{     
         if (ward_type==='Ward'){
@@ -1645,17 +1626,6 @@ function printPrescriptionForm(){
 
             console.log("presData", presData)
 
-            $.ajax({
-                type: 'POST',
-                dataType: "json",
-                'data': { 
-                    'presData':JSON.stringify(presData),
-                },
-                // url: '/save_patient_data',
-                success: function(data){
-                    console.log(data['Success']);
-                },
-            });
         }
         else if (ward_type==='Room'){
 
@@ -1686,20 +1656,22 @@ function printPrescriptionForm(){
 
             console.log("presData", presData)
 
-            $.ajax({
-                type: 'POST',
-                dataType: "json",
-                'data': { 
-                    'presData':JSON.stringify(presData),
-                },
-                url: '/save_patient_data',
-                success: function(data){
-                    console.log(data['Success']);
-                },
-            });
+         
         }
     }
-    window.location.replace("/print_patient_prescription")
+    $.ajax({
+        type: 'POST',
+        dataType: "json",
+        'data': { 
+            'presData':JSON.stringify(presData),
+        },
+        url: '/generate_prescription',
+        success: function(data){
+            console.log(data['Success']);
+            window.location.replace("/print_patient_prescription")
+
+        },
+    });
 }
 function createWardDataTable(){
     console.log("ward_list",ward_list)

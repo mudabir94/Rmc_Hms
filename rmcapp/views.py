@@ -1246,17 +1246,34 @@ def retirevePatientMedHistory(request):
             'pat_med_history_dict':pat_med_history_dict
         }
         return JsonResponse(data)
-
+presData={}
 class printPatientPrescription(TemplateView):
     template_path_name="rmcapp/patient_dashboard_template/patient_pres.html"
+    global presData
     def get(self,request):
-        return render(request,self.template_path_name)
+        if request.is_ajax():
+            print("presData",presData)
+            data={
+                'presData':json.dumps(presData),
+            }
+            return JsonResponse(data)
+        else:
+            return render(request,self.template_path_name)
     def post(self,request):
-        pass
+      
+        data={}
+        return JsonResponse(data)
 
-def generatePrescription():
-    if request.method=="GET":
-        pass
+def generatePrescription(request):
+    global presData
+
+    if request.method=="POST":
+        presData=request.POST.get('presData')
+        presData=json.loads(presData)
+        print("presData",presData)
+        data={}
+        return JsonResponse(data)
+
 
 # def outPrescform():
 #     if request.method=="POST":
