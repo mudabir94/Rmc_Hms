@@ -10,7 +10,7 @@ from rmcapp.models import (
     despensoryStock,despensoryStockHistory,tt_Medicine_DespensoryStock,
     medicineBatches,
     packageType,
-    employeeType,Employee,Patient,patientMedRecords,patientBillRecords,Rooms,Ward,patientRoomsBill,tokenRecords,
+    employeeType,Employee,Patient,patientMedRecords,patientBillRecords,Rooms,Ward,patientRoomsBill,tokenRecords,patientType,
 )
 from django.http import HttpResponse, JsonResponse
 from .Controllers.MedControllers.MedController import MedicineController  
@@ -1097,13 +1097,23 @@ def retirevePatientInfo(request):
         print("patient_dict",patient_dict)
 
 
-
+ 
         data={
             "patient_dict":json.dumps(patient_dict),
             # 'id':str(id),
         }
         return JsonResponse(data)
 
+def retrievePatTypeFee(request):
+
+    if request.method=="GET":
+        pat_type=request.GET.get("optionSelected")
+        patTypeObj=patientType.objects.get(patient_type=pat_type)
+        charges=patTypeObj.charges
+        data={
+            "charges":charges,
+        }
+        return JsonResponse(data)
 
 def retrievePatientInfoInPatientBill(request):
    if request.method=="GET":
