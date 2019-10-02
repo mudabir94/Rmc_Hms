@@ -1556,7 +1556,11 @@ def NoStripCalculationDespToPat(despensoryStock,patientid,medicineobj,boxes_want
 
         tempdict['price']=price
         amount=0
-        tempdict['amount']=0
+        if medicineobj.add_charge=="YES":
+            amount=price
+
+
+        tempdict['amount']=amount
         tempdict['despid']=despensoryStock.id
         tempdict['priceperpiece']=piece_unit
         tempdict['patientid']=patientid

@@ -30,7 +30,7 @@ class MedicineResource(resources.ModelResource):
     class meta:
         model=Medicine
 class MedicineAdmin(ImportExportActionModelAdmin):
-    list_display= ("id","medicine_name",'medicine_type_id','medicine_details','created_at','update_at')
+    list_display= ("id","medicine_name",'medicine_type_id','add_charge', 'medicine_details','created_at','update_at')
 
 class medicineTypeAdmin(admin.ModelAdmin):
     list_display= ("id",'medicine_type_name','created_at','update_at')

@@ -53,6 +53,7 @@ class Medicine(models.Model):
     litre=models.CharField(max_length=45,default=None,null=True,blank=True)
 
     medicine_details=models.CharField(max_length=45)   
+    add_charge=models.CharField(max_length=45,null=True,blank=True,default="No") 
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
     update_at = models.DateTimeField(auto_now_add=True, blank=True)
     def __str__(self):
