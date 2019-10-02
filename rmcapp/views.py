@@ -1549,7 +1549,13 @@ def NoStripCalculationDespToPat(despensoryStock,patientid,medicineobj,boxes_want
         price=int(despensoryStock.piece_price_unit)*pieces_wanted
 
         pbr_dict[key]['price']=price+pbr_dict[key]['price']
-   
+        price=pbr_dict[key]['price']
+        if medicineobj.add_charge=="YES":
+            amount=price
+        else:
+            amount=0
+
+        pbr_dict[key]['amount']=amount
         print(pbr_dict)
     else:
         print("Key Not Found")
