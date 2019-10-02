@@ -2743,9 +2743,7 @@ var col1=$("#desp-med-qty-form")
                 var col1_sub_sub_row5=$("<div class='col-md-4'></div>");
                 var col2_sub_sub_row5=$("<div class='col-md-4'></div>");
                     var button=$("<button id='add_med_desp' onclick='addMedicineToPatientBill()'>Add</button>")
-                    var print_button=$("<button id='save_print_bill' onclick='SaveAndPrintBill()'>Save And Print</button>")
                 col2_sub_sub_row5.append(button);
-                col2_sub_sub_row5.append(print_button);
 
             sub_sub_row5.append(col1_sub_sub_row5);
             sub_sub_row5.append(col2_sub_sub_row5);
@@ -2930,17 +2928,133 @@ function SaveAndPrintBill(){
 
 function createRowDivFiveBill(){
     var main_col_div=$("#main_col_div");
-    var row_div_five=$("<div class='row'></div>");
+    var row_div_five=$("<div class='row' id='row_div_five'></div>");
         var col_one__row_div_five=$("<div class='col-md-12'></div>");
-            row__col_one__row_div_five=$("<div class='row'></div>");
-                colmd1=$("<div class='col-md-12'></div>");
+            var row__col_one__row_div_five=$("<div class='row'></div>");
+                var  colmd1=$("<div class='col-md-12'></div>");
                     var row=$("<div class='row'></div>");
-                        var col1=$("<div class='col-md-4' >CALCULATIONS</div>");
-                        var col2=$("<div class='col-md-8' ></div>");
-                            var button=$("<button onclick='calculateBill()'> Calculate </button>")
-                        col2.append(button);
-                    row.append(col1);
-                    row.append(col2);
+                        var calculate_col1=$("<div class='col-md-4'></div>");
+                        var button=$("<button onclick='calculateBill()'> Calculate </button>")
+                        calculate_col1.append(button);
+
+                        var calculate_col2=$("<div class='col-md-8' ></div>");
+                            row1__calculate_col2=$("<div class='row'></div>");
+                                var subcol1=$("<div class='col-md-2'></div>")
+                                var subcol2=$("<div class='col-md-2'></div>")
+                                
+                                    var outdooramount_label=$("<label  class='custom_label_css'>Total Amount</label>");
+                                    subcol1.append(outdooramount_label)
+
+                                    var totalamount_input=$("<input class='form-control' id='totalamount_input' class='custom_input_css'>")
+                                    subcol2.append(totalamount_input)
+
+                            row1__calculate_col2.append(subcol1);
+                            row1__calculate_col2.append(subcol2);
+                            
+                            row2__calculate_col2=$("<div class='row'></div>");
+                                var subcol1=$("<div class='col-md-12'></div>")
+                                    row1__subcol1=$("<div class='row'></div>");
+                                        var c1=$("<div class='col-md-2'></div>")
+                                        var c2=$("<div class='col-md-2'></div>")
+                                        var c3=$("<div class='col-md-2'></div>")
+                                        var c4=$("<div class='col-md-2'></div>")
+                                        var c5=$("<div class='col-md-2'></div>")
+                                        var c6=$("<div class='col-md-2'></div>")
+
+
+                                        var discountamount_label=$("<label for='outdoorAmount_tag' class='custom_label_css'>Discount Amount</label>");
+                                        c1.append(discountamount_label)
+
+                                        discountamount_input=$("<input class='form-control' id='discountamount_input' onfocusout='discountAmountFocousOut($(this))' class='custom_input_css'>")
+                                        c2.append(discountamount_input)
+
+                                        var discountPercernt_label=$("<label for='discountPercernt_label' class='custom_label_css'>Discount Percent %</label>");
+                                        c3.append(discountPercernt_label)
+
+                                        discountpercent_input=$("<input class='form-control' id='discountpercent_input' class='custom_input_css'>")
+                                        c4.append(discountpercent_input);
+
+                                        var nettotal_label=$("<label for='nettotal_label' class='custom_label_css'>Net Total</label>");
+                                        c5.append(nettotal_label)
+
+                                        nettotal_input=$("<input class='form-control custom_input_css'onfocusin='netTotalFocusIn()'  id='nettotal_input' >")
+                                        c6.append(nettotal_input)
+
+                                        row1__subcol1.append(c1);
+                                        row1__subcol1.append(c2);
+                                        row1__subcol1.append(c3);
+                                        row1__subcol1.append(c4);
+                                        row1__subcol1.append(c5);
+                                        row1__subcol1.append(c6);
+
+                                        
+                                    subcol1.append(row1__subcol1)
+                                row2__calculate_col2.append(subcol1);
+                            var row3__calculate_col2=$("<div class='row'></div>");
+                                var subcol1=$("<div class='col-md-12'></div>")
+                                    var row1__subcol1=$("<div class='row'></div>");
+                                        var c1=$("<div class='col-md-2'></div>")
+                                        var c2=$("<div class='col-md-6'></div>")
+                                        
+                                            var reason_label=$("<label for='reason_label' class='custom_label_css'>Discount Reason</label>");
+                                            c1.append(reason_label)
+        
+                                            var reason_input=$("<input class='form-control' id='reason_input' class='custom_input_css'>")
+                                            c2.append(reason_input)
+        
+                                        row1__subcol1.append(c1);
+                                        row1__subcol1.append(c2);
+        
+                                    row1__subcol1.append(row1__subcol1);
+                                subcol1.append(row1__subcol1);
+                            row3__calculate_col2.append(subcol1);
+                            var row4__calculate_col2=$("<div class='row'></div>");
+                                var subcol1=$("<div class='col-md-12'></div>")
+                                    var row1__subcol1=$("<div class='row'></div>");
+                                        var c1=$("<div class='col-md-2'></div>")
+                                        var c2=$("<div class='col-md-3'></div>")
+                                        var c3=$("<div class='col-md-6'></div>")
+                                        
+                                            var doctor=$("<label for='doctor_label' class='custom_label_css'>Doctor</label>");
+                                        c1.append(doctor)
+        
+                                            var select=$("<select id='selecteddoctor' class='form-control'></select>");
+                                                var option=$("<option selected='selected' value='--'>--</option>");
+                                                var option1=$("<option id="+doctor_list[0]+"-opt value="+doctor_list[0]+">"+doctor_list[0]+"</option>");
+                                            $(select).append(option);
+                                            $(select).append(option1);
+        
+                                            for (var i=1;i<=doctor_list.length;i++){
+                                                if (doctor_list[i]!==undefined){
+                                                    var option=$("<option id="+doctor_list[i]+"-opt value="+doctor_list[i]+">"+doctor_list[i]+"</option>");
+                                                    $(select).append(option);
+                                                }
+                                            } 
+                                        c2.append(select);
+                                            var print_button=$("<button id='save_print_bill' onclick='SaveAndPrintBill()'>Save And Print</button>")
+                                        c3.append(print_button)
+
+                                    row1__subcol1.append(c1);
+                                    row1__subcol1.append(c2);
+                                    row1__subcol1.append(c3);
+
+                                subcol1.append(row1__subcol1);
+                            row4__calculate_col2.append(subcol1);
+
+    
+                        
+                        
+                        
+                        calculate_col2.append(row1__calculate_col2);
+                        calculate_col2.append(row2__calculate_col2);
+                        calculate_col2.append(row3__calculate_col2);
+                        calculate_col2.append(row4__calculate_col2);
+
+
+
+                   
+                    row.append(calculate_col1);
+                    row.append(calculate_col2);
                 colmd1.append(row);
             row__col_one__row_div_five.append(colmd1);
         col_one__row_div_five.append(row__col_one__row_div_five);
@@ -2956,6 +3070,25 @@ function calculateBill(){
         
     }
     console.log("totalamount",totalamount)
+    $("#totalamount_input").val(totalamount);
+
+}
+function discountAmountFocousOut(element){
+    var discountamount_input=$("#discountamount_input").val();
+    var discount_percentage=(discountamount_input/$("#totalamount_input").val())*100;
+    $("#discountpercent_input").val(discount_percentage);
+}   
+function netTotalFocusIn(){
+    var totalamount_input=$("#totalamount_input").val();
+    var discountamount_input=$("#discountamount_input").val();
+    console.log("discountamount_input",discountamount_input);
+    if(discountamount_input!==""){
+        var nettotal=totalamount_input-discountamount_input
+    }
+    else{
+        var nettotal=totalamount_input;
+    }
+    $("#nettotal_input").val(nettotal);
 }
 function getCookie(name) {
     var cookieValue = null;
