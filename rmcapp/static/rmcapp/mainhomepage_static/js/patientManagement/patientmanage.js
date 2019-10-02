@@ -1117,7 +1117,7 @@ function pat_type_OnSelect(element){
                                 var colmd1=$("<div class='col-md-2'></div>")
                                 var colmd2=$("<div class='col-md-2'></div>")
                                 
-                                    var outdooramount_label=$("<label for='outdoorAmount_tag' class='custom_label_css'>Amount/Fee</label>");
+                                    var outdooramount_label=$("<label for='outdoorAmount_tag' class='custom_label_css'>Outdoor Fee</label>");
                                     colmd1.append(outdooramount_label)
 
                                     outdooramount_input=$("<input class='form-control' id='outdooramount_input' class='custom_input_css'>")
@@ -1137,6 +1137,8 @@ function pat_type_OnSelect(element){
                                 var colmd2=$("<div class='col-md-2'></div>")
                                 var colmd3=$("<div class='col-md-2'></div>")
                                 var colmd4=$("<div class='col-md-2'></div>")
+                                var colmd5=$("<div class='col-md-2'></div>")
+                                var colmd6=$("<div class='col-md-2'></div>")
 
 
                                 var discountamount_label=$("<label for='outdoorAmount_tag' class='custom_label_css'>Discount Amount</label>");
@@ -1151,10 +1153,17 @@ function pat_type_OnSelect(element){
                                 discountPercent_input=$("<input class='form-control' id='discountPercent_input' class='custom_input_css'>")
                                 colmd4.append(discountPercent_input)
 
+                                var amountDue_label=$("<label for='amountDue_label' class='custom_label_css'>Net Total</label>");
+                                colmd5.append(amountDue_label)
+                                amountDue_input=$("<input class='form-control' id='amountDue_input'>")
+                                colmd6.append(amountDue_input)
+
                             row__col_one__row_two.append(colmd1);
                             row__col_one__row_two.append(colmd2);
                             row__col_one__row_two.append(colmd3);
                             row__col_one__row_two.append(colmd4);
+                            row__col_one__row_two.append(colmd5);
+                            row__col_one__row_two.append(colmd6);
 
                         col_one__row_two.append(row__col_one__row_two);
 
@@ -1258,7 +1267,7 @@ function pat_type_OnSelect(element){
                                 var colmd1=$("<div class='col-md-2'></div>")
                                 var colmd2=$("<div class='col-md-2'></div>")
                                 
-                                    var outdooramount_label=$("<label for='outdoorAmount_tag' class='custom_label_css'>Amount/Fee</label>");
+                                    var outdooramount_label=$("<label for='outdoorAmount_tag' class='custom_label_css'>Emergency Fee</label>");
                                     colmd1.append(outdooramount_label)
 
                                     outdooramount_input=$("<input class='form-control' id='outdooramount_input' class='custom_input_css'>")
@@ -1278,7 +1287,8 @@ function pat_type_OnSelect(element){
                                 var colmd2=$("<div class='col-md-2'></div>")
                                 var colmd3=$("<div class='col-md-2'></div>")
                                 var colmd4=$("<div class='col-md-2'></div>")
-
+                                var colmd5=$("<div class='col-md-2'></div>")
+                                var colmd6=$("<div class='col-md-2'></div>")
 
                                 var discountamount_label=$("<label for='outdoorAmount_tag' class='custom_label_css'>Discount Amount</label>");
                                 colmd1.append(discountamount_label)
@@ -1288,14 +1298,21 @@ function pat_type_OnSelect(element){
 
                                 var discountPercernt_label=$("<label for='discountPercernt_label' class='custom_label_css'>Discount Percent</label>");
                                 colmd3.append(discountPercernt_label)
-
                                 discountPercent_input=$("<input class='form-control' id='discountPercent_input' class='custom_input_css'>")
                                 colmd4.append(discountPercent_input)
+
+                                var amountDue_label=$("<label for='amountDue_label' class='custom_label_css'>Net Total</label>");
+                                colmd5.append(amountDue_label)
+                                amountDue_input=$("<input class='form-control' id='amountDue_input'>")
+                                colmd6.append(amountDue_input)
 
                             row__col_one__row_two.append(colmd1);
                             row__col_one__row_two.append(colmd2);
                             row__col_one__row_two.append(colmd3);
                             row__col_one__row_two.append(colmd4);
+                            row__col_one__row_two.append(colmd5);
+                            row__col_one__row_two.append(colmd6);
+
 
                         col_one__row_two.append(row__col_one__row_two);
 
@@ -1384,8 +1401,7 @@ function pat_type_OnSelect(element){
     }
     else if (optionSelected==='Indoor'){
         $('#row_div_five').remove();
-        $('#tokenNumber_label').hide();
-        $('#tokenNumber_disp').hide();
+
 
         var main_col_div=$('#main_col_div')
         var row_div_five=$("<div class='row' id='row_div_five'></div>");
@@ -1507,7 +1523,7 @@ function printPrescriptionForm(){
     if (years<1 && months>1){
         var age= months + ' months ';
     }
-    else{
+    else if(days<30){
         var age=  days + ' days';
     }
 
@@ -1536,6 +1552,10 @@ function printPrescriptionForm(){
         console.log("doctor_visited", doctor_visited);
         $("#selecteddoctor").val("")
 
+        var patient_type = $("#pat_type_input").val()
+        console.log("patient_type", patient_type);
+        $("#pat_type_input").val()
+
         var presData={}
         presData["id"]= pat_id;
         presData["name"]= patient_name;
@@ -1546,6 +1566,8 @@ function printPrescriptionForm(){
         presData["discount_percent"]= discountPercent;
         presData["discount_reason"]= discount_reason;
         presData["doctor"]= doctor_visited;
+        presData["pat_type"]= patient_type;
+
 
         console.log("presData", presData)
 
@@ -1576,6 +1598,10 @@ function printPrescriptionForm(){
         console.log("doctor_visited", doctor_visited);
         $("#selecteddoctor").val("")
 
+        var patient_type = $("#pat_type_input").val()
+        console.log("patient_type", patient_type);
+        $("#pat_type_input").val()
+
         var presData={}
         presData["id"]= pat_id;
         presData["name"]= patient_name;
@@ -1586,6 +1612,7 @@ function printPrescriptionForm(){
         presData["discount_percent"]= discountPercent;
         presData["discount_reason"]= discount_reason;
         presData["doctor"]= doctor_visited;
+        presData["pat_type"]= patient_type;
 
         console.log("presData", presData)
 
@@ -1612,6 +1639,14 @@ function printPrescriptionForm(){
             console.log("consultant", consultant);
             $("#consultant_input").val("")
 
+            var patient_type = $("#pat_type_input").val()
+            console.log("patient_type", patient_type);
+            $("#pat_type_input").val()
+
+            var ward_type = $("#ward_type_input").val()
+            console.log("ward_type", ward_type);
+            $("#ward_type_input").val()
+
             var presData={}
             presData["id"]= pat_id;
             presData["name"]= patient_name;
@@ -1622,6 +1657,9 @@ function printPrescriptionForm(){
             presData["Consultant"]= consultant;
             presData["doctor"]= Doctor;
             presData["admitreason"]= admitreason;
+            presData["pat_type"]= patient_type;
+            presData["ward_type"]= ward_type;
+
 
             console.log("presData", presData)
 
@@ -1643,6 +1681,15 @@ function printPrescriptionForm(){
             console.log("consultant", consultant);
             $("#consultant_input").val("")
 
+            var patient_type = $("#pat_type_input").val()
+            console.log("patient_type", patient_type);
+            $("#pat_type_input").val()
+
+            
+            var ward_type = $("#ward_type_input").val()
+            console.log("ward_type", ward_type);
+            $("#ward_type_input").val()
+
             var presData={}
             presData["id"]= pat_id;
             presData["name"]= patient_name;
@@ -1652,6 +1699,8 @@ function printPrescriptionForm(){
             presData["Consultant"]= consultant;
             presData["doctor"]= Doctor;
             presData["admitreason"]= admitreason;
+            presData["pat_type"]= patient_type;
+            presData["ward_type"]= ward_type;
 
             console.log("presData", presData)
 
