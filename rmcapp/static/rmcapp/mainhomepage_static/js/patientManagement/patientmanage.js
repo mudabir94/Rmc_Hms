@@ -219,11 +219,11 @@ function addPatient(){
 
                     $(row_div_five).append(col_two__row_div_five);
 
-$(main_col_div).append(row_div_one);
-$(main_col_div).append(row_div_two);
-$(main_col_div).append(row_div_three);
-$(main_col_div).append(row_div_four);
-$(main_col_div).append(row_div_five);
+    $(main_col_div).append(row_div_one);
+    $(main_col_div).append(row_div_two);
+    $(main_col_div).append(row_div_three);
+    $(main_col_div).append(row_div_four);
+    $(main_col_div).append(row_div_five);
 
         $( "#dob_input" ).datepicker({
             changeMonth: true,
@@ -708,48 +708,39 @@ function viewPatientHistory(){
 
     var main_col_div=$("<div class='col-md-12' id=''></div>");
        
-    $(main_row_div).append(main_col_div);
-    var row_div=$("<div class='row' id='row_div'></div>");
-        var col=$("<div class='col-md-12'></div>");
-            var sub_row_div=$("<div class='row' id='sub_row_div_spat'></div>");
-                var subcol1=$("<div class='col-md-4'></div>");
-                    var rw=$("<div class='row'></div>");
-                        var c1=$("<div class='col-md-4'></div>");
-                            var label=$("<label>Patient id</label>")
-                        var c2=$("<div class='col-md-4'></div>");
-                            var input=$("<input id='searchpat_id_input'></input>");
-                        c1.append(label);
-                        c2.append(input);
-                    rw.append(c1);
-                    rw.append(c2);
-                subcol1.append(rw);
-                var subcol2=$("<div class='col-md-4'></div>");
-                    var rw=$("<div class='row'></div>");
-                        var c1=$("<div class='col-md-4'></div>");
-                            var search_button=$("<button onclick='searchPatientMedHistory()'>Search Patient</button>")
-                        c1.append(search_button);
-                    rw.append(c1);
-                subcol2.append(rw)
-                
-            sub_row_div.append(subcol1);
-            sub_row_div.append(subcol2);
+        $(main_row_div).append(main_col_div);
+            var row_div=$("<div class='row' id='row_div'></div>");
+                var col=$("<div class='col-md-12'></div>");
+                    var sub_row_div=$("<div class='row' id='sub_row_div_spat'></div>");
+                        var subcol1=$("<div class='col-md-4'></div>");
+                            var rw=$("<div class='row'></div>");
+                                var c1=$("<div class='col-md-4'></div>");
+                                    var label=$("<label>Patient id</label>")
+                                var c2=$("<div class='col-md-4'></div>");
+                                    var input=$("<input id='searchpat_id_input'></input>");
+                                c1.append(label);
+                                c2.append(input);
+                            rw.append(c1);
+                            rw.append(c2);
+                        subcol1.append(rw);
+                        var subcol2=$("<div class='col-md-4'></div>");
+                            var rw=$("<div class='row'></div>");
+                                var c1=$("<div class='col-md-4'></div>");
+                                    var search_button=$("<button onclick='searchPatientMedHistory()'>Search Patient</button>")
+                                c1.append(search_button);
+                            rw.append(c1);
+                        subcol2.append(rw)
+                        
+                    sub_row_div.append(subcol1);
+                    sub_row_div.append(subcol2);
 
-        col.append(sub_row_div)
-    row_div.append(col)
+                col.append(sub_row_div)
+            row_div.append(col)
 
-    var row_div_one=$("<div class='row' id='row_div_one'></div>");
+        var row_div_one=$("<div class='row' id='row_div_one'></div>");   
 
-
-        
-
-
-
-
-            
-
-$(main_col_div).append(row_div);
-$(main_col_div).append(row_div_one);
-
+    $(main_col_div).append(row_div);
+    $(main_col_div).append(row_div_one);
 }
 function patientHistory(element){
     console.log($(element).attr('value'))
@@ -782,15 +773,7 @@ function createPatientHistory_DateList(){
         sub_col_one.append(row_one__sub_col_one);
         sub_col_one.append(row_two__sub_col_one);
 
-
-        
-
-
-    
-    
     row_div_one.append(sub_col_one);
-
-
 }
 function createPatientHistoryForm(){
     $("#sub_col_two").remove();
@@ -1120,7 +1103,7 @@ function pat_type_OnSelect(element){
                                     var outdooramount_label=$("<label for='outdoorAmount_tag' class='custom_label_css'>Outdoor Fee</label>");
                                     colmd1.append(outdooramount_label)
 
-                                    outdooramount_input=$("<input class='form-control' id='outdooramount_input' class='custom_input_css'>")
+                                    outdooramount_input=$("<input class='form-control' id='totalamount_input' class='custom_input_css'>")
                                     colmd2.append(outdooramount_input)
 
                             row__col_one__row_one.append(colmd1);
@@ -1139,12 +1122,11 @@ function pat_type_OnSelect(element){
                                 var colmd4=$("<div class='col-md-2'></div>")
                                 var colmd5=$("<div class='col-md-2'></div>")
                                 var colmd6=$("<div class='col-md-2'></div>")
-
-
+                               
                                 var discountamount_label=$("<label for='outdoorAmount_tag' class='custom_label_css'>Discount Amount</label>");
                                 colmd1.append(discountamount_label)
 
-                                discountamount_input=$("<input class='form-control' id='discountamount_input' class='custom_input_css'>")
+                                discountamount_input=$("<input class='form-control' id='discountamount_input' onfocusout='discountAmountFocousOutPres($(this))' class='custom_input_css'>")
                                 colmd2.append(discountamount_input)
 
                                 var discountPercernt_label=$("<label for='discountPercernt_label' class='custom_label_css'>Discount Percent</label>");
@@ -1155,7 +1137,8 @@ function pat_type_OnSelect(element){
 
                                 var amountDue_label=$("<label for='amountDue_label' class='custom_label_css'>Net Total</label>");
                                 colmd5.append(amountDue_label)
-                                amountDue_input=$("<input class='form-control' id='amountDue_input'>")
+
+                                amountDue_input=$("<input class='form-control' onfocusin='netTotalFocusInPres()' id='amountDue_input'>")
                                 colmd6.append(amountDue_input)
 
                             row__col_one__row_two.append(colmd1);
@@ -1267,11 +1250,11 @@ function pat_type_OnSelect(element){
                                 var colmd1=$("<div class='col-md-2'></div>")
                                 var colmd2=$("<div class='col-md-2'></div>")
                                 
-                                    var outdooramount_label=$("<label for='outdoorAmount_tag' class='custom_label_css'>Emergency Fee</label>");
-                                    colmd1.append(outdooramount_label)
+                                    var emergencyamount_label=$("<label for='outdoorAmount_tag' class='custom_label_css'>Emergency Fee</label>");
+                                    colmd1.append(emergencyamount_label)
 
-                                    outdooramount_input=$("<input class='form-control' id='outdooramount_input' class='custom_input_css'>")
-                                    colmd2.append(outdooramount_input)
+                                    emergencyamount_input=$("<input class='form-control' id='totalamount_input' class='custom_input_css'>")
+                                    colmd2.append(emergencyamount_input)
 
                             row__col_one__row_one.append(colmd1);
                             row__col_one__row_one.append(colmd2);
@@ -1293,17 +1276,19 @@ function pat_type_OnSelect(element){
                                 var discountamount_label=$("<label for='outdoorAmount_tag' class='custom_label_css'>Discount Amount</label>");
                                 colmd1.append(discountamount_label)
 
-                                discountamount_input=$("<input class='form-control' id='discountamount_input' class='custom_input_css'>")
+                                discountamount_input=$("<input class='form-control' id='discountamount_input' onfocusout='discountAmountFocousOutPres($(this))' class='custom_input_css'>")
                                 colmd2.append(discountamount_input)
 
                                 var discountPercernt_label=$("<label for='discountPercernt_label' class='custom_label_css'>Discount Percent</label>");
                                 colmd3.append(discountPercernt_label)
+
                                 discountPercent_input=$("<input class='form-control' id='discountPercent_input' class='custom_input_css'>")
                                 colmd4.append(discountPercent_input)
 
                                 var amountDue_label=$("<label for='amountDue_label' class='custom_label_css'>Net Total</label>");
                                 colmd5.append(amountDue_label)
-                                amountDue_input=$("<input class='form-control' id='amountDue_input'>")
+
+                                amountDue_input=$("<input class='form-control' onfocusin='netTotalFocusInPres()' id='amountDue_input'>")
                                 colmd6.append(amountDue_input)
 
                             row__col_one__row_two.append(colmd1);
@@ -3077,6 +3062,8 @@ function discountAmountFocousOut(element){
     var discountamount_input=$("#discountamount_input").val();
     var discount_percentage=(discountamount_input/$("#totalamount_input").val())*100;
     $("#discountpercent_input").val(discount_percentage);
+    $("#nettotal_input").val(nettotal);
+
 }   
 function netTotalFocusIn(){
     var totalamount_input=$("#totalamount_input").val();
@@ -3089,6 +3076,25 @@ function netTotalFocusIn(){
         var nettotal=totalamount_input;
     }
     $("#nettotal_input").val(nettotal);
+}
+function discountAmountFocousOutPres(element){
+    var discountamount_input=$("#discountamount_input").val();
+    var discount_percentage=(discountamount_input/$("#totalamount_input").val())*100;
+    $("#discountPercent_input").val(discount_percentage);
+    
+
+}   
+function netTotalFocusInPres(){
+    var totalamount_input=$("#totalamount_input").val();
+    var discountamount_input=$("#discountamount_input").val();
+    console.log("discountamount_input",discountamount_input);
+    if(discountamount_input!==""){
+        var nettotal=totalamount_input-discountamount_input
+    }
+    else{
+        var nettotal=totalamount_input;
+    }
+    $("#amountDue_input").val(nettotal);
 }
 function getCookie(name) {
     var cookieValue = null;
