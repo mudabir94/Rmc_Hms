@@ -28,6 +28,7 @@ var room_list=[]
 var dspstck_dict={}
 var presData={}
 var token_Number;
+var optionSelected;
 $(document).ready(function() {
 });
 
@@ -1066,12 +1067,11 @@ function retrieveWardInfoInRoomWard(){
 }
 function pat_type_OnSelect(element){
 
-    var optionSelected = $(element).val()
+     optionSelected = $(element).val()
    
     console.log("optionSelected",optionSelected)
 
     if (optionSelected==='Outdoor'){
-
         $('#row_div_five').remove();
         $('#tokenNumber_label').show();
         $('#tokenNumber_disp').show();
@@ -1231,10 +1231,10 @@ function pat_type_OnSelect(element){
 
         row_div_five.append(main_col__row_five)
     main_col_div.append(row_div_five)
-    
+    retrievePatTypeFee()
+
 }
     else if (optionSelected==='Emergency'){
-        
         $('#row_div_five').remove();
         $('#tokenNumber_label').show();
         $('#tokenNumber_disp').show();
@@ -1253,7 +1253,7 @@ function pat_type_OnSelect(element){
                                     var emergencyamount_label=$("<label for='outdoorAmount_tag' class='custom_label_css'>Emergency Fee</label>");
                                     colmd1.append(emergencyamount_label)
 
-                                    emergencyamount_input=$("<input class='form-control' id='totalamount_input' class='custom_input_css'>")
+                                    emergencyamount_input=$("<input class='form-control' id='totalamount_input'  class='custom_input_css'>")
                                     colmd2.append(emergencyamount_input)
 
                             row__col_one__row_one.append(colmd1);
@@ -1382,6 +1382,7 @@ function pat_type_OnSelect(element){
 
         row_div_five.append(main_col__row_five)
     main_col_div.append(row_div_five)
+    retrievePatTypeFee()
     
     }
     else if (optionSelected==='Indoor'){
@@ -1441,7 +1442,22 @@ function pat_type_OnSelect(element){
 
     }
 }
+function retrievePatTypeFee(){
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
 
+        url: '/retrieve_pat_type_fee',
+        'data': {
+            'optionSelected':optionSelected,
+        },
+        success: function(data){
+            charges=data['charges']
+            console.log('charges', charges)
+            $("#totalamount_input").val(charges)
+        },
+    })
+}
 function printPrescriptionForm(){
     var pat_type= $("#pat_type_input").val();
     var ward_type= $("#ward_type_input").val();

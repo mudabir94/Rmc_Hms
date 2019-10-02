@@ -252,5 +252,6 @@ function loadPresForm(){
     $(main_col_div).append(row_div_four);
     $(main_col_div).append(row_div_five);
 
+    window.print(patient_prescription_div);
 
 }
