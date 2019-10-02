@@ -1517,16 +1517,20 @@ function printPrescriptionForm(){
         else
             months = (totalMonths % 12) + 1;
     }
-
+    console.log("AGE IN YEARS",years);
     if(years>1){
-        var age = years + ' years ';
+        var age = years;
+        console.log("YEARS GREATETER THAN 1",age)
+
     }
-    if (years<1 && months>1){
-        var age= months + ' months ';
-    }
-    else if(days<30){
-        var age=  days + ' days';
-    }
+    // if (years<=1 && months>1){
+    //     console.log("YEARS GREATETER THAN 1",age)
+
+    //     var age= months + 'months ';
+    // }
+    // else (days<30){
+    //     var age=  days + 'days';
+    // }
 
     if (pat_type==='Outdoor'){
         var outdooramount=$("#outdooramount_input").val();
@@ -2248,7 +2252,6 @@ function createRoomDataTable(){
 }
 
 function maxTokenNo(){
-    alert("MAxTorken")
     $.ajax({
         type: 'GET',
         dataType: "json",

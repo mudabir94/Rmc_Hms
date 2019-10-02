@@ -1,10 +1,10 @@
 .setInvestigationColHeight{
 height: 1100px;
+background: rgba(149, 155, 246, 0.733);
 
 }
 .setPrescriptionColHeight{
     height: 1100px;
-    
 }
 
 .setTestColHeight{

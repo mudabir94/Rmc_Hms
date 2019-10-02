@@ -226,9 +226,9 @@ function loadPresForm(){
         var row_div_five=$("<div class='row'></div>");
             var col_one__row_div_five=$("<div class='col-md-12 '></div>");
                 var row__col_one__row_div_five=$("<div class='row'></div>");
-                    colmd1=$("<div class='col-md-3 setInvestigationColHeight' style='background:#f7f7f7'></div>")
+                    colmd1=$("<div class='col-md-3 setInvestigationColHeight' ></div>")
                     colmd2=$("<div class='col-md-6 setPrescriptionColHeight'></div>")
-                    colmd3=$("<div class='col-md-3 setInvestigationColHeight' style='background:#f7f7f7'></div>")
+                    colmd3=$("<div class='col-md-3 setInvestigationColHeight'></div>")
 
                     col_one_heading=$("<p class='text-center'>INVESTIGATION</p>");
                     colmd1.append(col_one_heading)
