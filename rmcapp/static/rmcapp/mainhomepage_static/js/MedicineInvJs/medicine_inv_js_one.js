@@ -233,7 +233,7 @@ function addMedicineForm(){
     $(main_col_div).append("<hr>")
 
     var row_two__col_one__row_div_one=$("<div class='row'></div>");
-        var table=$('<table id="med_table" class="display" width="100%"></table>')
+        var table=$('<table id="med_table" class="display" style= "width:100%"></table>')
     row_two__col_one__row_div_one.append(table)
     $(main_col2_div).append(row_two__col_one__row_div_one)
     medicineDataTableGenerator(medicine_name_type_list)
@@ -335,7 +335,9 @@ function sendAjaxReqToSaveMedicineToDb(medicine_name,selected_type,med_details){
 }
 function medicineDataTableGenerator(list){
     $(function(){
+        $('#med_table').append('<caption style="color: black;font-weight: bold; ;caption-side: top;text-align: center;">Regestered Medicines</caption>');
         med_table_datatable=$("#med_table").DataTable({
+            
             data: list,
             columns: [
                 { title: "Medicine" },
@@ -344,9 +346,10 @@ function medicineDataTableGenerator(list){
                 paging: false,
                 scrollY: 200,
                 scrollX: true,
-                ordering: true,
+                ordering: false,
                 info:false,
-    
+                searching:false,
+
             });
         });
     }
@@ -427,19 +430,20 @@ function addMedicineToWhStockFrom(){
 
       $("#main_col_div1").append();
 
-      var row_two__col_one__row_div_one=$("<div class='row'></div>");
+      var row_two__col_one__row_div_one=$("<div class='row datatablePadding'></div>");
         var table=$('<table id="med_table" class="display" width="100%"></table>')
       row_two__col_one__row_div_one.append(table)
       $(main_col_div1).append(row_two__col_one__row_div_one)
 
-      var row_one__col_one__row_div_one=$("<div class='row'></div>");
+      var row_one__col_one__row_div_one=$("<div class='row datatablePadding'></div>");
       var table=$('<table id="med_in_stock" class="display" width="100%"></table>')
       row_one__col_one__row_div_one.append(table)
       $(main_col_div1).append(row_one__col_one__row_div_one)
       console.log("medicine_name_list",medicine_name_list)
       $(function(){
-
+        $('#med_table').append('<caption style="color: black;font-weight: bold; ;caption-side: top;text-align: center;">Regestered Medicines</caption>');
         med_table_datatable=$("#med_table").DataTable({
+
             data: medicine_name_type_list,
             columns: [
                 { title: "Medicine" },
@@ -450,9 +454,12 @@ function addMedicineToWhStockFrom(){
                 scrollX: true,
                 ordering: true,
                 info:false,
+                searching:false
 
             });
 console.log("ENter in DAta table",medicine_batch_in_stock_list)
+        $('#med_in_stock').append('<caption style="color: black;font-weight: bold; ;caption-side: top;text-align: center;">Medicines in Stock</caption>');
+
         medstck_datatable=$("#med_in_stock").DataTable({
             data: medicine_batch_in_stock_list,
             columns: [
@@ -465,6 +472,7 @@ console.log("ENter in DAta table",medicine_batch_in_stock_list)
                 scrollX: true,
                 ordering: true,
                 info:false,
+                searching:false,
 
             });
 
@@ -1690,7 +1698,8 @@ function addMedicineToDespStockForm(){
 
     despMedFormMainColTwo(main_col_div_2);
     $(function(){
-
+    
+    $('#med_in_stock').append('<caption style="color: black;font-weight: bold; ;caption-side: top;text-align: center;">Medicines in Stock</caption>');
     medstck_datatable=$("#med_in_stock").DataTable({
         data: medicine_batch_in_stock_list,
         columns: [
@@ -1703,6 +1712,7 @@ function addMedicineToDespStockForm(){
             scrollX: true,
             ordering: true,
             info:false,
+            searching:false,
 
         });
 
