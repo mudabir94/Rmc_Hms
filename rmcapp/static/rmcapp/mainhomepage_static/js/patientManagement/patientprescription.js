@@ -45,11 +45,7 @@ function loadPresForm(){
                 row__col_one__row_div_one=$("<div class='row'></div>");
                     colmd1=$("<div class='col-md-12'></div>")
 
-<<<<<<< HEAD
-                    rmc_tag=$("<p class='text-center font-weight-bold' style='font-size:2em;'>RAFIQ MEDICAL CENTER</p>");
-=======
                     rmc_tag=$("<p class='text-center font-weight-bold' style='font-size:2vw;' id='rmc_label'>RAFIQ MEDICAL CENTER</p>");
->>>>>>> c97b1c38b7d7dead600bdac86064c8c4d87bd64a
                     colmd1.append(rmc_tag)
 
                 row__col_one__row_div_one.append(colmd1);
