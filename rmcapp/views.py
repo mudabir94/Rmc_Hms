@@ -1321,8 +1321,9 @@ def generatePrescription(request):
 
 def retrieveEmployeeInfo(request):
     if request.method=="GET":
-
-    
+        emp_name=request.GET.get('emp_name')
+        emp_objs=Employee.objects.filter(Q(name=emp_name) | Q(phone_no=""))
+        
 
         print("emp_objs",emp_objs)
         employee_dict={}
