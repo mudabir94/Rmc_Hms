@@ -119,7 +119,7 @@ function addMedicineForm(){
     $("#container-med-dashboard").append("<hr>");
     var main_row_div= $("<div class='row is-flex backgroundcss_medToInv'></div>");
     $("#container-med-dashboard").append(main_row_div);
-    var main_col_div=$("<div class='col-md-8'></div>");
+    var main_col_div=$("<div class='col-md-8' style='background: lightyellow;'></div>");
     var main_col2_div=$("<div class='col-md-4'></div>");
 
     $(main_row_div).append(main_col_div);
@@ -232,8 +232,8 @@ function addMedicineForm(){
     $(main_col_div).append(row_div_four);
     $(main_col_div).append("<hr>")
 
-    var row_two__col_one__row_div_one=$("<div class='row'></div>");
-        var table=$('<table id="med_table" class="display" style= "width:100%"></table>')
+    var row_two__col_one__row_div_one=$("<div class='row' style='background: cornsilk;padding-left: 60px;'></div>");
+        var table=$('<table id="med_table"  class="display" style= "width:100%"></table>')
     row_two__col_one__row_div_one.append(table)
     $(main_col2_div).append(row_two__col_one__row_div_one)
     medicineDataTableGenerator(medicine_name_type_list)
@@ -349,6 +349,10 @@ function medicineDataTableGenerator(list){
                 ordering: false,
                 info:false,
                 searching:false,
+                columnDefs: [
+                    { width: 200, targets: 0 }
+                ],
+                fixedColumns: true,
 
             });
         });
@@ -454,7 +458,11 @@ function addMedicineToWhStockFrom(){
                 scrollX: true,
                 ordering: true,
                 info:false,
-                searching:false
+                searching:false,
+                columnDefs: [
+                    { width: 200, targets: 0 }
+                ],
+                fixedColumns: true,
 
             });
 console.log("ENter in DAta table",medicine_batch_in_stock_list)
@@ -473,6 +481,10 @@ console.log("ENter in DAta table",medicine_batch_in_stock_list)
                 ordering: true,
                 info:false,
                 searching:false,
+                columnDefs: [
+                    { width: 200, targets: 0 }
+                ],
+                fixedColumns: true,
 
             });
 
