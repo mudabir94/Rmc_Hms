@@ -410,7 +410,7 @@ function createPatientDataTable(){
                     pat_datatable.$('tr.selected').removeClass('selected');
                     $(this).addClass('selected');
                     console.log("Patient dict on click",patient_dict);
-                    var row_div_four=$("<div class='row' id='row_div_four'></div>");
+                    var row_div_four=$("<div class='row' id='row_div_four' style='transform: rotate(270deg) ;transform-origin:50% 100%;transform:scaleX(1);'></div>");
                         var main_subcol=$("<div class='col-md-12'></div>");
 
                             var subrow_one=$("<div class='row'></div>")
@@ -589,7 +589,7 @@ function createPatientDataTable(){
 }
 function printEditedPatientData(){
     var restorepage = $('body').html();
-    var printcontent = $('#patient_table').clone();
+    var printcontent = $('#row_div_four').clone();
     $('body').empty().html(printcontent);
     window.print();
     $('body').html(restorepage);
@@ -1731,7 +1731,7 @@ function printPrescriptionForm(){
         }
     }
     $.ajax({
-        type: 'POST',
+        type: 'GET',
         dataType: "json",
         'data': { 
             'presData':JSON.stringify(presData),

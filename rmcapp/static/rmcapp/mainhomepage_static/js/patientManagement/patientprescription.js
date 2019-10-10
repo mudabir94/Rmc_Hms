@@ -1,4 +1,7 @@
-var presData={}
+var presData={'id': '2', 'name': 'Ali', 'token': '3', 'age': '33', 'gender': 'Male',
+ 'discount': '', 'discount_percent': '', 'discount_reason': '', 'doctor': '--', 
+ 'pat_type': 'Outdoor'}
+
 var today = new Date();
 var dd = today.getDate();
 
@@ -15,22 +18,22 @@ if(mm<10)
 } 
 today = mm+'-'+dd+'-'+yyyy;
 console.log(today);
-$( document ).ready(function() {
-    $.ajax({
-        type: 'GET',
-        dataType: "json",
-        'data': { 
+$(document).ready(function() {
+    // $.ajax({
+    //     type: 'POST',
+    //     dataType: "json",
+       
+    //     url: '/print_patient_prescription',
+    //     success: function(data){
+    //         console.log("presData----",JSON.parse(data['presData']));
+    //         presData= JSON.parse(data['presData'])
+    //         console.log("iddd", presData['id'])
+    //         loadPresForm();
 
-        },
-        url: '/print_patient_prescription',
-        success: function(data){
-            console.log("presData----",JSON.parse(data['presData']));
-            presData= JSON.parse(data['presData'])
-            console.log("iddd", presData['id'])
-            loadPresForm();
+    //     },
+    // });
+    loadPresForm();
 
-        },
-    });
 });
 function loadPresForm(){
     var patient_prescription_div=$("#patient_prescription_div").append('<div class="container-fluid" id="container-print-patient-prescription"></div>');
@@ -43,12 +46,17 @@ function loadPresForm(){
         var row_div_one=$("<div class='row'></div>");
             var col_one__row_div_one=$("<div class='col-md-12'></div>");
                 row__col_one__row_div_one=$("<div class='row'></div>");
-                    colmd1=$("<div class='col-md-12'></div>")
+                    colmd1=$("<div class='col-md-6'></div>")
 
                     rmc_tag=$("<p class='text-center font-weight-bold' style='font-size:2vw;' id='rmc_label'>RAFIQ MEDICAL CENTER</p>");
                     colmd1.append(rmc_tag)
+                    colmd2=$('<div class="col-md-6"></div>');
+                    button=$("<button onclick='PrintPres()'> Print </button>")
+                    colmd2.append(button)
 
                 row__col_one__row_div_one.append(colmd1);
+                row__col_one__row_div_one.append(colmd2);
+
             col_one__row_div_one.append(row__col_one__row_div_one);
 
         $(row_div_one).append(col_one__row_div_one);
@@ -295,7 +303,7 @@ function loadPresForm(){
         var row__col_one__row_div_eight=$("<div class='row'></div>");
             colmd1=$("<div class='col-md-12 setHeight' style='background:#f7f7f7'></div>")
 
-            col_one_heading=$("<p class='text-center' style='font-weight: bold; padding-top:20px;text-decoration: underline;font-size: 20px;'>Diagnosis</p>");
+            col_one_heading=$("<p class='text-center' style='font-weight: bold; padding-top:20px;text-decoration: underline;font-size: 20px;'>Investigation</p>");
             colmd1.append(col_one_heading)
 
         row__col_one__row_div_eight.append(colmd1);
@@ -313,9 +321,69 @@ $(row_div_eight).append(col_one__row_div_eight);
     $(main_col_div).append(row_div_seven);
     $(main_col_div).append(row_div_eight);
 
+   
 
+    // var mywindow = window.open('', 'PRINT', 'height=400,width=600');
 
+    // mywindow.document.write('<html><head><title>' + document.title  + '</title>');
+    // mywindow.document.write('</head><body >');
+    // mywindow.document.write('<h1>' + document.title  + '</h1>');
+    // mywindow.document.write(document.getElementById('patient_prescription_div').innerHTML);
+    // mywindow.document.write('</body></html>');
 
-    window.print(patient_prescription_div);
+    // mywindow.document.close(); // necessary for IE >= 10
+    // mywindow.focus(); // necessary for IE >= 10*/
+
+    // mywindow.print();
+    // mywindow.close();
+
+    // window.print(patient_prescription_div);
 
 }
+function PrintPres(){
+    var restorepage = $('body').html();
+    var printcontent = $('#patient_prescription_div').clone();
+    $('body').empty().html(printcontent);
+    window.print();
+    $('body').html(restorepage);
+    // var mywindow = window.open('', 'PRINT', 'height=400,width=600');
+
+    // mywindow.document.write('<html><head><title>' + document.title  + '</title>');
+    // mywindow.document.write('</head><body >');
+    // mywindow.document.write('<h1>' + document.title  + '</h1>');
+    // mywindow.document.write(document.getElementById('patient_prescription_div').innerHTML);
+    // mywindow.document.write('</body></html>');
+
+    // mywindow.document.close(); // necessary for IE >= 10
+    // mywindow.focus(); // necessary for IE >= 10*/
+
+    // mywindow.print();
+    // mywindow.close();
+}
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Check if this cookie string begin with the name we want
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+             }
+         }
+    }
+    return cookieValue;
+}
+
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));
+        }
+    }
+});

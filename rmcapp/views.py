@@ -16,6 +16,7 @@ from django.http import HttpResponse, JsonResponse
 from .Controllers.MedControllers.MedController import MedicineController  
 from django.db import connection
 from django.db.models import Q
+from django.views.decorators.csrf import csrf_exempt
 
 
 # Create your views here.
@@ -1257,28 +1258,28 @@ def retirevePatientMedHistory(request):
         }
         return JsonResponse(data)
 presData={}
-class printPatientPrescription(TemplateView):
+def printPatientPrescription(request):
     template_path_name="rmcapp/patient_dashboard_template/patient_pres.html"
     global presData
-    def get(self,request):
+    if request.method=='GET':
+        print("LOADING PATIENT PRES")
+        data={}
+        return render(request,template_path_name,data)
+    if request.method=="POST":
         if request.is_ajax():
+            print("In Ajax")
             print("presData",presData)
             data={
                 'presData':json.dumps(presData),
             }
             return JsonResponse(data)
-        else:
-            return render(request,self.template_path_name)
-    def post(self,request):
-      
-        data={}
-        return JsonResponse(data)
-
+        
+@csrf_exempt 
 def generatePrescription(request):
     global presData
 
-    if request.method=="POST":
-        presData=request.POST.get('presData')
+    if request.method=="GET":
+        presData=request.GET.get('presData')
         presData=json.loads(presData)
         print("presData",presData)
         data={}
