@@ -2651,7 +2651,7 @@ function billDataTable(){
                     } 
                     bill_datatable.rows(this).remove()
                     $(this).remove();
-                    // myTable.row( this ).delete(); 
+                   
 
                 }
                 else{
