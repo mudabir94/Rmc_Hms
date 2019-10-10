@@ -46,6 +46,8 @@ urlpatterns = [
   
   path('print_patient_prescription',views.printPatientPrescription.as_view(),name="print_patient_prescription"),
   
+  path('update_prescription_record',views.updatePrescriptionRecord,name="update_prescription_record"),
+
   path('generate_prescription',views.generatePrescription,name="generate_prescription"),
 
   path('update_employee_data',views.updateEmployeeData,name="update_employee_data"),
@@ -61,5 +63,8 @@ urlpatterns = [
   path('retrieve_pat_type_fee',views.retrievePatTypeFee,name='retrieve_pat_type_fee'),
 
   path('max_token_no',views.maxTokenNo,name="max_token_no"),
+
+  path('add_proc_surg_form',views.addProcSurgForm,name='add_proc_surg_form'),
+
   # path('out_presc_form',views.outPrescform,name="out_presc_form"),
 ]

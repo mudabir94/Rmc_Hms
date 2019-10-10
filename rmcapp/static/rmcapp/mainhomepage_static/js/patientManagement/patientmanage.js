@@ -874,40 +874,40 @@ function searchPatientMedHistory(){
         }
     });
 }
-function printPatientPrescription(){
-    $('#main_page_content').empty()
-    var container_patient_prescription= $('#main_page_content').append('<div class="container-fluid" id="container-patient-prescription"></div>');
-    $("#container-patient-prescription").append("<h2 class ='text-center'>R M C</h2>");
-    $("#container-patient-prescription").append("<hr class='custom_hr'>");
+// function printPatientPrescription(){
+//     $('#main_page_content').empty()
+//     var container_patient_prescription= $('#main_page_content').append('<div class="container-fluid" id="container-patient-prescription"></div>');
+//     $("#container-patient-prescription").append("<h2 class ='text-center'>R M C</h2>");
+//     $("#container-patient-prescription").append("<hr class='custom_hr'>");
 
-    var main_row_div= $("<div class='row is-flex'></div>");
+//     var main_row_div= $("<div class='row is-flex'></div>");
 
-    $(container_patient_prescription).append(main_row_div);
-    var main_col_div=$("<div class='col-md-12' id=''></div>");
+//     $(container_patient_prescription).append(main_row_div);
+//     var main_col_div=$("<div class='col-md-12' id=''></div>");
        
-    $(main_row_div).append(main_col_div);
+//     $(main_row_div).append(main_col_div);
 
-    var row_div_one=$("<div class='row'></div>");
-            // Print button
-            var col_one__row_div_one=$("<div class='col-md-6'></div>");
-                row__col_one__row_div_one=$("<div class='row'></div>");
-                    colmd1=$("<div class='col-md-4'></div>")
-                    colmd2=$("<div class='col-md-4'></div>")
-                    colmd3=$("<div class='col-md-4'></div>")
+//     var row_div_one=$("<div class='row'></div>");
+//             // Print button
+//             var col_one__row_div_one=$("<div class='col-md-6'></div>");
+//                 row__col_one__row_div_one=$("<div class='row'></div>");
+//                     colmd1=$("<div class='col-md-4'></div>")
+//                     colmd2=$("<div class='col-md-4'></div>")
+//                     colmd3=$("<div class='col-md-4'></div>")
 
 
-                    print_patient_pres_a=$("<a>print</a>")
-                    print_patient_pres_a.attr('href','/print_patient_prescription')
-                    colmd2.append(print_patient_pres_a)
+//                     print_patient_pres_a=$("<a>print</a>")
+//                     print_patient_pres_a.attr('href','/print_patient_prescription')
+//                     colmd2.append(print_patient_pres_a)
 
-                row__col_one__row_div_one.append(colmd2);
-            col_one__row_div_one.append(row__col_one__row_div_one);
+//                 row__col_one__row_div_one.append(colmd2);
+//             col_one__row_div_one.append(row__col_one__row_div_one);
 
-    $(row_div_one).append(col_one__row_div_one);
+//     $(row_div_one).append(col_one__row_div_one);
 
-$(main_col_div).append(row_div_one);
+// $(main_col_div).append(row_div_one);
 
-}
+// }
 function createPatientDataTableInGenPres(){
     console.log("datatable_list",datatable_list)
     $(function(){
@@ -3115,6 +3115,203 @@ function netTotalFocusInPres(){
     }
     $("#amountDue_input").val(nettotal);
 }
+
+function updatePrescriptionRecord(){
+        $('#main_page_content').empty()
+        var container_update_prescription= $('#main_page_content').append('<div class="container-fluid" id="container-update-prescription"></div>');
+        $("#container-update-prescription").append("<h2 class ='text-center'>Update Prescription Records</h2>");
+        $("#container-update-prescription").append("<hr class='custom_hr'>");
+    
+        var main_row_div= $("<div class='row is-flex'></div>");
+    
+        $(container_update_prescription).append(main_row_div);
+        var main_col_div=$("<div class='col-md-12' id='main_col_div'></div>");
+           
+        $(main_row_div).append(main_col_div);
+    
+        var row_div_one=$("<div class='row' style='padding-bottom: 10px;'></div>");
+                var col_one__row_div_one=$("<div class='col-md-12'></div>");
+                    row__col_one__row_div_one=$("<div class='row'></div>");
+                        colmd1=$("<div class='col-md-2 text-center'></div>")
+                        colmd2=$("<div class='col-md-3'></div>")
+                        colmd3=$("<div class='col-md-4'></div>")
+    
+                        presc_id_label=$("<label class='custom_label_css'>Prescription Id</label>");
+                        colmd1.append(presc_id_label)
+    
+                        presc_input=$("<input id='presc_input_id' class='form-control'>")
+                        colmd2.append(presc_input)
+
+                        var search_button=$("<button  class='btn btn-light btn-lg' onclick='searchPatPresc()'>Search</button>")
+                        colmd3.append(search_button);
+    
+                    row__col_one__row_div_one.append(colmd1);
+                    row__col_one__row_div_one.append(colmd2);
+                    row__col_one__row_div_one.append(colmd3);
+
+                col_one__row_div_one.append(row__col_one__row_div_one);
+    
+        $(row_div_one).append(col_one__row_div_one);
+    
+    $(main_col_div).append(row_div_one);
+}
+function searchPatPresc(){
+    var row_div_two=$("<div class='row' id='row_div_two' style='padding-bottom:10px;'></div>");
+        var main_subcol=$("<div class='col-md-12'></div>");
+
+            var subrow_one=$("<div class='row'></div>")
+                var col_one__subrow_one=$("<div class='col-md-6'></div>");
+                    row__col_one__subrow_one=$("<div class='row'></div>");
+                        
+                        var colmd1=$("<div class='col-md-4 text-center'></div>")
+                        var colmd2=$("<div class='col-md-8' style='padding-bottom:10px;'></div>")
+                            var ss_label=$("<label for='ss_tag' class='custom_label_css'>Signs/Symptoms</label>");
+                            var ss_input=$("<textarea id='ss_input' class='form-control custom_input_css' style='height: 140px;'>")
+                        colmd1.append(ss_label)
+                        colmd2.append(ss_input)
+                    
+                    row__col_one__subrow_one.append(colmd1);
+                    row__col_one__subrow_one.append(colmd2);
+                col_one__subrow_one.append(row__col_one__subrow_one);
+
+                var col_two__subrow_one=$("<div class='col-md-6'></div>");
+                    var row__col_two__subrow_one=$("<div class='row'></div>");
+                        
+                        var colmd1=$("<div class='col-md-4 text-center'></div>")
+                        var colmd2=$("<div class='col-md-8' style='padding-bottom:10px;'></div>")
+                            var pd_label=$("<label class='custom_label_css'>Provisonal Diagnosis</label>");
+                            var pd_input=$("<textarea id='pd_input' class='form-control custom_input_css' style='height: 140px;'>")
+                        colmd1.append(pd_label);
+                        colmd2.append(pd_input);
+    
+                    row__col_two__subrow_one.append(colmd1)
+                    row__col_two__subrow_one.append(colmd2)
+                col_two__subrow_one.append(row__col_two__subrow_one)
+
+            subrow_one.append(col_one__subrow_one)
+            subrow_one.append(col_two__subrow_one)
+
+            var subrow_two=$("<div class='row'></div>")
+
+                var col_one__subrow_two=$("<div class='col-md-6'></div>");
+                    row__col_one__subrow_two=$("<div class='row'></div>");
+                        
+                        var colmd1=$("<div class='col-md-4 text-center'></div>")
+                        var colmd2=$("<div class='col-md-8' style='padding-bottom:10px;'></div>")
+                            var investigation_label=$("<label for='ss_tag' class='custom_label_css'>Investigation</label>");
+                            var investigation_input=$("<textarea id='investigation_input' class='form-control custom_input_css' style='height: 140px;'>")
+                        colmd1.append(investigation_label)
+                        colmd2.append(investigation_input)
+
+                    row__col_one__subrow_two.append(colmd1);
+                    row__col_one__subrow_two.append(colmd2);
+                col_one__subrow_two.append(row__col_one__subrow_two);
+
+                var col_two__subrow_two=$("<div class='col-md-6'></div>");
+                    var row__col_two__subrow_two=$("<div class='row'></div>");
+                        
+                        var colmd1=$("<div class='col-md-4 text-center'></div>")
+                        var colmd2=$("<div class='col-md-8' style='padding-bottom:10px;'></div>")
+                            var pd_label=$("<label class='custom_label_css'>Diagnosis</label>");
+                            var pd_input=$("<textarea id='pd_input' class='form-control custom_input_css' style='height: 140px;'>")
+                        colmd1.append(pd_label);
+                        colmd2.append(pd_input);
+
+                    row__col_two__subrow_two.append(colmd1)
+                    row__col_two__subrow_two.append(colmd2)
+                col_two__subrow_two.append(row__col_two__subrow_two)
+
+            subrow_two.append(col_one__subrow_two)
+            subrow_two.append(col_two__subrow_two)
+
+            var subrow_three=$("<div class='row'></div>")
+
+                var col_one__subrow_three=$("<div class='col-md-6'></div>");
+                    row__col_one__subrow_three=$("<div class='row'></div>");
+                        
+                        var colmd1=$("<div class='col-md-4 text-center'></div>")
+                        var colmd2=$("<div class='col-md-8' style='padding-bottom:10px;'></div>")
+                            var vitals_label=$("<label for='ss_tag' class='custom_label_css'>Vitals</label>");
+                            var vitals_input=$("<textarea id='vitals_input' class='form-control custom_input_css' style='height: 140px;'>")
+                        colmd1.append(vitals_label)
+                        colmd2.append(vitals_input)
+
+                    row__col_one__subrow_three.append(colmd1);
+                    row__col_one__subrow_three.append(colmd2);
+                col_one__subrow_three.append(row__col_one__subrow_three);
+
+            subrow_three.append(col_one__subrow_three)
+
+        main_subcol.append(subrow_one)
+        main_subcol.append(subrow_two)
+        main_subcol.append(subrow_three)
+
+    row_div_two.append(main_subcol)
+
+    var row_div_four=$("<div class='row' id='row_div_two' style='padding-top:10px;'></div>");
+        var main_col=$("<div class='col-md-12'></div>");
+
+            var subrow_one=$("<div class='row'></div>")
+                var col_one__subrow_one=$("<div class='col-md-12'></div>");
+                    row__col_one__subrow_one=$("<div class='row'></div>");
+                        
+                        var colmd1=$("<div class='col-md-8 offset-md-2'></div>")
+                            var search_button=$("<button  class='btn btn-primary btn-block' onclick=''>Update</button>")
+                        colmd1.append(search_button)
+                    
+                    row__col_one__subrow_one.append(colmd1);
+                col_one__subrow_one.append(row__col_one__subrow_one);
+
+            subrow_one.append(col_one__subrow_one)
+        main_col.append(subrow_one)
+
+    row_div_four.append(main_col)
+
+    var main_col_div=$("#main_col_div");
+    main_col_div.append(row_div_two);
+    createPresMedDataTableRow();
+    createPresMedDataTable();
+    main_col_div.append(row_div_four);
+
+
+}
+function createPresMedDataTableRow(){
+    var row_div_three=$("<div class='row'></div>");
+        var col_one__row_div_three=$("<div class='col-md-12'></div>");
+            row__col_one__row_div_three=$("<div class='row'></div>");
+                colmd1=$("<div class='col-md-12'></div>")
+                    var table=$('<table id="pres-med-table" class="display" width="100%"></table>')
+                colmd1.append(table);
+            row__col_one__row_div_three.append(colmd1);
+        col_one__row_div_three.append(row__col_one__row_div_three);
+    row_div_three.append(col_one__row_div_three);
+    
+var main_col_div=$("#main_col_div");
+main_col_div.append(row_div_three)
+}
+
+function createPresMedDataTable(){
+    
+    $(function(){
+        pat_pres_datatable=$("#pres-med-table").DataTable({
+            data:datatable_list,
+            columns: [
+                { title: "Id" },
+                { title: "Medicine Name" },
+                { title: "Type" },
+                { title: 'Detail' },
+            ],
+            paging: false,
+            scrollY: 200,
+            scrollX: true,
+            ordering: true,
+            info:false,     
+            searching:false,
+
+        });
+    });
+}
+    
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== "") {

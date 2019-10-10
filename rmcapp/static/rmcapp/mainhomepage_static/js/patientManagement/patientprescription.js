@@ -295,7 +295,7 @@ function loadPresForm(){
         var row__col_one__row_div_eight=$("<div class='row'></div>");
             colmd1=$("<div class='col-md-12 setHeight' style='background:#f7f7f7'></div>")
 
-            col_one_heading=$("<p class='text-center' style='font-weight: bold; padding-top:20px;text-decoration: underline;font-size: 20px;'>Investigation</p>");
+            col_one_heading=$("<p class='text-center' style='font-weight: bold; padding-top:20px;text-decoration: underline;font-size: 20px;'>Diagnosis</p>");
             colmd1.append(col_one_heading)
 
         row__col_one__row_div_eight.append(colmd1);

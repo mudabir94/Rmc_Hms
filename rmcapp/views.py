@@ -1576,7 +1576,6 @@ def NoStripCalculationDespToPat(despensoryStock,patientid,medicineobj,boxes_want
         if medicineobj.add_charge=="YES":
             amount=price
 
-
         tempdict['amount']=amount
         tempdict['despid']=despensoryStock.id
         tempdict['priceperpiece']=piece_unit
@@ -1589,9 +1588,6 @@ def NoStripCalculationDespToPat(despensoryStock,patientid,medicineobj,boxes_want
     finaldata.append(pbr_dict)
     return finaldata
 
-
-
-
 def maxTokenNo(request):
     if request.method=="GET":
          
@@ -1603,9 +1599,6 @@ def maxTokenNo(request):
         data={"tokenNo":tokenNumber}
 
         return JsonResponse(data)
-
-    
-
 
 def savePatientBill(request):
     if request.method=='POST':
@@ -1636,16 +1629,59 @@ def savePatientBill(request):
             pbrObj.amount=int(pbr_dict[medname]['amount'])
             pbrObj.save()
 
-
-        
         data={}
         return JsonResponse(data)
         
+def updatePrescriptionRecord(request):
+    if request.method=="POST":
+        return JsonResponse(data)
+
+        
+def addProcSurgForm(request):
+    if request.method=="POST":
+        procedureName = request.POST.get('procedure')
+        print(name)
+        dob = request.POST.get('dob')
         
 
 
+        name = json.loads(name)
+        dob = json.loads(dob)
+        gender = json.loads(gender)
+        phone_number = json.loads(phone_number)
+        address = json.loads(address)
+        qualification = json.loads(qualification)
+        employee_type = json.loads(employee_type)
 
+        email_address = json.loads(email_address)
+        cnic = json.loads(cnic)
+
+
+
+        print(name)
+        print(gender)
+        print(email_address)
+        print("employee_type",employee_type)
         
-    
+        emp_obj=Employee()
+        emptype_obj=employeeType.objects.get(type_name=employee_type)
+        emp_obj.employee_type=emptype_obj
+        emp_obj.name=name
+        emp_obj.dob=dob
+        emp_obj.gender=gender
+        emp_obj.phone_no=phone_number
+        emp_obj.address=address
+        emp_obj.qualification=qualification
+        emp_obj.email_address=email_address
+        emp_obj.cnic=cnic
+
+        emp_obj.save()
+
+        data={
+            'success':"success"
+        }
+        return JsonResponse(data)
+
+
 
     
