@@ -387,6 +387,14 @@ function createPatientDataTable(){
                 scrollX: true,
                 ordering: true,
                 info:false,
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                    extend: 'print',
+                    text: 'ButtonLabelHere',
+                    title: '',
+                    }
+                ],
     
             });
             $('#patient_table tbody').on( 'click', 'tr', function () {
@@ -553,7 +561,8 @@ function createPatientDataTable(){
 
                                         var updatePatientdataForm_button=$('<button class="btn btn-success btn-sm btn-block" onclick="updatePatientData()">Update</button>')
                                     colmd2.append(updatePatientdataForm_button)
-                                    
+                                        var printdiv=$('<button class="btn" onclick="printEditedPatientData()">Primt</button>')
+                                    colmd3.append(printdiv);
                                 row__col_one__subrow_five.append(colmd1)
                                 row__col_one__subrow_five.append(colmd2)
                                 row__col_one__subrow_five.append(colmd3)
@@ -577,6 +586,15 @@ function createPatientDataTable(){
     
             });
         });
+}
+function printEditedPatientData(){
+    var restorepage = $('body').html();
+    var printcontent = $('#patient_table').clone();
+    $('body').empty().html(printcontent);
+    window.print();
+    $('body').html(restorepage);
+
+    
 }
 function savePatientData(){
     var patient_name=$("#pat_name_input").val();
