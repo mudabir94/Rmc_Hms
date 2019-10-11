@@ -1,0 +1,52 @@
+@media print {
+    
+    #patient_prescription_div {
+        /* background-color: white; */
+        /* height: 100%; */
+        /* width: 100%; */
+        position: absolute;
+        /*top: 0;
+        left: 0; */
+        /* margin-top: 20px; */
+        /* padding: 15px; */
+        font-size:10px;
+        /* line-height: 20px; */
+      
+        margin: 50px;
+        padding: 0;
+        border: none;
+        background: none;
+        transform: rotate(270deg) ;
+        transform-origin:50% 100%;
+        transform:scaleX(0.5);
+      
+      } 
+}
+
+/* #row_div_four{ */
+  /* background-color: rgb(255, 255, 255);
+
+  
+  left: 0;
+  margin: 0; */
+
+  /* top: 0; 
+  position: absolute;
+
+  margin: 4px;
+  padding: 0;
+  font-size:30px;
+  transform: rotate(270deg) ;
+  transform-origin:50% 100%;
+  transform:scaleX(1);
+}*/
+
+
+/* @page { */
+      /* size: 25cm 35.7cm;
+      margin: 5mm 5mm 5mm 5mm;  */
+      /* size: landscape; */
+      /* size: A5 landscape; ;  */
+     
+    /* } */
+
