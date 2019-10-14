@@ -10,7 +10,7 @@ from rmcapp.models import (
     despensoryStock,despensoryStockHistory,tt_Medicine_DespensoryStock,
     medicineBatches,
     packageType,
-    employeeType,Employee,Patient,patientMedRecords,patientBillRecords,Rooms,Ward,patientRoomsBill,tokenRecords,patientType,
+    employeeType,Employee,Patient,patientMedRecords,patientBillRecords,Rooms,Ward,patientRoomsBill,patientType,
 )
 from django.http import HttpResponse, JsonResponse
 from .Controllers.MedControllers.MedController import MedicineController  
