@@ -1,6 +1,5 @@
 @media print {
   @page { 
-<<<<<<< HEAD
     /* size: 148mm 200mm; */
     /* size: landscape; */
     /* size: A5 portrait; ;  */
@@ -64,82 +63,6 @@
        .col-md-1 {
         width: 8.333333333333332%;
        }
-=======
-   /* size: 25cm 35.7cm;
-    margin: 5mm 5mm 5mm 5mm;  */
-    /* size: landscape; */
-    /* size: A5 portrait;  */
-    /* margin: 0; */
-
-   
-   } 
-    .print{
-      /* background-color: white; */
-      /* height: 100%; */
-      /* width: 100%; */
-      position: relative;
-      /*top: 0;
-      left: 0; */
-      /* margin-top: 20px; */
-      /* padding: 15px; */
-      font-size:20px;
-      /* line-height: 20px; */
-    
-      /* margin: 50px; */
-      /* padding: 0; */
-      border: none;
-      background: none;
-      /* transform: rotate(-90deg); */
-      /* transform-origin: 65% 85%; */
-      /* size:auto; */
-      /* transform:scaleX(0.5);
-      transform:scaleY(0.5); */
-      /* transform:scale(0.5); */
-      /* width: 5;  */
-    } 
-    .btttn{
-      display: none;
-    }
-    .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12 {
-      float: left;
-    }
-    .col-md-12 {
-      width: 100%;
-    }
-    .col-md-11 {
-      width: 91.66666666666666%;
-    }
-    .col-md-10 {
-      width: 83.33333333333334%;
-    }
-    .col-md-9 {
-      width: 75%;
-    }
-    .col-md-8 {
-      width: 66.66666666666666%;
-    }
-    .col-md-7 {
-      width: 58.333333333333336%;
-    }
-    .col-md-6 {
-      width: 50%;
-    }
-    .col-md-5 {
-      width: 41.66666666666667%;
-    }
-    .col-md-4 {
-      width: 33.33333333333333%;
-     }
-     .col-md-3 {
-       width: 25%;
-     }
-     .col-md-2 {
-       width: 16.666666666666664%;
-     }
-     .col-md-1 {
-      width: 8.333333333333332%;
-     }
->>>>>>> 4c929646cf5458d4b2db7f5514781fab6ca965a7
 }
 
 /* #row_div_four{ */
