@@ -1,5 +1,5 @@
 .setHeight{
-height: 250px;
+height: 320px;
 border-color: black;
 border-right-style: solid;
 border-width: thin;
@@ -23,40 +23,4 @@ border-width: thin;
   .custom_hr{
       color: red;
   }
-  @media print {
-    
-    @page {
-      /* size: 25cm 35.7cm;
-      margin: 5mm 5mm 5mm 5mm;  */
-      /* size: landscape; */
-      /* size: A4 landscape; margin: 2cm;  */
-   
-    }
-    #patient_prescription_div {
-        background-color: white;
-        height: 100%;
-        width: 100%;
-        position: fixed;
-        top: 0;
-        left: 0;
-        margin: 0;
-        padding: 15px;
-        font-size:100px;
-        line-height: 18px;
-    }
-    /* #patient_table{
-      background-color: rgb(255, 255, 255);
-      height: 100%;
-      width: 100%;
-      position: fixed;
-      top: 0;
-      left: 0;
-      margin: 0;
-
-      /* padding-top: 5px; */
-      font-size:15px;
-      line-height: 10px;
-    } */
-}
-
-
+ 

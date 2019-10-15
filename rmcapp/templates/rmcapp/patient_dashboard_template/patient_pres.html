@@ -1,42 +1,27 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        {%load static from staticfiles%} -->
+        {%load static from staticfiles%}
 
         <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
         <title>Pro Sidebar Template with Bootstrap 4 - Bootsnipp.com</title>
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" media="all">
+        <link  href="{% static 'rmcapp/mainhomepage_static/css/patientManagement/printpres.css' %}" media="print" rel="stylesheet">
+
         <link href="{% static 'rmcapp/maindashboard_static/stylepage.css' %}" rel="stylesheet">
         <link href="{% static 'rmcapp/mainhomepage_static/css/patientManagement/patientmanage.css' %}" rel="stylesheet">
-        <!-- <link href="{% static 'rmcapp/mainhomepage_static/css/MedicineInvCss/jquery-ui.css' %}" type="text/css" rel="stylesheet"  /> -->
-        <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+        
         <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 
-        <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 
-        <!-- <script src="http://code.jquery.com/jquery-latest.min.js"></script> -->
-        
-        <!-- <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
-        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="Responsive sidebar template with sliding effect and dropdown menu based on bootstrap 3">
-    
-        <title>Sidebar template</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-            crossorigin="anonymous">-->
-
     </head>
     <body>
-         <div id ="patient_prescription_div"></div>
+         <div class='print' id ="patient_prescription_div"></div>
             
     </body>
 </html>

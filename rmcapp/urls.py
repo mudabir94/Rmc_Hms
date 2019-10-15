@@ -44,7 +44,7 @@ urlpatterns = [
   
   path('view_patient_history',views.viewPatientHistory,name="view_patient_history"),
   
-  path('print_patient_prescription',views.printPatientPrescription.as_view(),name="print_patient_prescription"),
+  path('print_patient_prescription',views.printPatientPrescription,name="print_patient_prescription"),
   
   path('update_prescription_record',views.updatePrescriptionRecord,name="update_prescription_record"),
 
@@ -62,7 +62,7 @@ urlpatterns = [
   path('retireve_ward_info_in_room_ward',views.retrieveWardInfoInRoomWard,name='retireve_ward_info_in_room_ward'),
   path('retrieve_pat_type_fee',views.retrievePatTypeFee,name='retrieve_pat_type_fee'),
 
-  path('max_token_no',views.maxTokenNo,name="max_token_no"),
+  # path('max_token_no',views.maxTokenNo,name="max_token_no"),
 
   path('add_proc_surg_form',views.addProcSurgForm,name='add_proc_surg_form'),
 
