@@ -1,5 +1,8 @@
+
+
+
 var presData={'id': '2', 'name': 'Ali', 'token': '3', 'age': '33', 'gender': 'Male',
- 'discount': '', 'discount_percent': '', 'discount_reason': '', 'doctor': '--', 
+ 'discount': '100', 'discount_percent': '50', 'discount_reason': 'poor', 'doctor': 'd1', 
  'pat_type': 'Outdoor'}
 
 var today = new Date();
@@ -51,7 +54,7 @@ function loadPresForm(){
                     rmc_tag=$("<p class='text-center font-weight-bold' style='font-size:2vw;' id='rmc_label'>RAFIQ MEDICAL CENTER</p>");
                     colmd1.append(rmc_tag)
                     colmd2=$('<div class="col-md-6"></div>');
-                    button=$("<button onclick='PrintPres()'> Print </button>")
+                    button=$("<button class= 'btttn' onclick='PrintPres()'> Print </button>")
                     colmd2.append(button)
 
                 row__col_one__row_div_one.append(colmd1);
@@ -277,8 +280,8 @@ function loadPresForm(){
                 var row__col_one__row_div_six=$("<div class='row'></div>");
                     colmd1=$("<div class='col-md-12 setHeight' style='background:#f7f7f7'></div>")
 
-                    col_one_heading=$("<p class='text-center' style='font-weight: bold; padding-top:20px;text-decoration: underline;font-size: 20px;'>Provisonal Diagnosis</p>");
-                    colmd1.append(col_one_heading)
+                    pd_heading=$("<p class='text-center' style='font-weight: bold; padding-top:20px;text-decoration: underline;font-size: 20px;'>Provisonal Diagnosis</p>");
+                    colmd1.append(pd_heading)
 
                 row__col_one__row_div_six.append(colmd1);
 
@@ -290,8 +293,8 @@ function loadPresForm(){
             var row__col_one__row_div_seven=$("<div class='row'></div>");
                 colmd1=$("<div class='col-md-12 setHeight' style='background:#f7f7f7'></div>")
 
-                col_one_heading=$("<p class='text-center' style='font-weight: bold; padding-top:20px;text-decoration: underline;font-size: 20px;'>Investigation</p>");
-                colmd1.append(col_one_heading)
+                invest_heading=$("<p class='text-center' style='font-weight: bold; padding-top:20px;text-decoration: underline;font-size: 20px;'>Investigation</p>");
+                colmd1.append(invest_heading)
 
             row__col_one__row_div_seven.append(colmd1);
 
@@ -303,8 +306,8 @@ function loadPresForm(){
         var row__col_one__row_div_eight=$("<div class='row'></div>");
             colmd1=$("<div class='col-md-12 setHeight' style='background:#f7f7f7'></div>")
 
-            col_one_heading=$("<p class='text-center' style='font-weight: bold; padding-top:20px;text-decoration: underline;font-size: 20px;'>Investigation</p>");
-            colmd1.append(col_one_heading)
+            daig_heading=$("<p class='text-center' style='font-weight: bold; padding-top:20px;text-decoration: underline;font-size: 20px;'>Diagnosis</p>");
+            colmd1.append(daig_heading)
 
         row__col_one__row_div_eight.append(colmd1);
 
@@ -326,6 +329,8 @@ $(row_div_eight).append(col_one__row_div_eight);
     // var mywindow = window.open('', 'PRINT', 'height=400,width=600');
 
     // mywindow.document.write('<html><head><title>' + document.title  + '</title>');
+    // mywindow.document.write('<link rel="stylesheet" href="D:/rmc/Rmc_Hms/rmcapp/static/rmcapp/mainhomepage_static/css/patientManagement/printpres.css" type="text/css" />');
+
     // mywindow.document.write('</head><body >');
     // mywindow.document.write('<h1>' + document.title  + '</h1>');
     // mywindow.document.write(document.getElementById('patient_prescription_div').innerHTML);
@@ -345,7 +350,8 @@ function PrintPres(){
     var printcontent = $('#patient_prescription_div').clone();
     $('body').empty().html(printcontent);
     window.print();
-    $('body').html(restorepage);
+    window.close();
+    
     // var mywindow = window.open('', 'PRINT', 'height=400,width=600');
 
     // mywindow.document.write('<html><head><title>' + document.title  + '</title>');
