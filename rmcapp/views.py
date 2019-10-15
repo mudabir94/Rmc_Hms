@@ -1241,7 +1241,7 @@ def retirevePatientMedHistory(request):
             temp_dict={}
             datelist.append(str(pmr_obj.datevisited))
             
-            temp_dict['blood_pressure']=pmr_obj.blood_pressure
+            # temp_dict['blood_pressure']=pmr_obj.blood_pressure
             prescription = [ int(x) for x in pmr_obj.prescription ]
             med_obj=Medicine.objects.filter(id__in=prescription)
             med_list=list(med_obj.values_list("medicine_name","weight"))
@@ -1589,17 +1589,17 @@ def NoStripCalculationDespToPat(despensoryStock,patientid,medicineobj,boxes_want
     finaldata.append(pbr_dict)
     return finaldata
 
-def maxTokenNo(request):
-    if request.method=="GET":
+# def maxTokenNo(request):
+#     if request.method=="GET":
          
-        # Retrieve token no from the model Token
-        tokRecObj=tokenRecords.objects.latest('token_no')
-        print("tokRecObj",tokRecObj.token_no)
-        maxTokenNumber=tokRecObj.token_no
-        tokenNumber=int(maxTokenNumber)
-        data={"tokenNo":tokenNumber}
+#         # Retrieve token no from the model Token
+#         tokRecObj=tokenRecords.objects.latest('token_no')
+#         print("tokRecObj",tokRecObj.token_no)
+#         maxTokenNumber=tokRecObj.token_no
+#         tokenNumber=int(maxTokenNumber)
+#         data={"tokenNo":tokenNumber}
 
-        return JsonResponse(data)
+#         return JsonResponse(data)
 
 def savePatientBill(request):
     if request.method=='POST':

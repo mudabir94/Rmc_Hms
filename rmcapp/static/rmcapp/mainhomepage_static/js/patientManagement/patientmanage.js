@@ -819,7 +819,7 @@ function createPatientHistoryForm(){
                         var col_one__row_one__col__row_two__sub_col_two=$("<div class='col-md-2'>")
                         var col_two__row_one__col__row_two__sub_col_two=$("<div class='col-md-3'>")
                             var label=$("<label>B.P</label>");
-                            var input=$("<input id='pat_hist_bp_inp'  value='"+pat_med_history_dict[date_selected]['blood_pressure']+"'></input>");
+                            // var input=$("<input id='pat_hist_bp_inp'  value='"+pat_med_history_dict[date_selected]['blood_pressure']+"'></input>");
                         col_one__row_one__col__row_two__sub_col_two.append(label);
                         col_two__row_one__col__row_two__sub_col_two.append(input);
                     row_one__col__row_two__sub_col_two.append(col_one__row_one__col__row_two__sub_col_two)
@@ -996,13 +996,13 @@ function createPatientDataTableInGenPres(){
                                                 
                                                 var tokenNumber_label=$("<label id='tokenNumber_label' class='custom_label_css'>Token Number</label>");
                                                 colmd3.append(tokenNumber_label)
-                                                tokenNumber_disp=$("<input class='form-control custom_input_css' id='tokenNumber_disp'  value= '"+token_Number+"' disabled> </input>")
-                                                colmd4.append(tokenNumber_disp)
+                                                // tokenNumber_disp=$("<input class='form-control custom_input_css' id='tokenNumber_disp'  value= '"+token_Number+"' disabled> </input>")
+                                                // colmd4.append(tokenNumber_disp)
 
                                             row__col_one__subrow_one.append(colmd1);
                                             row__col_one__subrow_one.append(colmd2);
                                             row__col_one__subrow_one.append(colmd3);
-                                            row__col_one__subrow_one.append(colmd4);
+                                            // row__col_one__subrow_one.append(colmd4);
                                         col_one__subrow_one.append(row__col_one__subrow_one);
 
                             subrow_one.append(col_one__subrow_one)
@@ -1011,7 +1011,7 @@ function createPatientDataTableInGenPres(){
                     row_div_four.append(main_subcol)
                 var main_col_div=$("#main_col_div");
                 main_col_div.append(row_div_four)
-                maxTokenNo()
+                // maxTokenNo()
 
                 }
             });
@@ -2269,23 +2269,23 @@ function createRoomDataTable(){
         });
 }
 
-function maxTokenNo(){
-    $.ajax({
-        type: 'GET',
-        dataType: "json",
-        // the ajax call is sent to  url name in the get function.  
-        url: '/max_token_no',
-        'data': {
-        },
+// function maxTokenNo(){
+//     $.ajax({
+//         type: 'GET',
+//         dataType: "json",
+//         // the ajax call is sent to  url name in the get function.  
+//         url: '/max_token_no',
+//         'data': {
+//         },
         
-        success: function(data){
-            token_Number=data['tokenNo'];
-            token_Number=token_Number+1
-            $('#tokenNumber_disp').val(token_Number);
-            // $("#tokenNumber_disp").prop('disabled',true)
-        },
-    });
-}
+//         success: function(data){
+//             token_Number=data['tokenNo'];
+//             token_Number=token_Number+1
+//             $('#tokenNumber_disp').val(token_Number);
+//             // $("#tokenNumber_disp").prop('disabled',true)
+//         },
+//     });
+// }
 function createPatientBill(){
         $('#main_page_content').empty()
         var container_patient_prescription= $('#main_page_content').append('<div class="container-fluid" id="container-patient-bill"></div>');
