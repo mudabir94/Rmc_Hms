@@ -431,7 +431,7 @@ class surgeryTable(models.Model):         #### NEW  ######
     surgery_name=models.CharField(max_length=50,null=True,blank=True)
     charges=models.IntegerField(null=True,blank=True)
     def __str__(self):
-        return str(self.surgery_type)
+        return str(self.surgery_name)
     class Meta:
         verbose_name_plural="Surgery Table"
         ordering=['pk']

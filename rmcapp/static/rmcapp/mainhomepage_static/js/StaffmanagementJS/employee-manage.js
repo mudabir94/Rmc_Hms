@@ -5,7 +5,14 @@ var employee_info_dict={};
 var emp_datatable;
 var emp_id_selected=0;
 var employee_dict={};
-var datatable_list=[]
+var all_employee_dict={};
+var datatable_list=[];
+var allEmployee_list=[];
+var employee_id_selected=0;
+var allEmp_datatable;
+var all_employee_dict={}
+var all_employee_info_dict={};
+
 
 $( document ).ready(function() {
     retrieveEmployeeType();
@@ -818,6 +825,315 @@ function onfocusOutGenderInput(element){
 
 }
 
+function viewAllEmployee(){
+    $('#main_page_content').empty()
+    var container_view_all_employee_dashboard= $('#main_page_content').append('<div class="container-fluid" id="container-view-all-employee-dashboard"></div>');
+    $("#container-view-all-employee-dashboard").append("<h2 class ='text-center'>Employee List</h2>");
+    $("#container-view-all-employee-dashboard").append("<hr class='custom_hr'>");
+    var main_row_div= $("<div class='row is-flex'></div>");
+
+        $(container_view_all_employee_dashboard).append(main_row_div);
+        var main_col_div=$("<div class='col-md-12' id='main_col_div'></div>");
+            var row_div_one=$("<div class='row' id='row_div_one'></div>");
+                var col_one__row_div_one=$("<div class='col-md-12'></div>");
+                    var row__col_one__row_div_one=$("<div class='row'></div>");
+                        var colmd1=$("<div class='col-md-12'></div>")
+                            var all_employee_table=$('<table id="all_employee_table" class="display" width="100%"></table>')
+                        colmd1.append(all_employee_table)
+                    row__col_one__row_div_one.append(colmd1);
+                col_one__row_div_one.append(row__col_one__row_div_one);
+            $(row_div_one).append(col_one__row_div_one);
+        main_col_div.append(row_div_one)
+       
+    $(main_row_div).append(main_col_div);
+    retrieve_all_employee_info();
+}
+
+function retrieve_all_employee_info(){
+    datatable_lst=[];
+
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        'data': {
+        },
+        url: '/retrieve_all_employee_info',
+        success: function(data){
+            console.log("all_employee_dict",data["all_employee_dict"])
+            all_employee_dict={}
+            all_employee_dict=JSON.parse(data["all_employee_dict"])
+            for (emp in all_employee_dict){
+                templist=[]
+                console.log("pat",emp);
+                templist.push(emp)
+                templist.push(all_employee_dict[emp]['name'])
+                templist.push(all_employee_dict[emp]['phone'])
+                templist.push(all_employee_dict[emp]['gender'])
+                templist.push(all_employee_dict[emp]['dob'])
+                templist.push(all_employee_dict[emp]['cnic'])
+                templist.push(all_employee_dict[emp]['qualification'])
+                templist.push(all_employee_dict[emp]['address'])
+                templist.push(all_employee_dict[emp]['employee_type'])
+                templist.push(all_employee_dict[emp]['email']);
+                datatable_list.push(templist)
+            }
+            createAllEmployeeDataTable();
+
+            console.log("all_employee_dict",all_employee_dict);
+            console.log(datatable_list)
+        },
+    }); 
+
+}
+
+function createAllEmployeeDataTable(){
+    console.log("allEmployee_list",allEmployee_list)
+    $(function(){
+        allEmp_datatable=$("#all_employee_table").DataTable({
+            data:datatable_list,
+            columns: [
+                { title: "Id" },
+                { title: "Employee_Name" },
+                { title: "Phone_no" },
+                { title: 'gender' },
+                { title: "dob" },
+                { title: "cnic" },
+                { title: "qualification" },
+                { title: "Address" },
+                { title: "employee_type" },
+                { title: "email" },
+                ],
+
+                paging: true,
+                scrollY: false,
+                scrollX: true,
+                ordering: true,
+                info:false,
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                    extend: 'print',
+                    text: 'ButtonLabelHere',
+                    title: '',
+                    }
+                ],
+            });
+            $('#all_employee_table tbody').on( 'click', 'tr', function () {
+                if ( $(this).hasClass('selected') ) {
+                    alert("clicked same entry")
+                }
+                else{
+                    employee_id_selected=$(this).find('td').eq(0).text()
+
+                    $("#row_div_two").remove();
+                  
+                    
+                    allEmp_datatable.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                    console.log("Patient dict on click",employee_dict);
+                    var row_div_two=$("<div class='row' id='row_div_two' style='transform: rotate(270deg) ;transform-origin:50% 100%;transform:scaleX(1);'></div>");
+                        var main_subcol=$("<div class='col-md-12'></div>");
+
+                            var subrow_one=$("<div class='row' style='padding-bottom:10px'></div>")
+
+                                var col_one__subrow_one=$("<div class='col-md-6'></div>");
+                                    row__col_one__subrow_one=$("<div class='row'></div>");
+                                        var colmd1=$("<div class='col-md-4 text-right'></div>")
+                                        var colmd2=$("<div class='col-md-4'></div>")
+                                            var emp_name_label=$("<label for='emp_name_tag' class='custom_label_css'>Employee Name</label>");
+                                            var emp_name_input=$("<label id='emp_name_input'class='custom_label_css' >"+all_employee_dict[employee_id_selected]['name']+"</label>")
+                                        colmd1.append(emp_name_label)
+                                        colmd2.append(emp_name_input)
+                                    row__col_one__subrow_one.append(colmd1);
+                                    row__col_one__subrow_one.append(colmd2);
+                                col_one__subrow_one.append(row__col_one__subrow_one);                 
+
+                            subrow_one.append(col_one__subrow_one)
+
+                            var subrow_two=$("<div class='row' style='padding-bottom:10px'></div>")
+
+                                var col_one__subrow_two=$("<div class='col-md-6'></div>");
+                                    var row__col_one__subrow_two=$("<div class='row'></div>");
+                                        var colmd1=$("<div class='col-md-4 text-right'></div>")
+                                        var colmd2=$("<div class='col-md-4'></div>")
+                                            var empID_label=$("<label class='custom_label_css'>Employee ID</label>");
+                                            var empID_input=$("<label class='custom_label_css'>"+employee_id_selected+"</label>")
+                                        colmd1.append(empID_label);
+                                        colmd2.append(empID_input);
+                                    row__col_one__subrow_two.append(colmd1);
+                                    row__col_one__subrow_two.append(colmd2);
+                                col_one__subrow_two.append(row__col_one__subrow_two);                 
+
+                            subrow_two.append(col_one__subrow_two)
+
+                            var subrow_three=$("<div class='row' style='padding-bottom:10px'></div>")
+                                var col_one__subrow_three=$("<div class='col-md-6'></div>");
+                                    var row__col_one__subrow_three=$("<div class='row'></div>");
+                                        colmd1=$("<div class='col-md-4 text-right'></div>")
+                                        colmd2=$("<div class='col-md-4'></div>")
+                            
+                                            var emp_gender_label=$("<label class='custom_label_css'>Gender</label>");
+                                        colmd1.append(emp_gender_label)
+                                            var emp_gender_input=$("<label class='custom_label_css'>"+all_employee_dict[employee_id_selected]['gender']+"</label>")
+                                        colmd2.append(emp_gender_input)                                        
+                                            
+                                    row__col_one__subrow_three.append(colmd1);
+                                    row__col_one__subrow_three.append(colmd2);
+                                col_one__subrow_three.append(row__col_one__subrow_three);
+                            subrow_three.append(col_one__subrow_three)
+
+                            var subrow_four=$("<div class='row' style='padding-bottom:10px'></div>")
+                                var col_one__subrow_four=$("<div class='col-md-6'></div>");
+                                    var row__col_one__subrow_four=$("<div class='row'></div>");
+                                        var colmd1=$("<div class='col-md-4 text-right'></div>")
+                                        var colmd2=$("<div class='col-md-4'></div>")
+                                            
+                                            var dob_label=$("<label class='custom_label_css'>DOB</label>");
+                                            colmd1.append(dob_label);
+                                            var dob_input=$("<label class='custom_label_css' id='dob_input'>"+all_employee_dict[employee_id_selected]['dob']+"</label>")
+                                            colmd2.append(dob_input);
+
+                                        row__col_one__subrow_four.append(colmd1)
+                                        row__col_one__subrow_four.append(colmd2)
+  
+                                col_one__subrow_four.append(row__col_one__subrow_four);
+                                
+                            subrow_four.append(col_one__subrow_four);
+
+                            var subrow_five=$("<div class='row' style='padding-bottom:10px'>")
+                                var col_one__subrow_five=$("<div class='col-md-6'></div>");
+                                    var row__col_one__subrow_five=$("<div class='row'></div>");
+                                        var colmd1=$("<div class='col-md-4 text-right'></div>")
+                                        var colmd2=$("<div class='col-md-4'></div>")
+                                            var cnic_label=$("<label  class='custom_label_css'>CNIC</label>");
+                                            var cnic_input=$("<label class='custom_label_css' id='guardian_input'>"+all_employee_dict[employee_id_selected]['cnic']+"</label>")
+                                        colmd1.append(cnic_label)
+                                        colmd2.append(cnic_input);
+                                        
+                                    row__col_one__subrow_five.append(colmd1)
+                                    row__col_one__subrow_five.append(colmd2)
+                                col_one__subrow_five.append(row__col_one__subrow_five)
+                            subrow_five.append(col_one__subrow_five);
+
+                            var subrow_six=$("<div class='row' style='padding-bottom:10px'>")
+                                var col_one__subrow_six=$("<div class='col-md-6'></div>");
+                                    var row__col_one__subrow_six=$("<div class='row'></div>");
+                                        var colmd1=$("<div class='col-md-4 text-right'></div>")
+                                        var colmd2=$("<div class='col-md-6'></div>")
+                                            var address_label=$("<label for='pat_address_tag' class='custom_label_css'>Address</label>");
+                                            var pat_address_input=$("<label class='custom_label_css'' id='pat_address_input'>"+all_employee_dict[employee_id_selected]['address']+"</label>")
+                                        colmd1.append(address_label)
+                                        colmd2.append(pat_address_input)
+                                        
+                                    row__col_one__subrow_six.append(colmd1)
+                                    row__col_one__subrow_six.append(colmd2)
+
+                                col_one__subrow_six.append(row__col_one__subrow_six)
+                            subrow_six.append(col_one__subrow_six);
+
+                            var subrow_seven=$("<div class='row' style='padding-bottom:10px'>")
+                                var col_one__subrow_seven=$("<div class='col-md-6'></div>");
+                                    var row__col_one__subrow_seven=$("<div class='row'></div>");
+                                    var colmd1=$("<div class='col-md-4 text-right'></div>")
+                                    var colmd2=$("<div class='col-md-4'></div>")
+            
+                                        phone_label=$("<label for='phone_label' class='custom_label_css'>Contact Number</label>");
+                                        phone_input=$("<label class='custom_label_css' id='phone_input'>"+all_employee_dict[employee_id_selected]['phone']+"</label>")
+                                    colmd1.append(phone_label)
+                                    colmd2.append(phone_input) 
+                                        
+                                    row__col_one__subrow_seven.append(colmd1)
+                                    row__col_one__subrow_seven.append(colmd2)
+
+                                col_one__subrow_seven.append(row__col_one__subrow_seven)
+                            subrow_seven.append(col_one__subrow_seven);
+
+                            var subrow_eight=$("<div class='row' style='padding-bottom:10px'>")
+                                var col_one__subrow_eight=$("<div class='col-md-6'></div>");
+                                    var row__col_one__subrow_eight=$("<div class='row'></div>");
+                                    var colmd1=$("<div class='col-md-4 text-right'></div>")
+                                    var colmd2=$("<div class='col-md-6'></div>")
+                
+                                        var email_id_label=$("<label class='custom_label_css'>Email Address</label>");
+                                        var email_id_input=$("<label class='custom_label_css' id='email_id_input'>"+all_employee_dict[employee_id_selected]['email']+"</label>")
+                                        colmd1.append(email_id_label);
+                                        colmd2.append(email_id_input);
+                                        
+                                    row__col_one__subrow_eight.append(colmd1)
+                                    row__col_one__subrow_eight.append(colmd2)
+
+                                col_one__subrow_eight.append(row__col_one__subrow_eight)
+                            subrow_eight.append(col_one__subrow_eight);
+
+                            var subrow_nine=$("<div class='row' style='padding-bottom:10px'>")
+                                var col_one__subrow_nine=$("<div class='col-md-6'></div>");
+                                    var row__col_one__subrow_nine=$("<div class='row'></div>");
+                                    var colmd1=$("<div class='col-md-4 text-right'></div>")
+                                    var colmd2=$("<div class='col-md-6'></div>")
+                
+                                        var qualification_label=$("<label class='custom_label_css'>Qualification</label>");
+                                        var qualification_input=$("<label class='custom_label_css' id='contact_input'>"+all_employee_dict[employee_id_selected]['qualification']+"</label>")
+                                        colmd1.append(qualification_label);
+                                        colmd2.append(qualification_input);
+                                        
+                                    row__col_one__subrow_nine.append(colmd1)
+                                    row__col_one__subrow_nine.append(colmd2)
+
+                                col_one__subrow_nine.append(row__col_one__subrow_nine)
+                            subrow_nine.append(col_one__subrow_nine);
+
+                            var subrow_ten=$("<div class='row' style='padding-bottom:10px'>")
+                                var col_one__subrow_ten=$("<div class='col-md-6'></div>");
+                                    var row__col_one__subrow_ten=$("<div class='row'></div>");
+                                    var colmd1=$("<div class='col-md-4 text-right'></div>")
+                                    var colmd2=$("<div class='col-md-6'></div>")
+                
+                                        var empType_label=$("<label class='custom_label_css'>Employee Type</label>");
+                                        var empType_input=$("<label class='custom_label_css' id='empType_input'>"+all_employee_dict[employee_id_selected]['employee_type']+"</label>")
+                                        colmd1.append(empType_label);
+                                        colmd2.append(empType_input);
+                                        
+                                    row__col_one__subrow_ten.append(colmd1)
+                                    row__col_one__subrow_ten.append(colmd2)
+
+                                col_one__subrow_ten.append(row__col_one__subrow_ten)
+                            subrow_ten.append(col_one__subrow_ten);
+
+                            var subrow_eleven=$("<div class='row' style='padding-bottom:10px'>")
+                                var col_one__subrow_eleven=$("<div class='col-md-12'></div>");
+                                    var row__col_one__subrow_eleven=$("<div class='row'></div>");
+                                        var colmd1=$("<div class='col-md-6 offset-md-2'></div>")
+
+                                            var print_button=$('<button class="btn btn-success btn-sm btn-block" onclick="printEditedEmployeeData()">Print</button>')
+                                        colmd1.append(print_button)
+                                        
+                                    row__col_one__subrow_eleven.append(colmd1)
+                                col_one__subrow_eleven.append(row__col_one__subrow_eleven)
+                            subrow_eleven.append(col_one__subrow_eleven);
+
+                    main_subcol.append(subrow_one)
+                    main_subcol.append(subrow_two)
+                    main_subcol.append(subrow_three)
+                    main_subcol.append(subrow_four)
+                    main_subcol.append(subrow_five)
+                    main_subcol.append(subrow_six)
+                    main_subcol.append(subrow_seven)
+                    main_subcol.append(subrow_eight)
+                    main_subcol.append(subrow_nine)
+                    main_subcol.append(subrow_ten)
+                    main_subcol.append(subrow_eleven)
+
+
+
+                row_div_two.append(main_subcol)
+            var main_col_div=$("#main_col_div");
+            main_col_div.append(row_div_two)
+                  
+            }
+
+        });
+    });
+}
 
 function getCookie(name) {
     var cookieValue = null;
