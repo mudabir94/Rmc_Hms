@@ -65,6 +65,18 @@ urlpatterns = [
   # path('max_token_no',views.maxTokenNo,name="max_token_no"),
 
   path('add_proc_surg_form',views.addProcSurgForm,name='add_proc_surg_form'),
+    path('add_proc_surg_form',views.addProcSurgForm,name='add_proc_surg_form'),
+
+  
+  
+  path('room_ward_form',views.roomWardForm,name='room_ward_form'),
+  path('add_procedure',views.addProcedure,name="add_procedure"),
+  path('add_surgery',views.addSurgery,name="add_surgery"),
+  
+  path('retireve_all_room_info_in_room_ward',views.retrieveAllRoomInfoInRoomWard,name='retireve_all_room_info_in_room_ward'),
+  path('retireve_all_ward_info_in_room_ward',views.retrieveAllWardInfoInRoomWard,name='retireve_all_ward_info_in_room_ward'),
+  path('update_room_data',views.updateRoomData,name="update_room_data"),
+  path('update_ward_data',views.updateWardData,name="update_ward_data"),
 
   # path('out_presc_form',views.outPrescform,name="out_presc_form"),
 ]

@@ -10,7 +10,6 @@ $( document ).ready(function() {
         },
         url: '/add_proc_surg_form',
         success: function(data){            
-            addProcSurgForm();
         },
     });
 });
@@ -96,7 +95,7 @@ function proc_surgery_OnSelect(element){
                             colmd1=$("<div class='col-md-2'></div>")
                             colmd2=$("<div class='col-md-3'></div>")
         
-                                price_label=$("<label for='procedure_tag' class='custom_label_css'>Treatment Cost</label>");
+                                price_label=$("<label for='price_label' class='custom_label_css'>Treatment Cost</label>");
                                 colmd1.append(price_label)
                                 price_input=$("<input id='price_input' class='custom_input_css form-control'>")
                                 colmd2.append(price_input)
@@ -114,11 +113,10 @@ function proc_surgery_OnSelect(element){
                         row__col_one__row_three=$("<div class='row'></div>");
                         colmd1=$("<div class='col-md-4 offset-md-5'></div>")
 
-                        savePatientdataForm_button=$('<button class="btn btn-success btn-sm btn-block" onclick="saveProcedure()">Save</button>')
-                        colmd1.append(savePatientdataForm_button)
+                        addprocedure_button=$('<button class="btn btn-success btn-sm btn-block" onclick="addProcedure()">Add Procedure</button>')
+                        colmd1.append(addprocedure_button)
 
                         row__col_one__row_three.append(colmd1);
-
                     col_one__row_three.append(row__col_one__row_three);
 
             row_three.append(col_one__row_three)
@@ -145,10 +143,10 @@ function proc_surgery_OnSelect(element){
                                 colmd1=$("<div class='col-md-2'></div>")
                                 colmd2=$("<div class='col-md-3'></div>")
             
-                                    procedure_label=$("<label for='procedure_tag' class='custom_label_css'>Surgery Name</label>");
-                                    colmd1.append(procedure_label)
-                                    procedure_input=$("<input id='surgery_input' class='custom_input_css form-control'>")
-                                    colmd2.append(procedure_input)
+                                    surgery_label=$("<label for='surgery_tag' class='custom_label_css'>Surgery Name</label>");
+                                    colmd1.append(surgery_label)
+                                    surgery_input=$("<input id='surgery_input' class='custom_input_css form-control'>")
+                                    colmd2.append(surgery_input)
             
                                 row__col_one__row_one.append(colmd1);
                                 row__col_one__row_one.append(colmd2);
@@ -164,7 +162,7 @@ function proc_surgery_OnSelect(element){
                             colmd1=$("<div class='col-md-2'></div>")
                             colmd2=$("<div class='col-md-3'></div>")
         
-                                price_label=$("<label for='procedure_tag' class='custom_label_css'>Treatment Cost</label>");
+                                price_label=$("<label for='price_tag' class='custom_label_css'>Treatment Cost</label>");
                                 colmd1.append(price_label)
                                 price_input=$("<input id='price_input' class='custom_input_css form-control'>")
                                 colmd2.append(price_input)
@@ -173,23 +171,21 @@ function proc_surgery_OnSelect(element){
                             row__col_one__row_two.append(colmd2);
 
                         col_one__row_two.append(row__col_one__row_two);
-
                 row_two.append(col_one__row_two)
                 
-            var row_three=$("<div class='row'></div>")
+                var row_three=$("<div class='row'></div>")
 
-                var col_one__row_three=$("<div class='col-md-6'></div>");
-                        row__col_one__row_three=$("<div class='row'></div>");
-                        colmd1=$("<div class='col-md-4 offset-md-5'></div>")
+                    var col_one__row_three=$("<div class='col-md-6'></div>");
+                            row__col_one__row_three=$("<div class='row'></div>");
+                            colmd1=$("<div class='col-md-4 offset-md-5'></div>")
 
-                        savePatientdataForm_button=$('<button class="btn btn-success btn-sm btn-block" onclick="saveProcedure()">Save</button>')
-                        colmd1.append(savePatientdataForm_button)
+                            addSurgery_button=$('<button class="btn btn-success btn-sm btn-block" onclick="addSurgery()">Add Surgery</button>')
+                            colmd1.append(addSurgery_button)
 
-                        row__col_one__row_three.append(colmd1);
+                            row__col_one__row_three.append(colmd1);
+                        col_one__row_three.append(row__col_one__row_three);
 
-                    col_one__row_three.append(row__col_one__row_three);
-
-            row_three.append(col_one__row_three)
+                row_three.append(col_one__row_three)
 
             main_col__row_two.append(row_one)
             main_col__row_two.append(row_two)
@@ -204,27 +200,50 @@ function proc_surgery_OnSelect(element){
     }
 }
 
-function saveProcedure(){
+function addProcedure(){
 
     var procedure_name=$("#procedure_input").val();
     console.log("procedure_name", procedure_name);
     $("#procedure_input").val("");
-
     var procedure_price=$("#price_input").val();
     console.log("procedure_price", procedure_price);
-    $("#price_input").val("")
+    $("#price_input").val("");
 
     $.ajax({
         type: 'POST',
         dataType: "json",
         'data': {
-            "procedure":JSON.stringify(procedure_name),
-            "price":JSON.stringify(procedure_price),
-            
+            "procedure_name":JSON.stringify(procedure_name),
+            "charges":JSON.stringify(procedure_price),
         },
-        url: '/add_proc_surg_form',
+        url: '/add_procedure',
         success: function(data){
-            console.log(data['Success']);
+        console.log(data['Success']);
+        $("#row_div_two").remove();        
+        },
+    });
+}
+function addSurgery(){
+
+    var surgery_name=$("#surgery_input").val();
+    console.log("surgery_name", surgery_name);
+    $("#surgery_input").val("");
+    var surgery_price=$("#price_input").val();
+    console.log("surgery_price", surgery_price);
+    $("#price_input").val("");
+    
+
+    $.ajax({
+        type: 'POST',
+        dataType: "json",
+        'data': {
+            "surgery_name":JSON.stringify(surgery_name),
+            "charges":JSON.stringify(surgery_price),
+        },
+        url: '/add_surgery',
+        success: function(data){
+        console.log(data['Success']);
+        $("#row_div_two").remove();        
         },
     });
 }

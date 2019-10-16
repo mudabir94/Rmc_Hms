@@ -2262,7 +2262,7 @@ function createRoomDataTable(){
 
                 row_div_seven.append(main_subcol)
             var main_col_div=$("#main_col_div");
-            main_col_div.append(row_div_seven)
+        main_col_div.append(row_div_seven)
                     
                 }
             });
