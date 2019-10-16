@@ -10,7 +10,8 @@
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="{% static 'rmcapp/maindashboard_static/stylepage.css' %}" rel="stylesheet">
     <link  href="{% static 'rmcapp/mainhomepage_static/css/patientManagement/patientmanage.css' %}"  rel="stylesheet">
-    <link  href="{% static 'rmcapp/mainhomepage_static/css/patientManagement/printpres.css' %}"  media="print" rel="stylesheet">
+    <link  href="{% static 'rmcapp/mainhomepage_static/css/patientManagement/printpres.css' %}"  rel="stylesheet">
+    <link  href="{% static 'rmcapp/mainhomepage_static/css/patientManagement/pos_reciept.css' %}"  rel="stylesheet">
 
     
     <!-- <link href="{% static 'rmcapp/mainhomepage_static/css/MedicineInvCss/jquery-ui.css' %}" type="text/css" rel="stylesheet"  /> -->
@@ -62,12 +63,16 @@
           background:grey;
 
         }
+    
+
     </style>
    
 </head>
 
 <body>
-<div class="page-wrapper chiller-theme toggled" style='zoom:70%'>
+    <div id='recipet_div'></div>        
+
+<div class="page-wrapper chiller-theme toggled" id='patient_dash_first_div' style='zoom:60%'>
   <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
     <i class="fas fa-bars"></i>
   </a>
@@ -135,7 +140,7 @@
                   <ul>
                  
                     
-                    <li>
+                    <!-- <li>
                       <a href="#" onclick="addPatient()">Add Patient
                       </a>
                     </li>
@@ -143,14 +148,14 @@
                     <li>
                       <a href="#" onclick="EditPatient()">Edit Patient Info
                       </a>
-                    </li>
+                    </li> -->
 
-                    <li>
+                    <!-- <li>
                       <a href="#" onclick="viewPatientHistory()">View Patient History
                       </a>
-                    </li>
+                    </li> -->
 
-                    <li>
+                    <!-- <li>
                       <a href="#" onclick="generatePrescription()">Generate Prescription 
                       </a>
                     </li>
@@ -158,18 +163,150 @@
                     <li>
                       <a href="#" onclick="updatePrescriptionRecord()">Update Prescription Record 
                       </a>
-                    </li>
-                    <li>
+                    </li> -->
+                    <!-- <li>
                       <a href="#" onclick="createPatientBill()">Create Patient Bill
                       </a>
                     </li>
-                    
+                     -->
                   </ul>
                 </div>
-              </li>
-         
-       
-         
+          </li>
+          <li class="sidebar-dropdown">
+              <a href="#">
+                <i class="fa fa-tachometer-alt"></i>
+                <span>Patient Info</span>
+                <!-- <span class="badge badge-pill badge-warning">New</span> -->
+              </a>
+              <div class="sidebar-submenu">
+                  <ul>
+                    <li>
+                      <a href="#" onclick="addPatient()">Add Patient
+                      </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="EditPatient()">Edit Patient Info
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" >View Patient Info
+                        </a>
+                    </li>
+                  </ul>
+                </div>
+
+          </li>
+          <li class="sidebar-dropdown">
+              <a href="#">
+                <i class="fa fa-tachometer-alt"></i>
+                <span>Prescription</span>
+                <!-- <span class="badge badge-pill badge-warning">New</span> -->
+              </a>
+              <div class="sidebar-submenu">
+                  <ul>
+                      <li>
+                        <a href="#" onclick="generatePrescription()">Generate Prescription 
+                        </a>
+                      </li>
+  
+                      <li>
+                        <a href="#" onclick="updatePrescriptionRecord()">Update Prescription Record 
+                        </a>
+                      </li>
+                  </ul>
+              </div>
+
+          </li>
+          <li class="sidebar-dropdown">
+              <a href="#">
+                <i class="fa fa-tachometer-alt"></i>
+                <span>Create Bills</span>
+                <!-- <span class="badge badge-pill badge-warning">New</span> -->
+              </a>
+              <div class="sidebar-submenu">
+                  <ul>
+                      <li>
+                        <a href="#"onclick="createPatientBill()" >Create Desp/Procedure Bill
+                        </a>
+                      </li>
+  
+                      <li>
+                        <a href="#">Create Surgery/Procedure Bill
+                        </a>
+                      </li>
+                      <li>
+                          <a href="#">Create Room Charges Bill
+                          </a>
+                      </li>
+                      <li>
+                          <a href="#">Create Ward Charges Bill
+                          </a>
+                      </li>
+                  </ul>
+                </div>
+
+          </li>
+          <li class="sidebar-dropdown">
+              <a href="#">
+                <i class="fa fa-tachometer-alt"></i>
+                <span>Update Patient Bill </span>
+                <!-- <span class="badge badge-pill badge-warning">New</span> -->
+              </a>
+              <div class="sidebar-submenu">
+                  <ul>
+                      <li>
+                        <a href="#" >Update Bill
+                        </a>
+                      </li>
+                      <li>
+                          <a href="#" >View Bill
+                          </a>
+                        </li>
+  
+                     
+                  </ul>
+                </div>
+
+          </li>
+          <li class="sidebar-dropdown">
+              <a href="#">
+                <i class="fa fa-tachometer-alt"></i>
+                <span>Patient  History</span>
+                <!-- <span class="badge badge-pill badge-warning">New</span> -->
+                
+              </a>
+                <div class="sidebar-submenu">
+                  <ul>
+                    <li class='header-menu'>
+                        Patient Medical History
+                    </li>
+                    <li>
+                      <a href="#" onclick="viewPatientHistory()">View Patient Medical History
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" >Update Patient Medical History
+                        </a>
+                    </li>
+                    <li class='header-menu'>
+                        Patient Bill History
+                    </li>
+
+                    <li>
+                        <a href="#" >View Patient Bill History
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" >Update Patient Bill History
+                        </a>
+                    </li>
+                    
+                  </ul>
+              </div>
+                  
+            
+          </li>
+        
         
         </ul>
       </div>
@@ -260,6 +397,7 @@
   </main>
   <!-- page-content" -->
 </div>
+
 <!-- page-wrapper -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>     -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -267,6 +405,9 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 
+
+  
+    
 </body>
 
 </html>

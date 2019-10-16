@@ -351,6 +351,8 @@ function PrintPres(){
     $('body').empty().html(printcontent);
     window.print();
     window.close();
+    $('body').html(restorepage);
+
     
     // var mywindow = window.open('', 'PRINT', 'height=400,width=600');
 

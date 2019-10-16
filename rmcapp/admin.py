@@ -121,7 +121,7 @@ class patPrescriptionBillAdmin(admin.ModelAdmin):
         'net_total','status')
 
 class patPrescriptionRecordsAdmin(admin.ModelAdmin):
-    list_display=('id','patient','patient_type','emp','sign_symtoms',\
+    list_display=('id','patient','patient_type','doc','sign_symtoms',\
     'provisional_diagnosis','investigation','diagnosis','vitals','rx','date_visited')
 
 

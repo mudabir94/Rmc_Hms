@@ -350,7 +350,7 @@ class patPrescriptionRecords(models.Model):
     
     patient=models.ForeignKey(Patient, on_delete=models.CASCADE,default=None,null=True,blank=True)
     patient_type=models.ForeignKey(patientType, on_delete=models.CASCADE,default=None,null=True,blank=True)
-    emp=models.ForeignKey(Employee, on_delete=models.CASCADE,default=None,null=True,blank=True)
+    doc=models.ForeignKey(Employee, on_delete=models.CASCADE,default=None,null=True,blank=True)
     sign_symtoms=models.TextField(default=None,null=True,blank=True)
     provisional_diagnosis=models.TextField(default=None,null=True,blank=True)
     investigation=models.TextField(default=None,null=True,blank=True)
@@ -358,7 +358,7 @@ class patPrescriptionRecords(models.Model):
     vitals=models.CharField(max_length=50,default=None,null=True,blank=True)
     rx=models.TextField(default=None,null=True,blank=True)
 
-    date_visited = models.DateTimeField(auto_now_add=True, blank=True)
+    date_visited = models.DateTimeField(default=None,null=True, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
     update_at = models.DateTimeField(auto_now_add=True, blank=True)
@@ -474,7 +474,7 @@ class procedureTable(models.Model):         #### NEW  ######
     procedure_name=models.CharField(max_length=50,null=True,blank=True)
     charges=models.IntegerField(null=True,blank=True)
     def __str__(self):
-        return str(self.surgery_type)
+        return str(self.procedure_name)
     class Meta:
         verbose_name_plural="Procedure Table"
         ordering=['pk']
@@ -496,8 +496,11 @@ class procedureBillRecord(models.Model):                #### NEW  ######
         ordering=['pk']
 
 class procedureRecords(models.Model):              #### NEW  ######
-    procedure_bill=models.ForeignKey(procedureBillRecord, on_delete=models.CASCADE,default=None,null=True,blank=True)
+    procedure_bill=models.CharField(max_length=50,null=True,blank=True)
     pres=models.ForeignKey(patPrescriptionRecords, on_delete=models.CASCADE,default=None,null=True,blank=True)
+    net_total=models.IntegerField(null=True,blank=True,default=0)
+    status=models.CharField(max_length=50,null=True,blank=True,default='UnPaid')
+
     misc1=models.CharField(max_length=50,null=True,blank=True,default='UnPaid')
     misc2=models.CharField(max_length=50,null=True,blank=True,default='UnPaid')
     misc3=models.CharField(max_length=50,null=True,blank=True,default='UnPaid')
@@ -604,7 +607,7 @@ class invoiceRecords(models.Model):
     desp_bill=models.ForeignKey(despBillRecord, on_delete=models.CASCADE,default=None,null=True,blank=True)
     surgery_bill=models.ForeignKey(surgeryBillRecord, on_delete=models.CASCADE,default=None,null=True,blank=True)
     ward_bill=models.ForeignKey(patientWardBill, on_delete=models.CASCADE,default=None,null=True,blank=True)
-
+    procedure_id=models.ForeignKey(procedureRecords, on_delete=models.CASCADE,default=None,null=True,blank=True)
     room_bill=models.ForeignKey(patientRoomsBill, on_delete=models.CASCADE,default=None,null=True,blank=True)
     discount=models.IntegerField(null=True,blank=True)
     discount_percentage=models.FloatField(null=True,blank=True)

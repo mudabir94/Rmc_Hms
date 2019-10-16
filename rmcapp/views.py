@@ -11,6 +11,10 @@ from rmcapp.models import (
     medicineBatches,
     packageType,
     employeeType,Employee,Patient,patientMedRecords,patientBillRecords,Rooms,Ward,patientRoomsBill,patientType,
+    procedureTable,patPrescriptionRecords,patPrescriptionBill,invoiceRecords,
+    despBillRecord,procedureBillRecord,procedureRecords,procedureTable,
+    patientVisitSummary,
+
 )
 from django.http import HttpResponse, JsonResponse
 from .Controllers.MedControllers.MedController import MedicineController  
@@ -1121,8 +1125,8 @@ def retrievePatientInfoInPatientBill(request):
       
         id=request.GET.get("id")
         id=int(id)
-      
-        pat_obj=Patient.objects.get(id=1)
+        patPresRecObj=patPrescriptionRecords.objects.get(id=id)
+        pat_obj=patPresRecObj.patient
     
         patient_dict={}
         patient_info_dict={}
@@ -1138,12 +1142,12 @@ def retrievePatientInfoInPatientBill(request):
         patient_dict[pat_obj.id]=[]
         patient_dict[pat_obj.id]=patient_info_dict
         print("patient_dict",patient_dict)
-
+        patient_id=pat_obj.id
 
 
         data={
             "patient_dict":json.dumps(patient_dict),
-            'id':str(id),
+            'id':str(patient_id),
         }
         return JsonResponse(data)
 
@@ -1282,6 +1286,27 @@ def generatePrescription(request):
         presData=request.GET.get('presData')
         presData=json.loads(presData)
         print("presData",presData)
+        # Add data to Prescription Record
+        presRecObj=patPrescriptionRecords()
+        patObj=Patient.objects.get(id=presData['pat_id'])
+        presRecObj.patient=patObj
+        doc_id=presData['doctor']
+        doc_id=8
+        empObj=Employee.objects.get(id=doc_id)
+        presRecObj.doc=empObj
+        # presRecObj.patient_type=
+        presRecObj.save()
+        # Add Data to Prescription Bill Records. 
+        patPresBillObj=patPrescriptionBill()
+        patPresBillObj.pres=presRecObj
+        patPresBillObj.net_total=presData['net_total']
+        patPresBillObj.status="UnPaid"
+        patPresBillObj.save()
+        invObj=invoiceRecords()
+        invObj.pres=presRecObj
+        invObj.net_total=presData['net_total']
+        invObj.status="UnPaid"
+        invObj.save()
         data={}
         return JsonResponse(data)
 
@@ -1319,7 +1344,21 @@ def generatePrescription(request):
 #             'success':"success"
 #         }
 #         return JsonResponse(data)
+def retrieveProcedureDetails(request):
+    if request.method=='GET':
+        procedure_objs=procedureTable.objects.all()
+        procedure_list=[]
+        for obj in procedure_objs:
+            templist=[]
+            templist.append(obj.procedure_name)
+            templist.append(obj.charges)
 
+            procedure_list.append(templist)
+
+    data={
+        'procedure_list':procedure_list,
+    }
+    return JsonResponse(data)
 def retrieveEmployeeInfo(request):
     if request.method=="GET":
         emp_name=request.GET.get('emp_name')
@@ -1579,7 +1618,7 @@ def NoStripCalculationDespToPat(despensoryStock,patientid,medicineobj,boxes_want
 
         tempdict['amount']=amount
         tempdict['despid']=despensoryStock.id
-        tempdict['priceperpiece']=piece_unit
+        tempdict['priceperpiece']=despensoryStock.piece_price_unit
         tempdict['patientid']=patientid
 
         pbr_dict[key]=tempdict
@@ -1603,10 +1642,38 @@ def NoStripCalculationDespToPat(despensoryStock,patientid,medicineobj,boxes_want
 
 def savePatientBill(request):
     if request.method=='POST':
+        prescription_id=request.POST.get('prescription_id')
+        prescription_id=int(prescription_id)
+
+        proceduredata_dict=request.POST.get('proceduredata_dict')
+        proceduredata_dict=json.loads(proceduredata_dict)
         despStckDict=request.POST.get('despStckDict')
         despStckDict=json.loads(despStckDict)
         pbr_dict=request.POST.get('pbr_dict')
         pbr_dict=json.loads(pbr_dict)
+        despmedbillamount=request.POST.get('despmedbillamount')
+        despmedbillamount=int(despmedbillamount)
+        totalamount=request.POST.get('totalamount')
+        totalamount=int(totalamount)
+        addchargeamount=request.POST.get('addchargeamount')
+        addchargeamount=int(addchargeamount)
+        discountamount=request.POST.get('discountamount')
+        discountamount=int(discountamount)
+        net_total=request.POST.get('net_total')
+        net_total=int(net_total)
+        procedure_total=request.POST.get('procedure_total')
+        procedure_total=int(procedure_total)
+
+        
+
+        patientid=0
+
+        patPresRecObj=patPrescriptionRecords.objects.get(id=prescription_id)
+        medicine_id_list=[]
+        procedure_id_list=[]
+        proc_net_total=0
+
+
         for id in despStckDict:
             despObj=despensoryStock.objects.get(id=id)
             print("despObj Medicine name",despObj.medicine.medicine_name)
@@ -1620,15 +1687,62 @@ def savePatientBill(request):
             despid=int(pbr_dict[medname]['despid'])
             despObj=despensoryStock.objects.get(id=despid)
             patientid=int(pbr_dict[medname]['patientid'])
-            patObj=Patient.objects.get(id=patientid)
+            patObj=Patient.objects.get(id=patPresRecObj.patient.id)
             pbrObj=patientBillRecords()
             pbrObj.patient=patObj
             pbrObj.desp=despObj
+            patPresRecObj=patPrescriptionRecords.objects.get(id=prescription_id)
+            pbrObj.pres=patPresRecObj
             pbrObj.boxes_stored=int(pbr_dict[medname]['boxes'])
             pbrObj.strips_stored=int(pbr_dict[medname]['strips'])
             pbrObj.pieces_stored=int(pbr_dict[medname]['pieces'])
             pbrObj.amount=int(pbr_dict[medname]['amount'])
             pbrObj.save()
+            medObj=Medicine.objects.get(medicine_name=medname)
+            medicine_id_list.append(medObj.id)
+        patMedRecObj=patientMedRecords()
+        patMedRecObj.patient=Patient.objects.get(id=patPresRecObj.patient.id)
+        patMedRecObj.pres=patPresRecObj
+        patMedRecObj.prescription=medicine_id_list
+        patMedRecObj.save()
+        despBillRecObj=despBillRecord()
+        despBillRecObj.pres=patPresRecObj
+        despBillRecObj.patient=Patient.objects.get(id=patPresRecObj.patient.id)
+        despBillRecObj.despcharge_bill=despmedbillamount
+        despBillRecObj.addcharge_bill=addchargeamount
+        despBillRecObj.actual_med_bill=despmedbillamount+addchargeamount
+        despBillRecObj.net_total=addchargeamount
+        despBillRecObj.status="UnPaid"
+        despBillRecObj.save()
+        for procname in proceduredata_dict:
+
+            procedureTable.objects.get(procedure_name=procname)
+            procBillRecObj=procedureBillRecord()
+            procBillRecObj.pres=patPresRecObj
+            procBillRecObj.net_total=int(proceduredata_dict[procname])
+            procBillRecObj.status="UnPaid"
+            procBillRecObj.save()
+            procedure_id_list.append(procBillRecObj.id)
+
+
+        procRecObj=procedureRecords()
+        procRecObj.procedure_bill=procedure_id_list
+        procRecObj.pres=patPresRecObj
+        procRecObj.net_total=procedure_total
+        procRecObj.save()
+        invObj=invoiceRecords.objects.get(pres=patPresRecObj.id)
+        net_total=net_total
+        invObj.desp_bill=despBillRecObj
+
+        invObj.procedure_id=procRecObj
+        invObj.discount=discountamount
+        invObj.net_total=invObj.net_total+net_total
+        invObj.save()
+        pvsObj=patientVisitSummary()
+        pvsObj.pres=patPresRecObj
+        pvsObj.pmr=patMedRecObj
+        pvsObj.patient=Patient.objects.get(id=patPresRecObj.patient.id)
+        pvsObj.save()
 
         data={}
         return JsonResponse(data)

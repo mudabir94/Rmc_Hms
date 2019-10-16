@@ -29,9 +29,29 @@ var dspstck_dict={}
 var presData={}
 var token_Number;
 var optionSelected;
-$(document).ready(function() {
-});
+var procedure_data=[];
+var pbr_dict={}
 
+$(document).ready(function() {
+    retrieveProcedureDetails();
+});
+function retrieveProcedureDetails(){
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        'data': {},
+        url: '/retrieve_procedure_details',
+        success: function(data){
+            procedure_data =data['procedure_list']
+            for (var i in procedure_data){
+                console.log("procedure_list",procedure_data[i])
+            
+            }
+            
+        }
+    });
+   
+}
 function addPatient(){
     $('#main_page_content').empty()
     var container_patient_dashboard= $('#main_page_content').append('<div class="container-fluid" id="container-patient-dashboard"></div>');
@@ -1549,46 +1569,31 @@ function printPrescriptionForm(){
     // else (days<30){
     //     var age=  days + 'days';
     // }
+    var amountDue_input=$("#amountDue_input").val()
 
     if (pat_type==='Outdoor'){
         var outdooramount=$("#outdooramount_input").val();
-        console.log("outdooramount", outdooramount);
         $("#outdooramount_input").val("")
-
         var discountamount=$("#discountamount_input").val();
-        console.log("discountamount", discountamount);
         $("#discountamount_input").val("")
-
-        var tokenNo = $("#tokenNumber_disp").val();
-        console.log("discountamount", discountamount);
         $("#discountamount_input").val("")
-
         var discountPercent=$("#discountPercent_input").val();
-        console.log("discountPercent", discountPercent);
         $("#discountPercent_input").val("")
-
         var discount_reason=$("#discount_reason_input").val();
-        console.log("discount_reason", discount_reason);
         $("#discount_reason_input").val("")
-
-        var doctor_visited = $("#selecteddoctor").val()
-        console.log("doctor_visited", doctor_visited);
+        var doctor = $("#selecteddoctor").val()
         $("#selecteddoctor").val("")
-
         var patient_type = $("#pat_type_input").val()
-        console.log("patient_type", patient_type);
-        $("#pat_type_input").val()
-
+        $("#pat_type_input").val();
         var presData={}
-        presData["id"]= pat_id;
-        presData["name"]= patient_name;
-        presData["token" ]= tokenNo;
-        presData["age"]= age;
-        presData["gender"]= patient_gender;
+        presData["pat_id"]= pat_id;
+        // presData["name"]= patient_name;
+        // presData["age"]= age;
+        // presData["gender"]= patient_gender;
         presData["discount"]= discountamount;
         presData["discount_percent"]= discountPercent;
         presData["discount_reason"]= discount_reason;
-        presData["doctor"]= doctor_visited;
+        presData["doctor"]= doctor;
         presData["pat_type"]= patient_type;
 
 
@@ -1626,10 +1631,9 @@ function printPrescriptionForm(){
         $("#pat_type_input").val()
 
         var presData={}
-        presData["id"]= pat_id;
-        presData["name"]= patient_name;
-        presData["token" ]= tokenNo;
-        presData["age"]= age;
+        presData["pat_id"]= pat_id;
+        // presData["name"]= patient_name;
+        // presData["age"]= age;
         presData["gender"]= patient_gender;
         presData["discount"]= discountamount;
         presData["discount_percent"]= discountPercent;
@@ -1645,36 +1649,22 @@ function printPrescriptionForm(){
         if (ward_type==='Ward'){
 
             var wardNumber=ward_dict[ward_id_selected]['ward_no']
-            console.log("Ward Number", wardNumber);
-
             var bedNumber=ward_dict[ward_id_selected]['bed_no']
-            console.log("bed Number", bedNumber);
-
             var admitreason=$("#admit_reason_input").val();
-            console.log("admitreason", admitreason);
             $("#admit_reason_input").val("")
-
             var Doctor=$("#Doctor_onDuty_input").val();
-            console.log("Doctor on duty", Doctor);
             $("#Doctor_onDuty_input").val("")
-            
             var consultant=$("#consultant_input").val();
-            console.log("consultant", consultant);
-            $("#consultant_input").val("")
-
+            $("#consultant_input").val("");
             var patient_type = $("#pat_type_input").val()
-            console.log("patient_type", patient_type);
-            $("#pat_type_input").val()
-
+            $("#pat_type_input").val();
             var ward_type = $("#ward_type_input").val()
-            console.log("ward_type", ward_type);
             $("#ward_type_input").val()
-
             var presData={}
-            presData["id"]= pat_id;
-            presData["name"]= patient_name;
-            presData["age"]= age;
-            presData["gender"]= patient_gender;
+            presData["pat_id"]= pat_id;
+            // presData["name"]= patient_name;
+            // presData["age"]= age;
+            // presData["gender"]= patient_gender;
             presData["ward"]= wardNumber;
             presData["bed"]= bedNumber;
             presData["Consultant"]= consultant;
@@ -1690,34 +1680,22 @@ function printPrescriptionForm(){
         else if (ward_type==='Room'){
 
             var roomNumber=room_dict[room_id_selected]['room_no']
-            console.log("RoomNumber", roomNumber);
-
             var admitreason=$("#admit_reason_input").val();
-            console.log("admitreason", admitreason);
             $("#admit_reason_input").val("")
-
             var Doctor=$("#Doctor_onDuty_input").val();
-            console.log("Doctor on duty", Doctor);
             $("#Doctor_onDuty_input").val("")
-            
             var consultant=$("#consultant_input").val();
-            console.log("consultant", consultant);
             $("#consultant_input").val("")
-
             var patient_type = $("#pat_type_input").val()
-            console.log("patient_type", patient_type);
             $("#pat_type_input").val()
-
-            
             var ward_type = $("#ward_type_input").val()
             console.log("ward_type", ward_type);
             $("#ward_type_input").val()
-
             var presData={}
-            presData["id"]= pat_id;
-            presData["name"]= patient_name;
-            presData["age"]= age;
-            presData["gender"]= patient_gender;
+            presData["pat_id"]= pat_id;
+            // presData["name"]= patient_name;
+            // presData["age"]= age;
+            // presData["gender"]= patient_gender;
             presData["roomNo"]= roomNumber;
             presData["Consultant"]= consultant;
             presData["doctor"]= Doctor;
@@ -1730,6 +1708,8 @@ function printPrescriptionForm(){
          
         }
     }
+    presData['net_total']=amountDue_input;
+
     $.ajax({
         type: 'GET',
         dataType: "json",
@@ -2309,13 +2289,13 @@ function createPatientBill(){
                 colmd3=$("<div class='col-md-2'></div>")
     
     
-                pat_id_label=$("<label for='emp_name_tag' class='custom_label_css'>Patient id</label>");
+                pat_id_label=$("<label for='emp_name_tag' class='custom_label_css'>Prescription id</label>");
                 colmd1.append(pat_id_label)
     
                 pat_id_input=$("<input class='form-control' id='search_patient_id' class='custom_input_css'>")
     
                 colmd2.append(pat_id_input);
-                var search_button=$('<button onclick="searchPatientInCreateBill()">Search Patient</button>');
+                var search_button=$('<button onclick="searchPatientInCreateBill()">Search</button>');
                 colmd3.append(search_button);
     
     
@@ -2330,17 +2310,20 @@ function createPatientBill(){
 }
     
 function searchPatientInCreateBill(){
-        retrievePatientInfoInCreateBill("","","","1")    
+    var pres_id=$("#search_patient_id").val()
+        retrievePatientInfoInCreateBill("","","",pres_id)    
 }
 var patientid=0
+var prescription_id=0;
 function retrievePatientInfoInCreateBill(pat_name,contact_no,cnic_no,id){
     datatable_lst=[];
     patientid=id;
+    prescription_id=id
     $.ajax({
         type: 'GET',
         dataType: "json",
         'data': {
-            "id":id,
+            "id":prescription_id,
         },
         url: '/retrieve_patient_info_in_createbill',
         success: function(data){
@@ -2519,9 +2502,9 @@ function createPatientDetailsHtmlInCreateBill(){
 
         
         main_subcol.append(subrow_one)
-        main_subcol.append(subrow_two)
-        main_subcol.append(subrow_three)
-        main_subcol.append(subrow_four)
+        // main_subcol.append(subrow_two)
+        // main_subcol.append(subrow_three)
+        // main_subcol.append(subrow_four)
 
     row_div_two.append(main_subcol)
     var main_col_div=$("#main_col_div");
@@ -2554,6 +2537,7 @@ function retrieveDespMedicine(){
             }
             createDespDataTable();
             createRowDivFourBill();
+            createRowDivSixDespBill();
             createRowDivFiveBill();
             console.log("datatable_desp_med_list",datatable_desp_med_list);
         }
@@ -2602,7 +2586,7 @@ function billDataTable(){
                 { title: "Id" },
                 { title:"Desp Id"},
                 { title:"Patient Id"},
-                { title: "Medicine Name" },
+                { title: "Item Name" },
                 { title: "Boxes" },
                 { title: 'Strips' },
                 { title: "Pieces" },
@@ -2616,6 +2600,7 @@ function billDataTable(){
                 ordering: true,
                 info:false,
                 searching:false,
+                
             });
             $('#bill_table tbody').on( 'click', 'tr', function () {
                 if ( $(this).hasClass('selected') ) {
@@ -2893,7 +2878,7 @@ function addMedicineToPatientBill(){
 }
 
 function SaveAndPrintBill(){
-     dspstck_dict={}
+    dspstck_dict={}
     despmed_datatable.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
         var data = this.data();
         strips_stored=0
@@ -2933,17 +2918,153 @@ function SaveAndPrintBill(){
         pbr_dict[data[3]]=tempdict
     } );
     console.log("pbr_dict",pbr_dict)
+    var rmc="RMC HOSPITAL";
+    var patient_name="Hamza";
+    var phoneno="0322-0001020";
+    var proceduredata_dict={};
+    var nettotal_input=$('#nettotal_input').val();
+    var totalamount_input=$('#totalamount_input').val();
+    var discountamount_input=$('#discountamount_input').val();
+
+
+    var invoice_pos=$("<div id='invoice-POS'></div>");
+
+        var center=$("<center id='top'></center>")
+            var div_logo=$("<div class='logo'></div>");
+            var div_info=$("<div class='info'></div>");
+                var h2=$("<h2></h2>");
+                h2.append(rmc);
+            div_info.append(h2);
+        center.append(div_logo);
+        center.append(div_info);
+
+        var mid_div=$("<div id='mid'></div>");
+            var div_info=$("<div class='info'></div>");
+                var h2=$("<h3>Patient Info</h3>");
+                    var p=$("<p> Name   :"+patient_name+" </br> Phone   : "+phoneno+"</br></p>")
+                h2.append(p);
+            div_info.append(h2);
+        mid_div.append(div_info);
+
+        var bot_div=$("<div id='bot'></div>");
+            var div_table=$("<div id='table'></div>");
+                var table=$("<table>")
+                    var tr=$('<tr class="tabletitle"></tr>')
+                        var td1=$('<td class="item"><p>Item</p></td>')
+                        var td2=$('<td class="Hours"><p>Qty</p></td>')
+                        var td3=$('<td class="Rate"><p>Sub Total</p></td>')
+                    tr.append(td1);
+                    tr.append(td2);
+                    tr.append(td3);
+                table.append(tr);
+                for (var key in pbr_dict){
+                    item=key;
+                    qty=pbr_dict[key]['pieces']
+                    subtotal=pbr_dict[key]['amount']
+                    var tr=$('<tr class="service"></tr>')
+                        var td1=$('<td class="tableitem"><p>'+item+'</p></td>')
+                        var td2=$('<td class="tableitem"><p>'+qty+'</p></td>')
+                        var td3=$('<td class="tableitem"><p>'+subtotal+'</p></td>')
+                    tr.append(td1);
+                    tr.append(td2);
+                    tr.append(td3);
+                table.append(tr);
+
+                }
+                procedure_bill_table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
+                    var data = this.data();
+                    item=data[0];
+                    qty='-'
+                    subtotal=data[1]
+
+                    proceduredata_dict[item]=subtotal
+
+                    var tr=$('<tr class="service"></tr>')
+                        var td1=$('<td class="tableitem"><p>'+item+'</p></td>')
+                        var td2=$('<td class="tableitem"><p>'+qty+'</p></td>')
+                        var td3=$('<td class="tableitem"><p>'+subtotal+'</p></td>')
+                    tr.append(td1);
+                    tr.append(td2);
+                    tr.append(td3);
+                table.append(tr);
+                } );
+             
+                var tr=$('<tr class="tabletitle"></tr>')
+                        var td1=$('<td></td>')
+                        var td2=$('<td class="Rate"><h2>Total Amount</h2></td>')
+                        var td3=$('<td class="payment"><h2>'+totalamount_input+'</h2></td>')
+                    tr.append(td1);
+                    tr.append(td2);
+                    tr.append(td3);
+                table.append(tr);
+                var tr=$('<tr class="tabletitle"></tr>')
+                    var td1=$('<td></td>')
+                    var td2=$('<td class="Rate"><h2>Discount</h2></td>')
+                    var td3=$('<td class="payment"><h2>'+discountamount_input+'</h2></td>')
+                tr.append(td1);
+                tr.append(td2);
+                tr.append(td3);
+            table.append(tr);
+            var tr=$('<tr class="tabletitle"></tr>')
+                    var td1=$('<td></td>')
+                    var td2=$('<td class="Rate"><h2>Net Total</h2></td>')
+                    var td3=$('<td class="payment"><h2>'+nettotal_input+'</h2></td>')
+                tr.append(td1);
+                tr.append(td2);
+                tr.append(td3);
+            table.append(tr);
+
+
+
+
+            div_table.append(table);
+
+            var legalcopy=$("<div id='legalcopy'>");
+                var p=$('<p class="legal"><strong>Thank you for visiting!</strong>  </p>')
+            legalcopy.append(p)
+        bot_div.append(div_table);
+        bot_div.append(legalcopy);
+
+
+    invoice_pos.append(center);   
+    invoice_pos.append(mid_div);    
+    invoice_pos.append(bot_div);    
+
+ 
+
+    
+
+    // var restorepage = $('#patient_dash_first_div').html();
+    $('#patient_dash_first_div').hide();
+    var printcontent = $(invoice_pos).clone();
+    $('#recipet_div').empty().html(printcontent);
+  
+    window.print();
+    // w.close();
+    $('#patient_dash_first_div').show();
+    $('#recipet_div').empty();
+   
+
+
+
     $.ajax({
         type: 'POST',
         dataType: "json",
         'data': {
-          
+            'prescription_id':prescription_id,
+            'proceduredata_dict':JSON.stringify(proceduredata_dict),
             "despStckDict":JSON.stringify(dspstck_dict),
             "pbr_dict":JSON.stringify(pbr_dict),
+            'despmedbillamount':despmedbillamount,
+            "totalamount":totalamount_input,
+            "addchargeamount":addchargeamount,
+            'discountamount':discountamount_input,
+            'procedure_total':procedure_total,
+            'net_total':nettotal_input,
         },
         url: '/save_patient_bill',
         success: function(data){
-
+          
         }
     });
 }
@@ -3083,24 +3204,178 @@ function createRowDivFiveBill(){
     row_div_five.append(col_one__row_div_five);
 main_col_div.append(row_div_five);
 }
+function createRowDivSixDespBill(){
+    var main_col_div=$("#main_col_div");
+        var row_div_six=$("<div class='row' id='row_div_six'></div>");
+            var col_one__row_div_six=$("<div class='col-md-12'></div>");
+                var row__col_one__row_div_six=$("<div class='row'></div>");
+                    var  colmd1=$("<div class='col-md-12'></div>");
+                        var row=$("<div class='row'></div>");
+                            var procedure_col1=$("<div class='col-md-6' id='procedure_col1'></div>");
+                                var sub_row1=$("<div class='row'></div>");
+                                    var subcol1_subrow1=$("<div class='col-md-6'></div>");
+                                        var label=$("<label>Procedures</label>");
+                                    subcol1_subrow1.append(label)
+
+                                    var subcol2_subrow1=$("<div class='col-md-6'></div>");
+                                        var select=$("<select id='procedure_select'  onchange='getProcedureCharge($(this))'></select>");
+                                            var option=$("<option selected='selected' value='--'>--</option>");
+                                        $(select).append(option);
+                                            for (var i in procedure_data){
+                                                
+                                                    var option=$("<option id="+procedure_data[i][0]+"-opt value='"+i+"'>"+procedure_data[i][0]+"</option>");
+                                                    $(select).append(option);
+                                        
+                                            } 
+                                    subcol2_subrow1.append(select)
+
+
+                                        
+
+                                sub_row1.append(subcol1_subrow1);
+                                sub_row1.append(subcol2_subrow1);
+
+                                var sub_row2=$("<div class='row'></div>");
+                                    var subcol1_subrow2=$("<div class='col-md-6'></div>");
+                                        var label=$("<label>Charges</label>");
+                                    subcol1_subrow2.append(label)
+
+                                    var subcol2_subrow2=$("<div class='col-md-6'></div>");
+                                        var input=$("<input id='procedure_charge_input' value=''></input>");
+                                    subcol2_subrow2.append(input)
+
+                                sub_row2.append(subcol1_subrow2);
+                                sub_row2.append(subcol2_subrow2);
+
+                                var sub_row3=$("<div class='row'></div>");
+                                   
+                                    var subcol1_subrow3=$("<div class='col-md-6'></div>");
+                                        
+
+                                    var subcol2_subrow3=$("<div class='col-md-6'></div>");
+                                        var button=$("<button onclick='addProcedureToDespBill()'>Add</button>");
+                                    subcol2_subrow3.append(button)
+
+                                sub_row3.append(subcol1_subrow3);
+                                sub_row3.append(subcol2_subrow3);
+
+
+                            procedure_col1.append(sub_row1);
+                            procedure_col1.append(sub_row2);
+                            procedure_col1.append(sub_row3);
+
+
+
+                            var procedure_col2=$("<div class='col-md-6'></div>");
+                                var procedure_bill_table=$('<table id="procedure_bill_table"></table>');
+                                procedure_col2.append(procedure_bill_table)
+                        row.append(procedure_col1)
+                        row.append(procedure_col2)
+
+
+
+                    colmd1.append(row);
+                row__col_one__row_div_six.append(colmd1);
+            col_one__row_div_six.append(row__col_one__row_div_six);
+        row_div_six.append(col_one__row_div_six);
+    main_col_div.append(row_div_six);
+    procedureBillDespDataTable();
+}
+var procedure_bill_table;
+function procedureBillDespDataTable(){
+    $(function(){
+        procedure_bill_table=$("#procedure_bill_table").DataTable({
+            data:datatable_patient_billlist,
+            columns: [
+               
+                { title:"Procedure Name"},
+                { title:"Amount"},
+             
+                ],
+                paging: false,
+                scrollY: 200,
+                scrollX: true,
+                ordering: true,
+                info:false,
+                searching:false,
+                columnDefs: [
+                    { width: '100%', targets: '_all' }
+                ],
+            });
+            $('#procedure_bill_table tbody').on( 'click', 'tr', function () {
+                if ( $(this).hasClass('selected') ) {
+                    // procedure_bill_data=procedure_bill_table.rows(this).data()[0];
+                    procedure_bill_table.rows(this).remove()
+                    $(this).remove();
+                   
+
+                }
+                else{
+                    rowid=$(this).find('td').eq(0).text()
+                    procedure_bill_table.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                    
+                }
+            });
+        });
+
+}
+function addProcedureToDespBill(){
+    var procedure_select=$("#procedure_select").val();
+    procedure_select=procedure_data[procedure_select][0]
+    var procedure_charge_input=$("#procedure_charge_input").val();
+    templist=[];
+    templist.push(procedure_select);
+    templist.push(procedure_charge_input);
+    procedure_bill_table.row.add( templist ).draw();
+    $("#procedure_select").val("--");
+    $("#procedure_charge_input").val("")
+
+}
+function getProcedureCharge(element){
+    i=$(element).val()
+    charge=procedure_data[i][1];
+    $('#procedure_charge_input').val(charge);
+}
+var despmedbillamount=0;
+var addchargeamount=0;
+var procedure_total=0
 function calculateBill(){
     var totalamount=0
-    for (var index in pbr_dict){
-        console.log("index",index);
-        console.log("pbr_dict",pbr_dict[index])
-        totalamount=pbr_dict[index].amount+totalamount;
-        
+    despmedbillamount=0
+    if (pbr_dict!==undefined){
+        for (var index in pbr_dict){
+            totalamount=pbr_dict[index].amount+totalamount;
+            despmedbillamount=pbr_dict[index].price+despmedbillamount
+        }
     }
-    console.log("totalamount",totalamount)
+    addchargeamount=totalamount;
+    
+    console.log("totalamount",totalamount);
+    
+
+
+    procedure_bill_data=procedure_bill_table.rows(this).data()[0];
+    procedure_bill_table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
+        var data = this.data();
+        charges=parseInt(data[1])
+        procedure_total=procedure_total+charges;
+        totalamount=charges+totalamount;
+
+    });
+  
     $("#totalamount_input").val(totalamount);
 
 }
 function discountAmountFocousOut(element){
     var discountamount_input=$("#discountamount_input").val();
+    if (discountamount_input==""){
+        discountamount_input=0
+        $("#discountamount_input").val('0');
+    }
     var discount_percentage=(discountamount_input/$("#totalamount_input").val())*100;
-    $("#discountpercent_input").val(discount_percentage);
-    $("#nettotal_input").val(nettotal);
-
+    $("#discountpercent_input").val(discount_percentage);   
+    
 }   
 function netTotalFocusIn(){
     var totalamount_input=$("#totalamount_input").val();
