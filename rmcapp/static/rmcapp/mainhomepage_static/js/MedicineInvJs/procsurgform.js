@@ -8,7 +8,7 @@ $( document ).ready(function() {
         'data': { 
 
         },
-        url: '/add_proc_surg_form',
+        url: '/proc_surg_form',
         success: function(data){            
         },
     });

@@ -1684,7 +1684,7 @@ def updatePrescriptionRecord(request):
         return JsonResponse(data)
 
         
-def addProcSurgForm(request):
+def procSurgForm(request):
     if request.method=="POST":
         data={
             'success':"success"

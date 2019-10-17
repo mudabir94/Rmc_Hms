@@ -64,9 +64,7 @@ urlpatterns = [
 
   # path('max_token_no',views.maxTokenNo,name="max_token_no"),
 
-  path('add_proc_surg_form',views.addProcSurgForm,name='add_proc_surg_form'),
-    path('add_proc_surg_form',views.addProcSurgForm,name='add_proc_surg_form'),
-
+  path('proc_surg_form',views.procSurgForm,name='proc_surg_form'),
   
   
   path('room_ward_form',views.roomWardForm,name='room_ward_form'),
