@@ -1295,7 +1295,7 @@ def generatePrescription(request):
         patObj=Patient.objects.get(id=presData['pat_id'])
         presRecObj.patient=patObj
         doc_id=presData['doctor']
-        doc_id=8
+        doc_id=2
         empObj=Employee.objects.get(id=doc_id)
         presRecObj.doc=empObj
         # presRecObj.patient_type=

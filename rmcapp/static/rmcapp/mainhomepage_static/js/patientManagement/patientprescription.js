@@ -38,8 +38,9 @@ $(document).ready(function() {
     loadPresForm();
 
 });
+var patient_prescription_div;
 function loadPresForm(){
-    var patient_prescription_div=$("#patient_prescription_div").append('<div class="container-fluid" id="container-print-patient-prescription"></div>');
+    patient_prescription_div=$("#patient_prescription_div").append('<div class="container-fluid" id="container-print-patient-prescription"></div>');
     var main_row_div= $("<div class='row is-flex'></div>");
     $(patient_prescription_div).append(main_row_div);
     var main_col_div=$("<div class='col-md-12' id=''></div>");
@@ -64,7 +65,7 @@ function loadPresForm(){
 
         $(row_div_one).append(col_one__row_div_one);
 
-        var row_div_two=$("<div class='row mx-0'></div>");
+        var row_div_two=$("<div class='row  '></div>");
             var col_one__row_div_two=$("<div class='col-md-12' style='padding-bottom: 15px;'></div>");
                 row__col_one__row_div_two=$("<div class='row'></div>");
 
@@ -101,7 +102,7 @@ function loadPresForm(){
 
         $(row_div_two).append(col_one__row_div_two);
         
-        var row_div_three=$("<div class='row mx-0'></div>");
+        var row_div_three=$("<div class='row  '></div>");
             var col_one__row_div_three=$("<div class='col-md-12' style='padding-bottom: 15px;'></div>");
                 row__col_one__row_div_three=$("<div class='row'></div>");
 
@@ -140,7 +141,7 @@ function loadPresForm(){
 
         if(presData['pat_type']==="Outdoor"){
 
-            var row_div_four=$("<div class='row mx-0'></div>");
+            var row_div_four=$("<div class='row  '></div>");
                 var col_one__row_div_four=$("<div class='col-md-12' style='padding-bottom: 15px;'></div>");
                     row__col_one__row_div_four=$("<div class='row'></div>");
 
@@ -161,7 +162,7 @@ function loadPresForm(){
         }
         else if(presData['pat_type']==="Emergency"){
 
-            var row_div_four=$("<div class='row mx-0'></div>");
+            var row_div_four=$("<div class='row  '></div>");
                 var col_one__row_div_four=$("<div class='col-md-12' style='padding-bottom: 15px;'></div>");
                     row__col_one__row_div_four=$("<div class='row'></div>");
                         colmd1=$("<div class='col-md-1 offset-md-4'></div>")
@@ -185,7 +186,7 @@ function loadPresForm(){
 
             var row_div_four=$("<div class='row'></div>");
                 var col_one__row_div_four=$("<div class='col-md-12' style='padding-bottom: 15px;'></div>");
-                    row__col_one__row_div_four=$("<div class='row mx-0'></div>");
+                    row__col_one__row_div_four=$("<div class='row  '></div>");
                         colmd1=$("<div class='col-md-1'></div>")
                         colmd2=$("<div class='col-md-3'></div>")
                         colmd3=$("<div class='col-md-1'></div>")
@@ -211,7 +212,7 @@ function loadPresForm(){
         }
         else if(presData['ward_type']==="Ward"){
 
-            var row_div_four=$("<div class='row mx-0'></div>");
+            var row_div_four=$("<div class='row  '></div>");
                 var col_one__row_div_four=$("<div class='col-md-12' style='padding-bottom: 15px;'></div>");
                     row__col_one__row_div_four=$("<div class='row'></div>");
 
@@ -249,7 +250,7 @@ function loadPresForm(){
         }
     }
         // 3 columns
-        var row_div_five=$("<div class='row mx-0'></div>");
+        var row_div_five=$("<div class='row  '></div>");
             var col_one__row_div_five=$("<div class='col-md-12 '></div>");
                 var row__col_one__row_div_five=$("<div class='row'></div>");
                     colmd1=$("<div class='col-md-4 setHeight' style='background:#f7f7f7;border-color: black;border-top-style: solid;border-width: thin;'></div>")
@@ -274,8 +275,7 @@ function loadPresForm(){
             col_one__row_div_five.append(row__col_one__row_div_five);
         $(row_div_five).append(col_one__row_div_five);
 
-
-        var row_div_six=$("<div class='row mx-0'></div>");
+        var row_div_six=$("<div class='row  '></div>");
             var col_one__row_div_six=$("<div class='col-md-4 '></div>");
                 var row__col_one__row_div_six=$("<div class='row'></div>");
                     colmd1=$("<div class='col-md-12 setHeight' style='background:#f7f7f7'></div>")
@@ -288,7 +288,7 @@ function loadPresForm(){
             col_one__row_div_six.append(row__col_one__row_div_six);
         $(row_div_six).append(col_one__row_div_six);
 
-        var row_div_seven=$("<div class='row mx-0'></div>");
+        var row_div_seven=$("<div class='row  '></div>");
         var col_one__row_div_seven=$("<div class='col-md-4 '></div>");
             var row__col_one__row_div_seven=$("<div class='row'></div>");
                 colmd1=$("<div class='col-md-12 setHeight' style='background:#f7f7f7'></div>")
@@ -301,7 +301,7 @@ function loadPresForm(){
         col_one__row_div_seven.append(row__col_one__row_div_seven);
     $(row_div_seven).append(col_one__row_div_seven);
 
-    var row_div_eight=$("<div class='row mx-0'></div>");
+    var row_div_eight=$("<div class='row  '></div>");
     var col_one__row_div_eight=$("<div class='col-md-4 '></div>");
         var row__col_one__row_div_eight=$("<div class='row'></div>");
             colmd1=$("<div class='col-md-12 setHeight' style='background:#f7f7f7'></div>")
@@ -347,11 +347,12 @@ $(row_div_eight).append(col_one__row_div_eight);
 }
 function PrintPres(){
     var restorepage = $('body').html();
-    var printcontent = $('#patient_prescription_div').clone();
+    var printcontent = $(patient_prescription_div).clone();
+    console.log("printcontent",printcontent)
     $('body').empty().html(printcontent);
     window.print();
-    window.close();
-    $('body').html(restorepage);
+    // window.close();
+    // $('body').html(restorepage);
 
     
     // var mywindow = window.open('', 'PRINT', 'height=400,width=600');
