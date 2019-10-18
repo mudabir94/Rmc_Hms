@@ -529,9 +529,6 @@ def savePatientData(request):
         cnic = json.loads(cnic)
         blood_group = json.loads(blood_group)
 
-
-
-
         print(name)
         print(gender)
         print(email_address)
@@ -1025,7 +1022,37 @@ def retrievePatientInfoInPresForm(request):
             "patient_dict":json.dumps(patient_dict),
         }
         return JsonResponse(data)
+def retrieveAllPatientInfo(request):
+    if request.method=="GET":
+        
+        pat_objs=Patient.objects.all()
 
+        print("pat_objs",pat_objs)
+        patient_dict={}
+        for pat_obj in pat_objs:
+            patient_info_dict={}
+            patient_info_dict['name']=pat_obj.pat_name
+            patient_info_dict['contact_no']=pat_obj.phone_no
+            patient_info_dict['gender']=pat_obj.gender
+            patient_info_dict['dob']=str(pat_obj.dob)
+            patient_info_dict['cnic']=pat_obj.cnic
+            patient_info_dict['guardian']=pat_obj.guardian
+            patient_info_dict['address']=pat_obj.address
+            patient_info_dict['bloodgroup']=pat_obj.bloodgroup
+            patient_info_dict['email']=pat_obj.email_address
+            patient_dict[pat_obj.id]=[]
+            patient_dict[pat_obj.id]=patient_info_dict
+        print("patient_dict",patient_dict)
+
+        data={
+            "patient_dict":json.dumps(patient_dict),
+        }
+        return JsonResponse(data)
+def viewAllPatients(request):
+    if request.method=="GET":
+        data={
+        }
+        return JsonResponse(data)    
 def retrieveRoomInfoInRoomWard(request):
     if request.method=="GET":
 
@@ -1067,51 +1094,6 @@ def retrieveWardInfoInRoomWard(request):
             "ward_dict":json.dumps(ward_dict),
         }
         return JsonResponse(data)
-
-def retrieveAllRoomInfoInRoomWard(request):
-    if request.method=="GET":
-
-        room_objs=Rooms.objects.all()
-        print("room_objs//",room_objs)
-
-        room_dict={}
-        for room_obj in room_objs:
-            room_info_dict={}
-            room_info_dict['floor_no']=room_obj.floor
-            room_info_dict['room_no']=room_obj.room_no
-            room_info_dict['charge_per_day']=room_obj.charge_per_day
-            room_info_dict['ac_charge_per_day']=room_obj.ac_charge_per_day
-            room_info_dict['status']=room_obj.status
-            room_dict[room_obj.id]=[]
-            room_dict[room_obj.id]=room_info_dict
-        print("room_dict", room_dict)
-
-        data={
-            "room_dict":json.dumps(room_dict),
-        }
-        return JsonResponse(data)
-
-def retrieveAllWardInfoInRoomWard(request):
-    if request.method=="GET":
-
-        ward_objs=Ward.objects.all()
-        ward_dict={}
-        for ward_obj in ward_objs:
-            ward_info_dict={}
-            ward_info_dict['ward_no']=ward_obj.ward_no
-            ward_info_dict['bed_no']=ward_obj.bed_no
-            ward_info_dict['charge_per_day']=ward_obj.charge_per_day
-            ward_info_dict['status']=ward_obj.status
-            ward_dict[ward_obj.id]=[]
-            ward_dict[ward_obj.id]=ward_info_dict
-        print("ward_dict", ward_dict)
-
-
-        data={
-            "ward_dict":json.dumps(ward_dict),
-        }
-        return JsonResponse(data)
-
 
 def retirevePatientInfo(request):
     if request.method=="GET":
@@ -1195,29 +1177,7 @@ def retrievePatientInfoInPatientBill(request):
 
 def viewPatientHistory(request):
     if request.method=="GET":
-        # pat_name=request.GET.get("pat_name")
-        # contact_no=request.GET.get("contact_no")
-        # cnic=request.GET.get("cnic")
-
-        # #phone_no=contact_no,cnic=cnic_no
-        # pat_objs=Patient.objects.filter(Q(pat_name=pat_name) | Q(phone_no=contact_no) | Q(cnic=cnic))
-        # # pat_obj=Patient.objects.get(id=1)
-        # print("pat_objs",pat_objs)
-        # patient_dict={}
-        # for pat_obj in pat_objs:
-        #     patient_info_dict={}
-        #     patient_info_dict['name']=pat_obj.pat_name
-        #     patient_info_dict['contact_no']=pat_obj.phone_no
-        #     patient_info_dict['gender']=pat_obj.gender
-        #     patient_info_dict['dob']=str(pat_obj.dob)
-        #     patient_info_dict['cnic']=pat_obj.cnic
-        #     patient_info_dict['guardian']=pat_obj.guardian
-        #     patient_info_dict['address']=pat_obj.address
-        #     patient_info_dict['bloodgroup']=pat_obj.bloodgroup
-        #     patient_info_dict['email']=pat_obj.email_address
-        #     patient_dict[pat_obj.id]=[]
-        #     patient_dict[pat_obj.id]=patient_info_dict
-        # print(patient_dict)
+        
 
 
 
@@ -1395,6 +1355,38 @@ def retrieveEmployeeInfo(request):
         }
         return JsonResponse(data)
 
+def retrieveAllEmployeeInfo(request):
+    if request.method=="GET":
+        emp_objs=Employee.objects.all()
+        
+
+        print("emp_objs",emp_objs)
+        all_employee_dict={}
+        for emp_obj in emp_objs:
+            all_employee_info_dict={}
+            all_employee_info_dict['name']=emp_obj.name
+            all_employee_info_dict['dob']=str(emp_obj.dob)
+            all_employee_info_dict['gender']=emp_obj.gender
+            all_employee_info_dict['phone']=emp_obj.phone_no
+            all_employee_info_dict['address']=emp_obj.address
+            all_employee_info_dict['qualification']=emp_obj.qualification
+            all_employee_info_dict['email']=emp_obj.email_address
+            all_employee_info_dict['employee_type']="Doctor"
+            all_employee_info_dict['cnic']=emp_obj.cnic
+            all_employee_dict[emp_obj.id]=[]
+            all_employee_dict[emp_obj.id]=all_employee_info_dict
+
+        print(all_employee_dict)
+
+        data={
+            "all_employee_dict":json.dumps(all_employee_dict),
+        }
+        return JsonResponse(data)
+def viewAllEmployee():
+        if request.method=="GET":
+            data={
+        }
+        return JsonResponse(data)
 
 
 def updateEmployeeData(request):
@@ -1681,9 +1673,8 @@ def savePatientBill(request):
         
 def updatePrescriptionRecord(request):
     if request.method=="POST":
-        return JsonResponse(data)
+        return JsonResponse(data)      
 
-        
 def procSurgForm(request):
     if request.method=="POST":
         data={
@@ -1692,17 +1683,13 @@ def procSurgForm(request):
         return JsonResponse(data)
 def addProcedure(request):
     if request.method=="POST":
-
         procedure_name=request.POST.get('procedure_name')
         procedure_name=json.loads(procedure_name)
-
         charges=request.POST.get('charges')
         charges=json.loads(charges)
-
         proc_obj=procedureTable()
         proc_obj.procedure_name=procedure_name
         proc_obj.charges=charges
-
         proc_obj.save()
         
         data={
@@ -1711,47 +1698,171 @@ def addProcedure(request):
         return JsonResponse(data)
 def addSurgery(request):
     if request.method=="POST":
-
         surgery_name=request.POST.get('surgery_name')
         surgery_name=json.loads(surgery_name)
-
         charges=request.POST.get('charges')
         charges=json.loads(charges)
-
         surg_obj=surgeryTable()
         surg_obj.surgery_name=surgery_name
         surg_obj.charges=charges
-
         surg_obj.save()
         
         data={
            'success':"success"
         }
         return JsonResponse(data)
-def roomWardForm(request):
-    if request.method=="POST":
-        # room_number = request.POST.get('room_number')
-        # floor_no = request.POST.get('floor_no')
-        # room_charges = request.POST.get('room_charges')
-        # ac_charges = request.POST.get('ac_charges')
-        # status = request.POST.get('status')
+def retrieveAllProcInfo(request):
+    if request.method=="GET":
 
-        
+        proc_objs=procedureTable.objects.all()
+        print("proc_objs//",proc_objs)
 
-
-        # name = json.loads(name)
-        # dob = json.loads(dob)
-        # gender = json.loads(gender)
-        # phone_number = json.loads(phone_number)
-        # address = json.loads(address)
-        # qualification = json.loads(qualification)
-        # employee_type = json.loads(employee_type)
-
-        # email_address = json.loads(email_address)
-        # cnic = json.loads(cnic)
+        proc_dict={}
+        for proc_obj in proc_objs:
+            proc_info_dict={}
+            proc_info_dict['procedure_name']=proc_obj.procedure_name
+            proc_info_dict['charges']=proc_obj.charges
+            proc_dict[proc_obj.id]=[]
+            proc_dict[proc_obj.id]=proc_info_dict
+        print("proc_dict", proc_dict)
 
         data={
+            "proc_dict":json.dumps(proc_dict),
+        }
+        return JsonResponse(data)
+def retrieveAllSurgInfo(request):
+    if request.method=="GET":
+
+        surg_objs=surgeryTable.objects.all()
+        surg_dict={}
+        for surg_obj in surg_objs:
+            surg_info_dict={}
+            surg_info_dict['surgery_name']=surg_obj.surgery_name
+            surg_info_dict['charges']=surg_obj.charges
+            surg_dict[surg_obj.id]=[]
+            surg_dict[surg_obj.id]=surg_info_dict
+        print("surg_dict", surg_dict)
+
+
+        data={
+            "surg_dict":json.dumps(surg_dict),
+        }
+        return JsonResponse(data)
+def updateSurgData(request):
+    if request.method=="POST":
+
+        surgery_name=request.POST.get('surgery_name')
+        surgery_name=surgery_name
+
+        charges=request.POST.get('charges')
+        charges=charges
+
+        id=request.POST.get('id')
+        id=id
+
+        surg_obj=surgeryTable.objects.get(id=id)
+        surg_obj.surgery_name=surgery_name
+        surg_obj.charges=charges
+
+        surg_obj.save()
+
+        surg_objs=surgeryTable.objects.all()
+        print("surg_objs//",surg_objs)
+
+        surg_dict={}
+        for surg_obj in surg_objs:
+            surg_info_dict={}
+            surg_info_dict['surgery_name']=surg_obj.surgery_name
+            surg_info_dict['charges']=surg_obj.charges
+            surg_dict[surg_obj.id]=[]
+            surg_dict[surg_obj.id]=surg_info_dict
+        print("surg_dict", surg_dict)
+        data={
+            "surg_dict":json.dumps(surg_dict),
+        }
+        return JsonResponse(data)
+
+def updateProcData(request):
+    if request.method=="POST":
+
+        procedure_name=request.POST.get('procedure_name')
+        procedure_name=procedure_name
+
+        charges=request.POST.get('charges')
+        charges=charges
+
+        id=request.POST.get('id')
+        id=id
+
+        proc_obj=procedureTable.objects.get(id=id)
+        proc_obj.procedure_name=procedure_name
+        proc_obj.charges=charges
+
+        proc_obj.save()
+
+        proc_objs=procedureTable.objects.all()
+        print("proc_objs//",proc_objs)
+
+        proc_dict={}
+        for proc_obj in proc_objs:
+            proc_info_dict={}
+            proc_info_dict['procedure_name']=proc_obj.procedure_name
+            proc_info_dict['charges']=proc_obj.charges
+            proc_dict[proc_obj.id]=[]
+            proc_dict[proc_obj.id]=proc_info_dict
+        print("proc_dict", proc_dict)
+
+        data={
+            "proc_dict":json.dumps(proc_dict),
+        }
+        return JsonResponse(data)
+
+def roomWardForm(request):
+    if request.method=="POST":
+        data={
             'success':"success"
+        }
+        return JsonResponse(data)
+def retrieveAllRoomInfoInRoomWard(request):
+    if request.method=="GET":
+
+        room_objs=Rooms.objects.all()
+        print("room_objs//",room_objs)
+
+        room_dict={}
+        for room_obj in room_objs:
+            room_info_dict={}
+            room_info_dict['floor_no']=room_obj.floor
+            room_info_dict['room_no']=room_obj.room_no
+            room_info_dict['charge_per_day']=room_obj.charge_per_day
+            room_info_dict['ac_charge_per_day']=room_obj.ac_charge_per_day
+            room_info_dict['status']=room_obj.status
+            room_dict[room_obj.id]=[]
+            room_dict[room_obj.id]=room_info_dict
+        print("room_dict", room_dict)
+
+        data={
+            "room_dict":json.dumps(room_dict),
+        }
+        return JsonResponse(data)
+def retrieveAllWardInfoInRoomWard(request):
+    if request.method=="GET":
+
+        ward_objs=Ward.objects.all()
+        ward_dict={}
+        for ward_obj in ward_objs:
+            ward_info_dict={}
+            ward_info_dict['ward_no']=ward_obj.ward_no
+            ward_info_dict['bed_no']=ward_obj.bed_no
+            ward_info_dict['charge_per_day']=ward_obj.charge_per_day
+            ward_info_dict['status']=ward_obj.status
+            ward_dict[ward_obj.id]=[]
+            ward_dict[ward_obj.id]=ward_info_dict
+        print("ward_dict", ward_dict)
+
+
+        data={
+            "ward_dict":json.dumps(ward_dict),
         }
         return JsonResponse(data)
 def updateRoomWardForm():
@@ -1780,7 +1891,7 @@ def updateRoomData(request):
 
 
         room_obj=Rooms.objects.get(id=room_no)
-        room_obj.pat_name=room_no
+        room_obj.room_no=room_no
         room_obj.charge_per_day=charge_per_day
         room_obj.ac_charge_per_day=ac_charge_per_day
         room_obj.status=status
@@ -1820,7 +1931,7 @@ def updateWardData(request):
 
 
         ward_obj=Ward.objects.get(id=ward_no)
-        ward_obj.pat_name=bed_no
+        ward_obj.bed_no=bed_no
         ward_obj.charge_per_day=charge_per_day
         ward_obj.status=status
         ward_obj.save()
@@ -1841,4 +1952,4 @@ def updateWardData(request):
             "ward_dict":json.dumps(ward_dict)
         }
         return JsonResponse(data)
-    
+

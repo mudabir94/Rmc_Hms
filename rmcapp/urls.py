@@ -51,10 +51,14 @@ urlpatterns = [
   path('generate_prescription',views.generatePrescription,name="generate_prescription"),
 
   path('update_employee_data',views.updateEmployeeData,name="update_employee_data"),
+  path('retrieve_all_employee_info',views.retrieveAllEmployeeInfo,name="retrieve_all_employee_info"),
+
   
   path('retireve_patient_info_in_pres_form',views.retrievePatientInfoInPresForm,name='retireve_patient_info_in_pres_form'),
   path('retrieve_patient_info_in_createbill',views.retrievePatientInfoInPatientBill,name='retrieve_patient_info_in_createbill'),
- 
+  path('retrieve_all_patient_info',views.retrieveAllPatientInfo,name='retrieve_all_patient_info'),
+
+
   path('retireve_room_info_in_room_ward',views.retrieveRoomInfoInRoomWard,name='retireve_room_info_in_room_ward'),
   path('retireve_ward_info_in_room_ward',views.retrieveWardInfoInRoomWard,name='retireve_ward_info_in_room_ward'),
   path('save_patient_bill',views.savePatientBill,name='save_patient_bill' ),
@@ -65,11 +69,16 @@ urlpatterns = [
   # path('max_token_no',views.maxTokenNo,name="max_token_no"),
 
   path('proc_surg_form',views.procSurgForm,name='proc_surg_form'),
+  path('retrieve_all_surg_info',views.retrieveAllSurgInfo,name='retrieve_all_surg_info'),
+  path('retrieve_all_proc_info',views.retrieveAllProcInfo,name='retrieve_all_proc_info'),
+  path('update_surg_data',views.updateSurgData,name="update_surg_data"),
+  path('update_proc_data',views.updateProcData,name="update_proc_data"),
+
   
-  
-  path('room_ward_form',views.roomWardForm,name='room_ward_form'),
   path('add_procedure',views.addProcedure,name="add_procedure"),
   path('add_surgery',views.addSurgery,name="add_surgery"),
+  
+  path('room_ward_form',views.roomWardForm,name='room_ward_form'),
   
   path('retireve_all_room_info_in_room_ward',views.retrieveAllRoomInfoInRoomWard,name='retireve_all_room_info_in_room_ward'),
   path('retireve_all_ward_info_in_room_ward',views.retrieveAllWardInfoInRoomWard,name='retireve_all_ward_info_in_room_ward'),
