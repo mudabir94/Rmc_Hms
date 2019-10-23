@@ -1104,7 +1104,7 @@ function createAllEmployeeDataTable(){
                                     var row__col_one__subrow_eleven=$("<div class='row'></div>");
                                         var colmd1=$("<div class='col-md-6 offset-md-2'></div>")
 
-                                            var print_button=$('<button class="btn btn-success btn-sm btn-block" onclick="printEditedEmployeeData()">Print</button>')
+                                            var print_button=$('<button class="btn btn-success btn-sm btn-block" onclick="printAllEmployeeData()">Print</button>')
                                         colmd1.append(print_button)
                                         
                                     row__col_one__subrow_eleven.append(colmd1)
@@ -1133,6 +1133,15 @@ function createAllEmployeeDataTable(){
 
         });
     });
+}
+
+function printAllEmployeeData(){
+    var restorepage = $('body').html();
+    var printcontent = $('#row_div_two').clone();
+    $('body').empty().html(printcontent);
+    window.print();
+    window.close();
+    $('body').html(restorepage);
 }
 
 function getCookie(name) {

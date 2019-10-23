@@ -10,7 +10,8 @@ from rmcapp.models import (
     despensoryStock,despensoryStockHistory,tt_Medicine_DespensoryStock,
     medicineBatches,
     packageType,
-    employeeType,Employee,Patient,patientMedRecords,patientBillRecords,Rooms,Ward,patientRoomsBill,patientType,
+    employeeType,Employee,Patient,patientMedRecords,patientBillRecords,Rooms,Ward,patientRoomsBill,patientWardBill,
+    patientType,
     procedureTable,patPrescriptionRecords,patPrescriptionBill,invoiceRecords,
     despBillRecord,procedureBillRecord,procedureRecords,procedureTable,
     patientVisitSummary,surgeryTable,
@@ -21,6 +22,7 @@ from .Controllers.MedControllers.MedController import MedicineController
 from django.db import connection
 from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
+from django.core.exceptions import ObjectDoesNotExist
 
 
 # Create your views here.
@@ -1296,7 +1298,7 @@ def generatePrescription(request):
         patObj=Patient.objects.get(id=presData['pat_id'])
         presRecObj.patient=patObj
         doc_id=presData['doctor']
-        doc_id=8
+        doc_id=2
         empObj=Employee.objects.get(id=doc_id)
         presRecObj.doc=empObj
         # presRecObj.patient_type=
@@ -1979,7 +1981,7 @@ def retrieveAllWardInfoInRoomWard(request):
         }
         return JsonResponse(data)
 def updateRoomWardForm():
- if request.method=="POST":
+    if request.method=="POST":
         data={
             'success':"success"
         }
@@ -2113,3 +2115,189 @@ def retrievePresInfoSurgProcBill(request):
 
         
 
+def createRoomWardBill(request):
+    if request.method=="POST":
+        data={
+            'success':"success"
+        }
+        return JsonResponse(data)
+def retrieveRoomWardBill(request):
+    if request.method=="GET":
+        pres_id=request.GET.get('id')
+        pres_id=int(pres_id)
+        patPresObj=patPrescriptionRecords.objects.get(id=pres_id)
+        roomBill_dict={}
+        wardBill_dict={}
+
+        try:
+                prbObj=patientRoomsBill.objects.get(pres=patPresObj)
+                roomObj=Rooms.objects.get(id=prbObj.rooms.id)
+                pprObj=patPrescriptionRecords.objects.get(id=patPresObj.id)
+                patObj=pprObj.patient  
+                # print('pat name',patObj.pat_name)    
+                print('roomObj', roomObj)
+ 
+                roomBill_dict={}
+                roomBill_dict['pat_name']=patObj.pat_name
+                roomBill_dict['floor']=roomObj.floor
+                roomBill_dict['room_no']=roomObj.room_no
+                roomBill_dict['charge_per_day']=roomObj.charge_per_day
+                roomBill_dict['ac_charge_per_day']=roomObj.ac_charge_per_day
+                roomBill_dict['checkin']=str(prbObj.checkin)
+                roomBill_dict['id']=prbObj.id
+
+                print("roomBill_dict", roomBill_dict)
+
+                data={
+                    "roomBill_dict":json.dumps(roomBill_dict),
+                    "wardBill_dict":json.dumps(wardBill_dict),
+
+                }
+                return JsonResponse(data)
+
+        except ObjectDoesNotExist:
+            try:
+                
+                pwbObj=patientWardBill.objects.get(pres=patPresObj)
+                wardObj=Ward.objects.get(id=pwbObj.wards.id)
+                pprObj=patPrescriptionRecords.objects.get(id=patPresObj.id)
+                patObj=pprObj.patient  
+
+                print('wardObj', wardObj)
+                wardBill_dict={}
+                            
+                wardBill_dict['patient_name']=patObj.pat_name
+                wardBill_dict['ward_no']=wardObj.ward_no
+                wardBill_dict['bed_no']=wardObj.bed_no
+                wardBill_dict['charge_per_day']=wardObj.charge_per_day
+                wardBill_dict['checkin']=str(pwbObj.checkin)
+                wardBill_dict['id']=pwbObj.id
+
+                print("wardBill_dict", wardBill_dict)
+
+                data={
+                    "wardBill_dict":json.dumps(wardBill_dict),
+                    "roomBill_dict":json.dumps(roomBill_dict),
+                }
+                return JsonResponse(data)
+            except:
+                data={
+                    "status": "Prescription ID Not Found"
+                }
+                return JsonResponse(data)
+def createBillDetailsRoomBill(request):
+    if request.method=="GET":
+        data={
+            'success':"success"
+        }
+        return JsonResponse(data)
+def createBillDetailsWardBill(request):
+    if request.method=="GET":
+        data={
+            'success':"success"
+        }
+        return JsonResponse(data)
+def printWardBill(request):
+    if request.method=="POST":
+        print('1111111111')
+        # pres_id=request.POST.get('id')
+        # # pres_id=int(pres_id)
+        # print("pres_id1111111", pres_id)
+        # patPresObj=patPrescriptionRecords.objects.get(id=pres_id)
+
+        pres=request.POST.get('pres')
+        pres=json.loads(pres)
+
+        checkout=request.POST.get('checkout')
+        checkout=json.loads(checkout)
+
+        net_total=request.POST.get('net_total')
+        net_total=json.loads(net_total)
+        print("totalAmount11",net_total )
+
+        wardbill_obj=patientWardBill.objects.get(pres=pres)
+        wardbill_obj.checkout=checkout
+        wardbill_obj.net_total=net_total
+        wardbill_obj.save()
+
+        invObj=invoiceRecords.objects.get(pres=pres)
+        net_total=int(net_total)
+        invObj.ward_bill=wardbill_obj
+        invObj.net_total=invObj.net_total+net_total
+        invObj.save()
+        return JsonResponse({})
+def printRoomBill(request):      
+    if request.method=="POST":
+
+        pres=request.POST.get('pres')
+        pres=json.loads(pres)
+
+        checkout=request.POST.get('checkout')
+        checkout=json.loads(checkout)
+
+        net_total=request.POST.get('net_total')
+        net_total=json.loads(net_total)
+
+        roombill_obj=patientRoomsBill.objects.get(pres=pres)
+        roombill_obj.checkout=checkout
+        roombill_obj.net_total=net_total
+        roombill_obj.save()
+        invObj=invoiceRecords.objects.get(pres=pres)
+        net_total=int(net_total)
+        invObj.room_bill=roombill_obj
+        invObj.net_total=invObj.net_total+net_total
+        invObj.save()
+        return JsonResponse({})
+
+def saveWardBill(request):
+    if request.method=="POST":
+        print('1111111111')
+        # pres_id=request.POST.get('id')
+        # # pres_id=int(pres_id)
+        # print("pres_id1111111", pres_id)
+        # patPresObj=patPrescriptionRecords.objects.get(id=pres_id)
+
+        pres=request.POST.get('pres')
+        pres=json.loads(pres)
+
+        checkout=request.POST.get('checkout')
+        checkout=json.loads(checkout)
+
+        net_total=request.POST.get('net_total')
+        net_total=json.loads(net_total)
+        print("totalAmount11",net_total )
+
+        wardbill_obj=patientWardBill.objects.get(pres=pres)
+        wardbill_obj.checkout=checkout
+        wardbill_obj.net_total=net_total
+        wardbill_obj.save()
+
+        invObj=invoiceRecords.objects.get(pres=pres)
+        net_total=int(net_total)
+        invObj.ward_bill=wardbill_obj
+        invObj.net_total=invObj.net_total+net_total
+        invObj.save()
+        return JsonResponse({})
+def saveRoomBill(request):      
+    if request.method=="POST":
+
+        pres=request.POST.get('pres')
+        pres=json.loads(pres)
+
+        checkout=request.POST.get('checkout')
+        checkout=json.loads(checkout)
+
+        net_total=request.POST.get('net_total')
+        net_total=json.loads(net_total)
+
+        roombill_obj=patientRoomsBill.objects.get(pres=pres)
+        roombill_obj.checkout=checkout
+        roombill_obj.net_total=net_total
+        roombill_obj.save()
+
+        invObj=invoiceRecords.objects.get(pres=pres)
+        net_total=int(net_total)
+        invObj.room_bill=roombill_obj
+        invObj.net_total=invObj.net_total+net_total
+        invObj.save()
+        return JsonResponse({})

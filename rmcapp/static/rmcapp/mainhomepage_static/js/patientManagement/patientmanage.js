@@ -924,7 +924,7 @@ function createAllPatientDataTable(){
                                     var row__col_one__subrow_nine=$("<div class='row'></div>");
                                         var colmd1=$("<div class='col-md-6 offset-md-2'></div>")
 
-                                            var print_button=$('<button class="btn btn-success btn-sm btn-block" onclick="printEditedPatientData()">Print</button>')
+                                            var print_button=$('<button class="btn btn-success btn-sm btn-block" onclick="printAllPatientData()">Print</button>')
                                         colmd1.append(print_button)
                                         
                                     row__col_one__subrow_nine.append(colmd1)
@@ -949,6 +949,14 @@ function createAllPatientDataTable(){
 
         });
     });
+}
+function printAllPatientData(){
+    var restorepage = $('body').html();
+    var printcontent = $('#row_div_two').clone();
+    $('body').empty().html(printcontent);
+    window.print();
+    window.close();
+    $('body').html(restorepage);
 }
 
 function updatePatientData(){
@@ -2639,7 +2647,6 @@ function retrievePatientInfoInCreateBill(pat_name,contact_no,cnic_no,id){
             createPatientDetailsHtmlInCreateBill();
         },
     }); 
-
 }
 function createPatientDetailsHtmlInCreateBill(){
     var row_div_two=$("<div class='row' id='row_div_two'></div>");
@@ -2647,39 +2654,33 @@ function createPatientDetailsHtmlInCreateBill(){
 
             var subrow_one=$("<div class='row'></div>")
 
-
-                    var col_one__subrow_one=$("<div class='col-md-6'></div>");
-                            row__col_one__subrow_one=$("<div class='row'></div>");
-                                var colmd1=$("<div class='col-md-4'></div>")
-                                var colmd2=$("<div class='col-md-6'></div>")
-                                    var pat_name_label=$("<label for='emp_name_tag' class='custom_label_css'>Patient Name</label>");
-                                    var pat_name_input=$("<input class='form-control' id='pat_name_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['name']+"' disabled>")
-                                colmd2.append(pat_name_input)
-                                colmd1.append(pat_name_label)
-                            row__col_one__subrow_one.append(colmd1);
-                            row__col_one__subrow_one.append(colmd2);
-                        col_one__subrow_one.append(row__col_one__subrow_one);
-
-
-                    var col_two__subrow_one=$("<div class='col-md-6'></div>");
-                        var row__col_two__subrow_one=$("<div class='row'></div>");
+                var col_one__subrow_one=$("<div class='col-md-6'></div>");
+                        row__col_one__subrow_one=$("<div class='row'></div>");
                             var colmd1=$("<div class='col-md-4'></div>")
                             var colmd2=$("<div class='col-md-6'></div>")
-                                var contact_type_label=$("<label class='custom_label_css'>Contact Number</label>");
-                                var contact_type_input=$("<input class='form-control' id='contact_numb_input' class='custom_input_css' placeholder='0312-3456789' value='"+patient_dict[patient_id_selected]['contact_no']+"'></input>")
-                            colmd1.append(contact_type_label);
-                            colmd2.append(contact_type_input);
-        
-                        row__col_two__subrow_one.append(colmd1)
-                        row__col_two__subrow_one.append(colmd2)
-                    col_two__subrow_one.append(row__col_two__subrow_one)
+                                var pat_name_label=$("<label for='emp_name_tag' class='custom_label_css'>Patient Name</label>");
+                                var pat_name_input=$("<input class='form-control' id='pat_name_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['name']+"' disabled>")
+                            colmd2.append(pat_name_input)
+                            colmd1.append(pat_name_label)
+                        row__col_one__subrow_one.append(colmd1);
+                        row__col_one__subrow_one.append(colmd2);
+                    col_one__subrow_one.append(row__col_one__subrow_one);
 
-
-            
+                var col_two__subrow_one=$("<div class='col-md-6'></div>");
+                    var row__col_two__subrow_one=$("<div class='row'></div>");
+                        var colmd1=$("<div class='col-md-4'></div>")
+                        var colmd2=$("<div class='col-md-6'></div>")
+                            var contact_type_label=$("<label class='custom_label_css'>Contact Number</label>");
+                            var contact_type_input=$("<input class='form-control' id='contact_numb_input' class='custom_input_css' placeholder='0312-3456789' value='"+patient_dict[patient_id_selected]['contact_no']+"'></input>")
+                        colmd1.append(contact_type_label);
+                        colmd2.append(contact_type_input);
+    
+                    row__col_two__subrow_one.append(colmd1)
+                    row__col_two__subrow_one.append(colmd2)
+                col_two__subrow_one.append(row__col_two__subrow_one)
 
             subrow_one.append(col_one__subrow_one)
             subrow_one.append(col_two__subrow_one)
-
 
         var subrow_two=$("<div class='row'></div>")
             var col_one_subrow_two=$("<div class='col-md-6'></div>");
@@ -3892,7 +3893,7 @@ function createPresMedDataTable(){
         });
     });
 }
-    
+
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== "") {
