@@ -126,7 +126,8 @@ class patPrescriptionRecordsAdmin(admin.ModelAdmin):
 
 
 class surgeryTableAdmin(admin.ModelAdmin):
-    list_display=('surgery_name','charges')
+    list_display=('surgery_name','charges',"surgeon_fee","operation_theater_fee",\
+        "anesthesiologist_fee","surplus_fee")
 
 
 class surgeryBillRecordAdmin(admin.ModelAdmin):

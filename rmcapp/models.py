@@ -430,13 +430,18 @@ class patPrescriptionBill(models.Model):
 class surgeryTable(models.Model):         #### NEW  ######
     surgery_name=models.CharField(max_length=50,null=True,blank=True)
     charges=models.IntegerField(null=True,blank=True)
+    surgeon_fee=models.IntegerField(null=True,blank=True,default=500)
+    operation_theater_fee=models.IntegerField(null=True,blank=True,default=500)
+    anesthesiologist_fee=models.IntegerField(null=True,blank=True,default=500)
+    surplus_fee=models.IntegerField(null=True,blank=True)
+    
     def __str__(self):
         return str(self.surgery_name)
     class Meta:
         verbose_name_plural="Surgery Table"
         ordering=['pk']
 
-class surgeryBillRecord(models.Model):                #### NEW  ######
+class surgeryBillRecord(models.Model): 
     surgery=models.ForeignKey(surgeryTable, on_delete=models.CASCADE,default=None,null=True,blank=True)
     pres=models.ForeignKey(patPrescriptionRecords, on_delete=models.CASCADE,default=None,null=True,blank=True)
     surgeon_fee=models.IntegerField(null=True,blank=True,default=500)

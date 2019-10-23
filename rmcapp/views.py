@@ -14,6 +14,7 @@ from rmcapp.models import (
     procedureTable,patPrescriptionRecords,patPrescriptionBill,invoiceRecords,
     despBillRecord,procedureBillRecord,procedureRecords,procedureTable,
     patientVisitSummary,surgeryTable,
+    surgeryRecords,surgeryBillRecord,
 )
 from django.http import HttpResponse, JsonResponse
 from .Controllers.MedControllers.MedController import MedicineController  
@@ -2064,4 +2065,51 @@ def updateWardData(request):
             "ward_dict":json.dumps(ward_dict)
         }
         return JsonResponse(data)
+
+
+def retrievePresInfoSurgProcBill(request):
+    if request.method=="GET":
+        pres_id=request.GET.get('id')
+        # surgeryRecords.objects.get(pres=pres_id)
+        surgery_dict={}
+        procedure_dict={}
+        surgObjs=surgeryTable.objects.all()
+        procObjs=procedureTable.objects.all()
+        invObj=invoiceRecords.objects.get(pres=pres_id)
+        already_discount=invObj.discount
+        for obj in surgObjs:
+            surgery_name=obj.surgery_name
+            charges=obj.charges
+            surgeon_fee=obj.surgeon_fee
+            operation_theatre_fee=obj.operation_theater_fee
+            anesthesiologist_fee=obj.anesthesiologist_fee
+            surplus_fee=obj.surplus_fee
+            templist=[]
+            templist.append(charges)
+            templist.append(surgeon_fee)
+            templist.append(operation_theatre_fee)
+            templist.append(anesthesiologist_fee)
+            templist.append(surplus_fee)
+            
+            surgery_dict[surgery_name]=templist
+        for obj in procObjs:
+            procedure_name=obj.procedure_name
+            charges=obj.charges
+           
+            templist=[]
+            templist.append(charges)
+            
+
+            procedure_dict[procedure_name]=templist
+            # procedure_data_list.append(templist)
+        data={
+            'surgery_dict':json.dumps(surgery_dict),
+            'procedure_dict':json.dumps(procedure_dict),
+            'already_discount':already_discount,
+            'consultant':'consultant',
+            'surgeon':"surgeon",
+        }
+        return JsonResponse(data)
+
+        
 
