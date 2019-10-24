@@ -58,7 +58,6 @@ urlpatterns = [
   path('retrieve_patient_info_in_createbill',views.retrievePatientInfoInPatientBill,name='retrieve_patient_info_in_createbill'),
   path('retrieve_all_patient_info',views.retrieveAllPatientInfo,name='retrieve_all_patient_info'),
 
-
   path('retireve_room_info_in_room_ward',views.retrieveRoomInfoInRoomWard,name='retireve_room_info_in_room_ward'),
   path('retireve_ward_info_in_room_ward',views.retrieveWardInfoInRoomWard,name='retireve_ward_info_in_room_ward'),
   path('save_patient_bill',views.savePatientBill,name='save_patient_bill' ),
@@ -67,24 +66,23 @@ urlpatterns = [
   path('retrieve_pat_type_fee',views.retrievePatTypeFee,name='retrieve_pat_type_fee'),
   path('retrieve_procedure_details',views.retrieveProcedureDetails,name='retrieve_procedure_details'),
 
-  # path('max_token_no',views.maxTokenNo,name="max_token_no"),
-
   path('proc_surg_form',views.procSurgForm,name='proc_surg_form'),
   path('retrieve_all_surg_info',views.retrieveAllSurgInfo,name='retrieve_all_surg_info'),
   path('retrieve_all_proc_info',views.retrieveAllProcInfo,name='retrieve_all_proc_info'),
   path('update_surg_data',views.updateSurgData,name="update_surg_data"),
   path('update_proc_data',views.updateProcData,name="update_proc_data"),
-
-  
   path('add_procedure',views.addProcedure,name="add_procedure"),
   path('add_surgery',views.addSurgery,name="add_surgery"),
   
   path('room_ward_form',views.roomWardForm,name='room_ward_form'),
-  
   path('retireve_all_room_info_in_room_ward',views.retrieveAllRoomInfoInRoomWard,name='retireve_all_room_info_in_room_ward'),
   path('retireve_all_ward_info_in_room_ward',views.retrieveAllWardInfoInRoomWard,name='retireve_all_ward_info_in_room_ward'),
+  path('retrieve_room_ward_bill',views.retrieveRoomWardBill,name='retrieve_room_ward_bill'),
   path('update_room_data',views.updateRoomData,name="update_room_data"),
   path('update_ward_data',views.updateWardData,name="update_ward_data"),
-
+  path('print_room_bill',views.printRoomBill,name='print_room_bill'),
+  path('print_ward_bill',views.printWardBill,name='print_ward_bill'),
+  path('save_room_bill',views.saveRoomBill,name='save_room_bill'),
+  path('save_ward_bill',views.saveWardBill,name='save_ward_bill'),
   # path('out_presc_form',views.outPrescform,name="out_presc_form"),
 ]

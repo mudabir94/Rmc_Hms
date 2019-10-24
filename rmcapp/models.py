@@ -556,13 +556,15 @@ class Rooms(models.Model):
         ordering=['pk']
 class patientRoomsBill(models.Model):
     patient=models.ForeignKey(Patient, on_delete=models.CASCADE,default=None,null=True,blank=True)
-    floor=models.IntegerField(null=True,blank=True,default=1)
-    room_no=models.IntegerField(null=True,blank=True,default=1)
-    # charge_per_day=models.IntegerField(null=True,blank=True,default=500)     ##### NEW ##########
+    rooms=models.ForeignKey(Rooms, on_delete=models.CASCADE,default=None,null=True,blank=True)
+
+    # floor=models.IntegerField(null=True,blank=True,default=1)
+    # room_no=models.IntegerField(null=True,blank=True,default=1)
+    # charge_per_day=models.IntegerField(null=True,blank=True,default=500)    
     # ac_charge_per_day=models.IntegerField(null=True,blank=True,default=500)
     pres=models.ForeignKey(patPrescriptionRecords, on_delete=models.CASCADE,default=None,null=True,blank=True)##### NEW ##########
-    checkin=models.DateTimeField(auto_now_add=True, blank=True)
-    checkout=models.DateTimeField(auto_now_add=True, blank=True)
+    checkin=models.DateField(null=True,blank=True)
+    checkout=models.DateField(null=True,blank=True)
     net_total=models.IntegerField(null=True,blank=True,default=0)
     status=models.CharField(max_length=50,null=True,blank=True,default='UnPaid')
 
@@ -585,8 +587,12 @@ class Ward(models.Model):
 class patientWardBill(models.Model):
     patient=models.ForeignKey(Patient, on_delete=models.CASCADE,default=None,null=True,blank=True)
     pres=models.ForeignKey(patPrescriptionRecords, on_delete=models.CASCADE,default=None,null=True,blank=True)##### NEW ##########
-    ward_no=models.IntegerField(null=True,blank=True,default=1)
-    bed_no=models.IntegerField(null=True,blank=True,default=1)
+    wards=models.ForeignKey(Ward, on_delete=models.CASCADE,default=None,null=True,blank=True)##### NEW ##########
+
+    # ward_no=models.IntegerField(null=True,blank=True,default=1)
+    # bed_no=models.IntegerField(null=True,blank=True,default=1)
+    checkin=models.DateField(null=True,blank=True)
+    checkout=models.DateField(null=True,blank=True)
     # charge_per_day=models.IntegerField(null=True,blank=True,default=200)   #### NEW/update   #####
     net_total=models.IntegerField(null=True,blank=True,default=0)
     status=models.CharField(max_length=50,null=True,blank=True,default='UnPaid')
