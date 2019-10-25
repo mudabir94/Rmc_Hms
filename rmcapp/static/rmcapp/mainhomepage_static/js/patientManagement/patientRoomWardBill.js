@@ -4,11 +4,11 @@ var roomBill_dict={};
 var prescription_id;
 var roomBill_list=[]
 var wardBill_list=[]
+var total_no_of_days;
 
 
 $(document).ready(function() {
 });
-
 function createRoomWardBill(){
     $('#main_page_content').empty()
     var container_room_ward_bill_prescription= $('#main_page_content').append('<div class="container-fluid" id="container-room-ward-bill"></div>');
@@ -47,7 +47,6 @@ function createRoomWardBill(){
     $(main_col_div).append(row_div_one);
 
 }
-
 function searchPatientInRoomWardBill(){
     var pres_id=$("#search_pres_id").val()
   
@@ -115,7 +114,6 @@ function retrieveRoomWardBill(pres_id){
         }
     }); 
 }
-
 function createBillDetailsRoomBill(){
     $("#row_div_two").remove()
         var row_div_two=$("<div class='row' id='row_div_two'></div>");
@@ -240,7 +238,7 @@ function createBillDetailsRoomBill(){
 
                     var col_three__subrow_four=$("<div class='col-md-2'></div>");
                         var row__col_three__subrow_four=$("<div class='row'></div>");
-                            var colmd1=$("<div class='col-md-8'></div>")
+                            var colmd1=$("<div class='col-md-12'></div>")
                                 var Calculate_bttn=$('<button class="btn btn-success btn-sm btn-block"  id="calc_bttn" onclick="calculateRoomBill()">Calculate Room Bill</button>')
                             colmd1.append(Calculate_bttn)
                         row__col_three__subrow_four.append(colmd1)
@@ -378,7 +376,7 @@ function createBillDetailsWardBill(){
 
                     var col_three__subrow_four=$("<div class='col-md-2'></div>");
                         var row__col_three__subrow_four=$("<div class='row'></div>");
-                            var colmd1=$("<div class='col-md-8'></div>")
+                            var colmd1=$("<div class='col-md-12'></div>")
                                 var Calculate_bttn=$('<button class="btn btn-success btn-sm btn-block" id="calc_bttn" onclick="calculateWardBill()">Calculate Ward Bill</button>')
                             colmd1.append(Calculate_bttn)
                         row__col_three__subrow_four.append(colmd1)
@@ -653,12 +651,143 @@ function printRoomBill(){
         },
     });
 
-    var restorepage = $('body').html();
-    var printcontent = $('#row_div_two').clone();
+    var rmc="RMC HOSPITAL";
+    var heading_mid= "Room Bill Details";
+    var patient_name=roomBill_dict['pat_name']
+    var room_no=roomBill_dict['room_no'];
+    var floor_no=roomBill_dict['floor'];
+    var charge_per_Day=roomBill_dict['charge_per_day']
+    var ac_charge_per_Day=roomBill_dict['ac_charge_per_day']
+    var total_no_of_days=$('#total_days').text();
+    var checkin=$("#checkin_input").text();
+
+
+
+    var room_print=$("<div id='room_print'></div>");
+
+        var header=$("<center id='top'></center>")
+            var div_logo=$("<div class='col-md-12'></div>");
+            var div_info=$("<div class='info'></div>");
+                var h1=$("<h1></h1>");
+                    h1.append(rmc);
+                div_info.append(h1);
+        header.append(div_logo);
+        header.append(div_info);
+
+        var mid_div=$("<div id='mid'></div>");
+            var div_info=$("<div class='heading_mid'></div>");
+                var h2=$("<h2></h2>");
+                    h2.append(heading_mid);
+                    
+                div_info.append(h2);
+        mid_div.append(div_info);
+
+        var bot_div=$("<div id='bot'></div>");
+            var div_table=$("<div id='table'></div>");
+                var table=$("<table>")
+            
+                    var tr=$('<tr class="tabletitle"></tr>')
+                            var td1=$('<td class="table_row t1 label_text">Patient Name</td>')
+                            var td2=$('<td class="table_row t1">'+patient_name+'</td>')
+                            var td3=$('<td class="table_row t1 label_text">Prescription ID</td>')
+                            var td4=$('<td class="table_row t1">'+pres_id+'</td>')
+
+                        tr.append(td1);
+                        tr.append(td2);
+                        tr.append(td3);
+                        tr.append(td4);
+
+                    table.append(tr);
+                    var tr=$('<tr class="tabletitle"></tr>')
+                            var td1=$('<td class="table_row label_text">Floor Number</td>')
+                            var td2=$('<td class="table_row">'+floor_no+'</td>')
+                            var td3=$('<td class="table_row label_text">Room Number</td>')
+                            var td4=$('<td class="table_row">'+room_no+'</td>')
+
+                        tr.append(td1);
+                        tr.append(td2);
+                        tr.append(td3);
+                        tr.append(td4);
+
+                    table.append(tr);
+                    var tr=$('<tr class="tabletitle"></tr>')
+                            var td1=$('<td class="table_row label_text">Room Charges/Day</td>')
+                            var td2=$('<td class="table_row">'+charge_per_Day+'</td>')
+                            var td3=$('<td class="table_row label_text">AC Charges/Day</td>')
+                            var td4=$('<td class="table_row">'+ac_charge_per_Day+'</td>')
+
+                        tr.append(td1);
+                        tr.append(td2);
+                        tr.append(td3);
+                        tr.append(td4);
+
+                    table.append(tr);
+                    var tr=$('<tr class="tabletitle"></tr>')
+                            var td1=$('<td class="table_row label_text">CheckIn</td>')
+                            var td2=$('<td class="table_row">'+checkin+'</td>')
+                            var td3=$('<td class="table_row label_text">CheckOut</td>')
+                            var td4=$('<td class="table_row">'+checkout+'</td>')
+
+                        tr.append(td1);
+                        tr.append(td2);
+                        tr.append(td3);
+                        tr.append(td4);
+
+                    table.append(tr);
+                    var tr=$('<tr class="tabletitle"></tr>')
+                            var td1=$('<td class="table_row label_text">Days Stayed</td>')
+                            var td2=$('<td class="table_row">'+total_no_of_days+'</td>')
+                            var td3=$('<td class="table_row label_text">Charges</td>')
+                            var td4=$('<td class="table_row">'+net_total+'</td>')
+
+                        tr.append(td1);
+                        tr.append(td2);
+                        tr.append(td3);
+                        tr.append(td4);
+
+                    table.append(tr);
+                    var tr=$('<tr class="tabletitle"></tr>')
+                            var td1=$('<td class="table_row"></td>')
+                            var td2=$('<td class="table_row"></td>')
+                            var td3=$('<td class="table_row t1 label_text">Net Total</td>')
+                            var td4=$('<td class="table_row t1">'+net_total+'</td>')
+                        tr.append(td1);
+                        tr.append(td2);
+                        tr.append(td3);
+                        tr.append(td4);
+
+                    table.append(tr);
+
+                div_table.append(table);
+
+            var legalcopy=$("<div id='legalcopy'>");
+                var p=$('<p class="legal" style="text-align:center"><h2><center>Thank you for visiting!<h2></center></p>')
+            legalcopy.append(p)
+        bot_div.append(div_table);
+        bot_div.append(legalcopy);
+        
+    room_print.append(header);  
+    room_print.append(mid_div);  
+    room_print.append(bot_div);      
+
+    var printcontent = $(room_print).clone();
     $('body').empty().html(printcontent);
+  
     window.print();
-    window.close();
-    $('body').html(restorepage);
+    w.close();
+    // $('#recipet_div').empty();
+
+    // var restorepage = $('body').html();
+    // var printcontent = $('#row_div_two').clone();
+    // $('body').empty().html(printcontent);
+    // window.print();
+    // window.close();
+    // $('body').html(restorepage);
+
+    // mywindow.document.write('<html><head><title>' +'RAFIQ MEDICAL CENTER'+ '</title>');
+    // mywindow.document.write('</head><body >');
+    // mywindow.document.write('<h1>' + 'RAFIQ MEDICAL CENTER'  + '</h1>');
+    // mywindow.document.write('</body></html>');
 }
 function printWardBill(){
 
@@ -685,14 +814,130 @@ function printWardBill(){
         },
     });
 
+    var rmc="RMC HOSPITAL";
+    var heading_mid= "Ward Bill Details";
+    var patient_name=wardBill_dict['patient_name']
+    var ward_no=wardBill_dict['ward_no'];
+    var bed_no=wardBill_dict['bed_no'];
+    var charge_per_Day=wardBill_dict['charge_per_day']
+    var total_no_of_days=$('#total_days').text();
+    var checkin=$("#checkin_input").text();
 
+    var ward_print=$("<div id='ward_print'></div>");
 
-    var restorepage = $('body').html();
-    var printcontent = $('#row_div_two').clone();
+        var header=$("<center id='top'></center>")
+            var div_logo=$("<div class='col-md-12'></div>");
+            var div_info=$("<div class='info'></div>");
+                var h1=$("<h1></h1>");
+                    h1.append(rmc);
+                div_info.append(h1);
+        header.append(div_logo);
+        header.append(div_info);
+
+        var mid_div=$("<div id='mid'></div>");
+            var div_info=$("<div class='heading_mid'></div>");
+                var h2=$("<p></p>");
+                    h2.append(heading_mid);
+                    
+                div_info.append(h2);
+        mid_div.append(div_info);
+
+        var bot_div=$("<div id='bot'></div>");
+            var div_table=$("<div id='table'></div>");
+                var table=$("<table>")
+            
+                    var tr=$('<tr class="tabletitle"></tr>')
+                            var td1=$('<td class="table_row t1 label_text">Patient Name</td>')
+                            var td2=$('<td class="table_row t1">'+patient_name+'</td>')
+                            var td3=$('<td class="table_row t1 label_text">Prescription ID</td>')
+                            var td4=$('<td class="table_row t1">'+pres_id+'</td>')
+
+                        tr.append(td1);
+                        tr.append(td2);
+                        tr.append(td3);
+                        tr.append(td4);
+
+                    table.append(tr);
+                    var tr=$('<tr class="tabletitle"></tr>')
+                            var td1=$('<td class="table_row label_text">Ward Number</td>')
+                            var td2=$('<td class="table_row">'+ward_no+'</td>')
+                            var td3=$('<td class="table_row label_text">Bed Number</td>')
+                            var td4=$('<td class="table_row">'+bed_no+'</td>')
+
+                        tr.append(td1);
+                        tr.append(td2);
+                        tr.append(td3);
+                        tr.append(td4);
+
+                    table.append(tr);
+                    var tr=$('<tr class="tabletitle"></tr>')
+                            var td1=$('<td class="table_row label_text">Bed Charges/Day</td>')
+                            var td2=$('<td class="table_row">'+charge_per_Day+'</td>')
+
+                        tr.append(td1);
+                        tr.append(td2);
+
+                    table.append(tr);
+                    var tr=$('<tr class="tabletitle"></tr>')
+                            var td1=$('<td class="table_row label_text">CheckIn</td>')
+                            var td2=$('<td class="table_row">'+checkin+'</td>')
+                            var td3=$('<td class="table_row label_text">CheckOut</td>')
+                            var td4=$('<td class="table_row">'+checkout+'</td>')
+
+                        tr.append(td1);
+                        tr.append(td2);
+                        tr.append(td3);
+                        tr.append(td4);
+
+                    table.append(tr);
+                    var tr=$('<tr class="tabletitle"></tr>')
+                            var td1=$('<td class="table_row label_text">Days Stayed</td>')
+                            var td2=$('<td class="table_row">'+total_no_of_days+'</td>')
+                            var td3=$('<td class="table_row label_text">Charges</td>')
+                            var td4=$('<td class="table_row">'+net_total+'</td>')
+
+                        tr.append(td1);
+                        tr.append(td2);
+                        tr.append(td3);
+                        tr.append(td4);
+
+                    table.append(tr);
+                    var tr=$('<tr class="tabletitle"></tr>')
+                            var td1=$('<td class="table_row"></td>')
+                            var td2=$('<td class="table_row"></td>')
+                            var td3=$('<td class="table_row t1 label_text">Net Total</td>')
+                            var td4=$('<td class="table_row t1">'+net_total+'</td>')
+                        tr.append(td1);
+                        tr.append(td2);
+                        tr.append(td3);
+                        tr.append(td4);
+
+                    table.append(tr);
+
+                div_table.append(table);
+
+            var legalcopy=$("<div id='legalcopy'>");
+                var p=$('<p class="legal" style="text-align:center"><h2><center>Thank you for visiting!<h2></center></p>')
+            legalcopy.append(p)
+        bot_div.append(div_table);
+        bot_div.append(legalcopy);
+        
+    ward_print.append(header);  
+    ward_print.append(mid_div);  
+    ward_print.append(bot_div);      
+
+    var printcontent = $(ward_print).clone();
     $('body').empty().html(printcontent);
+  
     window.print();
-    window.close();
-    $('body').html(restorepage);
+    w.close();
+
+    // var restorepage = $('body').html();
+    // var printcontent = $('#row_div_two').clone();
+    // $('body').empty().html(printcontent);
+    // window.print();
+    // window.close();
+    // $('body').html(restorepage);
 }
 function getCookie(name) {
     var cookieValue = null;
@@ -709,7 +954,6 @@ function getCookie(name) {
     }
     return cookieValue;
 }
-
 function csrfSafeMethod(method) {
     // these HTTP methods do not require CSRF protection
     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));

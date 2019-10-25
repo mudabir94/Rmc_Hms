@@ -1,3 +1,8 @@
+.table_row{
+    padding-top:10px;
+    padding-bottom:10px
+}
+
 @media print {
     @page { 
       /* size: 148mm 200mm; */    
