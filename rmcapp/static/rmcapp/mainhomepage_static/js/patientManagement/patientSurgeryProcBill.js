@@ -19,7 +19,7 @@ function surgeryProcFrom(){
        
     $(main_row_div).append(main_col_div);
 
-    var row_div_one=$("<div class='row'></div>");
+    var row_div_one=$("<div class='row' id='row_div_one'></div>");
         var col_one__row_div_one=$("<div class='col-md-4'></div>");
         row__col_one__row_div_one=$("<div class='row'></div>");
             colmd1=$("<div class='col-md-4'></div>")
@@ -131,6 +131,7 @@ var main_col_div=$("#main_col_div");
 main_col_div.append(row_div_two);
 subFormCreation();
 }
+
 var surg_proc_list=['Surgery','Procedure']
 function subFormCreation(){
     var row_div_three=$("<div class='row' id='row_div_three'></div>");
@@ -138,8 +139,21 @@ function subFormCreation(){
     var main_sidecol2=$("<div class='col-md-5' ></div>");
      
         var row1=$("<div></div>");
-            var calulate_button=$("<button onclick='calculateBill()'>Calculate Bill</button>")
-        row1.append(calulate_button)
+            var subrow1=$("<div class='row'>")
+                var subcol1=$("<div class='col-md-2'>")
+                    var calulate_button=$("<button onclick='calculateBill()'>Calculate Bill</button>")
+                subcol1.append(calulate_button)
+                var subcol2=$("<div class='col-md-8'>")
+                var subcol3=$("<div class='col-md-2'>")
+                    var print_btn=$("<button onclick='printBill()'>print</button>")
+                subcol3.append(print_btn)
+
+
+            subrow1.append(subcol1);
+            subrow1.append(subcol2);
+            subrow1.append(subcol3);
+
+        row1.append(subrow1)
         var row2=$("<div class='surg_proc_bill' id='bill_div'></div>");
     main_sidecol2.append(row1);
     main_sidecol2.append(row2);
@@ -457,6 +471,7 @@ function selectProc(ele){
 var surgerybill_dict={};
 var procedurebill_dict={};
 function calculateBill(){
+    $("#bill_div").empty();
     $('[id^="surg_proc_row-"]').each( function(  ) {
         console.log(">>>",$(this).attr('id'))
         row_id=$(this).attr('id');
@@ -465,26 +480,216 @@ function calculateBill(){
         surg_proc_val=$("#surg_proc_sel-"+num).val();
         if (surg_proc_val==="Surgery"){
             selectedsurgery=$("#select_surg_ele-"+num).val();
-            surgeon_charges=$("#surgeon_charges_input-"+num).val()
-            theatre_charges=$("#theatre_charges_input-"+num).val()
-            anesthetic_charges=$("#anesthetic_charges_input-"+num).val()
-            surplus_charges=$("#surplus_charges_input-"+num).val()
-            templist=[];
-            templist.push(surgeon_charges);
-            templist.push(theatre_charges)
-            templist.push(anesthetic_charges)
-            templist.push(surplus_charges)
+            if (selectedsurgery!=="--"){
 
-            surgerybill_dict[selectedsurgery]=templist;
-        }else{
+                surgeon_charges=$("#surgeon_charges_input-"+num).val()
+                theatre_charges=$("#theatre_charges_input-"+num).val()
+                anesthetic_charges=$("#anesthetic_charges_input-"+num).val()
+                surplus_charges=$("#surplus_charges_input-"+num).val()
+                templist=[];
+                templist.push(surgeon_charges);
+                templist.push(theatre_charges)
+                templist.push(anesthetic_charges)
+                templist.push(surplus_charges)
+                total_charges=parseInt(surgeon_charges)+parseInt(theatre_charges)+parseInt(anesthetic_charges)+parseInt(surplus_charges)
+                templist.push(total_charges)
+                surgerybill_dict[selectedsurgery]=templist;
+            }
+        }else if (surg_proc_val==="Procedure"){
             selectedprocedure=$("#select_proc_ele-"+num).val();
+            if (selectedprocedure!=="--"){
             charges=$("#charges_proc_input-"+num).val();
             templist=[];
             templist.push(charges);
             procedurebill_dict[selectedprocedure]=templist;
+            }
 
         }
     });
     console.log("surgerybill_dict",surgerybill_dict);
     console.log("procedurebill_dict",procedurebill_dict);
+    var surg_bill_final_div=$("<div id='surg_bill_final_div'>")
+        var row1=$("<div>Surgeries</div>");
+        var row2=$("<div id='surgery_table_row'></div>")
+            var surg_table=$("<table></table>");
+            var thead=$("<thead></thead>");
+                var tr=$("<tr>");
+                    var th1=$("<th>")
+                    th1.append("Syurgery Name")
+                    var th2=$("<th>")
+                    th2.append("Surgeon Fee")
+                    var th3=$("<th>")
+                    th3.append("Theatre Fee")
+                    var th4=$("<th>")
+                    th4.append("Anestheologist Fee")
+                    var th5=$("<th>")
+                    th5.append("Surplus Fee")
+                    var th6=$("<th>")
+                    th6.append("Total Fee")
+                tr.append(th1);
+                tr.append(th2);
+                tr.append(th3);
+                tr.append(th4);
+                tr.append(th5);
+                tr.append(th6);
+            thead.append(tr);
+        $(surg_table).append(thead);
+
+    var tbody=$("<tbody></tbody>");
+    $(surg_table).append(tbody);
+    var surg_total_bill=0;
+    for (key in surgerybill_dict){
+        if (key!=="undefined" || key!=='--'){
+            var tr=$("<tr>");
+                var td1=$("<td>");
+                td1.append(key)
+
+                surgeonfee=surgerybill_dict[key][0];
+                var td2=$("<td>");
+                td2.append(surgeonfee)
+
+                theatrefee=surgerybill_dict[key][1];
+                var td3=$("<td>");
+                td3.append(theatrefee)
+
+                anestheticfee=surgerybill_dict[key][2];
+                var td4=$("<td>");
+                td4.append(anestheticfee)
+
+                surplusfee=surgerybill_dict[key][3];
+                var td5=$("<td>");
+                td5.append(surplusfee);
+
+                totalfee=surgerybill_dict[key][4];
+                var td6=$("<td>");
+                td6.append(totalfee)
+                surg_total_bill=surg_total_bill+totalfee;
+            tr.append(td1);
+            tr.append(td2);
+            tr.append(td3);
+            tr.append(td4);
+            tr.append(td5);
+            tr.append(td6);
+        tbody.append(tr)
+           
+        }
+    }
+        var tr=$("<tr>");
+            var td1=$("<td>");
+            var td2=$("<td>");
+            var td3=$("<td>");
+            var td4=$("<td>");
+            var td5=$("<td>");
+                var th5=$("<th>");
+                th5.append("Surgery Total Bill")
+            td5.append(th5);
+            var td6=$("<td>");
+            nettotalfee=surg_total_bill;
+            var th6=$("<th>");
+                th6.append(nettotalfee)
+            td6.append(th6)
+        tr.append(td1);
+        tr.append(td2);
+        tr.append(td3);
+        tr.append(td4);
+        tr.append(td5);
+        tr.append(td6);
+        tbody.append(tr)
+    $(row2).append(surg_table)
+
+surg_bill_final_div.append(row1);
+surg_bill_final_div.append(row2);
+
+var proc_bill_final_div=$("<div id='proc_bill_final_div'>")
+    var row1=$("<div>Procedures</div>");
+    var row2=$("<div id='procedure_table_row'></div>")
+        var proc_table=$("<table></table>");
+        var thead=$("<thead></thead>");
+            var tr=$("<tr>");
+                var th1=$("<th>")
+                th1.append("Procedure Name")
+                var th3=$("<th>")
+                var th2=$("<th>")
+                th2.append("Charges")
+            tr.append(th1);
+            tr.append(th3);
+            tr.append(th2);
+
+        thead.append(tr)
+    $(proc_table).append(thead);
+
+       
+    var tbody=$("<tbody></tbody>");
+    $(proc_table).append(tbody);
+
+    var proc_total_bill=0;
+    for (key in procedurebill_dict){
+        console.log("Key---->",key);
+        if (key!==undefined ||key!=='undefined' || key!=='--'){
+            var tr=$("<tr>");
+                var td1=$("<td>");
+                td1.append(key)
+
+                charges=procedurebill_dict[key][0];
+                
+                proc_total_bill=parseInt(charges)+proc_total_bill
+                var td3=$("<td>")
+
+                var td2=$("<td>");
+                td2.append(charges)
+            tr.append(td1);
+            tr.append(td3);
+            tr.append(td2);
+            tbody.append(tr);
+        }
+    }
+    var tr=$("<tr>");
+    var td3=$("<td>");
+
+    var td1=$("<td>");
+    var th1=$("<th>");
+    th1.append("Procedure Total Bill");
+    td1.append(th1);
+    var td2=$("<td>");
+    var th2=$("<th>");
+        th2.append(proc_total_bill);
+    td2.append(th2);
+
+    tr.append(td3);
+    tr.append(td1);
+    tr.append(td2);
+    tbody.append(tr);
+    $(row2).append(proc_table);
+
+$(proc_bill_final_div).append(row1);
+$(proc_bill_final_div).append(row2);
+nettotal=proc_total_bill+surg_total_bill;
+var surg_proc_bill_final_div=$("<div id='surg_proc_bill_final_div'>")
+    var h3=$("<h3>Net Total:</h3>")
+    var label=$("<label>"+nettotal+"</label>")
+surg_proc_bill_final_div.append(h3);
+surg_proc_bill_final_div.append(label);
+
+
+
+$("#bill_div").append(surg_bill_final_div);
+$("#bill_div").append(proc_bill_final_div);
+$("#bill_div").append(surg_proc_bill_final_div);
+
+
+
+
+}
+function printBill(){
+    var printcontent = $("#bill_div").clone();
+    $('#patient_dash_first_div').hide();
+
+    $('#surg_proc_bill_div').empty().html(printcontent);
+    
+    window.print();
+    
+    $('#surg_proc_bill_div').empty();
+    $('#patient_dash_first_div').show();
+
+  
 }

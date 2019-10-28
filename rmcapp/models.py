@@ -620,6 +620,11 @@ class invoiceRecords(models.Model):
         verbose_name_plural="Invoices"
         ordering=['pk']
 
-    
-    
-
+class surgeryBillSummary(models.Model):
+    sbr=ListCharField(base_field=models.CharField(max_length=20),size=10,max_length=(10*21),null=True,blank=True)
+    pres=models.ForeignKey(patPrescriptionRecords, on_delete=models.CASCADE,default=None,null=True,blank=True)
+    net_total=models.IntegerField(null=True,blank=True,default=0)
+class procedureBillSummary(models.Model):
+    procbr=ListCharField(base_field=models.CharField(max_length=20),size=10,max_length=(10*21),null=True,blank=True)
+    pres=models.ForeignKey(patPrescriptionRecords, on_delete=models.CASCADE,default=None,null=True,blank=True)
+    net_total=models.IntegerField(null=True,blank=True,default=0)
