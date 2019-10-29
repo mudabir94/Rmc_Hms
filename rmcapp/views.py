@@ -2372,15 +2372,12 @@ def retrieveInvoiceBillRecord(request):
             patPresRecord_dict={}
             patPresRecord_dict['pat_name']=InvoiceObj.pres.patient.pat_name
             patPresRecord_dict['date_visited']=str(InvoiceObj.pres.date_visited)
-            # patPresRecord_dict['total_bill']=InvoiceObj.pres.net_total
-            # patPresRecord_dict['status']=InvoiceObj.pres.status
             print("patPresRecord_dict", patPresRecord_dict)
             pPresBObj=patPrescriptionBill.objects.get(pres=patPresObj)
             patPresRecord_dict['total_bill']=pPresBObj.net_total
             patPresRecord_dict['status']=pPresBObj.status
+            patPresRecord_dict['invoice_no']=InvoiceObj.id
             print("patPresRecord_dict",patPresRecord_dict)
-            # print("desp_bill", InvoiceObj.desp_bill)
-
         data={
             "patRoomBill_dict":json.dumps(patRoomBill_dict),
             "patWardBill_dict":json.dumps(patWardBill_dict),
