@@ -43,11 +43,15 @@
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <link  href="{% static 'rmcapp/mainhomepage_static/css/patientManagement/roomwardbill.css' %}" media="print" rel="stylesheet">
     <link  href="{% static 'rmcapp/mainhomepage_static/css/patientManagement/patientroomwardbill.css' %}" rel="stylesheet">
+    <link  href="{% static 'rmcapp/mainhomepage_static/css/patientManagement/updatepatientbill.css' %}" rel="stylesheet">
+
 
 
     <script src="{% static 'rmcapp/mainhomepage_static/js/patientManagement/patientmanage.js' %}"></script>
     <script src="{% static 'rmcapp/mainhomepage_static/js/patientManagement/patientSurgeryProcBill.js' %}"></script>
     <script src="{% static 'rmcapp/mainhomepage_static/js/patientManagement/patientRoomWardBill.js' %}"></script>
+    <script src="{% static 'rmcapp/mainhomepage_static/js/patientManagement/updatePatientBill.js' %}"></script>
+
 
 
 
@@ -257,7 +261,7 @@
               <div class="sidebar-submenu">
                   <ul>
                       <li>
-                        <a href="#" >Update Bill
+                        <a href="#" onclick="updatePatientBill()" >Update Bill
                         </a>
                       </li>
                       <li>

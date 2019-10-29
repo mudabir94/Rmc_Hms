@@ -2067,8 +2067,6 @@ def updateWardData(request):
             "ward_dict":json.dumps(ward_dict)
         }
         return JsonResponse(data)
-
-
 def retrievePresInfoSurgProcBill(request):
     if request.method=="GET":
         pres_id=request.GET.get('id')
@@ -2112,9 +2110,6 @@ def retrievePresInfoSurgProcBill(request):
             'surgeon':"surgeon",
         }
         return JsonResponse(data)
-
-        
-
 def createRoomWardBill(request):
     if request.method=="POST":
         data={
@@ -2213,11 +2208,15 @@ def printWardBill(request):
 
         net_total=request.POST.get('net_total')
         net_total=json.loads(net_total)
-        print("totalAmount11",net_total )
+
+        total_days=request.POST.get('total_no_of_days')
+        total_days=json.loads(total_days)
 
         wardbill_obj=patientWardBill.objects.get(pres=pres)
         wardbill_obj.checkout=checkout
         wardbill_obj.net_total=net_total
+        wardbill_obj.total_days=total_days
+
         wardbill_obj.save()
 
         invObj=invoiceRecords.objects.get(pres=pres)
@@ -2237,10 +2236,16 @@ def printRoomBill(request):
 
         net_total=request.POST.get('net_total')
         net_total=json.loads(net_total)
+        
+        total_days=request.POST.get('total_no_of_days')
+        total_days=json.loads(total_days)
 
         roombill_obj=patientRoomsBill.objects.get(pres=pres)
         roombill_obj.checkout=checkout
         roombill_obj.net_total=net_total
+        roombill_obj.total_days=total_days
+
+        
         roombill_obj.save()
         invObj=invoiceRecords.objects.get(pres=pres)
         net_total=int(net_total)
@@ -2265,11 +2270,17 @@ def saveWardBill(request):
 
         net_total=request.POST.get('net_total')
         net_total=json.loads(net_total)
-        print("totalAmount11",net_total )
+
+        total_days=request.POST.get('total_no_of_days')
+        total_days=json.loads(total_days)
+
+        print("total_days",total_days )
 
         wardbill_obj=patientWardBill.objects.get(pres=pres)
         wardbill_obj.checkout=checkout
         wardbill_obj.net_total=net_total
+        wardbill_obj.total_days=total_days
+
         wardbill_obj.save()
 
         invObj=invoiceRecords.objects.get(pres=pres)
@@ -2290,9 +2301,14 @@ def saveRoomBill(request):
         net_total=request.POST.get('net_total')
         net_total=json.loads(net_total)
 
+        total_days=request.POST.get('total_no_of_days')
+        total_days=json.loads(total_days)
+
         roombill_obj=patientRoomsBill.objects.get(pres=pres)
         roombill_obj.checkout=checkout
         roombill_obj.net_total=net_total
+        roombill_obj.total_days=total_days
+
         roombill_obj.save()
 
         invObj=invoiceRecords.objects.get(pres=pres)
@@ -2301,3 +2317,68 @@ def saveRoomBill(request):
         invObj.net_total=invObj.net_total+net_total
         invObj.save()
         return JsonResponse({})
+
+def retrieveInvoiceBillRecord(request):
+     if request.method=="GET":
+        pres_id=request.GET.get('id')
+        pres_id=int(pres_id)
+        patPresObj=patPrescriptionRecords.objects.get(id=pres_id)
+        InvoiceObj=invoiceRecords.objects.get(pres=patPresObj)
+        print("invoice Obj", InvoiceObj)
+
+        patRoomBill_dict={}
+        patWardBill_dict={}
+        surgBillRecord_dict={}
+        procBillRecord_dict={}
+        patPresRecord_dict={}
+        DespBill_dict={}
+
+        # print("floor--", InvoiceObj.room_bill.rooms.status)
+        if InvoiceObj.room_bill!=None:
+            patRoomBill_dict={}
+            patRoomBill_dict['floor']=InvoiceObj.room_bill.rooms.floor
+            patRoomBill_dict['room_no']=InvoiceObj.room_bill.rooms.room_no
+            patRoomBill_dict['charge_per_day']=InvoiceObj.room_bill.rooms.charge_per_day
+            patRoomBill_dict['ac_charge_per_day']=InvoiceObj.room_bill.rooms.ac_charge_per_day
+            patRoomBill_dict['total_days']=InvoiceObj.room_bill.total_days
+            patRoomBill_dict['total_bill']=InvoiceObj.room_bill.net_total
+            patRoomBill_dict['status']=InvoiceObj.room_bill.status
+            print("patRoomBill_dict", patRoomBill_dict)
+
+        if InvoiceObj.ward_bill!=None:
+            patWardBill_dict={}          
+            patWardBill_dict['ward_no']=InvoiceObj.ward_bill.wards.ward_no
+            patWardBill_dict['bed_no']=InvoiceObj.ward_bill.wards.bed_no
+            patWardBill_dict['charge_per_day']=InvoiceObj.ward_bill.wards.charge_per_day
+            patWardBill_dict['total_days']=InvoiceObj.ward_bill.total_days
+            patWardBill_dict['total_bill']=InvoiceObj.ward_bill.net_total
+            patWardBill_dict['status']=InvoiceObj.ward_bill.status
+            print("patWardBill_dict", patWardBill_dict)
+
+        if InvoiceObj.desp_bill!=None:
+            DespBill_dict={}
+            DespBill_dict['desp_bill']=InvoiceObj.desp_bill.despcharge_bill
+            DespBill_dict['add_med_bill']=InvoiceObj.desp_bill.addcharge_bill
+            DespBill_dict['total_bill']=InvoiceObj.desp_bill.net_total
+            DespBill_dict['status']=InvoiceObj.desp_bill.status
+            print("DespBill_dict", DespBill_dict)
+
+        if InvoiceObj.pres!=None:
+            patPresRecord_dict={}
+            patPresRecord_dict['pat_name']=InvoiceObj.pres.patient.pat_name
+            patPresRecord_dict['date_visited']=InvoiceObj.pres.date_visited
+            # patPresRecord_dict['total_bill']=InvoiceObj.pres.net_total
+            # patPresRecord_dict['status']=InvoiceObj.pres.status
+            print("patPresRecord_dict", patPresRecord_dict)
+            
+            print("desp_bill", InvoiceObj.desp_bill)
+
+        data={
+            "patRoomBill_dict":json.dumps(patRoomBill_dict),
+            "patWardBill_dict":json.dumps(patWardBill_dict),
+            "DespBill_dict":json.dumps(DespBill_dict),
+            "patPresRecord_dict":json.dumps(patPresRecord_dict),
+            "surgBillRecord_dict":json.dumps(surgBillRecord_dict),
+            "procBillRecord_dict":json.dumps(procBillRecord_dict),
+        }
+        return JsonResponse(data)

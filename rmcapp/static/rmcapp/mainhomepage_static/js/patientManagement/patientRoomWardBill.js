@@ -12,7 +12,7 @@ $(document).ready(function() {
 function createRoomWardBill(){
     $('#main_page_content').empty()
     var container_room_ward_bill_prescription= $('#main_page_content').append('<div class="container-fluid" id="container-room-ward-bill"></div>');
-    $("#container-room-ward-bill").append("<h2 class ='text-center'>Room/Ward Bill</h2>");
+    $("#container-room-ward-bill").append("<h1 class ='text-center'>Room/Ward Bill</h1>");
     $("#container-ward-bill").append("<hr class='custom_hr'>");
 
     var main_row_div= $("<div class='row is-flex'></div>");
@@ -20,22 +20,20 @@ function createRoomWardBill(){
     var main_col_div=$("<div class='col-md-12' id='main_col_div'></div>");
     $(main_row_div).append(main_col_div);
 
-        var row_div_one=$("<div class='row' id='row_div_one'></div>");
-            var col_one__row_div_one=$("<div class='col-md-6'></div>");
+        var row_div_one=$("<div class='row' id='row_div_one' style='padding-bottom: 30px'></div>");
+            var col_one__row_div_one=$("<div class='col-md-8'></div>");
             row__col_one__row_div_one=$("<div class='row'></div>");
-                colmd1=$("<div class='col-md-2'></div>")
-                colmd2=$("<div class='col-md-4'></div>")
-                
+                colmd1=$("<div class='col-md-3 text-center'></div>")
+                colmd2=$("<div class='col-md-3'></div>")
                 colmd3=$("<div class='col-md-2'></div>")
-
 
                 pres_id_label=$("<label for='pres_id_tag' class='custom_label_css'>Prescription id</label>");
                 colmd1.append(pres_id_label)
 
-                pres_id_input=$("<input id='search_pres_id' class='custom_input_css'>")
+                pres_id_input=$("<input id='search_pres_id' class='form-control custom_input_css'>")
                 colmd2.append(pres_id_input);
 
-                var search_button=$('<button onclick="searchPatientInRoomWardBill()">Search</button>');
+                var search_button=$('<button class= "btn btn-light" type= "Button" onclick="searchPatientInRoomWardBill()" style="font-size: large; font-weight:600">Search</button>');
                 colmd3.append(search_button);
 
             row__col_one__row_div_one.append(colmd1);
@@ -215,7 +213,7 @@ function createBillDetailsRoomBill(){
                         row__col_one__subrow_four=$("<div class='row'></div>");
                             var colmd1=$("<div class='col-md-4'></div>")
                             var colmd2=$("<div class='col-md-6'></div>")
-                                var checkin_label=$("<label for='checkin_tag' class='custom_label_css'>Checkin Date</label>");
+                                var checkin_label=$("<label for='checkin_tag' class='custom_label_css'>Admission Date</label>");
                                 var checkin_input=$("<label id='checkin_input' class='form-control-static'> "+roomBill_dict['checkin']+"</label>")
                             colmd1.append(checkin_label)
                             colmd2.append(checkin_input)
@@ -227,7 +225,7 @@ function createBillDetailsRoomBill(){
                         var row__col_two__subrow_four=$("<div class='row'></div>");
                             var colmd1=$("<div class='col-md-4'></div>")
                             var colmd2=$("<div class='col-md-4' ></div>")
-                                var checkout_label=$("<label class='custom_label_css'>Select Checkout Date</label>");
+                                var checkout_label=$("<label class='custom_label_css'>Select Discharge Date</label>");
                                 var checkout_input=$("<input id='checkout_input' style='background: transparent;border: none;border-bottom: 1px solid #000000;-webkit-box-shadow: none;box-shadow: none;border-radius: 0;'></input>")
                             colmd1.append(checkout_label);
                             colmd2.append(checkout_input);
@@ -353,7 +351,7 @@ function createBillDetailsWardBill(){
                         row__col_one__subrow_four=$("<div class='row'></div>");
                             var colmd1=$("<div class='col-md-4'></div>")
                             var colmd2=$("<div class='col-md-6'></div>")
-                                var checkin_label=$("<label for='checkin_tag' class='custom_label_css'>Checkin Date</label>");
+                                var checkin_label=$("<label for='checkin_tag' class='custom_label_css'>Admission Date</label>");
                                 var checkin_input=$("<label id='checkin_input' class='form-control-static'>"+wardBill_dict['checkin']+"</label>")
                             colmd1.append(checkin_label)
                             colmd2.append(checkin_input)
@@ -365,7 +363,7 @@ function createBillDetailsWardBill(){
                         var row__col_two__subrow_four=$("<div class='row'></div>");
                             var colmd1=$("<div class='col-md-4'></div>")
                             var colmd2=$("<div class='col-md-4'></div>")
-                                var checkout_label=$("<label class='custom_label_css'>Select Checkout Date</label>");
+                                var checkout_label=$("<label class='custom_label_css'>Select Discharge Date</label>");
                                 var checkout_input=$("<input id='checkout_input' style='background: transparent;border: none;border-bottom: 1px solid #000000;-webkit-box-shadow: none;box-shadow: none;border-radius: 0;'></input>")
                             colmd1.append(checkout_label);
                             colmd2.append(checkout_input);
@@ -412,10 +410,10 @@ function calculateRoomBill(){
     var checkInDate = $("#checkin_input").text()
     var checkOutDate = $("#checkout_input").val()
     if($("#checkout_input").val()==""){
-        alert("Please Select Checkout Date first")
+        alert("Please Select Discharge Date first")
     }
     else if(checkInDate>checkOutDate){
-        alert("Date cannot be less than the checkin Date")
+        alert("Date cannot be less than the Admision Date")
     }
 
     else{
@@ -496,7 +494,7 @@ function calculateWardBill(){
     var checkInDate = $("#checkin_input").text()
     var checkOutDate = $("#checkout_input").val()
     if($("#checkout_input").val()==""){
-        alert("Please Select Checkout Date first")
+        alert("Please Select Discharge Date first")
     }
     else if(checkInDate>checkOutDate){
         alert("Date cannot be less than the checkin Date")
@@ -585,6 +583,9 @@ function saveRoomBill(){
 
     var net_total=$("#net_total").text();
     console.log("net_total", net_total);
+
+    var total_no_of_days=$("#total_days").text();
+    console.log("total_no_of_days", total_no_of_days);
     
     $.ajax({
         type: 'POST',
@@ -593,6 +594,8 @@ function saveRoomBill(){
             "pres":JSON.stringify(pres_id),
             "checkout":JSON.stringify(checkout),
             "net_total":JSON.stringify(net_total),
+            "total_no_of_days":JSON.stringify(total_no_of_days),
+
         },
         url: '/save_room_bill',
         success: function(data){
@@ -601,7 +604,7 @@ function saveRoomBill(){
     });
 }
 function saveWardBill(){
-
+alert("")
     var pres_id=$("#prescription_input").text();
     console.log("pres_id", pres_id);
 
@@ -610,6 +613,9 @@ function saveWardBill(){
 
     var net_total=$("#net_total").text();
     console.log("net_total", net_total);
+
+    var total_no_of_days=$("#total_days").text();
+    console.log("total_days11111", total_no_of_days);
     
     $.ajax({
         type: 'POST',
@@ -618,9 +624,10 @@ function saveWardBill(){
             "pres":JSON.stringify(pres_id),
             "checkout":JSON.stringify(checkout),
             "net_total":JSON.stringify(net_total),
-            
+            "total_no_of_days":JSON.stringify(total_no_of_days),
+    
         },
-        url: '/save_ward_bill',
+        // url: '/save_ward_bill',
         success: function(data){
             console.log(data['Success']);
         },
@@ -636,7 +643,10 @@ function printRoomBill(){
 
     var net_total=$("#net_total").text();
     console.log("net_total", net_total);
-    
+
+    var total_no_of_days=$('#total_days').text();
+
+
     $.ajax({
         type: 'POST',
         dataType: "json",
@@ -644,6 +654,8 @@ function printRoomBill(){
             "pres":JSON.stringify(pres_id),
             "checkout":JSON.stringify(checkout),
             "net_total":JSON.stringify(net_total),
+            "total_no_of_days":JSON.stringify(total_no_of_days),
+
         },
         url: '/print_room_bill',
         success: function(data){
@@ -658,7 +670,6 @@ function printRoomBill(){
     var floor_no=roomBill_dict['floor'];
     var charge_per_Day=roomBill_dict['charge_per_day']
     var ac_charge_per_Day=roomBill_dict['ac_charge_per_day']
-    var total_no_of_days=$('#total_days').text();
     var checkin=$("#checkin_input").text();
 
 
@@ -799,6 +810,10 @@ function printWardBill(){
 
     var net_total=$("#net_total").text();
     console.log("net_total", net_total);
+
+    var total_no_of_days=$('#total_days').text();
+
+
     
     $.ajax({
         type: 'POST',
@@ -807,6 +822,8 @@ function printWardBill(){
             "pres":JSON.stringify(pres_id),
             "checkout":JSON.stringify(checkout),
             "net_total":JSON.stringify(net_total),
+            "total_no_of_days":JSON.stringify(total_no_of_days),
+
         },
         url: '/print_ward_bill',
         success: function(data){
@@ -820,7 +837,6 @@ function printWardBill(){
     var ward_no=wardBill_dict['ward_no'];
     var bed_no=wardBill_dict['bed_no'];
     var charge_per_Day=wardBill_dict['charge_per_day']
-    var total_no_of_days=$('#total_days').text();
     var checkin=$("#checkin_input").text();
 
     var ward_print=$("<div id='ward_print'></div>");
@@ -930,7 +946,7 @@ function printWardBill(){
     $('body').empty().html(printcontent);
   
     window.print();
-    w.close();
+    window.close();
 
     // var restorepage = $('body').html();
     // var printcontent = $('#row_div_two').clone();

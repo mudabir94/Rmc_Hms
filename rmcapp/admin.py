@@ -164,12 +164,13 @@ class RoomsAdmin(admin.ModelAdmin):
     list_display=('id','floor','room_no','charge_per_day','ac_charge_per_day','status')
 class patientRoomsBillAdmin(admin.ModelAdmin):
     list_display=('id','patient','pres','rooms',\
-        'checkin','checkout','net_total','status')
+        'checkin','checkout','total_days','net_total','status')
 
 class WardAdmin(admin.ModelAdmin):
     list_display=('id','ward_no','bed_no','charge_per_day','status')
 class patientWardBillAdmin(admin.ModelAdmin):
-    list_display=('id','patient','pres','wards','net_total','status')
+    list_display=('id','patient','pres','wards',\
+        'checkin','checkout','total_days','net_total','status')
 class patientVisitSummaryAdmin(admin.ModelAdmin):
     list_display=('id','patient','pmr','pres','date_visited')
 class invoiceRecordsAdmin(admin.ModelAdmin):
