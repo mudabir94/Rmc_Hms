@@ -15,7 +15,7 @@ from rmcapp.models import (
     procedureTable,patPrescriptionRecords,patPrescriptionBill,invoiceRecords,
     despBillRecord,procedureBillRecord,procedureRecords,procedureTable,
     patientVisitSummary,surgeryTable,
-    surgeryRecords,surgeryBillRecord,
+    surgeryRecords,surgeryBillRecord,procedureBillSummary,
 )
 from django.http import HttpResponse, JsonResponse
 from .Controllers.MedControllers.MedController import MedicineController  
@@ -1763,17 +1763,22 @@ def savePatientBill(request):
             procBillRecObj.save()
             procedure_id_list.append(procBillRecObj.id)
 
-
+        print("procedure_id_list",procedure_id_list)
         procRecObj=procedureRecords()
         procRecObj.procedure_bill=procedure_id_list
         procRecObj.pres=patPresRecObj
         procRecObj.net_total=procedure_total
         procRecObj.save()
-        invObj=invoiceRecords.objects.get(pres=patPresRecObj.id)
+        
+        procBillSumObj=procedureBillSummary()
+        procBillSumObj.procbr=procedure_id_list
+        procBillSumObj.pres=patPresRecObj
+        procBillSumObj.save()
+        invObj=invoiceRecords.objects.get(pres=patPresRecObj)
         net_total=net_total
         invObj.desp_bill=despBillRecObj
 
-        invObj.procedure_id=procRecObj
+        invObj.procedure_id=procBillSumObj
         invObj.discount=discountamount
         invObj.net_total=invObj.net_total+net_total
         invObj.save()
@@ -2366,12 +2371,15 @@ def retrieveInvoiceBillRecord(request):
         if InvoiceObj.pres!=None:
             patPresRecord_dict={}
             patPresRecord_dict['pat_name']=InvoiceObj.pres.patient.pat_name
-            patPresRecord_dict['date_visited']=InvoiceObj.pres.date_visited
+            patPresRecord_dict['date_visited']=str(InvoiceObj.pres.date_visited)
             # patPresRecord_dict['total_bill']=InvoiceObj.pres.net_total
             # patPresRecord_dict['status']=InvoiceObj.pres.status
             print("patPresRecord_dict", patPresRecord_dict)
-            
-            print("desp_bill", InvoiceObj.desp_bill)
+            pPresBObj=patPrescriptionBill.objects.get(pres=patPresObj)
+            patPresRecord_dict['total_bill']=pPresBObj.net_total
+            patPresRecord_dict['status']=pPresBObj.status
+            print("patPresRecord_dict",patPresRecord_dict)
+            # print("desp_bill", InvoiceObj.desp_bill)
 
         data={
             "patRoomBill_dict":json.dumps(patRoomBill_dict),

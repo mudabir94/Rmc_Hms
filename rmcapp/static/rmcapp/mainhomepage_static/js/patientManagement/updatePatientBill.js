@@ -74,50 +74,52 @@ function retrieveInvoiceBillRecord(){
             procBillRecord_dict={};
             patPresRecord_dict={};
             DespBill_dict={};
-            roomBill_dict=JSON.parse(data["roomBill_dict"])
-            wardBill_dict=JSON.parse(data["wardBill_dict"])
+            patRoomBill_dict=JSON.parse(data["patRoomBill_dict"])
+            patWardBill_dict=JSON.parse(data["patWardBill_dict"])
+            surgBillRecord_dict=JSON.parse(data["surgBillRecord_dict"])
+            procBillRecord_dict=JSON.parse(data["procBillRecord_dict"])
+            patPresRecord_dict=JSON.parse(data["patPresRecord_dict"])
+            DespBill_dict=JSON.parse(data["DespBill_dict"])
 
-            console.log("roomBill_dict1111",roomBill_dict)
-            console.log("wardBill_dict2222",wardBill_dict)
-            console.log("Object.keys(roomBill_dict).length", Object.keys(roomBill_dict).length)
-        //     if(Object.keys(roomBill_dict).length !== 0){
-        //         for (roombill in roomBill_dict){
-        //             templist=[]
-        //             console.log("roombill",roombill);
-        //             templist.push(roombill)
-        //             templist.push(roomBill_dict[roombill]['pat_name'])
-        //             templist.push(roomBill_dict[roombill]['floor'])
-        //             templist.push(roomBill_dict[roombill]['room_no'])
-        //             templist.push(roomBill_dict[roombill]['charge_per_day'])
-        //             templist.push(roomBill_dict[roombill]['ac_charge_per_day'])
-        //             templist.push(roomBill_dict[roombill]['checkin'])
-        //             templist.push(roomBill_dict[roombill]['id'])
-        //             roomBill_list.push(templist)
-        //         }
-        //         console.log("roomBill_dict>>>>>>",roomBill_dict);
-        //         console.log(roomBill_list);
-        //         createBillDetailsRoomBill();
-
-        //     }
-        //     else{
-        //         for (wardbill in wardBill_dict){
-        //             templist=[]
-        //             console.log("wardbill",wardbill);
-        //             templist.push(wardbill)
-        //             templist.push(wardBill_dict[wardbill]['patient_name'])
-        //             templist.push(wardBill_dict[wardbill]['ward_no'])
-        //             templist.push(wardBill_dict[wardbill]['bed_no'])
-        //             templist.push(wardBill_dict[wardbill]['charge_per_day'])
-        //             templist.push(wardBill_dict[wardbill]['checkin'])
-        //             templist.push(wardBill_dict[wardbill]['id'])
-        //             wardBill_list.push(templist)
-        //         }
-        //         console.log("wardBill_dic>>>>>>>>",wardBill_dict);
-        //         console.log(wardBill_list);
-        //         createBillDetailsWardBill();
-        //     }
-
-           
+            if(Object.keys(patPresRecord_dict).length !== 0){
+               
+                console.log("ssasdasd",patPresRecord_dict);
+                createPrescriptionBillRow();
+            }
+            if(Object.keys(DespBill_dict).length !== 0){
+                for (desp in DespBill_dict){
+                    templist=[]
+                    console.log("desp",desp);
+                    templist.push(desp)
+                    templist.push(DespBill_dict[desp]['patient_name'])
+                    templist.push(DespBill_dict[desp]['ward_no'])
+                    templist.push(DespBill_dict[desp]['bed_no'])
+                    templist.push(DespBill_dict[desp]['charge_per_day'])
+                    templist.push(DespBill_dict[desp]['checkin'])
+                    templist.push(DespBill_dict[desp]['id'])
+                    despBill_list.push(templist)
+                }
+                console.log("DespBill_dict>>>>>>>>",DespBill_dict);
+                console.log(despBill_list);
+                createDispensoryBillRow();
+            }
+            if(Object.keys(DespBill_dict).length !== 0){
+                for (desp in DespBill_dict){
+                    templist=[]
+                    console.log("desp",desp);
+                    templist.push(desp)
+                    templist.push(DespBill_dict[desp]['patient_name'])
+                    templist.push(DespBill_dict[desp]['ward_no'])
+                    templist.push(DespBill_dict[desp]['bed_no'])
+                    templist.push(DespBill_dict[desp]['charge_per_day'])
+                    templist.push(DespBill_dict[desp]['checkin'])
+                    templist.push(DespBill_dict[desp]['id'])
+                    despBill_list.push(templist)
+                }
+                console.log("DespBill_dict>>>>>>>>",DespBill_dict);
+                console.log(despBill_list);
+                createDispensoryBillRow();
+            }
         }
     }); 
         
@@ -173,8 +175,6 @@ function retrieveInvoiceBillRecord(){
     var main_col_div=$("#main_col_div");
     main_col_div.append(row_div_mid);
 
-    createPrescriptionBillRow();
-    createDispensoryBillRow();
     createRoomBillRow();
     createWardBillRow();
     netTotalAmountRow();
@@ -192,9 +192,9 @@ function createPrescriptionBillRow(){
                         var colmd1=$("<div class='col-md-4'></div>")
                         var colmd2=$("<div class='col-md-6'></div>")
                             var amount_label=$("<label for='amount_label_tag' class='custom_label_css'>Amount Paid</label>");
-                            // var pat_name_input=$("<label id='pat_name_input' class='form-control-static'>"+roomBill_dict['pat_name']+"</label>")
+                            var pat_name_input=$("<label id='pat_name_input' class='form-control-static'>"+patPresRecord_dict['total_bill']+"</label>")
                         colmd1.append(amount_label)
-                        // colmd2.append(pat_name_input)
+                        colmd2.append(pat_name_input)
                     row__col_one__subrow_one.append(colmd1);
                     row__col_one__subrow_one.append(colmd2);
                 col_one__subrow_one.append(row__col_one__subrow_one);

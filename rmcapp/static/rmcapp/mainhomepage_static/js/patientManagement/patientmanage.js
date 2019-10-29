@@ -3366,7 +3366,7 @@ function createRowDivFiveBill(){
                 var  colmd1=$("<div class='col-md-12'></div>");
                     var row=$("<div class='row'></div>");
                         var calculate_col1=$("<div class='col-md-4'></div>");
-                        var button=$("<button onclick='calculateBill()'> Calculate </button>")
+                        var button=$("<button onclick='calculateDespProcBill()'> Calculate </button>")
                         calculate_col1.append(button);
 
                         var calculate_col2=$("<div class='col-md-8' ></div>");
@@ -3629,7 +3629,8 @@ function getProcedureCharge(element){
 var despmedbillamount=0;
 var addchargeamount=0;
 var procedure_total=0
-function calculateBill(){
+function calculateDespProcBill(){
+    alert("sss")
     var totalamount=0
     despmedbillamount=0
     if (pbr_dict!==undefined){

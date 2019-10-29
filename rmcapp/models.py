@@ -501,7 +501,7 @@ class procedureBillRecord(models.Model):                #### NEW  ######
         ordering=['pk']
 
 class procedureRecords(models.Model):              #### NEW  ######
-    procedure_bill=models.CharField(max_length=50,null=True,blank=True)
+    procedure_bill=ListCharField(base_field=models.CharField(max_length=20),size=10,max_length=(10*21),null=True,blank=True)
     pres=models.ForeignKey(patPrescriptionRecords, on_delete=models.CASCADE,default=None,null=True,blank=True)
     net_total=models.IntegerField(null=True,blank=True,default=0)
     status=models.CharField(max_length=50,null=True,blank=True,default='UnPaid')
@@ -602,13 +602,32 @@ class patientVisitSummary(models.Model):
     pres=models.ForeignKey(patPrescriptionRecords, on_delete=models.CASCADE,default=None,null=True,blank=True)##### NEW ##########
     patient=models.ForeignKey(Patient, on_delete=models.CASCADE,default=None,null=True,blank=True)
     date_visited = models.DateTimeField(auto_now_add=True, blank=True)
+    
+class surgeryBillSummary(models.Model):
+    sbr=ListCharField(base_field=models.CharField(max_length=20),size=10,max_length=(10*21),null=True,blank=True)
+    pres=models.ForeignKey(patPrescriptionRecords, on_delete=models.CASCADE,default=None,null=True,blank=True)
+    net_total=models.IntegerField(null=True,blank=True,default=0)
+    def __str__(self):
+        return str(self.id)
+    class Meta:
+        verbose_name_plural="Surgery Bill Summary"
+        ordering=['pk']
+class procedureBillSummary(models.Model):
+    procbr=ListCharField(base_field=models.CharField(max_length=20),size=10,max_length=(10*21),null=True,blank=True)
+    pres=models.ForeignKey(patPrescriptionRecords, on_delete=models.CASCADE,default=None,null=True,blank=True)
+    net_total=models.IntegerField(null=True,blank=True,default=0)
+    def __str__(self):
+        return str(self.id)
+    class Meta:
+        verbose_name_plural="Procedure Bill Summary"
+        ordering=['pk']
 
 class invoiceRecords(models.Model):
-    pres_bill=models.ForeignKey(patPrescriptionBill, on_delete=models.CASCADE,default=None,null=True,blank=True)
+    pres=models.ForeignKey(patPrescriptionRecords, on_delete=models.CASCADE,default=None,null=True,blank=True)
     desp_bill=models.ForeignKey(despBillRecord, on_delete=models.CASCADE,default=None,null=True,blank=True)
-    surgery_bill=models.ForeignKey(surgeryBillRecord, on_delete=models.CASCADE,default=None,null=True,blank=True)
+    surgery_bill=models.ForeignKey(surgeryBillSummary, on_delete=models.CASCADE,default=None,null=True,blank=True)
     ward_bill=models.ForeignKey(patientWardBill, on_delete=models.CASCADE,default=None,null=True,blank=True)
-    procedure_id=models.ForeignKey(procedureRecords, on_delete=models.CASCADE,default=None,null=True,blank=True)
+    procedure_id=models.ForeignKey(procedureBillSummary, on_delete=models.CASCADE,default=None,null=True,blank=True)
     room_bill=models.ForeignKey(patientRoomsBill, on_delete=models.CASCADE,default=None,null=True,blank=True)
     discount=models.IntegerField(null=True,blank=True)
     discount_percentage=models.FloatField(null=True,blank=True)
@@ -620,11 +639,3 @@ class invoiceRecords(models.Model):
         verbose_name_plural="Invoices"
         ordering=['pk']
 
-class surgeryBillSummary(models.Model):
-    sbr=ListCharField(base_field=models.CharField(max_length=20),size=10,max_length=(10*21),null=True,blank=True)
-    pres=models.ForeignKey(patPrescriptionRecords, on_delete=models.CASCADE,default=None,null=True,blank=True)
-    net_total=models.IntegerField(null=True,blank=True,default=0)
-class procedureBillSummary(models.Model):
-    procbr=ListCharField(base_field=models.CharField(max_length=20),size=10,max_length=(10*21),null=True,blank=True)
-    pres=models.ForeignKey(patPrescriptionRecords, on_delete=models.CASCADE,default=None,null=True,blank=True)
-    net_total=models.IntegerField(null=True,blank=True,default=0)

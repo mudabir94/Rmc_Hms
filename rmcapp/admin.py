@@ -23,13 +23,14 @@ patientBillRecords,patientMedRecords,
 patPrescriptionRecords,patPrescriptionBill,
 patientRoomsBill,
 patientWardBill,
-
+procedureBillSummary,
 surgeryTable,
 surgeryRecords,surgeryBillRecord,
 procedureTable,
 procedureRecords,procedureBillRecord,
 despBillRecord,
-patientVisitSummary,invoiceRecords
+patientVisitSummary,invoiceRecords,
+surgeryBillSummary
 )
 
 
@@ -174,9 +175,13 @@ class patientWardBillAdmin(admin.ModelAdmin):
 class patientVisitSummaryAdmin(admin.ModelAdmin):
     list_display=('id','patient','pmr','pres','date_visited')
 class invoiceRecordsAdmin(admin.ModelAdmin):
-    list_display=('id','pres','desp_bill','surgery_bill','ward_bill',\
+    list_display=('id','pres','desp_bill','procedure_id','surgery_bill','ward_bill',\
         'room_bill','discount','discount_percentage',\
         'net_total','status')
+class procedureBillSummaryAdmin(admin.ModelAdmin):
+    list_display=('id','procbr','pres')
+class surgeryBillSummaryAdmin(admin.ModelAdmin):
+    list_display=('id','sbr','pres')
 
 
 admin.site.register(medicineType, medicineTypeAdmin)
@@ -233,7 +238,9 @@ admin.site.register(patientVisitSummary, patientVisitSummaryAdmin)
 
 admin.site.register(invoiceRecords, invoiceRecordsAdmin)
 
+admin.site.register(procedureBillSummary, procedureBillSummaryAdmin)
 
+admin.site.register(surgeryBillSummary, surgeryBillSummaryAdmin)
 
 
 
