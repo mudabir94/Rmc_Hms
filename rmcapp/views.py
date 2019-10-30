@@ -1001,7 +1001,7 @@ def retrievePatientInfoInPresForm(request):
         cnic=""
 
         # pat_objs=Patient.objects.filter(Q(pat_name=pat_name) | Q(phone_no=contact_no) | Q(cnic=cnic)| Q(id=id))
-        pat_objs=Patient.objects.filter(Q(pat_name=pat_name) | Q(phone_no=contact_no) | Q(cnic=cnic))
+        pat_objs=Patient.objects.filter(Q(pat_name__contains=pat_name) | Q(phone_no=contact_no) | Q(cnic=cnic))
 
         # pat_objs=Patient.objects.get(id=1)
         print("pat_objs",pat_objs)
