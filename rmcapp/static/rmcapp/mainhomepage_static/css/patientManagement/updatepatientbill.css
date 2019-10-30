@@ -3,5 +3,14 @@
     border: 1px solid;
     margin-top: 10px;
     margin-bottom: 10px;
+    font-size: x-large;
+
+
+}
+#total_amount_div, #pat_details_div{
+    font-size: x-large;
+    margin-top: 30px;
+    margin-bottom: 20px;
+
 
 }

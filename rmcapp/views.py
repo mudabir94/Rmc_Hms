@@ -2372,11 +2372,14 @@ def retrieveInvoiceBillRecord(request):
             patPresRecord_dict={}
             patPresRecord_dict['pat_name']=InvoiceObj.pres.patient.pat_name
             patPresRecord_dict['date_visited']=str(InvoiceObj.pres.date_visited)
-            print("patPresRecord_dict", patPresRecord_dict)
             pPresBObj=patPrescriptionBill.objects.get(pres=patPresObj)
-            patPresRecord_dict['total_bill']=pPresBObj.net_total
+            patPresRecord_dict['pres_bill']=pPresBObj.net_total
             patPresRecord_dict['status']=pPresBObj.status
+            patPresRecord_dict['total_bill']=InvoiceObj.net_total
+            patPresRecord_dict['status']=InvoiceObj.status
+
             patPresRecord_dict['invoice_no']=InvoiceObj.id
+
             print("patPresRecord_dict",patPresRecord_dict)
         data={
             "patRoomBill_dict":json.dumps(patRoomBill_dict),
@@ -2387,3 +2390,22 @@ def retrieveInvoiceBillRecord(request):
             "procBillRecord_dict":json.dumps(procBillRecord_dict),
         }
         return JsonResponse(data)
+
+def updateInvoice(request):
+    if request.method=="GET":
+        proc_dict=request.GET.get("proc_dict")
+        proc_dict=json.loads("proc_dict")
+        surg_dict=request.GET.get("surg_dict")
+        surg_dict=json.loads("surg_dict")
+        room_dict=request.GET.get("room_dict")
+        room_dict=json.loads("room_dict")
+        ward_dict=request.GET.get("ward_dict")
+        ward_dict=json.loads("ward_dict")
+        pres_dict=request.GET.get("pres_dict")
+        pres_dict=json.loads("pres_dict")
+        desp_dict=request.GET.get("desp_dict")
+        desp_dict=json.loads("desp_dict")
+        invoice_dict=request.GET.get("invoice_dict")
+        invoice_dict=json.loads("invoice_dict")
+
+        return JsonResponse({})
