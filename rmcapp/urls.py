@@ -85,6 +85,8 @@ urlpatterns = [
   path('print_ward_bill',views.printWardBill,name='print_ward_bill'),
   path('save_room_bill',views.saveRoomBill,name='save_room_bill'),
   path('save_ward_bill',views.saveWardBill,name='save_ward_bill'),
+  path('save_surg_proc_bill',views.saveSurgProcBill,name='save_surg_proc_bill'),
+
 
   path('retrieve_invoice_bill_record',views.retrieveInvoiceBillRecord,name='retrieve_invoice_bill_record'),
 

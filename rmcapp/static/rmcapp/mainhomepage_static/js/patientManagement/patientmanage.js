@@ -1912,11 +1912,8 @@ function printPrescriptionForm(){
 
         var discount_reason=$("#reason_input").val();
         console.log("discount_reason", discount_reason);
-        $("#discount_reason_input").val("")
 
-        var tokenNo = $("#tokenNumber_disp").val();
-        console.log("discountamount", discountamount);
-        $("#discountamount_input").val("")
+        $("#discount_reason_input").val("")
 
         var doctor_visited = $("#selecteddoctor").val()
         console.log("doctor_visited", doctor_visited);
@@ -1930,7 +1927,7 @@ function printPrescriptionForm(){
         presData["pat_id"]= pat_id;
         // presData["name"]= patient_name;
         // presData["age"]= age;
-        presData["gender"]= patient_gender;
+        // presData["gender"]= patient_gender;
         presData["discount"]= discountamount;
         presData["discount_percent"]= discountPercent;
         presData["discount_reason"]= discount_reason;
@@ -1961,14 +1958,15 @@ function printPrescriptionForm(){
             // presData["name"]= patient_name;
             // presData["age"]= age;
             // presData["gender"]= patient_gender;
+            presData['ward_id']=ward_id_selected;
             presData["ward"]= wardNumber;
             presData["bed"]= bedNumber;
             presData["Consultant"]= consultant;
             presData["doctor"]= Doctor;
             presData["admitreason"]= admitreason;
             presData["pat_type"]= patient_type;
-            presData["ward_type"]= ward_type;
-
+            // presData["ward_type"]= ward_type;
+            presData["bed_type"]=ward_type;
 
             console.log("presData", presData)
 
@@ -1992,19 +1990,23 @@ function printPrescriptionForm(){
             // presData["name"]= patient_name;
             // presData["age"]= age;
             // presData["gender"]= patient_gender;
+            presData['room_id']=room_id_selected;
+
             presData["roomNo"]= roomNumber;
             presData["Consultant"]= consultant;
             presData["doctor"]= Doctor;
             presData["admitreason"]= admitreason;
             presData["pat_type"]= patient_type;
-            presData["ward_type"]= ward_type;
+            // presData["ward_type"]= ward_type;
+            presData["bed_type"]=ward_type;
+            
 
             console.log("presData", presData)
 
          
         }
     }
-    presData['net_total']=amountDue_input;
+    presData['net_total']=200;
 
     $.ajax({
         type: 'GET',

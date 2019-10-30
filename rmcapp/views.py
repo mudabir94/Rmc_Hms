@@ -15,7 +15,7 @@ from rmcapp.models import (
     procedureTable,patPrescriptionRecords,patPrescriptionBill,invoiceRecords,
     despBillRecord,procedureBillRecord,procedureRecords,procedureTable,
     patientVisitSummary,surgeryTable,
-    surgeryRecords,surgeryBillRecord,procedureBillSummary,
+    surgeryRecords,surgeryBillRecord,procedureBillSummary,surgeryBillSummary
 )
 from django.http import HttpResponse, JsonResponse
 from .Controllers.MedControllers.MedController import MedicineController  
@@ -1293,19 +1293,28 @@ def generatePrescription(request):
         presData=request.GET.get('presData')
         presData=json.loads(presData)
         print("presData",presData)
+        patient_type=presData['pat_type']
         # Add data to Prescription Record
         presRecObj=patPrescriptionRecords()
         patObj=Patient.objects.get(id=presData['pat_id'])
         presRecObj.patient=patObj
+
         doc_id=presData['doctor']
         doc_id=2
         empObj=Employee.objects.get(id=doc_id)
         presRecObj.doc=empObj
-        # presRecObj.patient_type=
+
+        patTypeObj=patientType.objects.get(patient_type=patient_type)
+        print("patTypeObj",patTypeObj)
+        presRecObj.patient_type=patTypeObj
+
         presRecObj.save()
         # Add Data to Prescription Bill Records. 
         patPresBillObj=patPrescriptionBill()
         patPresBillObj.pres=presRecObj
+        # patPresBillObj.discount=
+        # patPresBillObj.discount_percentage=
+        print("presData['net_total']",presData['net_total'])
         patPresBillObj.net_total=presData['net_total']
         patPresBillObj.status="UnPaid"
         patPresBillObj.save()
@@ -1314,6 +1323,28 @@ def generatePrescription(request):
         invObj.net_total=presData['net_total']
         invObj.status="UnPaid"
         invObj.save()
+        if patient_type=='Indoor':
+            if presData['bed_type']=="Room":
+                roomObj=Rooms.objects.get(id=int(presData['room_id']))
+                roomBillObj=patientRoomsBill()
+                roomBillObj.patient=patObj
+                roomBillObj.rooms=roomObj
+                roomBillObj.pres=presRecObj
+                # have to add check in date and time here. 
+                roomBillObj.save()
+                
+            else:
+                wardObj=Ward.objects.get(id=int(presData['ward_id']))
+                wardBillObj=patientWardBill()
+                wardBillObj.patient=patObj
+                wardBillObj.pres=presRecObj
+                wardBillObj.wards=wardObj
+                # have to add check in date and time here. 
+                wardBillObj.save()
+        
+
+
+        
         data={}
         return JsonResponse(data)
 
@@ -2386,4 +2417,83 @@ def retrieveInvoiceBillRecord(request):
             "surgBillRecord_dict":json.dumps(surgBillRecord_dict),
             "procBillRecord_dict":json.dumps(procBillRecord_dict),
         }
+        return JsonResponse(data)
+def saveSurgProcBill(request):
+    if request.method=="GET":
+        surgerybill_dict=request.GET.get('surgerybill_dict')
+        surgerybill_dict=json.loads(surgerybill_dict)
+        procedurebill_dict=request.GET.get('procedurebill_dict')
+        procedurebill_dict=json.loads(procedurebill_dict)
+
+        surg_proc_bill_final_value=request.GET.get('surg_proc_bill_final_value')
+        nettotal=int(surg_proc_bill_final_value)
+        pres_id=request.GET.get('pres_id')
+        pres_id=int(pres_id)
+        surg_total_bill=request.GET.get('surg_total_bill')
+        surg_total_bill=int(surg_total_bill)
+        totalproc_bill=request.GET.get('totalproc_bill')
+        totalproc_bill=int(totalproc_bill)
+
+        print("surgerybill_dict",surgerybill_dict)
+        print("procedurebill_dict",procedurebill_dict)
+        print("nettotal",nettotal)
+        print("presid",pres_id)
+        patPresRecObj=patPrescriptionRecords.objects.get(id=pres_id)
+        sbrid_list=[]
+        procbrid_list=[]
+        invRecObj=invoiceRecords.objects.get(pres=patPresRecObj)
+
+        if procedurebill_dict!={}:
+            for key in procedurebill_dict:
+                proctabObj=procedureTable.objects.get(procedure_name=key)
+                procBRecObj=procedureBillRecord()
+                procBRecObj.procedure=proctabObj
+                procBRecObj.pres=patPresRecObj
+                procBRecObj.net_total=procedurebill_dict[key][0]
+                procBRecObj.save()
+                procbrid_list.append(procBRecObj.id)
+            procRecObj=procedureRecords()
+            procRecObj.procedure_bill=procbrid_list
+            procRecObj.pres=patPresRecObj
+            procRecObj.net_total=totalproc_bill
+            procRecObj.save()
+            procBSumObj=procedureBillSummary()
+            procBSumObj.procbr=procbrid_list
+            procBSumObj.pres=patPresRecObj
+            procBSumObj.net_total=totalproc_bill
+            procBSumObj.save()
+            invRecObj.procedure_id=procBSumObj
+            invRecObj.net_total=totalproc_bill+invRecObj.net_total
+            invRecObj.save()
+            print("Inv net total",invRecObj.net_total)
+        if surgerybill_dict!={}:
+
+            for key in surgerybill_dict:
+                surgtabObj=surgeryTable.objects.get(surgery_name=key)
+                sbrObj=surgeryBillRecord()
+                sbrObj.surgery=surgtabObj
+                sbrObj.pres=patPresRecObj
+                sbrObj.surgeon_fee=surgerybill_dict[key][0]
+                sbrObj.operation_theater_fee=surgerybill_dict[key][1]
+                sbrObj.anesthesiologist_fee=surgerybill_dict[key][2]
+                sbrObj.surplus_fee=surgerybill_dict[key][3]
+                sbrObj.net_total=surgerybill_dict[key][4]
+                sbrObj.save()
+                sbrid_list.append(sbrObj.id)
+                surgRecObj=surgeryRecords()
+                surgRecObj.surgery_bill=sbrObj
+                surgRecObj.pres=patPresRecObj
+                surgRecObj.save()
+            surgBSumObj=surgeryBillSummary()
+            surgBSumObj.sbr=sbrid_list
+            surgBSumObj.pres=patPresRecObj
+            surgBSumObj.net_total=surg_total_bill
+            surgBSumObj.save()
+            invRecObj.surgery_bill=surgBSumObj
+            invRecObj.net_total=surg_total_bill+invRecObj.net_total
+            invRecObj.save()
+            print("Inv net total",invRecObj.net_total)
+
+
+        data={}
         return JsonResponse(data)
