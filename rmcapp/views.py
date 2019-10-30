@@ -1020,11 +1020,16 @@ def retrievePatientInfoInPresForm(request):
             patient_dict[pat_obj.id]=[]
             patient_dict[pat_obj.id]=patient_info_dict
         print("patient_dict",patient_dict)
-
-
+        emptype_obj=employeeType.objects.get(type_name="Doctor")
+        embobjs=Employee.objects.filter(employee_type=emptype_obj)
+        empdict={}
+        for obj in embobjs:
+            empdict[obj.id]=obj.name
+            print("Emp Name",obj.name)
 
         data={
             "patient_dict":json.dumps(patient_dict),
+            "empdict":json.dumps(empdict),
         }
         return JsonResponse(data)
 def retrieveAllPatientInfo(request):
@@ -1273,17 +1278,22 @@ def printPatientPrescription(request):
     template_path_name="rmcapp/patient_dashboard_template/patient_pres.html"
     global presData
     if request.method=='GET':
-        print("LOADING PATIENT PRES")
-        data={}
-        return render(request,template_path_name,data)
-    if request.method=="POST":
         if request.is_ajax():
-            print("In Ajax")
-            print("presData",presData)
-            data={
-                'presData':json.dumps(presData),
-            }
-            return JsonResponse(data)
+            
+            print("LOADING PATIENT PRES")
+            data={'presData':json.dumps(presData)}
+            return JsonResponse(data)     
+        data={}   
+    return render(request,template_path_name,data)
+    if request.method=="POST":
+        pass
+        # if request.is_ajax():
+        #     print("In Ajax")
+        #     print("presData",presData)
+        #     data={
+        #         'presData':json.dumps(presData),
+        #     }
+        #     return JsonResponse(data)
         
 @csrf_exempt 
 def generatePrescription(request):
@@ -1298,30 +1308,27 @@ def generatePrescription(request):
         presRecObj=patPrescriptionRecords()
         patObj=Patient.objects.get(id=presData['pat_id'])
         presRecObj.patient=patObj
-
-        doc_id=presData['doctor']
-        doc_id=2
+        doc_id=int(presData['doctor'])
         empObj=Employee.objects.get(id=doc_id)
         presRecObj.doc=empObj
-
         patTypeObj=patientType.objects.get(patient_type=patient_type)
-        print("patTypeObj",patTypeObj)
         presRecObj.patient_type=patTypeObj
-
         presRecObj.save()
+
         # Add Data to Prescription Bill Records. 
         patPresBillObj=patPrescriptionBill()
         patPresBillObj.pres=presRecObj
-        # patPresBillObj.discount=
-        # patPresBillObj.discount_percentage=
-        print("presData['net_total']",presData['net_total'])
+        patPresBillObj.discount=presData['discount']
+        patPresBillObj.discount_percentage=presData['discount_percent']
+            # Discount Reason Missing --patPresBillObj.discount_reason=presData['discount_reason']
         patPresBillObj.net_total=presData['net_total']
-        patPresBillObj.status="UnPaid"
+        patPresBillObj.status="Paid"
         patPresBillObj.save()
+        # Adding Data to invoice Records
         invObj=invoiceRecords()
         invObj.pres=presRecObj
         invObj.net_total=presData['net_total']
-        invObj.status="UnPaid"
+        invObj.status="Paid"
         invObj.save()
         if patient_type=='Indoor':
             if presData['bed_type']=="Room":
