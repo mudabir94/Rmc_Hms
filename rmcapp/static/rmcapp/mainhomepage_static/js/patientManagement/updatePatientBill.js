@@ -320,39 +320,26 @@ function createDispensoryBillRow(){
 main_col_div.append(row_div_three);
 }
 function createSurgeryBillRow(){
-
-    var row_div_four=$("<div class='row' id='row_surgery_bill'></div>");
+        var row_div_four=$("<div class='row' id='row_surgery_bill'></div>");
         var main_subcol=$("<div class='col-md-12'></div>");
-            
+
+    for (key in surgBillRecord_dict){
+        var row_div=$("<div id='surg_no-"+key+"'>")
             var subrow_one=$("<div class='row' style='padding-top: 5px;padding-bottom: 5px;'></div>")
 
                 var col_one__subrow_one=$("<div class='col-md-5'></div>");
                     row__col_one__subrow_one=$("<div class='row'></div>");
                         var colmd1=$("<div class='col-md-4'></div>")
                         var colmd2=$("<div class='col-md-6'></div>")
-                            var pat_name_label=$("<label for='pat_name_tag' class='custom_label_css'>Patient Name</label>");
-                            // var pat_name_input=$("<label id='pat_name_input' class='form-control-static'>"+roomBill_dict['pat_name']+"</label>")
-                        colmd1.append(pat_name_label)
-                        // colmd2.append(pat_name_input)
+                            var Surg_label=$("<label for='Surg_tag' class='custom_label_css'>Surgery Name</label>");
+                            var surg_name_label=$("<label id='surg_name_label-"+key+"' class='form-control-static'>"+surgBillRecord_dict[key]['surgery_name']+"</label>")
+                        colmd1.append(Surg_label)
+                        colmd2.append(surg_name_label)
                     row__col_one__subrow_one.append(colmd1);
                     row__col_one__subrow_one.append(colmd2);
                 col_one__subrow_one.append(row__col_one__subrow_one);
 
-                var col_two__subrow_one=$("<div class='col-md-5'></div>");
-                    var row__col_two__subrow_one=$("<div class='row'></div>");
-                        var colmd1=$("<div class='col-md-4'></div>")
-                        var colmd2=$("<div class='col-md-6'></div>")
-                            var pres_label=$("<label class='custom_label_css'>prescription ID</label>");
-                            // var pres_input=$("<label id='prescription_input' class='form-control-static'>"+prescription_id+"</label>")
-                        colmd1.append(pres_label);
-                        // colmd2.append(pres_input);
-    
-                    row__col_two__subrow_one.append(colmd1)
-                    row__col_two__subrow_one.append(colmd2)
-                col_two__subrow_one.append(row__col_two__subrow_one)
-
             subrow_one.append(col_one__subrow_one)
-            subrow_one.append(col_two__subrow_one)
 
             var subrow_two=$("<div class='row' style='padding-top: 5px;padding-bottom: 5px;'></div>")
 
@@ -360,10 +347,10 @@ function createSurgeryBillRow(){
                     row__col_one__subrow_two=$("<div class='row'></div>");
                         var colmd1=$("<div class='col-md-4'></div>")
                         var colmd2=$("<div class='col-md-6'></div>")
-                            var floor_label=$("<label for='floor_tag' class='custom_label_css'>Floor Number</label>");
-                            // var floor_input=$("<label id='floor_input' class='form-control-static'>"+roomBill_dict['floor']+"</label>")
-                        colmd1.append(floor_label)
-                        // colmd2.append(floor_input)
+                            var SF_label=$("<label class='custom_label_css'>Surgeon Fee</label>");
+                            var SF_input=$("<input class='form-control custom_input_css' id='sf_input-"+key+"' onfocusin='valueFocusInSF($(this))' onfocusout='valueFocusOutSF($(this))' value='"+surgBillRecord_dict[key]['surgeon_fee']+"'>")
+                        colmd1.append(SF_label);
+                        colmd2.append(SF_input);
                     row__col_one__subrow_two.append(colmd1);
                     row__col_one__subrow_two.append(colmd2);
                 col_one__subrow_two.append(row__col_one__subrow_two);
@@ -372,11 +359,12 @@ function createSurgeryBillRow(){
                     var row__col_two__subrow_two=$("<div class='row'></div>");
                         var colmd1=$("<div class='col-md-4'></div>")
                         var colmd2=$("<div class='col-md-6'></div>")
-                            var room_label=$("<label class='custom_label_css'>Room Number</label>");
-                            // var room_input=$("<label id='room_input' class='form-control-static'>"+roomBill_dict['room_no']+"</label>")
-                        colmd1.append(room_label);
-                        // colmd2.append(room_input);
-    
+                            var OTF_label=$("<label class='custom_label_css'>Operation Theatre Fee</label>");
+                            var OTF_input=$("<input class='form-control custom_input_css' id='otf_input-"+key+"' onfocusin='valueFocusInOTF($(this))' onfocusout='valueFocusOutOTF($(this))' value='"+surgBillRecord_dict[key]['OT_fee']+"'>")
+
+                        colmd1.append(OTF_label);
+                        colmd2.append(OTF_input);
+
                     row__col_two__subrow_two.append(colmd1)
                     row__col_two__subrow_two.append(colmd2)
                 col_two__subrow_two.append(row__col_two__subrow_two)
@@ -384,87 +372,341 @@ function createSurgeryBillRow(){
             subrow_two.append(col_one__subrow_two)
             subrow_two.append(col_two__subrow_two)
 
-           
-        main_subcol.append(subrow_one)
-        main_subcol.append(subrow_two)
+            var subrow_three=$("<div class='row' style='padding-top: 5px;padding-bottom: 5px;'></div>")
+
+                var col_one__subrow_three=$("<div class='col-md-5'></div>");
+                    row__col_one__subrow_three=$("<div class='row'></div>");
+                        var colmd1=$("<div class='col-md-4'></div>")
+                        var colmd2=$("<div class='col-md-6'></div>")
+                            var AF_label=$("<label for='AF_label' class='custom_label_css'>Anesthesiologist Fee</label>");
+                            var AF_input=$("<input class='form-control custom_input_css' id='af_input-"+key+"' onfocusin='valueFocusInAF($(this))' onfocusout='valueFocusOutAF($(this))' value='"+surgBillRecord_dict[key]['anest_fee']+"'>")
+                        colmd1.append(AF_label)
+                        colmd2.append(AF_input)
+                    row__col_one__subrow_three.append(colmd1);
+                    row__col_one__subrow_three.append(colmd2);
+                col_one__subrow_three.append(row__col_one__subrow_three);
+
+                var col_two__subrow_three=$("<div class='col-md-5'></div>");
+                    row__col_two__subrow_three=$("<div class='row'></div>");
+                        var colmd1=$("<div class='col-md-4'></div>")
+                        var colmd2=$("<div class='col-md-6'></div>")
+                            var SF_label=$("<label for='SF_label' class='custom_label_css'>Surplus Charges</label>");
+                            var SF_input=$("<input class='form-control custom_input_css' id='sc_input-"+key+"' onfocusin='valueFocusInSC($(this))' onfocusout='valueFocusOutSC($(this))' value='"+surgBillRecord_dict[key]['surplus_fee']+"'>")
+
+                        colmd1.append(SF_label)
+                        colmd2.append(SF_input)
+                    row__col_two__subrow_three.append(colmd1);
+                    row__col_two__subrow_three.append(colmd2);
+                col_two__subrow_three.append(row__col_two__subrow_three);
+
+            subrow_three.append(col_one__subrow_three)
+            subrow_three.append(col_two__subrow_three)
+
+            var subrow_four=$("<div class='row' style='padding-top: 5px;padding-bottom: 5px;'></div>")
+
+                var col_one__subrow_four=$("<div class='col-md-5'></div>");
+                    row__col_one__subrow_four=$("<div class='row'></div>");
+                        var colmd1=$("<div class='col-md-4'></div>")
+                        var colmd2=$("<div class='col-md-2'></div>")
+                            var total_label=$("<label class='custom_label_css'>Total Amount</label>");
+                            var total_Input=$("<input class='form-control custom_input_css' id='surgery_input-"+key+"' value='"+surgBillRecord_dict[key]['net_total']+"' Disabled>")
+                        colmd1.append(total_label);
+                        colmd2.append(total_Input);
+                    row__col_one__subrow_four.append(colmd1);
+                    row__col_one__subrow_four.append(colmd2);
+                col_one__subrow_four.append(row__col_one__subrow_four);
+
+            subrow_four.append(col_one__subrow_four)
+
+            var subrow_five=$("<div class='row' style='padding-top: 5px;padding-bottom: 5px;'></div>")
+
+                var col_one__subrow_five=$("<div class='col-md-5'></div>");
+                    row__col_one__subrow_five=$("<div class='row'></div>");
+                        var colmd1=$("<div class='col-md-4'></div>")
+                        var colmd2=$("<div class='col-md-2'></div>")
+                            var status_label=$("<label class='custom_label_css'>Status</label>");
+                            var select=$("<select id='surg_status-"+key+"' class='form-control' ></select>");
+                                    
+                            if (surgBillRecord_dict[key]['status']==='Paid'){
+                                var option=$("<option id="+status_list[0]+"-opt value='"+status_list[0]+"'>"+status_list[0]+"</option>");
+                                $(select).append(option);
+                                var option1=$("<option id="+status_list[1]+"-opt value='"+status_list[1]+"' >"+status_list[1]+"</option>");
+                                $(select).append(option1);          
+                            }
+                            else{
+                                var option=$("<option id="+status_list[1]+"-opt value='"+status_list[1]+"'>"+status_list[1]+"</option>");
+                                $(select).append(option);
+                                var option1=$("<option id="+status_list[0]+"-opt value='"+status_list[0]+"'>"+status_list[0]+"</option>");
+                                $(select).append(option1);          
+                            }                               
+                        colmd1.append(status_label);
+                        colmd2.append(select);
+                    row__col_one__subrow_five.append(colmd1);
+                    row__col_one__subrow_five.append(colmd2);
+                col_one__subrow_five.append(row__col_one__subrow_five);
+
+            subrow_five.append(col_one__subrow_five)
+        
+        row_div.append(subrow_one)
+        row_div.append(subrow_two)
+        row_div.append(subrow_three)
+        row_div.append(subrow_four)
+        row_div.append(subrow_five)
+
+        main_subcol.append(row_div)
+    }
+    var subrow_six=$("<div class='row' style='padding-top: 5px;padding-bottom: 5px;'></div>")
+    
+        var col_one__subrow_six=$("<div class='col-md-5'></div>");
+            row__col_one__subrow_six=$("<div class='row'></div>");
+                var colmd1=$("<div class='col-md-4'></div>")
+                var colmd2=$("<div class='col-md-6'></div>")
+                    var surgTotal_label=$("<label class='custom_label_css'>Surgery Sub Total</label>");
+                    var surgTotal_Input=$("<label class='form-control custom_input_css' id='surg_total'>"+surgBillRecord_dict[key]['all_surg_amount']+"</label>")
+                colmd1.append(surgTotal_label);
+                colmd2.append(surgTotal_Input);
+            row__col_one__subrow_six.append(colmd1);
+            row__col_one__subrow_six.append(colmd2);
+        col_one__subrow_six.append(row__col_one__subrow_six);
+
+    subrow_six.append(col_one__subrow_six)
+    main_subcol.append(subrow_six)
+
 
     row_div_four.append(main_subcol)
     var main_col_div=$("#main_col_div");
 main_col_div.append(row_div_four);
 }
+var sgt=0
+function valueFocusInSF(element){
+    var id=$(element).attr('id')
+    var arr_id=id.split("-")
+    id= arr_id[1]
+    var sf= $("#sf_input-"+id+"").val();
+    console.log("id", id)
+    sf=parseInt(sf)
+
+    var surg_sub_total=$("#surgery_input-"+id+"").val();
+    console.log("surg_sub_total", surg_sub_total)
+
+    surg_sub_total=parseInt(surg_sub_total)
+    sgt= surg_sub_total-sf;
+
+    console.log("sgt--",sgt);
+}
+function valueFocusOutSF(element){
+    var id=$(element).attr('id')
+    var arr_id=id.split("-")
+    id= arr_id[1]
+    var newSF=  $("#sf_input-"+id+"").val();
+    newSF=parseInt(newSF)
+    if (newSF===""){
+        newSF=0
+        sgt= sgt+newSF;
+        console.log("sgt1111111111",sgt);
+
+        $("#sf_input-"+id+"").val('0');
+    }
+    sgt= sgt+newSF;
+    console.log("totalAmount",sgt);
+    $("#surgery_input-"+id+"").val(sgt);
+}
+function valueFocusInOTF(element){
+    var id=$(element).attr('id')
+    var arr_id=id.split("-")
+    id= arr_id[1]
+    var otf= $("#otf_input-"+id+"").val();
+    console.log("id", id)
+    otf=parseInt(otf)
+
+    var surg_sub_total=$("#surgery_input-"+id+"").val();
+    console.log("surg_sub_total", surg_sub_total)
+
+    surg_sub_total=parseInt(surg_sub_total)
+    sgt= surg_sub_total-otf;
+
+    console.log("sgt--",sgt);
+}
+function valueFocusOutOTF(element){
+    var id=$(element).attr('id')
+    var arr_id=id.split("-")
+    id= arr_id[1]
+    var newOTF=  $("#otf_input-"+id+"").val();
+    newOTF=parseInt(newOTF)
+    if (newOTF===""){
+        newOTF=0
+        sgt= sgt+newOTF;
+        console.log("sgt1111111111",sgt);
+
+        $("#otf_input-"+id+"").val('0');
+    }
+    sgt= sgt+newOTF;
+    console.log("totalAmount",sgt);
+    $("#surgery_input-"+id+"").val(sgt);
+}
+function valueFocusInAF(element){
+    var id=$(element).attr('id')
+    var arr_id=id.split("-")
+    id= arr_id[1]
+    var af= $("#af_input-"+id+"").val();
+    console.log("id", id)
+    af=parseInt(af)
+
+    var surg_sub_total=$("#surgery_input-"+id+"").val();
+    console.log("surg_sub_total", surg_sub_total)
+
+    surg_sub_total=parseInt(surg_sub_total)
+    sgt= surg_sub_total-af;
+
+    console.log("sgt--",sgt);
+}
+function valueFocusOutAF(element){
+    var id=$(element).attr('id')
+    var arr_id=id.split("-")
+    id= arr_id[1]
+    var newAF=  $("#af_input-"+id+"").val();
+    newAF=parseInt(newAF)
+    if (newAF===""){
+        newAF=0
+        sgt= sgt+newAF;
+        console.log("sgt1111111111",sgt);
+
+        $("#af_input-"+id+"").val('0');
+    }
+    sgt= sgt+newAF;
+    console.log("totalAmount",sgt);
+    $("#surgery_input-"+id+"").val(sgt);
+}
+function valueFocusInSC(element){
+    var id=$(element).attr('id')
+    var arr_id=id.split("-")
+    id= arr_id[1]
+    var sc= $("#sc_input-"+id+"").val();
+    console.log("id", id)
+    sc=parseInt(sc)
+
+    var surg_sub_total=$("#surgery_input-"+id+"").val();
+    console.log("surg_sub_total", surg_sub_total)
+
+    surg_sub_total=parseInt(surg_sub_total)
+    sgt= surg_sub_total-sc;
+
+    console.log("sgt--",sgt);
+}
+function valueFocusOutSC(element){
+    var id=$(element).attr('id')
+    var arr_id=id.split("-")
+    id= arr_id[1]
+    var newSC=  $("#sc_input-"+id+"").val();
+    newSC=parseInt(newSC)
+    if (newSC===""){
+        newSC=0
+        sgt= sgt+newSC;
+        console.log("sgt1111111111",sgt);
+
+        $("#sc_input-"+id+"").val('0');
+    }
+    sgt= sgt+newSC;
+    console.log("totalAmount",sgt);
+    $("#surgery_input-"+id+"").val(sgt);
+}
 function createProcedureBillRow(){
     var row_div_five=$("<div class='row' id='row_procedure_bill'></div>");
         var main_subcol=$("<div class='col-md-12'></div>");
             
-            var subrow_one=$("<div class='row' style='padding-top: 5px;padding-bottom: 5px;'></div>")
-
-                var col_one__subrow_one=$("<div class='col-md-5'></div>");
-                    row__col_one__subrow_one=$("<div class='row'></div>");
-                        var colmd1=$("<div class='col-md-4'></div>")
-                        var colmd2=$("<div class='col-md-6'></div>")
-                            var pat_name_label=$("<label for='pat_name_tag' class='custom_label_css'>Patient Name</label>");
-                            // var pat_name_input=$("<label id='pat_name_input' class='form-control-static'>"+roomBill_dict['pat_name']+"</label>")
-                        colmd1.append(pat_name_label)
-                        // colmd2.append(pat_name_input)
-                    row__col_one__subrow_one.append(colmd1);
-                    row__col_one__subrow_one.append(colmd2);
-                col_one__subrow_one.append(row__col_one__subrow_one);
-
-                var col_two__subrow_one=$("<div class='col-md-5'></div>");
-                    var row__col_two__subrow_one=$("<div class='row'></div>");
-                        var colmd1=$("<div class='col-md-4'></div>")
-                        var colmd2=$("<div class='col-md-6'></div>")
-                            var pres_label=$("<label class='custom_label_css'>prescription ID</label>");
-                            // var pres_input=$("<label id='prescription_input' class='form-control-static'>"+prescription_id+"</label>")
-                        colmd1.append(pres_label);
-                        // colmd2.append(pres_input);
+        for (key in procBillRecord_dict){
+            var row_div=$("<div id='proc_no-"+key+"'>")
+                var subrow_one=$("<div class='row' style='padding-top: 5px;padding-bottom: 5px;'></div>")
     
-                    row__col_two__subrow_one.append(colmd1)
-                    row__col_two__subrow_one.append(colmd2)
-                col_two__subrow_one.append(row__col_two__subrow_one)
-
-            subrow_one.append(col_one__subrow_one)
-            subrow_one.append(col_two__subrow_one)
-
-            var subrow_two=$("<div class='row' style='padding-top: 5px;padding-bottom: 5px;'></div>")
-
-                var col_one__subrow_two=$("<div class='col-md-5'></div>");
-                    row__col_one__subrow_two=$("<div class='row'></div>");
-                        var colmd1=$("<div class='col-md-4'></div>")
-                        var colmd2=$("<div class='col-md-6'></div>")
-                            var floor_label=$("<label for='floor_tag' class='custom_label_css'>Floor Number</label>");
-                            // var floor_input=$("<label id='floor_input' class='form-control-static'>"+roomBill_dict['floor']+"</label>")
-                        colmd1.append(floor_label)
-                        // colmd2.append(floor_input)
-                    row__col_one__subrow_two.append(colmd1);
-                    row__col_one__subrow_two.append(colmd2);
-                col_one__subrow_two.append(row__col_one__subrow_two);
-
-                var col_two__subrow_two=$("<div class='col-md-5'></div>");
-                    var row__col_two__subrow_two=$("<div class='row'></div>");
-                        var colmd1=$("<div class='col-md-4'></div>")
-                        var colmd2=$("<div class='col-md-6'></div>")
-                            var room_label=$("<label class='custom_label_css'>Room Number</label>");
-                            // var room_input=$("<label id='room_input' class='form-control-static'>"+roomBill_dict['room_no']+"</label>")
-                        colmd1.append(room_label);
-                        // colmd2.append(room_input);
+                    var col_one__subrow_one=$("<div class='col-md-5'></div>");
+                        row__col_one__subrow_one=$("<div class='row'></div>");
+                            var colmd1=$("<div class='col-md-4'></div>")
+                            var colmd2=$("<div class='col-md-6'></div>")
+                                var Surg_label=$("<label for='Surg_tag' class='custom_label_css'>Procedure Name</label>");
+                                var surg_name_label=$("<label id='proc_name_label-"+key+"' class='form-control-static'>"+procBillRecord_dict[key]['procedure_name']+"</label>")
+                            colmd1.append(Surg_label)
+                            colmd2.append(surg_name_label)
+                        row__col_one__subrow_one.append(colmd1);
+                        row__col_one__subrow_one.append(colmd2);
+                    col_one__subrow_one.append(row__col_one__subrow_one);
     
-                    row__col_two__subrow_two.append(colmd1)
-                    row__col_two__subrow_two.append(colmd2)
-                col_two__subrow_two.append(row__col_two__subrow_two)
+                subrow_one.append(col_one__subrow_one)
+    
+                var subrow_two=$("<div class='row' style='padding-top: 5px;padding-bottom: 5px;'></div>")
+    
+                    var col_one__subrow_two=$("<div class='col-md-5'></div>");
+                        row__col_one__subrow_two=$("<div class='row'></div>");
+                            var colmd1=$("<div class='col-md-4'></div>")
+                            var colmd2=$("<div class='col-md-6'></div>")
+                                var total_label=$("<label class='custom_label_css'>Procedure Fee</label>");
+                                var total_Input=$("<input class='form-control custom_input_css' id='proc_input-"+key+"' onfocusin='valueFocusInProcFee()' onfocusout='valueFocusOutProcFee($(this))' value='"+procBillRecord_dict[key]['net_total']+"'>")
+                            colmd1.append(total_label);
+                            colmd2.append(total_Input);
+                        row__col_one__subrow_two.append(colmd1);
+                        row__col_one__subrow_two.append(colmd2);
+                    col_one__subrow_two.append(row__col_one__subrow_two);
+    
+                subrow_two.append(col_one__subrow_two)
+    
+                var subrow_three=$("<div class='row' style='padding-top: 5px;padding-bottom: 5px;'></div>")
+    
+                    var col_one__subrow_three=$("<div class='col-md-5'></div>");
+                        row__col_one__subrow_three=$("<div class='row'></div>");
+                            var colmd1=$("<div class='col-md-4'></div>")
+                            var colmd2=$("<div class='col-md-6'></div>")
+                                var status_label=$("<label class='custom_label_css'>Status</label>");
+                                var select=$("<select id='proc_status-"+key+"' class='form-control' ></select>");
+                                        
+                                    if (procBillRecord_dict[key]['status']==='Paid'){
+                                        var option=$("<option id="+status_list[0]+"-opt value='"+status_list[0]+"'>"+status_list[0]+"</option>");
+                                        $(select).append(option);
+                                        var option1=$("<option id="+status_list[1]+"-opt value='"+status_list[1]+"' >"+status_list[1]+"</option>");
+                                        $(select).append(option1);          
+                                    }
+                                    else{
+                                        var option=$("<option id="+status_list[1]+"-opt value='"+status_list[1]+"'>"+status_list[1]+"</option>");
+                                        $(select).append(option);
+                                        var option1=$("<option id="+status_list[0]+"-opt value='"+status_list[0]+"'>"+status_list[0]+"</option>");
+                                        $(select).append(option1);          
+                                    }                               
+                            colmd1.append(status_label);
+                            colmd2.append(select);
+                        row__col_one__subrow_three.append(colmd1);
+                        row__col_one__subrow_three.append(colmd2);
+                    col_one__subrow_three.append(row__col_one__subrow_three);
+                subrow_three.append(col_one__subrow_three)
+            
+            row_div.append(subrow_one)
+            row_div.append(subrow_two)
+            row_div.append(subrow_three)
 
-            subrow_two.append(col_one__subrow_two)
-            subrow_two.append(col_two__subrow_two)
+            main_subcol.append(row_div)
+        }
+        var subrow_four=$("<div class='row' style='padding-top: 5px;padding-bottom: 5px;'></div>")
+    
+            var col_one__subrow_four=$("<div class='col-md-5'></div>");
+                row__col_one__subrow_four=$("<div class='row'></div>");
+                    var colmd1=$("<div class='col-md-4'></div>")
+                    var colmd2=$("<div class='col-md-6'></div>")
+                        var procTotal_label=$("<label class='custom_label_css'>Procedure Sub Total</label>");
+                        var procTotal_Input=$("<label class='form-control custom_input_css' id='proc_total'>"+procBillRecord_dict[key]['all_proc_amount']+"</label>")
+                    colmd1.append(procTotal_label);
+                    colmd2.append(procTotal_Input);
+                row__col_one__subrow_four.append(colmd1);
+                row__col_one__subrow_four.append(colmd2);
+            col_one__subrow_four.append(row__col_one__subrow_four);
 
-           
-        main_subcol.append(subrow_one)
-        main_subcol.append(subrow_two)
+        subrow_four.append(col_one__subrow_four)
+        main_subcol.append(subrow_four)
+
 
         row_div_five.append(main_subcol)
+
     var main_col_div=$("#main_col_div");
 main_col_div.append(row_div_five);
 
 }
+var pgt=0
 function createRoomBillRow(){
     var row_div_six=$("<div class='row' id='row_room_bill'></div>");
         var main_subcol=$("<div class='col-md-12'></div>");
@@ -906,11 +1148,11 @@ function netTotalAmountRow(){
 
 function updateInvoice(){
     
-    var invoice_no=$("#invoice_input").text();
+    var invoice_no=$("#invoice_label").text();
     var invoice_status=$("#invoice_status").val();
     var netTotal=$("#nettotal_label").text();
 
-
+    var pres_id=$("#pres_id_input").val();
     var pres_total=$("#pres_amount_input").val();
     var pres_status=$("#pres_status").val();
     var desp_total=$("#Desp_amount_input").val();
@@ -953,6 +1195,7 @@ function updateInvoice(){
         type: 'GET',
         dataType: "json",
         'data': {
+            "pres":JSON.stringify(pres_id),
             "proc_dict":JSON.stringify(proc_dict), 
             "surg_dict":JSON.stringify(surg_dict),
             "room_dict":JSON.stringify(room_dict),
