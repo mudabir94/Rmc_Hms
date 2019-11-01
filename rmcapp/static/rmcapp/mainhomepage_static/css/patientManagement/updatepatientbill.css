@@ -1,7 +1,14 @@
-#row_pres_bill, #row_disp_bill, #row_room_bill, #row_ward_bill{
+#row_surgery_bill, #row_procedure_bill, #row_pres_bill, #row_disp_bill, #row_room_bill, #row_ward_bill{
     background-color: #a79c9c1a;
     border: 1px solid;
     margin-top: 10px;
     margin-bottom: 10px;
+    font-size: x-large;
+}
+#total_amount_div, #pat_details_div{
+    font-size: x-large;
+    margin-top: 30px;
+    margin-bottom: 20px;
+
 
 }
