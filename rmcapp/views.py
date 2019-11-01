@@ -1314,6 +1314,7 @@ def generatePrescription(request):
         patTypeObj=patientType.objects.get(patient_type=patient_type)
         presRecObj.patient_type=patTypeObj
         presRecObj.save()
+        presData['pres_id']=presRecObj.id
 
         # Add Data to Prescription Bill Records. 
         patPresBillObj=patPrescriptionBill()

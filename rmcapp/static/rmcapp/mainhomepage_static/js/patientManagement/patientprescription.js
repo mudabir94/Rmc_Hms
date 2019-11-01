@@ -30,7 +30,7 @@ $(document).ready(function() {
         success: function(data){
             console.log("presData----",JSON.parse(data['presData']));
             presData= JSON.parse(data['presData'])
-            console.log("iddd", presData['pat_id'])
+            console.log("iddd", presData['pres_id'])
             loadPresForm();
 
         },
@@ -54,8 +54,16 @@ function loadPresForm(){
                     rmc_tag=$("<p class='text-center font-weight-bold' style='font-size:2vw;' id='rmc_label'>RAFIQ MEDICAL CENTER</p>");
                     colmd1.append(rmc_tag)
                     colmd2=$('<div class="col-md-6"></div>');
-                    button=$("<button class= 'btttn' onclick='PrintPres()'> Print </button>")
-                    colmd2.append(button)
+
+                    button=$("<button class= 'btttn' onclick='PrintPres()'> Print </button>");
+                    pres_id_label=$("<label class='custom_label_css' style='font-weight: bold;'>prescription id</label>");
+                    pres_id_input=$("<input class='form-control' id='pres_id' style='background-color: white;' value='"+presData['pres_id']+"' Disabled>")
+
+
+                    colmd2.append(button);
+                    colmd2.append(pres_id_label);
+                    colmd2.append(pres_id_input);
+
 
                 row__col_one__row_div_one.append(colmd1);
                 row__col_one__row_div_one.append(colmd2);
@@ -78,6 +86,7 @@ function loadPresForm(){
                     pat_id_label=$("<label class='custom_label_css' style='font-weight: bold;'>ID</label>");
                     colmd1.append(pat_id_label)
                     pat_id=$("<input class='form-control' id='pat_id' style='background-color: white;' value='"+presData['pat_id']+"' Disabled>")
+                    
                     colmd2.append(pat_id)
                     
                     pat_name_label=$("<label class='custom_label_css' style='font-weight: bold;'>Name</label>");
@@ -117,10 +126,10 @@ function loadPresForm(){
                     date_input=$("<input class='form-control' id='date_id' style='background-color: white;' value='"+today+"' disabled>")
                     colmd2.append(date_input)
                     
-                    pat_address_label=$("<label class='custom_label_css' style='font-weight: bold;'>Blood Group</label>");
-                    colmd3.append(pat_address_label)
-                    pat_address=$("<input class='form-control' id='pat_gender' style='background-color: white;' value='"+presData['bloodgroup']+"' disabled>")
-                    colmd4.append(pat_address)
+                    pat_bg_label=$("<label class='custom_label_css' style='font-weight: bold;'>Blood Group</label>");
+                    colmd3.append(pat_bg_label)
+                    pat_bg=$("<input class='form-control' id='pat_gender' style='background-color: white;' value='"+presData['bloodgroup']+"' disabled>")
+                    colmd4.append(pat_bg)
 
                     pat_tele_label=$("<label class='custom_label_css' style='font-weight: bold;'>Telephone No</label>");
                     colmd5.append(pat_tele_label)

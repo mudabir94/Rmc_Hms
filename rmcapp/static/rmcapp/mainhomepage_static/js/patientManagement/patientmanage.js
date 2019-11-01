@@ -1808,7 +1808,7 @@ function printPrescriptionForm(){
     var patient_name=patient_dict[patient_id_selected]['name'];
     console.log("patient_name", patient_name);
 
-    var pat_id= patient_id_selected
+    var pat_id= patient_id_selected;
     console.log("patient id", pat_id);
 
     var patient_gender=patient_dict[patient_id_selected]['gender'];
