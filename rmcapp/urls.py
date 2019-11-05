@@ -90,5 +90,6 @@ urlpatterns = [
 
   path('retrieve_invoice_bill_record',views.retrieveInvoiceBillRecord,name='retrieve_invoice_bill_record'),
   path('update_invoice',views.updateInvoice,name="update_invoice"),
+  path("printtest",views.printTest,name="printtest"),
 
 ]

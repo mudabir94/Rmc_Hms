@@ -56,14 +56,10 @@ function loadPresForm(){
                     colmd2=$('<div class="col-md-6"></div>');
 
                     button=$("<button class= 'btttn' onclick='PrintPres()'> Print </button>");
-                    pres_id_label=$("<label class='custom_label_css' style='font-weight: bold;'>prescription id</label>");
-                    pres_id_input=$("<input class='form-control' id='pres_id' style='background-color: white;' value='"+presData['pres_id']+"' Disabled>")
-
+                  
 
                     colmd2.append(button);
-                    colmd2.append(pres_id_label);
-                    colmd2.append(pres_id_input);
-
+                   
 
                 row__col_one__row_div_one.append(colmd1);
                 row__col_one__row_div_one.append(colmd2);
@@ -77,11 +73,19 @@ function loadPresForm(){
                 row__col_one__row_div_two=$("<div class='row'></div>");
 
                     colmd1=$("<div class='col-md-1'></div>")
-                    colmd2=$("<div class='col-md-2'></div>")
+                    colmd2=$("<div class='col-md-1'></div>")
                     colmd3=$("<div class='col-md-1 offset-md-1'></div>")
-                    colmd4=$("<div class='col-md-4'></div>")
+                    colmd4=$("<div class='col-md-2'></div>")
                     colmd5=$("<div class='col-md-1'></div>")
                     colmd6=$("<div class='col-md-2'></div>")
+                    colmd7=$("<div class='col-md-1'></div>");
+                    colmd8=$("<div class='col-md-1'></div>")
+
+                    pres_id_label=$("<label class='custom_label_css' style='font-weight: bold;'>Pres Id</label>");
+                    colmd7.append(pres_id_label);
+                    pres_id_input=$("<input class='form-control' id='pat_id' style='background-color: white;' value='"+presData['pres_id']+"' Disabled>")
+                    colmd8.append(pres_id_input);
+
 
                     pat_id_label=$("<label class='custom_label_css' style='font-weight: bold;'>ID</label>");
                     colmd1.append(pat_id_label)
@@ -99,6 +103,8 @@ function loadPresForm(){
                     pat_sex=$("<input class='form-control' id='token' style='background-color: white;' value='"+presData['gender']+"' Disabled >")
                     colmd6.append(pat_sex)
                     
+                row__col_one__row_div_two.append(colmd7);
+                row__col_one__row_div_two.append(colmd8);
                 row__col_one__row_div_two.append(colmd1);
                 row__col_one__row_div_two.append(colmd2);
                 row__col_one__row_div_two.append(colmd3);
@@ -354,11 +360,14 @@ $(row_div_eight).append(col_one__row_div_eight);
 
 }
 function PrintPres(){
+    // $("#patient_prescription_div").print();
     var restorepage = $('body').html();
     var printcontent = $(patient_prescription_div).clone();
     console.log("printcontent",printcontent)
     $('body').empty().html(printcontent);
     window.print();
+
+
     // window.close();
     // $('body').html(restorepage);
 

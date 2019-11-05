@@ -1495,15 +1495,11 @@ function createOutDoorPresFormDiv(){
 
                                     var select=$("<select id='selecteddoctor' class='form-control'></select>");
                                         var option=$("<option selected='selected' value='--'>--</option>");
-                                        var option1=$("<option id="+doctor_list[0]+"-opt value="+doctor_list[0]+">"+doctor_list[0]+"</option>");
                                     $(select).append(option);
-                                    $(select).append(option1);
 
-                                    for (var i=1;i<=doctor_list.length;i++){
-                                        if (doctor_list[i]!==undefined){
-                                            var option=$("<option id="+doctor_list[i]+"-opt value="+doctor_list[i]+">"+doctor_list[i]+"</option>");
-                                            $(select).append(option);
-                                        }
+                                    for (var key in empdict){
+                                        var option=$("<option id='"+key+"_doc-opt' value='"+key+"'>"+empdict[key]+"</option>");
+                                        $(select).append(option);
                                     } 
                                     colmd2.append(select)
 
@@ -1642,15 +1638,11 @@ function createEmergencyPresFormDiv(){
 
                                     var select=$("<select id='selecteddoctor' class='form-control'></select>");
                                         var option=$("<option selected='selected' value='--'>--</option>");
-                                        var option1=$("<option id="+doctor_list[0]+"-opt value="+doctor_list[0]+">"+doctor_list[0]+"</option>");
                                     $(select).append(option);
-                                    $(select).append(option1);
 
-                                    for (var i=1;i<=doctor_list.length;i++){
-                                        if (doctor_list[i]!==undefined){
-                                            var option=$("<option id="+doctor_list[i]+"-opt value="+doctor_list[i]+">"+doctor_list[i]+"</option>");
-                                            $(select).append(option);
-                                        }
+                                    for (var key in empdict){
+                                        var option=$("<option id='"+key+"_doc-opt' value='"+key+"'>"+empdict[key]+"</option>");
+                                        $(select).append(option);
                                     } 
                                     colmd2.append(select)
 
@@ -1875,29 +1867,65 @@ function printPrescriptionForm(){
     // else (days<30){
     //     var age=  days + 'days';
     // }
+
     var patient_type = $("#pat_type_input").val()
     $("#pat_type_input").val();
     var discountamount=$("#discountamount_input").val();
-    $("#discountamount_input").val("");
+    if (discountamount===""){discountamount=0}
     $("#discountamount_input").val("");
     var discountPercent=$("#discountpercent_input").val();
+    if (discountPercent===""){discountPercent=0}
     $("#discountpercent_input").val("");
     var discount_reason=$("#discount_reason_input").val();
     $("#discount_reason_input").val("");
     var doctor = $("#selecteddoctor").val();
-    $("#selecteddoctor").val("--");
     var doctor_name = $("#selecteddoctor option:selected").text();
+    $("#selecteddoctor").val("--");
     var amountdue_input=$("#amountdue_input").val()
     var totalamount_input=$("#totalamount_input").val();
-    $("#totalamount_input").val("");
+    // $("#totalamount_input").val("");
     var pat_contact_no=patient_dict[patient_id_selected]['contact_no'];
     var pat_address=patient_dict[patient_id_selected]['address'];
     var bloodgroup=patient_dict[patient_id_selected]['bloodgroup'];
 
     var presData={};
+    required_fields_left=false
+    if (amountdue_input===""){
+        $("#empty_name_check_div_amountdue_input").remove();
 
+        var div=$("<div class='empty_name_check_div' id='empty_name_check_div_"+ $("#amountdue_input").attr('id')+"'><span  class='glyphicon' style='color:red'>&#x2a;Required</span></div>")
+        $("#amountdue_input").parent().append(div);
+        required_fields_left=true
 
-
+    }else{
+        if($("#amountdue_input").parent().find(".empty_name_check_div").length > 0){
+            $("#empty_name_check_div_amountdue_input").remove();
+        }
+    }
+    if (doctor==="--"){
+        $("#empty_name_check_div_selecteddoctor").remove();
+        var div=$("<div class='empty_name_check_div' id='empty_name_check_div_"+ $("#selecteddoctor").attr('id')+"'><span  class='glyphicon' style='color:red'>&#x2a;Required</span></div>")
+        $("#selecteddoctor").parent().append(div);
+        required_fields_left=true;
+    }else{
+        if($("#selecteddoctor").parent().find(".empty_name_check_div").length > 0){
+            $("#empty_name_check_div_selecteddoctor").remove();
+        }
+    }
+    if (totalamount_input=="" || totalamount_input==0){
+        $("#empty_name_check_div_totalamount_input").remove();
+        var div=$("<div class='empty_name_check_div' id='empty_name_check_div_"+ $("#totalamount_input").attr('id')+"'><span  class='glyphicon' style='color:red'>&#x2a;Required</span></div>")
+        $("#totalamount_input").parent().append(div);
+        required_fields_left=true;
+    }
+    else{
+        if($("#totalamount_input").parent().find(".empty_name_check_div").length > 0){
+            $("#empty_name_check_div_totalamount_input").remove();
+        }
+    }
+    if (required_fields_left==true){
+        return;
+    }
     if (pat_type==='Outdoor'){
         console.log("Out Patient")
     }
@@ -2092,7 +2120,7 @@ function createWardDataTable(){
                                         $(select).append(option);
 
                                                 for (var key in empdict){
-                                                    var option=$("<option id="+key+"_doc-opt value="+key+">"+empdict[key]+"</option>");
+                                                    var option=$("<option id='"+key+"_doc-opt' value='"+key+"'>"+empdict[key]+"</option>");
                                                     $(select).append(option);
 
                                                 }
@@ -2113,7 +2141,7 @@ function createWardDataTable(){
                                         $(select).append(option);
 
                                             for (var key in empdict){
-                                                var option=$("<option id="+key+"_doc-opt value="+key+">"+empdict[key]+"</option>");
+                                                var option=$("<option id='"+key+"_doc-opt' value='"+key+"'>"+empdict[key]+"</option>");
                                                 $(select).append(option);
 
                                             }
@@ -2557,7 +2585,7 @@ function createRoomDataTable(){
                                     colmd2=$("<div class='col-md-9'></div>")
 
                                         var admit_reason_label=$("<label class='custom_label_css'>Admit Reason</label>");
-                                        var admit_reason_input=$("<input type='text'  id='admit_reason_input' class='custom_input_css'>")
+                                        var admit_reason_input=$("<textarea type='text'  id='admit_reason_input' class='custom_input_css'>")
 
                                     colmd1.append(admit_reason_label)
                                     colmd2.append(admit_reason_input)
@@ -2581,7 +2609,7 @@ function createRoomDataTable(){
                                         $(select).append(option);
 
                                                 for (var key in empdict){
-                                                    var option=$("<option id="+key+"_doc-opt value="+key+">"+empdict[key]+"</option>");
+                                                    var option=$("<option id='"+key+"_doc-opt' value='"+key+"'>"+empdict[key]+"</option>");
                                                     $(select).append(option);
 
                                                 }
@@ -2855,6 +2883,8 @@ function retrievePatientInfoInCreateBill(pat_name,contact_no,cnic_no,id){
             }
             console.log("patient_dict",patient_dict[patient_id_selected]);
             console.log(datatable_list);
+            empdict=JSON.parse(data['empdict']);
+            console.log("empdict",empdict)
             createPatientDetailsHtmlInCreateBill();
         },
     }); 
@@ -3226,7 +3256,7 @@ var col1=$("#desp-med-qty-form")
             sub_sub_row2.append(col2_sub_sub_row2);
             var strip_stored=dspstck_dict[1]['strip_stored'];
             console.log("strip_stored",strip_stored);
-            if (strip_stored!=null){
+            if (strip_stored!=null ){
             var sub_sub_row3=$("<div class='row'></div>");
                 var col1_sub_sub_row3=$("<div class='col-md-4'></div>");
                     var label=$("<label>Total Strips</label>")
@@ -3419,8 +3449,8 @@ function SaveAndPrintBill(){
     } );
     console.log("pbr_dict",pbr_dict)
     var rmc="RMC HOSPITAL";
-    var patient_name="Hamza";
-    var phoneno="0322-0001020";
+    var patient_name=$("#pat_name_input").val();
+    var phoneno=$("#contact_numb_input").val();
     var proceduredata_dict={};
     var nettotal_input=$('#nettotal_input').val();
     var totalamount_input=$('#totalamount_input').val();
@@ -3428,7 +3458,7 @@ function SaveAndPrintBill(){
 
 
     var invoice_pos=$("<div id='invoice-POS'></div>");
-
+    
         var center=$("<center id='top'></center>")
             var div_logo=$("<div class='logo'></div>");
             var div_info=$("<div class='info'></div>");
@@ -3437,22 +3467,24 @@ function SaveAndPrintBill(){
             div_info.append(h2);
         center.append(div_logo);
         center.append(div_info);
+        invoice_pos.append(center);   
+
 
         var mid_div=$("<div id='mid'></div>");
             var div_info=$("<div class='info'></div>");
-                var h2=$("<h3>Patient Info</h3>");
+                // var h2=$("<h3>Patient Info</h3>");
                     var p=$("<p> Name   :"+patient_name+" </br> Phone   : "+phoneno+"</br></p>")
-                h2.append(p);
-            div_info.append(h2);
+                // h2.append(p);
+            div_info.append(p);
         mid_div.append(div_info);
 
         var bot_div=$("<div id='bot'></div>");
             var div_table=$("<div id='table'></div>");
                 var table=$("<table>")
                     var tr=$('<tr class="tabletitle"></tr>')
-                        var td1=$('<td class="item"><p>Item</p></td>')
-                        var td2=$('<td class="Hours"><p>Qty</p></td>')
-                        var td3=$('<td class="Rate"><p>Sub Total</p></td>')
+                        var td1=$('<td class="item"><p style="font-size:20px">Item</p></td>')
+                        var td2=$('<td class="Hours"><p style="font-size:20px">Qty</p></td>')
+                        var td3=$('<td class="Rate"><p style="font-size:20px">Sub Total</p></td>')
                     tr.append(td1);
                     tr.append(td2);
                     tr.append(td3);
@@ -3526,7 +3558,6 @@ function SaveAndPrintBill(){
         bot_div.append(legalcopy);
 
 
-    invoice_pos.append(center);   
     invoice_pos.append(mid_div);    
     invoice_pos.append(bot_div);    
 
@@ -3540,9 +3571,8 @@ function SaveAndPrintBill(){
     $('#recipet_div').empty().html(printcontent);
   
     window.print();
-    // w.close();
-    $('#patient_dash_first_div').show();
-    $('#recipet_div').empty();
+    // $('#patient_dash_first_div').show();
+    // $('#recipet_div').empty();
    
 
 
@@ -3663,16 +3693,14 @@ function createRowDivFiveBill(){
         
                                             var select=$("<select id='selecteddoctor' class='form-control'></select>");
                                                 var option=$("<option selected='selected' value='--'>--</option>");
-                                                var option1=$("<option id="+doctor_list[0]+"-opt value="+doctor_list[0]+">"+doctor_list[0]+"</option>");
                                             $(select).append(option);
-                                            $(select).append(option1);
         
-                                            for (var i=1;i<=doctor_list.length;i++){
-                                                if (doctor_list[i]!==undefined){
-                                                    var option=$("<option id="+doctor_list[i]+"-opt value="+doctor_list[i]+">"+doctor_list[i]+"</option>");
-                                                    $(select).append(option);
-                                                }
-                                            } 
+                                            
+                                            for (var key in empdict){
+                                                var option=$("<option id="+key+"_doc-opt value="+key+">"+empdict[key]+"</option>");
+                                                $(select).append(option);
+
+                                            }
                                         c2.append(select);
                                             var print_button=$("<button id='save_print_bill' onclick='SaveAndPrintBill()'>Save And Print</button>")
                                         c3.append(print_button)
