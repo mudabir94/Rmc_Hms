@@ -1,10 +1,10 @@
 
 
 
-var presData={'id': '2', 'name': 'Ali', 'token': '3', 'age': '33', 'gender': 'Male',
- 'discount': '100', 'discount_percent': '50', 'discount_reason': 'poor', 'doctor': 'd1', 
- 'pat_type': 'Outdoor'}
-
+// var presData={'id': '2', 'name': 'Ali', 'token': '3', 'age': '33', 'gender': 'Male',
+//  'discount': '100', 'discount_percent': '50', 'discount_reason': 'poor', 'doctor': 'd1', 
+//  'pat_type': 'Outdoor'}
+var presData={}
 var today = new Date();
 var dd = today.getDate();
 
@@ -22,20 +22,19 @@ if(mm<10)
 today = mm+'-'+dd+'-'+yyyy;
 console.log(today);
 $(document).ready(function() {
-    // $.ajax({
-    //     type: 'POST',
-    //     dataType: "json",
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
        
-    //     url: '/print_patient_prescription',
-    //     success: function(data){
-    //         console.log("presData----",JSON.parse(data['presData']));
-    //         presData= JSON.parse(data['presData'])
-    //         console.log("iddd", presData['id'])
-    //         loadPresForm();
+        url: '/print_patient_prescription',
+        success: function(data){
+            console.log("presData----",JSON.parse(data['presData']));
+            presData= JSON.parse(data['presData'])
+            console.log("iddd", presData['pres_id'])
+            loadPresForm();
 
-    //     },
-    // });
-    loadPresForm();
+        },
+    });
 
 });
 var patient_prescription_div;
@@ -55,8 +54,12 @@ function loadPresForm(){
                     rmc_tag=$("<p class='text-center font-weight-bold' style='font-size:2vw;' id='rmc_label'>RAFIQ MEDICAL CENTER</p>");
                     colmd1.append(rmc_tag)
                     colmd2=$('<div class="col-md-6"></div>');
-                    button=$("<button class= 'btttn' onclick='PrintPres()'> Print </button>")
-                    colmd2.append(button)
+
+                    button=$("<button class= 'btttn' onclick='PrintPres()'> Print </button>");
+                  
+
+                    colmd2.append(button);
+                   
 
                 row__col_one__row_div_one.append(colmd1);
                 row__col_one__row_div_one.append(colmd2);
@@ -70,15 +73,24 @@ function loadPresForm(){
                 row__col_one__row_div_two=$("<div class='row'></div>");
 
                     colmd1=$("<div class='col-md-1'></div>")
-                    colmd2=$("<div class='col-md-2'></div>")
+                    colmd2=$("<div class='col-md-1'></div>")
                     colmd3=$("<div class='col-md-1 offset-md-1'></div>")
-                    colmd4=$("<div class='col-md-4'></div>")
+                    colmd4=$("<div class='col-md-2'></div>")
                     colmd5=$("<div class='col-md-1'></div>")
                     colmd6=$("<div class='col-md-2'></div>")
+                    colmd7=$("<div class='col-md-1'></div>");
+                    colmd8=$("<div class='col-md-1'></div>")
+
+                    pres_id_label=$("<label class='custom_label_css' style='font-weight: bold;'>Pres Id</label>");
+                    colmd7.append(pres_id_label);
+                    pres_id_input=$("<input class='form-control' id='pat_id' style='background-color: white;' value='"+presData['pres_id']+"' Disabled>")
+                    colmd8.append(pres_id_input);
+
 
                     pat_id_label=$("<label class='custom_label_css' style='font-weight: bold;'>ID</label>");
                     colmd1.append(pat_id_label)
-                    pat_id=$("<input class='form-control' id='pat_id' style='background-color: white;' value='"+presData['id']+"' Disabled>")
+                    pat_id=$("<input class='form-control' id='pat_id' style='background-color: white;' value='"+presData['pat_id']+"' Disabled>")
+                    
                     colmd2.append(pat_id)
                     
                     pat_name_label=$("<label class='custom_label_css' style='font-weight: bold;'>Name</label>");
@@ -91,6 +103,8 @@ function loadPresForm(){
                     pat_sex=$("<input class='form-control' id='token' style='background-color: white;' value='"+presData['gender']+"' Disabled >")
                     colmd6.append(pat_sex)
                     
+                row__col_one__row_div_two.append(colmd7);
+                row__col_one__row_div_two.append(colmd8);
                 row__col_one__row_div_two.append(colmd1);
                 row__col_one__row_div_two.append(colmd2);
                 row__col_one__row_div_two.append(colmd3);
@@ -118,14 +132,14 @@ function loadPresForm(){
                     date_input=$("<input class='form-control' id='date_id' style='background-color: white;' value='"+today+"' disabled>")
                     colmd2.append(date_input)
                     
-                    pat_address_label=$("<label class='custom_label_css' style='font-weight: bold;'>Address</label>");
-                    colmd3.append(pat_address_label)
-                    pat_address=$("<input class='form-control' id='pat_gender' style='background-color: white;' value='"+presData['address']+"' disabled>")
-                    colmd4.append(pat_address)
+                    pat_bg_label=$("<label class='custom_label_css' style='font-weight: bold;'>Blood Group</label>");
+                    colmd3.append(pat_bg_label)
+                    pat_bg=$("<input class='form-control' id='pat_gender' style='background-color: white;' value='"+presData['bloodgroup']+"' disabled>")
+                    colmd4.append(pat_bg)
 
                     pat_tele_label=$("<label class='custom_label_css' style='font-weight: bold;'>Telephone No</label>");
                     colmd5.append(pat_tele_label)
-                    pat_telephone=$("<input class='form-control' id='pat_age' style='background-color: white;' value='"+presData['contact']+"' disabled>")
+                    pat_telephone=$("<input class='form-control' id='pat_age' style='background-color: white;' value='"+presData['contact_no']+"' disabled>")
                     colmd6.append(pat_telephone)
 
                 row__col_one__row_div_three.append(colmd1);
@@ -150,7 +164,7 @@ function loadPresForm(){
                         
                         Doctor_label=$("<label class='custom_label_css' style='font-weight: bold;'>Doctor</label>");
                         colmd1.append(Doctor_label)
-                        Doctor_input=$("<input class='form-control' id='doct_id' style='background-color: white;' value='"+presData['doctor']+"' disabled>")
+                        Doctor_input=$("<input class='form-control' id='doct_id' style='background-color: white;' value='"+presData['doctor_name']+"' disabled>")
                         colmd2.append(Doctor_input)
                         
                     row__col_one__row_div_four.append(colmd1);
@@ -170,7 +184,7 @@ function loadPresForm(){
                         
                         Doctor_label=$("<label class='custom_label_css' style='font-weight: bold;'>Doctor</label>");
                         colmd1.append(Doctor_label)
-                        Doctor_input=$("<input class='form-control' id='doct_id' style='background-color: white;' value='"+presData['doctor']+"' disabled>")
+                        Doctor_input=$("<input class='form-control' id='doct_id' style='background-color: white;' value='"+presData['doctor_name']+"' disabled>")
                         colmd2.append(Doctor_input)
                         
                     row__col_one__row_div_four.append(colmd1);
@@ -182,7 +196,7 @@ function loadPresForm(){
         }
         else if(presData['pat_type']==="Indoor"){
 
-            if(presData['ward_type']==="Room"){
+            if(presData['bed_type']==="Room"){
 
             var row_div_four=$("<div class='row'></div>");
                 var col_one__row_div_four=$("<div class='col-md-12' style='padding-bottom: 15px;'></div>");
@@ -194,7 +208,7 @@ function loadPresForm(){
                         
                         Doctor_label=$("<label class='custom_label_css' style='font-weight: bold;'>Consultant</label>");
                         colmd1.append(Doctor_label)
-                        Doctor_input=$("<input class='form-control' id='doct_id' style='background-color: white;' value='"+presData['Consultant']+"' disabled>")
+                        Doctor_input=$("<input class='form-control' id='doct_id' style='background-color: white;' value='"+presData['consultant_name']+"' disabled>")
                         colmd2.append(Doctor_input)
 
                         roomNo_label=$("<label class='custom_label_css' style='font-weight: bold;'>Room Number</label>");
@@ -210,7 +224,7 @@ function loadPresForm(){
                 col_one__row_div_four.append(row__col_one__row_div_four);
             $(row_div_four).append(col_one__row_div_four);
         }
-        else if(presData['ward_type']==="Ward"){
+        else if(presData['bed_type']==="Ward"){
 
             var row_div_four=$("<div class='row  '></div>");
                 var col_one__row_div_four=$("<div class='col-md-12' style='padding-bottom: 15px;'></div>");
@@ -225,7 +239,7 @@ function loadPresForm(){
 
                         Doctor_label=$("<label class='custom_label_css' style='font-weight: bold;'>Consultant</label>");
                         colmd1.append(Doctor_label)
-                        Doctor_input=$("<input class='form-control' id='doct_id' style='background-color: white;' value='"+presData['Consultant']+"' disabled>")
+                        Doctor_input=$("<input class='form-control' id='doct_id' style='background-color: white;' value='"+presData['consultant_name']+"' disabled>")
                         colmd2.append(Doctor_input)
 
                         wardNo_label=$("<label class='custom_label_css' style='font-weight: bold;'>Ward Number</label>");
@@ -346,11 +360,14 @@ $(row_div_eight).append(col_one__row_div_eight);
 
 }
 function PrintPres(){
+    // $("#patient_prescription_div").print();
     var restorepage = $('body').html();
     var printcontent = $(patient_prescription_div).clone();
     console.log("printcontent",printcontent)
     $('body').empty().html(printcontent);
     window.print();
+
+
     // window.close();
     // $('body').html(restorepage);
 

@@ -138,23 +138,22 @@ function subFormCreation(){
     var main_sidecol1=$("<div class='col-md-1' ></div>");
     var main_sidecol2=$("<div class='col-md-5' ></div>");
      
-        var row1=$("<div></div>");
-            var subrow1=$("<div class='row'>")
-                var subcol1=$("<div class='col-md-2'>")
-                    var calulate_button=$("<button onclick='calculateBill()'>Calculate Bill</button>")
-                subcol1.append(calulate_button)
-                var subcol2=$("<div class='col-md-8'>")
-                var subcol3=$("<div class='col-md-2'>")
-                    var print_btn=$("<button onclick='printBill()'>print</button>")
-                subcol3.append(print_btn)
-
-
-            subrow1.append(subcol1);
-            subrow1.append(subcol2);
-            subrow1.append(subcol3);
-
-        row1.append(subrow1)
-        var row2=$("<div class='surg_proc_bill' id='bill_div'></div>");
+    var row1=$("<div></div>");
+        var subrow1=$("<div class='row'>")
+            var subcol1=$("<div class='col-md-2'>")
+                var calulate_button=$("<button onclick='calculateBill()'>Calculate Bill</button>")
+            subcol1.append(calulate_button)
+            var subcol2=$("<div class='col-md-8'>")
+            var subcol3=$("<div class='col-md-2'>")
+                var save=$("<button onclick='saveSurgProcBill()'>save</button>")
+                var print_btn=$("<button onclick='printSurgProcBill()'>print</button>")
+            subcol3.append(save);
+            subcol3.append(print_btn);
+        subrow1.append(subcol1);
+        subrow1.append(subcol2);
+        subrow1.append(subcol3);
+    row1.append(subrow1)
+    var row2=$("<div class='surg_proc_bill' id='bill_div'></div>");
     main_sidecol2.append(row1);
     main_sidecol2.append(row2);
 
@@ -561,7 +560,7 @@ function calculateBill(){
                 td5.append(surplusfee);
 
                 totalfee=surgerybill_dict[key][4];
-                var td6=$("<td>");
+                var td6=$("<td >");
                 td6.append(totalfee)
                 surg_total_bill=surg_total_bill+totalfee;
             tr.append(td1);
@@ -585,7 +584,7 @@ function calculateBill(){
             td5.append(th5);
             var td6=$("<td>");
             nettotalfee=surg_total_bill;
-            var th6=$("<th>");
+            var th6=$("<th id='totalsurg_bill'>");
                 th6.append(nettotalfee)
             td6.append(th6)
         tr.append(td1);
@@ -651,7 +650,7 @@ var proc_bill_final_div=$("<div id='proc_bill_final_div'>")
     th1.append("Procedure Total Bill");
     td1.append(th1);
     var td2=$("<td>");
-    var th2=$("<th>");
+    var th2=$("<th id='totalproc_bill'>");
         th2.append(proc_total_bill);
     td2.append(th2);
 
@@ -666,7 +665,7 @@ $(proc_bill_final_div).append(row2);
 nettotal=proc_total_bill+surg_total_bill;
 var surg_proc_bill_final_div=$("<div id='surg_proc_bill_final_div'>")
     var h3=$("<h3>Net Total:</h3>")
-    var label=$("<label>"+nettotal+"</label>")
+    var label=$("<label id='surg_proc_bill_final_value'>"+nettotal+"</label>")
 surg_proc_bill_final_div.append(h3);
 surg_proc_bill_final_div.append(label);
 
@@ -680,7 +679,7 @@ $("#bill_div").append(surg_proc_bill_final_div);
 
 
 }
-function printBill(){
+function printSurgProcBill(){
     var printcontent = $("#bill_div").clone();
     $('#patient_dash_first_div').hide();
 
@@ -691,5 +690,29 @@ function printBill(){
     $('#surg_proc_bill_div').empty();
     $('#patient_dash_first_div').show();
 
-  
+}
+function saveSurgProcBill(){
+    var surg_proc_bill_final_value=$("#surg_proc_bill_final_value").text();
+    console.log("surg_proc_bill_final_value",surg_proc_bill_final_value)
+    console.log("surg_bill_final_div",surgerybill_dict);
+    console.log("proc_bill_final_div",procedurebill_dict);
+    pres_id=$("#search_prescription_id").val();
+    surg_total_bill=$("#totalsurg_bill").text();
+    totalproc_bill=$("#totalproc_bill").text();
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        'data': {
+            'surgerybill_dict':JSON.stringify(surgerybill_dict),
+            "procedurebill_dict":JSON.stringify(procedurebill_dict),
+            "surg_proc_bill_final_value":surg_proc_bill_final_value,
+            "pres_id":pres_id,
+            "surg_total_bill":surg_total_bill,
+            'totalproc_bill':totalproc_bill,
+        },
+        url: '/save_surg_proc_bill',
+        success: function(data){
+
+        }
+    });
 }

@@ -1,79 +1,125 @@
+
+  @media print {
+    @page {
+            margin: 0;
+            top:0px;
+
+        }
+    #invoice-POS{
+        margin:0 0;
+        top:0px;
+        position:absolute;
+    }
+}
+#container {
+  background-color: red !important;
+
+  width: 300px !important;
+  margin: 0px auto !important;
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+  text-align: center !important;
+}
+h3 {
+  font-size: 22px !important;
+  font-weight: normal !important;
+  font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important;
+}
+tbody {
+  display: table-row-group !important;
+  vertical-align: middle !important;
+  border-color: inherit !important;
+}
+tr td:first-child {
+  width: 1% !important;
+  white-space: nowrap !important;
+  vertical-align: top !important;
+}
+th, td, .table-bordered {
+  border-radius: 0!important;
+}
+
+
+
+
+
+
 #invoice-POS{
-    box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5);
-    padding:2mm;
-    margin: 0 auto;
-    width: 44mm;
-    background: rgb(252, 246, 246);
+  background-color: red !important;
+
+  width: 300px !important;
+  margin: 0px auto !important;
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+  text-align: center !important;
     
-    
-  }
-  h1{
-    font-size: 1.5em !important;
-    color: #222  !important;
-  }
-  h2{font-size: .9em !important;}
-  h3{
-    font-size: 1.2em !important;
-    font-weight: 300 !important;
-    line-height: 2em !important;
-  }
-  p{
-    font-size: .7em !important;
-    color: #666 !important;
-    line-height: 1.2em !important;
-  }
-   
-  #top, #mid,#bot{ /* Targets all id with 'col-' */
-    border-bottom: 1px solid #EEE;
-  }
+ 
   
-  #top{min-height: 100px;}
-  #mid{min-height: 80px;} 
-  #bot{ min-height: 50px;}
-   
-  #top .logo{
-    /* //float: left; */
-      height: 60px;
-      width: 60px;
-      background: url(http://michaeltruong.ca/images/logo1.png) no-repeat;
-      background-size: 60px 60px;
-  } 
-  .clientlogo{
-    float: left;
-      height: 60px;
-      width: 60px;
-      background: url(http://michaeltruong.ca/images/client.jpg) no-repeat;
-      background-size: 60px 60px;
-    border-radius: 50px;
-  }
-  .info{
-    display: block;
-    /* //float:left; */
-    margin-left: 0;
-  }
-  .title{
-    float: right;
-  }
-  .title p{text-align: right;} 
-  table{
-    width: 100%;
-    border-collapse: collapse;
-  }
-  td{
-    /* //padding: 5px 0 5px 15px;
-    //border: 1px solid #EEE */
-  }
-  .tabletitle{
-    /* //padding: 5px; */
-    font-size: .5em;
-    background: #EEE;
-  }
-  .service{border-bottom: 1px solid #EEE;}
-  .item{width: 24mm;}
-  .itemtext{font-size: .5em;}
+ 
+}
+/* h1{
+
+  font-size: 22px;
+    font-weight: normal;
+    font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+h2{font-size: 18pt !important;}
+h3{
+  font-size: 15pt !important;
+ font-weight: 300 !important;
+ line-height: 2em !important; 
+}
+p{
+ font-size: 12pt !important;
+ font-weight: 800 !important;
+ color: #666 !important;
+ 
+} */
+
+/*
+
+ 
+#top .logo{
+    height: 60px;
+    width: 60px;
+    background: url("/static/rmcapp/mainhomepage_static/img/rmc.png") no-repeat;
+
+    background-size: 60px 60px;
+} 
+.clientlogo{
+  float: left;
+    height: 60px;
+    width: 60px;
+    background: url(http://michaeltruong.ca/images/client.jpg) no-repeat;
+    background-size: 60px 60px;
+  border-radius: 50px;
+}
+.info{
+  display: block;
+  margin-left: 0;
+}
+.title{
+  float: right;
+}
+.title p{text-align: right;} 
+table{
+  width: 100%;
+  border-collapse: collapse;
+}
+td{
   
-  #legalcopy{
-    margin-top: 5mm;
-  }
-   
-    
+}
+.tabletitle{
+
+  font-size: .5em;
+  background: #EEE;
+}
+.service{border-bottom: 1px solid #EEE;}
+.item{width: 24mm;}
+.itemtext{font-size: .7em;}
+
+#legalcopy{
+  margin-top: 5mm;
+}
+
+*/

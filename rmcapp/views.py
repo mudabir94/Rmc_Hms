@@ -15,7 +15,7 @@ from rmcapp.models import (
     procedureTable,patPrescriptionRecords,patPrescriptionBill,invoiceRecords,
     despBillRecord,procedureBillRecord,procedureRecords,procedureTable,
     patientVisitSummary,surgeryTable,
-    surgeryRecords,surgeryBillRecord,procedureBillSummary,surgeryBillSummary,
+    surgeryRecords,surgeryBillRecord,procedureBillSummary,surgeryBillSummary
 )
 from django.http import HttpResponse, JsonResponse
 from .Controllers.MedControllers.MedController import MedicineController  
@@ -23,6 +23,18 @@ from django.db import connection
 from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import ObjectDoesNotExist
+
+
+
+
+def printTest(request):
+    template_path_name="rmcapp/mainhomepage_template/printtest.html"
+    return render(request,template_path_name)
+
+
+
+
+
 
 
 # Create your views here.
@@ -1001,7 +1013,7 @@ def retrievePatientInfoInPresForm(request):
         cnic=""
 
         # pat_objs=Patient.objects.filter(Q(pat_name=pat_name) | Q(phone_no=contact_no) | Q(cnic=cnic)| Q(id=id))
-        pat_objs=Patient.objects.filter(Q(pat_name=pat_name) | Q(phone_no=contact_no) | Q(cnic=cnic))
+        pat_objs=Patient.objects.filter(Q(pat_name__contains=pat_name) | Q(phone_no=contact_no) | Q(cnic=cnic))
 
         # pat_objs=Patient.objects.get(id=1)
         print("pat_objs",pat_objs)
@@ -1020,11 +1032,15 @@ def retrievePatientInfoInPresForm(request):
             patient_dict[pat_obj.id]=[]
             patient_dict[pat_obj.id]=patient_info_dict
         print("patient_dict",patient_dict)
-
-
-
+        emptype_obj=employeeType.objects.get(type_name="Doctor")
+        embobjs=Employee.objects.filter(employee_type=emptype_obj)
+        empdict={}
+        for obj in embobjs:
+            empdict[obj.id]=obj.name
+            print("Emp Name",obj.name)
         data={
             "patient_dict":json.dumps(patient_dict),
+            "empdict":json.dumps(empdict),
         }
         return JsonResponse(data)
 def retrieveAllPatientInfo(request):
@@ -1172,11 +1188,17 @@ def retrievePatientInfoInPatientBill(request):
         patient_dict[pat_obj.id]=patient_info_dict
         print("patient_dict",patient_dict)
         patient_id=pat_obj.id
-
-
+        emptype_obj=employeeType.objects.get(type_name="Doctor")
+        embobjs=Employee.objects.filter(employee_type=emptype_obj)
+        empdict={}
+        for obj in embobjs:
+            empdict[obj.id]=obj.name
+            print("Emp Name",obj.name)
         data={
             "patient_dict":json.dumps(patient_dict),
             'id':str(patient_id),
+            "empdict":json.dumps(empdict),
+
         }
         return JsonResponse(data)
 
@@ -1273,17 +1295,22 @@ def printPatientPrescription(request):
     template_path_name="rmcapp/patient_dashboard_template/patient_pres.html"
     global presData
     if request.method=='GET':
-        print("LOADING PATIENT PRES")
-        data={}
-        return render(request,template_path_name,data)
-    if request.method=="POST":
         if request.is_ajax():
-            print("In Ajax")
-            print("presData",presData)
-            data={
-                'presData':json.dumps(presData),
-            }
-            return JsonResponse(data)
+            
+            print("LOADING PATIENT PRES")
+            data={'presData':json.dumps(presData)}
+            return JsonResponse(data)     
+        data={}   
+    return render(request,template_path_name,data)
+    if request.method=="POST":
+        pass
+        # if request.is_ajax():
+        #     print("In Ajax")
+        #     print("presData",presData)
+        #     data={
+        #         'presData':json.dumps(presData),
+        #     }
+        #     return JsonResponse(data)
         
 @csrf_exempt 
 def generatePrescription(request):
@@ -1293,27 +1320,56 @@ def generatePrescription(request):
         presData=request.GET.get('presData')
         presData=json.loads(presData)
         print("presData",presData)
+        patient_type=presData['pat_type']
         # Add data to Prescription Record
         presRecObj=patPrescriptionRecords()
-        patObj=Patient.objects.get(id=presData['pat_id'])
+        patObj=Patient.objects.get(id=int(presData['pat_id']))
         presRecObj.patient=patObj
-        doc_id=presData['doctor']
-        doc_id=2
+        doc_id=int(presData['doctor'])
         empObj=Employee.objects.get(id=doc_id)
         presRecObj.doc=empObj
-        # presRecObj.patient_type=
+        patTypeObj=patientType.objects.get(patient_type=patient_type)
+        presRecObj.patient_type=patTypeObj
         presRecObj.save()
+        presData['pres_id']=presRecObj.id
+
         # Add Data to Prescription Bill Records. 
         patPresBillObj=patPrescriptionBill()
         patPresBillObj.pres=presRecObj
+        patPresBillObj.discount=presData['discount']
+        patPresBillObj.discount_percentage=presData['discount_percent']
+            # Discount Reason Missing --patPresBillObj.discount_reason=presData['discount_reason']
         patPresBillObj.net_total=presData['net_total']
-        patPresBillObj.status="UnPaid"
+        patPresBillObj.status="Paid"
         patPresBillObj.save()
+        # Adding Data to invoice Records
         invObj=invoiceRecords()
         invObj.pres=presRecObj
         invObj.net_total=presData['net_total']
-        invObj.status="UnPaid"
+        invObj.status="Paid"
         invObj.save()
+        if patient_type=='Indoor':
+            if presData['bed_type']=="Room":
+                roomObj=Rooms.objects.get(id=int(presData['room_id']))
+                roomBillObj=patientRoomsBill()
+                roomBillObj.patient=patObj
+                roomBillObj.rooms=roomObj
+                roomBillObj.pres=presRecObj
+                # have to add check in date and time here. 
+                roomBillObj.save()
+                
+            else:
+                wardObj=Ward.objects.get(id=int(presData['ward_id']))
+                wardBillObj=patientWardBill()
+                wardBillObj.patient=patObj
+                wardBillObj.pres=presRecObj
+                wardBillObj.wards=wardObj
+                # have to add check in date and time here. 
+                wardBillObj.save()
+        
+
+
+        
         data={}
         return JsonResponse(data)
 
@@ -1528,7 +1584,7 @@ def retrieveMedicineFromDesp(request):
                 finaldata=NoStripCalculationDespToPat(despstckObj,patientid,medObj,boxes_wanted,pieces_wanted,despStckDict,pbr_dict,despid)
 
             else:
-                WithStripCalculationDespToPat(despstckObj,medObj,boxes_wanted,strips_wanted,pieces_wanted)
+                finaldata=WithStripCalculationDespToPat(despstckObj,medObj,boxes_wanted,strips_wanted,pieces_wanted,despStckDict,pbr_dict,despid,patientid)
         print("Desp Stock Dict",finaldata[0])
         print("Pbr dict",finaldata[1])
         despStckDict={}
@@ -1666,6 +1722,91 @@ def NoStripCalculationDespToPat(despensoryStock,patientid,medicineobj,boxes_want
     finaldata.append(despStckDict)
     finaldata.append(pbr_dict)
     return finaldata
+
+
+def WithStripCalculationDespToPat(despstckObj,medicineobj,boxes_wanted,strips_wanted,pieces_wanted,despStckDict,pbr_dict,despid,patientid):
+    despid=str(despid)
+    print("PBR",pbr_dict)
+    desp_BoxesStored=despStckDict[despid]['boxes_stored']
+    box_unit=despensoryStock.box_unit
+    strip_unit=despensoryStock.strip_unit
+    piece_unit=despensoryStock.piece_unit
+
+    boxes_wanted=boxes_wanted*box_unit
+    strips_wanted=boxes_wanted*strip_unit+strips_wanted
+    pieces_wanted=boxes_wanted*piece_unit+pieces_wanted
+    psd=despStckDict[despid]['piece_stored']
+
+
+    lps=float(psd)-float(pieces_wanted)
+
+    if lps==0:
+        bss=0
+        sts=0
+        print("BSS1",bss)
+
+    else:
+        sts= float(lps)/float(piece_unit)
+        sts= math.ceil(sts)
+        bss= float(sts)/float(strip_unit)
+        bss= math.ceil(bss)
+    key=despStckDict[despid]['name']
+    if key in pbr_dict.keys():
+        print("Key Found")
+        pbr_boxstored=pbr_dict[key]['boxes']
+
+        print("pbr_boxstored",pbr_dict)
+        boxes_wanted=(pbr_boxstored+desp_BoxesStored)-bss
+        print("Final Boxes For patient bill",boxes_wanted)
+        if boxes_wanted<0:
+            boxes_wanted=0
+        pbr_dict[key]['boxes']=boxes_wanted
+        strips_wanted=strips_wanted+int(pbr_dict[key]['strips_wanted'])
+        pbr_dict[key]['strips']=strips_wanted
+        pieces_wanted=pieces_wanted+int(pbr_dict[key]['pieces'])
+        pbr_dict[key]['pieces']=pieces_wanted
+
+
+        price=int(despensoryStock.piece_price_unit)*pieces_wanted
+        pbr_dict[key]['price']=price+pbr_dict[key]['price']
+        price=pbr_dict[key]['price']
+        if medicineobj.add_charge=="YES":
+            amount=price
+        else:
+            amount=0
+
+        pbr_dict[key]['amount']=amount
+        print(pbr_dict)
+    else:
+        print("Key Not Found")
+        tempdict={}
+        tempdict['pieces']=pieces_wanted
+        if pieces_wanted%piece_unit==0:
+            boxes_wanted=pieces_wanted/piece_unit
+        tempdict['boxes']=boxes_wanted
+        tempdict['strips']=strips_wanted
+        price=int(despensoryStock.piece_price_unit)*pieces_wanted
+        tempdict['price']=price
+        amount=0
+        if medicineobj.add_charge=="YES":
+            amount=price
+        tempdict['amount']=amount
+        tempdict['despid']=despensoryStock.id
+        tempdict['priceperpiece']=despensoryStock.piece_price_unit
+        tempdict['patientid']=patientid
+
+        pbr_dict[key]=tempdict
+        finaldata=[]
+        finaldata.append(despStckDict)
+        finaldata.append(pbr_dict)
+        return finaldata
+
+
+
+
+
+
+
 
 # def maxTokenNo(request):
 #     if request.method=="GET":
@@ -2435,6 +2576,85 @@ def retrieveInvoiceBillRecord(request):
             "surgBillRecord_dict":json.dumps(surgBillRecord_dict),
             "procBillRecord_dict":json.dumps(procBillRecord_dict),
         }
+        return JsonResponse(data)
+def saveSurgProcBill(request):
+    if request.method=="GET":
+        surgerybill_dict=request.GET.get('surgerybill_dict')
+        surgerybill_dict=json.loads(surgerybill_dict)
+        procedurebill_dict=request.GET.get('procedurebill_dict')
+        procedurebill_dict=json.loads(procedurebill_dict)
+
+        surg_proc_bill_final_value=request.GET.get('surg_proc_bill_final_value')
+        nettotal=int(surg_proc_bill_final_value)
+        pres_id=request.GET.get('pres_id')
+        pres_id=int(pres_id)
+        surg_total_bill=request.GET.get('surg_total_bill')
+        surg_total_bill=int(surg_total_bill)
+        totalproc_bill=request.GET.get('totalproc_bill')
+        totalproc_bill=int(totalproc_bill)
+
+        print("surgerybill_dict",surgerybill_dict)
+        print("procedurebill_dict",procedurebill_dict)
+        print("nettotal",nettotal)
+        print("presid",pres_id)
+        patPresRecObj=patPrescriptionRecords.objects.get(id=pres_id)
+        sbrid_list=[]
+        procbrid_list=[]
+        invRecObj=invoiceRecords.objects.get(pres=patPresRecObj)
+
+        if procedurebill_dict!={}:
+            for key in procedurebill_dict:
+                proctabObj=procedureTable.objects.get(procedure_name=key)
+                procBRecObj=procedureBillRecord()
+                procBRecObj.procedure=proctabObj
+                procBRecObj.pres=patPresRecObj
+                procBRecObj.net_total=procedurebill_dict[key][0]
+                procBRecObj.save()
+                procbrid_list.append(procBRecObj.id)
+            procRecObj=procedureRecords()
+            procRecObj.procedure_bill=procbrid_list
+            procRecObj.pres=patPresRecObj
+            procRecObj.net_total=totalproc_bill
+            procRecObj.save()
+            procBSumObj=procedureBillSummary()
+            procBSumObj.procbr=procbrid_list
+            procBSumObj.pres=patPresRecObj
+            procBSumObj.net_total=totalproc_bill
+            procBSumObj.save()
+            invRecObj.procedure_id=procBSumObj
+            invRecObj.net_total=totalproc_bill+invRecObj.net_total
+            invRecObj.save()
+            print("Inv net total",invRecObj.net_total)
+        if surgerybill_dict!={}:
+
+            for key in surgerybill_dict:
+                surgtabObj=surgeryTable.objects.get(surgery_name=key)
+                sbrObj=surgeryBillRecord()
+                sbrObj.surgery=surgtabObj
+                sbrObj.pres=patPresRecObj
+                sbrObj.surgeon_fee=surgerybill_dict[key][0]
+                sbrObj.operation_theater_fee=surgerybill_dict[key][1]
+                sbrObj.anesthesiologist_fee=surgerybill_dict[key][2]
+                sbrObj.surplus_fee=surgerybill_dict[key][3]
+                sbrObj.net_total=surgerybill_dict[key][4]
+                sbrObj.save()
+                sbrid_list.append(sbrObj.id)
+                surgRecObj=surgeryRecords()
+                surgRecObj.surgery_bill=sbrObj
+                surgRecObj.pres=patPresRecObj
+                surgRecObj.save()
+            surgBSumObj=surgeryBillSummary()
+            surgBSumObj.sbr=sbrid_list
+            surgBSumObj.pres=patPresRecObj
+            surgBSumObj.net_total=surg_total_bill
+            surgBSumObj.save()
+            invRecObj.surgery_bill=surgBSumObj
+            invRecObj.net_total=surg_total_bill+invRecObj.net_total
+            invRecObj.save()
+            print("Inv net total",invRecObj.net_total)
+
+
+        data={}
         return JsonResponse(data)
 
 def updateInvoice(request):

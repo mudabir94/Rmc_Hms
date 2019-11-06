@@ -562,12 +562,20 @@ class Rooms(models.Model):
 class patientRoomsBill(models.Model):
     patient=models.ForeignKey(Patient, on_delete=models.CASCADE,default=None,null=True,blank=True)
     rooms=models.ForeignKey(Rooms, on_delete=models.CASCADE,default=None,null=True,blank=True)
+
+    # floor=models.IntegerField(null=True,blank=True,default=1)
+    # room_no=models.IntegerField(null=True,blank=True,default=1)
+    # charge_per_day=models.IntegerField(null=True,blank=True,default=500)    
+    # ac_charge_per_day=models.IntegerField(null=True,blank=True,default=500)
     pres=models.ForeignKey(patPrescriptionRecords, on_delete=models.CASCADE,default=None,null=True,blank=True)##### NEW ##########
     checkin=models.DateField(null=True,blank=True)
     checkout=models.DateField(null=True,blank=True)
     total_days=models.IntegerField(null=True,blank=True,default=0)
+
     net_total=models.IntegerField(null=True,blank=True,default=0)
     status=models.CharField(max_length=50,null=True,blank=True,default='UnPaid')
+
+    
     def __str__(self):
         return str(self.id)
     class Meta:
@@ -587,11 +595,17 @@ class patientWardBill(models.Model):
     patient=models.ForeignKey(Patient, on_delete=models.CASCADE,default=None,null=True,blank=True)
     pres=models.ForeignKey(patPrescriptionRecords, on_delete=models.CASCADE,default=None,null=True,blank=True)##### NEW ##########
     wards=models.ForeignKey(Ward, on_delete=models.CASCADE,default=None,null=True,blank=True)##### NEW ##########
+
+    # ward_no=models.IntegerField(null=True,blank=True,default=1)
+    # bed_no=models.IntegerField(null=True,blank=True,default=1)
     checkin=models.DateField(null=True,blank=True)
     checkout=models.DateField(null=True,blank=True)
     total_days=models.IntegerField(null=True,blank=True,default=0)
+
+    # charge_per_day=models.IntegerField(null=True,blank=True,default=200)   #### NEW/update   #####
     net_total=models.IntegerField(null=True,blank=True,default=0)
     status=models.CharField(max_length=50,null=True,blank=True,default='UnPaid')
+
     def __str__(self):
         return str(self.id)
     class Meta:
@@ -602,7 +616,8 @@ class patientVisitSummary(models.Model):
     pres=models.ForeignKey(patPrescriptionRecords, on_delete=models.CASCADE,default=None,null=True,blank=True)##### NEW ##########
     patient=models.ForeignKey(Patient, on_delete=models.CASCADE,default=None,null=True,blank=True)
     date_visited = models.DateTimeField(auto_now_add=True, blank=True)
-    
+
+
 class surgeryBillSummary(models.Model):
     sbr=ListCharField(base_field=models.CharField(max_length=20),size=10,max_length=(10*21),null=True,blank=True)
     pres=models.ForeignKey(patPrescriptionRecords, on_delete=models.CASCADE,default=None,null=True,blank=True)
