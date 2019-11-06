@@ -1785,7 +1785,7 @@ function addMedicineToDespStockForm(){
                                                         colmd2.append(boxamount_input)
                                                         row1__col_one__row_div_two.append(colmd1);
                                                         row1__col_one__row_div_two.append(colmd2);
-                                                    if (strips!==0){
+                                                    if (strips!=="-"){
                                                             var colmd1=$("<div class='col-md-6'></div>")
                                                                 pieceamount_label=$("<label class='custom_label_css'>No of Strips Stored:</label>");
                                                             colmd1.append(pieceamount_label)

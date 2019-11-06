@@ -3250,19 +3250,19 @@ var col1=$("#desp-med-qty-form")
                     var label=$("<label>Boxes</label>")
                 col1_sub_sub_row2.append(label);
                 var col2_sub_sub_row2=$("<div class='col-md-4'></div>");
-                    var input=$("<input id='boxes_stored' placeholder='"+dspstck_dict[despid]['boxes_stored']+"'></input>")
+                    var input=$("<input id='boxes_stored'></input>")
                 col2_sub_sub_row2.append(input);
             sub_sub_row2.append(col1_sub_sub_row2);
             sub_sub_row2.append(col2_sub_sub_row2);
-            var strip_stored=dspstck_dict[1]['strip_stored'];
+            var strip_stored=dspstck_dict[despid]['strip_stored'];
             console.log("strip_stored",strip_stored);
-            if (strip_stored!=null ){
+            if (strip_stored!=="N/A" ){
             var sub_sub_row3=$("<div class='row'></div>");
                 var col1_sub_sub_row3=$("<div class='col-md-4'></div>");
                     var label=$("<label>Total Strips</label>")
                 col1_sub_sub_row3.append(label);
                 var col2_sub_sub_row3=$("<div class='col-md-4'></div>");
-                    var input=$("<input id='strips_stored' placholder='"+dspstck_dict[despid]['strip_stored']+"'></input>")
+                    var input=$("<input id='strips_stored'></input>")
                 col2_sub_sub_row3.append(input);
             sub_sub_row3.append(col1_sub_sub_row3);
             sub_sub_row3.append(col2_sub_sub_row3);
@@ -3272,7 +3272,7 @@ var col1=$("#desp-med-qty-form")
                     var label=$("<label>Total Pieces</label>")
                 col1_sub_sub_row4.append(label);
                 var col2_sub_sub_row4=$("<div class='col-md-4'></div>");
-                    var input=$("<input id='pieces_stored' placeholder='"+dspstck_dict[despid]['piece_stored']+"'></input>")
+                    var input=$("<input id='pieces_stored' ></input>")
                 col2_sub_sub_row4.append(input);
             sub_sub_row4.append(col1_sub_sub_row4);
             sub_sub_row4.append(col2_sub_sub_row4);
@@ -3297,23 +3297,35 @@ col1.append(sub_row);
 }
 function addMedicineToPatientBill(){
     var box_wanted=$("#boxes_stored").val();
+    console.log("Boxes wanted ",box_wanted)
     if (box_wanted===''){
         box_wanted=0
     }
-    var pieces_wanted=$("#pieces_stored").val();
+    $("#boxes_stored").val("");
+    console.log("Boxes wanted-- ",box_wanted)
 
+    var pieces_wanted=$("#pieces_stored").val();
+    if (pieces_wanted===''){
+        pieces_wanted="0"
+    }
+    $("#pieces_stored").val("");
+    var strips_wanted=$("#strips_stored").val();
+    if (strips_wanted==='' || strips_wanted===undefined ){
+        strips_wanted="0"
+    }
+    $("#strips_stored").val("");
     dspstck_dict={}
     despmed_datatable.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
         var data = this.data();
-        strips_stored=0;
         var meddatadict={};
+        strips_stored=data[3];
         meddatadict['name']=data[1];
         meddatadict['boxes_stored']=data[2];
-        if (data[3]==null){
-            strips_stored=0
+        if (data[3]=="N/A"){
+            strips_stored="0";
         }
         meddatadict['strip_stored']=strips_stored;
-        meddatadict['piece_stored']=data[4]
+        meddatadict['piece_stored']=data[4];
         meddatadict['price_unit']=data[5];
 
         dspstck_dict[parseInt(data[0])]=meddatadict
@@ -3327,9 +3339,9 @@ function addMedicineToPatientBill(){
         tempdict['despid']=data[1]
         tempdict['patientid']=data[2]
         tempdict['boxes']=data[4];
-        if (data[5]==null){
-            strips_stored=0
-        }
+       
+        strips_stored=data[5]
+        
         tempdict['strips']=strips_stored;
 
         tempdict['pieces']=data[6];
@@ -3351,6 +3363,7 @@ function addMedicineToPatientBill(){
             'patientid':parseInt(patientid),
             "pieces_wanted":pieces_wanted,
             'boxes_wanted':box_wanted,
+            "strips_wanted":strips_wanted,
             "despStckDict":JSON.stringify(dspstck_dict),
             "pbr_dict":JSON.stringify(pbr_dict),
         },
@@ -3388,7 +3401,7 @@ function addMedicineToPatientBill(){
                 templist.push(med);
 
                 templist.push(pbr_dict[med]['boxes']);
-                templist.push("0");
+                templist.push(pbr_dict[med]['strips']);
 
                 templist.push(pbr_dict[med]['pieces']);
                 templist.push(pbr_dict[med]['priceperpiece']);
@@ -3461,6 +3474,8 @@ function SaveAndPrintBill(){
     
         var center=$("<center id='top'></center>")
             var div_logo=$("<div class='logo'></div>");
+                var img_scr=$("<img style='width: 160px;' src='/static/rmcapp/mainhomepage_static/img/rmc.png'><br>")
+            div_logo.append(img_scr);
             var div_info=$("<div class='info'></div>");
                 var h2=$("<h2></h2>");
                 h2.append(rmc);

@@ -473,11 +473,9 @@ def retrieveMedicineStockDataFromStock(request):
         boxes=mwhs_objs.box_stored
         strips=mwhs_objs.strip_stored
         if strips==None:
-            strips=0
+            strips="-"
         pieces=mwhs_objs.piece_stored
-        print("boxes",boxes)
-        print("pieces",pieces)
-        print("strips",strips)
+        
         medstockdatafromstock_allval_dict["boxes"]=boxes
         medstockdatafromstock_allval_dict["strips"]=strips
         medstockdatafromstock_allval_dict["pieces"]=pieces
@@ -1544,7 +1542,14 @@ def retireveAllDespMed(request):
             tempdspstck_dict={}
             tempdspstck_dict['name']=dspstck.medicine.medicine_name
             tempdspstck_dict['boxes_stored']=dspstck.box_stored
-            tempdspstck_dict['strip_stored']=dspstck.strip_stored
+            strip_stored=dspstck.strip_stored
+            if dspstck.strip_unit==None:
+                strip_stored="N/A"
+            tempdspstck_dict['strip_stored']=strip_stored
+
+
+
+
             tempdspstck_dict['piece_stored']=dspstck.piece_stored
             tempdspstck_dict['piece_price_unit']=dspstck.piece_price_unit
             dspstck_dict[dspstck.id]=[]
@@ -1565,15 +1570,19 @@ def retrieveMedicineFromDesp(request):
         print("pateintid",patientid)
         patientid=int(patientid)
         pieces_wanted=request.GET.get('pieces_wanted')
-        strips_wanted=1
+        strips_wanted=request.GET.get('strips_wanted')
+
         boxes_wanted=request.GET.get('boxes_wanted')
-        pieces_wanted=int(pieces_wanted)
+        print("boxes_wanted",boxes_wanted)
         boxes_wanted=int(boxes_wanted)
+        pieces_wanted=int(pieces_wanted)
+        strips_wanted=int(strips_wanted)
+
         despStckDict=request.GET.get('despStckDict')
         despStckDict=json.loads(despStckDict)
         pbr_dict=request.GET.get('pbr_dict')
         pbr_dict=json.loads(pbr_dict)
-
+        print("boxes wanted ",boxes_wanted)
        
 
         # if medObj.AddCharge=='No' then add zero to amount
@@ -1585,6 +1594,7 @@ def retrieveMedicineFromDesp(request):
 
             else:
                 finaldata=WithStripCalculationDespToPat(despstckObj,medObj,boxes_wanted,strips_wanted,pieces_wanted,despStckDict,pbr_dict,despid,patientid)
+        print("Final Data",finaldata)
         print("Desp Stock Dict",finaldata[0])
         print("Pbr dict",finaldata[1])
         despStckDict={}
@@ -1724,22 +1734,29 @@ def NoStripCalculationDespToPat(despensoryStock,patientid,medicineobj,boxes_want
     return finaldata
 
 
-def WithStripCalculationDespToPat(despstckObj,medicineobj,boxes_wanted,strips_wanted,pieces_wanted,despStckDict,pbr_dict,despid,patientid):
+def WithStripCalculationDespToPat(despensoryStock,medicineobj,boxes_wanted,strips_wanted,pieces_wanted,despStckDict,pbr_dict,despid,patientid):
     despid=str(despid)
     print("PBR",pbr_dict)
     desp_BoxesStored=despStckDict[despid]['boxes_stored']
+    print("desp_BoxesStored--",desp_BoxesStored)
     box_unit=despensoryStock.box_unit
     strip_unit=despensoryStock.strip_unit
     piece_unit=despensoryStock.piece_unit
 
     boxes_wanted=boxes_wanted*box_unit
     strips_wanted=boxes_wanted*strip_unit+strips_wanted
-    pieces_wanted=boxes_wanted*piece_unit+pieces_wanted
+    pieces_wanted=strips_wanted*piece_unit+pieces_wanted
+    
+
+
+
+
+    print("strips_wanted",strips_wanted)
     psd=despStckDict[despid]['piece_stored']
 
 
     lps=float(psd)-float(pieces_wanted)
-
+    
     if lps==0:
         bss=0
         sts=0
@@ -1748,8 +1765,14 @@ def WithStripCalculationDespToPat(despstckObj,medicineobj,boxes_wanted,strips_wa
     else:
         sts= float(lps)/float(piece_unit)
         sts= math.ceil(sts)
+        print("sts",sts)
         bss= float(sts)/float(strip_unit)
         bss= math.ceil(bss)
+        print("bss",bss)
+
+    despStckDict[despid]['boxes_stored']=bss
+    despStckDict[despid]['piece_stored']=lps
+    despStckDict[despid]['strip_stored']=sts
     key=despStckDict[despid]['name']
     if key in pbr_dict.keys():
         print("Key Found")
@@ -1761,10 +1784,15 @@ def WithStripCalculationDespToPat(despstckObj,medicineobj,boxes_wanted,strips_wa
         if boxes_wanted<0:
             boxes_wanted=0
         pbr_dict[key]['boxes']=boxes_wanted
-        strips_wanted=strips_wanted+int(pbr_dict[key]['strips_wanted'])
-        pbr_dict[key]['strips']=strips_wanted
+       
+        # strips_wanted=strips_wanted+int(pbr_dict[key]['strips'])
+
+        # pbr_dict[key]['strips']=strips_wanted
         pieces_wanted=pieces_wanted+int(pbr_dict[key]['pieces'])
         pbr_dict[key]['pieces']=pieces_wanted
+        strips_wanted=pieces_wanted/piece_unit
+        strips_wanted=int(round(strips_wanted))
+        pbr_dict[key]['strips']=strips_wanted
 
 
         price=int(despensoryStock.piece_price_unit)*pieces_wanted
@@ -1776,15 +1804,15 @@ def WithStripCalculationDespToPat(despstckObj,medicineobj,boxes_wanted,strips_wa
             amount=0
 
         pbr_dict[key]['amount']=amount
-        print(pbr_dict)
+        print("pbr_dict***",pbr_dict)
     else:
         print("Key Not Found")
         tempdict={}
-        tempdict['pieces']=pieces_wanted
-        if pieces_wanted%piece_unit==0:
-            boxes_wanted=pieces_wanted/piece_unit
-        tempdict['boxes']=boxes_wanted
         tempdict['strips']=strips_wanted
+        if strips_wanted%strip_unit==0:
+            boxes_wanted=strips_wanted/strip_unit
+        tempdict['boxes']=boxes_wanted
+        tempdict['pieces']=pieces_wanted
         price=int(despensoryStock.piece_price_unit)*pieces_wanted
         tempdict['price']=price
         amount=0
@@ -1796,10 +1824,12 @@ def WithStripCalculationDespToPat(despstckObj,medicineobj,boxes_wanted,strips_wa
         tempdict['patientid']=patientid
 
         pbr_dict[key]=tempdict
-        finaldata=[]
-        finaldata.append(despStckDict)
-        finaldata.append(pbr_dict)
-        return finaldata
+    finaldata=[]
+    finaldata.append(despStckDict)
+
+    finaldata.append(pbr_dict)
+    print("finaldata---",finaldata)
+    return finaldata
 
 
 
