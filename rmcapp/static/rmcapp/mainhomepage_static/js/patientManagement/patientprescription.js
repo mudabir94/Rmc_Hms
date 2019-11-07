@@ -49,17 +49,14 @@ function loadPresForm(){
         var row_div_one=$("<div class='row'></div>");
             var col_one__row_div_one=$("<div class='col-md-12'></div>");
                 row__col_one__row_div_one=$("<div class='row'></div>");
-                    colmd1=$("<div class='col-md-6'></div>")
-
-                    rmc_tag=$("<p class='text-center font-weight-bold' style='font-size:2vw;' id='rmc_label'>RAFIQ MEDICAL CENTER</p>");
-                    colmd1.append(rmc_tag)
-                    colmd2=$('<div class="col-md-6"></div>');
+                    colmd1=$("<div class='col-md-1'></div>")
+                    colmd2=$("<div class='col-md-6 offset-md-2'></div>")
 
                     button=$("<button class= 'btttn' onclick='PrintPres()'> Print </button>");
-                  
+                    colmd1.append(button);
 
-                    colmd2.append(button);
-                   
+                    rmc_tag=$("<p class='text-center font-weight-bold' style='font-size:2vw;' id='rmc_label'>RAFIQ MEDICAL CENTER</p>");
+                    colmd2.append(rmc_tag)
 
                 row__col_one__row_div_one.append(colmd1);
                 row__col_one__row_div_one.append(colmd2);
@@ -73,38 +70,27 @@ function loadPresForm(){
                 row__col_one__row_div_two=$("<div class='row'></div>");
 
                     colmd1=$("<div class='col-md-1'></div>")
-                    colmd2=$("<div class='col-md-1'></div>")
-                    colmd3=$("<div class='col-md-1 offset-md-1'></div>")
-                    colmd4=$("<div class='col-md-2'></div>")
-                    colmd5=$("<div class='col-md-1'></div>")
-                    colmd6=$("<div class='col-md-2'></div>")
-                    colmd7=$("<div class='col-md-1'></div>");
-                    colmd8=$("<div class='col-md-1'></div>")
-
-                    pres_id_label=$("<label class='custom_label_css' style='font-weight: bold;'>Pres Id</label>");
-                    colmd7.append(pres_id_label);
-                    pres_id_input=$("<input class='form-control' id='pat_id' style='background-color: white;' value='"+presData['pres_id']+"' Disabled>")
-                    colmd8.append(pres_id_input);
-
-
-                    pat_id_label=$("<label class='custom_label_css' style='font-weight: bold;'>ID</label>");
-                    colmd1.append(pat_id_label)
-                    pat_id=$("<input class='form-control' id='pat_id' style='background-color: white;' value='"+presData['pat_id']+"' Disabled>")
+                    colmd2=$("<div class='col-md-2'></div>")
+                    colmd3=$("<div class='col-md-2 offset-md-2 '></div>")
+                    colmd4=$("<div class='col-md-1'></div>")
+                    colmd5=$("<div class='col-md-2 '></div>")
+                    colmd6=$("<div class='col-md-1'></div>")                
                     
-                    colmd2.append(pat_id)
-                    
-                    pat_name_label=$("<label class='custom_label_css' style='font-weight: bold;'>Name</label>");
-                    colmd3.append(pat_name_label)
-                    pat_name=$("<input class='form-control' id='pat_name' style='background-color: white;' value='"+presData['name']+"' Disabled >")
-                    colmd4.append(pat_name)
+                    var pat_name_label=$("<label class='form-control-static float-right' style='font-weight: bold;'>Name</label>");
+                    colmd1.append(pat_name_label)
+                    var pat_name=$("<label id='pat_name' class='form-control-static'>"+presData['name']+"</label>")                    
+                    colmd2.append(pat_name)
 
-                    pat_sex_label=$("<label class='custom_label_css' id='token_id' style='font-weight: bold;' >Sex</label>");
-                    colmd5.append(pat_sex_label)
-                    pat_sex=$("<input class='form-control' id='token' style='background-color: white;' value='"+presData['gender']+"' Disabled >")
-                    colmd6.append(pat_sex)
-                    
-                row__col_one__row_div_two.append(colmd7);
-                row__col_one__row_div_two.append(colmd8);
+                    var pat_id_label=$("<label class='form-control-static float-right' style='font-weight: bold;'>Patient ID</label>");
+                    colmd3.append(pat_id_label)
+                    var pat_id=$("<label id='pat_id' class='form-control-static'>"+presData['pat_id']+"</label>")                    
+                    colmd4.append(pat_id)
+
+                    var pres_id_label=$("<label class='form-control-static float-right' style='font-weight: bold;'>Prescription Id</label>");
+                    colmd5.append(pres_id_label);
+                    var pres_id_input=$("<label id='pres_id' class='form-control-static'>"+presData['pres_id']+"</label>")
+                    colmd6.append(pres_id_input);
+
                 row__col_one__row_div_two.append(colmd1);
                 row__col_one__row_div_two.append(colmd2);
                 row__col_one__row_div_two.append(colmd3);
@@ -121,26 +107,33 @@ function loadPresForm(){
                 row__col_one__row_div_three=$("<div class='row'></div>");
 
                     colmd1=$("<div class='col-md-1'></div>")
-                    colmd2=$("<div class='col-md-2'></div>")
-                    colmd3=$("<div class='col-md-1 offset-md-1'></div>")
-                    colmd4=$("<div class='col-md-4'></div>")
-                    colmd5=$("<div class='col-md-1'></div>")
+                    colmd2=$("<div class='col-md-1'></div>")
+                    colmd3=$("<div class='col-md-2'></div>")
+                    colmd4=$("<div class='col-md-1'></div>")
+                    colmd5=$("<div class='col-md-2'></div>")
                     colmd6=$("<div class='col-md-2'></div>")
-
-                    date_label=$("<label class='custom_label_css' style='font-weight: bold;'>Date</label>");
-                    colmd1.append(date_label)
-                    date_input=$("<input class='form-control' id='date_id' style='background-color: white;' value='"+today+"' disabled>")
-                    colmd2.append(date_input)
+                    colmd7=$("<div class='col-md-1'></div>")
+                    colmd8=$("<div class='col-md-2'></div>")                   
                     
-                    pat_bg_label=$("<label class='custom_label_css' style='font-weight: bold;'>Blood Group</label>");
+                    var pat_sex_label=$("<label class='form-control-static float-right' id='token_id' style='font-weight: bold;' >Sex</label>");
+                    colmd1.append(pat_sex_label)
+                    var pat_sex=$("<label id='pat_sex' class='form-control-static'>"+presData['gender']+"</label>")                    
+                    colmd2.append(pat_sex)
+
+                    pat_bg_label=$("<label class='form-control-static float-right' style='font-weight: bold;'>Blood Group</label>");
                     colmd3.append(pat_bg_label)
-                    pat_bg=$("<input class='form-control' id='pat_gender' style='background-color: white;' value='"+presData['bloodgroup']+"' disabled>")
+                    var pat_bg=$("<label id='pat_bg' class='form-control-static'>"+presData['bloodgroup']+"</label>")                    
                     colmd4.append(pat_bg)
 
-                    pat_tele_label=$("<label class='custom_label_css' style='font-weight: bold;'>Telephone No</label>");
+                    pat_tele_label=$("<label class='form-control-static float-right' style='font-weight: bold;'>Telephone No</label>");
                     colmd5.append(pat_tele_label)
-                    pat_telephone=$("<input class='form-control' id='pat_age' style='background-color: white;' value='"+presData['contact_no']+"' disabled>")
+                    var pat_telephone=$("<label id='pat_telephone' class='form-control-static'>"+presData['contact_no']+"</label>")                    
                     colmd6.append(pat_telephone)
+
+                    date_label=$("<label class='form-control-static float-right' style='font-weight: bold;'>Date</label>");
+                    colmd7.append(date_label)
+                    var date_input=$("<label id='date_id' class='form-control-static'>"+today+"</label>")                    
+                    colmd8.append(date_input)
 
                 row__col_one__row_div_three.append(colmd1);
                 row__col_one__row_div_three.append(colmd2);
@@ -148,6 +141,8 @@ function loadPresForm(){
                 row__col_one__row_div_three.append(colmd4);
                 row__col_one__row_div_three.append(colmd5);
                 row__col_one__row_div_three.append(colmd6);
+                row__col_one__row_div_three.append(colmd7);
+                row__col_one__row_div_three.append(colmd8);
 
             col_one__row_div_three.append(row__col_one__row_div_three);
 
@@ -159,12 +154,12 @@ function loadPresForm(){
                 var col_one__row_div_four=$("<div class='col-md-12' style='padding-bottom: 15px;'></div>");
                     row__col_one__row_div_four=$("<div class='row'></div>");
 
-                        colmd1=$("<div class='col-md-1 offset-md-4'></div>")
-                        colmd2=$("<div class='col-md-4'></div>")
+                        colmd1=$("<div class='col-md-1'></div>")
+                        colmd2=$("<div class='col-md-2'></div>")
                         
-                        Doctor_label=$("<label class='custom_label_css' style='font-weight: bold;'>Doctor</label>");
+                        Doctor_label=$("<label class='form-control-static float-right' style='font-weight: bold;'>Doctor</label>");
                         colmd1.append(Doctor_label)
-                        Doctor_input=$("<input class='form-control' id='doct_id' style='background-color: white;' value='"+presData['doctor_name']+"' disabled>")
+                        var Doctor_input=$("<label id='doct_id' class='form-control-static'>"+presData['doctor_name']+"</label>")                    
                         colmd2.append(Doctor_input)
                         
                     row__col_one__row_div_four.append(colmd1);
@@ -179,12 +174,12 @@ function loadPresForm(){
             var row_div_four=$("<div class='row  '></div>");
                 var col_one__row_div_four=$("<div class='col-md-12' style='padding-bottom: 15px;'></div>");
                     row__col_one__row_div_four=$("<div class='row'></div>");
-                        colmd1=$("<div class='col-md-1 offset-md-4'></div>")
-                        colmd2=$("<div class='col-md-4'></div>")
+                        colmd1=$("<div class='col-md-1'></div>")
+                        colmd2=$("<div class='col-md-2'></div>")
                         
-                        Doctor_label=$("<label class='custom_label_css' style='font-weight: bold;'>Doctor</label>");
+                        Doctor_label=$("<label class='form-control-static float-right' style='font-weight: bold;'>Doctor</label>");
                         colmd1.append(Doctor_label)
-                        Doctor_input=$("<input class='form-control' id='doct_id' style='background-color: white;' value='"+presData['doctor_name']+"' disabled>")
+                        var Doctor_input=$("<label id='doct_id' class='form-control-static'>"+presData['doctor_name']+"</label>")                    
                         colmd2.append(Doctor_input)
                         
                     row__col_one__row_div_four.append(colmd1);
@@ -202,24 +197,33 @@ function loadPresForm(){
                 var col_one__row_div_four=$("<div class='col-md-12' style='padding-bottom: 15px;'></div>");
                     row__col_one__row_div_four=$("<div class='row  '></div>");
                         colmd1=$("<div class='col-md-1'></div>")
-                        colmd2=$("<div class='col-md-3'></div>")
+                        colmd2=$("<div class='col-md-2'></div>")
                         colmd3=$("<div class='col-md-1'></div>")
-                        colmd4=$("<div class='col-md-1'></div>")
+                        colmd4=$("<div class='col-md-2'></div>")
+                        colmd5=$("<div class='col-md-2'></div>")
+                        colmd6=$("<div class='col-md-1'></div>")
                         
-                        Doctor_label=$("<label class='custom_label_css' style='font-weight: bold;'>Consultant</label>");
-                        colmd1.append(Doctor_label)
-                        Doctor_input=$("<input class='form-control' id='doct_id' style='background-color: white;' value='"+presData['consultant_name']+"' disabled>")
-                        colmd2.append(Doctor_input)
+                        doctor_label=$("<label class='form-control-static float-right' style='font-weight: bold;'>Doctor</label>");
+                        colmd1.append(doctor_label)
+                        var doct_input=$("<label id='doct_id' class='form-control-static'>"+presData['doctor_name']+"</label>")
+                        colmd2.append(doct_input)
 
-                        roomNo_label=$("<label class='custom_label_css' style='font-weight: bold;'>Room Number</label>");
-                        colmd3.append(roomNo_label)
-                        Room_input=$("<input class='form-control' style='background-color: white;' value='"+presData['roomNo']+"' disabled>")
-                        colmd4.append(Room_input)
+                        consultant_label=$("<label class='form-control-static float-right' style='font-weight: bold;'>Consultant</label>");
+                        colmd3.append(consultant_label)
+                        var consultant_input=$("<label id='cons_id' class='form-control-static'>"+presData['consultant_name']+"</label>")
+                        colmd4.append(consultant_input)
+
+                        roomNo_label=$("<label class='form-control-static float-right' style='font-weight: bold;'>Room No.</label>");
+                        colmd5.append(roomNo_label)
+                        var Room_input=$("<label id='Room_id' class='form-control-static'>"+presData['roomNo']+"</label>")
+                        colmd6.append(Room_input)
 
                     row__col_one__row_div_four.append(colmd1);
                     row__col_one__row_div_four.append(colmd2);
                     row__col_one__row_div_four.append(colmd3);
                     row__col_one__row_div_four.append(colmd4);
+                    row__col_one__row_div_four.append(colmd5);
+                    row__col_one__row_div_four.append(colmd6);
 
                 col_one__row_div_four.append(row__col_one__row_div_four);
             $(row_div_four).append(col_one__row_div_four);
@@ -231,26 +235,33 @@ function loadPresForm(){
                     row__col_one__row_div_four=$("<div class='row'></div>");
 
                         colmd1=$("<div class='col-md-1'></div>")
-                        colmd2=$("<div class='col-md-3'></div>")
+                        colmd2=$("<div class='col-md-2'></div>")
                         colmd3=$("<div class='col-md-1'></div>")
-                        colmd4=$("<div class='col-md-1'></div>")
-                        colmd5=$("<div class='col-md-1 offset-md-1'></div>")
+                        colmd4=$("<div class='col-md-2'></div>")
+                        colmd5=$("<div class='col-md-2'></div>")
                         colmd6=$("<div class='col-md-1'></div>")
+                        colmd7=$("<div class='col-md-2'></div>")
+                        colmd8=$("<div class='col-md-1'></div>")
 
-                        Doctor_label=$("<label class='custom_label_css' style='font-weight: bold;'>Consultant</label>");
-                        colmd1.append(Doctor_label)
-                        Doctor_input=$("<input class='form-control' id='doct_id' style='background-color: white;' value='"+presData['consultant_name']+"' disabled>")
-                        colmd2.append(Doctor_input)
+                        doctor_label=$("<label class='form-control-static float-right' style='font-weight: bold;'>Doctor</label>");
+                        colmd1.append(doctor_label)
+                        var doct_input=$("<label id='doct_id' class='form-control-static'>"+presData['doctor_name']+"</label>")
+                        colmd2.append(doct_input)
 
-                        wardNo_label=$("<label class='custom_label_css' style='font-weight: bold;'>Ward Number</label>");
-                        colmd3.append(wardNo_label)
-                        wardNo_input=$("<input class='form-control' id='wardNo_input' style='background-color: white;' value='"+presData['ward']+"' disabled>")
-                        colmd4.append(wardNo_input)
+                        consultant_label=$("<label class='form-control-static float-right' style='font-weight: bold;'>Consultant</label>");
+                        colmd3.append(consultant_label)
+                        var consultant_input=$("<label id='cons_id' class='form-control-static'>"+presData['consultant_name']+"</label>")
+                        colmd4.append(consultant_input)
+
+                        wardNo_label=$("<label class='form-control-static' style='font-weight: bold;'>Ward Number</label>");
+                        colmd5.append(wardNo_label)
+                        var wardNo_input=$("<label id='wardNo_input' class='form-control-static'>"+presData['ward']+"</label>")
+                        colmd6.append(wardNo_input)
                         
-                        bedNo_label=$("<label class='custom_label_css' style='font-weight: bold;'>Bed Number</label>");
-                        colmd5.append(bedNo_label)
-                        bedNo_input=$("<input class='form-control' id='bedNo_input' style='background-color: white;' value='"+presData['bed']+"' disabled>")
-                        colmd6.append(bedNo_input)
+                        bedNo_label=$("<label class='form-control-static' style='font-weight: bold;'>Bed Number</label>");
+                        colmd7.append(bedNo_label)
+                        var bedNo_input=$("<label id='bedNo_input' class='form-control-static'>"+presData['bed']+"</label>")
+                        colmd8.append(bedNo_input)
                                                         
                     row__col_one__row_div_four.append(colmd1);
                     row__col_one__row_div_four.append(colmd2);
@@ -258,6 +269,8 @@ function loadPresForm(){
                     row__col_one__row_div_four.append(colmd4);
                     row__col_one__row_div_four.append(colmd5);
                     row__col_one__row_div_four.append(colmd6);
+                    row__col_one__row_div_four.append(colmd7);
+                    row__col_one__row_div_four.append(colmd8);
 
                 col_one__row_div_four.append(row__col_one__row_div_four);
             $(row_div_four).append(col_one__row_div_four);

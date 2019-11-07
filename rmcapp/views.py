@@ -2709,6 +2709,7 @@ def saveSurgProcBill(request):
         return JsonResponse(data)
 
 def updateInvoice(request):
+
     if request.method=="GET":
         pres=request.GET.get("pres")
         pres=json.loads(pres)
@@ -2759,6 +2760,145 @@ def updateInvoice(request):
             ward_Obj.net_total=ward_dict['ward_total']
             ward_Obj.status=ward_dict['ward_status']
             ward_Obj.save()
+        
+        if surg_dict!={}:
+            for key in surg_dict:
+                surgSumObj=surgeryBillSummary.objects.get(pres=pres)
+                print("surgSumObj", surgSumObj)
 
+                surgSumObj.net_total=surg_dict[key]['all_total']
+                surg_Obj=surgeryBillRecord.objects.get(id=int(key))
+                surg_Obj.surgeon_fee=surg_dict[key]['surgeon_fee']
+                surg_Obj.operation_theater_fee=surg_dict[key]['oper_fee']
+                surg_Obj.anesthesiologist_fee=surg_dict[key]['anest_fee']
+                surg_Obj.surplus_fee=surg_dict[key]['surplus_char']
+                surg_Obj.net_total=surg_dict[key]['surg_total']
+                surg_Obj.status=surg_dict[key]['status']
+                surgSumObj.save()
+                surg_Obj.save()
+        
+        if proc_dict!={}:
+            for key in proc_dict:
+                procSumObj=procedureBillSummary.objects.get(pres=pres)
+                procSumObj.net_total=proc_dict[key]['all_total']
+                proc_Obj=procedureBillRecord.objects.get(id=int(key))
+                proc_Obj.net_total=proc_dict[key]['proc_total']
+                proc_Obj.status=proc_dict[key]['status']
+                proc_Obj.save()
+                procSumObj.save()
 
         return JsonResponse({})
+
+
+def retrieveInvoiceBillRecordForView(request):
+     if request.method=="GET":
+        pres_id=request.GET.get('id')
+        pres_id=int(pres_id)
+        patPresObj=patPrescriptionRecords.objects.get(id=pres_id)
+        InvoiceObj=invoiceRecords.objects.get(pres=patPresObj)
+        print("invoice Obj", InvoiceObj)
+
+        patRoomBillView_dict={}
+        patWardBillView_dict={}
+        surgBillRecordView_dict={}
+        procBillRecordView_dict={}
+        patPresRecordView_dict={}
+        DespBillView_dict={}
+
+        if InvoiceObj.room_bill!=None:
+            patRoomBillView_dict={}
+            patRoomBillView_dict['floor']=InvoiceObj.room_bill.rooms.floor
+            patRoomBillView_dict['room_no']=InvoiceObj.room_bill.rooms.room_no
+            patRoomBillView_dict['charge_per_day']=InvoiceObj.room_bill.rooms.charge_per_day
+            patRoomBillView_dict['ac_charge_per_day']=InvoiceObj.room_bill.rooms.ac_charge_per_day
+            patRoomBillView_dict['total_days']=InvoiceObj.room_bill.total_days
+            patRoomBillView_dict['total_bill']=InvoiceObj.room_bill.net_total
+            patRoomBillView_dict['status']=InvoiceObj.room_bill.status
+            print("patRoomBillView_dict", patRoomBillView_dict)
+
+        if InvoiceObj.ward_bill!=None:
+            patWardBillView_dict={}          
+            patWardBillView_dict['ward_no']=InvoiceObj.ward_bill.wards.ward_no
+            patWardBillView_dict['bed_no']=InvoiceObj.ward_bill.wards.bed_no
+            patWardBillView_dict['charge_per_day']=InvoiceObj.ward_bill.wards.charge_per_day
+            patWardBillView_dict['total_days']=InvoiceObj.ward_bill.total_days
+            patWardBillView_dict['total_bill']=InvoiceObj.ward_bill.net_total
+            patWardBillView_dict['status']=InvoiceObj.ward_bill.status
+            print("patWardBillView_dict", patWardBillView_dict)
+
+        if InvoiceObj.desp_bill!=None:
+            DespBillView_dict={}
+            DespBillView_dict['desp_bill']=InvoiceObj.desp_bill.despcharge_bill
+            DespBillView_dict['add_med_bill']=InvoiceObj.desp_bill.addcharge_bill
+            DespBillView_dict['total_bill']=InvoiceObj.desp_bill.net_total
+            DespBillView_dict['status']=InvoiceObj.desp_bill.status
+            print("DespBillView_dict", DespBillView_dict)
+
+        if InvoiceObj.pres!=None:
+            patPresRecordView_dict={}
+            patPresRecordView_dict['pat_name']=InvoiceObj.pres.patient.pat_name
+            patPresRecordView_dict['date_visited']=str(InvoiceObj.pres.date_visited)
+            pPresBObj=patPrescriptionBill.objects.get(pres=patPresObj)
+            patPresRecordView_dict['pres_bill']=pPresBObj.net_total
+            patPresRecordView_dict['status']=pPresBObj.status
+            patPresRecordView_dict['total_bill']=InvoiceObj.net_total
+            patPresRecordView_dict['status']=InvoiceObj.status
+            patPresRecordView_dict['invoice_no']=InvoiceObj.id
+            print("patPresRecordView_dict",patPresRecordView_dict)
+
+        if InvoiceObj.surgery_bill!=None:
+            surgBillRecordView_dict={}
+            surgBillSummary_Obj= InvoiceObj.surgery_bill
+            print("surgBillSummary_Obj", surgBillSummary_Obj)
+            sbsObj= surgeryBillSummary.objects.get(id=surgBillSummary_Obj.id)
+
+            sbr_list=sbsObj.sbr
+            for sbr in sbr_list:
+                sbr_Obj=surgeryBillRecord.objects.get(id=int(sbr))
+                print("sbr_Obj",sbr_Obj)
+                tempsurgbillrecord_dict={}
+                tempsurgbillrecord_dict['surgery_name']=sbr_Obj.surgery.surgery_name
+                tempsurgbillrecord_dict['surgeon_fee']=sbr_Obj.surgeon_fee
+                tempsurgbillrecord_dict['OT_fee']=sbr_Obj.operation_theater_fee
+                tempsurgbillrecord_dict['anest_fee']=sbr_Obj.anesthesiologist_fee
+                tempsurgbillrecord_dict['surplus_fee']=sbr_Obj.surplus_fee
+                tempsurgbillrecord_dict['net_total']=sbr_Obj.net_total
+                tempsurgbillrecord_dict['status']=sbr_Obj.status
+                surgBillRecordView_dict[sbr_Obj.id]=[]
+                surgBillRecordView_dict[sbr_Obj.id]=tempsurgbillrecord_dict
+            totalSurgBill=surgBillSummary_Obj.net_total
+            print("totalSurgBill", totalSurgBill)
+
+        print("surgBillRecordView_dict", surgBillRecordView_dict)
+
+        if InvoiceObj.procedure_id!=None:
+            procBillRecordView_dict={}
+            procBillSummary_Obj= InvoiceObj.procedure_id
+            print("procBillSummary_Obj", procBillSummary_Obj)
+            pbsObj= procedureBillSummary.objects.get(id=procBillSummary_Obj.id)
+            pbr_list=pbsObj.procbr
+            for procbr in pbr_list:
+                pbr_Obj=procedureBillRecord.objects.get(id=int(procbr))
+                print("pbr_Obj",pbr_Obj)
+                tempprocbillrecord_dict={}
+                tempprocbillrecord_dict['procedure_name']=pbr_Obj.procedure.procedure_name
+                tempprocbillrecord_dict['net_total']=pbr_Obj.net_total
+                tempprocbillrecord_dict['status']=pbr_Obj.status
+                procBillRecordView_dict[pbr_Obj.id]=[]
+                procBillRecordView_dict[pbr_Obj.id]=tempprocbillrecord_dict
+            totalProcBill=procBillSummary_Obj.net_total
+            print("totalProcBill", totalProcBill)
+
+        print("procBillRecordView_dict", procBillRecordView_dict)
+
+        data={
+            "totalProcBill":json.dumps(totalProcBill),
+            "totalSurgBill":json.dumps(totalSurgBill),
+            "patRoomBillView_dict":json.dumps(patRoomBillView_dict),
+            "patWardBillView_dict":json.dumps(patWardBillView_dict),
+            "DespBillView_dict":json.dumps(DespBillView_dict),
+            "patPresRecordView_dict":json.dumps(patPresRecordView_dict),
+            "surgBillRecordView_dict":json.dumps(surgBillRecordView_dict),
+            "procBillRecordView_dict":json.dumps(procBillRecordView_dict),
+        }
+        return JsonResponse(data)
