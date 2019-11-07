@@ -12,7 +12,6 @@ var prescription_datatable;
 var datatable_list=[]
 var allPatient_list=[]
 var pat_type_list=['Outdoor','Emergency','Indoor'];
-var doctor_list=['d1','d2','d3', 'd4'];
 var ward_type_list=['Room','Ward'];
 var datatable_desp_med_list=[];
 var datatable_patient_billlist=[];
@@ -55,6 +54,7 @@ function retrieveProcedureDetails(){
    
 }
 function addPatient(){
+    $("#dialog-confirm").hide()
     $('#main_page_content').empty()
     var container_patient_dashboard= $('#main_page_content').append('<div class="container-fluid" id="container-patient-dashboard"></div>');
     $("#container-patient-dashboard").append("<h2 class ='text-center'>Patient Information</h2>");
@@ -74,7 +74,7 @@ function addPatient(){
                     colmd1=$("<div class='col-md-4'></div>")
                     colmd2=$("<div class='col-md-6'></div>")
 
-                    pat_name_label=$("<label for='emp_name_tag' class='custom_label_css'>Patient Name</label>");
+                    pat_name_label=$("<label for='emp_name_tag' class='custom_label_css font-weight-bold'>Patient Name</label>");
                     colmd1.append(pat_name_label)
                     pat_name_input=$("<input class='form-control' id='pat_name_input' class='custom_input_css'>")
                     colmd2.append(pat_name_input)
@@ -90,7 +90,7 @@ function addPatient(){
                     colmd1=$("<div class='col-md-4'></div>")
                     colmd2=$("<div class='col-md-6'></div>")
 
-                    contact_type_label=$("<label class='custom_label_css'>Contact Number</label>");
+                    contact_type_label=$("<label class='custom_label_css font-weight-bold'>Contact Number</label>");
                     colmd1.append(contact_type_label);
                     contact_type_input=$("<input class='form-control' id='contact_numb_input' class='custom_input_css' placeholder='0312-3456789'></input>")
                     colmd2.append(contact_type_input);
@@ -107,18 +107,18 @@ function addPatient(){
                     var col_one__row_div_two=$("<div class='col-md-6'></div>");
                         var row__col_one__row_div_two=$("<div class='row'></div>");
                             colmd1=$("<div class='col-md-2'></div>")
-                            colmd2=$("<div class='col-md-3'></div>")
-                            colmd3=$("<div class='col-md-2'></div>")
+                            colmd2=$("<div class='col-md-2 offset-md-2'></div>")
+                            colmd3=$("<div class='col-md-1'></div>")
                             colmd4=$("<div class='col-md-3'></div>")
 
-                            pat_name_label=$("<label class='custom_label_css'>Gender</label>");
+                            pat_name_label=$("<label class='custom_label_css font-weight-bold'>Gender</label>");
                             colmd1.append(pat_name_label)
                             pat_name_input=$("<input class='form-control' id='gender_select' class='custom_input_css'>")
                             colmd2.append(pat_name_input)
                 // DOB
-                            dob_label=$("<label class='custom_label_css'>DOB</label>");
+                            dob_label=$("<label class='custom_label_css font-weight-bold'>DOB </label>");
                             colmd3.append(dob_label);
-                            dob_input=$("<input class='form-control' id='dob_input' class='custom_input_css' ></input>")
+                            dob_input=$("<input class='form-control custom_input_css' id='dob_input'></input>")
                             colmd4.append(dob_input);
 
                         row__col_one__row_div_two.append(colmd1);
@@ -129,12 +129,12 @@ function addPatient(){
                     col_one__row_div_two.append(row__col_one__row_div_two);
 
                 // CNIC
-                var col_two__row_div_two=$("<div class='col-md-6'></div>");//
+                var col_two__row_div_two=$("<div class='col-md-6'></div>");
                     var row__col_two__row_div_two=$("<div class='row'></div>");
                         colmd1=$("<div class='col-md-4'></div>")
                         colmd2=$("<div class='col-md-6'></div>")
 
-                        cnic_label=$("<label class='custom_label_css'>CNIC/Guardian CNIC</label>");
+                        cnic_label=$("<label class='custom_label_css font-weight-bold'>CNIC/Guardian CNIC</label>");
                         colmd1.append(cnic_label);
                         cnic_input=$("<input class='form-control' id='cnic_input' class='custom_input_css' placeholder='xxxxx-xxxxxxx-x' ></input>")
                         colmd2.append(cnic_input);
@@ -153,7 +153,7 @@ function addPatient(){
                         colmd1=$("<div class='col-md-4'></div>")
                         colmd2=$("<div class='col-md-6'></div>")
     
-                        guardian_name_label=$("<label for='emp_name_tag' class='custom_label_css'>Guardian Name</label>");
+                        guardian_name_label=$("<label for='emp_name_tag' class='custom_label_css font-weight-bold'>Guardian Name</label>");
                         colmd1.append(guardian_name_label)
                         guardian_name_input=$("<input class='form-control' id='guardian_input' class='custom_input_css' ></input>")
                         colmd2.append(guardian_name_input);
@@ -168,7 +168,7 @@ function addPatient(){
                         colmd1=$("<div class='col-md-4'></div>")
                         colmd2=$("<div class='col-md-6'></div>")
     
-                        address_label=$("<label for='pat_address_tag' class='custom_label_css'>Address</label>");
+                        address_label=$("<label for='pat_address_tag' class='custom_label_css font-weight-bold'>Address</label>");
                         colmd1.append(address_label)
                         pat_address_input=$("<input class='form-control' id='pat_address_input' class='custom_input_css'>")
                         colmd2.append(pat_address_input)
@@ -187,7 +187,7 @@ function addPatient(){
                             colmd1=$("<div class='col-md-4'></div>")
                             colmd2=$("<div class='col-md-6'></div>")
         
-                            blood_group_label=$("<label for='blood_group_tag' class='custom_label_css'>Blood group</label>");
+                            blood_group_label=$("<label for='blood_group_tag' class='custom_label_css font-weight-bold'>Blood group</label>");
                             colmd1.append(blood_group_label)
                             
                             var select=$("<select id='blood_group_input' class='form-control'></select>");
@@ -212,7 +212,7 @@ function addPatient(){
                             colmd1=$("<div class='col-md-4'></div>")
                             colmd2=$("<div class='col-md-6'></div>")
         
-                            email_id_label=$("<label class='custom_label_css'>Email Address</label>");
+                            email_id_label=$("<label class='custom_label_css font-weight-bold'>Email Address</label>");
                             colmd1.append(email_id_label);
                             email_id_input=$("<input class='form-control' id='email_id_input' class='custom_input_css'></input>")
                             colmd2.append(email_id_input);
@@ -229,10 +229,10 @@ function addPatient(){
                 var col_two__row_div_five=$("<div class='col-md-12'></div>");
                             var row__col_two__row_div_five=$("<div class='row'></div>");
                                 colmd1=$("<div class='col-md-2'></div>")
-                                colmd2=$("<div class='col-md-8'></div>")
+                                colmd2=$("<div class='col-md-4 offset-md-2'></div>")
                                 colmd3=$("<div class='col-md-2'></div>")
 
-                                savePatientdataForm_button=$('<button class="btn btn-success btn-sm btn-block" onclick="savePatientData()">Save</button>')
+                                savePatientdataForm_button=$('<button class="btn btn-success btn-block" onclick="savePatientData()"><span class="fa">&#xf019;</span> Save</button>')
                                 colmd2.append(savePatientdataForm_button)
                                 
                                 row__col_two__row_div_five.append(colmd1)
@@ -276,14 +276,14 @@ function EditPatient(){
        
     $(main_row_div).append(main_col_div);
 
-    var row_div_one=$("<div class='row'></div>");
+        var row_div_one=$("<div class='row'></div>");
             // Patient Name
             var col_one__row_div_one=$("<div class='col-md-4'></div>");
                 row__col_one__row_div_one=$("<div class='row'></div>");
                     colmd1=$("<div class='col-md-4'></div>")
                     colmd2=$("<div class='col-md-6'></div>")
 
-                    pat_name_label=$("<label for='emp_name_tag' class='custom_label_css'>Patient Name</label>");
+                    pat_name_label=$("<label for='emp_name_tag' class='custom_label_css float-right'>Patient Name</label>");
                     colmd1.append(pat_name_label)
 
                     pat_name_input=$("<input class='form-control' id='search_pat_name_input' class='custom_input_css'>")
@@ -299,12 +299,12 @@ function EditPatient(){
 
             var col_two__row_div_one=$("<div class='col-md-4'></div>");
                 var row__col_two__row_div_one=$("<div class='row'></div>");
-                    colmd1=$("<div class='col-md-4'></div>")
+                    colmd1=$("<div class='col-md-5'></div>")
                     colmd2=$("<div class='col-md-6'></div>")
 
-                    contact_type_label=$("<label class='custom_label_css'>Contact Number</label>");
+                    contact_type_label=$("<label class='custom_label_css float-right'>Contact Number</label>");
                     colmd1.append(contact_type_label);
-                    contact_type_input=$("<input class='form-control custom_input_css' id='search_contact_numb_input'  placeholder='0312-3456789'></input>")
+                    contact_type_input=$("<input class='form-control custom_input_css' id='search_contact_numb_input'></input>")
                     colmd2.append(contact_type_input);
 
                 row__col_two__row_div_one.append(colmd1)
@@ -313,44 +313,18 @@ function EditPatient(){
 
             var col_three__row_div_one=$("<div class='col-md-4'></div>");
                 var row__col_three__row_div_one=$("<div class='row'></div>");
-                    var colmd1=$("<div class='col-md-4'></div>")
-                    var colmd2=$("<div class='col-md-6'></div>")
-                        var cnic_label=$("<label class='custom_label_css'>CNIC</label>");
-                       
-                        var cnic_input=$("<input class='form-control custom_input_css' id='search_cnic_numb_input'></input>")
-                        colmd1.append(cnic_label);
-                        colmd2.append(cnic_input);
+                    var colmd1=$("<div class='col-md-7'></div>")
+                        var search_button=$('<button class="btn btn-block fa fa-search" onclick="searchPatient()">Search Patient</button>')
+                    colmd1.append(search_button)
 
                 row__col_three__row_div_one.append(colmd1)
-                row__col_three__row_div_one.append(colmd2)
             col_three__row_div_one.append(row__col_three__row_div_one)
 
-
-            $(row_div_one).append(col_one__row_div_one);
-            $(row_div_one).append(col_two__row_div_one);
-            $(row_div_one).append(col_three__row_div_one);
-
-        var row_div_two=$("<div class='row'></div>");
-            var col_one__row_div_two=$("<div class='col-md-4'></div>");
-            var col_two__row_div_two=$("<div class='col-md-4'></div>");
-            var col_three__row_div_two=$("<div class='col-md-4'></div>");
-                var row__col_three__row_div_two=$("<div class='row'></div>");
-                    var colmd1=$("<div class='col-md-12'></div>")
-                        var search_button=$('<button onclick="searchPatient()">Search Patient</button>')
-                    colmd1.append(search_button)
-                row__col_three__row_div_two.append(colmd1);
-            col_three__row_div_two.append(row__col_three__row_div_two)
-
-        row_div_two.append(col_one__row_div_two)
-        row_div_two.append(col_two__row_div_two)
-        row_div_two.append(col_three__row_div_two)
-
-   
-
-
+        $(row_div_one).append(col_one__row_div_one);
+        $(row_div_one).append(col_two__row_div_one);
+        $(row_div_one).append(col_three__row_div_one);
 
     $(main_col_div).append(row_div_one);
-    $(main_col_div).append(row_div_two);
 
   
 }
@@ -377,13 +351,11 @@ function searchPatient(){
 
     var pat_name=$("#search_pat_name_input").val();
     var contact_no=$("#search_contact_numb_input").val();
-    var cnic_no=$("#search_cnic_numb_input").val();
     if (pat_datatable!==undefined){
         pat_datatable.destroy();
     }
     id="1"
-    retrievePatientInfo(pat_name,contact_no,cnic_no,id)
-    // list= [["1","Ali","03009420002","35202-0000122-1","Lahore"],["2","Ahmad","03119420002","35202-7268122-1","Lahore"]] 
+    retrievePatientInfo(pat_name,contact_no,id)
 
 }
 function createPatientDataTable(){
@@ -409,14 +381,15 @@ function createPatientDataTable(){
                 scrollX: true,
                 ordering: true,
                 info:false,
-                dom: 'Bfrtip',
-                buttons: [
-                    {
-                    extend: 'print',
-                    text: 'ButtonLabelHere',
-                    title: '',
-                    }
-                ],
+                searching:false,
+                // dom: 'Bfrtip',
+                // buttons: [
+                //     {
+                //     extend: 'print',
+                //     text: 'ButtonLabelHere',
+                //     title: '',
+                //     }
+                // ],
     
             });
             $('#patient_table tbody').on( 'click', 'tr', function () {
@@ -435,7 +408,7 @@ function createPatientDataTable(){
                     var row_div_four=$("<div class='row' id='row_div_four' style='transform: rotate(270deg) ;transform-origin:50% 100%;transform:scaleX(1);'></div>");
                         var main_subcol=$("<div class='col-md-12'></div>");
 
-                            var subrow_one=$("<div class='row'></div>")
+                            var subrow_one=$("<div class='row' style='padding-top: 10px; padding-bottom: 10px;'></div>")
 
                                     var col_one__subrow_one=$("<div class='col-md-6'></div>");
                                             row__col_one__subrow_one=$("<div class='row'></div>");
@@ -467,21 +440,21 @@ function createPatientDataTable(){
                             subrow_one.append(col_two__subrow_one)
 
 
-                        var subrow_two=$("<div class='row'></div>")
+                        var subrow_two=$("<div class='row' style='padding-top: 10px; padding-bottom: 10px;'></div>")
                             var col_one_subrow_two=$("<div class='col-md-6'></div>");
                                 var row__col_one_subrow_two=$("<div class='row'></div>");
                                     colmd1=$("<div class='col-md-2'></div>")
-                                    colmd2=$("<div class='col-md-3'></div>")
-                                    colmd3=$("<div class='col-md-2'></div>")
+                                    colmd2=$("<div class='col-md-2 offset-md-2'></div>")
+                                    colmd3=$("<div class='col-md-1'></div>")
                                     colmd4=$("<div class='col-md-3'></div>")
                         
-                                        var pat_name_label=$("<label class='custom_label_css'>Gender</label>");
-                                        var pat_name_input=$("<input class='form-control' id='gender_select' class='custom_input_css' value='"+patient_dict[patient_id_selected]['gender']+"' disabled>")
-                                    // DOB
+                                        var pat_gender_label=$("<label class='custom_label_css'>Gender</label>");
+                                        var pat_gender_input=$("<input class='form-control' id='gender_select' class='custom_input_css' value='"+patient_dict[patient_id_selected]['gender']+"' disabled>")
+                                        
                                         var dob_label=$("<label class='custom_label_css'>DOB</label>");
                                         var dob_input=$("<input class='form-control' id='dob_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['dob']+"' ></input>")
-                                    colmd1.append(pat_name_label)
-                                    colmd2.append(pat_name_input)
+                                    colmd1.append(pat_gender_label)
+                                    colmd2.append(pat_gender_input)
                                     colmd3.append(dob_label);
                                     colmd4.append(dob_input);
                         
@@ -492,8 +465,7 @@ function createPatientDataTable(){
                         
                             col_one_subrow_two.append(row__col_one_subrow_two);
                         
-                                        // CNIC
-                            var col_two_subrow_two=$("<div class='col-md-6'></div>");//
+                            var col_two_subrow_two=$("<div class='col-md-6'></div>");
                                 var row__col_two_subrow_two=$("<div class='row'></div>");
                                     var colmd1=$("<div class='col-md-4'></div>")
                                     var colmd2=$("<div class='col-md-6'></div>")
@@ -509,7 +481,7 @@ function createPatientDataTable(){
                         subrow_two.append(col_one_subrow_two)
                         subrow_two.append(col_two_subrow_two)
 
-                        var subrow_three=$("<div class='row'></div>")
+                        var subrow_three=$("<div class='row' style='padding-top: 10px; padding-bottom: 10px;'></div>")
                             var col_one__subrow_three=$("<div class='col-md-6'></div>");
                                 var row__col_one__subrow_three=$("<div class='row'></div>");
                                     var colmd1=$("<div class='col-md-4'></div>")
@@ -542,8 +514,7 @@ function createPatientDataTable(){
                         subrow_three.append(col_one__subrow_three)
                         subrow_three.append(col_two__subrow_three)
 
-                        var subrow_four=$("<div class='row'></div>")
-                        // Blood group
+                        var subrow_four=$("<div class='row' style='padding-top: 10px; padding-bottom: 10px;'></div>")
                             var col_one__subrow_four=$("<div class='col-md-6'></div>");
                                 var row__col_one__subrow_four=$("<div class='row'></div>");
                                     var colmd1=$("<div class='col-md-4'></div>")
@@ -574,20 +545,15 @@ function createPatientDataTable(){
                         subrow_four.append(col_one__subrow_four);
                         subrow_four.append(col_two__subrow_four);
 
-                        var subrow_five=$("<div class='row'>")
+                        var subrow_five=$("<div class='row' style='padding-top: 10px; padding-bottom: 10px;'>")
                             var col_one__subrow_five=$("<div class='col-md-12'></div>");
                                 var row__col_one__subrow_five=$("<div class='row'></div>");
                                     var colmd1=$("<div class='col-md-2'></div>")
-                                    var colmd2=$("<div class='col-md-8'></div>")
-                                    var colmd3=$("<div class='col-md-2'></div>")
-
-                                        var updatePatientdataForm_button=$('<button class="btn btn-success btn-sm btn-block" onclick="updatePatientData()">Update</button>')
+                                    var colmd2=$("<div class='col-md-4 offset-md-2'></div>")
+                                        var updatePatientdataForm_button=$('<button class="btn btn-success btn-sm btn-block" onclick="updatePatientData()"><span class="fa">&#xf019;</span> Update</button>')
                                     colmd2.append(updatePatientdataForm_button)
-                                        var printdiv=$('<button class="btn" onclick="printEditedPatientData()">Primt</button>')
-                                    colmd3.append(printdiv);
                                 row__col_one__subrow_five.append(colmd1)
                                 row__col_one__subrow_five.append(colmd2)
-                                row__col_one__subrow_five.append(colmd3)
                             col_one__subrow_five.append(row__col_one__subrow_five)
                         subrow_five.append(col_one__subrow_five);
 
@@ -608,33 +574,6 @@ function createPatientDataTable(){
     
             });
         });
-}
-function printEditedPatientData(){
-    // var restorepage = $('body').html();
-    // var printcontent = $('#row_div_four').clone();
-    // // $('body').empty().html(printcontent);
-    // window.print();
-    // $('body').html(restorepage);
-    // // $("#row_div_four").remove();
-
-    var restorepage = $('body').html();
-    var data=document.getElementById(row_div_four).innerHTML;
-    var myWindow = window.open('', 'row_div_four', 'height=400,width=600');
-    myWindow.document.write('</head><body >');
-    myWindow.document.write(data);
-    myWindow.document.write('</body></html>');
-    myWindow.document.close(); // necessary for IE >= 10
-
-    // myWindow.onload=function(){ // necessary if the div contain images
-
-    //     myWindow.focus(); // necessary for IE >= 10
-    //     myWindow.print();
-    //     myWindow.close();
-    $('body').html(restorepage);
-
-
-
-    
 }
 function savePatientData(){
     var patient_name=$("#pat_name_input").val();
@@ -768,10 +707,12 @@ function createAllPatientDataTable(){
                 buttons: [
                     {
                     extend: 'print',
-                    text: 'ButtonLabelHere',
+                    text: ' Print all Patients Details',
                     title: '',
+                    className: 'btn btn-default fa fa-print',
                     }
                 ],
+    
             });
             $('#all_patient_table tbody').on( 'click', 'tr', function () {
                 if ( $(this).hasClass('selected') ) {
@@ -785,8 +726,28 @@ function createAllPatientDataTable(){
                     allPat_datatable.$('tr.selected').removeClass('selected');
                     $(this).addClass('selected');
                     console.log("Patient dict on click",patient_dict);
-                    var row_div_two=$("<div class='row' id='row_div_two' style='transform: rotate(270deg) ;transform-origin:50% 100%;transform:scaleX(1);'></div>");
+                    var row_div_two=$("<div class='row' id='row_div_two'></div>");
                         var main_subcol=$("<div class='col-md-12'></div>");
+
+                            var subrow_six=$("<div class='row' id='rmc_logo_div' style='padding-bottom:10px; padding-top:20px; display:none;'></div>")
+                                var col_one__subrow_six=$("<div class='col-md-12'></div>");
+                                    row__col_one__subrow_six=$("<div class='row'></div>");
+                                        var colmd1=$("<div class='col-md-12 text-center'></div>")
+                                            var rmc_label=$("<label for='rmc_tag' class='custom_label_css'><h2>Rafiq Medical Center</h2></label>");
+                                        colmd1.append(rmc_label)
+                                    row__col_one__subrow_six.append(colmd1);
+                                col_one__subrow_six.append(row__col_one__subrow_six);  
+                            subrow_six.append(col_one__subrow_six)
+
+                            var subrow_zero=$("<div class='row' style='padding-bottom:10px'></div>")
+                                var col_one__subrow_zero=$("<div class='col-md-5 offset-md-1'></div>");
+                                    row__col_one__subrow_zero=$("<div class='row'></div>");
+                                        var colmd1=$("<div class='col-md-12'></div>")
+                                            var head_label=$("<label for='head_tag' class='custom_label_css'><h3>Patient Details</h3></label>");
+                                        colmd1.append(head_label)
+                                    row__col_one__subrow_zero.append(colmd1);
+                                col_one__subrow_zero.append(row__col_one__subrow_zero);                 
+                            subrow_zero.append(col_one__subrow_zero)
 
                             var subrow_one=$("<div class='row' style='padding-bottom:10px'></div>")
 
@@ -794,7 +755,7 @@ function createAllPatientDataTable(){
                                     row__col_one__subrow_one=$("<div class='row'></div>");
                                         var colmd1=$("<div class='col-md-4 text-right'></div>")
                                         var colmd2=$("<div class='col-md-4'></div>")
-                                            var pat_name_label=$("<label for='emp_name_tag' class='custom_label_css'>Patient Name</label>");
+                                            var pat_name_label=$("<label for='pat_name_tag' class='custom_label_css font-weight-bold'>Patient Name</label>");
                                             var pat_name_input=$("<label id='pat_name_input'class='custom_label_css' >"+patient_dict[patient_id_selected]['name']+"</label>")
                                         colmd2.append(pat_name_input)
                                         colmd1.append(pat_name_label)
@@ -802,144 +763,156 @@ function createAllPatientDataTable(){
                                     row__col_one__subrow_one.append(colmd2);
                                 col_one__subrow_one.append(row__col_one__subrow_one);                 
 
-                            subrow_one.append(col_one__subrow_one)
-
-                            var subrow_two=$("<div class='row' style='padding-bottom:10px'></div>")
-
-                                var col_one__subrow_two=$("<div class='col-md-6'></div>");
-                                    var row__col_one__subrow_two=$("<div class='row'></div>");
+                                var col_two__subrow_one=$("<div class='col-md-6'></div>");
+                                    row__col_two__subrow_one=$("<div class='row'></div>");
                                         var colmd1=$("<div class='col-md-4 text-right'></div>")
                                         var colmd2=$("<div class='col-md-4'></div>")
-                                            var patID_label=$("<label class='custom_label_css'>Patient ID</label>");
+                                            var patID_label=$("<label class='custom_label_css font-weight-bold'>Patient ID</label>");
                                             var patID_input=$("<label class='custom_label_css'>"+patient_id_selected+"</label>")
                                         colmd1.append(patID_label);
                                         colmd2.append(patID_input);
-                                    row__col_one__subrow_two.append(colmd1);
-                                    row__col_one__subrow_two.append(colmd2);
-                                col_one__subrow_two.append(row__col_one__subrow_two);                 
+                                    row__col_two__subrow_one.append(colmd1);
+                                    row__col_two__subrow_one.append(colmd2);
+                                col_two__subrow_one.append(row__col_two__subrow_one);
+                                
+                            subrow_one.append(col_one__subrow_one)
+                            subrow_one.append(col_two__subrow_one)
 
-                            subrow_two.append(col_one__subrow_two)
-
-                            var subrow_three=$("<div class='row' style='padding-bottom:10px'></div>")
-                                var col_one__subrow_three=$("<div class='col-md-6'></div>");
-                                    var row__col_one__subrow_three=$("<div class='row'></div>");
+                            var subrow_two=$("<div class='row' style='padding-bottom:10px'></div>")
+                                
+                                var col_one__subrow_two=$("<div class='col-md-6'></div>");
+                                    var row__col_one__subrow_two=$("<div class='row'></div>");
                                         colmd1=$("<div class='col-md-4 text-right'></div>")
                                         colmd2=$("<div class='col-md-4'></div>")
                             
-                                            var pat_gender_label=$("<label class='custom_label_css'>Gender</label>");
+                                            var pat_gender_label=$("<label class='custom_label_css font-weight-bold'>Gender</label>");
                                         colmd1.append(pat_gender_label)
                                             var pat_gender_input=$("<label class='custom_label_css'>"+patient_dict[patient_id_selected]['gender']+"</label>")
                                         colmd2.append(pat_gender_input)                                        
                                             
-                                    row__col_one__subrow_three.append(colmd1);
-                                    row__col_one__subrow_three.append(colmd2);
-                                col_one__subrow_three.append(row__col_one__subrow_three);
-                            subrow_three.append(col_one__subrow_three)
+                                    row__col_one__subrow_two.append(colmd1);
+                                    row__col_one__subrow_two.append(colmd2);
+                                col_one__subrow_two.append(row__col_one__subrow_two);
+                                
+                                var col_two__subrow_two=$("<div class='col-md-6'></div>");
+                                    var row__col_two__subrow_two=$("<div class='row'></div>");
+                                        var colmd1=$("<div class='col-md-4 text-right'></div>")
+                                        var colmd2=$("<div class='col-md-4'></div>")
+                                            var dob_label=$("<label class='custom_label_css font-weight-bold'>Date of Birth</label>");
+                                            var dob_input=$("<label class='custom_label_css' id='dob_input'>"+patient_dict[patient_id_selected]['dob']+"</label>")
+                                        colmd1.append(dob_label);
+                                        colmd2.append(dob_input);                              
+                                    row__col_two__subrow_two.append(colmd1);
+                                    row__col_two__subrow_two.append(colmd2);
+                                col_two__subrow_two.append(row__col_two__subrow_two);
 
-                            var subrow_four=$("<div class='row' style='padding-bottom:10px'></div>")
+                            subrow_two.append(col_one__subrow_two)
+                            subrow_two.append(col_two__subrow_two)
+
+                            var subrow_three=$("<div class='row' style='padding-bottom:10px'></div>")
+                                
+                                var col_one__subrow_three=$("<div class='col-md-6'></div>");
+                                    var row__col_one__subrow_three=$("<div class='row'></div>");
+                                        var colmd1=$("<div class='col-md-4 text-right'></div>")
+                                        var colmd2=$("<div class='col-md-4'></div>")
+                                            var cnic_label=$("<label  class='custom_label_css font-weight-bold'>CNIC</label>");
+                                            var cnic_input=$("<label class='custom_label_css' id='guardian_input'>"+patient_dict[patient_id_selected]['cnic']+"</label>")
+                                        colmd1.append(cnic_label)
+                                        colmd2.append(cnic_input);
+                                    row__col_one__subrow_three.append(colmd1)
+                                    row__col_one__subrow_three.append(colmd2)
+                                col_one__subrow_three.append(row__col_one__subrow_three);
+
+                                var col_two__subrow_three=$("<div class='col-md-6'></div>");
+                                    var row__col_two__subrow_three=$("<div class='row'></div>");
+                                        var colmd1=$("<div class='col-md-4 text-right'></div>")
+                                        var colmd2=$("<div class='col-md-6'></div>")
+                                            var address_label=$("<label for='pat_address_tag' class='custom_label_css font-weight-bold'>Address</label>");
+                                            var pat_address_input=$("<label class='custom_label_css'' id='pat_address_input'>"+patient_dict[patient_id_selected]['address']+"</label>")
+                                        colmd1.append(address_label)
+                                        colmd2.append(pat_address_input)
+                                    row__col_two__subrow_three.append(colmd1)
+                                    row__col_two__subrow_three.append(colmd2)
+                                col_two__subrow_three.append(row__col_two__subrow_three);
+                                
+                            subrow_three.append(col_one__subrow_three);
+                            subrow_three.append(col_two__subrow_three);
+
+                            var subrow_four=$("<div class='row' style='padding-bottom:10px'>")
+                                
                                 var col_one__subrow_four=$("<div class='col-md-6'></div>");
                                     var row__col_one__subrow_four=$("<div class='row'></div>");
                                         var colmd1=$("<div class='col-md-4 text-right'></div>")
                                         var colmd2=$("<div class='col-md-4'></div>")
-                                            
-                                            var dob_label=$("<label class='custom_label_css'>DOB</label>");
-                                            colmd1.append(dob_label);
-                                            var dob_input=$("<label class='custom_label_css' id='dob_input'>"+patient_dict[patient_id_selected]['dob']+"</label>")
-                                            colmd2.append(dob_input);
+                                            blood_group_label=$("<label for='blood_group_tag' class='custom_label_css font-weight-bold'>Blood group</label>");
+                                            bloodgroup_input=$("<label class='custom_label_css' id='blood_group_input'>"+patient_dict[patient_id_selected]['bloodgroup']+"</label>")
+                                        colmd1.append(blood_group_label)
+                                        colmd2.append(bloodgroup_input) 
+                                    row__col_one__subrow_four.append(colmd1)
+                                    row__col_one__subrow_four.append(colmd2)
+                                col_one__subrow_four.append(row__col_one__subrow_four)
 
-                                        row__col_one__subrow_four.append(colmd1)
-                                        row__col_one__subrow_four.append(colmd2)
-  
-                                col_one__subrow_four.append(row__col_one__subrow_four);
-                                
+                                var col_two__subrow_four=$("<div class='col-md-6'></div>");
+                                    var row__col_two__subrow_four=$("<div class='row'></div>");
+                                        var colmd1=$("<div class='col-md-4 text-right'></div>")
+                                        var colmd2=$("<div class='col-md-6'></div>")
+                    
+                                            var email_id_label=$("<label class='custom_label_css font-weight-bold'>Email Address</label>");
+                                            var email_id_input=$("<label class='custom_label_css' id='email_id_input'>"+patient_dict[patient_id_selected]['email']+"</label>")
+                                        colmd1.append(email_id_label);
+                                        colmd2.append(email_id_input);
+                                    row__col_two__subrow_four.append(colmd1)
+                                    row__col_two__subrow_four.append(colmd2)
+                                col_two__subrow_four.append(row__col_two__subrow_four)
+
                             subrow_four.append(col_one__subrow_four);
+                            subrow_four.append(col_two__subrow_four);
+
+                            var subrow_seven=$("<div class='row' id='rmc_contact_div' style='padding-bottom:10px; padding-top:20px; display:none;'></div>")
+                                var col_one__subrow_seven=$("<div class='col-md-12'></div>");
+                                    row__col_one__subrow_seven=$("<div class='row'></div>");
+                                        var colmd1=$("<div class='col-md-4 text-center'></div>")
+                                        var colmd2=$("<div class='col-md-4 text-center'></div>")
+                                        var colmd3=$("<div class='col-md-4 text-center'></div>")
+
+                                            var c1_label=$("<label for='contact1_tag' class='custom_label_css'>Contact Details</label>");
+                                            var c2_label=$("<label for='contact2_tag' class='custom_label_css'>Contact Details</label>");
+                                            var c3_label=$("<label for='contact3_tag' class='custom_label_css'>Contact Details</label>");
+                                        colmd1.append(c1_label)
+                                        colmd2.append(c2_label)
+                                        colmd3.append(c3_label)
+
+                                    row__col_one__subrow_seven.append(colmd1);
+                                    row__col_one__subrow_seven.append(colmd2);
+                                    row__col_one__subrow_seven.append(colmd3);
+
+                                col_one__subrow_seven.append(row__col_one__subrow_seven);  
+                            subrow_seven.append(col_one__subrow_seven)
 
                             var subrow_five=$("<div class='row' style='padding-bottom:10px'>")
-                                var col_one__subrow_five=$("<div class='col-md-6'></div>");
+                                var col_one__subrow_five=$("<div class='col-md-12'></div>");
                                     var row__col_one__subrow_five=$("<div class='row'></div>");
-                                        var colmd1=$("<div class='col-md-4 text-right'></div>")
-                                        var colmd2=$("<div class='col-md-4'></div>")
-                                            var cnic_label=$("<label  class='custom_label_css'>CNIC</label>");
-                                            var cnic_input=$("<label class='custom_label_css' id='guardian_input'>"+patient_dict[patient_id_selected]['cnic']+"</label>")
-                                        colmd1.append(cnic_label)
-                                        colmd2.append(cnic_input);
-                                        
+                                        var colmd1=$("<div class='col-md-6 offset-md-2'></div>")
+                                            var print_button=$('<button class="btn btn-success btn-block" id="printPatientDetail" onclick="printAllPatientData()"><span class="fa">&#xf02f;</span> Print Patient Details</button>')
+                                        colmd1.append(print_button)
                                     row__col_one__subrow_five.append(colmd1)
-                                    row__col_one__subrow_five.append(colmd2)
                                 col_one__subrow_five.append(row__col_one__subrow_five)
                             subrow_five.append(col_one__subrow_five);
 
-                            var subrow_six=$("<div class='row' style='padding-bottom:10px'>")
-                                var col_one__subrow_six=$("<div class='col-md-6'></div>");
-                                    var row__col_one__subrow_six=$("<div class='row'></div>");
-                                        var colmd1=$("<div class='col-md-4 text-right'></div>")
-                                        var colmd2=$("<div class='col-md-6'></div>")
-                                            var address_label=$("<label for='pat_address_tag' class='custom_label_css'>Address</label>");
-                                            var pat_address_input=$("<label class='custom_label_css'' id='pat_address_input'>"+patient_dict[patient_id_selected]['address']+"</label>")
-                                        colmd1.append(address_label)
-                                        colmd2.append(pat_address_input)
-                                        
-                                    row__col_one__subrow_six.append(colmd1)
-                                    row__col_one__subrow_six.append(colmd2)
-
-                                col_one__subrow_six.append(row__col_one__subrow_six)
-                            subrow_six.append(col_one__subrow_six);
-
-                            var subrow_seven=$("<div class='row' style='padding-bottom:10px'>")
-                                var col_one__subrow_seven=$("<div class='col-md-6'></div>");
-                                    var row__col_one__subrow_seven=$("<div class='row'></div>");
-                                    var colmd1=$("<div class='col-md-4 text-right'></div>")
-                                    var colmd2=$("<div class='col-md-4'></div>")
-            
-                                        blood_group_label=$("<label for='blood_group_tag' class='custom_label_css'>Blood group</label>");
-                                        bloodgroup_input=$("<label class='custom_label_css' id='blood_group_input'>"+patient_dict[patient_id_selected]['bloodgroup']+"</label>")
-                                    colmd1.append(blood_group_label)
-                                    colmd2.append(bloodgroup_input) 
-                                        
-                                    row__col_one__subrow_seven.append(colmd1)
-                                    row__col_one__subrow_seven.append(colmd2)
-
-                                col_one__subrow_seven.append(row__col_one__subrow_seven)
-                            subrow_seven.append(col_one__subrow_seven);
-
-                            var subrow_eight=$("<div class='row' style='padding-bottom:10px'>")
-                                var col_one__subrow_eight=$("<div class='col-md-6'></div>");
-                                    var row__col_one__subrow_eight=$("<div class='row'></div>");
-                                    var colmd1=$("<div class='col-md-4 text-right'></div>")
-                                    var colmd2=$("<div class='col-md-6'></div>")
-                
-                                        var email_id_label=$("<label class='custom_label_css'>Email Address</label>");
-                                        var email_id_input=$("<label class='custom_label_css' id='email_id_input'>"+patient_dict[patient_id_selected]['email']+"</label>")
-                                        colmd1.append(email_id_label);
-                                        colmd2.append(email_id_input);
-                                        
-                                    row__col_one__subrow_eight.append(colmd1)
-                                    row__col_one__subrow_eight.append(colmd2)
-
-                                col_one__subrow_eight.append(row__col_one__subrow_eight)
-                            subrow_eight.append(col_one__subrow_eight);
-
-                            var subrow_nine=$("<div class='row' style='padding-bottom:10px'>")
-                                var col_one__subrow_nine=$("<div class='col-md-12'></div>");
-                                    var row__col_one__subrow_nine=$("<div class='row'></div>");
-                                        var colmd1=$("<div class='col-md-6 offset-md-2'></div>")
-
-                                            var print_button=$('<button class="btn btn-success btn-sm btn-block" onclick="printAllPatientData()">Print</button>')
-                                        colmd1.append(print_button)
-                                        
-                                    row__col_one__subrow_nine.append(colmd1)
-                                col_one__subrow_nine.append(row__col_one__subrow_nine)
-                            subrow_nine.append(col_one__subrow_nine);
-
+                        main_subcol.append(subrow_six)
+                        main_subcol.append(subrow_zero)
+                        var hr= $("<hr class='custom_hr' style='color:red'>")
+                        $(main_subcol).append(hr);
                         main_subcol.append(subrow_one)
                         main_subcol.append(subrow_two)
                         main_subcol.append(subrow_three)
                         main_subcol.append(subrow_four)
-                        main_subcol.append(subrow_five)
-                        main_subcol.append(subrow_six)
+                        var hr= $("<hr class='custom_hr' style='color:red'>")
+                        $(main_subcol).append(hr);
                         main_subcol.append(subrow_seven)
-                        main_subcol.append(subrow_eight)
-                        main_subcol.append(subrow_nine)
+                        main_subcol.append(subrow_five)
+                        // main_subcol.append(subrow_eight)
+                        // main_subcol.append(subrow_nine)
 
                     row_div_two.append(main_subcol)
                 var main_col_div=$("#main_col_div");
@@ -948,15 +921,34 @@ function createAllPatientDataTable(){
             }
 
         });
+        $('.dataTables_filter  input[type="search"]').
+        attr('placeholder','Search patient ....').
+        css({'width':'200px','display':'inline-block'});
+        $('.dataTables_filter input').addClass('form-control');
     });
 }
 function printAllPatientData(){
-    var restorepage = $('body').html();
-    var printcontent = $('#row_div_two').clone();
-    $('body').empty().html(printcontent);
+    var printcontent = $("#main_col_div").clone();
+    $('#row_div_one').hide();
+    $('#container-view-all-patient-dashboard').hide();
+    $('#printPatientDetail').hide();
+    $('#sidebar').hide();
+    $('#dialog-confirm').hide();
+    $('#rmc_logo_div').show();
+    $('#rmc_contact_div').show();
+
+    $('#pat_details_div').empty().html(printcontent);
+    
     window.print();
     window.close();
-    $('body').html(restorepage);
+
+    $('#pat_details_div').empty();
+    $('#rmc_logo_div').hide();
+    $('#rmc_contact_div').hide();
+    $('#row_div_one').show();
+
+    $('#sidebar').show();
+    $('#printPatientDetail').show();
 }
 
 function updatePatientData(){
@@ -997,7 +989,7 @@ function updatePatientData(){
     });
 }
    
-function retrievePatientInfo(pat_name,contact_no,cnic_no,id){
+function retrievePatientInfo(pat_name,contact_no,id){
     datatable_lst=[];
     console.log("id",id)
     $.ajax({
@@ -1208,40 +1200,6 @@ function searchPatientMedHistory(){
         }
     });
 }
-// function printPatientPrescription(){
-//     $('#main_page_content').empty()
-//     var container_patient_prescription= $('#main_page_content').append('<div class="container-fluid" id="container-patient-prescription"></div>');
-//     $("#container-patient-prescription").append("<h2 class ='text-center'>R M C</h2>");
-//     $("#container-patient-prescription").append("<hr class='custom_hr'>");
-
-//     var main_row_div= $("<div class='row is-flex'></div>");
-
-//     $(container_patient_prescription).append(main_row_div);
-//     var main_col_div=$("<div class='col-md-12' id=''></div>");
-       
-//     $(main_row_div).append(main_col_div);
-
-//     var row_div_one=$("<div class='row'></div>");
-//             // Print button
-//             var col_one__row_div_one=$("<div class='col-md-6'></div>");
-//                 row__col_one__row_div_one=$("<div class='row'></div>");
-//                     colmd1=$("<div class='col-md-4'></div>")
-//                     colmd2=$("<div class='col-md-4'></div>")
-//                     colmd3=$("<div class='col-md-4'></div>")
-
-
-//                     print_patient_pres_a=$("<a>print</a>")
-//                     print_patient_pres_a.attr('href','/print_patient_prescription')
-//                     colmd2.append(print_patient_pres_a)
-
-//                 row__col_one__row_div_one.append(colmd2);
-//             col_one__row_div_one.append(row__col_one__row_div_one);
-
-//     $(row_div_one).append(col_one__row_div_one);
-
-// $(main_col_div).append(row_div_one);
-
-// }
 function createPatientDataTableInGenPres(){
     console.log("datatable_list",datatable_list)
     $(function(){
@@ -1261,7 +1219,8 @@ function createPatientDataTableInGenPres(){
             scrollY: 200,
             scrollX: true,
             ordering: true,
-            info:false,     
+            info:false,   
+            searching:false, 
     
             });
             $('#patient_table tbody').on( 'click', 'tr', function () {
@@ -1285,7 +1244,7 @@ function createPatientDataTableInGenPres(){
 
                             var subrow_one=$("<div class='row'></div>")
 
-                                    var col_one__subrow_one=$("<div class='col-md-12'></div>");
+                                    var col_one__subrow_one=$("<div class='col-md-12' style='padding-top:30px; padding-bottom:10px;'></div>");
                                             row__col_one__subrow_one=$("<div class='row'></div>");
                                                 var colmd1=$("<div class='col-md-2'></div>")
                                                 var colmd2=$("<div class='col-md-2'></div>")
@@ -1308,17 +1267,11 @@ function createPatientDataTableInGenPres(){
                                                         $(select).append(option);
                                                     }
                                                 } 
-                                                    colmd2.append(select) 
+                                                colmd2.append(select) 
                                                 
-                                                // var tokenNumber_label=$("<label id='tokenNumber_label' class='custom_label_css'>Token Number</label>");
-                                                // colmd3.append(tokenNumber_label)
-                                                // tokenNumber_disp=$("<input class='form-control custom_input_css' id='tokenNumber_disp'  value= '"+token_Number+"' disabled> </input>")
-                                                // colmd4.append(tokenNumber_disp)
-
                                             row__col_one__subrow_one.append(colmd1);
                                             row__col_one__subrow_one.append(colmd2);
                                             row__col_one__subrow_one.append(colmd3);
-                                            // row__col_one__subrow_one.append(colmd4);
                                         col_one__subrow_one.append(row__col_one__subrow_one);
 
                             subrow_one.append(col_one__subrow_one)
@@ -1327,8 +1280,6 @@ function createPatientDataTableInGenPres(){
                     row_div_four.append(main_subcol)
                 var main_col_div=$("#main_col_div");
                 main_col_div.append(row_div_four)
-                // maxTokenNo()
-
                 }
             });
         });
@@ -1394,7 +1345,6 @@ function retrieveWardInfoInRoomWard(){
 
             createWardDataTable()
 
-
         },
     }); 
 
@@ -1405,7 +1355,7 @@ function createOutDoorPresFormDiv(){
 
         var main_col__row_five=$("<div class='col-md-12'></div>");
 
-            var row_one=$("<div class='row'></div>")
+            var row_one=$("<div class='row' style=' padding-bottom:10px;'></div>")
 
                 var col_one__row_one=$("<div class='col-md-12'></div>");
                         row__col_one__row_one=$("<div class='row'></div>");
@@ -1424,7 +1374,7 @@ function createOutDoorPresFormDiv(){
                     col_one__row_one.append(row__col_one__row_one);
 
             row_one.append(col_one__row_one)
-            var row_two=$("<div class='row'></div>")
+            var row_two=$("<div class='row' style=' padding-bottom:10px;'></div>")
 
                 var col_one__row_two=$("<div class='col-md-12'></div>");
                         row__col_one__row_two=$("<div class='row'></div>");
@@ -1441,13 +1391,13 @@ function createOutDoorPresFormDiv(){
                             discountamount_input=$("<input class='form-control' id='discountamount_input' onfocusout='discountAmountFocousOutPres($(this))' class='custom_input_css'>")
                             colmd2.append(discountamount_input)
 
-                            var discountPercernt_label=$("<label for='discountpercernt_label' class='custom_label_css'>Discount Percent</label>");
+                            var discountPercernt_label=$("<label for='discountpercernt_label' class='custom_label_css float-right'>Discount Percent</label>");
                             colmd3.append(discountPercernt_label)
 
                             discountpercent_input=$("<input class='form-control' id='discountpercent_input' class='custom_input_css'>")
                             colmd4.append(discountpercent_input)
 
-                            var amountDue_label=$("<label for='amountDue_label' class='custom_label_css'>Net Total</label>");
+                            var amountDue_label=$("<label for='amountDue_label' class='custom_label_css float-right'>Net Total</label>");
                             colmd5.append(amountDue_label)
 
                             amountdue_input=$("<input class='form-control' onfocusin='netTotalFocusInPres()' id='amountdue_input'>")
@@ -1463,7 +1413,7 @@ function createOutDoorPresFormDiv(){
                     col_one__row_two.append(row__col_one__row_two);
 
             row_two.append(col_one__row_two)
-            var row_three=$("<div class='row'></div>")
+            var row_three=$("<div class='row' style=' padding-bottom:10px;'></div>")
 
                 var col_one__row_three=$("<div class='col-md-12'></div>");
                         row__col_one__row_three=$("<div class='row'></div>");
@@ -1483,7 +1433,7 @@ function createOutDoorPresFormDiv(){
 
             row_three.append(col_one__row_three)
 
-            var row_four=$("<div class='row'></div>")
+            var row_four=$("<div class='row' style=' padding-bottom:10px;'></div>")
 
                 var col_one__row_four=$("<div class='col-md-12'></div>");
                             row__col_one__row_four=$("<div class='row'></div>");
@@ -1510,7 +1460,7 @@ function createOutDoorPresFormDiv(){
 
             row_four.append(col_one__row_four)
 
-            var row_five=$("<div class='row'></div>")
+            var row_five=$("<div class='row' style=' padding-bottom:10px;'></div>")
 
                 var col_one__row_five=$("<div class='col-md-12'></div>");
                         row__col_one__row_five=$("<div class='row'></div>");
@@ -1518,13 +1468,12 @@ function createOutDoorPresFormDiv(){
                             colmd2=$("<div class='col-md-6'></div>")
                             colmd3=$("<div class='col-md-3'></div>")
 
-                            GenPres_button=$('<button class="btn btn-success btn-sm btn-block" onclick="printPrescriptionForm()">Print Prescription</button>')
+                            GenPres_button=$('<button class="btn btn-success btn-block fa fa-print" onclick="printPrescriptionForm()"> Print Prescription</button>')
                             colmd2.append(GenPres_button)
                             
                         row__col_one__row_five.append(colmd1);
                         row__col_one__row_five.append(colmd2);
                         row__col_one__row_five.append(colmd3);
-
 
                     col_one__row_five.append(row__col_one__row_five);
 
@@ -1536,7 +1485,6 @@ function createOutDoorPresFormDiv(){
         main_col__row_five.append(row_four)
         main_col__row_five.append(row_five)
 
-
     row_div_five.append(main_col__row_five)
 main_col_div.append(row_div_five)
 }
@@ -1546,7 +1494,7 @@ function createEmergencyPresFormDiv(){
 
             var main_col__row_five=$("<div class='col-md-12'></div>");
 
-                var row_one=$("<div class='row'></div>")
+                var row_one=$("<div class='row' style='padding-bottom:10px;'></div>")
 
                     var col_one__row_one=$("<div class='col-md-12'></div>");
                             row__col_one__row_one=$("<div class='row'></div>");
@@ -1565,7 +1513,7 @@ function createEmergencyPresFormDiv(){
                         col_one__row_one.append(row__col_one__row_one);
 
                 row_one.append(col_one__row_one)
-                var row_two=$("<div class='row'></div>")
+                var row_two=$("<div class='row' style='padding-bottom:10px;'></div>")
 
                     var col_one__row_two=$("<div class='col-md-12'></div>");
                             row__col_one__row_two=$("<div class='row'></div>");
@@ -1582,13 +1530,13 @@ function createEmergencyPresFormDiv(){
                                 discountamount_input=$("<input class='form-control' id='discountamount_input' onfocusout='discountAmountFocousOutPres($(this))' class='custom_input_css'>")
                                 colmd2.append(discountamount_input)
 
-                                var discountPercernt_label=$("<label for='discountPercernt_label' class='custom_label_css'>Discount Percent</label>");
+                                var discountPercernt_label=$("<label for='discountPercernt_label' class='custom_label_css float-right'>Discount Percent</label>");
                                 colmd3.append(discountPercernt_label)
 
                                 discountpercent_input=$("<input class='form-control' id='discountpercent_input' class='custom_input_css'>")
                                 colmd4.append(discountpercent_input)
 
-                                var amountDue_label=$("<label for='amountdue_label' class='custom_label_css'>Net Total</label>");
+                                var amountDue_label=$("<label for='amountdue_label' class='custom_label_css float-right'>Net Total</label>");
                                 colmd5.append(amountDue_label)
 
                                 amountdue_input=$("<input class='form-control' onfocusin='netTotalFocusInPres()' id='amountdue_input'>")
@@ -1601,12 +1549,11 @@ function createEmergencyPresFormDiv(){
                             row__col_one__row_two.append(colmd5);
                             row__col_one__row_two.append(colmd6);
 
-
                         col_one__row_two.append(row__col_one__row_two);
 
                 row_two.append(col_one__row_two)
 
-                var row_three=$("<div class='row'></div>")
+                var row_three=$("<div class='row' style='padding-bottom:10px;'></div>")
 
                     var col_one__row_three=$("<div class='col-md-12'></div>");
                             row__col_one__row_three=$("<div class='row'></div>");
@@ -1626,7 +1573,7 @@ function createEmergencyPresFormDiv(){
 
                 row_three.append(col_one__row_three)
                 
-                var row_four=$("<div class='row'></div>")
+                var row_four=$("<div class='row' style='padding-bottom:10px;'></div>")
 
                     var col_one__row_four=$("<div class='col-md-12'></div>");
                             row__col_one__row_four=$("<div class='row'></div>");
@@ -1653,7 +1600,7 @@ function createEmergencyPresFormDiv(){
 
                 row_four.append(col_one__row_four)
 
-                var row_five=$("<div class='row'></div>")
+                var row_five=$("<div class='row' style='padding-bottom:10px;'></div>")
 
                     var col_one__row_five=$("<div class='col-md-12'></div>");
                             row__col_one__row_five=$("<div class='row'></div>");
@@ -1661,13 +1608,12 @@ function createEmergencyPresFormDiv(){
                                 colmd2=$("<div class='col-md-6'></div>")
                                 colmd3=$("<div class='col-md-3'></div>")
 
-                                GenPres_button=$('<button class="btn btn-success btn-sm btn-block" onclick="printPrescriptionForm()">Print Prescription</button>')
+                                GenPres_button=$('<button class="btn btn-success btn-block fa fa-print" onclick="printPrescriptionForm()"> Print Prescription</button>')
                                 colmd2.append(GenPres_button)
                                 
                             row__col_one__row_five.append(colmd1);
                             row__col_one__row_five.append(colmd2);
                             row__col_one__row_five.append(colmd3);
-
 
                         col_one__row_five.append(row__col_one__row_five);
 
@@ -1682,9 +1628,6 @@ function createEmergencyPresFormDiv(){
         row_div_five.append(main_col__row_five)
     main_col_div.append(row_div_five)
 
-}
-function createIndoorPresFormDiv(){
-  
 }
 function pat_type_OnSelect(element){
 
@@ -1859,14 +1802,6 @@ function printPrescriptionForm(){
         console.log("YEARS GREATETER THAN 1",age)
 
     }
-    // if (years<=1 && months>1){
-    //     console.log("YEARS GREATETER THAN 1",age)
-
-    //     var age= months + 'months ';
-    // }
-    // else (days<30){
-    //     var age=  days + 'days';
-    // }
 
     var patient_type = $("#pat_type_input").val()
     $("#pat_type_input").val();
@@ -1883,7 +1818,6 @@ function printPrescriptionForm(){
     $("#selecteddoctor").val("--");
     var amountdue_input=$("#amountdue_input").val()
     var totalamount_input=$("#totalamount_input").val();
-    // $("#totalamount_input").val("");
     var pat_contact_no=patient_dict[patient_id_selected]['contact_no'];
     var pat_address=patient_dict[patient_id_selected]['address'];
     var bloodgroup=patient_dict[patient_id_selected]['bloodgroup'];
@@ -1993,7 +1927,6 @@ function printPrescriptionForm(){
         }
     }
     presData["name"]= patient_name;
-    // presData["age"]= age;
     presData["gender"]= patient_gender;
     presData['contact_no']=pat_contact_no
     presData['address']=pat_address;
@@ -2040,10 +1973,11 @@ function createWardDataTable(){
 
                 ],
                 paging: false,
-                scrollY: 200,
+                scrollY: 130,
                 scrollX: true,
                 ordering: true,
                 info:false,
+                searching:false,
     
             });
             $('#available_room_table tbody').on( 'click', 'tr', function () {
@@ -2060,204 +1994,194 @@ function createWardDataTable(){
                     var row_div_seven=$("<div class='row' id='row_div_seven'></div>");
                         var main_subcol=$("<div class='col-md-12'></div>");
 
-                            var subrow_one=$("<div class='row'></div>")
+                            var subrow_one=$("<div class='row' style='padding-top:30px;'></div>")
 
-                                    var col_one__subrow_one=$("<div class='col-md-12'></div>");
-                                            row__col_one__subrow_one=$("<div class='row'></div>");
-                                                var colmd1=$("<div class='col-md-2'></div>")
-                                                var colmd2=$("<div class='col-md-2'></div>")
-                                                var colmd3=$("<div class='col-md-2'></div>")
-                                                var colmd4=$("<div class='col-md-2'></div>")
+                                var col_one__subrow_one=$("<div class='col-md-12'></div>");
+                                    row__col_one__subrow_one=$("<div class='row'></div>");
+                                        var colmd1=$("<div class='col-md-2'></div>")
+                                        var colmd2=$("<div class='col-md-1'></div>")
+                                        var colmd3=$("<div class='col-md-2 offset-md-1'></div>")
+                                        var colmd4=$("<div class='col-md-1'></div>")
 
-                                                    var wardNo_label=$("<label for='wardno_label' class='custom_label_css'>Ward No</label>");
-                                                    var wardNo_input=$("<input  id='wardno_input' class='custom_input_css' value='"+ward_dict[ward_id_selected]['ward_no']+"' disabled>")
+                                            var wardNo_label=$("<label for='wardno_label' class='custom_label_css'>Ward No</label>");
+                                            var wardNo_input=$("<input  id='wardno_input' class='custom_input_css form-control' value='"+ward_dict[ward_id_selected]['ward_no']+"' disabled>")
 
-                                                    var bedNo_label=$("<label for='bedno_label' class='custom_label_css'>Bed No</label>");
-                                                    var BedNo_input=$("<input  id='bedno_input' class='custom_input_css' value='"+ward_dict[ward_id_selected]['bed_no']+"' disabled>")
-                                                    
-                                                colmd1.append(wardNo_label)
-                                                colmd2.append(wardNo_input)
-                                                colmd3.append(bedNo_label)
-                                                colmd4.append(BedNo_input)
+                                            var bedNo_label=$("<label for='bedno_label' class='custom_label_css float-right'>Bed No</label>");
+                                            var BedNo_input=$("<input  id='bedno_input' class='custom_input_css form-control' value='"+ward_dict[ward_id_selected]['bed_no']+"' disabled>")
+                                            
+                                        colmd1.append(wardNo_label)
+                                        colmd2.append(wardNo_input)
+                                        colmd3.append(bedNo_label)
+                                        colmd4.append(BedNo_input)
 
-                                            row__col_one__subrow_one.append(colmd1);
-                                            row__col_one__subrow_one.append(colmd2);
-                                            row__col_one__subrow_one.append(colmd3);
-                                            row__col_one__subrow_one.append(colmd4);                                            
+                                    row__col_one__subrow_one.append(colmd1);
+                                    row__col_one__subrow_one.append(colmd2);
+                                    row__col_one__subrow_one.append(colmd3);
+                                    row__col_one__subrow_one.append(colmd4);                                            
 
-                                        col_one__subrow_one.append(row__col_one__subrow_one);
+                                col_one__subrow_one.append(row__col_one__subrow_one);
 
                             subrow_one.append(col_one__subrow_one)
 
-                        var subrow_two=$("<div class='row'></div>")
-                            var col_one_subrow_two=$("<div class='col-md-12'></div>");
-                                var row__col_one_subrow_two=$("<div class='row'></div>");
-                                    colmd1=$("<div class='col-md-2'></div>")
-                                    colmd2=$("<div class='col-md-9'></div>")
+                            var subrow_two=$("<div class='row' style='padding-top:10px;padding-bottom:10px;'></div>")
+                                var col_one_subrow_two=$("<div class='col-md-8'></div>");
+                                    var row__col_one_subrow_two=$("<div class='row'></div>");
+                                        colmd1=$("<div class='col-md-3'></div>")
+                                        colmd2=$("<div class='col-md-9'></div>")
 
-                                        var admit_reason_label=$("<label class='custom_label_css'>Admit reason</label>");
-                                        var admit_reason_input=$("<input  id='admit_reason_input' class='custom_input_css'>")
+                                            var admit_reason_label=$("<label class='custom_label_css' >Admit reason</label>");
+                                            var admit_reason_input=$("<textarea type='text'  id='admit_reason_input' class='custom_input_css' style='width:inherit;'></textarea>")
 
-                                    colmd1.append(admit_reason_label)
-                                    colmd2.append(admit_reason_input)
-                        
-                                row__col_one_subrow_two.append(colmd1);
-                                row__col_one_subrow_two.append(colmd2);
-                        
-                            col_one_subrow_two.append(row__col_one_subrow_two);
-                        subrow_one.append(col_one_subrow_two)
+                                        colmd1.append(admit_reason_label)
+                                        colmd2.append(admit_reason_input)
+                            
+                                    row__col_one_subrow_two.append(colmd1);
+                                    row__col_one_subrow_two.append(colmd2);
+                            
+                                col_one_subrow_two.append(row__col_one_subrow_two);
+                            subrow_two.append(col_one_subrow_two)
 
-                        var subrow_three=$("<div class='row'></div>")
-                            var col_one__subrow_three=$("<div class='col-md-6'></div>");
-                                var row__col_one__subrow_three=$("<div class='row'></div>");
-                                    var colmd1=$("<div class='col-md-4'></div>")
-                                    var colmd2=$("<div class='col-md-6'></div>")
-                                    
-                                        var doconduty_label=$("<label  class='custom_label_css'>Doctor on Duty</label>");
-                                        // var Doctor_onDuty_input=$("<input id='Doctor_onDuty_input' class='custom_input_css' ></input>")
-                                        var select=$("<select id='selecteddoctor' class='form-control'></select>");
-                                            var option=$("<option selected='selected' value='--'>--</option>");
-                                        $(select).append(option);
+                            var subrow_three=$("<div class='row' style='padding-bottom:10px;'></div>")
+                                var col_one__subrow_three=$("<div class='col-md-4'></div>");
+                                    var row__col_one__subrow_three=$("<div class='row'></div>");
+                                        var colmd1=$("<div class='col-md-6'></div>")
+                                        var colmd2=$("<div class='col-md-6'></div>")
+                                        
+                                            var doconduty_label=$("<label  class='custom_label_css'>Doctor on Duty</label>");
+                                            var select=$("<select id='selecteddoctor' class='form-control'></select>");
+                                                var option=$("<option selected='selected' value='--'>--</option>");
+                                            $(select).append(option);
+
+                                                    for (var key in empdict){
+                                                        var option=$("<option id='"+key+"_doc-opt' value='"+key+"'>"+empdict[key]+"</option>");
+                                                        $(select).append(option);
+
+                                                    }
+                                        colmd1.append(doconduty_label)
+                                        colmd2.append(select);
+                                
+                                        row__col_one__subrow_three.append(colmd1);
+                                        row__col_one__subrow_three.append(colmd2);
+                                col_one__subrow_three.append(row__col_one__subrow_three);
+
+                                var col_two__subrow_three=$("<div class='col-md-4'></div>");
+                                    var row__col_two__subrow_three=$("<div class='row'></div>");
+                                        var colmd1=$("<div class='col-md-6'></div>")
+                                        var colmd2=$("<div class='col-md-6'></div>")
+                                            var consultant_label=$("<label for='Consultant_label' class='custom_label_css float-right'>Consultant</label>");
+                                            var select=$("<select id='selectedconsultant' class='form-control'></select>");
+                                                var option=$("<option selected='selected' value='--'>--</option>");
+                                            $(select).append(option);
 
                                                 for (var key in empdict){
                                                     var option=$("<option id='"+key+"_doc-opt' value='"+key+"'>"+empdict[key]+"</option>");
                                                     $(select).append(option);
 
                                                 }
-                                    colmd1.append(doconduty_label)
-                                    colmd2.append(select);
-                            
-                                    row__col_one__subrow_three.append(colmd1);
-                                    row__col_one__subrow_three.append(colmd2);
-                            col_one__subrow_three.append(row__col_one__subrow_three);
-
-                            var col_two__subrow_three=$("<div class='col-md-6'></div>");
-                                var row__col_two__subrow_three=$("<div class='row'></div>");
-                                    var colmd1=$("<div class='col-md-4'></div>")
-                                    var colmd2=$("<div class='col-md-6'></div>")
-                                        var consultant_label=$("<label for='Consultant_label' class='custom_label_css'>Consultant</label>");
-                                        var select=$("<select id='selectedconsultant' class='form-control'></select>");
-                                            var option=$("<option selected='selected' value='--'>--</option>");
-                                        $(select).append(option);
-
-                                            for (var key in empdict){
-                                                var option=$("<option id='"+key+"_doc-opt' value='"+key+"'>"+empdict[key]+"</option>");
-                                                $(select).append(option);
-
-                                            }
-                                    colmd1.append(consultant_label);
-                                    colmd2.append(select);
-                    
-                                row__col_two__subrow_three.append(colmd1);
-                                row__col_two__subrow_three.append(colmd2);
-                            col_two__subrow_three.append(row__col_two__subrow_three);
-
-                        subrow_three.append(col_one__subrow_three)
-                        subrow_three.append(col_two__subrow_three)
-
+                                        colmd1.append(consultant_label);
+                                        colmd2.append(select);
                         
-                    var subrow_five=$("<div class='row'></div>")
+                                    row__col_two__subrow_three.append(colmd1);
+                                    row__col_two__subrow_three.append(colmd2);
+                                col_two__subrow_three.append(row__col_two__subrow_three);
 
-                    var col_one__row_one=$("<div class='col-md-12'></div>");
-                            row__col_one__row_one=$("<div class='row'></div>");
-                                var colmd1=$("<div class='col-md-2'></div>")
-                                var colmd2=$("<div class='col-md-2'></div>")
-                                
-                                    var indoor_admit_fee_label=$("<label for='indoor_fee_tag' class='custom_label_css'>Admission Fee</label>");
-                                    colmd1.append(indoor_admit_fee_label)
+                            subrow_three.append(col_one__subrow_three)
+                            subrow_three.append(col_two__subrow_three)
 
-                                    indoor_admit_fee_input=$("<input class='form-control' id='totalamount_input'  class='custom_input_css'>")
-                                    colmd2.append(indoor_admit_fee_input)
+                            
+                            var subrow_five=$("<div class='row' style='padding-bottom:10px;'></div>")
 
-                            row__col_one__row_one.append(colmd1);
-                            row__col_one__row_one.append(colmd2);
+                            var col_one__subrow_five=$("<div class='col-md-12'></div>");
+                                row__col_one__subrow_five=$("<div class='row'></div>");
+                                        var colmd1=$("<div class='col-md-2'></div>")
+                                        var colmd2=$("<div class='col-md-2'></div>")
+                                        
+                                            var indoor_admit_fee_label=$("<label for='indoor_fee_tag' class='custom_label_css'>Admission Fee</label>");
+                                            indoor_admit_fee_input=$("<input class='form-control' id='totalamount_input'  class='custom_input_css'>")
 
-                        col_one__row_one.append(row__col_one__row_one);
+                                        colmd1.append(indoor_admit_fee_label)
+                                        colmd2.append(indoor_admit_fee_input)
 
-                    subrow_five.append(col_one__row_one)
-                var subrow_six=$("<div class='row'></div>")
+                                    row__col_one__subrow_five.append(colmd1);
+                                    row__col_one__subrow_five.append(colmd2);
 
-                    var col_one__row_two=$("<div class='col-md-12'></div>");
-                            row__col_one__row_two=$("<div class='row'></div>");
-                                var colmd1=$("<div class='col-md-2'></div>")
-                                var colmd2=$("<div class='col-md-2'></div>")
-                                var colmd3=$("<div class='col-md-2'></div>")
-                                var colmd4=$("<div class='col-md-2'></div>")
-                                var colmd5=$("<div class='col-md-2'></div>")
-                                var colmd6=$("<div class='col-md-2'></div>")
+                                col_one__subrow_five.append(row__col_one__subrow_five);
 
-                                var discountamount_label=$("<label for='indoor_disc_tag' class='custom_label_css'>Discount Amount</label>");
-                                colmd1.append(discountamount_label)
+                            subrow_five.append(col_one__subrow_five)
+                            
+                            var subrow_six=$("<div class='row' style='padding-bottom:10px;'></div>")
 
-                                discountamount_input=$("<input class='form-control' id='discountamount_input' onfocusout='discountAmountFocousOutPres($(this))' class='custom_input_css'>")
-                                colmd2.append(discountamount_input)
+                                var col_one__subrow_six=$("<div class='col-md-12'></div>");
+                                    row__col_one__subrow_six=$("<div class='row'></div>");
+                                        var colmd1=$("<div class='col-md-2'></div>")
+                                        var colmd2=$("<div class='col-md-2'></div>")
+                                        var colmd3=$("<div class='col-md-2'></div>")
+                                        var colmd4=$("<div class='col-md-2'></div>")
+                                        var colmd5=$("<div class='col-md-2'></div>")
+                                        var colmd6=$("<div class='col-md-2'></div>")
 
-                                var discountPercernt_label=$("<label for='discountPercernt_label' class='custom_label_css'>Discount Percent</label>");
-                                colmd3.append(discountPercernt_label)
+                                            var discountamount_label=$("<label for='indoor_disc_tag' class='custom_label_css'>Discount Amount</label>");
+                                            discountamount_input=$("<input class='form-control' id='discountamount_input' onfocusout='discountAmountFocousOutPres($(this))' class='custom_input_css'>")
+                                            var discountPercernt_label=$("<label for='discountPercernt_label' class='custom_label_css float-right'>Discount Percent</label>");
+                                            discountpercent_input=$("<input class='form-control' id='discountpercent_input' class='custom_input_css'>")
+                                            var amountDue_label=$("<label for='amountDue_label' class='custom_label_css float-right'>Net Total</label>");
+                                            amountdue_input=$("<input class='form-control' onfocusin='netTotalFocusInPres()' id='amountdue_input'>")
 
-                                discountpercent_input=$("<input class='form-control' id='discountpercent_input' class='custom_input_css'>")
-                                colmd4.append(discountpercent_input)
+                                        colmd1.append(discountamount_label)
+                                        colmd2.append(discountamount_input)
+                                        colmd3.append(discountPercernt_label)
+                                        colmd4.append(discountpercent_input)
+                                        colmd5.append(amountDue_label)
+                                        colmd6.append(amountdue_input)
 
-                                var amountDue_label=$("<label for='amountDue_label' class='custom_label_css'>Net Total</label>");
-                                colmd5.append(amountDue_label)
+                                    row__col_one__subrow_six.append(colmd1);
+                                    row__col_one__subrow_six.append(colmd2);
+                                    row__col_one__subrow_six.append(colmd3);
+                                    row__col_one__subrow_six.append(colmd4);
+                                    row__col_one__subrow_six.append(colmd5);
+                                    row__col_one__subrow_six.append(colmd6);
 
-                                amountdue_input=$("<input class='form-control' onfocusin='netTotalFocusInPres()' id='amountdue_input'>")
-                                colmd6.append(amountdue_input)
+                                col_one__subrow_six.append(row__col_one__subrow_six);
 
-                            row__col_one__row_two.append(colmd1);
-                            row__col_one__row_two.append(colmd2);
-                            row__col_one__row_two.append(colmd3);
-                            row__col_one__row_two.append(colmd4);
-                            row__col_one__row_two.append(colmd5);
-                            row__col_one__row_two.append(colmd6);
+                            subrow_six.append(col_one__subrow_six)
 
+                            var subrow_seven=$("<div class='row' style='padding-bottom:10px;'></div>")
 
-                        col_one__row_two.append(row__col_one__row_two);
+                                var col_one__subrow_seven=$("<div class='col-md-12'></div>");
+                                    row__col_one__subrow_seven=$("<div class='row'></div>");
+                                        var colmd1=$("<div class='col-md-2'></div>")
+                                        var colmd2=$("<div class='col-md-6'></div>")
+                                        
+                                            var reason_label=$("<label for='discount_reason_label' class='custom_label_css'>Discount Reason</label>");
+                                            reason_input=$("<input class='form-control' id='discount_reason_input' class='custom_input_css'>")
+                                        colmd1.append(reason_label)
+                                        colmd2.append(reason_input)
 
-                    subrow_six.append(col_one__row_two)
+                                    row__col_one__subrow_seven.append(colmd1);
+                                    row__col_one__subrow_seven.append(colmd2);
 
-                var subrow_seven=$("<div class='row'></div>")
+                                col_one__subrow_seven.append(row__col_one__subrow_seven);
 
-                    var col_one__row_three=$("<div class='col-md-12'></div>");
-                            row__col_one__row_three=$("<div class='row'></div>");
-                                var colmd1=$("<div class='col-md-2'></div>")
-                                var colmd2=$("<div class='col-md-6'></div>")
-                                
-                                    var reason_label=$("<label for='discount_reason_label' class='custom_label_css'>Discount Reason</label>");
-                                    colmd1.append(reason_label)
+                            subrow_seven.append(col_one__subrow_seven)
+                    
+                            var subrow_eight=$("<div class='row' style='padding-bottom:10px;'></div>")
 
-                                    reason_input=$("<input class='form-control' id='discount_reason_input' class='custom_input_css'>")
-                                    colmd2.append(reason_input)
+                                var col_one__subrow_eight=$("<div class='col-md-12'></div>");
+                                        row__col_one__subrow_eight=$("<div class='row'></div>");
+                                            colmd1=$("<div class='col-md-3'></div>")
+                                            colmd2=$("<div class='col-md-6'></div>")
+                                            colmd3=$("<div class='col-md-3'></div>")
 
-                            row__col_one__row_three.append(colmd1);
-                            row__col_one__row_three.append(colmd2);
+                                            GenPres_button=$('<button class="btn btn-success btn-block fa fa-print" onclick="printPrescriptionForm()">Print Prescription</button>')
+                                            colmd2.append(GenPres_button)
+                                            
+                                            row__col_one__subrow_eight.append(colmd1);
+                                        row__col_one__subrow_eight.append(colmd2);
+                                        row__col_one__subrow_eight.append(colmd3);
 
-                        col_one__row_three.append(row__col_one__row_three);
+                                    col_one__subrow_eight.append(row__col_one__subrow_eight);
 
-                subrow_seven.append(col_one__row_three)
-                
-               
-
-                var subrow_nine=$("<div class='row'></div>")
-
-                    var col_one__row_five=$("<div class='col-md-12'></div>");
-                            row__col_one__row_five=$("<div class='row'></div>");
-                                colmd1=$("<div class='col-md-3'></div>")
-                                colmd2=$("<div class='col-md-6'></div>")
-                                colmd3=$("<div class='col-md-3'></div>")
-
-                                GenPres_button=$('<button class="btn btn-success btn-sm btn-block" onclick="printPrescriptionForm()">Print Prescription</button>')
-                                colmd2.append(GenPres_button)
-                                
-                            row__col_one__row_five.append(colmd1);
-                            row__col_one__row_five.append(colmd2);
-                            row__col_one__row_five.append(colmd3);
-
-
-                        col_one__row_five.append(row__col_one__row_five);
-
-                subrow_nine.append(col_one__row_five)
-
+                            subrow_eight.append(col_one__subrow_eight)
                         
                     main_subcol.append(subrow_one)
                     main_subcol.append(subrow_two)
@@ -2265,8 +2189,7 @@ function createWardDataTable(){
                     main_subcol.append(subrow_five)
                     main_subcol.append(subrow_six)
                     main_subcol.append(subrow_seven)
-                    main_subcol.append(subrow_nine);
-
+                    main_subcol.append(subrow_eight);
 
                 row_div_seven.append(main_subcol)
             var main_col_div=$("#main_col_div");
@@ -2279,15 +2202,11 @@ function createWardDataTable(){
 function availableRoomWardRowDivSixCreation(){
     var main_col_div=$("#main_col_div");
     var row_div_six=$("<div class='row' id='row_div_six'></div>");
-    // Datatable Name
         var col_one__row_div_six=$("<div class='col-md-12'></div>");
             var row__col_one__row_div_six=$("<div class='row'></div>");
                 var colmd1=$("<div class='col-md-12'></div>")
                     var available_room_table=$('<table id="available_room_table" class="display" width="100%"></table>')
-                    // var available_ward_table=$('<table id="available_ward_table" class="display" width="100%"></table>')
-
                 colmd1.append(available_room_table)
-                // colmd1.append(available_ward_table)
 
             row__col_one__row_div_six.append(colmd1);
         col_one__row_div_six.append(row__col_one__row_div_six);
@@ -2308,7 +2227,6 @@ function onSelectWardRoom(element){
             
             availableRoomWardRowDivSixCreation()
             retrieveRoomInfoInRoomWard()
-
 
         }
         else if (ward_datatable!==undefined){
@@ -2350,7 +2268,6 @@ function onSelectWardRoom(element){
             availableRoomWardRowDivSixCreation()
             retrieveWardInfoInRoomWard()
         }
-        
 
     }
     else{
@@ -2371,7 +2288,7 @@ function onSelectWardRoom(element){
 
 }
 var empdict={}
-function retrievePatientInfoInGenPres(pat_name,contact_no,cnic_no){
+function retrievePatientInfoInGenPres(pat_name,contact_no){
     datatable_lst=[];
 
     $.ajax({
@@ -2432,19 +2349,17 @@ function searchPatientInGenPres(){
 
     var pat_name=$("#search_pat_name_input").val();
     var contact_no=$("#search_contact_numb_input").val();
-    var cnic_no=$("#search_cnic_numb_input").val();
     if (pat_datatable!==undefined){
         pat_datatable.destroy();
     }
-    retrievePatientInfoInGenPres(pat_name,contact_no,cnic_no);
-    // list= [["1","Ali","03009420002","35202-0000122-1","Lahore"],["2","Ahmad","03119420002","35202-7268122-1","Lahore"]] 
-
+    retrievePatientInfoInGenPres(pat_name,contact_no);
 }
 
 function generatePrescription(){
+    $('#dialog-confirm').hide()
     $('#main_page_content').empty()
     var generate_prescription_div=$("#main_page_content").append('<div class="container-fluid" id="container-generate-prescription"></div>');
-    $("#main_page_content").append("<h3 class ='text-center'>R M C</h3>");
+    $("#main_page_content").append("<h3 class ='text-center'>Generate Prescription</h3>");
     $("#main_page_content").append("<hr class='custom_hr'>");
     var main_row_div= $("<div class='row is-flex'></div>");
     $(generate_prescription_div).append(main_row_div);
@@ -2472,15 +2387,14 @@ function generatePrescription(){
             col_one__row_div_one.append(row__col_one__row_div_one);
 
             // Contact Number
-
             var col_two__row_div_one=$("<div class='col-md-4'></div>");
                 var row__col_two__row_div_one=$("<div class='row'></div>");
-                    colmd1=$("<div class='col-md-4'></div>")
+                    colmd1=$("<div class='col-md-5'></div>")
                     colmd2=$("<div class='col-md-6'></div>")
 
                     contact_type_label=$("<label class='custom_label_css'>Contact Number</label>");
                     colmd1.append(contact_type_label);
-                    contact_type_input=$("<input class='form-control custom_input_css' id='search_contact_numb_input'  placeholder='0312-3456789'></input>")
+                    contact_type_input=$("<input class='form-control custom_input_css' id='search_contact_numb_input'></input>")
                     colmd2.append(contact_type_input);
 
                 row__col_two__row_div_one.append(colmd1)
@@ -2489,41 +2403,17 @@ function generatePrescription(){
 
             var col_three__row_div_one=$("<div class='col-md-4'></div>");
                 var row__col_three__row_div_one=$("<div class='row'></div>");
-                    var colmd1=$("<div class='col-md-4'></div>")
-                    var colmd2=$("<div class='col-md-6'></div>")
-                        var cnic_label=$("<label class='custom_label_css'>CNIC</label>");
-                       
-                        var cnic_input=$("<input class='form-control custom_input_css' id='search_cnic_numb_input'></input>")
-                        colmd1.append(cnic_label);
-                        colmd2.append(cnic_input);
-
+                    var colmd1=$("<div class='col-md-7'></div>")
+                        var search_button=$('<button class="btn btn-block fa fa-search" onclick="searchPatientInGenPres()">  Search Patient</button>')
+                    colmd1.append(search_button)
                 row__col_three__row_div_one.append(colmd1)
-                row__col_three__row_div_one.append(colmd2)
             col_three__row_div_one.append(row__col_three__row_div_one)
-
 
             $(row_div_one).append(col_one__row_div_one);
             $(row_div_one).append(col_two__row_div_one);
             $(row_div_one).append(col_three__row_div_one);
         
-            //search button
-        var row_div_two=$("<div class='row'></div>");
-            var col_one__row_div_two=$("<div class='col-md-4'></div>");
-            var col_two__row_div_two=$("<div class='col-md-4'></div>");
-            var col_three__row_div_two=$("<div class='col-md-4'></div>");
-                var row__col_three__row_div_two=$("<div class='row'></div>");
-                    var colmd1=$("<div class='col-md-12'></div>")
-                        var search_button=$('<button onclick="searchPatientInGenPres()">Search Patient</button>')
-                    colmd1.append(search_button)
-                row__col_three__row_div_two.append(colmd1);
-            col_three__row_div_two.append(row__col_three__row_div_two)
-
-        row_div_two.append(col_one__row_div_two)
-        row_div_two.append(col_two__row_div_two)
-        row_div_two.append(col_three__row_div_two)
-
     $(main_col_div).append(row_div_one);
-    $(main_col_div).append(row_div_two);
 }
 function createRoomDataTable(){
     console.log("room_list----------",room_list)
@@ -2539,7 +2429,7 @@ function createRoomDataTable(){
 
                 ],
                 paging: false,
-                scrollY: 200,
+                scrollY: 130,
                 scrollX: true,
                 ordering: true,
                 info:false,
@@ -2557,18 +2447,17 @@ function createRoomDataTable(){
                     console.log("room dict on click",room_dict);
                     $("#row_div_seven").remove();
 
-                    var row_div_seven=$("<div class='row' id='row_div_seven'></div>");
+                    var row_div_seven=$("<div class='row' id='row_div_seven' ></div>");
                         var main_subcol=$("<div class='col-md-12'></div>");
 
-                            var subrow_one=$("<div class='row'></div>")
+                            var subrow_one=$("<div class='row' style='padding-bottom:10px;'></div>")
 
                                     var col_one__subrow_one=$("<div class='col-md-6'></div>");
                                             row__col_one__subrow_one=$("<div class='row'></div>");
                                                 var colmd1=$("<div class='col-md-4'></div>")
                                                 var colmd2=$("<div class='col-md-2'></div>")
                                                     var roomNo_label=$("<label for='roomNo_label' class='custom_label_css'>Room Number</label>");
-                                                    // var roomNo_input=$("<input  id='roomNo_input' class='custom_input_css' value='"+room_dict[room_id_selected]['room_no']+"' disabled>")
-                                                    var roomNo_input=$("<input  id='roomNo_input' class='custom_input_css' value='"+room_id_selected+"' disabled>")
+                                                    var roomNo_input=$("<input id='roomNo_input' class='custom_input_css form-control' value='"+room_id_selected+"' disabled>")
 
                                                     colmd1.append(roomNo_label)
                                                 colmd2.append(roomNo_input)
@@ -2578,7 +2467,7 @@ function createRoomDataTable(){
 
                             subrow_one.append(col_one__subrow_one)
 
-                        var subrow_two=$("<div class='row'></div>")
+                        var subrow_two=$("<div class='row' style='padding-bottom:10px;'></div>")
                             var col_one_subrow_two=$("<div class='col-md-12'></div>");
                                 var row__col_one_subrow_two=$("<div class='row'></div>");
                                     colmd1=$("<div class='col-md-2'></div>")
@@ -2596,14 +2485,13 @@ function createRoomDataTable(){
                             col_one_subrow_two.append(row__col_one_subrow_two);
                         subrow_two.append(col_one_subrow_two)
 
-                        var subrow_three=$("<div class='row'></div>")
-                            var col_one__subrow_three=$("<div class='col-md-6'></div>");
+                        var subrow_three=$("<div class='row' style='padding-bottom:10px;'></div>")
+                            var col_one__subrow_three=$("<div class='col-md-4'></div>");
                                 var row__col_one__subrow_three=$("<div class='row'></div>");
-                                    var colmd1=$("<div class='col-md-4'></div>")
+                                    var colmd1=$("<div class='col-md-6'></div>")
                                     var colmd2=$("<div class='col-md-6'></div>")
                                     
                                         var doconduty_label=$("<label  class='custom_label_css'>Doctor on Duty</label>");
-                                        // var Doctor_onDuty_input=$("<input id='Doctor_onDuty_input' class='custom_input_css' ></input>")
                                         var select=$("<select id='selecteddoctor' class='form-control'></select>");
                                             var option=$("<option selected='selected' value='--'>--</option>");
                                         $(select).append(option);
@@ -2620,11 +2508,11 @@ function createRoomDataTable(){
                                     row__col_one__subrow_three.append(colmd2);
                             col_one__subrow_three.append(row__col_one__subrow_three);
 
-                            var col_two__subrow_three=$("<div class='col-md-6'></div>");
+                            var col_two__subrow_three=$("<div class='col-md-4'></div>");
                                 var row__col_two__subrow_three=$("<div class='row'></div>");
-                                    var colmd1=$("<div class='col-md-4'></div>")
+                                    var colmd1=$("<div class='col-md-6'></div>")
                                     var colmd2=$("<div class='col-md-6'></div>")
-                                        var consultant_label=$("<label for='Consultant_label' class='custom_label_css'>Consultant</label>");
+                                        var consultant_label=$("<label for='Consultant_label' class='custom_label_css float-right'>Consultant</label>");
                                         var select=$("<select id='selectedconsultant' class='form-control'></select>");
                                             var option=$("<option selected='selected' value='--'>--</option>");
                                         $(select).append(option);
@@ -2644,136 +2532,113 @@ function createRoomDataTable(){
                         subrow_three.append(col_one__subrow_three)
                         subrow_three.append(col_two__subrow_three)
 
-                        // var subrow_four=$("<div class='row'></div>")
-                        //     var col_one__subrow_four=$("<div class='col-md-12'></div>");
-                        //         var row__col_one__subrow_four=$("<div class='row'></div>");
-                        //             var colmd1=$("<div class='col-md-3'></div>")
-                        //             var colmd2=$("<div class='col-md-6'></div>")
-                        //             var colmd3=$("<div class='col-md-3'></div>")
-                                    
-                        //                 var printPres_button=$('<button class="btn btn-success btn-sm btn-block" onclick="printPrescriptionForm()">Pint Prescription</button>')
-                        //                 colmd2.append(printPres_button);
-                            
-                        //             row__col_one__subrow_four.append(colmd1);
-                        //             row__col_one__subrow_four.append(colmd2);
-                        //             row__col_one__subrow_four.append(colmd3);
-
-                        //     col_one__subrow_four.append(row__col_one__subrow_four);
-
-
-                        // subrow_four.append(col_one__subrow_four)
-                    var subrow_five=$("<div class='row'></div>")
-
-                    var col_one__row_one=$("<div class='col-md-12'></div>");
-                            row__col_one__row_one=$("<div class='row'></div>");
-                                var colmd1=$("<div class='col-md-2'></div>")
-                                var colmd2=$("<div class='col-md-2'></div>")
-                                
-                                    var indoor_admit_fee_label=$("<label for='indoor_fee_tag' class='custom_label_css'>Admission Fee</label>");
-                                    colmd1.append(indoor_admit_fee_label)
-
-                                    indoor_admit_fee_input=$("<input class='form-control' id='totalamount_input'  class='custom_input_css'>")
-                                    colmd2.append(indoor_admit_fee_input)
-
-                            row__col_one__row_one.append(colmd1);
-                            row__col_one__row_one.append(colmd2);
-
-                        col_one__row_one.append(row__col_one__row_one);
-
-                    subrow_five.append(col_one__row_one)
-                var subrow_six=$("<div class='row'></div>")
-
-                    var col_one__row_two=$("<div class='col-md-12'></div>");
-                            row__col_one__row_two=$("<div class='row'></div>");
-                                var colmd1=$("<div class='col-md-2'></div>")
-                                var colmd2=$("<div class='col-md-2'></div>")
-                                var colmd3=$("<div class='col-md-2'></div>")
-                                var colmd4=$("<div class='col-md-2'></div>")
-                                var colmd5=$("<div class='col-md-2'></div>")
-                                var colmd6=$("<div class='col-md-2'></div>")
-
-                                var discountamount_label=$("<label for='indoor_disc_tag' class='custom_label_css'>Discount Amount</label>");
-                                colmd1.append(discountamount_label)
-
-                                discountamount_input=$("<input class='form-control' id='discountamount_input' onfocusout='discountAmountFocousOutPres($(this))' class='custom_input_css'>")
-                                colmd2.append(discountamount_input)
-
-                                var discountPercernt_label=$("<label for='discountPercernt_label' class='custom_label_css'>Discount Percent</label>");
-                                colmd3.append(discountPercernt_label)
-
-                                discountpercent_input=$("<input class='form-control' id='discountpercent_input' class='custom_input_css'>")
-                                colmd4.append(discountpercent_input)
-
-                                var amountDue_label=$("<label for='amountDue_label' class='custom_label_css'>Net Total</label>");
-                                colmd5.append(amountDue_label)
-
-                                amountdue_input=$("<input class='form-control' onfocusin='netTotalFocusInPres()' id='amountdue_input'>")
-                                colmd6.append(amountdue_input)
-
-                            row__col_one__row_two.append(colmd1);
-                            row__col_one__row_two.append(colmd2);
-                            row__col_one__row_two.append(colmd3);
-                            row__col_one__row_two.append(colmd4);
-                            row__col_one__row_two.append(colmd5);
-                            row__col_one__row_two.append(colmd6);
-
-
-                        col_one__row_two.append(row__col_one__row_two);
-
-                    subrow_six.append(col_one__row_two)
-
-                var subrow_seven=$("<div class='row'></div>")
-
-                    var col_one__row_three=$("<div class='col-md-12'></div>");
-                            row__col_one__row_three=$("<div class='row'></div>");
-                                var colmd1=$("<div class='col-md-2'></div>")
-                                var colmd2=$("<div class='col-md-6'></div>")
-                                
-                                    var reason_label=$("<label for='discount_reason_label' class='custom_label_css'>Discount Reason</label>");
-                                    colmd1.append(reason_label)
-
-                                    reason_input=$("<input class='form-control' id='discount_reason_input' class='custom_input_css'>")
-                                    colmd2.append(reason_input)
-
-                            row__col_one__row_three.append(colmd1);
-                            row__col_one__row_three.append(colmd2);
-
-                        col_one__row_three.append(row__col_one__row_three);
-
-                subrow_seven.append(col_one__row_three)
-                
-               
-
-                var subrow_nine=$("<div class='row'></div>")
-
-                    var col_one__row_five=$("<div class='col-md-12'></div>");
-                            row__col_one__row_five=$("<div class='row'></div>");
-                                colmd1=$("<div class='col-md-3'></div>")
-                                colmd2=$("<div class='col-md-6'></div>")
-                                colmd3=$("<div class='col-md-3'></div>")
-
-                                GenPres_button=$('<button class="btn btn-success btn-sm btn-block" onclick="printPrescriptionForm()">Print Prescription</button>')
-                                colmd2.append(GenPres_button)
-                                
-                            row__col_one__row_five.append(colmd1);
-                            row__col_one__row_five.append(colmd2);
-                            row__col_one__row_five.append(colmd3);
-
-
-                        col_one__row_five.append(row__col_one__row_five);
-
-                subrow_nine.append(col_one__row_five)
-
                         
+                        var subrow_four=$("<div class='row' style='padding-bottom:10px;'></div>")
+
+                            var col_one__subrow_four=$("<div class='col-md-12'></div>");
+                                    row__col_one__subrow_four=$("<div class='row'></div>");
+                                        var colmd1=$("<div class='col-md-2'></div>")
+                                        var colmd2=$("<div class='col-md-2'></div>")
+                                        
+                                            var indoor_admit_fee_label=$("<label for='indoor_fee_tag' class='custom_label_css'>Admission Fee</label>");
+                                            colmd1.append(indoor_admit_fee_label)
+
+                                            indoor_admit_fee_input=$("<input class='form-control' id='totalamount_input'  class='custom_input_css'>")
+                                            colmd2.append(indoor_admit_fee_input)
+
+                                    row__col_one__subrow_four.append(colmd1);
+                                    row__col_one__subrow_four.append(colmd2);
+
+                                col_one__subrow_four.append(row__col_one__subrow_four);
+                            subrow_four.append(col_one__subrow_four)
+                        
+                        var subrow_five=$("<div class='row' style='padding-bottom:10px;'></div>")
+
+                            var col_one__subrow_five=$("<div class='col-md-12'></div>");
+                                row__col_one__subrow_five=$("<div class='row'></div>");
+                                    var colmd1=$("<div class='col-md-2'></div>")
+                                    var colmd2=$("<div class='col-md-2'></div>")
+                                    var colmd3=$("<div class='col-md-2'></div>")
+                                    var colmd4=$("<div class='col-md-2'></div>")
+                                    var colmd5=$("<div class='col-md-2'></div>")
+                                    var colmd6=$("<div class='col-md-2'></div>")
+
+                                    var discountamount_label=$("<label for='indoor_disc_tag' class='custom_label_css'>Discount Amount</label>");
+                                    colmd1.append(discountamount_label)
+
+                                    discountamount_input=$("<input class='form-control' id='discountamount_input' onfocusout='discountAmountFocousOutPres($(this))' class='custom_input_css'>")
+                                    colmd2.append(discountamount_input)
+
+                                    var discountPercernt_label=$("<label for='discountPercernt_label' class='custom_label_css float-right'>Discount Percent</label>");
+                                    colmd3.append(discountPercernt_label)
+
+                                    discountpercent_input=$("<input class='form-control' id='discountpercent_input' class='custom_input_css'>")
+                                    colmd4.append(discountpercent_input)
+
+                                    var amountDue_label=$("<label for='amountDue_label' class='custom_label_css float-right'>Net Total</label>");
+                                    colmd5.append(amountDue_label)
+
+                                    amountdue_input=$("<input class='form-control' onfocusin='netTotalFocusInPres()' id='amountdue_input'>")
+                                    colmd6.append(amountdue_input)
+
+                                row__col_one__subrow_five.append(colmd1);
+                                row__col_one__subrow_five.append(colmd2);
+                                row__col_one__subrow_five.append(colmd3);
+                                row__col_one__subrow_five.append(colmd4);
+                                row__col_one__subrow_five.append(colmd5);
+                                row__col_one__subrow_five.append(colmd6);
+
+
+                            col_one__subrow_five.append(row__col_one__subrow_five);
+
+                        subrow_five.append(col_one__subrow_five)
+
+                        var subrow_six=$("<div class='row' style='padding-bottom:10px;'></div>")
+
+                            var col_one__subrow_six=$("<div class='col-md-12'></div>");
+                                row__col_one__subrow_six=$("<div class='row'></div>");
+                                    var colmd1=$("<div class='col-md-2'></div>")
+                                    var colmd2=$("<div class='col-md-6'></div>")
+                                    
+                                        var reason_label=$("<label for='discount_reason_label' class='custom_label_css'>Discount Reason</label>");
+                                        colmd1.append(reason_label)
+
+                                        reason_input=$("<input class='form-control' id='discount_reason_input' class='custom_input_css'>")
+                                        colmd2.append(reason_input)
+
+                                row__col_one__subrow_six.append(colmd1);
+                                row__col_one__subrow_six.append(colmd2);
+
+                            col_one__subrow_six.append(row__col_one__subrow_six);
+
+                        subrow_six.append(col_one__subrow_six)
+
+                        var subrow_seven=$("<div class='row' style='padding-bottom:10px;'></div>")
+
+                            var col_one__subrow_seven=$("<div class='col-md-12'></div>");
+                                row__col_one__subrow_seven=$("<div class='row'></div>");
+                                    colmd1=$("<div class='col-md-3'></div>")
+                                    colmd2=$("<div class='col-md-6'></div>")
+                                    colmd3=$("<div class='col-md-3'></div>")
+
+                                        GenPres_button=$('<button class="btn btn-success btn-block fa fa-print" onclick="printPrescriptionForm()">  Print Prescription</button>')
+                                    colmd2.append(GenPres_button)
+                                    
+                                row__col_one__subrow_seven.append(colmd1);
+                                row__col_one__subrow_seven.append(colmd2);
+                                row__col_one__subrow_seven.append(colmd3);
+
+                            col_one__subrow_seven.append(row__col_one__subrow_seven);
+
+                        subrow_seven.append(col_one__subrow_seven)
+
                     main_subcol.append(subrow_one)
                     main_subcol.append(subrow_two)
                     main_subcol.append(subrow_three)
+                    main_subcol.append(subrow_four)
                     main_subcol.append(subrow_five)
                     main_subcol.append(subrow_six)
                     main_subcol.append(subrow_seven)
-                    main_subcol.append(subrow_nine)
-
-
 
                 row_div_seven.append(main_subcol)
             var main_col_div=$("#main_col_div");
@@ -2784,23 +2649,6 @@ function createRoomDataTable(){
         });
 }
 
-// function maxTokenNo(){
-//     $.ajax({
-//         type: 'GET',
-//         dataType: "json",
-//         // the ajax call is sent to  url name in the get function.  
-//         url: '/max_token_no',
-//         'data': {
-//         },
-        
-//         success: function(data){
-//             token_Number=data['tokenNo'];
-//             token_Number=token_Number+1
-//             $('#tokenNumber_disp').val(token_Number);
-//             // $("#tokenNumber_disp").prop('disabled',true)
-//         },
-//     });
-// }
 function createPatientBill(){
         $('#main_page_content').empty()
         var container_patient_prescription= $('#main_page_content').append('<div class="container-fluid" id="container-patient-bill"></div>');
@@ -3032,9 +2880,6 @@ function createPatientDetailsHtmlInCreateBill(){
 
         
         main_subcol.append(subrow_one)
-        // main_subcol.append(subrow_two)
-        // main_subcol.append(subrow_three)
-        // main_subcol.append(subrow_four)
 
     row_div_two.append(main_subcol)
     var main_col_div=$("#main_col_div");
@@ -3096,7 +2941,6 @@ function createDespDataTable(){
             });
             $('#desp-med-table tbody').on( 'click', 'tr', function () {
                 if ( $(this).hasClass('selected') ) {
-                    // alert("clicked same entry")
                 }
                 else{
                     despid=$(this).find('td').eq(0).text()
@@ -3400,7 +3244,6 @@ function addMedicineToPatientBill(){
                 bill_datatable.row.add( templist ).draw();
                 count++;
 
-
             }
             console.log("datatable_pbr_list",datatable_pbr_list)
         }
@@ -3472,9 +3315,7 @@ function SaveAndPrintBill(){
 
         var mid_div=$("<div id='mid'></div>");
             var div_info=$("<div class='info'></div>");
-                // var h2=$("<h3>Patient Info</h3>");
                     var p=$("<p> Name   :"+patient_name+" </br> Phone   : "+phoneno+"</br></p>")
-                // h2.append(p);
             div_info.append(p);
         mid_div.append(div_info);
 
@@ -3546,9 +3387,6 @@ function SaveAndPrintBill(){
                 tr.append(td3);
             table.append(tr);
 
-
-
-
             div_table.append(table);
 
             var legalcopy=$("<div id='legalcopy'>");
@@ -3560,9 +3398,6 @@ function SaveAndPrintBill(){
 
     invoice_pos.append(mid_div);    
     invoice_pos.append(bot_div);    
-
- 
-
     
 
     // var restorepage = $('#patient_dash_first_div').html();
@@ -3573,9 +3408,6 @@ function SaveAndPrintBill(){
     window.print();
     // $('#patient_dash_first_div').show();
     // $('#recipet_div').empty();
-   
-
-
 
     $.ajax({
         type: 'POST',
@@ -3711,18 +3543,11 @@ function createRowDivFiveBill(){
 
                                 subcol1.append(row1__subcol1);
                             row4__calculate_col2.append(subcol1);
-
-    
-                        
-                        
                         
                         calculate_col2.append(row1__calculate_col2);
                         calculate_col2.append(row2__calculate_col2);
                         calculate_col2.append(row3__calculate_col2);
                         calculate_col2.append(row4__calculate_col2);
-
-
-
                    
                     row.append(calculate_col1);
                     row.append(calculate_col2);
@@ -3756,10 +3581,7 @@ function createRowDivSixDespBill(){
                                         
                                             } 
                                     subcol2_subrow1.append(select)
-
-
                                         
-
                                 sub_row1.append(subcol1_subrow1);
                                 sub_row1.append(subcol2_subrow1);
 
@@ -3787,20 +3609,15 @@ function createRowDivSixDespBill(){
                                 sub_row3.append(subcol1_subrow3);
                                 sub_row3.append(subcol2_subrow3);
 
-
                             procedure_col1.append(sub_row1);
                             procedure_col1.append(sub_row2);
                             procedure_col1.append(sub_row3);
-
-
 
                             var procedure_col2=$("<div class='col-md-6'></div>");
                                 var procedure_bill_table=$('<table id="procedure_bill_table"></table>');
                                 procedure_col2.append(procedure_bill_table)
                         row.append(procedure_col1)
                         row.append(procedure_col2)
-
-
 
                     colmd1.append(row);
                 row__col_one__row_div_six.append(colmd1);
@@ -3832,11 +3649,9 @@ function procedureBillDespDataTable(){
             });
             $('#procedure_bill_table tbody').on( 'click', 'tr', function () {
                 if ( $(this).hasClass('selected') ) {
-                    // procedure_bill_data=procedure_bill_table.rows(this).data()[0];
                     procedure_bill_table.rows(this).remove()
                     $(this).remove();
                    
-
                 }
                 else{
                     rowid=$(this).find('td').eq(0).text()
@@ -3881,8 +3696,6 @@ function calculateDespProcBill(){
     addchargeamount=totalamount;
     
     console.log("totalamount",totalamount);
-    
-
 
     procedure_bill_data=procedure_bill_table.rows(this).data()[0];
     procedure_bill_table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
@@ -4094,7 +3907,6 @@ function searchPatPresc(){
     createPresMedDataTableRow();
     createPresMedDataTable();
     main_col_div.append(row_div_four);
-
 
 }
 function createPresMedDataTableRow(){
