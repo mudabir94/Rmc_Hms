@@ -250,14 +250,15 @@ def WithStripCalculation(medicineWarehouseStock_obj,medicineobj,numofboxes,numof
         med_name=medicineWarehouseStock_obj.medicine.medicine_name
         print("med_name",med_name)
         medObj=Medicine.objects.get(medicine_name=med_name)
-    try:
-        tt_tempMedWhStk_Med.objects.get(medicine=medObj)
-        tempMedWhStk_Med_Obj=tt_tempMedWhStk_Med.objects.get(medicine=medObj)
-        saveMedicineToWhStockFromTempMedStock(tempMedWhStk_Med_Obj,medObj)
-        tempMedWhStk_Med_Obj.delete()
-    except:
-        print("NOT FOUND IN TEMP")
-    
+        batch_no=int(medbatch_obj.batch_no)
+        batch_no_new=batch_no+1
+        try:
+            tempMedWhStk_Med_Obj=tt_tempMedWhStk_Med.objects.get(medicine=medObj,batch_no=batch_no_new)
+            saveMedicineToWhStockFromTempMedStock(tempMedWhStk_Med_Obj,medObj)
+            tempMedWhStk_Med_Obj.delete()
+        except:
+            print("NOT FOUND IN TEMP")
+        
 
     medicineWarehouseStock_obj.box_stored=boxes_stored
     medicineWarehouseStock_obj.strip_stored=strips_stored
@@ -343,6 +344,7 @@ def NoStripCalculation(medicineWarehouseStock_obj,medicineobj,noofboxes,noofpiec
         despStrg_obj.piece_stored=medicineWarehouseStock_obj.piece_stored-pieces_leftin_stock
         despStrg_obj.box_price_unit=medicineWarehouseStock_obj.box_price_unit
         despStrg_obj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
+        despStrg_obj.status="In Use"
         despStrg_obj.save()
 
     despStrgHist_obj=despensoryStockHistory()
@@ -356,6 +358,7 @@ def NoStripCalculation(medicineWarehouseStock_obj,medicineobj,noofboxes,noofpiec
     despStrgHist_obj.piece_stored=medicineWarehouseStock_obj.piece_stored-pieces_leftin_stock
     despStrgHist_obj.box_price_unit=medicineWarehouseStock_obj.box_price_unit
     despStrgHist_obj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
+    despStrgHist_obj.status="Added"
     despStrgHist_obj.save()
     if boxes_stored_in_stock==0 and pieces_leftin_stock==0.0:
         medicineWarehouseStock_obj.status="Used"
@@ -365,9 +368,10 @@ def NoStripCalculation(medicineWarehouseStock_obj,medicineobj,noofboxes,noofpiec
         med_name=medicineWarehouseStock_obj.medicine.medicine_name
         print("med_name",med_name)
         medObj=Medicine.objects.get(medicine_name=med_name)
+        batch_no=int(medbatch_obj.batch_no)
+        batch_no_new=batch_no+1
         try:
-            tt_tempMedWhStk_Med.objects.get(medicine=medObj)
-            tempMedWhStk_Med_Obj=tt_tempMedWhStk_Med.objects.get(medicine=medObj)
+            tempMedWhStk_Med_Obj=tt_tempMedWhStk_Med.objects.get(medicine=medObj,batch_no=batch_no_new)
             saveMedicineToWhStockFromTempMedStock(tempMedWhStk_Med_Obj,medObj)
             tempMedWhStk_Med_Obj.delete()
         except:
@@ -916,7 +920,18 @@ def saveMedicineToWhStockBottle(request):
             obj.medicine=Medicine.objects.get(medicine_name=medicine_name)
             obj.mwhs=mwh_stock_obj
             obj.save()
-        data={}
+        mwhs_objs=medicineWarehouseStock.objects.all().distinct()
+        medicine_batch_in_stock_list=[]
+        for mwhs_obj in mwhs_objs:
+            # print("mwhs_obj--",mwhs_obj.medicine.medicine_name)
+            medbatch_obj=medicineBatches.objects.get(medicine_strg=mwhs_obj)
+            if medbatch_obj.status=="Active":
+                medbatchno=medbatch_obj.batch_no
+                medname=mwhs_obj.medicine.medicine_name
+                medicine_batch_in_stock_list.append([medname,medbatchno])
+        data={
+            'medicine_batch_in_stock_list':medicine_batch_in_stock_list,
+        }
         return JsonResponse(data)
 
 
@@ -1545,6 +1560,9 @@ def retireveAllDespMed(request):
             strip_stored=dspstck.strip_stored
             if dspstck.strip_unit==None:
                 strip_stored="N/A"
+                tempdspstck_dict['strip_unit']="-"
+            else:
+                tempdspstck_dict['strip_unit']=dspstck.strip_unit
             tempdspstck_dict['strip_stored']=strip_stored
 
 
@@ -1571,12 +1589,15 @@ def retrieveMedicineFromDesp(request):
         patientid=int(patientid)
         pieces_wanted=request.GET.get('pieces_wanted')
         strips_wanted=request.GET.get('strips_wanted')
+        no_strips=request.GET.get('no_strips')
 
         boxes_wanted=request.GET.get('boxes_wanted')
         print("boxes_wanted",boxes_wanted)
         boxes_wanted=int(boxes_wanted)
         pieces_wanted=int(pieces_wanted)
-        strips_wanted=int(strips_wanted)
+        print("strips wanted-->",strips_wanted)
+        if no_strips=="false":
+            strips_wanted=int(strips_wanted)
 
         despStckDict=request.GET.get('despStckDict')
         despStckDict=json.loads(despStckDict)

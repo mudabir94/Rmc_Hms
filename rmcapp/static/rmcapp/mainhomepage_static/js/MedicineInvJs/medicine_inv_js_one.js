@@ -365,7 +365,7 @@ function addMedicineToWhStockFrom(){
     retrieveMedicineGenDataFromStock();
 
     $('#main_page_content').empty();
-    var main_page_content= $('#main_page_content').append('<div class="container-fluid" id="container-med-dashboard"></div>');
+    $('#main_page_content').append('<div class="container-fluid" id="container-med-dashboard"></div>');
     $("#container-med-dashboard").append("<h2>Add Medicine To Storage</h2>");
     $("#container-med-dashboard").append("<hr class='custom_hr'>");
     var main_row_div= $("<div class='row is-flex'></div>");
@@ -444,7 +444,26 @@ function addMedicineToWhStockFrom(){
       row_one__col_one__row_div_one.append(table)
       $(main_col_div1).append(row_one__col_one__row_div_one)
       console.log("medicine_name_list",medicine_name_list)
-      $(function(){
+      createMedTStckT();
+    //   updateMedTStckT();
+     
+
+}
+function updateMedTStckT(){
+    medstck_datatable.clear().draw();
+    console.log("medicine_batch_in_stock_list>>",medicine_batch_in_stock_list)
+    count=0;
+    for (var i in medicine_batch_in_stock_list){
+        // if (count===0){
+        //     medstck_datatable.clear().draw();
+        // }
+        
+        medstck_datatable.row.add( medicine_batch_in_stock_list[i] ).draw();
+        // count++;
+    } 
+}
+function createMedTStckT(){
+    $(function(){
         $('#med_table').append('<caption style="color: black;font-weight: bold; ;caption-side: top;text-align: center;">Regestered Medicines</caption>');
         med_table_datatable=$("#med_table").DataTable({
 
@@ -465,9 +484,23 @@ function addMedicineToWhStockFrom(){
                 fixedColumns: true,
 
             });
-console.log("ENter in DAta table",medicine_batch_in_stock_list)
-        $('#med_in_stock').append('<caption style="color: black;font-weight: bold; ;caption-side: top;text-align: center;">Medicines in Stock</caption>');
+            $('#med_table tbody').on( 'click', 'tr', function () {
+                if ( $(this).hasClass('selected') ) {
+                    alert("clicked same entry")
+                    $(this).removeClass('selected');
+                }
+                else {
+                    var medicine_name=$(this).find('td').eq(0).text()
+                    med_table_datatable.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                    $("#medicine_name_tag").val(medicine_name);
+                    $("#medicine_name_tag").focus()
+                }
+            });
 
+    $('#med_in_stock').empty();
+   
+    $('#med_in_stock').append('<caption style="color: black;font-weight: bold; ;caption-side: top;text-align: center;">Medicines in Stock</caption>');
         medstck_datatable=$("#med_in_stock").DataTable({
             data: medicine_batch_in_stock_list,
             columns: [
@@ -487,9 +520,37 @@ console.log("ENter in DAta table",medicine_batch_in_stock_list)
                 fixedColumns: true,
 
             });
+            $('#med_in_stock tbody').on( 'click', 'tr', function () {
+                if ( $(this).hasClass('selected') ) {
+                    alert("clicked same entry")
+                    $(this).removeClass('selected');
+                }
+                else {
+                    var medicine_name=$(this).find('td').eq(0).text()
+                    medstck_datatable.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+            });
 
     });
+}
+function refreshMedTStckT(){
+    retrieveMedicineType();
+    retrieveMedicineNames();
+    retrieveMedicineGenDataFromStock();
+    $(".custom_hr").remove();
 
+    $("#medicine_name_tag").val("");
+    $("#medicine_type_input").val("");
+    $("#batchno_input").val("");
+    $("#row_div_two_box").remove();
+    $("#row_div_two_bottle").remove();
+    $("#dates_row_div").remove();
+    $("#row_div_four_save_box").remove();
+    $("#row_div_four_save_bottle").remove();
+
+
+    updateMedTStckT()
 }
 function checkBatchNo(){
     var medicine_name=$("#medicine_name_tag").val()
@@ -731,7 +792,7 @@ function subPackageHtml(pack_type,sublevel,subpack_type_list){
 
                     row_two__col_one__row_div=$("<div class='row'></div>");
                         quantity_subpackage_type_label=$("<label>Quantity:</label>");
-                        quantity_subpackage_type_input=$("<input class='form-control' type='number' placeholder='1.0' step='1.00' min='1 id='sublevel"+sublevel+"' name='sublevel_input'></input>");
+                        quantity_subpackage_type_input=$("<input class='form-control' type='number'  step='1.00' min='1' id='sublevel"+sublevel+"' name='sublevel_input'></input>");
                     
                     row_two__col_one__row_div.append(quantity_subpackage_type_label);
                     row_two__col_one__row_div.append(quantity_subpackage_type_input);
@@ -794,6 +855,7 @@ function calculateFunc(){
     console.log("sublevel_data",sublevel_data);
     // calculate purchase price of one main  package. 
     priceperpack=purchaseprice/quantity_mainpackage;
+    priceperpack=Math.round(priceperpack)
     // check sublevel1 and store its vals use those vals for sublevels 2,3.. 
     // sublevels=['Strip','Piece']
     var j=1;
@@ -822,9 +884,13 @@ function calculateFunc(){
     else{
         // Only piece as sublevel.
         // calculate total no of pieces in all of main packs. 
+        
         totalnoofpieces=quantity_mainpackage*sublevel_data[0][2]
+        totalnoofpieces=Math.round(totalnoofpieces);
         // price of 1 piece 
+        
         priceof1piece=priceperpack/sublevel_data[0][2]
+        priceof1piece=Math.round(priceof1piece);
         
         
         console.log("totalnoofpieces--",totalnoofpieces)
@@ -946,7 +1012,9 @@ function recursiveFunc(list_length){
             priceof1sublevel=previous_sublevel_data[previous_sublevel_data.length-1][3]
 
             totalnoofsublevel=quantityofsublevel*quant1*quantity_mainpackage;
+            totalnoofsublevel=Math.round(totalnoofsublevel);
             price=priceof1sublevel/quant1;
+            price=Math.round(price);
             console.log("total no of pieces",totalnoofsublevel);
             console.log("price of one piece",price);
             temp_list=[sublevel1,package_name1,quant1,price];
@@ -1022,7 +1090,6 @@ function saveMedicineToWhStock(){
                             var batchno=$("#batchno_input").val();
                             var manufactor_date=$("#manudatepicker").val();
                             var purchaserate=$("#main_priceperpack_input").val();
-                            console.log("purchaserate",purchaserate);
                             var exp_date=$("#expdatepicker").val();
                             var main_package_type=$("#mainpackage_type_select").val();
                             var main_quantity_input=$("#main_quantity_input").val();
@@ -1105,14 +1172,15 @@ function saveMedicineToWhStock(){
                                 success: function(data){
                                     medicine_batch_in_stock_list=data['medicine_batch_in_stock_list']
                                     // retrieveMedicineGenDataFromStock()
+                                    refreshMedTStckT()
+                                    // addMedicineToWhStockFrom();
                                 },
                             
                             });
-                        
-        
-                        $( this ).dialog( "close" );
+                            $( this ).dialog( "close" );
 
-                        addMedicineToWhStockFrom();
+        
+                      
         
                         },
                         Cancel: function() {
@@ -1161,14 +1229,14 @@ function addRowDivTwo()
 
             row_two__col_one__package_info_row_div=$("<div class='row'></div>");
                 quantity_mainpackage_type_label=$("<label>Quantity:</label>");
-                quantity_mainpackage_type_input=$("<input class='form-control' type='number' placeholder='1.0' step='1.00' min='1'  id='main_quantity_input' name='main_quantity_input'></input>");
+                quantity_mainpackage_type_input=$("<input class='form-control' type='number'  step='1.00' min='1'  id='main_quantity_input' name='main_quantity_input'></input>");
             
             row_two__col_one__package_info_row_div.append(quantity_mainpackage_type_label);
             row_two__col_one__package_info_row_div.append(quantity_mainpackage_type_input);
 
             row_three__col_one__package_info_row_div=$("<div class='row'></div>");
                 priceperpackage_label=$("<label>Total Purchase Rate:</label>");
-                priceperpackage_input=$("<input class='form-control' type='number' placeholder='0.0' step='50.00' min='0'  id='main_priceperpack_input' name='main_priceperpack_input'></input>");
+                priceperpackage_input=$("<input class='form-control' type='number' step='50.00' min='0'  id='main_priceperpack_input' name='main_priceperpack_input'></input>");
             row_three__col_one__package_info_row_div.append(priceperpackage_label)
             row_three__col_one__package_info_row_div.append(priceperpackage_input)
 
@@ -1306,7 +1374,7 @@ function addRowDivTwoCustomSyrup(){
                     var option=$("<option value='--'>--</option>");
                     $(mainpackage_type_select).append(option);
                     // if medicine type is syrup then populate with this data 
-                    package_type_list=['MainBottle','DispensoryBottle'];
+                    package_type_list=['MainBottle'];
                     // else use defualt package type --package_type_list=['Box','Strip','piece'];
                     for (var i=0;i<=package_type_list.length;i++){
                         if (package_type_list[i]!==undefined){
@@ -1320,20 +1388,20 @@ function addRowDivTwoCustomSyrup(){
 
                     row_two__col_one__package_info_row_div=$("<div class='row main_inputfields_bottle' ></div>");
                         ml_quantity_mainpackage_type_label=$("<label>Amount of ml in Main Package(def-Bottle):</label>");
-                        ml_quantity_mainpackage_type_input=$("<input class='form-control' type='number' placeholder='1.0' step='1.00' min='1'  id='main_ml_quant_input' name='main_ml_quant_input'></input>");
+                        ml_quantity_mainpackage_type_input=$("<input class='form-control' type='number'  step='1.00' min='1'  id='main_ml_quant_input' name='main_ml_quant_input'></input>");
                     
                     row_two__col_one__package_info_row_div.append(ml_quantity_mainpackage_type_label);
                     row_two__col_one__package_info_row_div.append(ml_quantity_mainpackage_type_input);
 
                     row_three__col_one__package_info_row_div=$("<div class='row'></div>");
                         priceperpackage_label=$("<label>Total Purchase Rate:</label>");
-                        priceperpackage_input=$("<input class='form-control' type='number' placeholder='0.0' step='50.00' min='0'  id='main_priceperpack_input' name='main_priceperpack_input'></input>");
+                        priceperpackage_input=$("<input class='form-control' type='number'  step='50.00' min='0'  id='main_priceperpack_input' name='main_priceperpack_input'></input>");
                     row_three__col_one__package_info_row_div.append(priceperpackage_label)
                     row_three__col_one__package_info_row_div.append(priceperpackage_input)
 
                     row_four__col_one__package_info_row_div=$("<div class='row'></div>");
                         quantityofpackage_label=$("<label>Quantity of Main Package(def-Bottle) :</label>");
-                        quantityofpackage_input=$("<input class='form-control' type='number' placeholder='0.0' step='1.00' min='0'  id='main_quantity_input' name='main_quantity_input'></input>");
+                        quantityofpackage_input=$("<input class='form-control' type='number' step='1.00' min='0'  id='main_quantity_input' name='main_quantity_input'></input>");
                     row_four__col_one__package_info_row_div.append(quantityofpackage_label)
                     row_four__col_one__package_info_row_div.append(quantityofpackage_input)
 
@@ -1419,6 +1487,9 @@ function saveMedicineToWhStock_Bottle(){
 
 
     
+    
+   
+    
     $.ajax({
         type: 'POST',
         dataType: "json",
@@ -1437,7 +1508,11 @@ function saveMedicineToWhStock_Bottle(){
         },
         url: '/save_medicine_to_wh_stock_bottle',
         success: function(data){
+            medicine_batch_in_stock_list=data['medicine_batch_in_stock_list']
+
             console.log(data['Success']);
+            refreshMedTStckT();
+
         },
       
     });
@@ -1496,7 +1571,7 @@ function subPackageCustomHtml(pack_type,sublevel_custom,subpack_customtype_list)
 
                 row_two__col_one__row_div=$("<div class='row'></div>");
                     quantity_subpack_customtype_label=$("<label>Capicity of Disp Bottle(ml):</label>"); 
-                    quantity_subpack_customtype_input=$("<input class='form-control' type='number' placeholder='1.0' step='1.00' min='1' id='sublevel"+sublevel_custom+"' name='sublevel_input'></input>");
+                    quantity_subpack_customtype_input=$("<input class='form-control' type='number' step='1.00' min='1' id='sublevel"+sublevel_custom+"' name='sublevel_input'></input>");
                 
                 row_two__col_one__row_div.append(quantity_subpack_customtype_label);
                 row_two__col_one__row_div.append(quantity_subpack_customtype_input);
@@ -1553,8 +1628,8 @@ function subpackageCustom_typeOnButtonDel(parent_id,package_type){
 }
 
 function calculate_medPriceQuantity_Custom(){
-    var selectedoption=$("#mainpackage_type_select").val()
-    quantity_mainpackage= $('#main_quantity_input').val()
+    var selectedoption=$("#mainpackage_type_select").val();
+    quantity_mainpackage= $('#main_quantity_input').val();
     purchaseprice=$('#main_priceperpack_input').val();
     amount=$("#main_ml_quant_input").val();
     var sublevel_customtemplist=[]
@@ -1577,11 +1652,18 @@ function calculate_medPriceQuantity_Custom(){
     mlinonebottle=amount;
     totalpurchaserate=purchaseprice;
     priceofonebottle=totalpurchaserate/noofbottles;
+    priceofonebottle=Math.round(priceofonebottle)
     console.log("sublevel_customtemplist[2]",sublevel_customtemplist[0][2])
     mlinoneminibottle=parseInt(sublevel_customtemplist[0][2])
+    
     noofdespbottleinonebottle=mlinonebottle/mlinoneminibottle;
+    noofdespbottleinonebottle=Math.round(noofdespbottleinonebottle)
+    
     totaldespbottle=noofdespbottleinonebottle*noofbottles;
+    totaldespbottle=Math.round(totaldespbottle);
+    
     priceofonedespbottle=totalpurchaserate/totaldespbottle;
+    priceofonedespbottle=Math.round(priceofonedespbottle);
     console.log("noofbottles",noofbottles);
     console.log("mlinonebottle",mlinonebottle);
     console.log("totalpurchaserate",totalpurchaserate);
@@ -1687,12 +1769,15 @@ function addMedicineToDespStockForm(){
     retrieveMedicineType();
     retrieveMedicineNames();
     retrieveMedicineGenDataFromStock();
-    // $("#med_in_stock").remove();
-    // $("#med_in_temp_stock").remove();
+   
     console.log("medicine_batch_in_stock_list---",medicine_batch_in_stock_list)
 
     if (inactive_datatable!==undefined ){
         inactive_datatable.destroy();
+    }
+    if (medstck_datatable!==undefined){
+        alert(",l,l")
+        medstck_datatable.destroy();
     }
     
     $('#main_page_content').empty();
@@ -2065,11 +2150,17 @@ function SaveToDespStock(){
     var batch_no=$("#batchno_input").val();
     var noofboxes=$("#noofboxes_input").val();
     var noofpieces=$("#noofpieces_input").val();
-    if($("#noofstrips_input").length){
-        var noofstrips=$("#noofstrips_input").val();
-    }else{
-        var noofstrips=0;
+    var noofstrips=$("#noofstrips_input").val();
+    console.log("noofstrips--",noofstrips)
+
+    if(noofstrips==="" || noofstrips===undefined ){
+        noofstrips=0;
     }
+    // if($("#noofstrips_input").length){
+    //     var noofstrips=$("#noofstrips_input").val();
+    // }else{
+    //     var noofstrips=0;
+    // }
 
     
     console.log("med_name",med_name)

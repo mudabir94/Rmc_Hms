@@ -2881,10 +2881,7 @@ function retrievePatientInfoInCreateBill(pat_name,contact_no,cnic_no,id){
                 templist.push(patient_dict[pat]['email']);
                 datatable_list.push(templist)
             }
-            console.log("patient_dict",patient_dict[patient_id_selected]);
-            console.log(datatable_list);
             empdict=JSON.parse(data['empdict']);
-            console.log("empdict",empdict)
             createPatientDetailsHtmlInCreateBill();
         },
     }); 
@@ -3254,9 +3251,9 @@ var col1=$("#desp-med-qty-form")
                 col2_sub_sub_row2.append(input);
             sub_sub_row2.append(col1_sub_sub_row2);
             sub_sub_row2.append(col2_sub_sub_row2);
-            var strip_stored=dspstck_dict[despid]['strip_stored'];
-            console.log("strip_stored",strip_stored);
-            if (strip_stored!=="N/A" ){
+            var strip_unit=dspstck_dict[despid]['strip_unit'];
+            console.log("strip_unit-->",strip_unit);
+            if (strip_unit!=="-" ){
             var sub_sub_row3=$("<div class='row'></div>");
                 var col1_sub_sub_row3=$("<div class='col-md-4'></div>");
                     var label=$("<label>Total Strips</label>")
@@ -3286,9 +3283,11 @@ var col1=$("#desp-med-qty-form")
             sub_sub_row5.append(col2_sub_sub_row5);
         sub_col.append(sub_sub_row1);
         sub_col.append(sub_sub_row2);
-        if (strip_stored!=null){
-        sub_col.append(sub_sub_row3);
+
+        if (strip_unit!=="-" ){
+            sub_col.append(sub_sub_row3);
         }
+
         sub_col.append(sub_sub_row4);
         sub_col.append(sub_sub_row5);
 
@@ -3296,6 +3295,8 @@ var col1=$("#desp-med-qty-form")
 col1.append(sub_row);
 }
 function addMedicineToPatientBill(){
+    no_strips="false"
+
     var box_wanted=$("#boxes_stored").val();
     console.log("Boxes wanted ",box_wanted)
     if (box_wanted===''){
@@ -3310,10 +3311,16 @@ function addMedicineToPatientBill(){
     }
     $("#pieces_stored").val("");
     var strips_wanted=$("#strips_stored").val();
-    if (strips_wanted==='' || strips_wanted===undefined ){
+    console.log("STRIPS",strips_wanted)
+    if (strips_wanted==='' ){
         strips_wanted="0"
     }
+    
     $("#strips_stored").val("");
+    if (strips_wanted=="0" && pieces_wanted=="0" && box_wanted=="0"){
+        alert("ss")
+        return;
+    }
     dspstck_dict={}
     despmed_datatable.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
         var data = this.data();
@@ -3321,14 +3328,14 @@ function addMedicineToPatientBill(){
         strips_stored=data[3];
         meddatadict['name']=data[1];
         meddatadict['boxes_stored']=data[2];
-        if (data[3]=="N/A"){
-            strips_stored="0";
-        }
+        // if (data[3]=="N/A"){
+        //     strips_stored="-";
+        // }
         meddatadict['strip_stored']=strips_stored;
         meddatadict['piece_stored']=data[4];
         meddatadict['price_unit']=data[5];
 
-        dspstck_dict[parseInt(data[0])]=meddatadict
+        dspstck_dict[parseInt(data[0])]=meddatadict;
     } );
     console.log("dspstck_dict",dspstck_dict)
     pbr_dict={}
@@ -3355,6 +3362,13 @@ function addMedicineToPatientBill(){
     } );
     console.log("pbr_dict",pbr_dict);
     console.log("Patient Id", patientid);
+    if (strips_wanted===undefined){
+        no_strips="true";
+        strips_wanted="0";
+
+    }
+    console.log("okokok",strips_wanted)
+    console.log("asdasdmkamdkasmd",strips_wanted)
     $.ajax({
         type: 'GET',
         dataType: "json",
@@ -3363,6 +3377,7 @@ function addMedicineToPatientBill(){
             'patientid':parseInt(patientid),
             "pieces_wanted":pieces_wanted,
             'boxes_wanted':box_wanted,
+            "no_strips":no_strips,
             "strips_wanted":strips_wanted,
             "despStckDict":JSON.stringify(dspstck_dict),
             "pbr_dict":JSON.stringify(pbr_dict),
@@ -3424,11 +3439,12 @@ function SaveAndPrintBill(){
     dspstck_dict={}
     despmed_datatable.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
         var data = this.data();
-        strips_stored=0
         var meddatadict={}
         meddatadict['name']=data[1];
         meddatadict['boxes_stored']=data[2];
-        if (data[3]==null){
+        strips_stored=data[3]
+
+        if (data[3]=="N/A"){
             strips_stored=0
         }
         meddatadict['strip_stored']=strips_stored;
@@ -3447,9 +3463,10 @@ function SaveAndPrintBill(){
         tempdict['patientid']=data[2];
 
         tempdict['boxes']=data[4];
-        if (data[5]==null){
-            strips_stored=0
-        }
+        strips_stored=data[5];
+        // if (data[5]==null){
+        //     strips_stored=0
+        // }
         tempdict['strips']=strips_stored;
         tempdict['pieces']=data[6];
         tempdict['priceperpiece']=data[7];
@@ -3469,8 +3486,8 @@ function SaveAndPrintBill(){
     var totalamount_input=$('#totalamount_input').val();
     var discountamount_input=$('#discountamount_input').val();
 
-
-    var invoice_pos=$("<div id='invoice-POS'></div>");
+    $("#invoice-POS").empty();
+    var invoice_pos=$("#invoice-POS");
     
         var center=$("<center id='top'></center>")
             var div_logo=$("<div class='logo'></div>");
@@ -3583,11 +3600,11 @@ function SaveAndPrintBill(){
     // var restorepage = $('#patient_dash_first_div').html();
     $('#patient_dash_first_div').hide();
     var printcontent = $(invoice_pos).clone();
-    $('#recipet_div').empty().html(printcontent);
+    // $('#recipet_div').empty().html(printcontent);
   
     window.print();
-    // $('#patient_dash_first_div').show();
-    // $('#recipet_div').empty();
+    $('#patient_dash_first_div').show();
+    $('#invoice-POS').empty();
    
 
 
@@ -3703,20 +3720,20 @@ function createRowDivFiveBill(){
                                         var c2=$("<div class='col-md-3'></div>")
                                         var c3=$("<div class='col-md-6'></div>")
                                         
-                                            var doctor=$("<label for='doctor_label' class='custom_label_css'>Doctor</label>");
-                                        c1.append(doctor)
+                                        //     var doctor=$("<label for='doctor_label' class='custom_label_css'>Doctor</label>");
+                                        // c1.append(doctor)
         
-                                            var select=$("<select id='selecteddoctor' class='form-control'></select>");
-                                                var option=$("<option selected='selected' value='--'>--</option>");
-                                            $(select).append(option);
+                                        //     var select=$("<select id='selecteddoctor' class='form-control'></select>");
+                                        //         var option=$("<option selected='selected' value='--'>--</option>");
+                                        //     $(select).append(option);
         
                                             
-                                            for (var key in empdict){
-                                                var option=$("<option id="+key+"_doc-opt value="+key+">"+empdict[key]+"</option>");
-                                                $(select).append(option);
+                                        //     for (var key in empdict){
+                                        //         var option=$("<option id="+key+"_doc-opt value="+key+">"+empdict[key]+"</option>");
+                                        //         $(select).append(option);
 
-                                            }
-                                        c2.append(select);
+                                        //     }
+                                        // c2.append(select);
                                             var print_button=$("<button id='save_print_bill' onclick='SaveAndPrintBill()'>Save And Print</button>")
                                         c3.append(print_button)
 
