@@ -261,6 +261,7 @@ class tempDespensoryStock(models.Model):
     status=models.CharField(max_length=45,null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
     update_at = models.DateTimeField(auto_now_add=True, blank=True)
+    batch_no=models.IntegerField( null=True, blank=True)
     # def __str__(self):
     #     return str(self.id)
     class Meta:

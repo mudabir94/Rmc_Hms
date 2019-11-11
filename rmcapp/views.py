@@ -1913,6 +1913,12 @@ def savePatientBill(request):
             despObj.piece_stored=despStckDict[id]['piece_stored']
             if despStckDict[id]['boxes_stored'] ==0 and despStckDict[id]['piece_stored']==0:
                 despObj.status='Used'
+                try:
+                    tempDespObjs=tempDespensoryStock.objects.filter(medicine=despObj.medicine)
+                    
+
+                except:
+                    pass
             despObj.save()
         for medname in pbr_dict:
             despid=int(pbr_dict[medname]['despid'])
@@ -2728,7 +2734,7 @@ def updateInvoice(request):
         invoice_dict=request.GET.get("invoice_dict")
         invoice_dict=json.loads(invoice_dict)
 
-        presObj=patPrescriptionBill.objects.get(id=pres)
+        presObj=patPrescriptionBill.objects.get(pres=pres)
         print("presObj1234", presObj)
         presObj.net_total=pres_dict['pres_total']
         presObj.status=pres_dict['pres_status']
