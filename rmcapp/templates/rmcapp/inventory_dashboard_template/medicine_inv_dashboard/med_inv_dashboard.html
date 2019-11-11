@@ -36,8 +36,7 @@
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
  
     <script src="{% static 'rmcapp/mainhomepage_static/js/MedicineInvJs/medicine_inv_js_one.js' %}"></script>
-    <script src="{% static 'rmcapp/mainhomepage_static/js/MedicineInvJs/procSurgForm.js' %}"></script>
-    <script src="{% static 'rmcapp/mainhomepage_static/js/MedicineInvJs/room_ward_form.js' %}"></script>
+    
 
 
 
@@ -121,48 +120,32 @@
             </div>
           </li>
           <li class="sidebar-dropdown">
-                <a href="#">
-                  <i class="fa fa-tachometer-alt"></i>
-                  <span>Forms</span>
-                  <!-- <span class="badge badge-pill badge-warning">New</span> -->
-                </a>
-                <div class="sidebar-submenu">
-                  <ul>
-                      <li>
-                          <a href="#" onclick="mainDashBoard()">Medicine Dashboard 
-                            <!-- <span class="badge badge-pill badge-success">Pro</span> -->
-                          </a>
-                        </li>
-                    <li>
-                      <a href="#" onclick="addMedicineForm()">Add New Medicine 
+            <a href="#">
+              <i class="fa fa-tachometer-alt"></i>
+              <span>Forms</span>
+              <!-- <span class="badge badge-pill badge-warning">New</span> -->
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                  <li>
+                      <a href="#" onclick="mainDashBoard()">Medicine Dashboard 
                         <!-- <span class="badge badge-pill badge-success">Pro</span> -->
                       </a>
                     </li>
-                    <li>
-                      <a href="#" onclick="addMedicineToWhStockFrom()">Add Medicine To Stock</a>
-                    </li>
-                    <li>
-                      <a href="#" onclick="addMedicineToDespStockForm()">Add Medicine To Dispensory</a>
-                    </li>
-                    <li>
-                      <a href="#" onclick="addProcSurgForm()">Add Procedures/Surgery</a>
-                    </li>
-                    <li>
-                      <a href="#" onclick="updateProcSurgForm()">Update Procedures/Surgery</a>
-                    </li>
-                    <li>
-                      <a href="#" onclick="addRoomWardForm()">Add Room/Ward</a>
-                    </li>
-                    <li>
-                      <a href="#" onclick="updateRoomWardForm()">Update Room/Ward</a>
-                    </li>                      
-                  </ul>
-                </div>
-              </li>
-         
-       
-         
-        
+                <li>
+                  <a href="#" onclick="addMedicineForm()">Add New Medicine 
+                    <!-- <span class="badge badge-pill badge-success">Pro</span> -->
+                  </a>
+                </li>
+                <li>
+                  <a href="#" onclick="addMedicineToWhStockFrom()">Add Medicine To Stock</a>
+                </li>
+                <li>
+                  <a href="#" onclick="addMedicineToDespStockForm()">Add Medicine To Dispensory</a>
+                </li>                    
+              </ul>
+            </div>
+          </li>
         </ul>
       </div>
       <!-- sidebar-menu  -->

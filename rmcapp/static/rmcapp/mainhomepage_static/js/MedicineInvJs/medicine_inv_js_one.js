@@ -125,117 +125,69 @@ function addMedicineForm(){
     $(main_row_div).append(main_col_div);
     $(main_row_div).append(main_col2_div);
 
-    var row_div_one=$("<div class='row'></div>");
-    var package_info_row_div=$("<div class='row'></div>");
-    var row_div_three=$("<div class='row'></div>");
-    var row_div_four=$("<div class='row'></div>");
+        var row_div_one=$("<div class='row'></div>");
+        var package_info_row_div=$("<div class='row'></div>");
+        var row_div_four=$("<div class='row'></div>");
 
-    col_one__row_div_one=$("<div class='col-md-4'></div>");
-    row_div_one__col_one__row_div_one=$("<div class='row'></div>");
-    $(col_one__row_div_one).append(row_div_one__col_one__row_div_one);
-    col_one__row_div_one__col_one__row_div_one=$("<div class='col-md-4 '><label>Medicine</label></div>");
-    
-    col_two__row_div_one__col_one__row_div_one=$("<div class='col-md-8' onfocusout='focusOut_medicineNameAddMedForm($(this))'id='med_name_input_div'><input type='text' id='med_name_input' class='form-control'></input></div>");
+            col_one__row_div_one=$("<div class='col-md-6'></div>");
+            row_div_one__col_one__row_div_one=$("<div class='row'></div>");
+            $(col_one__row_div_one).append(row_div_one__col_one__row_div_one);
+            col_one__row_div_one__col_one__row_div_one=$("<div class='col-md-4' style=' padding-top:10px'><label>Medicine</label></div>");
+            
+            col_two__row_div_one__col_one__row_div_one=$("<div class='col-md-6' style=' padding-top:10px' onfocusout='focusOut_medicineNameAddMedForm($(this))'id='med_name_input_div'><input type='text' id='med_name_input' class='form-control'></input></div>");
 
-    $(row_div_one__col_one__row_div_one).append(col_one__row_div_one__col_one__row_div_one);
-    $(row_div_one__col_one__row_div_one).append(col_two__row_div_one__col_one__row_div_one);
+            $(row_div_one__col_one__row_div_one).append(col_one__row_div_one__col_one__row_div_one);
+            $(row_div_one__col_one__row_div_one).append(col_two__row_div_one__col_one__row_div_one);
 
-   
-   
-    col_two__row_div_one=$("<div class='col-md-4'></div>");
-    row_div_one__col_two__row_div_one=$("<div class='row'></div>");
-    $(col_two__row_div_one).append(row_div_one__col_two__row_div_one);
-    col_one__row_div_one__col_two__row_div_one=$("<div class='col-md-6 '><label>Medicine Type</label></div>");
-    var select=$("<select id='med_type_sel' class='form-control'></select>");
-    var option=$("<option selected='selected' id="+medicine_type_list[0]+"-opt value="+medicine_type_list[0]+">"+medicine_type_list[0]+"</option>");
-    $(select).append(option);
+            col_two__row_div_one=$("<div class='col-md-6' style=' padding-top:10px'></div>");
+            row_div_one__col_two__row_div_one=$("<div class='row'></div>");
+            $(col_two__row_div_one).append(row_div_one__col_two__row_div_one);
+            col_one__row_div_one__col_two__row_div_one=$("<div class='col-md-4' style=' padding-top:10px'><label class='float-right'>Medicine Type</label></div>");
+                
+                var select=$("<select id='med_type_sel' class='form-control'></select>");
+                    var option=$("<option selected='selected' id="+medicine_type_list[0]+"-opt value="+medicine_type_list[0]+">"+medicine_type_list[0]+"</option>");
+                        $(select).append(option);
 
-    for (var i=1;i<=medicine_type_list.length;i++){
-        if (medicine_type_list[i]!==undefined){
-            var option=$("<option id="+medicine_type_list[i]+"-opt value="+medicine_type_list[i]+">"+medicine_type_list[i]+"</option>");
-            $(select).append(option);
-        }
-    }
-    col_two__row_div_one__col_two__row_div_one=$("<div class='col-md-6 '></div>");
-    $(col_two__row_div_one__col_two__row_div_one).append(select)
-    $(row_div_one__col_two__row_div_one).append(col_one__row_div_one__col_two__row_div_one);
-    $(row_div_one__col_two__row_div_one).append(col_two__row_div_one__col_two__row_div_one);
-   
-    
-    col_three__row_div_one=$("<div class='col-md-4'></div>");
+                            for (var i=1;i<=medicine_type_list.length;i++){
+                                if (medicine_type_list[i]!==undefined){
+                                    var option=$("<option id="+medicine_type_list[i]+"-opt value="+medicine_type_list[i]+">"+medicine_type_list[i]+"</option>");
+                                    $(select).append(option);
+                                }
+                            }
+            col_two__row_div_one__col_two__row_div_one=$("<div class='col-md-4 '></div>");
+            $(col_two__row_div_one__col_two__row_div_one).append(select)
+            $(row_div_one__col_two__row_div_one).append(col_one__row_div_one__col_two__row_div_one);
+            $(row_div_one__col_two__row_div_one).append(col_two__row_div_one__col_two__row_div_one);
+        
+            $(row_div_one).append(col_one__row_div_one);
+            $(row_div_one).append(col_two__row_div_one);
+        
+            // Html of row 2 starting. 
+            
+            col_one__package_info_row_div=$("<div class='col-md-2' style=' padding-top:10px'></div>");
+            p__col_one__package_info_row_div=$("<label >Medicine Details</label>");
+            col_one__package_info_row_div.append(p__col_one__package_info_row_div);
+            col_two__package_info_row_div=$("<div class='col-md-8' style=' padding-top:10px'></div>");
+            p__col_two__package_info_row_div=$("<input type='textarea' class='form-control' id='med_details'></input>");
+            col_two__package_info_row_div.append(p__col_two__package_info_row_div);
+            package_info_row_div.append(col_one__package_info_row_div)
+            package_info_row_div.append(col_two__package_info_row_div)
 
-    $(row_div_one).append(col_one__row_div_one);
+            // HTML of row2 completed
 
-    $(row_div_one).append(col_two__row_div_one);
+            col_one__row_div_four=$("<div class='col-md-2 offset-md-2'></div>");
+                    save_btn_label=$("<button class='btn btn-success fa fa-save' style='width:inherit' onclick='saveMedicineToDb()'>  Save</button>");
+                col_one__row_div_four.append(save_btn_label);
+            row_div_four.append(col_one__row_div_four)
 
-    $(row_div_one).append(col_three__row_div_one);
-
-
-
-    // Html of row one completed. 
-    // <--------------------------------------------------------->
-  
-
-
-
-    // Html of row 2 starting. 
-      
-    col_one__package_info_row_div=$("<div class='col-md-2'></div>");
-    p__col_one__package_info_row_div=$("<label>Medicine Details</label>");
-    col_one__package_info_row_div.append(p__col_one__package_info_row_div);
-    col_two__package_info_row_div=$("<div class='col-md-6'></div>");
-    p__col_two__package_info_row_div=$("<input type='textarea' class='form-control' id='med_details'></input>");
-    col_two__package_info_row_div.append(p__col_two__package_info_row_div);
-    col_three__package_info_row_div=$("<div class='col-md-4'></div>");
-    package_info_row_div.append(col_one__package_info_row_div)
-    package_info_row_div.append(col_two__package_info_row_div)
-    package_info_row_div.append(col_three__package_info_row_div)
-
-    // HTML of row2 completed
-    // <----------------------------------------------------------->
-
-
-    // Html of row 3 starting. 
-    col_one__row_div_three=$("<div class='col-md-2'></div>");
-    col_two__row_div_three=$("<div class='col-md-6'></div>");
-    
-    col_three__row_div_three=$("<div class='col-md-4'></div>");
-    row_div_three.append(col_one__row_div_three)
-    row_div_three.append(col_two__row_div_three)
-    row_div_three.append(col_three__row_div_three)
-
-    // HTML of row 3 completed
-    // <----------------------------------------------------------->
-
-    // Html of row 4 starting. 
-    col_one__row_div_four=$("<div class='col-md-4'></div>");
-    col_two__row_div_four=$("<div class='col-md-4'></div>");
-    
-    col_three__row_div_four=$("<div class='col-md-4'></div>");
-    p__col_one__row_div_four=$("<button class='btn btn-success' onclick='saveMedicineToDb()'>Save</button>");
-    col_two__row_div_four.append(p__col_one__row_div_four);
-    row_div_four.append(col_one__row_div_four)
-    row_div_four.append(col_two__row_div_four)
-    row_div_four.append(col_three__row_div_four)
-
-    // HTML of row 4 completed
-    // <----------------------------------------------------------->
-
-
+            var table=$('<table id="med_table"  class="display"></table>')
+        $(main_col2_div).append(table)
 
     $(main_col_div).append(row_div_one)
-    $(main_col_div).append("<hr>")
-
     $(main_col_div).append(package_info_row_div)
-    $(main_col_div).append(row_div_three);
     $(main_col_div).append("<hr>")
     $(main_col_div).append(row_div_four);
-    $(main_col_div).append("<hr>")
 
-    var row_two__col_one__row_div_one=$("<div class='row' style='background: cornsilk;padding-left: 60px;'></div>");
-        var table=$('<table id="med_table"  class="display" style= "width:100%"></table>')
-    row_two__col_one__row_div_one.append(table)
-    $(main_col2_div).append(row_two__col_one__row_div_one)
     medicineDataTableGenerator(medicine_name_type_list)
 
 }
@@ -325,17 +277,12 @@ function sendAjaxReqToSaveMedicineToDb(medicine_name,selected_type,med_details){
             medicine_name_type_list=JSON.parse(JSON.stringify(data['medicine_name_type_list']))
             console.log("PPPPPPPPP",medicine_name_type_list)
             addMedicineForm();
-            // med_table_datatable.destroy();
-            // $("#med_table").remove();
-            // medicineDataTableGenerator(medicine_name_type_list)
-
-
         },
     });
 }
 function medicineDataTableGenerator(list){
     $(function(){
-        $('#med_table').append('<caption style="color: black;font-weight: bold; ;caption-side: top;text-align: center;">Regestered Medicines</caption>');
+        $('#med_table').append('<caption style="color: black;font-weight: bold; ;caption-side: top;text-align: center;">Registered Medicines</caption>');
         med_table_datatable=$("#med_table").DataTable({
             
             data: list,
@@ -350,9 +297,9 @@ function medicineDataTableGenerator(list){
                 info:false,
                 searching:false,
                 columnDefs: [
-                    { width: 200, targets: 0 }
+                    { width: '100%', targets: '_all' }
                 ],
-                fixedColumns: true,
+                fixedColumns: false,
 
             });
         });
@@ -370,22 +317,23 @@ function addMedicineToWhStockFrom(){
     $("#container-med-dashboard").append("<hr class='custom_hr'>");
     var main_row_div= $("<div class='row is-flex'></div>");
     $("#container-med-dashboard").append(main_row_div);
-    var main_col_div=$("<div class='col-md-6' id='medstorage_main_col_div'></div>");
-    var main_col_div1=$("<div class='col-md-6'></div>");
+    var main_col_div=$("<div class='col-md-8' id='medstorage_main_col_div'></div>");
+    var main_col_div1=$("<div class='col-md-4'></div>");
        
     $(main_row_div).append(main_col_div);
     $(main_row_div).append(main_col_div1);
 
-        var row_div_one=$("<div class='row'></div>");
+        var row_div_one=$("<div class='row' style='padding-bottom:10px'></div>");
             // Medicine Name
             col_one__row_div_one=$("<div class='col-md-4'></div>");
                 row__col_one__row_div_one=$("<div class='row'></div>");
                     colmd1=$("<div class='col-md-5'></div>")
                     colmd2=$("<div class='col-md-7'></div>")
 
-                    med_name_label=$("<label for='medicine_name_tag' class='custom_label_css'>Medicine</label>");
+                        med_name_label=$("<label for='medicine_name_tag' class='custom_label_css'>Medicine Name</label>");
+                        med_name_input=$("<input class='form-control custom_input_css' id='medicine_name_tag' onfocusout='focusOut_medicineName($(this))'>")
+
                     colmd1.append(med_name_label)
-                    med_name_input=$("<input class='form-control' id='medicine_name_tag' onfocusout='focusOut_medicineName($(this))' class='custom_input_css'>")
                     colmd2.append(med_name_input)
                 row__col_one__row_div_one.append(colmd1);
                 row__col_one__row_div_one.append(colmd2);
@@ -394,11 +342,11 @@ function addMedicineToWhStockFrom(){
             // Medicine Type
             col_two__row_div_one=$("<div class='col'></div>");
                 row__col_two__row_div_one=$("<div class='row'></div>");
-                    colmd1=$("<div class='col-md-6'></div>")
-                    colmd2=$("<div class='col-md-6'></div>")
-                    med_type_label=$("<label class='custom_label_css'>Medicine Type:</label>");
+                    colmd1=$("<div class='col-md-5'></div>")
+                    colmd2=$("<div class='col-md-5'></div>")
+                        med_type_label=$("<label class='custom_label_css float-right'>Medicine Type</label>");
                     colmd1.append(med_type_label);
-                    med_type_input=$("<input class='form-control' id='medicine_type_input' class='custom_input_css' ></input>")
+                        med_type_input=$("<input class='form-control custom_input_css' id='medicine_type_input' ></input>")
                     colmd2.append(med_type_input);
 
                 row__col_two__row_div_one.append(colmd1)
@@ -406,24 +354,21 @@ function addMedicineToWhStockFrom(){
 
             col_two__row_div_one.append(row__col_two__row_div_one)
 
-
-            // Batch No
             col_three__row_div_one=$("<div class='col'></div>");
                 row__col_three__row_div_one=$("<div class='row'></div>");
-                    colmd1=$("<div class='col-md-6'></div>")
-                    colmd2=$("<div class='col-md-6'></div>")
-                    batchno_label=$("<label class='custom_label_css'>batchno: </label>");
+                    colmd1=$("<div class='col-md-5'></div>")
+                    colmd2=$("<div class='col-md-3'></div>")
+                    batchno_label=$("<label class='custom_label_css float-right'>batchno</label>");
                     colmd1.append(batchno_label)
-                    batchno_input=$("<input class='form-control' id='batchno_input' onfocus='checkBatchNo()' class='custom_input_css'></input>")
+                    batchno_input=$("<input class='form-control custom_input_css' id='batchno_input' onfocus='checkBatchNo()'></input>")
                     colmd2.append(batchno_input)
                 row__col_three__row_div_one.append(colmd1)
                 row__col_three__row_div_one.append(colmd2)
             col_three__row_div_one.append(row__col_three__row_div_one)
+        
         $(row_div_one).append(col_one__row_div_one);
         $(row_div_one).append(col_two__row_div_one);
         $(row_div_one).append(col_three__row_div_one);
-        // Second Row.. 
-
         
     $(main_col_div).append(row_div_one);
    
@@ -434,15 +379,13 @@ function addMedicineToWhStockFrom(){
 
       $("#main_col_div1").append();
 
-      var row_two__col_one__row_div_one=$("<div class='row datatablePadding'></div>");
-        var table=$('<table id="med_table" class="display" width="100%"></table>')
-      row_two__col_one__row_div_one.append(table)
-      $(main_col_div1).append(row_two__col_one__row_div_one)
+    //   var row_two__col_one__row_div_one=$("<div class='row datatablePadding'></div>");
+        var table=$('<table id="med_table" class="display" style="width: 100%;"></table>')
+    //   row_two__col_one__row_div_one.append(table)
+      $(main_col_div1).append(table)
 
-      var row_one__col_one__row_div_one=$("<div class='row datatablePadding'></div>");
-      var table=$('<table id="med_in_stock" class="display" width="100%"></table>')
-      row_one__col_one__row_div_one.append(table)
-      $(main_col_div1).append(row_one__col_one__row_div_one)
+      var table=$('<table id="med_in_stock" class="display" style="width: 100%;" ></table>')
+      $(main_col_div1).append(table)
       console.log("medicine_name_list",medicine_name_list)
       createMedTStckT();
     //   updateMedTStckT();
@@ -479,14 +422,14 @@ function createMedTStckT(){
                 info:false,
                 searching:false,
                 columnDefs: [
-                    { width: 200, targets: 0 }
+                    { width: '100%', targets: '_all' }
                 ],
-                fixedColumns: true,
+                fixedColumns: false,
 
             });
             $('#med_table tbody').on( 'click', 'tr', function () {
                 if ( $(this).hasClass('selected') ) {
-                    alert("clicked same entry")
+                    // alert("clicked same entry")
                     $(this).removeClass('selected');
                 }
                 else {
@@ -522,7 +465,7 @@ function createMedTStckT(){
             });
             $('#med_in_stock tbody').on( 'click', 'tr', function () {
                 if ( $(this).hasClass('selected') ) {
-                    alert("clicked same entry")
+                    // alert("clicked same entry")
                     $(this).removeClass('selected');
                 }
                 else {
@@ -531,7 +474,6 @@ function createMedTStckT(){
                     $(this).addClass('selected');
                 }
             });
-
     });
 }
 function refreshMedTStckT(){
@@ -650,16 +592,6 @@ function package_typeOnSelect(element){
                 }else if(pack_type==="Box"){
                      subpack_type_list=["Strip","Piece"]
                 }
-                
-                // var subpack_type_list=JSON.parse(JSON.stringify(package_type_list))
-                // // remove all elements before 
-                // var index = subpack_type_list.indexOf(pack_type);
-                // console.log("index",index)
-                // if (index > -1) {
-                //     // subpack_type_list.shift(index); 
-                //     subpack_type_list.splice(0,index+1);
-                // }
-                // console.log("subpack_type_list",subpack_type_list)
                 subPackageHtml(pack_type,sublevel,subpack_type_list);
             }
     }
@@ -669,9 +601,15 @@ function subpackage_typeOnSelect(element){
     var optionSelected = $(element).find("option:selected");
    
     console.log("sublevel_list",sublevel_list)
+    // old version
+    // console.log("parent id ",$(element).parent().parent().parent().attr('id'))
+    // parentid=$(element).parent().parent().parent().attr('id')
+    // new version 
+    
+    console.log("parent id ",$(element).parent().parent().parent().parent().attr('id'))
+    parentid=$(element).parent().parent().parent().parent().attr('id')
 
-    console.log("parent id ",$(element).parent().parent().parent().attr('id'))
-    parentid=$(element).parent().parent().parent().attr('id')
+
     parentid=parentid.split("_");
     console.log("SUBLEVEL retrieved",parentid[3][8]);
     sublevel=parseInt(parentid[3][8])
@@ -770,10 +708,16 @@ function subpackage_typeOnButtonDel(parent_id,package_type){
 function subPackageHtml(pack_type,sublevel,subpack_type_list){
     var medstorage_main_col_div=$('#cont_row_div_two');
             var row_div=$("<div class='row subpacks' id='subpack_row_div_sublevel"+sublevel+"' ></div>");
-                 var col_one__row_div=$("<div class='col'  id='subpack_info_col_div_sublevel"+sublevel+"'></div>");
-                    var row_one__col_one__row_div=$("<div class='row'></div>");
-                            var subpackage_type_label=$("<label>Sub Package Type</label>");
-                            var subpackage_type_select=$("<select onchange='subpackage_typeOnSelect($(this))' id='subpackage_type_select"+pack_type+"' class='form-control'></select>");
+                 var col_one__row_div=$("<div class='col-md-4'  id='subpack_info_col_div_sublevel"+sublevel+"'></div>");
+                   
+                    var row_one__col_one__row_div=$("<div class='row' style='padding-bottom:10px'></div>");
+                        colmd1=$("<div class='col-md-8'></div>")
+                        colmd2=$("<div class='col-md-4'></div>")
+    
+                        var subpackage_type_label=$("<label>Sub Package Type</label>");
+                        colmd1.append(subpackage_type_label);
+
+                        var subpackage_type_select=$("<select onchange='subpackage_typeOnSelect($(this))' id='subpackage_type_select"+pack_type+"' class='form-control'></select>");
                             var option=$("<option value='--'>--</option>");
                             $(subpackage_type_select).append(option);
                             
@@ -785,18 +729,56 @@ function subPackageHtml(pack_type,sublevel,subpack_type_list){
                                     $(subpackage_type_select).append(option);
                                 }
                             }
-
-                    row_one__col_one__row_div.append(subpackage_type_label);
-                    row_one__col_one__row_div.append(subpackage_type_select);
+                        colmd2.append(subpackage_type_select);
+    
+                    row_one__col_one__row_div.append(colmd1)
+                    row_one__col_one__row_div.append(colmd2)
                 col_one__row_div.append(row_one__col_one__row_div)
 
-                    row_two__col_one__row_div=$("<div class='row'></div>");
+                // Old html Version
+                    // var row_one__col_one__row_div=$("<div class='row'></div>");
+
+
+                    //         var subpackage_type_label=$("<label>Sub Package Type</label>");
+                    //         var subpackage_type_select=$("<select onchange='subpackage_typeOnSelect($(this))' id='subpackage_type_select"+pack_type+"' class='form-control'></select>");
+                    //         var option=$("<option value='--'>--</option>");
+                    //         $(subpackage_type_select).append(option);
+                            
+                    //         // Remove package type selected. 
+                    //         for (var i=0;i<=subpack_type_list.length;i++){
+                    //             if (subpack_type_list[i]!==undefined){
+                    //                 console.log("asas",subpack_type_list[i])
+                    //                 var option=$("<option  id="+subpack_type_list[i]+"-opt value="+subpack_type_list[i]+">"+subpack_type_list[i]+"</option>");
+                    //                 $(subpackage_type_select).append(option);
+                    //             }
+                    //         }
+
+                    // row_one__col_one__row_div.append(subpackage_type_label);
+                    // row_one__col_one__row_div.append(subpackage_type_select);
+                // col_one__row_div.append(row_one__col_one__row_div)
+                
+                // old version
+                //     row_two__col_one__row_div=$("<div class='row'></div>");
+                //         quantity_subpackage_type_label=$("<label>Quantity:</label>");
+                //         quantity_subpackage_type_input=$("<input class='form-control' type='number'  step='1.00' min='1' id='sublevel"+sublevel+"' name='sublevel_input'></input>");
+                    
+                //     row_two__col_one__row_div.append(quantity_subpackage_type_label);
+                //     row_two__col_one__row_div.append(quantity_subpackage_type_input);
+                // col_one__row_div.append(row_two__col_one__row_div)
+                // new version
+                row_two__col_one__row_div=$("<div class='row' style='padding-bottom:10px'></div>");
+                    var colmd1=$("<div class='col-md-8'></div>")
+                    var colmd2=$("<div class='col-md-4'></div>")
+
                         quantity_subpackage_type_label=$("<label>Quantity:</label>");
                         quantity_subpackage_type_input=$("<input class='form-control' type='number'  step='1.00' min='1' id='sublevel"+sublevel+"' name='sublevel_input'></input>");
-                    
-                    row_two__col_one__row_div.append(quantity_subpackage_type_label);
-                    row_two__col_one__row_div.append(quantity_subpackage_type_input);
-                col_one__row_div.append(row_two__col_one__row_div)
+                    colmd1.append(quantity_subpackage_type_label)
+                    colmd2.append(quantity_subpackage_type_input)
+
+                row_two__col_one__row_div.append(colmd1);
+                row_two__col_one__row_div.append(colmd2);
+            col_one__row_div.append(row_two__col_one__row_div)
+
 
 
                 //     row_three__col_one__row_div=$("<div class='row'></div>");
@@ -806,7 +788,7 @@ function subPackageHtml(pack_type,sublevel,subpack_type_list){
                 //     row_three__col_one__row_div.append(priceperpackage_input)
                 // col_one__row_div.append(row_three__col_one__row_div)
 
-            var col_two__row_div=$("<div class='col'><button onclick='deleteSubPackdiv($(this))'>Delete</button></div>");
+            var col_two__row_div=$("<div ><button id='delBtn' class='fa fa-times-circle' onclick='deleteSubPackdiv($(this))'></button></div>");
             var col_three__row_div=$("<div class='col'></div>");
             row_div.append(col_one__row_div);
             row_div.append(col_two__row_div);
@@ -819,8 +801,12 @@ function subPackageHtml(pack_type,sublevel,subpack_type_list){
 }
 
 function deleteSubPackdiv(element){
-    console.log($(element).parent().parent().attr('id'));
-    var parent_id=$(element).parent().parent().attr('id');
+    // old version
+    // console.log($(element).parent().parent().attr('id'));
+    // var parent_id=$(element).parent().parent().attr('id');
+    // new version 
+    console.log($(element).parent().parent().parent().attr('id'));
+    var parent_id=$(element).parent().parent().parent().attr('id');
     console.log($('#subpack_row_div_sublevel1 option:selected').val());
     var package_type=$('#subpack_row_div_sublevel1 option:selected').val()
 
@@ -841,6 +827,12 @@ function calculateFunc(){
     quantity_mainpackage= $('#main_quantity_input').val()
     purchaseprice=$('#main_priceperpack_input').val();
     var sublev=[]
+    $("#calc_res_info_form").css({
+        border:'none',
+    })
+    $("#calc_res_info_form").css({
+        border: '1px solid',
+    })
     sublevel_data=$("[id^=subpack_row_div_sublevel]").map(
     function(){
         var selectedoption=$(this).find('select').val()
@@ -865,18 +857,24 @@ function calculateFunc(){
         $('#calc_res_info_form').empty();
             var container=$('<div class="container-left" id="container_sublevels"> </div>');
                 var row=$("<div class='row' id='row_sublevels'></div>");
-                    var row_div_one=$("<div class='row' id='sublevelsmainrow_"+selectedoption+"'></div>");
-                        var col_one__row_div=$("<div class='col-md-12'></div>");
-                            row1_col_one__row_div=$("<div class='row'></div>");
-                                col__row1_col_one__row_div=$("<div class='col-md-12'></div>");
-                                    priceofonepack_label=$("<label id='"+selectedoption+"_unit-label' >price of one"+selectedoption +":</label>");
-                                    priceofonepack_input=$("<input id='"+selectedoption+"_unit-price' value="+priceperpack+"  disabled></input>");
-                                col__row1_col_one__row_div.append(priceofonepack_label)
-                                col__row1_col_one__row_div.append(priceofonepack_input)
-                            row1_col_one__row_div.append(col__row1_col_one__row_div);
-                        col_one__row_div.append(row1_col_one__row_div)
-                    row_div_one.append(col_one__row_div);
-                row.append(row_div_one)
+                    var col=$("<div class='col-md-12' id='row_sublevels_cols'></div>");
+                    
+                        var row_div_zero=$("<div class='row' id='sublevelsmainrow_"+selectedoption+"'></div>");
+                            var col_one__row_div_zero=$("<div class='col-md-12'></div>");
+                                row0_col_one__row_div_zero=$("<div class='row'></div>");
+                                    var colmd1=$("<div class='col-md-9'></div>")
+                                    var colmd2=$("<div class='col-md-2'></div>")                                    
+                                        priceofonepack_label=$("<label id='"+selectedoption+"_unit-label' >Price of one "+selectedoption +":</label>");
+                                        priceofonepack_input=$("<label id='"+selectedoption+"_unit-price' class='form-control-static'>"+priceperpack+"</label>");
+                                    colmd1.append(priceofonepack_label)
+                                    colmd2.append(priceofonepack_input)
+                                row0_col_one__row_div_zero.append(colmd1);
+                                row0_col_one__row_div_zero.append(colmd2);
+
+                            col_one__row_div_zero.append(row0_col_one__row_div_zero)
+                        row_div_zero.append(col_one__row_div_zero);
+                    col.append(row_div_zero)
+                row.append(col)
             container.append(row)    
         $('#calc_res_info_form').append(container)    
         recursiveFunc(list_length);
@@ -898,54 +896,58 @@ function calculateFunc(){
         $('#calc_res_info_form').empty();
         var container=$('<div class="container"></div>');
             var row=$("<div class='row' id='row_sublevels'></div>");
-                var row_div_one=$("<div class='row'  id='sublevelsmainrow_"+selectedoption+"'></div>");
-                    var col_one__row_div=$("<div class='col-md-12'></div>");
-                        var row1_col_one__row_div=$("<div class='row'></div>");
-                            var col__row1_col_one__row_div=$("<div class='col-md-12'></div>");
+                var col=$("<div class='col-md-12' id='row_sublevels_cols'></div>");
 
-                                priceofonepack_label=$("<label id='"+selectedoption+"_unit-label' value="+selectedoption+">price of one"+selectedoption +":</label>");
-                                priceofonepack_input=$("<input id='"+selectedoption+"_unit-price' value="+priceperpack+" disabled></input>");
-                            col__row1_col_one__row_div.append(priceofonepack_label)
-                            col__row1_col_one__row_div.append(priceofonepack_input)
-                        row1_col_one__row_div.append(col__row1_col_one__row_div);
-                    col_one__row_div.append(row1_col_one__row_div)
-                row_div_one.append(col_one__row_div);
-                var row_div_two=$("<div class='row' id='sublevelssubrowquantity_Piece'></div>");
-                    var col_one__row_div=$("<div class='col-md-12'></div>");
-                        var row1_col_one__row_div=$("<div class='row'></div>");
-                            var col_row1_col_one__row_div=$("<div class='col-md-12'></div>");
-                                totalnoofpieces_label=$("<label id='Piece_total-label' value='Piece'>total no of Pieces:</label>");
-                                totalnoofpieces_input=$("<input id='Piece_total-quant' value="+totalnoofpieces+" disabled ></input>");
-                            col_row1_col_one__row_div.append(totalnoofpieces_label);
-                            col_row1_col_one__row_div.append(totalnoofpieces_input);
-                        row1_col_one__row_div.append(col_row1_col_one__row_div);
-                    col_one__row_div.append(row1_col_one__row_div)
-                row_div_two.append(col_one__row_div);
-                var row_div_three=$("<div class='row'  id='sublevelssubrowprice_Piece'></div>");
-                    var col_one__row_div=$("<div class='col-md-12'></div>");
-                        var row2_col_one__row_div=$("<div class='row'></div>");
-                            var col_row2_col_one__row_div=$("<div class='col-md-12'></div>");
+                    var row_div_one=$("<div class='row'  id='sublevelsmainrow_"+selectedoption+"'></div>");
+                        var col_one__row_div=$("<div class='col-md-12'></div>");
+                            var row1_col_one__row_div=$("<div class='row'></div>");
+                                var colmd1=$("<div class='col-md-9'></div>")
+                                var colmd2=$("<div class='col-md-2'></div>")
+                                    priceofonepack_label=$("<label id='"+selectedoption+"_unit-label' value="+selectedoption+">Price of one "+selectedoption +":</label>");
+                                    priceofonepack_input=$("<label id='"+selectedoption+"_unit-price' class='form-control-static'>"+priceperpack+"</label>");
+                                colmd1.append(priceofonepack_label)
+                                colmd2.append(priceofonepack_input)
+                            row1_col_one__row_div.append(colmd1);
+                            row1_col_one__row_div.append(colmd2);
+                        col_one__row_div.append(row1_col_one__row_div)
+                    row_div_one.append(col_one__row_div);
 
-                                var prieceofonepiece_label=$("<label id='Piece_unit-label ' value='Piece' >Price of Piece:</label>");
-                                var prieceofonepiece_input=$("<input id='Piece_unit-price' value="+priceof1piece+" disabled ></input>");
-                            col_row2_col_one__row_div.append(prieceofonepiece_label);
-                            col_row2_col_one__row_div.append(prieceofonepiece_input);
-                        row2_col_one__row_div.append(col_row2_col_one__row_div);
-                    col_one__row_div.append(row2_col_one__row_div)
-                row_div_three.append(col_one__row_div);
+                    var row_div_two=$("<div class='row' id='sublevelssubrowquantity_Piece'></div>");
+                        var col_one__row_div=$("<div class='col-md-12'></div>");
+                            var row1_col_one__row_div=$("<div class='row'></div>");
+                                var colmd1=$("<div class='col-md-9'></div>")
+                                var colmd2=$("<div class='col-md-2'></div>") 
+                                    totalnoofpieces_label=$("<label id='Piece_total-label' value='Piece'>Total no of Pieces:</label>");
+                                    totalnoofpieces_input=$("<label id='Piece_total-quant' class= 'form-control-static'>"+totalnoofpieces+"</label>");
+                                colmd1.append(totalnoofpieces_label);
+                                colmd2.append(totalnoofpieces_input);
+                            row1_col_one__row_div.append(colmd1);
+                            row1_col_one__row_div.append(colmd2);
+                        col_one__row_div.append(row1_col_one__row_div)
+                    row_div_two.append(col_one__row_div);
 
-                
-            row.append(row_div_one);
-            row.append(row_div_two);
-            row.append(row_div_three);
+                    var row_div_three=$("<div class='row'  id='sublevelssubrowprice_Piece'></div>");
+                        var col_one__row_div=$("<div class='col-md-12'></div>");
+                            var row2_col_one__row_div=$("<div class='row'></div>");
+                                var colmd1=$("<div class='col-md-9'></div>")
+                                var colmd2=$("<div class='col-md-2'></div>") 
+                                    var prieceofonepiece_label=$("<label id='Piece_unit-label ' value='Piece' >Price of Piece:</label>");
+                                    var prieceofonepiece_input=$("<label id='Piece_unit-price' class='form-control-static'>"+priceof1piece+" </label>");
+                                colmd1.append(prieceofonepiece_label);
+                                colmd2.append(prieceofonepiece_input);
+                            row2_col_one__row_div.append(colmd1);
+                            row2_col_one__row_div.append(colmd2);
+                        col_one__row_div.append(row2_col_one__row_div)
+                    row_div_three.append(col_one__row_div);
 
+                    
+            col.append(row_div_one);
+            col.append(row_div_two);
+            col.append(row_div_three);
+        row.append(col)
 
         container.append(row)
-        $('#calc_res_info_form').append(container);
-
-
-
-        
+        $('#calc_res_info_form').append(container);  
     }
 }
 
@@ -965,38 +967,43 @@ function recursiveFunc(list_length){
             console.log("Total no of strips",totalofsublevel1);
             // price of 1 piece 
             priceof1sublevel=priceperpack/quantityofsublevel
+            priceof1sublevel=Math.round(priceof1sublevel)
             console.log("price of one strip",priceof1sublevel)
             var temp_list=[sublevel,package_name,quantityofsublevel,priceof1sublevel];
             previous_sublevel_data.push(temp_list);
             sublevel_data.shift();
-
+            var row_sublevels_cols= $("#row_sublevels_cols")
            
             var row_div_one=$("<div class='row' id='sublevelssubrowquantity_"+package_name+"'></div>");
                     var col_one__row_div=$("<div class='col-md-12'></div>");
                         var row1_col_one__row_div=$("<div class='row'></div>");
-                            var col_row1_col_one__row_div=$("<div class='col-md-12'></div>");
-                                var totalofsublevel_label=$("<label id='"+package_name+"_total-label' >total no of"+package_name +":</label>");
-                                var totalofsublevel_input=$("<input id='"+package_name+"_total-quant'  value="+totalofsublevel1+" disabled></input>");
-                            col_row1_col_one__row_div.append(totalofsublevel_label)
-                            col_row1_col_one__row_div.append(totalofsublevel_input)
-                        row1_col_one__row_div.append(col_row1_col_one__row_div);
+                            var colmd1=$("<div class='col-md-9'></div>")
+                            var colmd2=$("<div class='col-md-2'></div>")                                
+                                var totalofsublevel_label=$("<label id='"+package_name+"_total-label' >Total no of "+package_name +":</label>");
+                                var totalofsublevel_input=$("<label id='"+package_name+"_total-quant' class='form-control-static'>"+totalofsublevel1+" </label>");
+                                colmd1.append(totalofsublevel_label)
+                                colmd2.append(totalofsublevel_input)
+                        row1_col_one__row_div.append(colmd1);
+                        row1_col_one__row_div.append(colmd2);
                     col_one__row_div.append(row1_col_one__row_div)
             row_div_one.append(col_one__row_div);
 
             var row_div_two=$("<div class='row' id='sublevelssubrowprice_"+package_name+"'></div>");
                 var col_one__row_div=$("<div class='col-md-12'></div>");
                     var row2_col_one__row_div=$("<div class='row'></div>");
-                        var col_row2_col_one__row_div=$("<div class='col-md-12'></div>");
-                            var priceofonepack_label=$("<label id='"+package_name+"_unit-label'>price  of one"+package_name +":</label>");
-                            var priceofonepack_input=$("<input id='"+package_name+"_unit-price' value="+priceof1sublevel+" disabled ></input>");
-                        col_row2_col_one__row_div.append(priceofonepack_label)
-                        col_row2_col_one__row_div.append(priceofonepack_input)
-                        row2_col_one__row_div.append(col_row2_col_one__row_div);
+                        var colmd1=$("<div class='col-md-9'></div>")
+                        var colmd2=$("<div class='col-md-2'></div>")                            
+                            var priceofonepack_label=$("<label id='"+package_name+"_unit-label'>Price of one "+package_name +":</label>");
+                            var priceofonepack_input=$("<label id='"+package_name+"_unit-price' class='form-control-static'>"+priceof1sublevel+"</label>");
+                            colmd1.append(priceofonepack_label)
+                            colmd2.append(priceofonepack_input)
+                        row2_col_one__row_div.append(colmd1);
+                        row2_col_one__row_div.append(colmd2);
                 col_one__row_div.append(row2_col_one__row_div)
             row_div_two.append(col_one__row_div);
 
-        $('#row_sublevels').append(row_div_one);
-        $('#row_sublevels').append(row_div_two);
+        $(row_sublevels_cols).append(row_div_one);
+        $(row_sublevels_cols).append(row_div_two);
 
             
 
@@ -1020,31 +1027,38 @@ function recursiveFunc(list_length){
             temp_list=[sublevel1,package_name1,quant1,price];
             previous_sublevel_data.push(temp_list);
             sublevel_data.shift();
+            
             var row_div_one=$("<div class='row' id='sublevelssubrowquantity_"+package_name1+"'></div>");
-                    var col_one__row_div=$("<div class='col-md-12'></div>");
-                        row1_col_one__row_div=$("<div class='row'></div>");
-                            var col_row1_col_one__row_div=$("<div class='col-md-12'></div>");
-                                var priceofonepack_label=$("<label  id='"+package_name1+"_total-label'  >total no of"+package_name1 +":</label>");
-                                var priceofonepack_input=$("<input  id='"+package_name1+"_total-price'  value="+totalnoofsublevel+" disabled></input>");
-                            col_row1_col_one__row_div.append(priceofonepack_label)
-                            col_row1_col_one__row_div.append(priceofonepack_input)
-                        row1_col_one__row_div.append(col_row1_col_one__row_div);
-                    col_one__row_div.append(row1_col_one__row_div)
+                var col_one__row_div=$("<div class='col-md-12'></div>");
+                    row1_col_one__row_div=$("<div class='row'></div>");
+                        var colmd1=$("<div class='col-md-9'></div>")
+                        var colmd2=$("<div class='col-md-2'></div>")
+                            var priceofonepack_label=$("<label  id='"+package_name1+"_total-label'>Total no of "+package_name1 +":</label>");
+                            var priceofonepack_input=$("<label  id='"+package_name1+"_total-price' class='form-control-static'>"+totalnoofsublevel+"</label>");
+                        colmd1.append(priceofonepack_label)
+                        colmd2.append(priceofonepack_input)
+                    row1_col_one__row_div.append(colmd1);
+                    row1_col_one__row_div.append(colmd2);
+                col_one__row_div.append(row1_col_one__row_div)
             row_div_one.append(col_one__row_div);
+            
             var row_div_two=$("<div class='row' id='sublevelssubrowprice_"+package_name1+"'></div>");
                 var col_one__row_div=$("<div class='col-md-12'></div>");
                     var row2_col_one__row_div=$("<div class='row'></div>");
-                        var col_row2_col_one__row_div=$("<div class='col-md-12'></div>");
-
-                            var priceofonepack_label=$("<label id='"+package_name1+"_unit-label' >price  of one"+package_name1 +":</label>");
-                            var priceofonepack_input=$("<input id='"+package_name1+"_unit-price' value="+price+" disabled></input>");
-                        col_row2_col_one__row_div.append(priceofonepack_label)
-                        col_row2_col_one__row_div.append(priceofonepack_input)
-                        row2_col_one__row_div.append(col_row2_col_one__row_div);
+                        var colmd1=$("<div class='col-md-9'></div>")
+                        var colmd2=$("<div class='col-md-2'></div>")
+                            var priceofonepack_label=$("<label id='"+package_name1+"_unit-label' >Price  of one "+package_name1 +":</label>");
+                            var priceofonepack_input=$("<label id='"+package_name1+"_unit-price' class='form-control-static'>"+price+" </label>");
+                        colmd1.append(priceofonepack_label)
+                        colmd2.append(priceofonepack_input)
+                    row2_col_one__row_div.append(colmd1);
+                    row2_col_one__row_div.append(colmd2);
                 col_one__row_div.append(row2_col_one__row_div)
             row_div_two.append(col_one__row_div);
-        $('#row_sublevels').append(row_div_one);
-        $('#row_sublevels').append(row_div_two);
+
+        $(row_sublevels_cols).append(row_div_one);
+        $(row_sublevels_cols).append(row_div_two);
+    
 
         }
         recursive_count=recursive_count+1;
@@ -1203,73 +1217,90 @@ function addRowDivTwo()
 
     var row_div_two=$("<div class='row' id='row_div_two_box'></div>");
 
-    var container_row_div_two=$("<div class='container-left' id='cont_row_div_two'></div>")
+    var container_row_div_two=$("<div class='col-md-12' id='cont_row_div_two'></div>")
 
     var package_info_row_div=$("<div class='row' id='package_info_row_div'></div>");
-        col_one__package_info_row_div=$("<div class='col'  id='package_info_col_div'></div>");
+        col_one__package_info_row_div=$("<div class='col-md-4'  id='package_info_col_div'></div>");
 
             row_one__col_one__package_info_row_div=$("<div class='row'></div>");
-                mainpackage_type_label=$("<label>Main Package Type</label>");
-                var mainpackage_type_select=$("<select class='form-control' onchange='package_typeOnSelect($(this))' id='mainpackage_type_select'></select>");
-                var option=$("<option value='--'>--</option>");
-                $(mainpackage_type_select).append(option);
-                // if medicine type is syrup then populate with this data 
-                package_type_list=['Box'];
-                // else use defualt package type --package_type_list=['Box','Strip','piece'];
-                for (var i=0;i<=package_type_list.length;i++){
-                    if (package_type_list[i]!==undefined){
-                        console.log("asas",package_type_list[i])
-                        var option=$("<option  id="+package_type_list[i]+"-opt value="+package_type_list[i]+">"+package_type_list[i]+"</option>");
-                        $(mainpackage_type_select).append(option);
-                    }
-                }
+                var col_one__row_one__col_one__package_info_row_div=$("<div class='col-md-12'></div>");
+                    row__col_one__row_one__col_one__package_info_row_div=$("<div class='row' style='padding-bottom:10px'></div>");
+                        colmd1=$("<div class='col-md-8'></div>")
+                        colmd2=$("<div class='col-md-4'></div>")
+                        
+                            mainpackage_type_label=$("<label>Main Package Type</label>");
+                        colmd1.append(mainpackage_type_label)
 
-            row_one__col_one__package_info_row_div.append(mainpackage_type_label);
-            row_one__col_one__package_info_row_div.append(mainpackage_type_select);
+                            var mainpackage_type_select=$("<select class='form-control' onchange='package_typeOnSelect($(this))' id='mainpackage_type_select'></select>");
+                                var option=$("<option value='--'>--</option>");
+                            $(mainpackage_type_select).append(option);
+                            // if medicine type is syrup then populate with this data 
+                            package_type_list=['Box'];
+                            // else use defualt package type --package_type_list=['Box','Strip','piece'];
+                            for (var i=0;i<=package_type_list.length;i++){
+                                if (package_type_list[i]!==undefined){
+                                    console.log("asas",package_type_list[i])
+                                    var option=$("<option  id="+package_type_list[i]+"-opt value="+package_type_list[i]+">"+package_type_list[i]+"</option>");
+                                    $(mainpackage_type_select).append(option);
+                                }
+                            }
+                        colmd2.append(mainpackage_type_select);
+
+                    row__col_one__row_one__col_one__package_info_row_div.append(colmd1);
+                    row__col_one__row_one__col_one__package_info_row_div.append(colmd2);
+                col_one__row_one__col_one__package_info_row_div.append(row__col_one__row_one__col_one__package_info_row_div);
+
+            row_one__col_one__package_info_row_div.append(col_one__row_one__col_one__package_info_row_div);
 
             row_two__col_one__package_info_row_div=$("<div class='row'></div>");
-                quantity_mainpackage_type_label=$("<label>Quantity:</label>");
-                quantity_mainpackage_type_input=$("<input class='form-control' type='number'  step='1.00' min='1'  id='main_quantity_input' name='main_quantity_input'></input>");
-            
-            row_two__col_one__package_info_row_div.append(quantity_mainpackage_type_label);
-            row_two__col_one__package_info_row_div.append(quantity_mainpackage_type_input);
+                var col_one__row_two__col_one__package_info_row_div=$("<div class='col-md-12'></div>");
+                    row__col_one__row_two__col_one__package_info_row_div=$("<div class='row' style='padding-bottom:10px'></div>");
+                        colmd1=$("<div class='col-md-8'></div>")
+                        colmd2=$("<div class='col-md-4'></div>")
+
+                            quantity_mainpackage_type_label=$("<label>Quantity</label>");
+                        colmd1.append(quantity_mainpackage_type_label)
+                            quantity_mainpackage_type_input=$("<input class='form-control' type='number'  step='1.00' min='1'  id='main_quantity_input' name='main_quantity_input'></input>")
+                        colmd2.append(quantity_mainpackage_type_input);
+
+                    row__col_one__row_two__col_one__package_info_row_div.append(colmd1);
+                    row__col_one__row_two__col_one__package_info_row_div.append(colmd2);
+                col_one__row_two__col_one__package_info_row_div.append(row__col_one__row_two__col_one__package_info_row_div);
+            row_two__col_one__package_info_row_div.append(col_one__row_two__col_one__package_info_row_div);
 
             row_three__col_one__package_info_row_div=$("<div class='row'></div>");
-                priceperpackage_label=$("<label>Total Purchase Rate:</label>");
-                priceperpackage_input=$("<input class='form-control' type='number' step='50.00' min='0'  id='main_priceperpack_input' name='main_priceperpack_input'></input>");
-            row_three__col_one__package_info_row_div.append(priceperpackage_label)
-            row_three__col_one__package_info_row_div.append(priceperpackage_input)
+                var col_one__row_three__col_one__package_info_row_div=$("<div class='col-md-12'></div>");
+                    row__row_three__col_one__package_info_row_div=$("<div class='row' style='padding-bottom:10px'></div>");
+                        colmd1=$("<div class='col-md-8'></div>")
+                        colmd2=$("<div class='col-md-4'></div>")
 
+                            priceperpackage_label=$("<label>Purchase Rate</label>");
+                        colmd1.append(priceperpackage_label)
+                            priceperpackage_input=$("<input class='form-control' type='number'  step='50.00' min='0'  id='main_priceperpack_input' name='main_priceperpack_input'></input>")
+                        colmd2.append(priceperpackage_input);
 
+                    row__row_three__col_one__package_info_row_div.append(colmd1);
+                    row__row_three__col_one__package_info_row_div.append(colmd2);
+                    col_one__row_three__col_one__package_info_row_div.append(row__row_three__col_one__package_info_row_div);
+            row_three__col_one__package_info_row_div.append(col_one__row_three__col_one__package_info_row_div)
 
 
         col_one__package_info_row_div.append(row_one__col_one__package_info_row_div);
-        col_one__package_info_row_div.append("<hr>");
-
         col_one__package_info_row_div.append(row_two__col_one__package_info_row_div);
-        col_one__package_info_row_div.append("<hr>");
-
         col_one__package_info_row_div.append(row_three__col_one__package_info_row_div);
-        col_one__package_info_row_div.append("<hr>");
 
 
-        col_two__package_info_row_div=$("<div class='col' id='calc_res_info_form'></div>");
-        col_three__package_info_row_div=$("<div class='col' id='calculate_button_div'></div>");
-            row_div=$('<div class="row"></div>');
-            var calculate_button=$('<button class="btn btn-primary" onclick="calculateFunc()">Calculate</button>')
-            row_div.append(calculate_button);
-        col_three__package_info_row_div.append(row_div);
+        col_two__package_info_row_div=$("<div class='col-md-4 offset-md-2' id='calc_res_info_form'></div>");
+
 
     
     package_info_row_div.append(col_one__package_info_row_div)
     package_info_row_div.append(col_two__package_info_row_div)
-    package_info_row_div.append(col_three__package_info_row_div)
     container_row_div_two.append(package_info_row_div);
 
     row_div_two.append(container_row_div_two);
 
     $(main_col_div).append(row_div_two);
-    $(main_col_div).append("<hr class='custom_hr'>");
 
 }
 function addRowDivThree(){
@@ -1277,24 +1308,21 @@ function addRowDivThree(){
 
     var row_div_three=$("<div class='row' id='dates_row_div'></div>");
     
-        col_one__row_div_three=$("<div class='col-md-5'></div>");
-                row_one__col_one__row_div_three=$("<div class='row'></div>");
-                    manufact_date_label=$("<label for='from'>Manufactoring Date</label>");
-                    manufact_input=$("<input class='form-control' id='manudatepicker'>");
-                    // manufact_input=$("<input  id='from'>");
+        col_one__row_div_three=$("<div class='col-md-3'></div>");
+            row_one__col_one__row_div_three=$("<div class='row'></div>");
+                manufact_date_label=$("<label for='from'>Manufactoring Date</label>");
+                manufact_input=$("<input class='form-control' id='manudatepicker'>");
+            row_one__col_one__row_div_three.append(manufact_date_label);
+            row_one__col_one__row_div_three.append(manufact_input);
+        col_one__row_div_three.append(row_one__col_one__row_div_three);
 
-                row_one__col_one__row_div_three.append(manufact_date_label);
-                row_one__col_one__row_div_three.append(manufact_input);
-            col_one__row_div_three.append(row_one__col_one__row_div_three);
-            col_two__row_div_three=$("<div class='col-md-5'></div>");
-                row_one__col_two__row_div_three=$("<div class='row'></div>");
-                    exp_date_label=$("<label for='to'>Exp Date</label>");
-                    exp_date_input=$("<input class='form-control' id='expdatepicker'>");
-                    // exp_date_input=$("<input id='to'>");
-
-                     row_one__col_two__row_div_three.append(exp_date_label);
-                row_one__col_two__row_div_three.append(exp_date_input);
-            col_two__row_div_three.append(row_one__col_two__row_div_three);
+        col_two__row_div_three=$("<div class='col-md-3 offset-md-1'></div>");
+            row_one__col_two__row_div_three=$("<div class='row'></div>");
+                exp_date_label=$("<label for='to'>Expiration  Date</label>");
+                exp_date_input=$("<input class='form-control' id='expdatepicker'>");
+            row_one__col_two__row_div_three.append(exp_date_label);
+            row_one__col_two__row_div_three.append(exp_date_input);
+        col_two__row_div_three.append(row_one__col_two__row_div_three);
     
         row_div_three.append(col_one__row_div_three);
         row_div_three.append(col_two__row_div_three);
@@ -1344,97 +1372,113 @@ function addRowDivFour(){
 
     var row_div_four=$("<div class='row' id='row_div_four_save_box'></div>");
 
-        col_one__row_div_four=$("<div class='col-md-12'></div>");
-            col_two__row_div_four=$("<div class='col-md-12'></div>");
-            col_three__row_div_four=$("<div class='col-md-12'></div>");
-                row_one__col_three__row_div_four=$("<div class='row'></div>");
-                    savetomedstrgForm_button=$('<button class="btn btn-success btn-sm btn-block" onclick="saveMedicineToWhStock()">Save</button>')
-                row_one__col_three__row_div_four.append(savetomedstrgForm_button);
-            col_three__row_div_four.append(row_one__col_three__row_div_four);
-        row_div_four.append(col_one__row_div_four);
-        row_div_four.append(col_two__row_div_four)
-        row_div_four.append(col_three__row_div_four)
+        var col_two__row_div_four=$("<div class='col-md-12'></div>");
+            var row__col_two__row_div_four=$("<div class='row'></div>");
+                colmd1=$("<div class='col-md-3'></div>")
+                colmd2=$("<div class='col-md-7 offset-1'></div>")                
+
+                    var calculate_button=$('<button class="btn btn-block fa fa-calculator" id="calculate_button_div" onclick="calculateFunc()">  Calculate</button>')
+                colmd1.append(calculate_button)
+
+                    savetomedstrgForm_button=$('<button class="btn btn-success fa fa-save" onclick="saveMedicineToWhStock()" style="width:inherit">  Save</button>')
+                colmd2.append(savetomedstrgForm_button)
+                
+                row__col_two__row_div_four.append(colmd1)
+                row__col_two__row_div_four.append(colmd2)
+        col_two__row_div_four.append(row__col_two__row_div_four)
+    row_div_four.append(col_two__row_div_four)
 
     $(main_col_div).append(row_div_four);
-    $(main_col_div).append("<hr class='custom_hr'>");
+    $(main_col_div).append("<hr class='custom_hr'>")
 
-    
 }
 
 function addRowDivTwoCustomSyrup(){
     var main_col_div=$('#medstorage_main_col_div');
 
     var row_div_two=$("<div class='row' id='row_div_two_bottle'></div>");
-    var container_row_div_two=$("<div class='container-left' id='cont_row_div_two'></div>")
+    var container_row_div_two=$("<div class='col-md-12 container-left' id='cont_row_div_two'></div>")
             var package_info_row_div=$("<div class='row' id='package_info_row_div'></div>");
-            col_one__package_info_row_div=$("<div class='col'  id='package_info_col_div'></div>");
-                row_one__col_one__package_info_row_div=$("<div class='row'></div>");
-                    mainpackage_type_label=$("<label>Main Med Package Type</label>");
-                    var mainpackage_type_select=$("<select class='form-control' onchange='customPackage_typeOnSelect($(this))' id='mainpackage_type_select'></select>");
-                    var option=$("<option value='--'>--</option>");
-                    $(mainpackage_type_select).append(option);
-                    // if medicine type is syrup then populate with this data 
-                    package_type_list=['MainBottle'];
-                    // else use defualt package type --package_type_list=['Box','Strip','piece'];
-                    for (var i=0;i<=package_type_list.length;i++){
-                        if (package_type_list[i]!==undefined){
-                            console.log("asas",package_type_list[i])
-                            var option=$("<option  id="+package_type_list[i]+"-opt value="+package_type_list[i]+">"+package_type_list[i]+"</option>");
-                            $(mainpackage_type_select).append(option);
-                        }
-                    }
-                    row_one__col_one__package_info_row_div.append(mainpackage_type_label);
-                    row_one__col_one__package_info_row_div.append(mainpackage_type_select);
+            var col_one__package_info_row_div=$("<div class='col-md-8'  id='package_info_col_div'></div>");
 
-                    row_two__col_one__package_info_row_div=$("<div class='row main_inputfields_bottle' ></div>");
+                var row_one__col_one__package_info_row_div=$("<div class='row' style='padding-bottom:10px;padding-top: 23px;'></div>");
+                    var colmd1=$("<div class='col-md-6'></div>")
+                    var colmd2=$("<div class='col-md-3'></div>")
+                        mainpackage_type_label=$("<label>Main Med Package Type</label>");
+                        var mainpackage_type_select=$("<select class='form-control' onchange='customPackage_typeOnSelect($(this))' id='mainpackage_type_select'></select>");
+                        var option=$("<option value='--'>--</option>");
+                        $(mainpackage_type_select).append(option);
+                        // if medicine type is syrup then populate with this data 
+                        package_type_list=['MainBottle'];
+                        // else use defualt package type --package_type_list=['Box','Strip','piece'];
+                        for (var i=0;i<=package_type_list.length;i++){
+                            if (package_type_list[i]!==undefined){
+                                console.log("asas",package_type_list[i])
+                                var option=$("<option  id="+package_type_list[i]+"-opt value="+package_type_list[i]+">"+package_type_list[i]+"</option>");
+                                $(mainpackage_type_select).append(option);
+                            }
+                        }
+                    colmd1.append(mainpackage_type_label);
+                    colmd2.append(mainpackage_type_select)
+
+                row_one__col_one__package_info_row_div.append(colmd1);
+                row_one__col_one__package_info_row_div.append(colmd2);
+
+                row_two__col_one__package_info_row_div=$("<div class='row main_inputfields_bottle' style='padding-bottom:10px' ></div>");
+                    var colmd1=$("<div class='col-md-6'></div>")
+                    var colmd2=$("<div class='col-md-3'></div>")
                         ml_quantity_mainpackage_type_label=$("<label>Amount of ml in Main Package(def-Bottle):</label>");
                         ml_quantity_mainpackage_type_input=$("<input class='form-control' type='number'  step='1.00' min='1'  id='main_ml_quant_input' name='main_ml_quant_input'></input>");
-                    
-                    row_two__col_one__package_info_row_div.append(ml_quantity_mainpackage_type_label);
-                    row_two__col_one__package_info_row_div.append(ml_quantity_mainpackage_type_input);
+                    colmd1.append(ml_quantity_mainpackage_type_label);
+                    colmd2.append(ml_quantity_mainpackage_type_input)
+                row_two__col_one__package_info_row_div.append(colmd1);
+                row_two__col_one__package_info_row_div.append(colmd2);
 
-                    row_three__col_one__package_info_row_div=$("<div class='row'></div>");
+                row_three__col_one__package_info_row_div=$("<div class='row' style='padding-bottom:10px'></div>");
+                    var colmd1=$("<div class='col-md-6'></div>")
+                    var colmd2=$("<div class='col-md-3'></div>")
                         priceperpackage_label=$("<label>Total Purchase Rate:</label>");
                         priceperpackage_input=$("<input class='form-control' type='number'  step='50.00' min='0'  id='main_priceperpack_input' name='main_priceperpack_input'></input>");
-                    row_three__col_one__package_info_row_div.append(priceperpackage_label)
-                    row_three__col_one__package_info_row_div.append(priceperpackage_input)
+                    colmd1.append(priceperpackage_label);
+                    colmd2.append(priceperpackage_input)
+                row_three__col_one__package_info_row_div.append(colmd1)
+                row_three__col_one__package_info_row_div.append(colmd2)
 
-                    row_four__col_one__package_info_row_div=$("<div class='row'></div>");
+                row_four__col_one__package_info_row_div=$("<div class='row' style='padding-bottom:10px'></div>");
+                    var colmd1=$("<div class='col-md-6'></div>")
+                    var colmd2=$("<div class='col-md-3'></div>")
                         quantityofpackage_label=$("<label>Quantity of Main Package(def-Bottle) :</label>");
                         quantityofpackage_input=$("<input class='form-control' type='number' step='1.00' min='0'  id='main_quantity_input' name='main_quantity_input'></input>");
-                    row_four__col_one__package_info_row_div.append(quantityofpackage_label)
-                    row_four__col_one__package_info_row_div.append(quantityofpackage_input)
+                    colmd1.append(quantityofpackage_label);
+                    colmd2.append(quantityofpackage_input)
+                row_four__col_one__package_info_row_div.append(colmd1)
+                row_four__col_one__package_info_row_div.append(colmd2)
 
-            col_one__package_info_row_div.append(row_one__col_one__package_info_row_div);
-            col_one__package_info_row_div.append("<hr>");
-    
+            col_one__package_info_row_div.append(row_one__col_one__package_info_row_div);    
             col_one__package_info_row_div.append(row_two__col_one__package_info_row_div);
-            col_one__package_info_row_div.append("<hr>");
-    
             col_one__package_info_row_div.append(row_three__col_one__package_info_row_div);
-            col_one__package_info_row_div.append("<hr>");
-
             col_one__package_info_row_div.append(row_four__col_one__package_info_row_div);
-            col_one__package_info_row_div.append("<hr>");
+            // col_one__package_info_row_div.append("<hr>");
     
     
-            col_two__package_info_row_div=$("<div class='col' id='calc_res_info_form'></div>");
-            col_three__package_info_row_div=$("<div class='col' id='calculate_button_div'></div>");
-                row_div=$('<div class="row"></div>');
-                var calculate_button=$('<button class="btn btn-primary" onclick="calculate_medPriceQuantity_Custom()">Calculate</button>')
-                row_div.append(calculate_button);
-            col_three__package_info_row_div.append(row_div);
+            col_two__package_info_row_div=$("<div class='col-md-4' id='calc_res_info_form'></div>");
+            // old version removed
+            // col_three__package_info_row_div=$("<div class='col' id='calculate_button_div'></div>");
+            //     row_div=$('<div class="row"></div>');
+            //     var calculate_button=$('<button class="btn btn-primary" onclick="calculate_medPriceQuantity_Custom()">Calculate</button>')
+            //     row_div.append(calculate_button);
+            // col_three__package_info_row_div.append(row_div);
         
             
             package_info_row_div.append(col_one__package_info_row_div)
             package_info_row_div.append(col_two__package_info_row_div)
-            package_info_row_div.append(col_three__package_info_row_div)
+            // package_info_row_div.append(col_three__package_info_row_div)
 
         container_row_div_two.append(package_info_row_div);
         row_div_two.append(container_row_div_two);
 
     $(main_col_div).append(row_div_two);
-    $(main_col_div).append("<hr class='custom_hr'>");
+    // $(main_col_div).append("<hr class='custom_hr'>");
 
 
 }
@@ -1442,17 +1486,23 @@ function addRowDivFourCustomSyrup(){
     var main_col_div=$('#medstorage_main_col_div');
 
     var row_div_four=$("<div class='row' id='row_div_four_save_bottle'></div>");
+        var col_one__row_div_four=$("<div class='col-md-12'></div>");
 
-        col_one__row_div_four=$("<div class='col'></div>");
-            col_two__row_div_four=$("<div class='col'></div>");
-            col_three__row_div_four=$("<div class='col'></div>");
-                row_one__col_three__row_div_four=$("<div class='row'></div>");
-                    savetomedstrgForm_button=$('<button class="btn btn-primary" onclick="saveMedicineToWhStock_Bottle()">Save</button>')
-                row_one__col_three__row_div_four.append(savetomedstrgForm_button);
-            col_three__row_div_four.append(row_one__col_three__row_div_four);
-        row_div_four.append(col_one__row_div_four);
-        row_div_four.append(col_two__row_div_four)
-        row_div_four.append(col_three__row_div_four)
+
+            row_one__col_one__row_div_four=$("<div class='row'></div>");
+                var colmd1=$("<div class='col-md-3'></div>")
+                var colmd2=$("<div class='col-md-7 offset-md-1'></div>")
+
+                    var calculate_button=$('<button class="btn fa fa-calculator" style="width:inherit" onclick="calculate_medPriceQuantity_Custom()">  Calculate</button>')
+                    savetomedstrgForm_button=$('<button class="btn btn-success fa fa-save"  style="width:inherit" onclick="saveMedicineToWhStock_Bottle()">  Save</button>')
+
+                colmd1.append(calculate_button);
+                colmd2.append(savetomedstrgForm_button);
+
+            row_one__col_one__row_div_four.append(colmd1)
+            row_one__col_one__row_div_four.append(colmd2)
+        col_one__row_div_four.append(row_one__col_one__row_div_four)
+    row_div_four.append(col_one__row_div_four);
 
     $(main_col_div).append(row_div_four);
     $(main_col_div).append("<hr class='custom_hr'>");
@@ -1550,9 +1600,11 @@ function customPackage_typeOnSelect(element){
 function subPackageCustomHtml(pack_type,sublevel_custom,subpack_customtype_list){
     var medstorage_main_col_div=$('#cont_row_div_two');
         var row_div=$("<div class='row subpacks_custom' id='subpack_custom_row_div_sublevel_custom"+sublevel_custom+"' ></div>");
-            var col_one__row_div=$("<div class='col'  id='subpack_custom_info_col_div_sublevel_custom"+sublevel_custom+"'></div>");
-                var row_one__col_one__row_div=$("<div class='row'></div>");
-                        var subpack_customtype_label=$("<label>Sub Package Type</label>");
+            var col_one__row_div=$("<div class='col-md-8'  id='subpack_custom_info_col_div_sublevel_custom"+sublevel_custom+"'></div>");
+                var row_one__col_one__row_div=$("<div class='row' style='padding-bottom:10px'></div>");
+                    var colmd1=$("<div class='col-md-6'></div>")
+                    var colmd2=$("<div class='col-md-3'></div>");
+                    var subpack_customtype_label=$("<label>Sub Package Type</label>");
                         var subpack_customtype_select=$("<select class='form-control' onchange='subpack_customtypeOnSelect($(this))' id='subpack_customtype_select"+pack_type+"'></select>");
                         var option=$("<option value='--'>--</option>");
                         $(subpack_customtype_select).append(option);
@@ -1565,23 +1617,36 @@ function subPackageCustomHtml(pack_type,sublevel_custom,subpack_customtype_list)
                                 $(subpack_customtype_select).append(option);
                             }
                         }
-                row_one__col_one__row_div.append(subpack_customtype_label);
-                row_one__col_one__row_div.append(subpack_customtype_select);
+                    colmd1.append(subpack_customtype_label)
+                    colmd2.append(subpack_customtype_select)
+
+                row_one__col_one__row_div.append(colmd1);
+                row_one__col_one__row_div.append(colmd2);
+
             col_one__row_div.append(row_one__col_one__row_div)
 
-                row_two__col_one__row_div=$("<div class='row'></div>");
-                    quantity_subpack_customtype_label=$("<label>Capicity of Disp Bottle(ml):</label>"); 
-                    quantity_subpack_customtype_input=$("<input class='form-control' type='number' step='1.00' min='1' id='sublevel"+sublevel_custom+"' name='sublevel_input'></input>");
-                
-                row_two__col_one__row_div.append(quantity_subpack_customtype_label);
-                row_two__col_one__row_div.append(quantity_subpack_customtype_input);
+                var row_two__col_one__row_div=$("<div class='row' style='padding-bottom:10px'></div>");
+                    var colmd1=$("<div class='col-md-6'></div>")
+                    var colmd2=$("<div class='col-md-3'></div>");
+                    var colmd3=$("<div class='col-md-3'></div>");
+
+                        var quantity_subpack_customtype_label=$("<label>Capicity of Disp Bottle(ml):</label>"); 
+                        var quantity_subpack_customtype_input=$("<input class='form-control' type='number' step='1.00' min='1' id='sublevel"+sublevel_custom+"' name='sublevel_input'></input>");
+                        var delete_btn=$("<button class='fa fa-times-circle' id= 'delBtn' onclick='deleteSubPackCustomdiv($(this))'></button>");
+                    colmd1.append(quantity_subpack_customtype_label);
+                    colmd2.append(quantity_subpack_customtype_input)
+                    colmd3.append(delete_btn)
+                row_two__col_one__row_div.append(colmd1);
+                row_two__col_one__row_div.append(colmd2);
+                row_two__col_one__row_div.append(colmd3);
+
             col_one__row_div.append(row_two__col_one__row_div)
             
-            var col_two__row_div=$("<div class='col'><button class='btn' onclick='deleteSubPackCustomdiv($(this))'>Delete</button></div>");
-            var col_three__row_div=$("<div class='col'></div>");
+            // var col_two__row_div=$("<div class='col-md-2'><button class='btn' onclick='deleteSubPackCustomdiv($(this))'>Delete</button></div>");
+            // var col_three__row_div=$("<div class='col-md-2'></div>");
             row_div.append(col_one__row_div);
-            row_div.append(col_two__row_div);
-            row_div.append(col_three__row_div);
+            // row_div.append(col_two__row_div);
+            // row_div.append(col_three__row_div);
 
     
     $(medstorage_main_col_div).append(row_div)
@@ -1592,8 +1657,12 @@ function subpack_customtypeOnSelect(element){
 }
 function deleteSubPackCustomdiv(element){
     console.log("deleteSubPackCustomdiv");
-    console.log($(element).parent().parent().attr('id'));
-    var parent_id=$(element).parent().parent().attr('id');
+    // old ver
+    // console.log($(element).parent().parent().attr('id'));
+    // var parent_id=$(element).parent().parent().attr('id');
+    // new version 
+    console.log($(element).parent().parent().parent().parent().attr('id'));
+    var parent_id=$(element).parent().parent().parent().parent().attr('id');
     console.log($('#subpack_custom_row_div_sublevel_custom1 option:selected').val());
     var package_type=$('#subpack_custom_row_div_sublevel_custom1 option:selected').val()
 
@@ -1633,6 +1702,12 @@ function calculate_medPriceQuantity_Custom(){
     purchaseprice=$('#main_priceperpack_input').val();
     amount=$("#main_ml_quant_input").val();
     var sublevel_customtemplist=[]
+    $("#calc_res_info_form").css({
+        border:'none',
+    })
+    $("#calc_res_info_form").css({
+        border: '1px solid',
+    })
     $("[id^=subpack_custom_row_div_sublevel]").map(
 
     function(){
@@ -1673,92 +1748,116 @@ function calculate_medPriceQuantity_Custom(){
     console.log("totaldespbottle",totaldespbottle);
     console.log("priceofonedespbottle",priceofonedespbottle);
     $('#calc_res_info_form').empty();
-    var container=$('<div class="container-left" id="container_sublevels"> </div>');
+    var container=$('<div class="col-md-12 container-left" id="container_sublevels"> </div>');
         var row=$("<div class='row' id='row_sublevels'></div>");
-        var row_div_one=$("<div class='row' id='sublevelsmainrowquant_"+selectedoption+"'></div>");
-                var col_one__row_div=$("<div class='col-md-12'></div>");
-                    var row1_col_one__row_div=$("<div class='row'></div>");
-                            var col1__row1_col_one__row_div=$("<div class='col-md-12'></div>");
+            var col=$("<div class='col-md-12' id='row_sublevels_cols'></div>");
+            
+                var row_div_one=$("<div class='row' id='sublevelsmainrowquant_"+selectedoption+"'></div>");
+                    var col_one__row_div=$("<div class='col-md-12'></div>");
+                        var row1_col_one__row_div=$("<div class='row'></div>");
+                            colmd1=$("<div class='col-md-9'></div>")
+                            colmd2=$("<div class='col-md-2'></div>")                                
                                 quanttotal_label=$("<label id='"+selectedoption+"_total' >No of Bottles:</label>");
-                                quanttotal_input=$("<input id='"+selectedoption+"_total-quant' value="+noofbottles+"  disabled></input>");
-                            col1__row1_col_one__row_div.append(quanttotal_label)
-                            col1__row1_col_one__row_div.append(quanttotal_input)
-                    row1_col_one__row_div.append(col1__row1_col_one__row_div);
-                col_one__row_div.append(row1_col_one__row_div)
-            row_div_one.append(col_one__row_div);
-        row.append(row_div_one)
-        var row_div_two=$("<div class='row' id='sublevelsmainrowmlunit_"+selectedoption+"'></div>");
-                var col_one__row_div=$("<div class='col-md-12'></div>");
-                    var row1_col_one__row_div=$("<div class='row'></div>");
-                        var col1__row1_col_one__row_div=$("<div class='col-md-12'></div>");
-                            mlperunit_label=$("<label id='"+selectedoption+"_unit' >Ml in 1 Bottle:</label>");
-                            mlperunit_input=$("<input id='"+selectedoption+"_unit-ml' value="+mlinonebottle+"  disabled></input>");
-                        col1__row1_col_one__row_div.append(mlperunit_label)
-                        col1__row1_col_one__row_div.append(mlperunit_input)
-                    row1_col_one__row_div.append(col1__row1_col_one__row_div);
-                col_one__row_div.append(row1_col_one__row_div)
+                                quanttotal_input=$("<label id='"+selectedoption+"_total-quant' class='form-control-static'>"+noofbottles+"</label>");
+                            colmd1.append(quanttotal_label)
+                            colmd2.append(quanttotal_input)
+                        row1_col_one__row_div.append(colmd1)
+                        row1_col_one__row_div.append(colmd2)
+                    col_one__row_div.append(row1_col_one__row_div)
+                row_div_one.append(col_one__row_div);
+
+                var row_div_two=$("<div class='row' id='sublevelsmainrowmlunit_"+selectedoption+"'></div>");
+                    var col_one__row_div=$("<div class='col-md-12'></div>");
+                        var row2_col_one__row_div=$("<div class='row'></div>");
+                            colmd1=$("<div class='col-md-9'></div>")
+                            colmd2=$("<div class='col-md-2'></div>")
+                                mlperunit_label=$("<label id='"+selectedoption+"_unit' >ML in 1 Bottle:</label>");
+                                mlperunit_input=$("<label id='"+selectedoption+"_unit-ml' class='form-control-static'>"+mlinonebottle+"</label>");
+                            colmd1.append(mlperunit_label)
+                            colmd2.append(mlperunit_input)
+                        row2_col_one__row_div.append(colmd1);
+                        row2_col_one__row_div.append(colmd2);
+                    col_one__row_div.append(row2_col_one__row_div)
                 row_div_two.append(col_one__row_div);
-        row.append(row_div_two)
-        var row_div_three=$("<div class='row' id='sublevelsmainrowpriceunit_"+selectedoption+"'></div>");
-            var col_one__row_div=$("<div class='col-md-12'></div>");
-                var row1_col_one__row_div=$("<div class='row'></div>");
-                    var col1__row1_col_one__row_div=$("<div class='col-md-12'></div>");
-                        priceofonepack_label=$("<label id='"+selectedoption+"_unit' >price of one Bottle:</label>");
-                        priceofonepack_input=$("<input id='"+selectedoption+"_unit-price' value="+priceofonebottle+"  disabled></input>");
-                    col1__row1_col_one__row_div.append(priceofonepack_label)
-                    col1__row1_col_one__row_div.append(priceofonepack_input)
-                row1_col_one__row_div.append(col1__row1_col_one__row_div);
-            col_one__row_div.append(row1_col_one__row_div)
-            row_div_three.append(col_one__row_div);
-        row.append(row_div_three)
-        var row_div_four=$("<div class='row' id='sublevelsSubrowquantunit_"+sublevel_customtemplist[0][1]+"'></div>");
-                var col_one__row_div=$("<div class='col-md-12'></div>");
-                    var row1_col_one__row_div=$("<div class='row'></div>");
-                        var col1__row1_col_one__row_div=$("<div class='col-md-12'></div>");
-                            quantperunit_label=$("<label id='"+sublevel_customtemplist[0][1]+"_unit' >No of Dispensory Bottles in 1 Bottle :</label>");
-                            quantperunit_input=$("<input id='"+sublevel_customtemplist[0][1]+"_unit-quant' value="+noofdespbottleinonebottle+"  disabled></input>");
-                        col1__row1_col_one__row_div.append(quantperunit_label)
-                        col1__row1_col_one__row_div.append(quantperunit_input)
-                    row1_col_one__row_div.append(col1__row1_col_one__row_div);
-                col_one__row_div.append(row1_col_one__row_div)
-                row_div_four.append(col_one__row_div);
-        row.append(row_div_four)
-        var row_div_five=$("<div class='row' id='sublevelsSubrowmlunit_"+sublevel_customtemplist[0][1]+"'></div>");
-            var col_one__row_div=$("<div class='col-md-12'></div>");
-                var row1_col_one__row_div=$("<div class='row'></div>");
-                    var col1__row1_col_one__row_div=$("<div class='col-md-12'></div>");
-                        mlperunit_label=$("<label id='"+sublevel_customtemplist[0][1]+"_unit' >Ml in one Dispensory Bottles :</label>");
-                        mlperunit_input=$("<input id='"+sublevel_customtemplist[0][1]+"_unit-ml' value="+mlinoneminibottle+"  disabled></input>");
-                    col1__row1_col_one__row_div.append(mlperunit_label)
-                    col1__row1_col_one__row_div.append(mlperunit_input)
-                row1_col_one__row_div.append(col1__row1_col_one__row_div);
-            col_one__row_div.append(row1_col_one__row_div)
-            row_div_five.append(col_one__row_div);
-        row.append(row_div_five)
-        var row_div_six=$("<div class='row' id='sublevelsSubrowquanttotal_"+sublevel_customtemplist[0][1]+"'></div>");
-            var col_one__row_div=$("<div class='col-md-12'></div>");
-                var row1_col_one__row_div=$("<div class='row'></div>");
-                    var col1__row1_col_one__row_div=$("<div class='col-md-12'></div>");
-                        quantTotal_label=$("<label id='"+sublevel_customtemplist[0][1]+"_total' >Total Dispensory Bottles:</label>");
-                        quantTotal_input=$("<input id='"+sublevel_customtemplist[0][1]+"_total-quant' value="+totaldespbottle+"  disabled></input>");
-                    col1__row1_col_one__row_div.append(quantTotal_label)
-                    col1__row1_col_one__row_div.append(quantTotal_input)
-                row1_col_one__row_div.append(col1__row1_col_one__row_div);
-            col_one__row_div.append(row1_col_one__row_div)
-            row_div_six.append(col_one__row_div);
-        row.append(row_div_six)
-        var row_div_seven=$("<div class='row' id='sublevelsSubrowpriceunit_"+sublevel_customtemplist[0][1]+"'></div>");
-            var col_one__row_div=$("<div class='col-md-12'></div>");
-                var row1_col_one__row_div=$("<div class='row'></div>");
-                    var col1__row1_col_one__row_div=$("<div class='col-md-12'></div>");
-                        priceperunit_label=$("<label id='"+sublevel_customtemplist[0][1]+"_unit' >Price of one Dispensory Bottle:</label>");
-                        priceperunit_input=$("<input id='"+sublevel_customtemplist[0][1]+"_unit-price' value="+priceofonedespbottle+"  disabled></input>");
-                    col1__row1_col_one__row_div.append(priceperunit_label)
-                    col1__row1_col_one__row_div.append(priceperunit_input)
-                row1_col_one__row_div.append(col1__row1_col_one__row_div);
-            col_one__row_div.append(row1_col_one__row_div)
-            row_div_seven.append(col_one__row_div);
-        row.append(row_div_seven)
+
+                var row_div_three=$("<div class='row' id='sublevelsmainrowpriceunit_"+selectedoption+"'></div>");
+                    var col_one__row_div=$("<div class='col-md-12'></div>");
+                        var row3_col_one__row_div=$("<div class='row'></div>");
+                            colmd1=$("<div class='col-md-9'></div>")
+                            colmd2=$("<div class='col-md-2'></div>")
+                                priceofonepack_label=$("<label id='"+selectedoption+"_unit' >Price of one Bottle:</label>");
+                                priceofonepack_input=$("<label id='"+selectedoption+"_unit-price' class='form-control-static'>"+priceofonebottle+"</label>");
+                            colmd1.append(priceofonepack_label)
+                            colmd2.append(priceofonepack_input)
+                        row3_col_one__row_div.append(colmd1);
+                        row3_col_one__row_div.append(colmd2);
+                    col_one__row_div.append(row3_col_one__row_div)
+                row_div_three.append(col_one__row_div);
+
+                var row_div_four=$("<div class='row' id='sublevelsSubrowquantunit_"+sublevel_customtemplist[0][1]+"'></div>");
+                        var col_one__row_div=$("<div class='col-md-12'></div>");
+                            var row4_col_one__row_div=$("<div class='row'></div>");
+                                colmd1=$("<div class='col-md-9'></div>")
+                                colmd2=$("<div class='col-md-2'></div>")
+                                    quantperunit_label=$("<label id='"+sublevel_customtemplist[0][1]+"_unit' >No of Dispensory Bottles in 1 Bottle :</label>");
+                                    quantperunit_input=$("<label id='"+sublevel_customtemplist[0][1]+"_unit-quant' class='form-control-static'>"+noofdespbottleinonebottle+"</label>");
+                                colmd1.append(quantperunit_label)
+                                colmd2.append(quantperunit_input)
+                            row4_col_one__row_div.append(colmd1);
+                            row4_col_one__row_div.append(colmd2);
+                        col_one__row_div.append(row4_col_one__row_div)
+                    row_div_four.append(col_one__row_div);
+
+                var row_div_five=$("<div class='row' id='sublevelsSubrowmlunit_"+sublevel_customtemplist[0][1]+"'></div>");
+                    var col_one__row_div=$("<div class='col-md-12'></div>");
+                        var row5_col_one__row_div=$("<div class='row'></div>");
+                            colmd1=$("<div class='col-md-9'></div>")
+                            colmd2=$("<div class='col-md-2'></div>")                            
+                                mlperunit_label=$("<label id='"+sublevel_customtemplist[0][1]+"_unit' >Ml in one Dispensory Bottles :</label>");
+                                mlperunit_input=$("<label id='"+sublevel_customtemplist[0][1]+"_unit-ml' class='form-control-static'>"+mlinoneminibottle+"</label>");
+                            colmd1.append(mlperunit_label)
+                            colmd2.append(mlperunit_input)
+                        row5_col_one__row_div.append(colmd1);
+                        row5_col_one__row_div.append(colmd2);
+                    col_one__row_div.append(row5_col_one__row_div)
+                row_div_five.append(col_one__row_div);
+
+                var row_div_six=$("<div class='row' id='sublevelsSubrowquanttotal_"+sublevel_customtemplist[0][1]+"'></div>");
+                    var col_one__row_div=$("<div class='col-md-12'></div>");
+                        var row6_col_one__row_div=$("<div class='row'></div>");
+                            colmd1=$("<div class='col-md-9'></div>")
+                            colmd2=$("<div class='col-md-2'></div>")
+                                quantTotal_label=$("<label id='"+sublevel_customtemplist[0][1]+"_total' >Total Dispensory Bottles:</label>");
+                                quantTotal_input=$("<label id='"+sublevel_customtemplist[0][1]+"_total-quant' class='form-control-static'>"+totaldespbottle+"</label>");
+                            colmd1.append(quantTotal_label)
+                            colmd2.append(quantTotal_input)
+                        row6_col_one__row_div.append(colmd1);
+                        row6_col_one__row_div.append(colmd2);
+                    col_one__row_div.append(row6_col_one__row_div)
+                row_div_six.append(col_one__row_div);
+
+                var row_div_seven=$("<div class='row' id='sublevelsSubrowpriceunit_"+sublevel_customtemplist[0][1]+"'></div>");
+                    var col_one__row_div=$("<div class='col-md-12'></div>");
+                        var row7_col_one__row_div=$("<div class='row'></div>");
+                            colmd1=$("<div class='col-md-9'></div>")
+                            colmd2=$("<div class='col-md-2'></div>")                            
+                                priceperunit_label=$("<label id='"+sublevel_customtemplist[0][1]+"_unit' >Price of one Dispensory Bottle:</label>");
+                                priceperunit_input=$("<label id='"+sublevel_customtemplist[0][1]+"_unit-price' class='form-control-static'>"+priceofonedespbottle+"</label>");
+                            colmd1.append(priceperunit_label)
+                            colmd2.append(priceperunit_input)
+                        row7_col_one__row_div.append(colmd1);
+                        row7_col_one__row_div.append(colmd2);
+                    col_one__row_div.append(row7_col_one__row_div)
+                row_div_seven.append(col_one__row_div);
+
+            col.append(row_div_one)
+            col.append(row_div_two)
+            col.append(row_div_three)
+            col.append(row_div_four)
+            col.append(row_div_five)
+            col.append(row_div_six)
+            col.append(row_div_seven)
+        row.append(col)
     container.append(row)    
     $('#calc_res_info_form').append(container);
 
@@ -1815,7 +1914,7 @@ function addMedicineToDespStockForm(){
 
         $('#med_in_stock tbody').on( 'click', 'tr', function () {
             if ( $(this).hasClass('selected') ) {
-                alert("clicked same entry")
+                // alert("clicked same entry")
 
                 $(this).removeClass('selected');
             }

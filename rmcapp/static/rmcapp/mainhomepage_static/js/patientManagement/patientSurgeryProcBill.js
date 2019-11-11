@@ -19,32 +19,28 @@ function surgeryProcFrom(){
        
     $(main_row_div).append(main_col_div);
 
-    var row_div_one=$("<div class='row' id='row_div_one'></div>");
-        var col_one__row_div_one=$("<div class='col-md-4'></div>");
-        row__col_one__row_div_one=$("<div class='row'></div>");
-            colmd1=$("<div class='col-md-4'></div>")
-            colmd2=$("<div class='col-md-6'></div>")
-            
-            colmd3=$("<div class='col-md-2'></div>")
+        var row_div_one=$("<div class='row' id='row_div_one'></div>");
+            var col_one__row_div_one=$("<div class='col-md-4'></div>");
+            row__col_one__row_div_one=$("<div class='row'></div>");
+                colmd1=$("<div class='col-md-4'></div>")
+                colmd2=$("<div class='col-md-6'></div>")
+                colmd3=$("<div class='col-md-2'></div>")
 
+                    pat_id_label=$("<label class='custom_label_css'>Prescription id</label>");
+                    pat_id_input=$("<input class='form-control' id='search_prescription_id' class='custom_input_css'>")
+                    var search_button=$('<button onclick="searchPrescription()">Search</button>');
+                
+                colmd1.append(pat_id_label)
+                colmd2.append(pat_id_input);
+                colmd3.append(search_button);
 
-            pat_id_label=$("<label class='custom_label_css'>Prescription id</label>");
-            colmd1.append(pat_id_label)
+            row__col_one__row_div_one.append(colmd1);
+            row__col_one__row_div_one.append(colmd2);
+            row__col_one__row_div_one.append(colmd3);
 
-            pat_id_input=$("<input class='form-control' id='search_prescription_id' class='custom_input_css'>")
-
-            colmd2.append(pat_id_input);
-            var search_button=$('<button onclick="searchPrescription()">Search</button>');
-            colmd3.append(search_button);
-
-
-        row__col_one__row_div_one.append(colmd1);
-        row__col_one__row_div_one.append(colmd2);
-        row__col_one__row_div_one.append(colmd3);
-
-        col_one__row_div_one.append(row__col_one__row_div_one);
-    row_div_one.append(col_one__row_div_one);
-$(main_col_div).append(row_div_one);
+            col_one__row_div_one.append(row__col_one__row_div_one);
+        row_div_one.append(col_one__row_div_one);
+    $(main_col_div).append(row_div_one);
 
 }
 
@@ -299,8 +295,6 @@ function createProcForm(grandparent_id,num,addbutton_flag){
                 sub_proc_col_1.append(row2__sel_proc);
                 sub_proc_col_1.append(row3__sel_proc);
 
-
-
     $(grandparent).append(sub_proc_col_1)
 }
 function createSurgForm(grandparent_id,num,addbutton_flag){
@@ -381,9 +375,6 @@ function createSurgForm(grandparent_id,num,addbutton_flag){
                 sub_surg_col_1.append(row6__surplus_charges);
 
                 sub_surg_col_1.append(row5);
-
-
-
 
     $(grandparent).append(sub_surg_col_1)
 }
@@ -670,13 +661,9 @@ surg_proc_bill_final_div.append(h3);
 surg_proc_bill_final_div.append(label);
 
 
-
 $("#bill_div").append(surg_bill_final_div);
 $("#bill_div").append(proc_bill_final_div);
 $("#bill_div").append(surg_proc_bill_final_div);
-
-
-
 
 }
 function printSurgProcBill(){
@@ -686,6 +673,7 @@ function printSurgProcBill(){
     $('#surg_proc_bill_div').empty().html(printcontent);
     
     window.print();
+    window.close();
     
     $('#surg_proc_bill_div').empty();
     $('#patient_dash_first_div').show();
