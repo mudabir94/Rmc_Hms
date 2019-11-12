@@ -121,7 +121,7 @@ function proc_surgery_OnSelect(element){
                         row__col_one__row_three=$("<div class='row'></div>");
                         colmd1=$("<div class='col-md-4 offset-md-5'></div>")
 
-                        addprocedure_button=$('<button class="btn btn-success btn-sm btn-block" onclick="addProcedure()">Add Procedure</button>')
+                        addprocedure_button=$('<button class="btn btn-success btn-block fa fa-plus-circle" onclick="addProcedure()">  Add Procedure</button>')
                         colmd1.append(addprocedure_button)
 
                         row__col_one__row_three.append(colmd1);
@@ -187,7 +187,7 @@ function proc_surgery_OnSelect(element){
                             row__col_one__row_three=$("<div class='row'></div>");
                             colmd1=$("<div class='col-md-4 offset-md-5'></div>")
 
-                            addSurgery_button=$('<button class="btn btn-success btn-sm btn-block" onclick="addSurgery()">Add Surgery</button>')
+                            addSurgery_button=$('<button class="btn btn-success btn-block fa fa-plus-circle" onclick="addSurgery()">  Add Surgery</button>')
                             colmd1.append(addSurgery_button)
 
                             row__col_one__row_three.append(colmd1);
@@ -516,10 +516,10 @@ function createProcDataTable(){
                             var subrow_three=$("<div class='row'></div>")
                                 var col_one__subrow_three=$("<div class='col-md-12'></div>");
                                     var row__col_one__subrow_three=$("<div class='row'></div>");
-                                        var colmd1=$("<div class='col-md-6 offset-md-2' offset-md-1></div>")
+                                        var colmd1=$("<div class='col-md-3 offset-md-3' offset-md-1></div>")
                         
                                         
-                                            var update_button=$('<button class="btn btn-success btn-sm btn-block" onclick="updateProcData()">Update Procedure</button>')
+                                            var update_button=$('<button class="btn btn-success btn-block fa fa-save" onclick="updateProcData()">  Update Procedure</button>')
                                             colmd1.append(update_button);
                                 
                                         row__col_one__subrow_three.append(colmd1);
@@ -610,10 +610,10 @@ function createSurgDataTable(){
                             var subrow_three=$("<div class='row'></div>")
                                 var col_one__subrow_three=$("<div class='col-md-12'></div>");
                                     var row__col_one__subrow_three=$("<div class='row'></div>");
-                                        var colmd1=$("<div class='col-md-6 offset-md-2'></div>")
+                                        var colmd1=$("<div class='col-md-3 offset-md-3'></div>")
                         
                                         
-                                            var update_button=$('<button class="btn btn-success btn-sm btn-block" onclick="updateSurgData()">Update Surgery</button>')
+                                            var update_button=$('<button class="btn btn-success btn-block fa fa-save" onclick="updateSurgData()">  Update Surgery</button>')
                                             colmd1.append(update_button);
                                 
                                         row__col_one__subrow_three.append(colmd1);

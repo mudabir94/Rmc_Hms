@@ -103,79 +103,79 @@ function addPatient(){
             $(row_div_one).append(col_two__row_div_one);
 
         var row_div_two=$("<div class='row' style='padding-top: 15px; padding-bottom: 15px;'></div>");
-                // Gender
-                    var col_one__row_div_two=$("<div class='col-md-6'></div>");
-                        var row__col_one__row_div_two=$("<div class='row'></div>");
-                            colmd1=$("<div class='col-md-2'></div>")
-                            colmd2=$("<div class='col-md-2 offset-md-2'></div>")
-                            colmd3=$("<div class='col-md-1'></div>")
-                            colmd4=$("<div class='col-md-3'></div>")
+            // Gender
+            var col_one__row_div_two=$("<div class='col-md-6'></div>");
+                var row__col_one__row_div_two=$("<div class='row'></div>");
+                    colmd1=$("<div class='col-md-2'></div>")
+                    colmd2=$("<div class='col-md-2 offset-md-2'></div>")
+                    colmd3=$("<div class='col-md-1'></div>")
+                    colmd4=$("<div class='col-md-3'></div>")
 
-                            pat_name_label=$("<label class='custom_label_css font-weight-bold'>Gender</label>");
-                            colmd1.append(pat_name_label)
-                            pat_name_input=$("<input class='form-control' id='gender_select' class='custom_input_css'>")
-                            colmd2.append(pat_name_input)
-                // DOB
-                            dob_label=$("<label class='custom_label_css font-weight-bold'>DOB </label>");
-                            colmd3.append(dob_label);
-                            dob_input=$("<input class='form-control custom_input_css' id='dob_input'></input>")
-                            colmd4.append(dob_input);
+                    pat_name_label=$("<label class='custom_label_css font-weight-bold'>Gender</label>");
+                    colmd1.append(pat_name_label)
+                    pat_name_input=$("<input class='form-control' id='gender_select' class='custom_input_css'>")
+                    colmd2.append(pat_name_input)
+        // DOB
+                    dob_label=$("<label class='custom_label_css font-weight-bold'>DOB </label>");
+                    colmd3.append(dob_label);
+                    dob_input=$("<input class='form-control custom_input_css' id='dob_input'></input>")
+                    colmd4.append(dob_input);
 
-                        row__col_one__row_div_two.append(colmd1);
-                        row__col_one__row_div_two.append(colmd2);
-                        row__col_one__row_div_two.append(colmd3);
-                        row__col_one__row_div_two.append(colmd4);
+                row__col_one__row_div_two.append(colmd1);
+                row__col_one__row_div_two.append(colmd2);
+                row__col_one__row_div_two.append(colmd3);
+                row__col_one__row_div_two.append(colmd4);
 
-                    col_one__row_div_two.append(row__col_one__row_div_two);
+            col_one__row_div_two.append(row__col_one__row_div_two);
 
-                // CNIC
-                var col_two__row_div_two=$("<div class='col-md-6'></div>");
-                    var row__col_two__row_div_two=$("<div class='row'></div>");
-                        colmd1=$("<div class='col-md-4'></div>")
-                        colmd2=$("<div class='col-md-6'></div>")
+            // CNIC
+            var col_two__row_div_two=$("<div class='col-md-6'></div>");
+                var row__col_two__row_div_two=$("<div class='row'></div>");
+                    colmd1=$("<div class='col-md-4'></div>")
+                    colmd2=$("<div class='col-md-6'></div>")
 
-                        cnic_label=$("<label class='custom_label_css font-weight-bold'>CNIC/Guardian CNIC</label>");
-                        colmd1.append(cnic_label);
-                        cnic_input=$("<input class='form-control' id='cnic_input' class='custom_input_css' placeholder='xxxxx-xxxxxxx-x' ></input>")
-                        colmd2.append(cnic_input);
+                    cnic_label=$("<label class='custom_label_css font-weight-bold'>CNIC/Guardian CNIC</label>");
+                    colmd1.append(cnic_label);
+                    cnic_input=$("<input class='form-control' id='cnic_input' class='custom_input_css' placeholder='xxxxx-xxxxxxx-x' ></input>")
+                    colmd2.append(cnic_input);
 
-                    row__col_two__row_div_two.append(colmd1)
-                    row__col_two__row_div_two.append(colmd2)
-                col_two__row_div_two.append(row__col_two__row_div_two)
+                row__col_two__row_div_two.append(colmd1)
+                row__col_two__row_div_two.append(colmd2)
+            col_two__row_div_two.append(row__col_two__row_div_two)
 
-            $(row_div_two).append(col_one__row_div_two);
-            $(row_div_two).append(col_two__row_div_two);
+        $(row_div_two).append(col_one__row_div_two);
+        $(row_div_two).append(col_two__row_div_two);
 
         var row_div_three=$("<div class='row' style='padding-bottom: 15px;''></div>");
                 // Guardian
-                var col_one__row_div_three=$("<div class='col-md-6'></div>");
-                    row__col_one__row_div_three=$("<div class='row'></div>");
-                        colmd1=$("<div class='col-md-4'></div>")
-                        colmd2=$("<div class='col-md-6'></div>")
-    
-                        guardian_name_label=$("<label for='emp_name_tag' class='custom_label_css font-weight-bold'>Guardian Name</label>");
-                        colmd1.append(guardian_name_label)
-                        guardian_name_input=$("<input class='form-control' id='guardian_input' class='custom_input_css' ></input>")
-                        colmd2.append(guardian_name_input);
+            var col_one__row_div_three=$("<div class='col-md-6'></div>");
+                row__col_one__row_div_three=$("<div class='row'></div>");
+                    colmd1=$("<div class='col-md-4'></div>")
+                    colmd2=$("<div class='col-md-6'></div>")
 
-                    row__col_one__row_div_three.append(colmd1);
-                    row__col_one__row_div_three.append(colmd2);
-                 col_one__row_div_three.append(row__col_one__row_div_three);
-            
-                // Address
-                var col_two__row_div_three=$("<div class='col-md-6'></div>");
-                 row__col_two__row_div_three=$("<div class='row'></div>");
-                        colmd1=$("<div class='col-md-4'></div>")
-                        colmd2=$("<div class='col-md-6'></div>")
-    
+                    guardian_name_label=$("<label for='emp_name_tag' class='custom_label_css font-weight-bold'>Guardian Name</label>");
+                    colmd1.append(guardian_name_label)
+                    guardian_name_input=$("<input class='form-control' id='guardian_input' class='custom_input_css' ></input>")
+                    colmd2.append(guardian_name_input);
+
+                row__col_one__row_div_three.append(colmd1);
+                row__col_one__row_div_three.append(colmd2);
+                col_one__row_div_three.append(row__col_one__row_div_three);
+        
+            // Address
+            var col_two__row_div_three=$("<div class='col-md-6'></div>");
+                row__col_two__row_div_three=$("<div class='row'></div>");
+                    colmd1=$("<div class='col-md-4'></div>")
+                    colmd2=$("<div class='col-md-6'></div>")
+
                         address_label=$("<label for='pat_address_tag' class='custom_label_css font-weight-bold'>Address</label>");
-                        colmd1.append(address_label)
+                    colmd1.append(address_label)
                         pat_address_input=$("<input class='form-control' id='pat_address_input' class='custom_input_css'>")
-                        colmd2.append(pat_address_input)
-    
-                        row__col_two__row_div_three.append(colmd1);
-                        row__col_two__row_div_three.append(colmd2);
-                    col_two__row_div_three.append(row__col_two__row_div_three);           
+                    colmd2.append(pat_address_input)
+
+                row__col_two__row_div_three.append(colmd1);
+                row__col_two__row_div_three.append(colmd2);
+            col_two__row_div_three.append(row__col_two__row_div_three);           
             
              $(row_div_three).append(col_one__row_div_three);
              $(row_div_three).append(col_two__row_div_three);
@@ -226,21 +226,21 @@ function addPatient(){
     
         var row_div_five=$("<div class='row' style='padding-top: 15px;'></div>");
                     //save button
-                var col_two__row_div_five=$("<div class='col-md-12'></div>");
-                            var row__col_two__row_div_five=$("<div class='row'></div>");
-                                colmd1=$("<div class='col-md-2'></div>")
-                                colmd2=$("<div class='col-md-4 offset-md-2'></div>")
-                                colmd3=$("<div class='col-md-2'></div>")
+            var col_two__row_div_five=$("<div class='col-md-12'></div>");
+                var row__col_two__row_div_five=$("<div class='row'></div>");
+                    colmd1=$("<div class='col-md-2'></div>")
+                    colmd2=$("<div class='col-md-4 offset-md-2'></div>")
+                    colmd3=$("<div class='col-md-2'></div>")
 
-                                savePatientdataForm_button=$('<button class="btn btn-success btn-block" onclick="savePatientData()"><span class="fa">&#xf019;</span> Save</button>')
-                                colmd2.append(savePatientdataForm_button)
-                                
-                                row__col_two__row_div_five.append(colmd1)
-                                row__col_two__row_div_five.append(colmd2)
-                                row__col_two__row_div_five.append(colmd3)
-                        col_two__row_div_five.append(row__col_two__row_div_five)
+                        savePatientdataForm_button=$('<button class="btn btn-success btn-block" onclick="savePatientData()"><span class="fa">&#xf019;</span> Save</button>')
+                    colmd2.append(savePatientdataForm_button)
+                    
+                    row__col_two__row_div_five.append(colmd1)
+                    row__col_two__row_div_five.append(colmd2)
+                    row__col_two__row_div_five.append(colmd3)
+            col_two__row_div_five.append(row__col_two__row_div_five)
 
-                    $(row_div_five).append(col_two__row_div_five);
+        $(row_div_five).append(col_two__row_div_five);
 
     $(main_col_div).append(row_div_one);
     $(main_col_div).append(row_div_two);

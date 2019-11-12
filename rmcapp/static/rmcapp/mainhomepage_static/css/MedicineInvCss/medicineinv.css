@@ -24,6 +24,24 @@ border: none;
 .despstorage_second_col_div{
 
 }
+#delBtn:focus{
+    outline: none;
+}
+#delBtn{
+
+    color:red !important; 
+    background-color:lightcyan;
+    border:none; 
+    cursor:pointer;
+    border:none;
+}
+#calc_res_info_form{
+
+    /* border: 1px solid; */
+    padding:25px;
+
+}
+calc_res_info_form
 .despstorage_second_col_div_three_rows{
     padding-bottom: 30px;
 }
