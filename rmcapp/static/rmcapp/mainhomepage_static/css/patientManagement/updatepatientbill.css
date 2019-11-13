@@ -1,8 +1,12 @@
 @media print{
 
     #row_surgery_bill{
-    page-break-before: always !important;
+    page-break-after: left !important;
     }
+    /* #row_surgery_bill{
+        page-break-after: always;
+
+    } */
 }
 
 

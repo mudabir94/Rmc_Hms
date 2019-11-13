@@ -1452,7 +1452,7 @@ def retrieveEmployeeInfo(request):
             employee_info_dict['address']=emp_obj.address
             employee_info_dict['qualification']=emp_obj.qualification
             employee_info_dict['email']=emp_obj.email_address
-            employee_info_dict['employee_type']="Doctor"
+            employee_info_dict['employee_type']=emp_obj.employee_type.type_name
             employee_info_dict['cnic']=emp_obj.cnic
             employee_dict[emp_obj.id]=[]
             employee_dict[emp_obj.id]=employee_info_dict
@@ -1480,7 +1480,7 @@ def retrieveAllEmployeeInfo(request):
             all_employee_info_dict['address']=emp_obj.address
             all_employee_info_dict['qualification']=emp_obj.qualification
             all_employee_info_dict['email']=emp_obj.email_address
-            all_employee_info_dict['employee_type']="Doctor"
+            all_employee_info_dict['employee_type']=emp_obj.employee_type.type_name
             all_employee_info_dict['cnic']=emp_obj.cnic
             all_employee_dict[emp_obj.id]=[]
             all_employee_dict[emp_obj.id]=all_employee_info_dict
