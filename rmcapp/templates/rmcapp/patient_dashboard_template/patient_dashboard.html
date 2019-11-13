@@ -19,6 +19,9 @@
     <!-- <link href="{% static 'rmcapp/mainhomepage_static/css/MedicineInvCss/jquery-ui.css' %}" type="text/css" rel="stylesheet"  /> -->
     <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+
+
     
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
@@ -63,18 +66,114 @@
         .dashboard-icons{
             width:100%;
             border-radius: 2px;
-
             height:200px;
-            background:#b0b0b0;
+            background:#476589;
             box-shadow: 0 0 5px 3px #555;
         }
         .dashboard-icon-rows{
           padding:10px;
+          padding-top:  50px;
         }
         .dashboard-icons:hover{
-          background:grey;
+          background:#4c7c9a;
 
         }
+
+        .card-counter{
+          box-shadow: 2px 2px 10px #DADADA;
+          margin: 5px;
+          padding: 24px 17px;
+          background-color: #fff;
+          height: 120px;
+          border-radius: 5px;
+          transition: .3s linear all;
+        }
+
+        .card-counter:hover{
+          box-shadow: 4px 4px 20px #DADADA;
+          transition: .3s linear all;
+        }
+
+        .card-counter.primary{
+          background-color: #007bff;
+          color: #FFF;
+        }
+
+        .card-counter.danger{
+          background-color: #ef5350;
+          color: #FFF;
+        }  
+
+        .card-counter.success{
+          background-color: #66bb6a;
+          color: #FFF;
+        }  
+
+        .card-counter.info{
+          background-color: #26c6da;
+          color: #FFF;
+        }  
+
+        .card-counter i{
+          font-size: 5em;
+          opacity: 0.2;
+        }
+
+        .card-counter .count-numbers{
+          position: absolute;
+          right: 35px;
+          top: 20px;
+          font-size: 32px;
+          display: block;
+        }
+
+        .card-counter .count-name{
+          position: absolute;
+          right: 35px;
+          top: 65px;
+          font-style: italic;
+          text-transform: capitalize;
+          opacity: 0.5;
+          display: block;
+          font-size: 18px;
+        }
+        .view_pat_bill, .creat_surg_bill, .creat_desp_bill, .update_pres{
+          font-size: 30px;
+
+        }
+        .edit_pat, .pat_list, .gen_pres, .add_pat{
+          font-size: 30px;
+        }
+        .add_pat{
+          padding: 0px 0px 0px 130px;
+        }
+        .gen_pres{
+          padding:0px 0px 0px 42px;
+        }
+        .pat_list{
+          padding: 0px 0px 0px 113px;
+        }
+        .edit_pat{
+          padding:0px 0px 0px 70px;
+        }
+        .update_pres{
+          padding: 0px 0px 0px 63px;
+        }
+        .creat_desp_bill{
+          padding: 0px 0px 0px 45px;
+        }
+        .creat_surg_bill{
+          padding: 0px 0px 0px 73px;
+        }
+        .view_pat_bill{
+          padding: 0px 0px 0px 94px;
+
+        }
+
+        .icon_padding{
+          padding:32px 0px 0px 160px;
+        }
+
     
 
     </style>
@@ -317,41 +416,20 @@
                 <i class="fa fa-tachometer-alt"></i>
                 <span>Patient  History</span>
                 <!-- <span class="badge badge-pill badge-warning">New</span> -->
-                
               </a>
-                <div class="sidebar-submenu">
-                  <ul>
-                    <li class='header-menu'>
-                        Patient Medical History
-                    </li>
-                    <li>
-                      <a href="#" onclick="viewPatientHistory()">View Patient Medical History
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" >Update Patient Medical History
-                        </a>
-                    </li>
-                    <li class='header-menu'>
-                        Patient Bill History
-                    </li>
-
-                    <li>
-                        <a href="#" >View Patient Bill History
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" >Update Patient Bill History
-                        </a>
-                    </li>
-                    
-                  </ul>
+              <div class="sidebar-submenu">
+                <ul>
+                  <li>
+                    <a href="#" onclick="viewPatientHistory()">View Patient Medical History
+                      </a>
+                  </li>
+                  <li>
+                    <a href="#" >Update Patient Medical History
+                    </a>
+                  </li>
+                </ul>
               </div>
-                  
-            
           </li>
-        
-        
         </ul>
       </div>
       <!-- sidebar-menu  -->
@@ -390,7 +468,7 @@
       <h2>Patient Dashboard</h2>
       <hr>
       
-      <div class="row">
+      <!-- <div class="row">
         <div class="form-group col-md-12">
          
                 
@@ -402,32 +480,99 @@
             It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
             and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
         </div>
+      </div> -->
+
+        <div class="col-md-12">
+          <div class="row">
+          <div class="col-md-3">
+            <div class="card-counter primary">
+              <i class="fa fa-user-circle"></i>
+              <span class="count-numbers">12</span>
+              <span class="count-name">Total Patients</span>
+            </div>
+          </div>
+      
+          <div class="col-md-3">
+            <div class="card-counter danger">
+              <i class="fa fa-calendar-alt"></i>
+              <span class="count-numbers">599</span>
+              <span class="count-name">Total Visited Today</span>
+            </div>
+          </div>
+      
+          <div class="col-md-3">
+            <div class="card-counter success">
+              <i class="fa fa-database"></i>
+              <span class="count-numbers">6875</span>
+              <span class="count-name">Total Visits</span>
+            </div>
+          </div>
+      
+          <div class="col-md-3">
+            <div class="card-counter info">
+              <i class="fa fa-file-prescription"></i>
+              <span class="count-numbers">35</span>
+              <span class="count-name">Total Prescriptions</span>
+            </div>
+          </div>
+
+        </div>
       </div>
          
       <div class="row">
           <div class="col-md-12">
         
             <div class="row dashboard-icon-rows">
-                <div class="col-md-4" >
-                    <div class="dashboard-icons" ></div>
+                <div class="col-md-3" >
+                  <div class="dashboard-icons" role="button" onclick="addPatient()">
+                    <i class="fa fa-plus fa-5x icon_padding"></i></br>
+                    <span class="add_pat">Add Patient</span>
+                  </div>
                 </div>
-                <div class="col-md-4">
-                  <div class='dashboard-icons'></div>
+                <div class="col-md-3">
+                  <div class='dashboard-icons' role="button" onclick="generatePrescription()">
+                    <i class="fa fa-print fa-5x icon_padding"></i></br>
+                    <span class="gen_pres">Generate Prescriptions</span>
+                  </div>
                 </div>
-                <div class="col-md-4">
-                  <div class='dashboard-icons'></div>
+                <div class="col-md-3">
+                  <div class='dashboard-icons' role="button" onclick="viewAllPatients()">
+                    <i class="fa fa-list-alt fa-5x icon_padding"></i></br>
+                    <span class="pat_list" >Patients List</span>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class='dashboard-icons' role="button" onclick="EditPatient()">
+                    <i class="fa fa-pencil-square-o fa-5x icon_padding"></i></br>
+                    <span class="edit_pat">Update Patient Info</span>
+                  </div>
                 </div>
             </div>
 
             <div class="row dashboard-icon-rows" >
-                <div class="col-md-4" >
-                    <div class="dashboard-icons" ></div>
+                <div class="col-md-3" >
+                    <div class="dashboard-icons" role="button" onclick="updatePrescriptionRecord()">
+                      <i class="fa fa-pencil-square-o fa-5x icon_padding"></i></br>
+                      <span class="update_pres">Update Prescription</span>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                  <div class='dashboard-icons'></div>
+                <div class="col-md-3">
+                  <div class='dashboard-icons'role="button" onclick="createPatientBill()">
+                    <i class="fa fa-money-bill-alt fa-5x icon_padding"></i></br>
+                    <span class="creat_desp_bill">Create Despensory Bill</span>
+                  </div>
                 </div>
-                <div class="col-md-4">
-                  <div class='dashboard-icons'></div>
+                <div class="col-md-3">
+                  <div class='dashboard-icons' role="button" onclick="surgeryProcFrom()">
+                    <i class="fa fa-money-bill-alt fa-5x icon_padding"></i></br>
+                    <span class="creat_surg_bill">Create Surgery Bill</span>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class='dashboard-icons' role="button" onclick="viewPatientBill()">
+                    <i class="fa fa-eye fa-5x icon_padding"></i></br>
+                    <span class="view_pat_bill">View Patient Bill</span>
+                  </div>
                 </div>
             </div>
         </div>
