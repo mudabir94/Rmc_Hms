@@ -462,6 +462,8 @@ var surgerybill_dict={};
 var procedurebill_dict={};
 function calculateBill(){
     $("#bill_div").empty();
+    surg_count=1
+    proc_count=1
     $('[id^="surg_proc_row-"]').each( function(  ) {
         console.log(">>>",$(this).attr('id'))
         row_id=$(this).attr('id');
@@ -477,21 +479,27 @@ function calculateBill(){
                 anesthetic_charges=$("#anesthetic_charges_input-"+num).val()
                 surplus_charges=$("#surplus_charges_input-"+num).val()
                 templist=[];
+                templist.push(selectedsurgery)
                 templist.push(surgeon_charges);
                 templist.push(theatre_charges)
                 templist.push(anesthetic_charges)
                 templist.push(surplus_charges)
                 total_charges=parseInt(surgeon_charges)+parseInt(theatre_charges)+parseInt(anesthetic_charges)+parseInt(surplus_charges)
                 templist.push(total_charges)
-                surgerybill_dict[selectedsurgery]=templist;
+                surgerybill_dict[surg_count]=templist;
+                surg_count++;
             }
         }else if (surg_proc_val==="Procedure"){
             selectedprocedure=$("#select_proc_ele-"+num).val();
             if (selectedprocedure!=="--"){
             charges=$("#charges_proc_input-"+num).val();
             templist=[];
+            templist.push(selectedprocedure)
             templist.push(charges);
-            procedurebill_dict[selectedprocedure]=templist;
+           
+                procedurebill_dict[proc_count]=templist;
+                proc_count++;
+
             }
 
         }
@@ -529,28 +537,28 @@ function calculateBill(){
     $(surg_table).append(tbody);
     var surg_total_bill=0;
     for (key in surgerybill_dict){
-        if (key!=="undefined" || key!=='--'){
+        if (surgerybill_dict[key][0]!=="undefined" || surgerybill_dict[key][0]!=='--'){
             var tr=$("<tr>");
                 var td1=$("<td>");
-                td1.append(key)
+                td1.append(surgerybill_dict[key][0])
 
-                surgeonfee=surgerybill_dict[key][0];
+                surgeonfee=surgerybill_dict[key][1];
                 var td2=$("<td>");
                 td2.append(surgeonfee)
 
-                theatrefee=surgerybill_dict[key][1];
+                theatrefee=surgerybill_dict[key][2];
                 var td3=$("<td>");
                 td3.append(theatrefee)
 
-                anestheticfee=surgerybill_dict[key][2];
+                anestheticfee=surgerybill_dict[key][3];
                 var td4=$("<td>");
                 td4.append(anestheticfee)
 
-                surplusfee=surgerybill_dict[key][3];
+                surplusfee=surgerybill_dict[key][4];
                 var td5=$("<td>");
                 td5.append(surplusfee);
 
-                totalfee=surgerybill_dict[key][4];
+                totalfee=surgerybill_dict[key][5];
                 var td6=$("<td >");
                 td6.append(totalfee)
                 surg_total_bill=surg_total_bill+totalfee;
@@ -615,12 +623,12 @@ var proc_bill_final_div=$("<div id='proc_bill_final_div'>")
     var proc_total_bill=0;
     for (key in procedurebill_dict){
         console.log("Key---->",key);
-        if (key!==undefined ||key!=='undefined' || key!=='--'){
+        if (procedurebill_dict[key][0]!==undefined ||procedurebill_dict[key][0]!=='undefined' || procedurebill_dict[key][0]!=='--'){
             var tr=$("<tr>");
                 var td1=$("<td>");
-                td1.append(key)
+                td1.append(procedurebill_dict[key][0])
 
-                charges=procedurebill_dict[key][0];
+                charges=procedurebill_dict[key][1];
                 
                 proc_total_bill=parseInt(charges)+proc_total_bill
                 var td3=$("<td>")

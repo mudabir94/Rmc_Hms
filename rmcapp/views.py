@@ -1804,10 +1804,9 @@ def NoStripCalculationDespToPat(despensoryStock,patientid,medicineobj,boxes_want
         despStckDict[despid]['boxes_stored']=bss
         despStckDict[despid]['piece_stored']=lps
         # despensoryStock.status="Used"
-
-
-
-    # despensoryStock.save()
+        # despensoryStock.save()
+        
+       
 
 
     
@@ -2785,11 +2784,11 @@ def saveSurgProcBill(request):
 
         if procedurebill_dict!={}:
             for key in procedurebill_dict:
-                proctabObj=procedureTable.objects.get(procedure_name=key)
+                proctabObj=procedureTable.objects.get(procedure_name=procedurebill_dict[key][0])
                 procBRecObj=procedureBillRecord()
                 procBRecObj.procedure=proctabObj
                 procBRecObj.pres=patPresRecObj
-                procBRecObj.net_total=procedurebill_dict[key][0]
+                procBRecObj.net_total=procedurebill_dict[key][1]
                 procBRecObj.save()
                 procbrid_list.append(procBRecObj.id)
             procRecObj=procedureRecords()
@@ -2809,15 +2808,15 @@ def saveSurgProcBill(request):
         if surgerybill_dict!={}:
 
             for key in surgerybill_dict:
-                surgtabObj=surgeryTable.objects.get(surgery_name=key)
+                surgtabObj=surgeryTable.objects.get(surgery_name=surgerybill_dict[key][0])
                 sbrObj=surgeryBillRecord()
                 sbrObj.surgery=surgtabObj
                 sbrObj.pres=patPresRecObj
-                sbrObj.surgeon_fee=surgerybill_dict[key][0]
-                sbrObj.operation_theater_fee=surgerybill_dict[key][1]
-                sbrObj.anesthesiologist_fee=surgerybill_dict[key][2]
-                sbrObj.surplus_fee=surgerybill_dict[key][3]
-                sbrObj.net_total=surgerybill_dict[key][4]
+                sbrObj.surgeon_fee=surgerybill_dict[key][1]
+                sbrObj.operation_theater_fee=surgerybill_dict[key][2]
+                sbrObj.anesthesiologist_fee=surgerybill_dict[key][3]
+                sbrObj.surplus_fee=surgerybill_dict[key][4]
+                sbrObj.net_total=surgerybill_dict[key][5]
                 sbrObj.save()
                 sbrid_list.append(sbrObj.id)
                 surgRecObj=surgeryRecords()
