@@ -1924,6 +1924,7 @@ function addMedicineToDespStockForm(){
                 var medicine_name=$(this).find('td').eq(0).text()
                 medstck_datatable.$('tr.selected').removeClass('selected');
                 $(this).addClass('selected');
+                $(".add_all_stk").show();
 
                 // if (inactive_datatable!==undefined){
                 //     inactive_datatable.destroy();
@@ -1959,6 +1960,7 @@ function addMedicineToDespStockForm(){
                                                     var boxes=data["boxes"]
                                                     var strips=data['strips']
                                                     var pieces=data["pieces"]
+                                                    var strip_unit=data['strip_unit']
                                                     console.log("boxes--",boxes)
                                                     console.log("strips--",strips)
 
@@ -1973,7 +1975,7 @@ function addMedicineToDespStockForm(){
                                                         colmd2.append(boxamount_input)
                                                         row1__col_one__row_div_two.append(colmd1);
                                                         row1__col_one__row_div_two.append(colmd2);
-                                                    if (strips!=="-"){
+                                                    if (strip_unit!=="-"){
                                                             var colmd1=$("<div class='col-md-6'></div>")
                                                                 pieceamount_label=$("<label class='custom_label_css'>No of Strips Stored:</label>");
                                                             colmd1.append(pieceamount_label)
@@ -2210,9 +2212,10 @@ function refreshAddMedicineToDespStockForm(){
     // retrieveMedicineGenDataFromStock();
     $("#medicine_name_tag").val("");
     $("#batchno_input").val("");
-    $(".add_all_stk").remove();
+    $(".add_all_stk").hide();
     $("#row_div_two").remove();
     $("#active_batch_data_row").remove();
+    $("#row_div_three").remove()
     updateMedTStckT();
     if (inactive_datatable!==undefined ){
         inactive_datatable.destroy();
