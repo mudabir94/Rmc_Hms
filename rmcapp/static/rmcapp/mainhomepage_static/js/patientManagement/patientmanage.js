@@ -2981,11 +2981,18 @@ function billDataTable(){
                         var data = this.data();
                         console.log("data",data);
                         var meddatadict={}
-                        console.log("Bill Data",billdata[3]);
+                        console.log("Bill Data",billdata);
                         var medname=data[1];
                         var billmedname=billdata[3];
                         if (medname===billmedname){
                             delete pbr_dict[medname]
+                            console.log("data[2]",data[2])
+                            console.log("data[3]",data[3])
+                            console.log("data[4]",data[4])
+
+                            console.log("billdata[4]",billdata[4])
+                            console.log("billdata[5]",billdata[5])
+                            console.log("billdata[6]",billdata[5])
 
                             meddatadict['boxes_stored']=parseInt(data[2])+parseInt(billdata[4]);
                            
@@ -2993,6 +3000,7 @@ function billDataTable(){
                             
                             meddatadict['strip_stored']=strips_stored;
                             meddatadict['piece_stored']=parseInt(data[4])+parseInt(billdata[6]);
+                            console.log("In if")
                         }
                         else{
                             meddatadict['boxes_stored']=data[2]
@@ -3001,6 +3009,8 @@ function billDataTable(){
                             
                             meddatadict['strip_stored']=strips_stored;
                             meddatadict['piece_stored']=data[4];
+                            console.log("In else")
+
                         }
                         meddatadict['name']=medname;
                         meddatadict['price_unit']=data[5];            
@@ -3187,7 +3197,9 @@ function addMedicineToPatientBill(){
         var data = this.data();
         console.log("Bill DATA",data)
         var tempdict={}
-        tempdict['despid']=data[1]
+        // tempdict['despid']=data[1]
+        tempdict['medname']=data[3]
+
         tempdict['patientid']=data[2]
         tempdict['boxes']=data[4];
        
@@ -3202,7 +3214,9 @@ function addMedicineToPatientBill(){
         tempdict['amount']=data[9];
 
 
-        pbr_dict[data[3]]=tempdict
+        // pbr_dict[data[3]]=tempdict
+        pbr_dict[data[1]]=tempdict
+
     } );
     console.log("pbr_dict",pbr_dict);
     console.log("Patient Id", patientid);
@@ -3253,11 +3267,13 @@ function addMedicineToPatientBill(){
             for (med in pbr_dict){
                 templist=[];
                 templist.push(count);
-
-                templist.push(pbr_dict[med]['despid']);
-                templist.push(pbr_dict[med]['patientid']);
-
                 templist.push(med);
+
+                // templist.push(pbr_dict[med]['despid']);
+                templist.push(pbr_dict[med]['patientid']);
+                templist.push(pbr_dict[med]['medname']);
+
+                // templist.push(med);
 
                 templist.push(pbr_dict[med]['boxes']);
                 templist.push(pbr_dict[med]['strips']);
@@ -3302,7 +3318,8 @@ function SaveAndPrintBill(){
         var data = this.data();
         console.log("Bill DATA",data)
         var tempdict={}
-        tempdict['despid']=data[1];
+        // tempdict['despid']=data[1];
+        tempdict['medname']=data[3];
         tempdict['patientid']=data[2];
 
         tempdict['boxes']=data[4];
@@ -3318,7 +3335,8 @@ function SaveAndPrintBill(){
         tempdict['amount']=data[9];
 
 
-        pbr_dict[data[3]]=tempdict
+        // pbr_dict[data[3]]=tempdict
+        pbr_dict[data[1]]=tempdict
     } );
     console.log("pbr_dict",pbr_dict)
     var rmc="RMC HOSPITAL";
@@ -3363,7 +3381,8 @@ function SaveAndPrintBill(){
                     tr.append(td3);
                 table.append(tr);
                 for (var key in pbr_dict){
-                    item=key;
+                    // item=key;
+                    item=pbr_dict[key]['medname']
                     qty=pbr_dict[key]['pieces']
                     subtotal=pbr_dict[key]['amount']
                     var tr=$('<tr class="service"></tr>')
@@ -3751,6 +3770,10 @@ function discountAmountFocousOut(element){
         $("#discountamount_input").val('0');
     }
     var discount_percentage=(discountamount_input/$("#totalamount_input").val())*100;
+    if (discount_percentage !== discount_percentage){
+        discount_percentage=0
+    } //true
+
     $("#discountpercent_input").val(discount_percentage);   
     
 }   
@@ -3826,7 +3849,18 @@ function updatePrescriptionRecord(){
     $(main_col_div).append(row_div_one);
 }
 function searchPatPresc(){
-    var row_div_two=$("<div class='row' id='row_div_two' style='padding-bottom:10px;'></div>");
+    presid=$("#presc_input_id").val()
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        'data': {
+           "presid":presid
+        },
+        url: '/update_prescription_record',
+        success: function(data){
+            pres_data_dict=JSON.parse(data['pres_data_dict']);
+            med_info_list=data['med_info_list'];
+            var row_div_two=$("<div class='row' id='row_div_two' style='padding-bottom:10px;'></div>");
         var main_subcol=$("<div class='col-md-12'></div>");
 
             var subrow_one=$("<div class='row'></div>")
@@ -3836,7 +3870,7 @@ function searchPatPresc(){
                         var colmd1=$("<div class='col-md-4 text-center'></div>")
                         var colmd2=$("<div class='col-md-8' style='padding-bottom:10px;'></div>")
                             var ss_label=$("<label for='ss_tag' class='custom_label_css'>Signs/Symptoms</label>");
-                            var ss_input=$("<textarea id='ss_input' class='form-control custom_input_css' style='height: 140px;'>")
+                            var ss_input=$("<textarea id='ss_input' class='form-control custom_input_css' style='height: 140px;' value='"+pres_data_dict['sign_symtoms']+"'>"+pres_data_dict['sign_symtoms']+"</textarea>")
                         colmd1.append(ss_label)
                         colmd2.append(ss_input)
                     
@@ -3850,7 +3884,7 @@ function searchPatPresc(){
                         var colmd1=$("<div class='col-md-4 text-center'></div>")
                         var colmd2=$("<div class='col-md-8' style='padding-bottom:10px;'></div>")
                             var pd_label=$("<label class='custom_label_css'>Provisonal Diagnosis</label>");
-                            var pd_input=$("<textarea id='pd_input' class='form-control custom_input_css' style='height: 140px;'>")
+                            var pd_input=$("<textarea id='pd_input' class='form-control custom_input_css' style='height: 140px;'  value='"+pres_data_dict['provisional_diagnosis']+"'>"+pres_data_dict['provisional_diagnosis']+"</textarea>")
                         colmd1.append(pd_label);
                         colmd2.append(pd_input);
     
@@ -3869,7 +3903,7 @@ function searchPatPresc(){
                         var colmd1=$("<div class='col-md-4 text-center'></div>")
                         var colmd2=$("<div class='col-md-8' style='padding-bottom:10px;'></div>")
                             var investigation_label=$("<label for='ss_tag' class='custom_label_css'>Investigation</label>");
-                            var investigation_input=$("<textarea id='investigation_input' class='form-control custom_input_css' style='height: 140px;'>")
+                            var investigation_input=$("<textarea id='investigation_input' class='form-control custom_input_css' style='height: 140px;'  value='"+pres_data_dict['investigation']+"'>"+pres_data_dict['investigation']+"</textarea>")
                         colmd1.append(investigation_label)
                         colmd2.append(investigation_input)
 
@@ -3883,7 +3917,7 @@ function searchPatPresc(){
                         var colmd1=$("<div class='col-md-4 text-center'></div>")
                         var colmd2=$("<div class='col-md-8' style='padding-bottom:10px;'></div>")
                             var pd_label=$("<label class='custom_label_css'>Diagnosis</label>");
-                            var pd_input=$("<textarea id='pd_input' class='form-control custom_input_css' style='height: 140px;'>")
+                            var pd_input=$("<textarea id='diagnosis_input' class='form-control custom_input_css' style='height: 140px;'  value='"+pres_data_dict['diagnosis']+"'>"+pres_data_dict['diagnosis']+"</textarea>")
                         colmd1.append(pd_label);
                         colmd2.append(pd_input);
 
@@ -3902,7 +3936,7 @@ function searchPatPresc(){
                         var colmd1=$("<div class='col-md-4 text-center'></div>")
                         var colmd2=$("<div class='col-md-8' style='padding-bottom:10px;'></div>")
                             var vitals_label=$("<label for='ss_tag' class='custom_label_css'>Vitals</label>");
-                            var vitals_input=$("<textarea id='vitals_input' class='form-control custom_input_css' style='height: 140px;'>")
+                            var vitals_input=$("<textarea id='vitals_input' class='form-control custom_input_css' style='height: 140px;'  value='"+pres_data_dict['vitals']+"'>"+pres_data_dict['vitals']+"</textarea>")
                         colmd1.append(vitals_label)
                         colmd2.append(vitals_input)
 
@@ -3918,7 +3952,7 @@ function searchPatPresc(){
 
     row_div_two.append(main_subcol)
 
-    var row_div_four=$("<div class='row' id='row_div_two' style='padding-top:10px;'></div>");
+    var row_div_four=$("<div class='row' id='row_div_four' style='padding-top:10px;'></div>");
         var main_col=$("<div class='col-md-12'></div>");
 
             var subrow_one=$("<div class='row'></div>")
@@ -3926,7 +3960,7 @@ function searchPatPresc(){
                     row__col_one__subrow_one=$("<div class='row'></div>");
                         
                         var colmd1=$("<div class='col-md-8 offset-md-2'></div>")
-                            var search_button=$("<button  class='btn btn-primary btn-block' onclick=''>Update</button>")
+                            var search_button=$("<button  class='btn btn-primary btn-block' onclick='UpdatePrescription()'>Update</button>")
                         colmd1.append(search_button)
                     
                     row__col_one__subrow_one.append(colmd1);
@@ -3940,12 +3974,15 @@ function searchPatPresc(){
     var main_col_div=$("#main_col_div");
     main_col_div.append(row_div_two);
     createPresMedDataTableRow();
-    createPresMedDataTable();
+    createPresMedDataTable(med_info_list);
     main_col_div.append(row_div_four);
+    }
+});
+    
 
 }
 function createPresMedDataTableRow(){
-    var row_div_three=$("<div class='row'></div>");
+    var row_div_three=$("<div class='row' id='row_div_three'></div>");
         var col_one__row_div_three=$("<div class='col-md-12'></div>");
             row__col_one__row_div_three=$("<div class='row'></div>");
                 colmd1=$("<div class='col-md-12'></div>")
@@ -3959,11 +3996,11 @@ var main_col_div=$("#main_col_div");
 main_col_div.append(row_div_three)
 }
 
-function createPresMedDataTable(){
+function createPresMedDataTable(med_info_list){
     
     $(function(){
         pat_pres_datatable=$("#pres-med-table").DataTable({
-            data:datatable_list,
+            data:med_info_list,
             columns: [
                 { title: "Id" },
                 { title: "Medicine Name" },
@@ -3980,7 +4017,42 @@ function createPresMedDataTable(){
         });
     });
 }
+function UpdatePrescription(){
+    presid=$("#presc_input_id").val()
 
+    ss_input=$("#ss_input").val()
+    pd_input=$("#pd_input").val()
+    investigation_input=$("#investigation_input").val()
+    diagnosis_input=$("#diagnosis_input").val()
+    vitals_input=$("#vitals_input").val()
+    pres_data_dict={}
+    pres_data_dict['ss']=ss_input;
+    pres_data_dict['pd']=pd_input;
+    pres_data_dict['investigation']=investigation_input;
+    pres_data_dict['diagnosis']=diagnosis_input;
+    pres_data_dict['vitals']=vitals_input;
+    $.ajax({
+        type: 'POST',
+        dataType: "json",
+        'data': {
+            "presid":presid,
+            "pres_data_dict":JSON.stringify(pres_data_dict),
+        },
+        url: '/update_prescription_record',
+        success: function(data){
+            $("#row_div_two").remove();
+            $("#row_div_three").remove();
+            $("#row_div_four").remove();
+            $("#presc_input_id").val("")
+
+        }
+    });
+
+
+
+
+    
+}
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== "") {
