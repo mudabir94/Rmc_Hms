@@ -1415,30 +1415,45 @@ function createOutDoorPresFormDiv(){
             row_two.append(col_one__row_two)
             var row_three=$("<div class='row' style=' padding-bottom:10px;'></div>")
 
-                var col_one__row_three=$("<div class='col-md-12'></div>");
-                        row__col_one__row_three=$("<div class='row'></div>");
-                            var colmd1=$("<div class='col-md-2'></div>")
-                            var colmd2=$("<div class='col-md-6'></div>")
-                            
-                                var reason_label=$("<label for='reason_label' class='custom_label_css'>Discount Reason</label>");
-                                colmd1.append(reason_label)
+                var col_one__row_three=$("<div class='col-md-8'></div>");
+                    row__col_one__row_three=$("<div class='row'></div>");
+                        var colmd1=$("<div class='col-md-3'></div>")
+                        var colmd2=$("<div class='col-md-9'></div>")
+                            var reason_label=$("<label for='reason_label' class='custom_label_css'>Discount Reason</label>");
+                        colmd1.append(reason_label)
+                            discount_reason_input=$("<input class='form-control' id='discount_reason_input' class='custom_input_css'>")
+                        colmd2.append(discount_reason_input)
+                    row__col_one__row_three.append(colmd1);
+                    row__col_one__row_three.append(colmd2);
+                col_one__row_three.append(row__col_one__row_three);
 
-                                discount_reason_input=$("<input class='form-control' id='discount_reason_input' class='custom_input_css'>")
-                                colmd2.append(discount_reason_input)
+                var col_two__row_three=$("<div class='col-md-4'></div>");
+                    row__col_two__row_three=$("<div class='row'></div>");
+                        var colmd1=$("<div class='col-md-6'></div>")
+                        var colmd2=$("<div class='col-md-3'></div>")
+                        var colmd3=$("<div class='col-md-3'></div>")
 
-                        row__col_one__row_three.append(colmd1);
-                        row__col_one__row_three.append(colmd2);
-
-                    col_one__row_three.append(row__col_one__row_three);
+                            var bill_status_label=$("<label for='reason_label' class='custom_label_css float-right'>Add Bill Status</label>");
+                        colmd1.append(bill_status_label)
+                            var option1_input=$("<input  type='radio' name='Paid_NotPaid' value='Paid' checked>Paid</input>");
+                        colmd2.append(option1_input)
+                            var option2_input=$("<input  type='radio' name='Paid_NotPaid' value='Unpaid'>Not Paid</input>");  
+                        colmd3.append(option2_input)
+                    row__col_two__row_three.append(colmd1);
+                    row__col_two__row_three.append(colmd2);
+                    row__col_two__row_three.append(colmd3);
+                col_two__row_three.append(row__col_two__row_three);
 
             row_three.append(col_one__row_three)
+            row_three.append(col_two__row_three)
+
 
             var row_four=$("<div class='row' style=' padding-bottom:10px;'></div>")
 
                 var col_one__row_four=$("<div class='col-md-12'></div>");
                             row__col_one__row_four=$("<div class='row'></div>");
                                 var colmd1=$("<div class='col-md-2'></div>")
-                                var colmd2=$("<div class='col-md-3'></div>")
+                                var colmd2=$("<div class='col-md-2'></div>")
                                 
                                     var doctor=$("<label for='doctor_label' class='custom_label_css'>Doctor</label>");
                                     colmd1.append(doctor)
@@ -1555,30 +1570,44 @@ function createEmergencyPresFormDiv(){
 
                 var row_three=$("<div class='row' style='padding-bottom:10px;'></div>")
 
-                    var col_one__row_three=$("<div class='col-md-12'></div>");
+                    var col_one__row_three=$("<div class='col-md-8'></div>");
                             row__col_one__row_three=$("<div class='row'></div>");
-                                var colmd1=$("<div class='col-md-2'></div>")
-                                var colmd2=$("<div class='col-md-6'></div>")
-                                
+                                var colmd1=$("<div class='col-md-3'></div>")
+                                var colmd2=$("<div class='col-md-9'></div>")
                                     var reason_label=$("<label for='reason_label' class='custom_label_css'>Discount Reason</label>");
-                                    colmd1.append(reason_label)
-
+                                colmd1.append(reason_label)
                                     discount_reason_input=$("<input class='form-control' id='discount_reason_input' class='custom_input_css'>")
-                                    colmd2.append(discount_reason_input)
-
+                                colmd2.append(discount_reason_input)
                             row__col_one__row_three.append(colmd1);
                             row__col_one__row_three.append(colmd2);
-
                         col_one__row_three.append(row__col_one__row_three);
 
+                    var col_two__row_three=$("<div class='col-md-4'></div>");
+                        row__col_two__row_three=$("<div class='row'></div>");
+                            var colmd1=$("<div class='col-md-6'></div>")
+                            var colmd2=$("<div class='col-md-3'></div>")
+                            var colmd3=$("<div class='col-md-3'></div>")
+    
+                                var bill_status_label=$("<label for='reason_label' class='custom_label_css float-right'>Add Bill Status</label>");
+                            colmd1.append(bill_status_label)
+                                var option1_input=$("<input  type='radio' name='Paid_NotPaid' value='Paid' checked>Paid</input>");
+                            colmd2.append(option1_input)
+                                var option2_input=$("<input  type='radio' name='Paid_NotPaid' value='Unpaid'>Not Paid</input>");  
+                            colmd3.append(option2_input)
+                        row__col_two__row_three.append(colmd1);
+                        row__col_two__row_three.append(colmd2);
+                        row__col_two__row_three.append(colmd3);
+                    col_two__row_three.append(row__col_two__row_three);
+    
                 row_three.append(col_one__row_three)
-                
+                row_three.append(col_two__row_three)
+
                 var row_four=$("<div class='row' style='padding-bottom:10px;'></div>")
 
                     var col_one__row_four=$("<div class='col-md-12'></div>");
                             row__col_one__row_four=$("<div class='row'></div>");
                                 var colmd1=$("<div class='col-md-2'></div>")
-                                var colmd2=$("<div class='col-md-3'></div>")
+                                var colmd2=$("<div class='col-md-2'></div>")
                                 
                                     var doctor=$("<label for='doctor_label' class='custom_label_css'>Doctor</label>");
                                     colmd1.append(doctor)
@@ -1749,7 +1778,6 @@ function printPrescriptionForm(){
     var patient_gender=patient_dict[patient_id_selected]['gender'];
     console.log("patient_gender", patient_gender);
 
-    
     var today = new Date();
     var DOB = patient_dict[patient_id_selected]['dob']
     var DOB = new Date(DOB);
@@ -1816,6 +1844,8 @@ function printPrescriptionForm(){
     var doctor = $("#selecteddoctor").val();
     var doctor_name = $("#selecteddoctor option:selected").text();
     $("#selecteddoctor").val("--");
+    var bill_status=$("input[name='Paid_NotPaid']:checked").val();
+    console.log("bill status", bill_status)
     var amountdue_input=$("#amountdue_input").val()
     var totalamount_input=$("#totalamount_input").val();
     var pat_contact_no=patient_dict[patient_id_selected]['contact_no'];
@@ -1945,6 +1975,7 @@ function printPrescriptionForm(){
 
     presData["fee_amount"]= totalamount_input;
     presData['net_total']=amountdue_input;
+    presData['status']=bill_status;
     console.log("presData--",presData)
     $.ajax({
         type: 'GET',
@@ -2004,10 +2035,10 @@ function createWardDataTable(){
                                         var colmd4=$("<div class='col-md-1'></div>")
 
                                             var wardNo_label=$("<label for='wardno_label' class='custom_label_css'>Ward No</label>");
-                                            var wardNo_input=$("<input  id='wardno_input' class='custom_input_css form-control' value='"+ward_dict[ward_id_selected]['ward_no']+"' disabled>")
+                                            var wardNo_input=$("<input  id='wardno_input' class='custom_input_css form-control' style='background: white;' value='"+ward_dict[ward_id_selected]['ward_no']+"' disabled>")
 
                                             var bedNo_label=$("<label for='bedno_label' class='custom_label_css float-right'>Bed No</label>");
-                                            var BedNo_input=$("<input  id='bedno_input' class='custom_input_css form-control' value='"+ward_dict[ward_id_selected]['bed_no']+"' disabled>")
+                                            var BedNo_input=$("<input  id='bedno_input' class='custom_input_css form-control' style='background: white;' value='"+ward_dict[ward_id_selected]['bed_no']+"' disabled>")
                                             
                                         colmd1.append(wardNo_label)
                                         colmd2.append(wardNo_input)
@@ -2029,8 +2060,8 @@ function createWardDataTable(){
                                         colmd1=$("<div class='col-md-3'></div>")
                                         colmd2=$("<div class='col-md-9'></div>")
 
-                                            var admit_reason_label=$("<label class='custom_label_css' >Admit reason</label>");
-                                            var admit_reason_input=$("<textarea type='text'  id='admit_reason_input' class='custom_input_css' style='width:inherit;'></textarea>")
+                                            var admit_reason_label=$("<label class=' form-control custom_label_css' >Admit reason</label>");
+                                            var admit_reason_input=$("<textarea type='text' id='admit_reason_input' class='custom_input_css' style='width:inherit;'></textarea>")
 
                                         colmd1.append(admit_reason_label)
                                         colmd2.append(admit_reason_input)
@@ -2121,11 +2152,11 @@ function createWardDataTable(){
                                         var colmd6=$("<div class='col-md-2'></div>")
 
                                             var discountamount_label=$("<label for='indoor_disc_tag' class='custom_label_css'>Discount Amount</label>");
-                                            discountamount_input=$("<input class='form-control' id='discountamount_input' onfocusout='discountAmountFocousOutPres($(this))' class='custom_input_css'>")
+                                            var discountamount_input=$("<input class='form-control' id='discountamount_input' onfocusout='discountAmountFocousOutPres($(this))' class='custom_input_css'>")
                                             var discountPercernt_label=$("<label for='discountPercernt_label' class='custom_label_css float-right'>Discount Percent</label>");
-                                            discountpercent_input=$("<input class='form-control' id='discountpercent_input' class='custom_input_css'>")
+                                            var discountpercent_input=$("<input class='form-control' id='discountpercent_input' class='custom_input_css'>")
                                             var amountDue_label=$("<label for='amountDue_label' class='custom_label_css float-right'>Net Total</label>");
-                                            amountdue_input=$("<input class='form-control' onfocusin='netTotalFocusInPres()' id='amountdue_input'>")
+                                            var amountdue_input=$("<input class='form-control' onfocusin='netTotalFocusInPres()' id='amountdue_input'>")
 
                                         colmd1.append(discountamount_label)
                                         colmd2.append(discountamount_input)
@@ -2147,22 +2178,39 @@ function createWardDataTable(){
 
                             var subrow_seven=$("<div class='row' style='padding-bottom:10px;'></div>")
 
-                                var col_one__subrow_seven=$("<div class='col-md-12'></div>");
+                                var col_one__subrow_seven=$("<div class='col-md-8'></div>");
                                     row__col_one__subrow_seven=$("<div class='row'></div>");
-                                        var colmd1=$("<div class='col-md-2'></div>")
-                                        var colmd2=$("<div class='col-md-6'></div>")
-                                        
+                                        var colmd1=$("<div class='col-md-3'></div>")
+                                        var colmd2=$("<div class='col-md-9'></div>")
                                             var reason_label=$("<label for='discount_reason_label' class='custom_label_css'>Discount Reason</label>");
                                             reason_input=$("<input class='form-control' id='discount_reason_input' class='custom_input_css'>")
                                         colmd1.append(reason_label)
                                         colmd2.append(reason_input)
-
                                     row__col_one__subrow_seven.append(colmd1);
                                     row__col_one__subrow_seven.append(colmd2);
-
                                 col_one__subrow_seven.append(row__col_one__subrow_seven);
 
+                                var col_two__subrow_seven=$("<div class='col-md-4'></div>");
+                                    row__col_two__subrow_seven=$("<div class='row'></div>");
+                                        var colmd1=$("<div class='col-md-6'></div>")
+                                        var colmd2=$("<div class='col-md-3'></div>")
+                                        var colmd3=$("<div class='col-md-3'></div>")
+                                            
+                                            var bill_status_label=$("<label for='reason_label' class='custom_label_css float-right'>Add Bill Status</label>");
+                                        colmd1.append(bill_status_label)
+                                            var option1_input=$("<input  type='radio' name='Paid_NotPaid' value='Paid' checked>Paid</input>");
+                                        colmd2.append(option1_input)
+                                            var option2_input=$("<input  type='radio' name='Paid_NotPaid' value='Unpaid'>Not Paid</input>");  
+                                        colmd3.append(option2_input)
+
+                                    row__col_two__subrow_seven.append(colmd1);
+                                    row__col_two__subrow_seven.append(colmd2);
+                                    row__col_two__subrow_seven.append(colmd3);
+
+                                col_two__subrow_seven.append(row__col_two__subrow_seven);
+                            
                             subrow_seven.append(col_one__subrow_seven)
+                            subrow_seven.append(col_two__subrow_seven)
                     
                             var subrow_eight=$("<div class='row' style='padding-bottom:10px;'></div>")
 
@@ -2461,7 +2509,7 @@ function createRoomDataTable(){
                                                 var colmd1=$("<div class='col-md-4'></div>")
                                                 var colmd2=$("<div class='col-md-2'></div>")
                                                     var roomNo_label=$("<label for='roomNo_label' class='custom_label_css'>Room Number</label>");
-                                                    var roomNo_input=$("<input id='roomNo_input' class='custom_input_css form-control' value='"+room_id_selected+"' disabled>")
+                                                    var roomNo_input=$("<input id='roomNo_input' class='custom_input_css form-control' style='background: white;' value='"+room_id_selected+"' disabled>")
 
                                                     colmd1.append(roomNo_label)
                                                 colmd2.append(roomNo_input)
@@ -2472,13 +2520,13 @@ function createRoomDataTable(){
                             subrow_one.append(col_one__subrow_one)
 
                         var subrow_two=$("<div class='row' style='padding-bottom:10px;'></div>")
-                            var col_one_subrow_two=$("<div class='col-md-12'></div>");
+                            var col_one_subrow_two=$("<div class='col-md-8'></div>");
                                 var row__col_one_subrow_two=$("<div class='row'></div>");
-                                    colmd1=$("<div class='col-md-2'></div>")
+                                    colmd1=$("<div class='col-md-3'></div>")
                                     colmd2=$("<div class='col-md-9'></div>")
 
                                         var admit_reason_label=$("<label class='custom_label_css'>Admit Reason</label>");
-                                        var admit_reason_input=$("<textarea type='text'  id='admit_reason_input' class='custom_input_css'>")
+                                        var admit_reason_input=$("<textarea type='text'  id='admit_reason_input' class='form-control custom_input_css' style='width:inherit;'>")
 
                                     colmd1.append(admit_reason_label)
                                     colmd2.append(admit_reason_input)
@@ -2566,56 +2614,62 @@ function createRoomDataTable(){
                                     var colmd4=$("<div class='col-md-2'></div>")
                                     var colmd5=$("<div class='col-md-2'></div>")
                                     var colmd6=$("<div class='col-md-2'></div>")
-
-                                    var discountamount_label=$("<label for='indoor_disc_tag' class='custom_label_css'>Discount Amount</label>");
+                                        var discountamount_label=$("<label for='indoor_disc_tag' class='custom_label_css'>Discount Amount</label>");
                                     colmd1.append(discountamount_label)
-
-                                    discountamount_input=$("<input class='form-control' id='discountamount_input' onfocusout='discountAmountFocousOutPres($(this))' class='custom_input_css'>")
+                                        discountamount_input=$("<input class='form-control' id='discountamount_input' onfocusout='discountAmountFocousOutPres($(this))' class='custom_input_css'>")
                                     colmd2.append(discountamount_input)
-
-                                    var discountPercernt_label=$("<label for='discountPercernt_label' class='custom_label_css float-right'>Discount Percent</label>");
+                                        var discountPercernt_label=$("<label for='discountPercernt_label' class='custom_label_css float-right'>Discount Percent</label>");
                                     colmd3.append(discountPercernt_label)
-
-                                    discountpercent_input=$("<input class='form-control' id='discountpercent_input' class='custom_input_css'>")
+                                        discountpercent_input=$("<input class='form-control' id='discountpercent_input' class='custom_input_css'>")
                                     colmd4.append(discountpercent_input)
-
-                                    var amountDue_label=$("<label for='amountDue_label' class='custom_label_css float-right'>Net Total</label>");
+                                        var amountDue_label=$("<label for='amountDue_label' class='custom_label_css float-right'>Net Total</label>");
                                     colmd5.append(amountDue_label)
-
-                                    amountdue_input=$("<input class='form-control' onfocusin='netTotalFocusInPres()' id='amountdue_input'>")
+                                        amountdue_input=$("<input class='form-control' onfocusin='netTotalFocusInPres()' id='amountdue_input'>")
                                     colmd6.append(amountdue_input)
-
                                 row__col_one__subrow_five.append(colmd1);
                                 row__col_one__subrow_five.append(colmd2);
                                 row__col_one__subrow_five.append(colmd3);
                                 row__col_one__subrow_five.append(colmd4);
                                 row__col_one__subrow_five.append(colmd5);
                                 row__col_one__subrow_five.append(colmd6);
-
-
                             col_one__subrow_five.append(row__col_one__subrow_five);
-
                         subrow_five.append(col_one__subrow_five)
 
                         var subrow_six=$("<div class='row' style='padding-bottom:10px;'></div>")
-
-                            var col_one__subrow_six=$("<div class='col-md-12'></div>");
+                            var col_one__subrow_six=$("<div class='col-md-8'></div>");
                                 row__col_one__subrow_six=$("<div class='row'></div>");
-                                    var colmd1=$("<div class='col-md-2'></div>")
-                                    var colmd2=$("<div class='col-md-6'></div>")
-                                    
+                                    var colmd1=$("<div class='col-md-3'></div>")
+                                    var colmd2=$("<div class='col-md-9'></div>")
                                         var reason_label=$("<label for='discount_reason_label' class='custom_label_css'>Discount Reason</label>");
-                                        colmd1.append(reason_label)
-
+                                    colmd1.append(reason_label)
                                         reason_input=$("<input class='form-control' id='discount_reason_input' class='custom_input_css'>")
-                                        colmd2.append(reason_input)
-
+                                    colmd2.append(reason_input)
                                 row__col_one__subrow_six.append(colmd1);
                                 row__col_one__subrow_six.append(colmd2);
-
                             col_one__subrow_six.append(row__col_one__subrow_six);
 
+                            var col_two__subrow_six=$("<div class='col-md-4'></div>");
+                                row__col_two__subrow_six=$("<div class='row'></div>");
+                                    var colmd1=$("<div class='col-md-6'></div>")
+                                    var colmd2=$("<div class='col-md-3'></div>")
+                                    var colmd3=$("<div class='col-md-3'></div>")
+                                        
+                                        var bill_status_label=$("<label for='reason_label' class='custom_label_css float-right'>Add Bill Status</label>");
+                                    colmd1.append(bill_status_label)
+                                        var option1_input=$("<input  type='radio' name='Paid_NotPaid' value='Paid' checked>Paid</input>");
+                                    colmd2.append(option1_input)
+                                        var option2_input=$("<input  type='radio' name='Paid_NotPaid' value='Unpaid'>Not Paid</input>");  
+                                    colmd3.append(option2_input)
+
+                                row__col_two__subrow_six.append(colmd1);
+                                row__col_two__subrow_six.append(colmd2);
+                                row__col_two__subrow_six.append(colmd3);
+
+                            col_two__subrow_six.append(row__col_two__subrow_six);
+                    
                         subrow_six.append(col_one__subrow_six)
+                        subrow_six.append(col_two__subrow_six)
+
 
                         var subrow_seven=$("<div class='row' style='padding-bottom:10px;'></div>")
 
@@ -3347,12 +3401,14 @@ function SaveAndPrintBill(){
     } );
     console.log("pbr_dict",pbr_dict)
     var rmc="RMC HOSPITAL";
-    var patient_name=$("#pat_name_input").val();
-    var phoneno=$("#contact_numb_input").val();
+    var patient_name=$("#pat_name_input").text();
+    var phoneno=$("#contact_numb_input").text();
     var proceduredata_dict={};
     var nettotal_input=$('#nettotal_input').val();
     var totalamount_input=$('#totalamount_input').val();
     var discountamount_input=$('#discountamount_input').val();
+    var bill_status=$("input[name='Paid_NotPaid']:checked").val();
+    console.log("bill status", bill_status)
 
     $("#invoice-POS").empty();
     var invoice_pos=$("#invoice-POS");
@@ -3484,6 +3540,7 @@ function SaveAndPrintBill(){
             'discountamount':discountamount_input,
             'procedure_total':procedure_total,
             'net_total':nettotal_input,
+            'status':bill_status,
         },
         url: '/save_patient_bill',
         success: function(data){
@@ -3564,10 +3621,10 @@ function createRowDivFiveBill(){ ///Last Discount and total Bill row with Button
                                 subcol1.append(row1__subcol1)
                             row2__calculate_col2.append(subcol1);
                         var row3__calculate_col2=$("<div class='row' style='padding-bottom:10px;'></div>");
-                            var subcol1=$("<div class='col-md-12'></div>")
+                            var subcol1=$("<div class='col-md-8'></div>")
                                 var row1__subcol1=$("<div class='row'></div>");
-                                    var c1=$("<div class='col-md-2'></div>")
-                                    var c2=$("<div class='col-md-6'></div>")
+                                    var c1=$("<div class='col-md-3'></div>")
+                                    var c2=$("<div class='col-md-9'></div>")
                                     
                                         var reason_label=$("<label for='reason_label' class='custom_label_css'>Discount Reason</label>");
                                         c1.append(reason_label)
@@ -3580,7 +3637,25 @@ function createRowDivFiveBill(){ ///Last Discount and total Bill row with Button
     
                                 row1__subcol1.append(row1__subcol1);
                             subcol1.append(row1__subcol1);
+                            var subcol2=$("<div class='col-md-4'></div>")
+                                var row1__subcol2=$("<div class='row'></div>");
+                                    var c1=$("<div class='col-md-6'></div>")
+                                    var c2=$("<div class='col-md-3'></div>")
+                                    var c3=$("<div class='col-md-3'></div>")
+                                        var bill_status_label=$("<label for='reason_label' class='custom_label_css float-right'>Add Bill Status</label>");
+                                    c1.append(bill_status_label)
+                                        var option1_input=$("<input  type='radio' name='Paid_NotPaid' value='Paid' >Paid</input>");
+                                    c2.append(option1_input)
+                                        var option2_input=$("<input  type='radio' name='Paid_NotPaid' value='Unpaid' checked>Not Paid</input>");
+                                    c3.append(option2_input)
+                                row1__subcol2.append(c1);
+                                row1__subcol2.append(c2);
+                                row1__subcol2.append(c3);
+                            subcol2.append(row1__subcol2);
+
                         row3__calculate_col2.append(subcol1);
+                        row3__calculate_col2.append(subcol2);
+
                         var row4__calculate_col2=$("<div class='row'></div>");
                             var subcol1=$("<div class='col-md-12'></div>")
                                 var row1__subcol1=$("<div class='row'></div>");

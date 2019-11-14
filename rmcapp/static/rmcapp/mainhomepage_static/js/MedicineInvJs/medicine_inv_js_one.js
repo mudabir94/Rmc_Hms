@@ -176,11 +176,11 @@ function addMedicineForm(){
             package_info_row_div.append(col_two__package_info_row_div)
             // HTML of row2 completed
             col_one__row_div_three=$("<div class='col-md-6' style=' padding-top:10px'></div>");
-            p__col_one__row_div_three=$("<label >Add Charge Status</label>");
+                p__col_one__row_div_three=$("<label >Add Charge Status</label>");
             col_one__row_div_three.append(p__col_one__row_div_three);
             col_two__row_div_three=$("<div class='col-md-6' style=' padding-top:10px'></div>");
-            p__col_two__row_div_three1=$("<input type='radio' name='YES_NO' value='YES' checked>YES</input>");
-            p__col_two__row_div_three2=$("<input type='radio'  name='YES_NO' value='No' >No</input>");
+                p__col_two__row_div_three1=$("<input type='radio' name='YES_NO' value='YES' checked>YES</input>");
+                p__col_two__row_div_three2=$("<input type='radio'  name='YES_NO' value='No' >No</input>");
 
             col_two__row_div_three.append(p__col_two__row_div_three1);
             col_two__row_div_three.append(p__col_two__row_div_three2);
