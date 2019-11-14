@@ -38,7 +38,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
- 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+
     <script src="{% static 'rmcapp/mainhomepage_static/js/StaffmanagementJS/employee-manage.js' %}"></script>
     <!-- <script src="{% static 'rmcapp/mainhomepage_static/js/jsprint/jQuery.print.js' %}"></script> -->
 
@@ -57,6 +58,28 @@
         }
         .dashboard-icons:hover{
           background:grey;
+
+        }
+        .icon_padding{
+          padding:32px 0px 0px 215px;
+          opacity: 0.2;
+          color:white;
+        }
+        .view_all, .edit_info, .add_emp{
+          font-size: 30px;
+          opacity: 0.5;
+          color:white;
+        }
+        .add_emp{
+          padding: 0px 0px 0px 160px;
+
+        }
+        .edit_info{
+          padding: 0px 0px 0px 91px;
+
+        }
+        .view_all{
+          padding: 0px 0px 0px 58px;
 
         }
     </style>
@@ -189,49 +212,31 @@
     <div class="container-fluid">
       <h2>Staff Dashboard</h2>
       <hr>
-      
-      <div class="row">
-        <div class="form-group col-md-12">
-         
-                
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-            when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-            It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
-            It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
-            and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
-        </div>
-      </div>
-      
       <div class="row">
           <div class="col-md-12">
         
             <div class="row dashboard-icon-rows">
-                <div class="col-md-4" >
-                    <div class="dashboard-icons"></div>
+              <div class="col-md-4" >
+                <div class="dashboard-icons" role="button" onclick="addEmployee()">
+                  <i class="fa fa-plus-square fa-5x icon_padding"></i></br>
+                  <span class="add_emp">Add Employee</span>
                 </div>
-                <div class="col-md-4">
-                  <div class='dashboard-icons'></div>
+              </div>
+              <div class="col-md-4">
+                <div class='dashboard-icons' role="button" onclick="editEmployee()">
+                  <i class="fa fa-pencil-square-o fa-5x icon_padding"></i></br>
+                  <span class="edit_info">Edit Employee Information</span>
                 </div>
-                <div class="col-md-4">
-                  <div class='dashboard-icons'></div>
+              </div>
+              <div class="col-md-4">
+                <div class='dashboard-icons' role="button" onclick="viewAllEmployee()">
+                  <i class="fa fa-list-alt fa-5x icon_padding"></i></br>
+                  <span class="view_all" >View All Employees Information</span>
                 </div>
+              </div>
             </div>
-
-            <div class="row dashboard-icon-rows" >
-                <div class="col-md-4" >
-                    <div class="dashboard-icons" ></div>
-                </div>
-                <div class="col-md-4">
-                  <div class='dashboard-icons'></div>
-                </div>
-                <div class="col-md-4">
-                  <div class='dashboard-icons'></div>
-                </div>
-            </div>
+          </div>
         </div>
-      </div>
    
     </div>
   
