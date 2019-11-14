@@ -43,7 +43,7 @@
     <!-- <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script> -->
     <style>
     
-    .dashboard-icons{
+        .dashboard-icons{
             width:100%;
             border-radius: 2px;
             height:200px;
@@ -55,6 +55,29 @@
         }
         .dashboard-icons:hover{
           background:grey;
+
+        }
+
+        .icon_padding{
+          padding:32px 0px 0px 215px;
+          opacity: 0.2;
+          color:white;
+        }
+        .add_med, .med_stck, .med_desp{
+          font-size: 30px;
+          opacity: 0.5;
+          color:white;
+        }
+        .add_med{
+          padding: 0px 0px 0px 134px;
+
+        }
+        .med_stck{
+          padding: 0px 0px 0px 120px;
+
+        }
+        .med_desp{
+          padding: 0px 0px 0px 83px;
 
         }
     </style>
@@ -127,11 +150,6 @@
             </a>
             <div class="sidebar-submenu">
               <ul>
-                  <li>
-                      <a href="#" onclick="mainDashBoard()">Medicine Dashboard 
-                        <!-- <span class="badge badge-pill badge-success">Pro</span> -->
-                      </a>
-                    </li>
                 <li>
                   <a href="#" onclick="addMedicineForm()">Add New Medicine 
                     <!-- <span class="badge badge-pill badge-success">Pro</span> -->
@@ -185,49 +203,30 @@
       <hr>
       
       <div class="row">
-        <div class="form-group col-md-12">
-         
-                
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-            when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-            It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
-            It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
-            and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
+        <div class="col-md-12">
+      
+          <div class="row dashboard-icon-rows">
+            <div class="col-md-4" >
+              <div class="dashboard-icons" role="button" onclick="addMedicineForm()">
+                <i class="fa fa-plus-square fa-5x icon_padding"></i></br>
+                <span class="add_med">Add New Medicine</span>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class='dashboard-icons' role="button" onclick="addMedicineToWhStockFrom()">
+                <i class="fa fa-medkit fa-5x icon_padding"></i></br>
+                <span class="med_stck">Add Medicine To Stock</span>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class='dashboard-icons' role="button" onclick="addMedicineToDespStockForm()">
+                <i class="fa fa-list-alt fa-5x icon_padding"></i></br>
+                <span class="med_desp" >Add Medicine To Dispensory</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-        
-      <div class="row">
-          <div class="col-md-12">
-        
-            <div class="row dashboard-icon-rows">
-                <div class="col-md-4" >
-                    <div class="dashboard-icons" ></div>
-                </div>
-                <div class="col-md-4">
-                  <div class='dashboard-icons'></div>
-                </div>
-                <div class="col-md-4">
-                  <div class='dashboard-icons'></div>
-                </div>
-            </div>
-
-            <div class="row dashboard-icon-rows" >
-                <div class="col-md-4" >
-                    <div class="dashboard-icons" ></div>
-                </div>
-                <div class="col-md-4">
-                  <div class='dashboard-icons'></div>
-                </div>
-                <div class="col-md-4">
-                  <div class='dashboard-icons'></div>
-                </div>
-            </div>
-        </div>
-      </div>
-
-
 
     </div>
   
