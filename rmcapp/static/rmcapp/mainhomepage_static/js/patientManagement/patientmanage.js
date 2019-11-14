@@ -3319,8 +3319,8 @@ function SaveAndPrintBill(){
 
         dspstck_dict[parseInt(data[0])]=meddatadict
     } );
-    console.log("dspstck_dict",dspstck_dict)
-    pbr_dict={}
+    console.log("dspstck_dict",dspstck_dict);
+    pbr_dict={};
     bill_datatable.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
         var data = this.data();
         console.log("Bill DATA",data)

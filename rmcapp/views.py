@@ -1544,8 +1544,11 @@ def generatePrescription(request):
                 roomBillObj.patient=patObj
                 roomBillObj.rooms=roomObj
                 roomBillObj.pres=presRecObj
+                roomBillObj.checkin=presRecObj.created_at
                 # have to add check in date and time here. 
                 roomBillObj.save()
+                roomObj.status="Not Available"
+                roomObj.save()
                 
             else:
                 wardObj=Ward.objects.get(id=int(presData['ward_id']))
@@ -1555,6 +1558,8 @@ def generatePrescription(request):
                 wardBillObj.wards=wardObj
                 # have to add check in date and time here. 
                 wardBillObj.save()
+                wardObj.status="Not Available"
+                wardObj.save()
         
 
 
