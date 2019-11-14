@@ -42,7 +42,7 @@ function addProcSurgForm(){
 
                     procedure_label=$("<label for='procedure_tag' class='custom_label_css'>Procedure/Surgery</label>");
                     colmd1.append(procedure_label)
-                    var select=$("<select id='ps_type_input' class='form-control' onchange='proc_surgery_OnSelect($(this))'></select>");
+                    var select=$("<select id='ps_type_select' class='form-control' onchange='proc_surgery_OnSelect($(this))'></select>");
                         var option=$("<option selected='selected' value='--'>--</option>");
                         var option1=$("<option id="+ps_type_list[0]+"-opt value="+ps_type_list[0]+">"+ps_type_list[0]+"</option>");
 
@@ -277,7 +277,7 @@ function updateProcSurgForm(){
 
                     procedure_label=$("<label for='procedure_tag' class='custom_label_css'>Procedure/Surgery</label>");
                     colmd1.append(procedure_label)
-                    var select=$("<select id='ps_type_input' class='form-control' onchange='ps_OnSelect($(this))'></select>");
+                    var select=$("<select id='ps_type_select' class='form-control' onchange='ps_OnSelect($(this))'></select>");
                         var option=$("<option selected='selected' value='--'>--</option>");
                         var option1=$("<option id="+ps_type_list[0]+"-opt value="+ps_type_list[0]+">"+ps_type_list[0]+"</option>");
 

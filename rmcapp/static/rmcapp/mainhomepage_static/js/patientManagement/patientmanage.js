@@ -2218,6 +2218,8 @@ function onSelectWardRoom(element){
    
     console.log("Room_WardSelected",Room_WardSelected)
     if (Room_WardSelected==='Room'){
+        alert(Room_WardSelected)
+
         $("#row_div_seven").remove();
 
         if (room_datatable!==undefined){
@@ -2246,6 +2248,8 @@ function onSelectWardRoom(element){
     }
     else if (Room_WardSelected==='Ward'){
         $("#row_div_seven").remove();
+        alert(Room_WardSelected)
+
 
         if (room_datatable!==undefined){
             room_datatable.destroy();

@@ -787,9 +787,12 @@ def sendAjaxReqToSaveMedicineToDb(request):
         medicine_name = request.POST.get('medicine_name')
         selected_type = request.POST.get('selected_type')
         med_details = request.POST.get('med_details')
+        add_charge_status=request.POST.get('add_charge_status')
         medicine_name = json.loads(medicine_name)
         selected_type = json.loads(selected_type)
         med_details = json.loads(med_details)
+        add_charge_status = json.loads(add_charge_status)
+
 
         print(medicine_name)
         print(selected_type)
@@ -799,6 +802,7 @@ def sendAjaxReqToSaveMedicineToDb(request):
         med_obj.medicine_type_id=medicineType.objects.get(medicine_type_name=selected_type)
         med_obj.medicine_name=medicine_name
         med_obj.medicine_details=med_details
+        med_obj.add_charge=add_charge_status
         med_obj.save()
         medicine_name_type_list=list(Medicine.objects.all().values_list('medicine_name',"medicine_type_id__medicine_type_name"))
 

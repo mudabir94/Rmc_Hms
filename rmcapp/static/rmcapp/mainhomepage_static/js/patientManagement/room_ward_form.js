@@ -11,17 +11,17 @@ var room_list=[]
 
 
 $( document ).ready(function() {
-    $.ajax({
-        type: 'POST',
-        dataType: "json",
-        'data': { 
+    // $.ajax({
+    //     type: 'POST',
+    //     dataType: "json",
+    //     'data': { 
 
-        },
-        url: '/room_ward_form',
-        success: function(data){            
-            // addRoomWardForm();
-        },
-    });
+    //     },
+    //     url: '/room_ward_form',
+    //     success: function(data){            
+    //         // addRoomWardForm();
+    //     },
+    // });
 });
 function addRoomWardForm(){
     $('#main_page_content').empty()
@@ -535,7 +535,7 @@ function update_rw_OnSelect(element){
     }
 
 }
-function createRoomDataTable(){
+function createRoomDTable(){
     console.log("room_list----------",room_list)
     $(function(){
         room_datatable=$("#available_room_ward_table").DataTable({
@@ -694,7 +694,7 @@ function createRoomDataTable(){
         });
     });
 }
-function createWardDataTable(){
+function createRoomDTable(){
     console.log("ward_list",ward_list)
     $(function(){
         ward_datatable=$("#available_room_ward_table").DataTable({
@@ -939,7 +939,7 @@ function retrieveAllWardInfoInRoomWard(){
             console.log(ward_list)
             $('#available_ward_table').show()
 
-            createWardDataTable()
+            createRoomDTable()
 
 
         },
@@ -975,7 +975,7 @@ function retrieveAllRoomInfoInRoomWard(){
             console.log("room_dict",room_dict);
             console.log(room_list)
 
-            createRoomDataTable()
+            createRoomDTable()
 
         },
     }); 

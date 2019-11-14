@@ -127,6 +127,8 @@ function addMedicineForm(){
 
         var row_div_one=$("<div class='row'></div>");
         var package_info_row_div=$("<div class='row'></div>");
+        var row_div_three=$("<div class='row'></div>");
+
         var row_div_four=$("<div class='row'></div>");
 
             col_one__row_div_one=$("<div class='col-md-6'></div>");
@@ -172,8 +174,20 @@ function addMedicineForm(){
             col_two__package_info_row_div.append(p__col_two__package_info_row_div);
             package_info_row_div.append(col_one__package_info_row_div)
             package_info_row_div.append(col_two__package_info_row_div)
-
             // HTML of row2 completed
+            col_one__row_div_three=$("<div class='col-md-6' style=' padding-top:10px'></div>");
+            p__col_one__row_div_three=$("<label >Add Charge Status</label>");
+            col_one__row_div_three.append(p__col_one__row_div_three);
+            col_two__row_div_three=$("<div class='col-md-6' style=' padding-top:10px'></div>");
+            p__col_two__row_div_three1=$("<input type='radio' name='YES_NO' value='YES' checked>YES</input>");
+            p__col_two__row_div_three2=$("<input type='radio'  name='YES_NO' value='No' >No</input>");
+
+            col_two__row_div_three.append(p__col_two__row_div_three1);
+            col_two__row_div_three.append(p__col_two__row_div_three2);
+
+            $(row_div_three).append(col_one__row_div_three)
+            $(row_div_three).append(col_two__row_div_three)
+           
 
             col_one__row_div_four=$("<div class='col-md-2 offset-md-2'></div>");
                     save_btn_label=$("<button class='btn btn-success fa fa-save' style='width:inherit' onclick='saveMedicineToDb()'>  Save</button>");
@@ -185,6 +199,8 @@ function addMedicineForm(){
 
     $(main_col_div).append(row_div_one)
     $(main_col_div).append(package_info_row_div)
+    $(main_col_div).append(row_div_three)
+
     $(main_col_div).append("<hr>")
     $(main_col_div).append(row_div_four);
 
@@ -242,8 +258,10 @@ function saveMedicineToDb(){
                     med_details=$("#med_details").val();
                     $("#med_details").val("");
                     console.log("med_details",med_details);
-
-                    sendAjaxReqToSaveMedicineToDb(medicine_name,selected_type,med_details);
+                    // get Radio Button Value and Send it for Save
+                    add_charge_status=$("input[name='YES_NO']:checked").val();
+                    alert(add_charge_status) 
+                    sendAjaxReqToSaveMedicineToDb(medicine_name,selected_type,med_details,add_charge_status);
 
                     $( this ).dialog( "close" );
                     medicine_name_type_list=[]
@@ -259,7 +277,7 @@ function saveMedicineToDb(){
     
     
 }
-function sendAjaxReqToSaveMedicineToDb(medicine_name,selected_type,med_details){
+function sendAjaxReqToSaveMedicineToDb(medicine_name,selected_type,med_details,add_charge_status){
     console.log("selected_type",selected_type)
     $.ajax({
         type: 'POST',
@@ -271,6 +289,7 @@ function sendAjaxReqToSaveMedicineToDb(medicine_name,selected_type,med_details){
             "medicine_name":JSON.stringify(medicine_name),
             "selected_type":JSON.stringify(selected_type),
             "med_details":JSON.stringify(med_details),
+            "add_charge_status":JSON.stringify(add_charge_status),
         },
         
         success: function(data){
@@ -333,8 +352,8 @@ function addMedicineToWhStockFrom(){
                         med_name_label=$("<label for='medicine_name_tag' class='custom_label_css'>Medicine Name</label>");
                         med_name_input=$("<input class='form-control custom_input_css' id='medicine_name_tag' onfocusout='focusOut_medicineName($(this))'>")
 
-                    colmd1.append(med_name_label)
-                    colmd2.append(med_name_input)
+                    colmd1.append(med_name_label);
+                    colmd2.append(med_name_input);
                 row__col_one__row_div_one.append(colmd1);
                 row__col_one__row_div_one.append(colmd2);
             col_one__row_div_one.append(row__col_one__row_div_one);
