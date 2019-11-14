@@ -123,7 +123,7 @@ class patPrescriptionBillAdmin(admin.ModelAdmin):
 
 class patPrescriptionRecordsAdmin(admin.ModelAdmin):
     list_display=('id','patient','patient_type','doc','sign_symtoms',\
-    'provisional_diagnosis','investigation','diagnosis','vitals','rx','date_visited')
+    'provisional_diagnosis','investigation','diagnosis','vitals','rx','date_visited','created_at','update_at')
 
 
 class surgeryTableAdmin(admin.ModelAdmin):

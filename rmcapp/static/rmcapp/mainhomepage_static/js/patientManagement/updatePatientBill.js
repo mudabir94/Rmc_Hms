@@ -9,9 +9,6 @@ var netTotal;
 var status_list=['Paid', 'Not Paid']
 
 
-$(document).ready(function() {
-});
-
 function updatePatientBill(){
     // $("#pat_details_div").remove();
     // $("#row_pres_bill").remove();

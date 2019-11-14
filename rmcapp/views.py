@@ -1515,8 +1515,12 @@ def generatePrescription(request):
         presRecObj.doc=empObj
         patTypeObj=patientType.objects.get(patient_type=patient_type)
         presRecObj.patient_type=patTypeObj
+        
+        presRecObj.save()
+        presRecObj.date_visited=presRecObj.created_at
         presRecObj.save()
         presData['pres_id']=presRecObj.id
+
 
         # Add Data to Prescription Bill Records. 
         patPresBillObj=patPrescriptionBill()
@@ -2238,6 +2242,8 @@ def savePatientBill(request):
 
             procedureTable.objects.get(procedure_name=procname)
             procBillRecObj=procedureBillRecord()
+            procObj=procedureTable.objects.get(procedure_name=procname)
+            procBillRecObj.procedure=procObj
             procBillRecObj.pres=patPresRecObj
             procBillRecObj.net_total=int(proceduredata_dict[procname])
             procBillRecObj.status="UnPaid"
@@ -3143,7 +3149,8 @@ def retrieveInvoiceBillRecordForView(request):
         procBillRecordView_dict={}
         patPresRecordView_dict={}
         DespBillView_dict={}
-
+        totalProcBill=0
+        totalSurgBill=0
         if InvoiceObj.room_bill!=None:
             patRoomBillView_dict={}
             patRoomBillView_dict['floor']=InvoiceObj.room_bill.rooms.floor
@@ -3226,6 +3233,7 @@ def retrieveInvoiceBillRecordForView(request):
                 procBillRecordView_dict[pbr_Obj.id]=[]
                 procBillRecordView_dict[pbr_Obj.id]=tempprocbillrecord_dict
             totalProcBill=procBillSummary_Obj.net_total
+            
             print("totalProcBill", totalProcBill)
 
         print("procBillRecordView_dict", procBillRecordView_dict)
