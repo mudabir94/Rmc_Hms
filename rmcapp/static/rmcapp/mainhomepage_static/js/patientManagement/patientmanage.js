@@ -2741,7 +2741,7 @@ function createPatientDetailsHtmlInCreateBill(){
 
                 var col_one__subrow_one=$("<div class='col-md-3'></div>");
                         row__col_one__subrow_one=$("<div class='row'></div>");
-                            var colmd1=$("<div class='col-md-4'></div>")
+                            var colmd1=$("<div class='col-md-5'></div>")
                             var colmd2=$("<div class='col-md-6'></div>")
                                 var pat_name_label=$("<label for='emp_name_tag' class='custom_label_css'>Patient Name</label>");
                                 var pat_name_input=$("<label class='form-control-static' id='pat_name_input'>"+patient_dict[patient_id_selected]['name']+"</label>")
@@ -2753,7 +2753,7 @@ function createPatientDetailsHtmlInCreateBill(){
 
                 var col_two__subrow_one=$("<div class='col-md-3'></div>");
                     var row__col_two__subrow_one=$("<div class='row'></div>");
-                        var colmd1=$("<div class='col-md-4'></div>")
+                        var colmd1=$("<div class='col-md-5'></div>")
                         var colmd2=$("<div class='col-md-6'></div>")
                             var contact_type_label=$("<label class='custom_label_css'>Contact Number</label>");
                             var contact_type_input=$("<label class='form-control-static' id='contact_numb_input'>"+patient_dict[patient_id_selected]['contact_no']+"</label>")
@@ -3137,7 +3137,7 @@ var col1=$("#desp-med-qty-form")
             var sub_sub_row5=$("<div class='row'></div>");
                 var col1_sub_sub_row5=$("<div class='col-md-4'></div>");
                 var col2_sub_sub_row5=$("<div class='col-md-6'></div>");
-                    var button=$("<button class='btn btn-blocl fa fa-plus-circle' id='add_med_desp' onclick='addMedicineToPatientBill()'>  Add Medicine to Bill</button>")
+                    var button=$("<button class='btn btn-blocl fa fa-plus-circle' id='add_med_desp' onclick='addMedicineToPatientBill()' style='width:inherit'>  Add Medicine to Bill</button>")
                 col2_sub_sub_row5.append(button);
 
             sub_sub_row5.append(col1_sub_sub_row5);
@@ -3648,7 +3648,7 @@ function createRowDivSixDespBill(){
                                 sub_row2.append(subcol2_subrow2);
 
                                 var sub_row3=$("<div class='row'></div>");                                        
-                                    var subcol1_subrow3=$("<div class='col-md-5 offset-md-4'></div>");
+                                    var subcol1_subrow3=$("<div class='col-md-6 offset-md-4'></div>");
                                         var button=$("<button class='btn btn-block fa fa-plus-circle' onclick='addProcedureToDespBill()'>  Add Procedure to Bill</button>");
                                     subcol1_subrow3.append(button)
                                 sub_row3.append(subcol1_subrow3);

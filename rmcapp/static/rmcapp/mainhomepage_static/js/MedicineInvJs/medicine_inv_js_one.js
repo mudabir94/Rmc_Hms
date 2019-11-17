@@ -1962,109 +1962,106 @@ function addMedicineToDespStockForm(){
                         var row1__col_one__row_div_two=$("<div class='row'></div>");
                         var row3__col_one__row_div_two=$("<div class='row'></div>");
                         var row2__col_one__row_div_two=$("<div class='row'></div>");
-
-
-
-                                
-                                            // based on medicine name and get current data in stock through ajax,
-                                            $.ajax({
-                                                type:"POST",
-                                                dataType:"json",
-                                                'data':{
-                                                    "medicine_name":medicine_name,
-                                                },
-                                                url:"/retrieve_medicine_stock_data_from_stock",
-                                                success:function (data){
-                                                    var medicine_batch_in_tempstock_list=data["medicine_batch_in_tempstock_list"];
-                                                    var boxes=data["boxes"]
-                                                    var strips=data['strips']
-                                                    var pieces=data["pieces"]
-                                                    var strip_unit=data['strip_unit']
-                                                    console.log("boxes--",boxes)
-                                                    console.log("strips--",strips)
-
-                                                    console.log("pieces",pieces)
-
-
-                                                        var colmd1=$("<div class='col-md-6'></div>")
-                                                            boxamount_label=$("<label class='custom_label_css'>No of Boxes Stored:</label>");
-                                                        colmd1.append(boxamount_label)
-                                                        var colmd2=$("<div class='col-md-6'></div>")
-                                                             boxamount_input=$("<input class='form-control' type='number' id='active_box_input' class='custom_input_css' value='"+boxes+"' disabled> </input>")
-                                                        colmd2.append(boxamount_input)
-                                                        row1__col_one__row_div_two.append(colmd1);
-                                                        row1__col_one__row_div_two.append(colmd2);
-                                                    if (strip_unit!=="-"){
-                                                            var colmd1=$("<div class='col-md-6'></div>")
-                                                                pieceamount_label=$("<label class='custom_label_css'>No of Strips Stored:</label>");
-                                                            colmd1.append(pieceamount_label)
-                                                            var colmd2=$("<div class='col-md-6'></div>")
-                                                                pieceamount_input=$("<input class='form-control' type='number' id='active_strip_input' value='"+strips+"'  class='custom_input_css' disabled> </input>")
-                                                            colmd2.append(pieceamount_input)
-                                                        row3__col_one__row_div_two.append(colmd1);
-                                                        row3__col_one__row_div_two.append(colmd2);
-                                                    }
                     
-                                                        var colmd1=$("<div class='col-md-6'></div>")
-                                                            pieceamount_label=$("<label class='custom_label_css'>No of Pieces Stored:</label>");
-                                                        colmd1.append(pieceamount_label)
-                                                        var colmd2=$("<div class='col-md-6'></div>")
-                                                            pieceamount_input=$("<input class='form-control' type='number' id='active_piece_input' value='"+pieces+"'  class='custom_input_css' disabled> </input>")
-                                                        colmd2.append(pieceamount_input)
-                                                    row2__col_one__row_div_two.append(colmd1);
-                                                    row2__col_one__row_div_two.append(colmd2);
-                                                col_one__row_div_two.append(row__col_one__row_div_two)
-                                                col_one__row_div_two.append(row1__col_one__row_div_two);         
-                                                col_one__row_div_two.append(row2__col_one__row_div_two);         
-                                                col_one__row_div_two.append(row3__col_one__row_div_two);         
-                                            active_row_div_two.append(col_one__row_div_two);    
-                                            $(main_col_div_2).append(active_row_div_two);
-                            
-                            
-                                            var temp_row_div_three=$("<div class='row despstorage_second_col_div_three_rows' id='med_in_temp_stock_datatable_row'></div>");
-                                            var col_one__row_div_three=$("<div class='col'></div>");
-                            
-                                                var row1__col_one__row_div_three=$("<div class='row'></div>");
-                                                    var label=$("<label>InActive Batches of Medicine </label>")
-                                                row1__col_one__row_div_three.append(label);
-                            
-                                                var row2__col_one__row_div_three=$("<div class='row'></div>");
-                                                        table=$('<table id="med_in_temp_stock" class="display"></table>')
-                                                row2__col_one__row_div_three.append(table);
-                            
-                                            col_one__row_div_three.append(row1__col_one__row_div_three);         
-                                            col_one__row_div_three.append(row2__col_one__row_div_three);   
-                                                    
-                                        temp_row_div_three.append(col_one__row_div_three);    
-                                        $(main_col_div_2).append(temp_row_div_three);
-                                        console.log("medicine_batch_in_tempstock_list",medicine_batch_in_tempstock_list)
-                                        $(function(){
-                                        
-                                                inactive_datatable=$("#med_in_temp_stock").DataTable({
-                                                data:medicine_batch_in_tempstock_list ,
-                                                columns: [
-                                                    { title: "Med" },
-                                                    { title: "BatNo" },
-                                                    
-                                                    { title: "boxes" },
-                                                    { title: "Strips" },
+                                    // based on medicine name and get current data in stock through ajax,
+                                    $.ajax({
+                                        type:"POST",
+                                        dataType:"json",
+                                        'data':{
+                                            "medicine_name":medicine_name,
+                                        },
+                                        url:"/retrieve_medicine_stock_data_from_stock",
+                                        success:function (data){
+                                            var medicine_batch_in_tempstock_list=data["medicine_batch_in_tempstock_list"];
+                                            var boxes=data["boxes"]
+                                            var strips=data['strips']
+                                            var pieces=data["pieces"]
+                                            var strip_unit=data['strip_unit']
+                                            console.log("boxes--",boxes)
+                                            console.log("strips--",strips)
+
+                                            console.log("pieces",pieces)
+
+
+                                                var colmd1=$("<div class='col-md-6'></div>")
+                                                    boxamount_label=$("<label class='custom_label_css'>No of Boxes Stored:</label>");
+                                                colmd1.append(boxamount_label)
+                                                var colmd2=$("<div class='col-md-6'></div>")
+                                                        boxamount_input=$("<input class='form-control' type='number' id='active_box_input' class='custom_input_css' value='"+boxes+"' disabled> </input>")
+                                                colmd2.append(boxamount_input)
+                                                row1__col_one__row_div_two.append(colmd1);
+                                                row1__col_one__row_div_two.append(colmd2);
+                                            if (strip_unit!=="-"){
+                                                    var colmd1=$("<div class='col-md-6'></div>")
+                                                        pieceamount_label=$("<label class='custom_label_css'>No of Strips Stored:</label>");
+                                                    colmd1.append(pieceamount_label)
+                                                    var colmd2=$("<div class='col-md-6'></div>")
+                                                        pieceamount_input=$("<input class='form-control' type='number' id='active_strip_input' value='"+strips+"'  class='custom_input_css' disabled> </input>")
+                                                    colmd2.append(pieceamount_input)
+                                                row3__col_one__row_div_two.append(colmd1);
+                                                row3__col_one__row_div_two.append(colmd2);
+                                            }
+            
+                                                var colmd1=$("<div class='col-md-6'></div>")
+                                                    pieceamount_label=$("<label class='custom_label_css'>No of Pieces Stored:</label>");
+                                                colmd1.append(pieceamount_label)
+                                                var colmd2=$("<div class='col-md-6'></div>")
+                                                    pieceamount_input=$("<input class='form-control' type='number' id='active_piece_input' value='"+pieces+"'  class='custom_input_css' disabled> </input>")
+                                                colmd2.append(pieceamount_input)
+                                            row2__col_one__row_div_two.append(colmd1);
+                                            row2__col_one__row_div_two.append(colmd2);
+                                        col_one__row_div_two.append(row__col_one__row_div_two)
+                                        col_one__row_div_two.append(row1__col_one__row_div_two);         
+                                        col_one__row_div_two.append(row2__col_one__row_div_two);         
+                                        col_one__row_div_two.append(row3__col_one__row_div_two);         
+                                    active_row_div_two.append(col_one__row_div_two);    
+                                    $(main_col_div_2).append(active_row_div_two);
                     
-                                                    { title: "pieces" },
-                                                
-                                                    ],
-                                                    
-                                                    paging: false,
-                                                    "scrollY": 100,
-                                                    "scrollX": 50,
-                                                    "ordering": true,
-                                                    "searching":false,
-                                                    "autoWidth": false,
-                                                    info:false,
-                                        
-                                                });
-                                        
+                    
+                                    var temp_row_div_three=$("<div class='row despstorage_second_col_div_three_rows' id='med_in_temp_stock_datatable_row'></div>");
+                                    var col_one__row_div_three=$("<div class='col'></div>");
+                    
+                                        var row1__col_one__row_div_three=$("<div class='row'></div>");
+                                            var label=$("<label>InActive Batches of Medicine </label>")
+                                        row1__col_one__row_div_three.append(label);
+                    
+                                        var row2__col_one__row_div_three=$("<div class='row'></div>");
+                                                table=$('<table id="med_in_temp_stock" class="display"></table>')
+                                        row2__col_one__row_div_three.append(table);
+                    
+                                    col_one__row_div_three.append(row1__col_one__row_div_three);         
+                                    col_one__row_div_three.append(row2__col_one__row_div_three);   
                                             
+                                temp_row_div_three.append(col_one__row_div_three);    
+                                $(main_col_div_2).append(temp_row_div_three);
+                                console.log("medicine_batch_in_tempstock_list",medicine_batch_in_tempstock_list)
+                                $(function(){
+                                
+                                        inactive_datatable=$("#med_in_temp_stock").DataTable({
+                                        data:medicine_batch_in_tempstock_list ,
+                                        columns: [
+                                            { title: "Med" },
+                                            { title: "BatNo" },
+                                            
+                                            { title: "boxes" },
+                                            { title: "Strips" },
+            
+                                            { title: "pieces" },
+                                        
+                                            ],
+                                            
+                                            paging: false,
+                                            "scrollY": 100,
+                                            "scrollX": 50,
+                                            "ordering": true,
+                                            "searching":false,
+                                            "autoWidth": false,
+                                            info:false,
+                                
                                         });
+                                
+                                    
+                                });
                                
 
                             },
@@ -2147,28 +2144,27 @@ function addMedicineToDespStockForm(){
 function despMedFormMainColOne(main_col_div_1){
     var row_div_one=$("<div class='row desp_col_div_rows'></div>");
     // Medicine Name
-    col_one__row_div_one=$("<div class='col '></div>");
+    col_one__row_div_one=$("<div class='col-md-4 '></div>");
         row__col_one__row_div_one=$("<div class='row'></div>");
             colmd1=$("<div class='col-md-6'></div>")
             colmd2=$("<div class='col-md-6'></div>")
 
-            med_name_label=$("<label for='medicine_name_tag' class='custom_label_css'>Medicine</label>");
+                med_name_label=$("<label for='medicine_name_tag' class='custom_label_css'>Medicine</label>");
             colmd1.append(med_name_label)
-            med_name_input=$("<input class='form-control' id='medicine_name_tag' onfocusout='focusOut_medicineNameDesp($(this))'  class='custom_input_css'>")
+                med_name_input=$("<input class='form-control' id='medicine_name_tag' onfocusout='focusOut_medicineNameDesp($(this))'  class='custom_input_css'>")
             colmd2.append(med_name_input)
         row__col_one__row_div_one.append(colmd1);
         row__col_one__row_div_one.append(colmd2);
     col_one__row_div_one.append(row__col_one__row_div_one);
 
-    
     // Batch No
-    col_three__row_div_one=$("<div class='col'></div>");
+    col_three__row_div_one=$("<div class='col-md-4'></div>");
         row__col_three__row_div_one=$("<div class='row'></div>");
             colmd1=$("<div class='col-md-6'></div>")
             colmd2=$("<div class='col-md-6'></div>")
-            batchno_label=$("<label class='custom_label_css'>batchno: </label>");
+                batchno_label=$("<label class='custom_label_css float-right'>Batch Number </label>");
             colmd1.append(batchno_label)
-            batchno_input=$("<input class='form-control' type='number'  id='batchno_input'  class='custom_input_css'></input>")
+                batchno_input=$("<input class='form-control' type='number'  id='batchno_input'  class='custom_input_css'></input>")
             colmd2.append(batchno_input)
         row__col_three__row_div_one.append(colmd1)
         row__col_three__row_div_one.append(colmd2)
@@ -2176,17 +2172,15 @@ function despMedFormMainColOne(main_col_div_1){
 $(row_div_one).append(col_one__row_div_one);
 $(row_div_one).append(col_three__row_div_one);
 // Second Row.. 
-var row_div_four=$("<div class='row desp_col_div_rows'></div>");
-col_one__row_div_four=$("<div class='col-md-10'></div>");
-col_two__row_div_four=$("<div class='col-md-2'></div>");
-    row__col_two__row_div_four=$("<div class='row'></div>");
-        var colmd1=$("<div class='col-md-12'></div>")
-        var add_button=$("<button class='add_all_stk' onclick='addAllstck()' >Add All Stock</button>")
-        colmd1.append(add_button)
-    row__col_two__row_div_four.append(colmd1);
-col_two__row_div_four.append(row__col_two__row_div_four);
-row_div_four.append(col_one__row_div_four);
-row_div_four.append(col_two__row_div_four);
+    var row_div_four=$("<div class='row desp_col_div_rows'></div>");
+        col_one__row_div_four=$("<div class='col-md-12'></div>");
+            row__col_one__row_div_four=$("<div class='row'></div>");
+                var colmd1=$("<div class='col-md-12'></div>")
+                    var add_button=$("<button class='btn btn-block fa fa-plus-circle add_all_stk' onclick='addAllstck()' >  Add All Stock</button>")
+                colmd1.append(add_button)
+            row__col_one__row_div_four.append(colmd1);
+        col_one__row_div_four.append(row__col_one__row_div_four);
+    row_div_four.append(col_one__row_div_four);
 
 
 $(main_col_div_1).append(row_div_one);
@@ -2200,14 +2194,14 @@ $(main_col_div_1).append(row_div_four);
 
 }
 function addAllstck(){
-        var abc = $("#active_box_input").val()
-        if (abc === undefined){
-            alert("Please select a medicine")
-        }
-        else{
-            console.log("oooo", $("#active_box_input").val())
-            $("#noofboxes_input").val($("#active_box_input").val())    
-        }
+    var abc = $("#active_box_input").val()
+    if (abc === undefined){
+        alert("Please select a medicine")
+    }
+    else{
+        console.log("oooo", $("#active_box_input").val())
+        $("#noofboxes_input").val($("#active_box_input").val())    
+    }
 }
 
 function despMedFormMainColTwo(main_col_div_2){
@@ -2264,11 +2258,11 @@ function focusOut_medicineNameDesp(element){
                 $("#row_div_three").remove()
                 var despstorage_first_col_div=$("#despstorage_first_col_div")
                     var row_div_two=$("<div class='row' id='row_div_two'></div>");
-                        col_one__row_div_two=$("<div class='col-md-10'></div>");
+                        col_one__row_div_two=$("<div class='col-md-12'></div>");
                             row1__col_one__row_div_two=$("<div class='row desp_col_div_rows'></div>");
-                                var colmd1=$("<div class='col-md-6'></div>")
-                                var colmd2=$("<div class='col-md-6'></div>")
-                                boxamount_label=$("<label class='custom_label_css'>No of Boxes:</label>");
+                                var colmd1=$("<div class='col-md-2'></div>")
+                                var colmd2=$("<div class='col-md-2'></div>")
+                                boxamount_label=$("<label class='custom_label_css'>Number of Boxes:</label>");
                                 colmd1.append(boxamount_label)
                                 boxamount_input=$("<input class='form-control' type='number' id='noofboxes_input' class='custom_input_css' value='0'> </input>")
                                 colmd2.append(boxamount_input)
@@ -2276,8 +2270,8 @@ function focusOut_medicineNameDesp(element){
                             row1__col_one__row_div_two.append(colmd2);
                         if (strips!=="-"){
                             row3__col_one__row_div_two=$("<div class='row desp_col_div_rows'></div>")
-                                var colmd1=$("<div class='col-md-6'></div>")
-                                var colmd2=$("<div class='col-md-6'></div>")
+                                var colmd1=$("<div class='col-md-2'></div>")
+                                var colmd2=$("<div class='col-md-2'></div>")
                                 pieceamount_label=$("<label class='custom_label_css'>No of Strips:</label>");
                                 colmd1.append(pieceamount_label)
                                 pieceamount_input=$("<input class='form-control' type='number' id='noofstrips_input' value='0'  class='custom_input_css'> </input>")
@@ -2287,8 +2281,8 @@ function focusOut_medicineNameDesp(element){
                         }
 
                             row2__col_one__row_div_two=$("<div class='row desp_col_div_rows'></div>");
-                                var colmd1=$("<div class='col-md-6'></div>")
-                                var colmd2=$("<div class='col-md-6'></div>")
+                                var colmd1=$("<div class='col-md-2'></div>")
+                                var colmd2=$("<div class='col-md-2'></div>")
                                 pieceamount_label=$("<label class='custom_label_css'>No of Pieces:</label>");
                                 colmd1.append(pieceamount_label)
                                 pieceamount_input=$("<input class='form-control' type='number' id='noofpieces_input' value='0'  class='custom_input_css'> </input>")
@@ -2301,32 +2295,17 @@ function focusOut_medicineNameDesp(element){
                         if (strips!=="-"){
                         col_one__row_div_two.append(row3__col_one__row_div_two);
                         }
-
-
-
-
-
-                        col_two__row_div_two=$("<div class='col-md-2'></div>");
-                            row__col_two__row_div_two=$("<div class='row'></div>");
-                        col_two__row_div_two.append(row__col_two__row_div_two);
-
                     row_div_two.append(col_one__row_div_two);
-                    row_div_two.append(col_two__row_div_two);
-
 
                     var row_div_three=$("<div class='row desp_col_div_rows' id='row_div_three'></div>");
-                        col_one__row_div_three=$("<div class='col-md-10'></div>");
-
-                        col_two__row_div_three=$("<div class='col-md-2'></div>");
-                            row__col_two__row_div_three=$("<div class='row'></div>");
-                                    var colmd1=$("<div class='col-md-12'></div>")
-                                    var save_button=$("<button class='btn btn-success' onclick='SaveToDespStock()'>Save</button>")
-                                    colmd1.append(save_button)
-                            row__col_two__row_div_three.append(colmd1);
-                        col_two__row_div_three.append(row__col_two__row_div_three);
-
+                        col_one__row_div_three=$("<div class='col-md-12'></div>");
+                            row__col_one__row_div_three=$("<div class='row'></div>");
+                                var colmd1=$("<div class='col-md-12'></div>")
+                                    var save_button=$("<button class='btn btn-success' onclick='SaveToDespStock()' style='width:inherit;'>Save</button>")
+                                colmd1.append(save_button)
+                            row__col_one__row_div_three.append(colmd1);
+                            col_one__row_div_three.append(row__col_one__row_div_three);
                     row_div_three.append(col_one__row_div_three);
-                    row_div_three.append(col_two__row_div_three);
 
                 $(despstorage_first_col_div).append(row_div_two);
                 $(despstorage_first_col_div).append(row_div_three);        
