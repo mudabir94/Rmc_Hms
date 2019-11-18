@@ -3056,12 +3056,12 @@ function billDataTable(){
 }
 function createDespensoryMedTable(){
     var row_div_three=$("<div class='row' style='padding-bottom:18px'></div>");
-    var col_one__row_div_three=$("<div class='col-md-12'></div>");
-        row__col_one__row_div_three=$("<div class='row'></div>");
-            colmd1=$("<div class='col-md-12'></div>")
-            var table=$('<table id="desp-med-table" class="display" width="100%"></table>')
-            colmd1.append(table);
-        row__col_one__row_div_three.append(colmd1);
+        var col_one__row_div_three=$("<div class='col-md-12'></div>");
+            row__col_one__row_div_three=$("<div class='row'></div>");
+                colmd1=$("<div class='col-md-12'></div>")
+                var table=$('<table id="desp-med-table" class="display" width="100%"></table>')
+                colmd1.append(table);
+            row__col_one__row_div_three.append(colmd1);
         col_one__row_div_three.append(row__col_one__row_div_three);
     row_div_three.append(col_one__row_div_three);
     $(main_col_div).append(row_div_three);

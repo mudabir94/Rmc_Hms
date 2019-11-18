@@ -495,11 +495,11 @@ function calculateBill(){
     console.log("surgerybill_dict",surgerybill_dict);
     console.log("procedurebill_dict",procedurebill_dict);
     var surg_bill_final_div=$("<div id='surg_bill_final_div' style='padding-top:40px; padding-bottom:40px'>")
-        var row1=$("<div>Surgeries</div>");
+        var row1=$("<div><h3><center><u>Surgeries</u></center></h3></div>");
         var row2=$("<div id='surgery_table_row'></div>")
             var surg_table=$("<table></table>");
             var thead=$("<thead></thead>");
-                var tr=$("<tr>");
+                var tr=$("<tr style='border-bottom:1px solid black'  >");
                     var th1=$("<th>")
                     th1.append("Syurgery Name")
                     var th2=$("<th>")
@@ -526,7 +526,7 @@ function calculateBill(){
     var surg_total_bill=0;
     for (key in surgerybill_dict){
         if (surgerybill_dict[key][0]!=="undefined" || surgerybill_dict[key][0]!=='--'){
-            var tr=$("<tr>");
+            var tr=$("<tr style='border-bottom:1px solid black'>");
                 var td1=$("<td>");
                 td1.append(surgerybill_dict[key][0])
 
@@ -560,7 +560,7 @@ function calculateBill(){
            
         }
     }
-        var tr=$("<tr>");
+        var tr=$("<tr style='border-bottom:1px solid black'>");
             var td1=$("<td>");
             var td2=$("<td>");
             var td3=$("<td>");
@@ -587,19 +587,35 @@ surg_bill_final_div.append(row1);
 surg_bill_final_div.append(row2);
 
 var proc_bill_final_div=$("<div id='proc_bill_final_div'>")
-    var row1=$("<div>Procedures</div>");
+    var row1=$("<div><h3><center><u>Procedures</u></center></h3></div>");
     var row2=$("<div id='procedure_table_row'></div>")
         var proc_table=$("<table></table>");
         var thead=$("<thead></thead>");
-            var tr=$("<tr>");
+            // var tr=$("<tr>");
+            //     var th1=$("<th>")
+            //     th1.append("Procedure Name")
+            //     var th3=$("<th>")
+            //     var th2=$("<th>")
+            //     th2.append("Charges")
+            // tr.append(th1);
+            // tr.append(th3);
+            // tr.append(th2);
+
+            var tr=$("<tr style='border-bottom:1px solid black'>");
                 var th1=$("<th>")
                 th1.append("Procedure Name")
-                var th3=$("<th>")
                 var th2=$("<th>")
-                th2.append("Charges")
+                var th3=$("<th>")
+                var th4=$("<th>")
+                var th5=$("<th>")
+                var th6=$("<th>")
+                th6.append("Procedure Charges")
             tr.append(th1);
-            tr.append(th3);
             tr.append(th2);
+            tr.append(th3);
+            tr.append(th4);
+            tr.append(th5);
+            tr.append(th6);
 
         thead.append(tr)
     $(proc_table).append(thead);
@@ -612,21 +628,28 @@ var proc_bill_final_div=$("<div id='proc_bill_final_div'>")
     for (key in procedurebill_dict){
         console.log("Key---->",key);
         if (procedurebill_dict[key][0]!==undefined ||procedurebill_dict[key][0]!=='undefined' || procedurebill_dict[key][0]!=='--'){
-            var tr=$("<tr>");
+            var tr=$("<tr style='border-bottom:1px solid black'>");
                 var td1=$("<td>");
-                td1.append(procedurebill_dict[key][0])
-
-                charges=procedurebill_dict[key][1];
-                
-                proc_total_bill=parseInt(charges)+proc_total_bill
-                var td3=$("<td>")
-
                 var td2=$("<td>");
-                td2.append(charges)
+                var td3=$("<td>");
+                var td4=$("<td>");
+                var td5=$("<td>");
+                var td6=$("<td>");
+
+                
+                td1.append(procedurebill_dict[key][0])
+                charges=procedurebill_dict[key][1];
+                proc_total_bill=parseInt(charges)+proc_total_bill
+                td6.append(charges)
             tr.append(td1);
             tr.append(td3);
             tr.append(td2);
-            tbody.append(tr);
+            tr.append(td3);
+            tr.append(td4);
+            tr.append(td5);
+            tr.append(td6);
+
+        tbody.append(tr);
         }
     }
     // var tr=$("<tr>");
@@ -637,7 +660,7 @@ var proc_bill_final_div=$("<div id='proc_bill_final_div'>")
     // var td7=$("<td>");
 
 
-        var tr=$("<tr>");
+        var tr=$("<tr style='border-bottom:1px solid black'>");
             var td1=$("<td>");
             var td2=$("<td>");
             var td3=$("<td>");
@@ -647,7 +670,7 @@ var proc_bill_final_div=$("<div id='proc_bill_final_div'>")
                 th5.append("Procedure Total Bill")
             td5.append(th5);
             var td6=$("<td>");
-            var th6=$("<th id='totalproc_bill'>");
+                var th6=$("<th id='totalproc_bill'>");
                 th6.append(proc_total_bill)
             td6.append(th6)
         tr.append(td1);
@@ -656,41 +679,26 @@ var proc_bill_final_div=$("<div id='proc_bill_final_div'>")
         tr.append(td4);
         tr.append(td5);
         tr.append(td6);
+
         tbody.append(tr)
-
-
-
-
-    // var td1=$("<td>");
-    // var th1=$("<th>");
-    // th1.append("Procedure Total Bill");
-    // td1.append(th1);
-    // var td2=$("<td>");
-    // var th2=$("<th id='totalproc_bill'>");
-    //     th2.append(proc_total_bill);
-    // td2.append(th2);
-
-    // tr.append(td3);
-    // tr.append(td4);
-    // tr.append(td5);
-    // tr.append(td6);
-    // tr.append(td7);
-
-    // tr.append(td1);
-    // tr.append(td2);
-    // tbody.append(tr);
     $(row2).append(proc_table);
 
 $(proc_bill_final_div).append(row1);
 $(proc_bill_final_div).append(row2);
-nettotal=proc_total_bill+surg_total_bill;
-var surg_proc_bill_final_div=$("<div id='surg_proc_bill_final_div'>")
-    var h3=$("<h3>Net Total:</h3>")
-    var label=$("<label id='surg_proc_bill_final_value'>"+nettotal+"</label>")
-surg_proc_bill_final_div.append(h3);
-surg_proc_bill_final_div.append(label);
-
-
+        nettotal=proc_total_bill+surg_total_bill;
+        var surg_proc_bill_final_div=$("<div id='surg_proc_bill_final_div'>")
+            var col_surg_proc_bill_final_div=$("<div class='col-md-12'></div>");
+                row__col_surg_proc_bill_final_div=$("<div class='row' style='padding-top:20px;'></div>");
+                    colmd1=$("<div class='col-md-3'></div>")
+                    colmd2=$("<div class='col-md-2 offset-md-7'></div>")
+                        var label=$("<label class='form-control-static'><h3>Total Bill</h3>")
+                        var totalAmount=$("<label id='surg_proc_bill_final_value'>"+nettotal+"</label>")
+                    colmd1.append(label);
+                    colmd2.append(totalAmount);
+                row__col_surg_proc_bill_final_div.append(colmd1);
+                row__col_surg_proc_bill_final_div.append(colmd2);
+            col_surg_proc_bill_final_div.append(row__col_surg_proc_bill_final_div);
+        surg_proc_bill_final_div.append(col_surg_proc_bill_final_div);
 $("#bill_div").append(surg_bill_final_div);
 $("#bill_div").append(proc_bill_final_div);
 $("#bill_div").append(surg_proc_bill_final_div);
