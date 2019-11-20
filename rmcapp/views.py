@@ -1529,13 +1529,13 @@ def generatePrescription(request):
         patPresBillObj.discount_percentage=presData['discount_percent']
             # Discount Reason Missing --patPresBillObj.discount_reason=presData['discount_reason']
         patPresBillObj.net_total=presData['net_total']
-        patPresBillObj.status="Paid"
+        patPresBillObj.status=presData['status']
         patPresBillObj.save()
         # Adding Data to invoice Records
         invObj=invoiceRecords()
         invObj.pres=presRecObj
         invObj.net_total=presData['net_total']
-        invObj.status="Paid"
+        invObj.status=presData['status']
         invObj.save()
         if patient_type=='Indoor':
             if presData['bed_type']=="Room":
@@ -2148,6 +2148,9 @@ def savePatientBill(request):
         procedure_total=request.POST.get('procedure_total')
         procedure_total=int(procedure_total)
 
+        status=request.POST.get('status')
+
+
         
 
         patientid=0
@@ -2236,7 +2239,7 @@ def savePatientBill(request):
         despBillRecObj.addcharge_bill=addchargeamount
         despBillRecObj.actual_med_bill=despmedbillamount+addchargeamount
         despBillRecObj.net_total=addchargeamount
-        despBillRecObj.status="UnPaid"
+        despBillRecObj.status=status
         despBillRecObj.save()
         for procname in proceduredata_dict:
 
@@ -2246,7 +2249,7 @@ def savePatientBill(request):
             procBillRecObj.procedure=procObj
             procBillRecObj.pres=patPresRecObj
             procBillRecObj.net_total=int(proceduredata_dict[procname])
-            procBillRecObj.status="UnPaid"
+            procBillRecObj.status=status
             procBillRecObj.save()
             procedure_id_list.append(procBillRecObj.id)
 
@@ -2290,21 +2293,24 @@ def updatePrescriptionRecord(request):
         pres_data_dict["diagnosis"]=presObj.diagnosis
         pres_data_dict["vitals"]=presObj.vitals
 
+        try:
+    
+            medlist=patientMedRecords.objects.get(pres=presObj).prescription
+            print("Med list",medlist)
+            medObjs=Medicine.objects.filter(id__in=medlist)
+            med_info_list=[]
+            for count,medObj in enumerate(medObjs):
+                templist=[]
+                templist.append(medObj.medicine_name)
 
-        medlist=patientMedRecords.objects.get(pres=presObj).prescription
-        print("Med list",medlist)
-        medObjs=Medicine.objects.filter(id__in=medlist)
-        med_info_list=[]
-        for count,medObj in enumerate(medObjs):
-            templist=[]
-            templist.append(medObj.medicine_name)
+                templist.append(medObj.medicine_name)
+                templist.append(medObj.medicine_type_id.medicine_type_name)
+                templist.append(medObj.medicine_details)
+                med_info_list.append(templist)
 
-            templist.append(medObj.medicine_name)
-            templist.append(medObj.medicine_type_id.medicine_type_name)
-            templist.append(medObj.medicine_details)
-            med_info_list.append(templist)
-
-        print("medObjs",medObjs)
+            print("medObjs",medObjs)
+        except:
+            med_info_list=[]
 
 
 
@@ -2988,6 +2994,8 @@ def saveSurgProcBill(request):
         surg_total_bill=int(surg_total_bill)
         totalproc_bill=request.GET.get('totalproc_bill')
         totalproc_bill=int(totalproc_bill)
+        status=request.GET.get('status')
+        print("status", status)
 
         print("surgerybill_dict",surgerybill_dict)
         print("procedurebill_dict",procedurebill_dict)
@@ -3005,6 +3013,8 @@ def saveSurgProcBill(request):
                 procBRecObj.procedure=proctabObj
                 procBRecObj.pres=patPresRecObj
                 procBRecObj.net_total=procedurebill_dict[key][1]
+                procBRecObj.status=status
+
                 procBRecObj.save()
                 procbrid_list.append(procBRecObj.id)
             procRecObj=procedureRecords()
@@ -3033,6 +3043,7 @@ def saveSurgProcBill(request):
                 sbrObj.anesthesiologist_fee=surgerybill_dict[key][3]
                 sbrObj.surplus_fee=surgerybill_dict[key][4]
                 sbrObj.net_total=surgerybill_dict[key][5]
+                sbrObj.status=status
                 sbrObj.save()
                 sbrid_list.append(sbrObj.id)
                 surgRecObj=surgeryRecords()
