@@ -358,7 +358,7 @@ class patPrescriptionRecords(models.Model):
     diagnosis=models.TextField(default=None,null=True,blank=True)
     vitals=models.CharField(max_length=50,default=None,null=True,blank=True)
     rx=models.TextField(default=None,null=True,blank=True)
-
+    admit_reason=models.CharField(max_length=200,default=None,null=True,blank=True)
     date_visited = models.DateTimeField(default=None,null=True, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
@@ -417,8 +417,9 @@ class patPrescriptionBill(models.Model):
     pres=models.ForeignKey(patPrescriptionRecords, on_delete=models.CASCADE,default=None,null=True,blank=True)
     discount=models.IntegerField(null=True,blank=True)
     discount_percentage=models.FloatField(null=True,blank=True)
+    discount_reason=models.CharField(max_length=50,null=True,blank=True)
     net_total=models.IntegerField(null=True,blank=True)
-    status=models.CharField(max_length=50,null=True,blank=True,default='UnPaid')
+    status=models.CharField(max_length=50,null=True,blank=True,default='NotPaid')
 
     def __str__(self):
         return str(self.id)
@@ -450,7 +451,7 @@ class surgeryBillRecord(models.Model):
     anesthesiologist_fee=models.IntegerField(null=True,blank=True,default=500)
     surplus_fee=models.IntegerField(null=True,blank=True,default=500)
     net_total=models.IntegerField(null=True,blank=True,default=0)
-    status=models.CharField(max_length=50,null=True,blank=True,default='UnPaid')
+    status=models.CharField(max_length=50,null=True,blank=True,default='NotPaid')
     date_visited = models.DateTimeField(auto_now_add=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
     update_at = models.DateTimeField(auto_now_add=True, blank=True)
@@ -464,11 +465,11 @@ class surgeryRecords(models.Model):              #### NEW  ######
     surgery_bill=models.ForeignKey(surgeryBillRecord, on_delete=models.CASCADE,default=None,null=True,blank=True)
     pres=models.ForeignKey(patPrescriptionRecords, on_delete=models.CASCADE,default=None,null=True,blank=True)
     consultant=models.ForeignKey(Employee, on_delete=models.CASCADE,default=None,null=True,blank=True)
-    misc1=models.CharField(max_length=50,null=True,blank=True,default='UnPaid')
-    misc2=models.CharField(max_length=50,null=True,blank=True,default='UnPaid')
-    misc3=models.CharField(max_length=50,null=True,blank=True,default='UnPaid')
-    misc4=models.CharField(max_length=50,null=True,blank=True,default='UnPaid')
-    misc5=models.CharField(max_length=50,null=True,blank=True,default='UnPaid')
+    misc1=models.CharField(max_length=50,null=True,blank=True,default='NotPaid')
+    misc2=models.CharField(max_length=50,null=True,blank=True,default='NotPaid')
+    misc3=models.CharField(max_length=50,null=True,blank=True,default='NotPaid')
+    misc4=models.CharField(max_length=50,null=True,blank=True,default='NotPaid')
+    misc5=models.CharField(max_length=50,null=True,blank=True,default='NotPaid')
     def __str__(self):
                 return str(self.id)
     class Meta:
@@ -489,7 +490,7 @@ class procedureBillRecord(models.Model):                #### NEW  ######
     procedure=models.ForeignKey(procedureTable, on_delete=models.CASCADE,default=None,null=True,blank=True)
     pres=models.ForeignKey(patPrescriptionRecords, on_delete=models.CASCADE,default=None,null=True,blank=True)
     net_total=models.IntegerField(null=True,blank=True,default=0)
-    status=models.CharField(max_length=50,null=True,blank=True,default='UnPaid')
+    status=models.CharField(max_length=50,null=True,blank=True,default='NotPaid')
     date_visited = models.DateTimeField(auto_now_add=True, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
@@ -505,13 +506,13 @@ class procedureRecords(models.Model):              #### NEW  ######
     procedure_bill=ListCharField(base_field=models.CharField(max_length=20),size=10,max_length=(10*21),null=True,blank=True)
     pres=models.ForeignKey(patPrescriptionRecords, on_delete=models.CASCADE,default=None,null=True,blank=True)
     net_total=models.IntegerField(null=True,blank=True,default=0)
-    status=models.CharField(max_length=50,null=True,blank=True,default='UnPaid')
+    status=models.CharField(max_length=50,null=True,blank=True,default='NotPaid')
 
-    misc1=models.CharField(max_length=50,null=True,blank=True,default='UnPaid')
-    misc2=models.CharField(max_length=50,null=True,blank=True,default='UnPaid')
-    misc3=models.CharField(max_length=50,null=True,blank=True,default='UnPaid')
-    misc4=models.CharField(max_length=50,null=True,blank=True,default='UnPaid')
-    misc5=models.CharField(max_length=50,null=True,blank=True,default='UnPaid')
+    misc1=models.CharField(max_length=50,null=True,blank=True,default='NotPaid')
+    misc2=models.CharField(max_length=50,null=True,blank=True,default='NotPaid')
+    misc3=models.CharField(max_length=50,null=True,blank=True,default='NotPaid')
+    misc4=models.CharField(max_length=50,null=True,blank=True,default='NotPaid')
+    misc5=models.CharField(max_length=50,null=True,blank=True,default='NotPaid')
     def __str__(self):
                 return str(self.id)
     class Meta:
@@ -543,7 +544,7 @@ class despBillRecord(models.Model):
     addcharge_bill=models.IntegerField(null=True,blank=True)
     actual_med_bill=models.IntegerField(null=True,blank=True)
     net_total=models.IntegerField(null=True,blank=True)
-    status=models.CharField(max_length=50,null=True,blank=True,default='UnPaid')
+    status=models.CharField(max_length=50,null=True,blank=True,default='NotPaid')
     def __str__(self):
         return str(self.id)
     class Meta:
@@ -574,7 +575,7 @@ class patientRoomsBill(models.Model):
     total_days=models.IntegerField(null=True,blank=True,default=0)
 
     net_total=models.IntegerField(null=True,blank=True,default=0)
-    status=models.CharField(max_length=50,null=True,blank=True,default='UnPaid')
+    status=models.CharField(max_length=50,null=True,blank=True,default='NotPaid')
 
     
     def __str__(self):
@@ -605,7 +606,7 @@ class patientWardBill(models.Model):
 
     # charge_per_day=models.IntegerField(null=True,blank=True,default=200)   #### NEW/update   #####
     net_total=models.IntegerField(null=True,blank=True,default=0)
-    status=models.CharField(max_length=50,null=True,blank=True,default='UnPaid')
+    status=models.CharField(max_length=50,null=True,blank=True,default='NotPaid')
 
     def __str__(self):
         return str(self.id)
@@ -616,7 +617,12 @@ class patientVisitSummary(models.Model):
     pmr=models.ForeignKey(patientMedRecords, on_delete=models.CASCADE,default=None,null=True,blank=True)
     pres=models.ForeignKey(patPrescriptionRecords, on_delete=models.CASCADE,default=None,null=True,blank=True)##### NEW ##########
     patient=models.ForeignKey(Patient, on_delete=models.CASCADE,default=None,null=True,blank=True)
-    date_visited = models.DateTimeField(auto_now_add=True, blank=True)
+    date_visited = models.DateTimeField(default=None,null=True, blank=True)
+    def __str__(self):
+        return str(self.id)
+    class Meta:
+        verbose_name_plural="Pateint Visit Summary"
+        ordering=['pk']
 
 
 class surgeryBillSummary(models.Model):
@@ -648,7 +654,7 @@ class invoiceRecords(models.Model):
     discount=models.IntegerField(null=True,blank=True)
     discount_percentage=models.FloatField(null=True,blank=True)
     net_total=models.IntegerField(null=True,blank=True,default=0)
-    status=models.CharField(max_length=50,null=True,blank=True,default='UnPaid')
+    status=models.CharField(max_length=50,null=True,blank=True,default='NotPaid')
     def __str__(self):
         return str(self.id)
     class Meta:

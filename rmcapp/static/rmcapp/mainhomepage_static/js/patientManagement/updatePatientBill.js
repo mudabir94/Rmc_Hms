@@ -6,8 +6,7 @@ var procBillRecord_dict={};
 var patPresRecord_dict={};
 var DespBill_dict={};
 var netTotal;
-var status_list=['Paid', 'Not Paid']
-
+var status_list=['Paid', 'NotPaid']
 
 function updatePatientBill(){
     // $("#pat_details_div").remove();
@@ -94,7 +93,7 @@ function retrieveInvoiceBillRecord(){
             procBillRecord_dict=JSON.parse(data["procBillRecord_dict"])
             patPresRecord_dict=JSON.parse(data["patPresRecord_dict"])
             DespBill_dict=JSON.parse(data["DespBill_dict"])
-
+            
             var dt= new Date(patPresRecord_dict['date_visited']);
             var newdate=dt.toISOString().split('T')[0];
 
@@ -225,6 +224,7 @@ function createPrescriptionBillRow(){
                             var select=$("<select id='pres_status' class='form-control' style='font-size: inherit;'></select>");
                                     
                                 if (patPresRecord_dict['status']==='Paid'){
+                                    alert("PPPP")
                                     var option=$("<option id="+status_list[0]+"-opt value='"+status_list[0]+"'>"+status_list[0]+"</option>");
                                     $(select).append(option);
                                     var option1=$("<option id="+status_list[1]+"-opt value='"+status_list[1]+"' >"+status_list[1]+"</option>");
@@ -1293,7 +1293,7 @@ function netTotalAmountRow(){
                             var status_label=$("<label for='status_label' class='custom_label_css'>Status</label>");
                             var select=$("<select id='invoice_status' class='form-control' onfocusout='valueFocusOutInvoiceStatus($(this))' ></select>");
                                     
-                            if (patPresRecord_dict['status']==='Paid'){
+                            if (patPresRecord_dict['invoice_status']==='Paid'){
                                 var option=$("<option id="+status_list[0]+"-opt value='"+status_list[0]+"'>"+status_list[0]+"</option>");
                                 $(select).append(option);
                                 var option1=$("<option id="+status_list[1]+"-opt value='"+status_list[1]+"' >"+status_list[1]+"</option>");

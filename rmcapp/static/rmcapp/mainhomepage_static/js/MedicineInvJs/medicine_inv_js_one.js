@@ -1912,7 +1912,7 @@ function addMedicineToDespStockForm(){
     $(main_row_div).append(main_col_div_1);
     $(main_row_div).append(main_col_div_2);
     despMedFormMainColOne(main_col_div_1);
-
+    $(".add_all_stk").hide();
     despMedFormMainColTwo(main_col_div_2);
     $(function(){
     

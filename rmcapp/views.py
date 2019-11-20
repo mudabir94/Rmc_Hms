@@ -2,6 +2,10 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 import math
 import json
+
+from django.utils.dateparse import parse_date 
+from datetime import datetime
+
 from rmcapp.models import (
     medicineType,
     Medicine,Category,
@@ -824,8 +828,7 @@ def checkMedicineInmedicineBatches(request):
             "batchno":batchno
         }
         return JsonResponse(data)
-from django.utils.dateparse import parse_date 
-from datetime import datetime
+
 def saveMedicineToWhStock(request):
     if request.method=="POST":
 
@@ -1453,26 +1456,129 @@ def retirevePatientMedHistory(request):
         # from patient med record 
         # retrieve patient medical records where date is distinct and id=1
         datelist=[]
-        pat_med_history_dict={}
-        pmr_objs=patientMedRecords.objects.filter(patient=patient_id)
-        for pmr_obj in pmr_objs:
-            temp_dict={}
-            datelist.append(str(pmr_obj.datevisited))
+        date_visited_dict={}
+        med_hist_dict={}
+        # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        # pat_med_history_dict={}
+        # pmr_objs=patientMedRecords.objects.filter(patient=patient_id)
+        # for pmr_obj in pmr_objs:
+        #     temp_dict={}
+        #     datelist.append(str(pmr_obj.datevisited))
             
-            # temp_dict['blood_pressure']=pmr_obj.blood_pressure
-            prescription = [ int(x) for x in pmr_obj.prescription ]
-            med_obj=Medicine.objects.filter(id__in=prescription)
-            med_list=list(med_obj.values_list("medicine_name","weight"))
-            print("Med list",med_list)
-            temp_dict['prescription']=med_list
+        #     # temp_dict['blood_pressure']=pmr_obj.blood_pressure
+        #     prescription = [ int(x) for x in pmr_obj.prescription ]
+        #     med_obj=Medicine.objects.filter(id__in=prescription)
+        #     med_list=list(med_obj.values_list("medicine_name","weight"))
+        #     print("Med list",med_list)
+        #     temp_dict['prescription']=med_list
           
 
-            pat_med_history_dict[str(pmr_obj.datevisited)]=temp_dict
-        print("pmr_objs",pmr_objs)
-        print("datelist",datelist)
+        #     pat_med_history_dict[str(pmr_obj.datevisited)]=temp_dict
+        
+        
+        # print("pmr_objs",pmr_objs)
+        # print("datelist",datelist)
+        # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 
+
+        # Search Patient id in Patient Visit Summary... 
+        # We'll get medicine record object, pres obj and dates visited.
+        # In a for loop iterate all the pres id and extract the following info
+        # - Pres Records
+            #- From patPresRecords get 
+                # - PatientType
+                # - Doctor On Duty
+                # - Date Visited
+                # - SS,PD,IN,Vit,RX etc..
+                # - Admit Reason 
+        # - Surgery Records
+            # - From Surgery Record
+                # - Consultant Name
+            # - From Surgery Bill Record
+                # - Surgery Info 
+                # - Date Visited 
+        # - Procedure Records
+            # - From Procedure Bill  Records
+                # - Procedure Infos 
+        # - Room Record
+            # Room Bill Record
+        # - Ward Record
+            # Ward Bill Record
+        
+        ## Algorithm--
+        # DateVisited dict key="datevisited", value="presid"
+        # med_hist_dict    key="pres" value="Multiple Dictionarys... " 
+        patObj=Patient.objects.get(id=patient_id)
+        try:
+            patVSumObjs=patientVisitSummary.objects.filter(patient=patObj)
+            print("hee")
+            for patVSumObj in patVSumObjs:
+                presid=patVSumObj.pres.id
+                print("OO")
+                presObj=patPrescriptionRecords.objects.get(id=presid)
+                print("lll")
+                print(patVSumObj)
+                date=patVSumObj.date_visited
+                print("HII")
+                date_visited_dict[date]=presid
+                temp_med_hist_dict={}
+                temp_med_hist_dict['patienttype']=presObj.patient_type.patient_type
+                temp_med_hist_dict['doc_on_duty']=presObj.doc
+                temp_med_hist_dict['sign_symptom']=presObj.sign_symptoms
+                temp_med_hist_dict['provisional_diagnosis']=presObj.provisional_diagnosis
+                temp_med_hist_dict['investigation']=presObj.investigation
+                temp_med_hist_dict['diagnosis']=presObj.diagnosis
+                temp_med_hist_dict['vitals']=presObj.vitals
+                temp_med_hist_dict['rx']=presObj.rx
+                temp_med_hist_dict['admit_reason']=presObj.admit_reason
+                temp_med_hist_dict['diagnosis']=presObj.diagnosis
+                surgRecObj=surgeryRecords.objects.get(pres=presObj)
+                surg_bill_ids=surgeryRecords.objects.get(surgery_bill)
+                temp_med_hist_dict['consultant']=surgRecObj.consultant
+                surgeryBillRecord.objects.filter(id_in)
+                temp_med_hist_dict['surgeries']=surgRecObj
+
+
+
+                med_hist_dict[presid]=temp_med_hist_dict
+        except:
+            pass
+        print("med_hist_dict",med_hist_dict)
+
+
+
+        # pres_data_dict={}
+        # presid=request.GET.get('presid')
+        # presid=int(presid)
+        # presObj=patPrescriptionRecords.objects.get(id=presid)
+        # pres_data_dict["sign_symtoms"]=presObj.sign_symtoms
+        # pres_data_dict["provisional_diagnosis"]=presObj.provisional_diagnosis
+        # pres_data_dict["investigation"]=presObj.investigation
+        # pres_data_dict["diagnosis"]=presObj.diagnosis
+        # pres_data_dict["vitals"]=presObj.vitals
+
+        # try:
+    
+        #     medlist=patientMedRecords.objects.get(pres=presObj).prescription
+        #     print("Med list",medlist)
+        #     medObjs=Medicine.objects.filter(id__in=medlist)
+        #     med_info_list=[]
+        #     for count,medObj in enumerate(medObjs):
+        #         templist=[]
+        #         templist.append(medObj.medicine_name)
+
+        #         templist.append(medObj.medicine_name)
+        #         templist.append(medObj.medicine_type_id.medicine_type_name)
+        #         templist.append(medObj.medicine_details)
+        #         med_info_list.append(templist)
+
+        #     print("medObjs",medObjs)
+        # except:
+        #     med_info_list=[]
+
+
         data={
             'datelist':datelist,
-            'pat_med_history_dict':pat_med_history_dict
+            'pat_med_history_dict':med_hist_dict
         }
         return JsonResponse(data)
 presData={}
@@ -1518,6 +1624,8 @@ def generatePrescription(request):
         
         presRecObj.save()
         presRecObj.date_visited=presRecObj.created_at
+        if 'admitreason' in presData:
+            presRecObj.admit_reason=presData['admitreason']
         presRecObj.save()
         presData['pres_id']=presRecObj.id
 
@@ -1527,7 +1635,9 @@ def generatePrescription(request):
         patPresBillObj.pres=presRecObj
         patPresBillObj.discount=presData['discount']
         patPresBillObj.discount_percentage=presData['discount_percent']
-            # Discount Reason Missing --patPresBillObj.discount_reason=presData['discount_reason']
+        # Discount Reason Missing --patPresBillObj.discount_reason=presData['discount_reason']
+        if presData['discount_reason']:
+            patPresBillObj.discount_reason=presData['discount_reason']
         patPresBillObj.net_total=presData['net_total']
         patPresBillObj.status=presData['status']
         patPresBillObj.save()
@@ -1535,7 +1645,7 @@ def generatePrescription(request):
         invObj=invoiceRecords()
         invObj.pres=presRecObj
         invObj.net_total=presData['net_total']
-        invObj.status=presData['status']
+        invObj.status="NotPaid"
         invObj.save()
         if patient_type=='Indoor':
             if presData['bed_type']=="Room":
@@ -2164,7 +2274,10 @@ def savePatientBill(request):
         medicine_id_list=[]
         procedure_id_list=[]
         proc_net_total=0
+        invObj=invoiceRecords.objects.get(pres=patPresRecObj)
 
+        sum_proc_total=0
+        patMedRecObj=None
 
         for id in despStckDict:
             despObj=despensoryStock.objects.get(id=id)
@@ -2212,76 +2325,141 @@ def savePatientBill(request):
             despStrgHist_obj.piece_price_unit=despObj.piece_price_unit
             despStrgHist_obj.status="Updated"
             despStrgHist_obj.save()
-
-        for despid in pbr_dict:
-            # despid=int(pbr_dict[medname]['despid'])
-            desp_id=int(despid)
-            despObj=despensoryStock.objects.get(id=desp_id)
-            patientid=int(pbr_dict[despid]['patientid'])
-            patObj=Patient.objects.get(id=patPresRecObj.patient.id)
-            pbrObj=patientBillRecords()
-            pbrObj.patient=patObj
-            pbrObj.desp=despObj
-            patPresRecObj=patPrescriptionRecords.objects.get(id=prescription_id)
-            pbrObj.pres=patPresRecObj
-            pbrObj.boxes_stored=int(pbr_dict[despid]['boxes'])
-            pbrObj.strips_stored=int(pbr_dict[despid]['strips'])
-            pbrObj.pieces_stored=int(pbr_dict[despid]['pieces'])
-            pbrObj.amount=int(pbr_dict[despid]['amount'])
-            pbrObj.save()
-            # medObj=Medicine.objects.get(medicine_name=medname)
-            medObj=Medicine.objects.get(medicine_name=pbr_dict[despid]['medname'])
-            medicine_id_list.append(medObj.id)
-        patMedRecObj=patientMedRecords()
-        patMedRecObj.patient=Patient.objects.get(id=patPresRecObj.patient.id)
-        patMedRecObj.pres=patPresRecObj
-        patMedRecObj.prescription=medicine_id_list
-        patMedRecObj.save()
-        despBillRecObj=despBillRecord()
-        despBillRecObj.pres=patPresRecObj
-        despBillRecObj.patient=Patient.objects.get(id=patPresRecObj.patient.id)
-        despBillRecObj.despcharge_bill=despmedbillamount
-        despBillRecObj.addcharge_bill=addchargeamount
-        despBillRecObj.actual_med_bill=despmedbillamount+addchargeamount
-        despBillRecObj.net_total=addchargeamount
-        despBillRecObj.status=status
-        despBillRecObj.save()
-        for procname in proceduredata_dict:
-
-            procedureTable.objects.get(procedure_name=procname)
-            procBillRecObj=procedureBillRecord()
-            procObj=procedureTable.objects.get(procedure_name=procname)
-            procBillRecObj.procedure=procObj
-            procBillRecObj.pres=patPresRecObj
-            procBillRecObj.net_total=int(proceduredata_dict[procname])
-            procBillRecObj.status=status
-            procBillRecObj.save()
-            procedure_id_list.append(procBillRecObj.id)
-
-        print("procedure_id_list",procedure_id_list)
-        procRecObj=procedureRecords()
-        procRecObj.procedure_bill=procedure_id_list
-        procRecObj.pres=patPresRecObj
-        procRecObj.net_total=procedure_total
-        procRecObj.save()
+       
+        # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         
-        procBillSumObj=procedureBillSummary()
-        procBillSumObj.procbr=procedure_id_list
-        procBillSumObj.pres=patPresRecObj
-        procBillSumObj.save()
-        invObj=invoiceRecords.objects.get(pres=patPresRecObj)
-        net_total=net_total
-        invObj.desp_bill=despBillRecObj
+        if pbr_dict:
+            for despid in pbr_dict:
+                # despid=int(pbr_dict[medname]['despid'])
+                desp_id=int(despid)
+                despObj=despensoryStock.objects.get(id=desp_id)
+                patientid=int(pbr_dict[despid]['patientid'])
+                patObj=Patient.objects.get(id=patPresRecObj.patient.id)
+                pbrObj=patientBillRecords()
+                pbrObj.patient=patObj
+                pbrObj.desp=despObj
+                patPresRecObj=patPrescriptionRecords.objects.get(id=prescription_id)
+                pbrObj.pres=patPresRecObj
+                pbrObj.boxes_stored=int(pbr_dict[despid]['boxes'])
+                pbrObj.strips_stored=int(pbr_dict[despid]['strips'])
+                pbrObj.pieces_stored=int(pbr_dict[despid]['pieces'])
+                pbrObj.amount=int(pbr_dict[despid]['amount'])
+                pbrObj.datevisited=patPresRecObj.created_at.date()
+                pbrObj.save()
+                # medObj=Medicine.objects.get(medicine_name=medname)
+                medObj=Medicine.objects.get(medicine_name=pbr_dict[despid]['medname'])
+                medicine_id_list.append(medObj.id)
+            
+            try:
+                pmrObj=patientMedRecords.objects.get(pres=patPresRecObj)
+                # pmr_exst_list=[]
+                pmr_exst_list=pmrObj.prescription
+                for med in pmr_exst_list:
+                    medicine_id_list.append(med)
+                # pmr_exst_list.append(medicine_id_list)
+                pmrObj.prescription=medicine_id_list
+                pmrObj.update_at=datetime.now()
+                pmrObj.save()
 
-        invObj.procedure_id=procBillSumObj
+            except:
+                patMedRecObj=patientMedRecords()
+                patMedRecObj.patient=Patient.objects.get(id=patPresRecObj.patient.id)
+                patMedRecObj.pres=patPresRecObj
+                patMedRecObj.prescription=medicine_id_list
+                patMedRecObj.datevisited=patPresRecObj.created_at.date()
+                patMedRecObj.save()
+            try:
+                dbrobj=despBillRecord.objects.get(pres=patPresRecObj)
+                dbrobj.despcharge_bill=dbrobj.despcharge_bill+despmedbillamount
+                dbrobj.addcharge_bill=dbrobj.addcharge_bill+addchargeamount
+                dbrobj.actual_med_bill=dbrobj.actual_med_bill+despmedbillamount+addchargeamount
+                dbrobj.net_total=dbrobj.net_total+addchargeamount
+                dbrobj.status=status
+                dbrobj.save()
+
+            except:
+                despBillRecObj=despBillRecord()
+                despBillRecObj.pres=patPresRecObj
+                despBillRecObj.patient=Patient.objects.get(id=patPresRecObj.patient.id)
+                despBillRecObj.despcharge_bill=despmedbillamount
+                despBillRecObj.addcharge_bill=addchargeamount
+                despBillRecObj.actual_med_bill=despmedbillamount+addchargeamount
+                despBillRecObj.net_total=addchargeamount
+                despBillRecObj.status=status
+                despBillRecObj.save()
+                invObj.desp_bill=despBillRecObj
+
+        
+        if proceduredata_dict:
+            for procname in proceduredata_dict:
+
+                procedureTable.objects.get(procedure_name=procname)
+                procBillRecObj=procedureBillRecord()
+                procObj=procedureTable.objects.get(procedure_name=procname)
+                procBillRecObj.procedure=procObj
+                procBillRecObj.pres=patPresRecObj
+                procBillRecObj.net_total=int(proceduredata_dict[procname])
+                procBillRecObj.status=status
+                procBillRecObj.save()
+                procedure_id_list.append(procBillRecObj.id)
+
+            print("procedure_id_list",procedure_id_list)
+            try:
+                procRObj=procedureRecords.objects.get(pres=patPresRecObj)
+                proc_ext_list=procRObj.procedure_bill
+                for proc in proc_ext_list:
+                    procedure_id_list.append(proc)
+                procRObj.procedure_bill=procedure_id_list
+                if procRObj.net_total!=None:
+                    procRObj.net_total=procRObj.net_total+procedure_total
+
+                procRObj.save()
+            except:
+                
+                procRecObj=procedureRecords()
+                procRecObj.procedure_bill=procedure_id_list
+                procRecObj.pres=patPresRecObj
+                procRecObj.net_total=procedure_total
+                procRecObj.save()
+            try:
+                prcBSumObj=procedureBillSummary.objects.get(pres=patPresRecObj)
+                proc_ext_list=prcBSumObj.procbr
+                # for proc in proc_ext_list:
+                #     procedure_id_list.append(proc)
+                prcBSumObj.procbr=procedure_id_list
+                if prcBSumObj.net_total!=None:
+
+                    prcBSumObj.net_total=prcBSumObj.net_total+procedure_total
+                prcBSumObj.save()
+            except:
+                
+                procBillSumObj=procedureBillSummary()
+                procBillSumObj.procbr=procedure_id_list
+                procBillSumObj.pres=patPresRecObj
+                procBillSumObj.net_total=procedure_total
+                procBillSumObj.save()
+                invObj.procedure_id=procBillSumObj
+
+            
+
+        # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+        net_total=net_total
+        # invObj.procedure_id=procBillSumObj
         invObj.discount=discountamount
         invObj.net_total=invObj.net_total+net_total
         invObj.save()
-        pvsObj=patientVisitSummary()
-        pvsObj.pres=patPresRecObj
-        pvsObj.pmr=patMedRecObj
-        pvsObj.patient=Patient.objects.get(id=patPresRecObj.patient.id)
-        pvsObj.save()
+        try: 
+            patientVisitSummary.objects.get(pres=patPresRecObj)
+            pass
+        except:
+            pvsObj=patientVisitSummary()
+            pvsObj.pres=patPresRecObj
+            if patMedRecObj!=None:
+                pvsObj.pmr=patMedRecObj
+            pvsObj.patient=Patient.objects.get(id=patPresRecObj.patient.id)
+            pvsObj.date_visited=patPresRecObj.date_visited.date()
+            pvsObj.save()
 
         data={}
         return JsonResponse(data)
@@ -2924,7 +3102,8 @@ def retrieveInvoiceBillRecord(request):
             patPresRecord_dict['pres_bill']=pPresBObj.net_total
             patPresRecord_dict['status']=pPresBObj.status
             patPresRecord_dict['total_bill']=InvoiceObj.net_total
-            patPresRecord_dict['status']=InvoiceObj.status
+            patPresRecord_dict['invoice_status']=InvoiceObj.status
+
             patPresRecord_dict['invoice_no']=InvoiceObj.id
 
             print("patPresRecord_dict",patPresRecord_dict)
@@ -3022,17 +3201,40 @@ def saveSurgProcBill(request):
 
                 procBRecObj.save()
                 procbrid_list.append(procBRecObj.id)
-            procRecObj=procedureRecords()
-            procRecObj.procedure_bill=procbrid_list
-            procRecObj.pres=patPresRecObj
-            procRecObj.net_total=totalproc_bill
-            procRecObj.save()
-            procBSumObj=procedureBillSummary()
-            procBSumObj.procbr=procbrid_list
-            procBSumObj.pres=patPresRecObj
-            procBSumObj.net_total=totalproc_bill
-            procBSumObj.save()
-            invRecObj.procedure_id=procBSumObj
+            try:
+                procRObj=procedureRecords.objects.get(pres=patPresRecObj)
+                proc_ext_list=procRObj.procedure_bill
+                for proc in proc_ext_list:
+                    procbrid_list.append(proc)
+                procRObj.procedure_bill=procbrid_list
+                if procRObj.net_total!=None:
+                    procRObj.net_total=procRObj.net_total+totalproc_bill
+
+                procRObj.save()
+            except:
+                procRecObj=procedureRecords()
+                procRecObj.procedure_bill=procbrid_list
+                procRecObj.pres=patPresRecObj
+                procRecObj.net_total=totalproc_bill
+                procRecObj.save()
+
+            try:
+                prcBSumObj=procedureBillSummary.objects.get(pres=patPresRecObj)
+                proc_ext_list=prcBSumObj.procbr
+                # for proc in proc_ext_list:
+                #     procedure_id_list.append(proc)
+                prcBSumObj.procbr=procbrid_list
+                if prcBSumObj.net_total!=None:
+                    prcBSumObj.net_total=prcBSumObj.net_total+totalproc_bill
+                prcBSumObj.save()
+            except:
+                procBSumObj=procedureBillSummary()
+                procBSumObj.procbr=procbrid_list
+                procBSumObj.pres=patPresRecObj
+                procBSumObj.net_total=totalproc_bill
+                procBSumObj.save()
+                invRecObj.procedure_id=procBSumObj
+
             invRecObj.net_total=totalproc_bill+invRecObj.net_total
             invRecObj.save()
             print("Inv net total",invRecObj.net_total)
@@ -3055,12 +3257,23 @@ def saveSurgProcBill(request):
                 surgRecObj.surgery_bill=sbrObj
                 surgRecObj.pres=patPresRecObj
                 surgRecObj.save()
-            surgBSumObj=surgeryBillSummary()
-            surgBSumObj.sbr=sbrid_list
-            surgBSumObj.pres=patPresRecObj
-            surgBSumObj.net_total=surg_total_bill
-            surgBSumObj.save()
-            invRecObj.surgery_bill=surgBSumObj
+            try:
+                surgBSObj=surgeryBillSummary.objects.get(pres=patPresRecObj)
+                surg_ext_list=surgBSObj.sbr
+                for surg in surg_ext_list:
+                    sbrid_list.append(surg)
+                surgBSObj.sbr=sbrid_list
+                surgBSObj.net_total=surgBSObj.net_total+surg_total_bill
+                surgBSObj.save()
+            except:
+                surgBSumObj=surgeryBillSummary()
+                surgBSumObj.sbr=sbrid_list
+                surgBSumObj.pres=patPresRecObj
+                surgBSumObj.net_total=surg_total_bill
+                surgBSumObj.save()
+                invRecObj.surgery_bill=surgBSumObj
+
+                
             invRecObj.net_total=surg_total_bill+invRecObj.net_total
             invRecObj.save()
             print("Inv net total",invRecObj.net_total)
@@ -3204,7 +3417,7 @@ def retrieveInvoiceBillRecordForView(request):
             patPresRecordView_dict['pres_bill']=pPresBObj.net_total
             patPresRecordView_dict['status']=pPresBObj.status
             patPresRecordView_dict['total_bill']=InvoiceObj.net_total
-            patPresRecordView_dict['status']=InvoiceObj.status
+            patPresRecordView_dict['status']=pPresBObj.status
             patPresRecordView_dict['invoice_no']=InvoiceObj.id
             print("patPresRecordView_dict",patPresRecordView_dict)
 
