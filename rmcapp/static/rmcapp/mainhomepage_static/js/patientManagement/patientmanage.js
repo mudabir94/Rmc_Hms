@@ -1437,7 +1437,7 @@ function createOutDoorPresFormDiv(){
                         colmd1.append(bill_status_label)
                             var option1_input=$("<input  type='radio' name='Paid_NotPaid' value='Paid' checked>Paid</input>");
                         colmd2.append(option1_input)
-                            var option2_input=$("<input  type='radio' name='Paid_NotPaid' value='Unpaid'>Not Paid</input>");  
+                            var option2_input=$("<input  type='radio' name='Paid_NotPaid' value='NotPaid'>Not Paid</input>");  
                         colmd3.append(option2_input)
                     row__col_two__row_three.append(colmd1);
                     row__col_two__row_three.append(colmd2);
@@ -1592,7 +1592,7 @@ function createEmergencyPresFormDiv(){
                             colmd1.append(bill_status_label)
                                 var option1_input=$("<input  type='radio' name='Paid_NotPaid' value='Paid' checked>Paid</input>");
                             colmd2.append(option1_input)
-                                var option2_input=$("<input  type='radio' name='Paid_NotPaid' value='Unpaid'>Not Paid</input>");  
+                                var option2_input=$("<input  type='radio' name='Paid_NotPaid' value='NotPaid'>Not Paid</input>");  
                             colmd3.append(option2_input)
                         row__col_two__row_three.append(colmd1);
                         row__col_two__row_three.append(colmd2);
@@ -2200,7 +2200,7 @@ function createWardDataTable(){
                                         colmd1.append(bill_status_label)
                                             var option1_input=$("<input  type='radio' name='Paid_NotPaid' value='Paid' checked>Paid</input>");
                                         colmd2.append(option1_input)
-                                            var option2_input=$("<input  type='radio' name='Paid_NotPaid' value='Unpaid'>Not Paid</input>");  
+                                            var option2_input=$("<input  type='radio' name='Paid_NotPaid' value='NotPaid'>Not Paid</input>");  
                                         colmd3.append(option2_input)
 
                                     row__col_two__subrow_seven.append(colmd1);
@@ -2658,7 +2658,7 @@ function createRoomDataTable(){
                                     colmd1.append(bill_status_label)
                                         var option1_input=$("<input  type='radio' name='Paid_NotPaid' value='Paid' checked>Paid</input>");
                                     colmd2.append(option1_input)
-                                        var option2_input=$("<input  type='radio' name='Paid_NotPaid' value='Unpaid'>Not Paid</input>");  
+                                        var option2_input=$("<input  type='radio' name='Paid_NotPaid' value='NotPaid'>Not Paid</input>");  
                                     colmd3.append(option2_input)
 
                                 row__col_two__subrow_six.append(colmd1);
@@ -3109,7 +3109,7 @@ function billDataTable(){
     });
 }
 function createDespensoryMedTable(){
-    var row_div_three=$("<div class='row' style='padding-bottom:18px'></div>");
+    var row_div_three=$("<div class='row' id='row_div_three' style='padding-bottom:18px'></div>");
         var col_one__row_div_three=$("<div class='col-md-12'></div>");
             row__col_one__row_div_three=$("<div class='row'></div>");
                 colmd1=$("<div class='col-md-12'></div>")
@@ -3122,7 +3122,7 @@ function createDespensoryMedTable(){
 }
 function createRowDivFourBill(){
     var main_col_div=$("#main_col_div");
-    var row_div_four=$("<div class='row' style='padding-bottom:18px'></div>");
+    var row_div_four=$("<div class='row' id='row_div_four'style='padding-bottom:18px'></div>");
         var col_one__row_div_four=$("<div class='col-md-12'></div>");
             row__col_one__row_div_four=$("<div class='row'></div>");
                 colmd1=$("<div class='col-md-12'></div>");
@@ -3373,8 +3373,8 @@ function SaveAndPrintBill(){
 
         dspstck_dict[parseInt(data[0])]=meddatadict
     } );
-    console.log("dspstck_dict",dspstck_dict)
-    pbr_dict={}
+    console.log("dspstck_dict",dspstck_dict);
+    pbr_dict={};
     bill_datatable.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
         var data = this.data();
         console.log("Bill DATA",data)
@@ -3523,7 +3523,9 @@ function SaveAndPrintBill(){
     $('#patient_dash_first_div').show();
     $('#invoice-POS').empty();
    
-
+    despmed_datatable.destroy();
+    procedure_bill_table.destroy();
+    bill_datatable.destroy();
 
 
     $.ajax({
@@ -3544,7 +3546,15 @@ function SaveAndPrintBill(){
         },
         url: '/save_patient_bill',
         success: function(data){
+       
+          $("#row_div_two").remove();
+          $("#row_div_six").empty();
+          $("#row_div_six").remove();
+          $("#row_div_three").remove();
+          $("#row_div_four").remove();
+          $("#row_div_five").remove();
           
+          $("#search_patient_id").val("")
         }
     });
 }
@@ -3646,7 +3656,7 @@ function createRowDivFiveBill(){ ///Last Discount and total Bill row with Button
                                     c1.append(bill_status_label)
                                         var option1_input=$("<input  type='radio' name='Paid_NotPaid' value='Paid' >Paid</input>");
                                     c2.append(option1_input)
-                                        var option2_input=$("<input  type='radio' name='Paid_NotPaid' value='Unpaid' checked>Not Paid</input>");
+                                        var option2_input=$("<input  type='radio' name='Paid_NotPaid' value='NotPaid' checked>Not Paid</input>");
                                     c3.append(option2_input)
                                 row1__subcol2.append(c1);
                                 row1__subcol2.append(c2);

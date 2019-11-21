@@ -1,5 +1,5 @@
 var rw_type_list=['Room','Ward'];
-var status_list=['Available', 'Not Available']
+var room_status_list=['Available', 'Not Available']
 var ward_datatable;
 var ward_dict;
 var ward_id_selected=0;
@@ -165,15 +165,15 @@ function rw_OnSelect(element){
                                         colmd1.append(room_status_label)
                                         var select=$("<select id='status_input' class='form-control'></select>");
                                         var option=$("<option selected='selected' value='--'>--</option>");
-                                        var option1=$("<option id="+status_list[0]+"-opt value="+status_list[0]+">"+status_list[0]+"</option>");
+                                        var option1=$("<option id="+room_status_list[0]+"-opt value="+room_status_list[0]+">"+room_status_list[0]+"</option>");
 
                                         $(select).append(option);
                                         $(select).append(option1);
                                         colmd2.append(select) 
                                 
-                                        for (var i=1;i<=status_list.length;i++){
-                                            if (status_list[i]!==undefined){
-                                                var option=$("<option id="+status_list[i]+"-opt value="+status_list[i]+">"+status_list[i]+"</option>");
+                                        for (var i=1;i<=room_status_list.length;i++){
+                                            if (room_status_list[i]!==undefined){
+                                                var option=$("<option id="+room_status_list[i]+"-opt value="+room_status_list[i]+">"+room_status_list[i]+"</option>");
                                                 $(select).append(option);
                                             }
                                         } 
@@ -282,15 +282,15 @@ function rw_OnSelect(element){
                                     colmd1.append(bed_status_label)
                                     var select=$("<select id='status_input' class='form-control'></select>");
                                     var option=$("<option selected='selected' value='--'>--</option>");
-                                    var option1=$("<option id="+status_list[0]+"-opt value="+status_list[0]+">"+status_list[0]+"</option>");
+                                    var option1=$("<option id="+room_status_list[0]+"-opt value="+room_status_list[0]+">"+room_status_list[0]+"</option>");
 
                                     $(select).append(option);
                                     $(select).append(option1);
                                     colmd2.append(select) 
                             
-                                    for (var i=1;i<=status_list.length;i++){
-                                        if (status_list[i]!==undefined){
-                                            var option=$("<option id="+status_list[i]+"-opt value="+status_list[i]+">"+status_list[i]+"</option>");
+                                    for (var i=1;i<=room_status_list.length;i++){
+                                        if (room_status_list[i]!==undefined){
+                                            var option=$("<option id="+room_status_list[i]+"-opt value="+room_status_list[i]+">"+room_status_list[i]+"</option>");
                                             $(select).append(option);
                                         }
                                     } 
@@ -646,11 +646,11 @@ function createRoomDTable(){
                                             var status_label=$("<label  class='custom_label_css'>Status</label>");
                                             var select=$("<select id='status_input' class='form-control' ></select>");
                                     
-                                            for (var i=0;i<=status_list.length;i++){
-                                                if (status_list[i]!==undefined){
-                                                    var option=$("<option id="+status_list[i]+"-opt  value='"+status_list[i]+"'>"+status_list[i]+"</option>");
+                                            for (var i=0;i<=room_status_list.length;i++){
+                                                if (room_status_list[i]!==undefined){
+                                                    var option=$("<option id="+room_status_list[i]+"-opt  value='"+room_status_list[i]+"'>"+room_status_list[i]+"</option>");
                                                     $(select).append(option);
-                                                    if(room_dict[room_id_selected]['status']==status_list[i]){
+                                                    if(room_dict[room_id_selected]['status']==room_status_list[i]){
                                                         $(option).attr('selected', 'selected');
                                                     }                                        
                                                 }
@@ -786,11 +786,11 @@ function createRoomDTable(){
                                             var status_label=$("<label  class='custom_label_css'>Status</label>");
                                             var select=$("<select id='status_input' class='form-control' ></select>");
                                     
-                                            for (var i=0;i<=status_list.length;i++){
-                                                if (status_list[i]!==undefined){
-                                                    var option=$("<option id="+status_list[i]+"-opt  value='"+status_list[i]+"'>"+status_list[i]+"</option>");
+                                            for (var i=0;i<=room_status_list.length;i++){
+                                                if (room_status_list[i]!==undefined){
+                                                    var option=$("<option id="+room_status_list[i]+"-opt  value='"+room_status_list[i]+"'>"+room_status_list[i]+"</option>");
                                                     $(select).append(option);
-                                                    if(ward_dict[ward_id_selected]['status']==status_list[i]){
+                                                    if(ward_dict[ward_id_selected]['status']==room_status_list[i]){
                                                         $(option).attr('selected', 'selected');
                                                     }                                        
                                                 }

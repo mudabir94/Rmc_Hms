@@ -744,6 +744,8 @@ function printSurgProcBill(){
     
     $('#surg_proc_bill_div').empty();
     $('#patient_dash_first_div').show();
+    saveSurgProcBill();
+
 
 }
 function saveSurgProcBill(){

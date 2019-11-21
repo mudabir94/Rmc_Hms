@@ -90,6 +90,7 @@ function retrieveInvoiceBillRecordForView(){
             console.log("totalProcBill",totalProcBill)
 
             var dt= new Date(patPresRecordView_dict['date_visited']);
+            // remove time from datetime 
             var newdate=dt.toISOString().split('T')[0];
 
             var subrow_one=$("<div class='row' style='padding-top: 5px;padding-bottom: 5px; '></div>")
