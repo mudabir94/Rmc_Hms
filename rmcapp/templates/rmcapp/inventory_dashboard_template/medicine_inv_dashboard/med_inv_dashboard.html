@@ -36,6 +36,8 @@
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
  
     <script src="{% static 'rmcapp/mainhomepage_static/js/MedicineInvJs/medicine_inv_js_one.js' %}"></script>
+    <script src="{% static 'rmcapp/mainhomepage_static/js/MedicineInvJs/desp_med_removal.js' %}"></script>
+
     
 
 
@@ -160,7 +162,10 @@
                 </li>
                 <li>
                   <a href="#" onclick="addMedicineToDespStockForm()">Add Medicine To Dispensory</a>
-                </li>                    
+                </li>   
+                <li>
+                  <a href="#" onclick="removeMedForInternalUse()">Despensory Medicine Extraction</a>
+                </li>                 
               </ul>
             </div>
           </li>
@@ -206,22 +211,28 @@
         <div class="col-md-12">
       
           <div class="row dashboard-icon-rows">
-            <div class="col-md-4" >
+            <div class="col-md-3" >
               <div class="dashboard-icons" role="button" onclick="addMedicineForm()">
                 <i class="fa fa-plus-square fa-5x icon_padding"></i></br>
                 <span class="add_med">Add New Medicine</span>
               </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
               <div class='dashboard-icons' role="button" onclick="addMedicineToWhStockFrom()">
                 <i class="fa fa-medkit fa-5x icon_padding"></i></br>
                 <span class="med_stck">Add Medicine To Stock</span>
               </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
               <div class='dashboard-icons' role="button" onclick="addMedicineToDespStockForm()">
                 <i class="fa fa-list-alt fa-5x icon_padding"></i></br>
                 <span class="med_desp" >Add Medicine To Dispensory</span>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class='dashboard-icons' role="button" onclick="removeMedForInternalUse()">
+                <i class="fa fa-list-alt fa-5x icon_padding"></i></br>
+                <span class="med_desp" >Despensory Medicine Extraction</span>
               </div>
             </div>
           </div>

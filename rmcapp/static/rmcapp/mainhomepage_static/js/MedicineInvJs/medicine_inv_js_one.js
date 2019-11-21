@@ -2372,6 +2372,8 @@ function SaveToDespStock(){
 function focusOut_medicineNameAddMedForm(element){
     $("#empty_name_check_div").remove()
 }
+
+
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== "") {
