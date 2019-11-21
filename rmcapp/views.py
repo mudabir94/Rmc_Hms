@@ -1508,34 +1508,79 @@ def retirevePatientMedHistory(request):
         # DateVisited dict key="datevisited", value="presid"
         # med_hist_dict    key="pres" value="Multiple Dictionarys... " 
         patObj=Patient.objects.get(id=patient_id)
+
         try:
             patVSumObjs=patientVisitSummary.objects.filter(patient=patObj)
             print("hee")
             for patVSumObj in patVSumObjs:
                 presid=patVSumObj.pres.id
-                print("OO")
                 presObj=patPrescriptionRecords.objects.get(id=presid)
-                print("lll")
-                print(patVSumObj)
-                date=patVSumObj.date_visited
-                print("HII")
+                date=patVSumObj.date_visited.date()
+                date=str(date)
                 date_visited_dict[date]=presid
                 temp_med_hist_dict={}
                 temp_med_hist_dict['patienttype']=presObj.patient_type.patient_type
-                temp_med_hist_dict['doc_on_duty']=presObj.doc
-                temp_med_hist_dict['sign_symptom']=presObj.sign_symptoms
+                temp_med_hist_dict['doc_on_duty']=presObj.doc.name
+                temp_med_hist_dict['sign_symptom']=presObj.sign_symtoms
                 temp_med_hist_dict['provisional_diagnosis']=presObj.provisional_diagnosis
                 temp_med_hist_dict['investigation']=presObj.investigation
                 temp_med_hist_dict['diagnosis']=presObj.diagnosis
                 temp_med_hist_dict['vitals']=presObj.vitals
                 temp_med_hist_dict['rx']=presObj.rx
-                temp_med_hist_dict['admit_reason']=presObj.admit_reason
+                temp_med_hist_dict['admit_reason']=presObj.admit_reason   
                 temp_med_hist_dict['diagnosis']=presObj.diagnosis
-                surgRecObj=surgeryRecords.objects.get(pres=presObj)
-                surg_bill_ids=surgeryRecords.objects.get(surgery_bill)
-                temp_med_hist_dict['consultant']=surgRecObj.consultant
-                surgeryBillRecord.objects.filter(id_in)
-                temp_med_hist_dict['surgeries']=surgRecObj
+                print("presObj",presObj)
+                # Surgery Info
+                try:
+                    surgRecObj=surgeryRecords.objects.get(pres=presObj)
+                    temp_med_hist_dict['consultant']=surgRecObj.consultant.name
+                    surgBillRecObjs=surgeryBillRecord.objects.filter(id__in=surgRecObj.surgery_bill)
+                    surgery_name_list=[]
+                    for surgBillRecObj in surgBillRecObjs:
+                        surgery_name_list.append(surgBillRecObj.surgery.surgery_name)
+                    temp_med_hist_dict['surgery_names']=surgery_name_list
+                except:
+                    temp_med_hist_dict['surgery_names']=[]
+                # Procedure Info
+                try:
+                    procBRecObjs=procedureBillRecord.objects.filter(pres=presObj)
+                    procedure_name_list=[]
+                    for procBRecObj in procBRecObjs:
+                        procedure_name_list.append(procBRecObj.procedure.procedure_name)
+                    
+                    temp_med_hist_dict['procedure_names']=procedure_name_list
+
+                except:
+                    temp_med_hist_dict['procedure_names']=[]
+
+                try:
+                    patRBObj=patientRoomsBill.objects.get(pres=presObj)
+                    room_no=patRBObj.rooms.room_no
+                    totaldays=patRBObj.total_days
+                    temp_med_hist_dict['room_no']=room_no
+                    temp_med_hist_dict['total_days']=totaldays
+
+                except:
+                    pass
+                try:
+                    medlist=patientMedRecords.objects.get(pres=presObj).prescription
+                    print("Med list",medlist)
+                    medObjs=Medicine.objects.filter(id__in=medlist)
+                    med_info_list=[]
+                    for count,medObj in enumerate(medObjs):
+                        templist=[]
+
+                        templist.append(medObj.medicine_name)
+                        templist.append(medObj.medicine_type_id.medicine_type_name)
+                        templist.append(medObj.medicine_details)
+                        med_info_list.append(templist)
+
+                    print("medObjs",medObjs)
+                    temp_med_hist_dict['med_list']=med_info_list
+
+                except:
+                    med_info_list=[]
+                
 
 
 
@@ -1543,42 +1588,17 @@ def retirevePatientMedHistory(request):
         except:
             pass
         print("med_hist_dict",med_hist_dict)
+ 
 
 
 
-        # pres_data_dict={}
-        # presid=request.GET.get('presid')
-        # presid=int(presid)
-        # presObj=patPrescriptionRecords.objects.get(id=presid)
-        # pres_data_dict["sign_symtoms"]=presObj.sign_symtoms
-        # pres_data_dict["provisional_diagnosis"]=presObj.provisional_diagnosis
-        # pres_data_dict["investigation"]=presObj.investigation
-        # pres_data_dict["diagnosis"]=presObj.diagnosis
-        # pres_data_dict["vitals"]=presObj.vitals
-
-        # try:
-    
-        #     medlist=patientMedRecords.objects.get(pres=presObj).prescription
-        #     print("Med list",medlist)
-        #     medObjs=Medicine.objects.filter(id__in=medlist)
-        #     med_info_list=[]
-        #     for count,medObj in enumerate(medObjs):
-        #         templist=[]
-        #         templist.append(medObj.medicine_name)
-
-        #         templist.append(medObj.medicine_name)
-        #         templist.append(medObj.medicine_type_id.medicine_type_name)
-        #         templist.append(medObj.medicine_details)
-        #         med_info_list.append(templist)
-
-        #     print("medObjs",medObjs)
-        # except:
-        #     med_info_list=[]
+        
 
 
         data={
             'datelist':datelist,
-            'pat_med_history_dict':med_hist_dict
+            "date_visited_dict":json.dumps(date_visited_dict),
+            'pat_med_history_dict':json.dumps(med_hist_dict),
         }
         return JsonResponse(data)
 presData={}
