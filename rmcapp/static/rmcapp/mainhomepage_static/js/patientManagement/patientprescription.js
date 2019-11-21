@@ -351,26 +351,6 @@ $(row_div_eight).append(col_one__row_div_eight);
     $(main_col_div).append(row_div_seven);
     $(main_col_div).append(row_div_eight);
 
-   
-
-    // var mywindow = window.open('', 'PRINT', 'height=400,width=600');
-
-    // mywindow.document.write('<html><head><title>' + document.title  + '</title>');
-    // mywindow.document.write('<link rel="stylesheet" href="D:/rmc/Rmc_Hms/rmcapp/static/rmcapp/mainhomepage_static/css/patientManagement/printpres.css" type="text/css" />');
-
-    // mywindow.document.write('</head><body >');
-    // mywindow.document.write('<h1>' + document.title  + '</h1>');
-    // mywindow.document.write(document.getElementById('patient_prescription_div').innerHTML);
-    // mywindow.document.write('</body></html>');
-
-    // mywindow.document.close(); // necessary for IE >= 10
-    // mywindow.focus(); // necessary for IE >= 10*/
-
-    // mywindow.print();
-    // mywindow.close();
-
-    // window.print(patient_prescription_div);
-
 }
 function PrintPres(){
     // $("#patient_prescription_div").print();
@@ -379,25 +359,6 @@ function PrintPres(){
     console.log("printcontent",printcontent)
     $('body').empty().html(printcontent);
     window.print();
-
-
-    // window.close();
-    // $('body').html(restorepage);
-
-    
-    // var mywindow = window.open('', 'PRINT', 'height=400,width=600');
-
-    // mywindow.document.write('<html><head><title>' + document.title  + '</title>');
-    // mywindow.document.write('</head><body >');
-    // mywindow.document.write('<h1>' + document.title  + '</h1>');
-    // mywindow.document.write(document.getElementById('patient_prescription_div').innerHTML);
-    // mywindow.document.write('</body></html>');
-
-    // mywindow.document.close(); // necessary for IE >= 10
-    // mywindow.focus(); // necessary for IE >= 10*/
-
-    // mywindow.print();
-    // mywindow.close();
 }
 function getCookie(name) {
     var cookieValue = null;

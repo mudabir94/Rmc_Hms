@@ -1458,6 +1458,7 @@ function updateInvoice(){
             $("#row_room_bill").remove();
             $("#row_ward_bill").remove();
             $("#total_amount_div").remove();
+            $("#update_bttn").remove();
         },
     });
 }

@@ -36,6 +36,8 @@
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
  
     <script src="{% static 'rmcapp/mainhomepage_static/js/MedicineInvJs/medicine_inv_js_one.js' %}"></script>
+    <script src="{% static 'rmcapp/mainhomepage_static/js/MedicineInvJs/desp_med_removal.js' %}"></script>
+
     
 
 
@@ -59,25 +61,29 @@
         }
 
         .icon_padding{
-          padding:32px 0px 0px 215px;
+          padding:32px 0px 0px 155px;
           opacity: 0.2;
           color:white;
         }
-        .add_med, .med_stck, .med_desp{
-          font-size: 30px;
+        .add_med, .med_stck, .med_desp, .remove_med{
+          font-size: 26px;
           opacity: 0.5;
           color:white;
         }
         .add_med{
-          padding: 0px 0px 0px 134px;
+          padding: 0px 0px 0px 85px;
 
         }
         .med_stck{
-          padding: 0px 0px 0px 120px;
+          padding: 0px 0px 0px 63px;
 
         }
         .med_desp{
-          padding: 0px 0px 0px 83px;
+          padding: 0px 0px 0px 28px;
+
+        }
+        .remove_med{
+          padding: 0px 0px 0px 8px;
 
         }
     </style>
@@ -160,7 +166,13 @@
                 </li>
                 <li>
                   <a href="#" onclick="addMedicineToDespStockForm()">Add Medicine To Dispensory</a>
-                </li>                    
+                </li>   
+                <li>
+                  <a href="#" onclick="removeMedForInternalUse()">Despensory Medicine Extraction</a> 
+                </li> 
+                <li>
+                  <a href="#" onclick="removeExpiryMed()">Remove Expired Medicine</a> 
+                </li>                 
               </ul>
             </div>
           </li>
@@ -206,23 +218,61 @@
         <div class="col-md-12">
       
           <div class="row dashboard-icon-rows">
-            <div class="col-md-4" >
+            <div class="col-md-3" >
               <div class="dashboard-icons" role="button" onclick="addMedicineForm()">
                 <i class="fa fa-plus-square fa-5x icon_padding"></i></br>
                 <span class="add_med">Add New Medicine</span>
               </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
               <div class='dashboard-icons' role="button" onclick="addMedicineToWhStockFrom()">
                 <i class="fa fa-medkit fa-5x icon_padding"></i></br>
                 <span class="med_stck">Add Medicine To Stock</span>
               </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
               <div class='dashboard-icons' role="button" onclick="addMedicineToDespStockForm()">
                 <i class="fa fa-list-alt fa-5x icon_padding"></i></br>
                 <span class="med_desp" >Add Medicine To Dispensory</span>
               </div>
+            </div>
+            <div class="col-md-3">
+              <div class='dashboard-icons' role="button" onclick="removeMedForInternalUse()">
+                <i class="fa fa-list-alt fa-5x icon_padding"></i></br>
+                <span class="remove_med" >Despensory Medicine Extraction</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+      
+          <div class="row dashboard-icon-rows">
+            <div class="col-md-3" >
+              <div class="dashboard-icons" role="button" onclick="removeExpiryMed()">
+                <i class="fa fa-plus-square fa-5x icon_padding"></i></br>
+                <span class="exp_med">Remove Expired Medicine</span>
+              </div>
+            </div>
+            <!-- <div class="col-md-3">
+              <div class='dashboard-icons' role="button" onclick="addMedicineToWhStockFrom()">
+                <i class="fa fa-medkit fa-5x icon_padding"></i></br>
+                <span class="med_stck">Add Medicine To Stock</span>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class='dashboard-icons' role="button" onclick="addMedicineToDespStockForm()">
+                <i class="fa fa-list-alt fa-5x icon_padding"></i></br>
+                <span class="med_desp" >Add Medicine To Dispensory</span>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class='dashboard-icons' role="button" onclick="removeMedForInternalUse()">
+                <i class="fa fa-list-alt fa-5x icon_padding"></i></br>
+                <span class="remove_med" >Despensory Medicine Extraction</span>
+              </div> -->
             </div>
           </div>
         </div>

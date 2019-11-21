@@ -2487,6 +2487,7 @@ def savePatientBill(request):
 def updatePrescriptionRecord(request):
     if request.method=="GET":
         pres_data_dict={}
+        print("pres_data_dict", pres_data_dict)
         presid=request.GET.get('presid')
         presid=int(presid)
         presObj=patPrescriptionRecords.objects.get(id=presid)
@@ -2495,6 +2496,8 @@ def updatePrescriptionRecord(request):
         pres_data_dict["investigation"]=presObj.investigation
         pres_data_dict["diagnosis"]=presObj.diagnosis
         pres_data_dict["vitals"]=presObj.vitals
+        pres_data_dict["rx"]=presObj.rx
+
 
         try:
     
@@ -2534,6 +2537,8 @@ def updatePrescriptionRecord(request):
         presObj.investigation=pres_data_dict["investigation"]
         presObj.diagnosis=pres_data_dict["diagnosis"]
         presObj.vitals=pres_data_dict["vitals"]
+        presObj.rx=pres_data_dict["rx"]
+
         presObj.save()
 
 
@@ -3496,5 +3501,56 @@ def retrieveInvoiceBillRecordForView(request):
             "patPresRecordView_dict":json.dumps(patPresRecordView_dict),
             "surgBillRecordView_dict":json.dumps(surgBillRecordView_dict),
             "procBillRecordView_dict":json.dumps(procBillRecordView_dict),
+        }
+        return JsonResponse(data)
+
+# def removeMedForInternalUse(request):
+#     pass
+
+def retrieveMedicineFromDespForInternalUse(request):
+    if request.method=='GET':
+        despid=request.GET.get('despid')
+        print("despid",despid)
+        despid=int(despid)
+        pieces_wanted=request.GET.get('pieces_wanted')
+        strips_wanted=request.GET.get('strips_wanted')
+        no_strips=request.GET.get('no_strips')
+
+        boxes_wanted=request.GET.get('boxes_wanted')
+        print("boxes_wanted",boxes_wanted)
+        boxes_wanted=int(boxes_wanted)
+        pieces_wanted=int(pieces_wanted)
+        print("strips wanted-->",strips_wanted)
+        if no_strips=="false":
+            strips_wanted=int(strips_wanted)
+
+        despStckDict=request.GET.get('despStckDict')
+        despStckDict=json.loads(despStckDict)
+        
+        print("boxes wanted ",boxes_wanted)
+       
+
+        # if medObj.AddCharge=='No' then add zero to amount
+        despstckObj=despensoryStock.objects.get(id=despid)
+        medObj=despstckObj.medicine
+        if despstckObj:
+            if(despstckObj.strip_unit==None ):
+                finaldata=NoStripCalculationDespToPat(despstckObj,medObj,boxes_wanted,pieces_wanted,despStckDict,despid)
+
+            else:
+                finaldata=WithStripCalculationDespToPat(despstckObj,medObj,boxes_wanted,strips_wanted,pieces_wanted,despStckDict,despid)
+        print("Final Data",finaldata)
+        print("Desp Stock Dict",finaldata[0])
+        despStckDict={}
+
+
+        
+        # medicine_list=['1',medObj.medicine_name,str(mainlist[0]),'0',str(mainlist[1]),str(mainlist[2]),str(mainlist[3])]
+        
+      
+        data={
+            'despStckDict':json.dumps(despStckDict),
+            # 'main_list':medicine_list,
+            # 'dspstck_dict':json.dumps(dspstck_dict),
         }
         return JsonResponse(data)

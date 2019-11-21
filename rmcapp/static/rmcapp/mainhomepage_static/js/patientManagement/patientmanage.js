@@ -3938,6 +3938,7 @@ function searchPatPresc(){
         url: '/update_prescription_record',
         success: function(data){
             pres_data_dict=JSON.parse(data['pres_data_dict']);
+            console.log("pres_data_dict", pres_data_dict)
             med_info_list=data['med_info_list'];
             var row_div_two=$("<div class='row' id='row_div_two' style='padding-bottom:10px;'></div>");
         var main_subcol=$("<div class='col-md-12'></div>");
@@ -4014,7 +4015,7 @@ function searchPatPresc(){
                         
                         var colmd1=$("<div class='col-md-4 text-center'></div>")
                         var colmd2=$("<div class='col-md-8' style='padding-bottom:10px;'></div>")
-                            var vitals_label=$("<label for='ss_tag' class='custom_label_css'>Vitals</label>");
+                            var vitals_label=$("<label for='v_tag' class='custom_label_css'>Vitals</label>");
                             var vitals_input=$("<textarea id='vitals_input' class='form-control custom_input_css' style='height: 140px;'  value='"+pres_data_dict['vitals']+"'>"+pres_data_dict['vitals']+"</textarea>")
                         colmd1.append(vitals_label)
                         colmd2.append(vitals_input)
@@ -4023,7 +4024,23 @@ function searchPatPresc(){
                     row__col_one__subrow_three.append(colmd2);
                 col_one__subrow_three.append(row__col_one__subrow_three);
 
+                var col_two__subrow_three=$("<div class='col-md-6'></div>");
+                    row__col_two__subrow_three=$("<div class='row'></div>");
+                        
+                        var colmd1=$("<div class='col-md-4 text-center'></div>")
+                        var colmd2=$("<div class='col-md-8' style='padding-bottom:10px;'></div>")
+                            var rx_label=$("<label for='rx_tag' class='custom_label_css'>RX</label>");
+                            var rx_input=$("<textarea id='rx_input' class='form-control custom_input_css' style='height: 140px;' value='"+pres_data_dict['rx']+"'>"+pres_data_dict['rx']+"</textarea>")
+                        colmd1.append(rx_label)
+                        colmd2.append(rx_input)
+
+                    row__col_two__subrow_three.append(colmd1);
+                    row__col_two__subrow_three.append(colmd2);
+                col_two__subrow_three.append(row__col_two__subrow_three);
+
             subrow_three.append(col_one__subrow_three)
+            subrow_three.append(col_two__subrow_three)
+
 
         main_subcol.append(subrow_one)
         main_subcol.append(subrow_two)
@@ -4033,21 +4050,16 @@ function searchPatPresc(){
 
     var row_div_four=$("<div class='row' id='row_div_four' style='padding-top:10px;'></div>");
         var main_col=$("<div class='col-md-12'></div>");
-
             var subrow_one=$("<div class='row'></div>")
                 var col_one__subrow_one=$("<div class='col-md-12'></div>");
                     row__col_one__subrow_one=$("<div class='row'></div>");
-                        
                         var colmd1=$("<div class='col-md-8 offset-md-2'></div>")
-                            var search_button=$("<button  class='btn btn-primary btn-block' onclick='UpdatePrescription()'>Update</button>")
+                            var search_button=$("<button  class='btn btn-block fa fa-save' onclick='UpdatePrescription()'>  Update Prescription Record</button>")
                         colmd1.append(search_button)
-                    
                     row__col_one__subrow_one.append(colmd1);
                 col_one__subrow_one.append(row__col_one__subrow_one);
-
             subrow_one.append(col_one__subrow_one)
         main_col.append(subrow_one)
-
     row_div_four.append(main_col)
 
     var main_col_div=$("#main_col_div");
@@ -4104,12 +4116,16 @@ function UpdatePrescription(){
     investigation_input=$("#investigation_input").val()
     diagnosis_input=$("#diagnosis_input").val()
     vitals_input=$("#vitals_input").val()
+    rx_input=$("#rx_input").val()
     pres_data_dict={}
     pres_data_dict['ss']=ss_input;
     pres_data_dict['pd']=pd_input;
     pres_data_dict['investigation']=investigation_input;
     pres_data_dict['diagnosis']=diagnosis_input;
     pres_data_dict['vitals']=vitals_input;
+    pres_data_dict['rx']=rx_input;
+
+
     $.ajax({
         type: 'POST',
         dataType: "json",
