@@ -1044,23 +1044,17 @@ function viewPatientHistory(){
                                 var c1=$("<div class='col-md-4'></div>");
                                     var label=$("<label>Patient id</label>")
                                 var c2=$("<div class='col-md-4'></div>");
-                                    var input=$("<input id='searchpat_id_input'></input>");
+                                    var input=$("<input class='form-control' id='searchpat_id_input'></input>");
+                                var c3=$("<div class='col-md-4'></div>");
+                                    var search_button=$("<button class='btn btn-block fa fa-search' onclick='searchPatientMedHistory()'>  Search Patient</button>")
                                 c1.append(label);
                                 c2.append(input);
+                                c3.append(search_button);
                             rw.append(c1);
                             rw.append(c2);
+                            rw.append(c3);
                         subcol1.append(rw);
-                        var subcol2=$("<div class='col-md-4'></div>");
-                            var rw=$("<div class='row'></div>");
-                                var c1=$("<div class='col-md-4'></div>");
-                                    var search_button=$("<button onclick='searchPatientMedHistory()'>Search Patient</button>")
-                                c1.append(search_button);
-                            rw.append(c1);
-                        subcol2.append(rw)
-                        
                     sub_row_div.append(subcol1);
-                    sub_row_div.append(subcol2);
-
                 col.append(sub_row_div)
             row_div.append(col)
 
@@ -1079,7 +1073,7 @@ function patientHistory(element){
 function createPatientHistory_DateList(){
     
     row_div_one=$("#row_div_one");
-        var sub_col_one=$("<div class='col-md-4'></div>");
+        var sub_col_one=$("<div class='col-md-4' id='col1'></div>");
             var row_one__sub_col_one=$("<div class='row'></div>");
                 var col__row_one__sub_col_one=$("<div class='col-md-12'></div>");
                     var label=$("<label>Dates Visited</label>");
@@ -1090,10 +1084,10 @@ function createPatientHistory_DateList(){
                 var col__row_two__sub_col_one=$("<div class='col-md-12'></div>");
                     var list_div=$("<div></div>")
                         var ul=$("<ul></ul>")
-                        for (date in date_visited_dict){
-                            var li=$("<li id='"+date_visited_dict[date]+"_pres' onclick='patientHistory($(this))' value='"+date_visited_dict[date]+"'>"+date+"</li>")
-                            ul.append(li);
-                        }
+                            for (date in date_visited_dict){
+                                var li=$("<li id='"+date_visited_dict[date]+"_pres' onclick='patientHistory($(this))' value='"+date_visited_dict[date]+"'>"+date+"</li>")
+                                ul.append(li);
+                            }
                         list_div.append(ul);
                 col__row_two__sub_col_one.append(list_div);
             row_two__sub_col_one.append(col__row_two__sub_col_one);
@@ -1103,80 +1097,297 @@ function createPatientHistory_DateList(){
 
     row_div_one.append(sub_col_one);
 }
-function createPatientHistoryForm(){
+function createPatientHistoryForm(){ ///details in right col
     $("#sub_col_two").remove();
     var row_div_one=$("#row_div_one");
     var sub_col_two=$("#sub_col_two");
-    var sub_col_two=$("<div class='col-md-8' id='sub_col_two'></div>");
-            var row_one__sub_col_two=$("<div class='row'></div>");
-                // var col__row_one__sub_col_two=$("<div class='col-md-12'></div>");
-                //     var row_one__col__row_one__sub_col_two=$("<div class='row'></div>");
-                //         var col_one__row_one__col__row_one__sub_col_two=$("<div class='col-md-2'>")
-                //         var col_two__row_one__col__row_one__sub_col_two=$("<div class='col-md-3'>")
-                //             var label=$("<label>Dates Visited</label>");
-                //             var input=$("<input id='pat_hist_date_vis_inp'value='"+pres_selected+"' ></input>");
-                //         col_one__row_one__col__row_one__sub_col_two.append(label);
-                //         col_two__row_one__col__row_one__sub_col_two.append(input);
-                //     row_one__col__row_one__sub_col_two.append(col_one__row_one__col__row_one__sub_col_two)
-                //     row_one__col__row_one__sub_col_two.append(col_two__row_one__col__row_one__sub_col_two)
-                // col__row_one__sub_col_two.append(row_one__col__row_one__sub_col_two);
-            // row_one__sub_col_two.append(col__row_one__sub_col_two);
+    var sub_col_two=$("<div class='col-md-8' class='sub_col_two' id='sub_col_two'></div>");
 
-            var row_two__sub_col_two=$("<div class='row'></div>");
-                var col__row_two__sub_col_two=$("<div class='col-md-12'></div>");
-                    var row_one__col__row_two__sub_col_two=$("<div class='row'></div>");
-                        var col_one__row_one__col__row_two__sub_col_two=$("<div class='col-md-2'>")
-                        var col_two__row_one__col__row_two__sub_col_two=$("<div class='col-md-3'>")
-                            var label=$("<label>Vitals</label>");
-                            var input=$("<input id='pat_hist_vitals_inp_"+pres_selected+"'  value='"+pat_med_history_dict[pres_selected]['vitals']+"'></input>");
-                        col_one__row_one__col__row_two__sub_col_two.append(label);
-                        col_two__row_one__col__row_two__sub_col_two.append(input);
-                    row_one__col__row_two__sub_col_two.append(col_one__row_one__col__row_two__sub_col_two)
-                    row_one__col__row_two__sub_col_two.append(col_two__row_one__col__row_two__sub_col_two)
-                col__row_two__sub_col_two.append(row_one__col__row_two__sub_col_two);
-            row_two__sub_col_two.append(col__row_two__sub_col_two);
-            var row_three_sub_col_three=$("<div class='row'></div>");
-                var col__row_three_sub_col_three=$("<div class='col-md-12'></div>");
-                    var row_one__col__row_three_sub_col_three=$("<div class='row'></div>");
-                    
-                        var col_one__row_one__col__row_three_sub_col_three=$("<div class='col-md-12'>")
-                            // var table=$('<table id="prescription_table" class="display" width="100%"></table>');
-                        // col_one__row_one__col__row_three_sub_col_three.append(table);
-                    row_one__col__row_three_sub_col_three.append(col_one__row_one__col__row_three_sub_col_three);
-                col__row_three_sub_col_three.append(row_one__col__row_three_sub_col_three);
-            row_three_sub_col_three.append(col__row_three_sub_col_three);
+        var row_one__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
+            var col__row_one__sub_col_two=$("<div class='col-md-12'></div>");
+                var row_one__col__row_one__sub_col_two=$("<div class='row'></div>");
+                    var colmd1=$("<div class='col-md-3'>")
+                    var colmd2=$("<div class='col-md-3'>")
+                        var label=$("<label>Patient Type</label>");
+                        var input=$("<input id='pat_hist_pattype_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['patienttype']+"' style='background:white' disabled></input>");
+                    colmd1.append(label);
+                    colmd2.append(input);
+                row_one__col__row_one__sub_col_two.append(colmd1)
+                row_one__col__row_one__sub_col_two.append(colmd2)
+            col__row_one__sub_col_two.append(row_one__col__row_one__sub_col_two);
+        row_one__sub_col_two.append(col__row_one__sub_col_two);
 
+        var row_two__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
+            var col__row_two__sub_col_two=$("<div class='col-md-12'></div>");
+                var row_one__col__row_two__sub_col_two=$("<div class='row'></div>");
+                    var colmd1=$("<div class='col-md-3'>")
+                    var colmd2=$("<div class='col-md-3'>")
+                        var label=$("<label>Doctor Visited</label>");
+                        var input=$("<input id='pat_hist_docOnduty_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['doc_on_duty']+"' style='background:white' disabled></input>");
+                    colmd1.append(label);
+                    colmd2.append(input);
+                row_one__col__row_two__sub_col_two.append(colmd1)
+                row_one__col__row_two__sub_col_two.append(colmd2)
+            col__row_two__sub_col_two.append(row_one__col__row_two__sub_col_two);
+        row_two__sub_col_two.append(col__row_two__sub_col_two);
+        
+        var row_three__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
+            var col__row_three__sub_col_two=$("<div class='col-md-12'></div>");
+                var row_one__col__row_three__sub_col_two=$("<div class='row'></div>");
+                    var colmd1=$("<div class='col-md-3'>")
+                    var colmd2=$("<div class='col-md-3'>")
+                        var label=$("<label>Vitals</label>");
+                        var input=$("<textarea id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['vitals']+"' style='background:white' disabled></textarea>");
+                    colmd1.append(label);
+                    colmd2.append(input);
+                row_one__col__row_three__sub_col_two.append(colmd1)
+                row_one__col__row_three__sub_col_two.append(colmd2)
+            col__row_three__sub_col_two.append(row_one__col__row_three__sub_col_two);
+        row_three__sub_col_two.append(col__row_three__sub_col_two);
 
+        var row_four__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
+            var col__row_four__sub_col_two=$("<div class='col-md-12'></div>");
+                var row_one__col__row_four__sub_col_two=$("<div class='row'></div>");
+                    var colmd1=$("<div class='col-md-3'>")
+                    var colmd2=$("<div class='col-md-3'>")
+                        var label=$("<label>Sign Symptoms</label>");
+                        var input=$("<input id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['sign_symptom']+"' style='background:white' disabled></input>");
+                    colmd1.append(label);
+                    colmd2.append(input);
+                row_one__col__row_four__sub_col_two.append(colmd1)
+                row_one__col__row_four__sub_col_two.append(colmd2)
+            col__row_four__sub_col_two.append(row_one__col__row_four__sub_col_two);
+        row_four__sub_col_two.append(col__row_four__sub_col_two);
 
+        var row_five__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
+            var col__row_five__sub_col_two=$("<div class='col-md-12'></div>");
+                var row_one__col__row_five__sub_col_two=$("<div class='row'></div>");
+                    var colmd1=$("<div class='col-md-3'>")
+                    var colmd2=$("<div class='col-md-3'>")
+                        var label=$("<label>Provisional Diagnosis</label>");
+                        var input=$("<input id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['provisional_diagnosis']+"' style='background:white' disabled></input>");
+                    colmd1.append(label);
+                    colmd2.append(input);
+                row_one__col__row_five__sub_col_two.append(colmd1)
+                row_one__col__row_five__sub_col_two.append(colmd2)
+            col__row_five__sub_col_two.append(row_one__col__row_five__sub_col_two);
+        row_five__sub_col_two.append(col__row_five__sub_col_two);
 
-        sub_col_two.append(row_one__sub_col_two);                 
-        sub_col_two.append(row_two__sub_col_two);  
-        sub_col_two.append(row_three_sub_col_three);  
+        var row_six__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
+            var col__row_six__sub_col_two=$("<div class='col-md-12'></div>");
+                var row_one__col__row_six__sub_col_two=$("<div class='row'></div>");
+                    var colmd1=$("<div class='col-md-3'>")
+                    var colmd2=$("<div class='col-md-3'>")
+                        var label=$("<label>Investigation</label>");
+                        var input=$("<input id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['investigation']+"' style='background:white' disabled></input>");
+                    colmd1.append(label);
+                    colmd2.append(input);
+                row_one__col__row_six__sub_col_two.append(colmd1)
+                row_one__col__row_six__sub_col_two.append(colmd2)
+            col__row_six__sub_col_two.append(row_one__col__row_six__sub_col_two);
+        row_six__sub_col_two.append(col__row_six__sub_col_two);
 
+        var row_seven__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
+            var col__row_seven__sub_col_two=$("<div class='col-md-12'></div>");
+                var row_one__col__row_seven__sub_col_two=$("<div class='row'></div>");
+                    var colmd1=$("<div class='col-md-3'>")
+                    var colmd2=$("<div class='col-md-3'>")
+                        var label=$("<label>Diagnosis</label>");
+                        var input=$("<input id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['diagnosis']+"' style='background:white' disabled></input>");
+                    colmd1.append(label);
+                    colmd2.append(input);
+                row_one__col__row_seven__sub_col_two.append(colmd1)
+                row_one__col__row_seven__sub_col_two.append(colmd2)
+            col__row_seven__sub_col_two.append(row_one__col__row_seven__sub_col_two);
+        row_seven__sub_col_two.append(col__row_seven__sub_col_two);
 
-    row_div_one.append(sub_col_two);
+        var row_eight__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
+            var col__row_eight__sub_col_two=$("<div class='col-md-12'></div>");
+                var row_one__col__row_eight__sub_col_two=$("<div class='row'></div>");
+                    var colmd1=$("<div class='col-md-3'>")
+                    var colmd2=$("<div class='col-md-3'>")
+                        var label=$("<label>RX</label>");
+                        var input=$("<input id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['rx']+"' style='background:white' disabled></input>");
+                    colmd1.append(label);
+                    colmd2.append(input);
+                row_one__col__row_eight__sub_col_two.append(colmd1)
+                row_one__col__row_eight__sub_col_two.append(colmd2)
+            col__row_eight__sub_col_two.append(row_one__col__row_eight__sub_col_two);
+        row_eight__sub_col_two.append(col__row_eight__sub_col_two);
 
-    // $(function(){
-    //     prescription_datatable=$("#prescription_table").DataTable({
-    //         data:pat_med_history_dict[date_selected]['prescription'],
-    //         columns: [
-                
-    //             { title: "Medicine Name" },
-    //             { title: "Weight(mg)" },
-             
-               
+        if (pat_med_history_dict[pres_selected]['patienttype']==="Indoor"){
+            var row_nine__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
+                var col__row_nine__sub_col_two=$("<div class='col-md-12'></div>");
+                    var row_one__col__row_nine__sub_col_two=$("<div class='row'></div>");
+                        var colmd1=$("<div class='col-md-2'>")
+                        var colmd2=$("<div class='col-md-3'>")
+                            var label=$("<label>Admission Reason</label>");
+                            var input=$("<label id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control-static'>"+pat_med_history_dict[pres_selected]['admit_reason']+"</label>");
+                        colmd1.append(label);
+                        colmd2.append(input);
+                    row_one__col__row_nine__sub_col_two.append(colmd1)
+                    row_one__col__row_nine__sub_col_two.append(colmd2)
+                col__row_nine__sub_col_two.append(row_one__col__row_nine__sub_col_two);
+            row_nine__sub_col_two.append(col__row_nine__sub_col_two);
 
+            if (pat_med_history_dict[pres_selected]['surgery_names'].lenght!==0){
 
-    //             ],
-    //             paging: false,
-    //             scrollY: 200,
-    //             scrollX: true,
-    //             ordering: true,
-    //             info:false,
+                var row_ten__sub_col_two=$("<div class='row'></div>");
+                    var surg_list=pat_med_history_dict[pres_selected]['surgery_names']
+                    var col__row_ten__sub_col_two=$("<div class='col-md-12'></div>");
+                        var div=$("<div>")
+                            var surg_table=$("<table></table>");
+                                var thead=$("<thead></thead>");
+                                    var tr=$("<tr style='border-bottom:1px solid black'  >");
+                                        var th1=$("<th>")
+                                        th1.append("SrNo.")
+                                        var th2=$("<th>")
+                                        th2.append("Surgery Name")
+                                    tr.append(th1);
+                                    tr.append(th2);
+                                thead.append(tr);
+                            $(surg_table).append(thead);
     
-    //         });    
-    //     });         
+                                var tbody=$("<tbody></tbody>");
+                            $(surg_table).append(tbody);
+                                for (index in surg_list){
+                                    console.log("index",index)
+                                    console.log("med_list--index",surg_list[index])
+                                    onesurg_list=surg_list[index]
+                                    var tr=$("<tr style='border-bottom:1px solid black'>");
+                                        var td=$("<td>");
+                                        var count=parseInt(index)+1;
+                                        td.append(count)
+                                        var td2=$("<td>");
+                                        td2.append(surg_list[index])
+                                    tr.append(td);
+                                    tr.append(td2)
+                                    tbody.append(tr);
 
+                                }
+                        div.append(surg_table)               
+                    col__row_ten__sub_col_two.append(div);
+                row_ten__sub_col_two.append(col__row_ten__sub_col_two);
+            }
+        } 
+
+        
+        
+        if (pat_med_history_dict[pres_selected]['med_list'].length!==0){
+            var med_list=pat_med_history_dict[pres_selected]['med_list']
+            var row_eleven__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
+                var col__row_eleven__sub_col_two=$("<div class='col-md-12'></div>");
+                    var div=$("<div>")
+                        var med_table=$("<table></table>");
+                            var thead=$("<thead></thead>");
+                                var tr=$("<tr style='border-bottom:1px solid black'  >");
+                                    var th1=$("<th>")
+                                    th1.append("SrNo.")
+                                    var th2=$("<th>")
+                                    th2.append("Medicine Name")
+                                    var th3=$("<th>")
+                                    th3.append("Type")
+                                    var th4=$("<th>")
+                                    th4.append("Details")
+                                    var th5=$("<th>")
+                                    th5.append("Weight(mg)")
+                                    
+                                tr.append(th1);
+                                tr.append(th2);
+                                tr.append(th3);
+                                tr.append(th4);
+                                tr.append(th5);
+                            thead.append(tr);
+                        $(med_table).append(thead);
+
+                            var tbody=$("<tbody></tbody>");
+                        $(med_table).append(tbody);
+                                for (index in med_list){
+                                    console.log("index",index)
+                                    console.log("med_list--index",med_list[index])
+                                    onemed_list=med_list[index]
+                                    var tr=$("<tr style='border-bottom:1px solid black'>");
+                                    var td=$("<td>");
+                                    var count=parseInt(index)+1;
+                                    td.append(count)
+                                    tr.append(td)
+                                    for (var i in onemed_list){
+                                                var td=$("<td>");
+                                                td.append(onemed_list[i])
+                                            tr.append(td)
+                                    }
+                                    tbody.append(tr);
+                                }
+                    div.append(med_table)                        
+                col__row_eleven__sub_col_two.append(div);
+            row_eleven__sub_col_two.append(col__row_eleven__sub_col_two);
+        }
+
+        
+        if (pat_med_history_dict[pres_selected]['procedure_names'].lenght!==0){
+
+            var row_twelve__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
+                var proc_list=pat_med_history_dict[pres_selected]['procedure_names']
+                var col__row_twelve__sub_col_two=$("<div class='col-md-12'></div>");
+                    var div=$("<div>")
+                        var proc_table=$("<table></table>");
+                            var thead=$("<thead></thead>");
+                                var tr=$("<tr style='border-bottom:1px solid black'  >");
+                                    var th1=$("<th>")
+                                    th1.append("SrNo.")
+                                    var th2=$("<th>")
+                                    th2.append("Procedure Name")
+                                tr.append(th1);
+                                tr.append(th2);
+                            thead.append(tr);
+                        $(proc_table).append(thead);
+
+                            var tbody=$("<tbody></tbody>");
+                        $(proc_table).append(tbody);
+                            for (index in proc_list){
+                                console.log("index",index)
+                                console.log("proc_list--index",proc_list[index])
+                                oneproc_list=proc_list[index]
+                                var tr=$("<tr style='border-bottom:1px solid black'>");
+                                    var td=$("<td>");
+                                    var count=parseInt(index)+1;
+                                    td.append(count)
+                                    var td2=$("<td>");
+                                    td2.append(proc_list[index])
+                                tr.append(td);
+                                tr.append(td2)
+                                tbody.append(tr);
+                            }
+                    div.append(proc_table)               
+                col__row_twelve__sub_col_two.append(div);
+            row_twelve__sub_col_two.append(col__row_twelve__sub_col_two);
+        }
+
+        var row_thirteen__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
+            var col__row_thirteen__sub_col_two=$("<div class='col-md-12'></div>");
+                var row_one__col__row_thirteen__sub_col_two=$("<div class='row'></div>");
+                    var colmd1=$("<div class='col-md-6 offset-md-3'></div>")
+                        var printBtn_label=$('<button class="btn btn-block fa fa-print" id="print_bttn" onclick="PrintPatVisitInfo()">Print Patient Visit Information</button>');
+                    colmd1.append(printBtn_label)
+                row_one__col__row_thirteen__sub_col_two.append(colmd1)
+            col__row_thirteen__sub_col_two.append(row_one__col__row_thirteen__sub_col_two);
+        row_thirteen__sub_col_two.append(col__row_thirteen__sub_col_two);
+
+    sub_col_two.append(row_one__sub_col_two);                 
+    sub_col_two.append(row_two__sub_col_two);  
+    sub_col_two.append(row_three__sub_col_two);
+    sub_col_two.append(row_four__sub_col_two);
+    sub_col_two.append(row_five__sub_col_two);
+    sub_col_two.append(row_six__sub_col_two);
+    sub_col_two.append(row_seven__sub_col_two);
+    sub_col_two.append(row_eight__sub_col_two); 
+    sub_col_two.append(row_nine__sub_col_two);
+    sub_col_two.append(row_ten__sub_col_two);
+    sub_col_two.append(row_eleven__sub_col_two);  
+    sub_col_two.append(row_twelve__sub_col_two);
+    sub_col_two.append(row_thirteen__sub_col_two);
+
+row_div_one.append(sub_col_two);
 }
 var date_visited_dict={}
 function searchPatientMedHistory(){
@@ -1184,9 +1395,6 @@ function searchPatientMedHistory(){
     console.log("patient_id",patient_id)
     if ($("#row_div_one")!==undefined){
         $("#row_div_one").empty();
-        if (prescription_datatable!==undefined){
-            prescription_datatable.destroy();
-        }
     }
     $.ajax({
         type: 'POST',
@@ -1196,7 +1404,7 @@ function searchPatientMedHistory(){
         },
         url: '/retireve_patient_med_history',
         success: function(data){
-            datelist=data['datelist'];
+            console.log("JSON.parse(data['pat_med_history_dict']);",JSON.parse(data['pat_med_history_dict']))
             pat_med_history_dict=JSON.parse(data['pat_med_history_dict']);
             date_visited_dict=JSON.parse(data['date_visited_dict']);
 
@@ -1205,6 +1413,435 @@ function searchPatientMedHistory(){
         }
     });
 }
+
+function PrintPatVisitInfo(){
+    var content = $("#sub_col_two").clone();
+    var mywindow = window.open('', 'Print', 'height=600,width=800');
+
+    mywindow.document.close();
+    mywindow.focus()
+    mywindow.print();
+    mywindow.close();
+    return true;
+
+    // var printcontent = $(".main_col_div").clone();
+    // $('#row_div').hide();
+    // $('#sidebar').hide();
+    // $('#print_bttn').hide();
+    // $('#dialog-confirm').hide();
+    // $('#col1').hide();
+    // // $('#rmcHeading').show();
+    // // $('#heading2').show();
+
+
+    // $('#patVisit_bill_div').empty().html(printcontent);
+    
+    // window.print();
+    // window.close();
+
+    // // $('#rmcHeading').hide();
+    // // $('#heading2').hide();
+
+    // $('#row_div').show();
+    // $('#col1').show();
+    // $('#sidebar').show();
+    // $('#sidebar').show();
+    // $('#print_bttn').show();
+}
+
+function updatePatientHistory(){
+    $('#main_page_content').empty()
+    var container_patient_dashboard= $('#main_page_content').append('<div class="container-fluid" id="container-patient-dashboard"></div>');
+    $("#container-patient-dashboard").append("<h2 class ='text-center'>Update Patient Medical History</h2>");
+    $("#container-patient-dashboard").append("<hr class='custom_hr'>");
+    var main_row_div= $("<div class='row is-flex'></div>");
+    $(container_patient_dashboard).append(main_row_div);
+
+    var main_col_div=$("<div class='col-md-12' id=''></div>");
+       
+        $(main_row_div).append(main_col_div);
+            var row_div=$("<div class='row' id='row_div'></div>");
+                var col=$("<div class='col-md-12'></div>");
+                    var sub_row_div=$("<div class='row' id='sub_row_div_spat'></div>");
+                        var subcol1=$("<div class='col-md-4'></div>");
+                            var rw=$("<div class='row'></div>");
+                                var c1=$("<div class='col-md-4'></div>");
+                                    var label=$("<label>Patient id</label>")
+                                var c2=$("<div class='col-md-4'></div>");
+                                    var input=$("<input class='form-control' id='searchpat_id_input'></input>");
+                                var c3=$("<div class='col-md-4'></div>");
+                                    var search_button=$("<button class='btn btn-block fa fa-search' onclick='searchUpdatePatientMedHistory()'>  Search Patient</button>")
+                                c1.append(label);
+                                c2.append(input);
+                                c3.append(search_button);
+                            rw.append(c1);
+                            rw.append(c2);
+                            rw.append(c3);
+                        subcol1.append(rw);
+                    sub_row_div.append(subcol1);
+                col.append(sub_row_div)
+            row_div.append(col)
+
+        var row_div_one=$("<div class='row' id='row_div_one'></div>");   
+
+    $(main_col_div).append(row_div);
+    $(main_col_div).append(row_div_one);
+}
+
+var date_visited_dict={}
+function searchUpdatePatientMedHistory(){
+    var patient_id=$("#searchpat_id_input").val();
+    console.log("patient_id",patient_id)
+    if ($("#row_div_one")!==undefined){
+        $("#row_div_one").empty();
+    }
+    $.ajax({
+        type: 'POST',
+        dataType: "json",
+        'data': {
+          "patient_id":patient_id,
+        },
+        url: '/retireve_patient_med_history',
+        success: function(data){
+            console.log("JSON.parse(data['pat_med_history_dict']);",JSON.parse(data['pat_med_history_dict']))
+            pat_med_history_dict=JSON.parse(data['pat_med_history_dict']);
+            date_visited_dict=JSON.parse(data['date_visited_dict']);
+
+            console.log("pat_med_history_dict",pat_med_history_dict)
+            createUpdatePatientHistory_DateList()
+        }
+    });
+}
+
+function createUpdatePatientHistory_DateList(){
+    
+    row_div_one=$("#row_div_one");
+        var sub_col_one=$("<div class='col-md-4' id='col1'></div>");
+            var row_one__sub_col_one=$("<div class='row'></div>");
+                var col__row_one__sub_col_one=$("<div class='col-md-12'></div>");
+                    var label=$("<label>Dates Visited</label>");
+                col__row_one__sub_col_one.append(label);
+            row_one__sub_col_one.append(col__row_one__sub_col_one);
+
+            var row_two__sub_col_one=$("<div class='row'></div>");
+                var col__row_two__sub_col_one=$("<div class='col-md-12'></div>");
+                    var list_div=$("<div></div>")
+                        var ul=$("<ul></ul>")
+                            for (date in date_visited_dict){
+                                var li=$("<li id='"+date_visited_dict[date]+"_pres' onclick='updatePatientHistory_form($(this))' value='"+date_visited_dict[date]+"'>"+date+"</li>")
+                                ul.append(li);
+                            }
+                        list_div.append(ul);
+                col__row_two__sub_col_one.append(list_div);
+            row_two__sub_col_one.append(col__row_two__sub_col_one);
+
+        sub_col_one.append(row_one__sub_col_one);
+        sub_col_one.append(row_two__sub_col_one);
+
+    row_div_one.append(sub_col_one);
+}
+
+function updatePatientHistory_form(element){
+    console.log($(element).attr('value'))
+    pres_selected=$(element).attr('value')
+    
+    createUpdatePatientHistoryForm();
+}
+
+function createUpdatePatientHistoryForm(){ ///details in right col
+    $("#sub_col_two").remove();
+    var row_div_one=$("#row_div_one");
+    var sub_col_two=$("#sub_col_two");
+    var sub_col_two=$("<div class='col-md-8' class='sub_col_two' id='sub_col_two'></div>");
+
+        var row_one__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
+            var col__row_one__sub_col_two=$("<div class='col-md-12'></div>");
+                var row_one__col__row_one__sub_col_two=$("<div class='row'></div>");
+                    var colmd1=$("<div class='col-md-3'>")
+                    var colmd2=$("<div class='col-md-3'>")
+                        var label=$("<label>Patient Type</label>");
+                        var input=$("<input id='pat_hist_pattype_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['patienttype']+"' style='background:white' disabled></input>");
+                    colmd1.append(label);
+                    colmd2.append(input);
+                row_one__col__row_one__sub_col_two.append(colmd1)
+                row_one__col__row_one__sub_col_two.append(colmd2)
+            col__row_one__sub_col_two.append(row_one__col__row_one__sub_col_two);
+        row_one__sub_col_two.append(col__row_one__sub_col_two);
+
+        var row_two__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
+            var col__row_two__sub_col_two=$("<div class='col-md-12'></div>");
+                var row_one__col__row_two__sub_col_two=$("<div class='row'></div>");
+                    var colmd1=$("<div class='col-md-3'>")
+                    var colmd2=$("<div class='col-md-3'>")
+                        var label=$("<label>Doctor Visited</label>");
+                        var input=$("<input id='pat_hist_docOnduty_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['doc_on_duty']+"' style='background:white' disabled></input>");
+                    colmd1.append(label);
+                    colmd2.append(input);
+                row_one__col__row_two__sub_col_two.append(colmd1)
+                row_one__col__row_two__sub_col_two.append(colmd2)
+            col__row_two__sub_col_two.append(row_one__col__row_two__sub_col_two);
+        row_two__sub_col_two.append(col__row_two__sub_col_two);
+        
+        var row_three__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
+            var col__row_three__sub_col_two=$("<div class='col-md-12'></div>");
+                var row_one__col__row_three__sub_col_two=$("<div class='row'></div>");
+                    var colmd1=$("<div class='col-md-3'>")
+                    var colmd2=$("<div class='col-md-3'>")
+                        var label=$("<label>Vitals</label>");
+                        var input=$("<textarea id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['vitals']+"'> "+pat_med_history_dict[pres_selected]['vitals']+"</textarea>");
+                    colmd1.append(label);
+                    colmd2.append(input);
+                row_one__col__row_three__sub_col_two.append(colmd1)
+                row_one__col__row_three__sub_col_two.append(colmd2)
+            col__row_three__sub_col_two.append(row_one__col__row_three__sub_col_two);
+        row_three__sub_col_two.append(col__row_three__sub_col_two);
+
+        var row_four__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
+            var col__row_four__sub_col_two=$("<div class='col-md-12'></div>");
+                var row_one__col__row_four__sub_col_two=$("<div class='row'></div>");
+                    var colmd1=$("<div class='col-md-3'>")
+                    var colmd2=$("<div class='col-md-3'>")
+                        var label=$("<label>Sign Symptoms</label>");
+                        var input=$("<textarea id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['sign_symptom']+"'>"+pat_med_history_dict[pres_selected]['sign_symptom']+"</textarea>");
+                    colmd1.append(label);
+                    colmd2.append(input);
+                row_one__col__row_four__sub_col_two.append(colmd1)
+                row_one__col__row_four__sub_col_two.append(colmd2)
+            col__row_four__sub_col_two.append(row_one__col__row_four__sub_col_two);
+        row_four__sub_col_two.append(col__row_four__sub_col_two);
+
+        var row_five__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
+            var col__row_five__sub_col_two=$("<div class='col-md-12'></div>");
+                var row_one__col__row_five__sub_col_two=$("<div class='row'></div>");
+                    var colmd1=$("<div class='col-md-3'>")
+                    var colmd2=$("<div class='col-md-3'>")
+                        var label=$("<label>Provisional Diagnosis</label>");
+                        var input=$("<textarea id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['provisional_diagnosis']+"'>"+pat_med_history_dict[pres_selected]['provisional_diagnosis']+"</textarea>");
+                    colmd1.append(label);
+                    colmd2.append(input);
+                row_one__col__row_five__sub_col_two.append(colmd1)
+                row_one__col__row_five__sub_col_two.append(colmd2)
+            col__row_five__sub_col_two.append(row_one__col__row_five__sub_col_two);
+        row_five__sub_col_two.append(col__row_five__sub_col_two);
+
+        var row_six__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
+            var col__row_six__sub_col_two=$("<div class='col-md-12'></div>");
+                var row_one__col__row_six__sub_col_two=$("<div class='row'></div>");
+                    var colmd1=$("<div class='col-md-3'>")
+                    var colmd2=$("<div class='col-md-3'>")
+                        var label=$("<label>Investigation</label>");
+                        var input=$("<textarea id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['investigation']+"'>"+pat_med_history_dict[pres_selected]['investigation']+"</textarea>");
+                    colmd1.append(label);
+                    colmd2.append(input);
+                row_one__col__row_six__sub_col_two.append(colmd1)
+                row_one__col__row_six__sub_col_two.append(colmd2)
+            col__row_six__sub_col_two.append(row_one__col__row_six__sub_col_two);
+        row_six__sub_col_two.append(col__row_six__sub_col_two);
+
+        var row_seven__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
+            var col__row_seven__sub_col_two=$("<div class='col-md-12'></div>");
+                var row_one__col__row_seven__sub_col_two=$("<div class='row'></div>");
+                    var colmd1=$("<div class='col-md-3'>")
+                    var colmd2=$("<div class='col-md-3'>")
+                        var label=$("<label>Diagnosis</label>");
+                        var input=$("<textarea id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['diagnosis']+"'>"+pat_med_history_dict[pres_selected]['diagnosis']+"</textarea>");
+                    colmd1.append(label);
+                    colmd2.append(input);
+                row_one__col__row_seven__sub_col_two.append(colmd1)
+                row_one__col__row_seven__sub_col_two.append(colmd2)
+            col__row_seven__sub_col_two.append(row_one__col__row_seven__sub_col_two);
+        row_seven__sub_col_two.append(col__row_seven__sub_col_two);
+
+        var row_eight__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
+            var col__row_eight__sub_col_two=$("<div class='col-md-12'></div>");
+                var row_one__col__row_eight__sub_col_two=$("<div class='row'></div>");
+                    var colmd1=$("<div class='col-md-3'>")
+                    var colmd2=$("<div class='col-md-3'>")
+                        var label=$("<label>RX</label>");
+                        var input=$("<textarea id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['rx']+"'>"+pat_med_history_dict[pres_selected]['rx']+"</textarea>");
+                    colmd1.append(label);
+                    colmd2.append(input);
+                row_one__col__row_eight__sub_col_two.append(colmd1)
+                row_one__col__row_eight__sub_col_two.append(colmd2)
+            col__row_eight__sub_col_two.append(row_one__col__row_eight__sub_col_two);
+        row_eight__sub_col_two.append(col__row_eight__sub_col_two);
+
+        if (pat_med_history_dict[pres_selected]['patienttype']==="Indoor"){
+            var row_nine__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
+                var col__row_nine__sub_col_two=$("<div class='col-md-12'></div>");
+                    var row_one__col__row_nine__sub_col_two=$("<div class='row'></div>");
+                        var colmd1=$("<div class='col-md-2'>")
+                        var colmd2=$("<div class='col-md-3'>")
+                            var label=$("<label>Admission Reason</label>");
+                            var input=$("<textarea id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['admit_reason']+"'>"+pat_med_history_dict[pres_selected]['admit_reason']+"</textarea>");
+                        colmd1.append(label);
+                        colmd2.append(input);
+                    row_one__col__row_nine__sub_col_two.append(colmd1)
+                    row_one__col__row_nine__sub_col_two.append(colmd2)
+                col__row_nine__sub_col_two.append(row_one__col__row_nine__sub_col_two);
+            row_nine__sub_col_two.append(col__row_nine__sub_col_two);
+
+            if (pat_med_history_dict[pres_selected]['surgery_names'].lenght!==0){
+
+                var row_ten__sub_col_two=$("<div class='row'></div>");
+                    var surg_list=pat_med_history_dict[pres_selected]['surgery_names']
+                    var col__row_ten__sub_col_two=$("<div class='col-md-12'></div>");
+                        var div=$("<div>")
+                            var surg_table=$("<table></table>");
+                                var thead=$("<thead></thead>");
+                                    var tr=$("<tr style='border-bottom:1px solid black'  >");
+                                        var th1=$("<th>")
+                                        th1.append("SrNo.")
+                                        var th2=$("<th>")
+                                        th2.append("Surgery Name")
+                                    tr.append(th1);
+                                    tr.append(th2);
+                                thead.append(tr);
+                            $(surg_table).append(thead);
+    
+                                var tbody=$("<tbody></tbody>");
+                            $(surg_table).append(tbody);
+                                for (index in surg_list){
+                                    console.log("index",index)
+                                    console.log("med_list--index",surg_list[index])
+                                    onesurg_list=surg_list[index]
+                                    var tr=$("<tr style='border-bottom:1px solid black'>");
+                                        var td=$("<td>");
+                                        var count=parseInt(index)+1;
+                                        td.append(count)
+                                        var td2=$("<td>");
+                                        td2.append(surg_list[index])
+                                    tr.append(td);
+                                    tr.append(td2)
+                                    tbody.append(tr);
+
+                                }
+                        div.append(surg_table)               
+                    col__row_ten__sub_col_two.append(div);
+                row_ten__sub_col_two.append(col__row_ten__sub_col_two);
+            }
+        } 
+
+        
+        
+        if (pat_med_history_dict[pres_selected]['med_list'].length!==0){
+            var med_list=pat_med_history_dict[pres_selected]['med_list']
+            var row_eleven__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
+                var col__row_eleven__sub_col_two=$("<div class='col-md-12'></div>");
+                    var div=$("<div>")
+                        var med_table=$("<table></table>");
+                            var thead=$("<thead></thead>");
+                                var tr=$("<tr style='border-bottom:1px solid black'  >");
+                                    var th1=$("<th>")
+                                    th1.append("SrNo.")
+                                    var th2=$("<th>")
+                                    th2.append("Medicine Name")
+                                    var th3=$("<th>")
+                                    th3.append("Type")
+                                    var th4=$("<th>")
+                                    th4.append("Details")
+                                    var th5=$("<th>")
+                                    th5.append("Weight(mg)")
+                                    
+                                tr.append(th1);
+                                tr.append(th2);
+                                tr.append(th3);
+                                tr.append(th4);
+                                tr.append(th5);
+                            thead.append(tr);
+                        $(med_table).append(thead);
+
+                            var tbody=$("<tbody></tbody>");
+                        $(med_table).append(tbody);
+                                for (index in med_list){
+                                    console.log("index",index)
+                                    console.log("med_list--index",med_list[index])
+                                    onemed_list=med_list[index]
+                                    var tr=$("<tr style='border-bottom:1px solid black'>");
+                                    var td=$("<td>");
+                                    var count=parseInt(index)+1;
+                                    td.append(count)
+                                    tr.append(td)
+                                    for (var i in onemed_list){
+                                                var td=$("<td>");
+                                                td.append(onemed_list[i])
+                                            tr.append(td)
+                                    }
+                                    tbody.append(tr);
+                                }
+                    div.append(med_table)                        
+                col__row_eleven__sub_col_two.append(div);
+            row_eleven__sub_col_two.append(col__row_eleven__sub_col_two);
+        }
+
+        
+        if (pat_med_history_dict[pres_selected]['procedure_names'].lenght!==0){
+
+            var row_twelve__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
+                var proc_list=pat_med_history_dict[pres_selected]['procedure_names']
+                var col__row_twelve__sub_col_two=$("<div class='col-md-12'></div>");
+                    var div=$("<div>")
+                        var proc_table=$("<table></table>");
+                            var thead=$("<thead></thead>");
+                                var tr=$("<tr style='border-bottom:1px solid black'  >");
+                                    var th1=$("<th>")
+                                    th1.append("SrNo.")
+                                    var th2=$("<th>")
+                                    th2.append("Procedure Name")
+                                tr.append(th1);
+                                tr.append(th2);
+                            thead.append(tr);
+                        $(proc_table).append(thead);
+
+                            var tbody=$("<tbody></tbody>");
+                        $(proc_table).append(tbody);
+                            for (index in proc_list){
+                                console.log("index",index)
+                                console.log("proc_list--index",proc_list[index])
+                                oneproc_list=proc_list[index]
+                                var tr=$("<tr style='border-bottom:1px solid black'>");
+                                    var td=$("<td>");
+                                    var count=parseInt(index)+1;
+                                    td.append(count)
+                                    var td2=$("<td>");
+                                    td2.append(proc_list[index])
+                                tr.append(td);
+                                tr.append(td2)
+                                tbody.append(tr);
+                            }
+                    div.append(proc_table)               
+                col__row_twelve__sub_col_two.append(div);
+            row_twelve__sub_col_two.append(col__row_twelve__sub_col_two);
+        }
+
+        var row_thirteen__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
+            var col__row_thirteen__sub_col_two=$("<div class='col-md-12'></div>");
+                var row_one__col__row_thirteen__sub_col_two=$("<div class='row'></div>");
+                    var colmd1=$("<div class='col-md-6 offset-md-3'></div>")
+                        var printBtn_label=$('<button class="btn btn-block fa fa-print" id="print_bttn" onclick="">Update Patient Visit Information</button>');
+                    colmd1.append(printBtn_label)
+                row_one__col__row_thirteen__sub_col_two.append(colmd1)
+            col__row_thirteen__sub_col_two.append(row_one__col__row_thirteen__sub_col_two);
+        row_thirteen__sub_col_two.append(col__row_thirteen__sub_col_two);
+
+    sub_col_two.append(row_one__sub_col_two);                 
+    sub_col_two.append(row_two__sub_col_two);  
+    sub_col_two.append(row_three__sub_col_two);
+    sub_col_two.append(row_four__sub_col_two);
+    sub_col_two.append(row_five__sub_col_two);
+    sub_col_two.append(row_six__sub_col_two);
+    sub_col_two.append(row_seven__sub_col_two);
+    sub_col_two.append(row_eight__sub_col_two); 
+    sub_col_two.append(row_nine__sub_col_two);
+    sub_col_two.append(row_ten__sub_col_two);
+    sub_col_two.append(row_eleven__sub_col_two);  
+    sub_col_two.append(row_twelve__sub_col_two);
+    sub_col_two.append(row_thirteen__sub_col_two);
+
+row_div_one.append(sub_col_two);
+}
+
+
 function createPatientDataTableInGenPres(){
     console.log("datatable_list",datatable_list)
     $(function(){

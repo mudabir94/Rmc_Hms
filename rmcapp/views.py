@@ -1541,82 +1541,100 @@ def retirevePatientMedHistory(request):
 
         try:
             patVSumObjs=patientVisitSummary.objects.filter(patient=patObj)
-            print("hee")
-            for patVSumObj in patVSumObjs:
-                presid=patVSumObj.pres.id
-                presObj=patPrescriptionRecords.objects.get(id=presid)
-                date=patVSumObj.date_visited.date()
-                date=str(date)
-                date_visited_dict[date]=presid
-                temp_med_hist_dict={}
-                temp_med_hist_dict['patienttype']=presObj.patient_type.patient_type
-                temp_med_hist_dict['doc_on_duty']=presObj.doc.name
-                temp_med_hist_dict['sign_symptom']=presObj.sign_symtoms
-                temp_med_hist_dict['provisional_diagnosis']=presObj.provisional_diagnosis
-                temp_med_hist_dict['investigation']=presObj.investigation
-                temp_med_hist_dict['diagnosis']=presObj.diagnosis
-                temp_med_hist_dict['vitals']=presObj.vitals
-                temp_med_hist_dict['rx']=presObj.rx
-                temp_med_hist_dict['admit_reason']=presObj.admit_reason   
-                temp_med_hist_dict['diagnosis']=presObj.diagnosis
-                print("presObj",presObj)
-                # Surgery Info
-                try:
-                    surgRecObj=surgeryRecords.objects.get(pres=presObj)
-                    temp_med_hist_dict['consultant']=surgRecObj.consultant.name
-                    surgBillRecObjs=surgeryBillRecord.objects.filter(id__in=surgRecObj.surgery_bill)
-                    surgery_name_list=[]
-                    for surgBillRecObj in surgBillRecObjs:
-                        surgery_name_list.append(surgBillRecObj.surgery.surgery_name)
-                    temp_med_hist_dict['surgery_names']=surgery_name_list
-                except:
-                    temp_med_hist_dict['surgery_names']=[]
-                # Procedure Info
-                try:
-                    procBRecObjs=procedureBillRecord.objects.filter(pres=presObj)
-                    procedure_name_list=[]
-                    for procBRecObj in procBRecObjs:
-                        procedure_name_list.append(procBRecObj.procedure.procedure_name)
-                    
-                    temp_med_hist_dict['procedure_names']=procedure_name_list
+            print("hee",patVSumObjs)
+            if patVSumObjs.exists():
 
-                except:
-                    temp_med_hist_dict['procedure_names']=[]
+                for patVSumObj in patVSumObjs:
+                    presid=patVSumObj.pres.id
+                    presid=int(presid)
+                    print(presid)
+                    presObj=patPrescriptionRecords.objects.get(id=presid)
+                    print("RRR")
 
-                try:
-                    patRBObj=patientRoomsBill.objects.get(pres=presObj)
-                    room_no=patRBObj.rooms.room_no
-                    totaldays=patRBObj.total_days
-                    temp_med_hist_dict['room_no']=room_no
-                    temp_med_hist_dict['total_days']=totaldays
+                    date=patVSumObj.date_visited.date()
+                    date=str(date)
+                    date_visited_dict[date]=presid
+                    temp_med_hist_dict={}
+                    temp_med_hist_dict['patienttype']=presObj.patient_type.patient_type
+                    temp_med_hist_dict['doc_on_duty']=presObj.doc.name
+                    temp_med_hist_dict['sign_symptom']=presObj.sign_symtoms
+                    temp_med_hist_dict['provisional_diagnosis']=presObj.provisional_diagnosis
+                    temp_med_hist_dict['investigation']=presObj.investigation
+                    temp_med_hist_dict['diagnosis']=presObj.diagnosis
+                    temp_med_hist_dict['vitals']=presObj.vitals
+                    temp_med_hist_dict['rx']=presObj.rx
+                    temp_med_hist_dict['admit_reason']=presObj.admit_reason   
+                    temp_med_hist_dict['diagnosis']=presObj.diagnosis
+                    print("temp_med_hist_dict",temp_med_hist_dict)
+                    # Surgery Info
+                    try:
+                        surgRecObj=surgeryRecords.objects.get(pres=presObj)
+                        temp_med_hist_dict['consultant']=surgRecObj.consultant.name
+                        surgBillRecObjs=surgeryBillRecord.objects.filter(id__in=surgRecObj.surgery_bill)
+                        surgery_name_list=[]
+                        for surgBillRecObj in surgBillRecObjs:
+                            surgery_name_list.append(surgBillRecObj.surgery.surgery_name)
+                        temp_med_hist_dict['surgery_names']=surgery_name_list
+                    except:
+                        print("No Surgery Record found")
+                        temp_med_hist_dict['surgery_names']=[]
+                    # Procedure Info
+                    print("ww")
+                    try:
+                        procBRecObjs=procedureBillRecord.objects.filter(pres=presObj)
+                        procedure_name_list=[]
+                        for procBRecObj in procBRecObjs:
+                            procedure_name_list.append(procBRecObj.procedure.procedure_name)
+                        
+                        temp_med_hist_dict['procedure_names']=procedure_name_list
 
-                except:
-                    pass
-                try:
-                    medlist=patientMedRecords.objects.get(pres=presObj).prescription
-                    print("Med list",medlist)
-                    medObjs=Medicine.objects.filter(id__in=medlist)
-                    med_info_list=[]
-                    for count,medObj in enumerate(medObjs):
-                        templist=[]
+                    except:
+                        print("No Procedure Record found")
 
-                        templist.append(medObj.medicine_name)
-                        templist.append(medObj.medicine_type_id.medicine_type_name)
-                        templist.append(medObj.medicine_details)
-                        med_info_list.append(templist)
+                        temp_med_hist_dict['procedure_names']=[]
 
-                    print("medObjs",medObjs)
-                    temp_med_hist_dict['med_list']=med_info_list
+                    try:
+                        patRBObj=patientRoomsBill.objects.get(pres=presObj)
+                        room_no=patRBObj.rooms.room_no
+                        totaldays=patRBObj.total_days
+                        temp_med_hist_dict['room_no']=room_no
+                        temp_med_hist_dict['total_days']=totaldays
 
-                except:
-                    med_info_list=[]
+                    except:
+                        print("No Room Record found")
+                    try:
+                        medlist=patientMedRecords.objects.get(pres=presObj).prescription
+                        print("Med list",medlist)
+                        medObjs=Medicine.objects.filter(id__in=medlist)
+                        med_info_list=[]
+                        for count,medObj in enumerate(medObjs):
+                            templist=[]
+
+                            templist.append(medObj.medicine_name)
+                            templist.append(medObj.medicine_type_id.medicine_type_name)
+                            templist.append(medObj.medicine_details)
+                            templist.append(medObj.weight)
+
+                            med_info_list.append(templist)
+
+                        print("medObjs",medObjs)
+                        temp_med_hist_dict['med_list']=med_info_list
+
+                    except:
+                        print("No Med record found")
+                        med_info_list=[]
+                med_hist_dict[presid]=temp_med_hist_dict
+
+            
+
+            else:
+                print("query set emoty")
                 
 
 
 
-                med_hist_dict[presid]=temp_med_hist_dict
         except:
-            pass
+            print("Patient not found in Pat visit summary")
         print("med_hist_dict",med_hist_dict)
  
 
