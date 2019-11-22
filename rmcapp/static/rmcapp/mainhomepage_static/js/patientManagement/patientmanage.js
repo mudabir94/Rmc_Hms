@@ -3052,21 +3052,15 @@ function billDataTable(){
                         var billmedname=billdata[3];
                         if (medname===billmedname){
                             delete pbr_dict[medname]
-                            console.log("data[2]",data[2])
-                            console.log("data[3]",data[3])
-                            console.log("data[4]",data[4])
-
-                            console.log("billdata[4]",billdata[4])
-                            console.log("billdata[5]",billdata[5])
-                            console.log("billdata[6]",billdata[5])
-
+                      
                             meddatadict['boxes_stored']=parseInt(data[2])+parseInt(billdata[4]);
-                           
+                            strips_stored=data[3]
+                            alert(strips_stored)
+                            if (data[3]!=="N/A"){
                             strips_stored=parseInt(data[3])+parseInt(billdata[5])
-                            
+                            }
                             meddatadict['strip_stored']=strips_stored;
                             meddatadict['piece_stored']=parseInt(data[4])+parseInt(billdata[6]);
-                            console.log("In if")
                         }
                         else{
                             meddatadict['boxes_stored']=data[2]
@@ -3308,54 +3302,60 @@ function addMedicineToPatientBill(){
         },
         url: '/retrieve_medicine_from_desp',
         success: function(data){
-            dspstck_dict={};
-            datatable_desp_med_list=[];
-            datatable_pbr_list=[];
-            dspstck_dict=JSON.parse(data["despStckDict"]);
-            despmed_datatable.clear();
+            if(data['errorflag']==="false"){
 
-            for (dspstck in dspstck_dict){
-                templist=[];
-                templist.push(dspstck);
-                templist.push(dspstck_dict[dspstck]['name']);
-                templist.push(dspstck_dict[dspstck]['boxes_stored']);
-                templist.push(dspstck_dict[dspstck]['strip_stored']);
-                templist.push(dspstck_dict[dspstck]['piece_stored']);
-                templist.push(dspstck_dict[dspstck]['price_unit']);               
-                datatable_desp_med_list.push(templist);
-                despmed_datatable.row.add( templist ).draw();
+                dspstck_dict={};
+                datatable_desp_med_list=[];
+                datatable_pbr_list=[];
+                dspstck_dict=JSON.parse(data["despStckDict"]);
+                despmed_datatable.clear();
 
-            } 
-            console.log("datatable_desp_med_list",datatable_desp_med_list)
-            pbr_dict=JSON.parse(data['pbr_dict'])
-            count=1;
-            bill_datatable.clear();
-            for (med in pbr_dict){
-                templist=[];
-                templist.push(count);
-                templist.push(med);
+                for (dspstck in dspstck_dict){
+                    templist=[];
+                    templist.push(dspstck);
+                    templist.push(dspstck_dict[dspstck]['name']);
+                    templist.push(dspstck_dict[dspstck]['boxes_stored']);
+                    templist.push(dspstck_dict[dspstck]['strip_stored']);
+                    templist.push(dspstck_dict[dspstck]['piece_stored']);
+                    templist.push(dspstck_dict[dspstck]['price_unit']);               
+                    datatable_desp_med_list.push(templist);
+                    despmed_datatable.row.add( templist ).draw();
 
-                // templist.push(pbr_dict[med]['despid']);
-                templist.push(pbr_dict[med]['patientid']);
-                templist.push(pbr_dict[med]['medname']);
+                } 
+                console.log("datatable_desp_med_list",datatable_desp_med_list)
+                pbr_dict=JSON.parse(data['pbr_dict'])
+                count=1;
+                bill_datatable.clear();
+                for (med in pbr_dict){
+                    templist=[];
+                    templist.push(count);
+                    templist.push(med);
 
-                // templist.push(med);
+                    // templist.push(pbr_dict[med]['despid']);
+                    templist.push(pbr_dict[med]['patientid']);
+                    templist.push(pbr_dict[med]['medname']);
 
-                templist.push(pbr_dict[med]['boxes']);
-                templist.push(pbr_dict[med]['strips']);
+                    // templist.push(med);
 
-                templist.push(pbr_dict[med]['pieces']);
-                templist.push(pbr_dict[med]['priceperpiece']);
+                    templist.push(pbr_dict[med]['boxes']);
+                    templist.push(pbr_dict[med]['strips']);
 
-                templist.push(pbr_dict[med]['price']);
+                    templist.push(pbr_dict[med]['pieces']);
+                    templist.push(pbr_dict[med]['priceperpiece']);
 
-                templist.push(pbr_dict[med]['amount']);
-                datatable_pbr_list.push(templist);
-                bill_datatable.row.add( templist ).draw();
-                count++;
+                    templist.push(pbr_dict[med]['price']);
 
+                    templist.push(pbr_dict[med]['amount']);
+                    datatable_pbr_list.push(templist);
+                    bill_datatable.row.add( templist ).draw();
+                    count++;
+                }
+                console.log("datatable_pbr_list",datatable_pbr_list)
             }
-            console.log("datatable_pbr_list",datatable_pbr_list)
+            else{
+                alert("Sorry This entry is not possible")
+            }
+          
         }
     });
 }

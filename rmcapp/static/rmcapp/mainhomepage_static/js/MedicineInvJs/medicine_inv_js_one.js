@@ -2253,6 +2253,7 @@ function focusOut_medicineNameDesp(element){
                 boxes=data["boxes"]
                 strips=data['strips'];
                 pieces=data["pieces"];
+                var strip_unit=data['strip_unit']
 
                 $("#row_div_two").remove()
                 $("#row_div_three").remove()
@@ -2268,7 +2269,7 @@ function focusOut_medicineNameDesp(element){
                                 colmd2.append(boxamount_input)
                             row1__col_one__row_div_two.append(colmd1);
                             row1__col_one__row_div_two.append(colmd2);
-                        if (strips!=="-"){
+                        if (strip_unit!=="-"){
                             row3__col_one__row_div_two=$("<div class='row desp_col_div_rows'></div>")
                                 var colmd1=$("<div class='col-md-2'></div>")
                                 var colmd2=$("<div class='col-md-2'></div>")
@@ -2292,7 +2293,7 @@ function focusOut_medicineNameDesp(element){
 
                         col_one__row_div_two.append(row1__col_one__row_div_two);
                         col_one__row_div_two.append(row2__col_one__row_div_two);
-                        if (strips!=="-"){
+                        if (strip_unit!=="-"){
                         col_one__row_div_two.append(row3__col_one__row_div_two);
                         }
                     row_div_two.append(col_one__row_div_two);
@@ -2357,11 +2358,14 @@ function SaveToDespStock(){
         },
         url:"/save_to_desp_stock",
         success:function (data){
-            
             // 'medicine_batch_in_stock_dict':JSON.parse(medicine_batch_in_stock_dict),
-            medicine_batch_in_stock_list=data['medicine_batch_in_stock_list'],
-            console.log("data")
-            refreshAddMedicineToDespStockForm();           
+            if (data['errorflag']==="false"){
+                medicine_batch_in_stock_list=data['medicine_batch_in_stock_list'],
+                refreshAddMedicineToDespStockForm();           
+            }
+            else{
+                alert("Exceeding Limit!")
+            }
         },
     });
 

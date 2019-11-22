@@ -5,7 +5,7 @@ var datatable_patient_billlist=[];
 $( document ).ready(function(){
    
 });
-
+var removal_med_dict={}
 function removeMedForInternalUse(){
     $("#dialog-confirm").hide()
     $('#main_page_content').empty()
@@ -51,6 +51,7 @@ function retrieveDespensoryMedicine(){
             }
             createDespensoryDataTable();
             createRowDivTwoBill();
+            createRemoveRow();
             console.log("datatable_med_desp_list",datatable_med_desp_list);
         }
     });
@@ -86,7 +87,9 @@ function createDespensoryDataTable(){
                     despid=$(this).find('td').eq(0).text()
                     despmed_datatable.$('tr.selected').removeClass('selected');
                     $(this).addClass('selected');
+                    console.log("DespStck=-",dspstck_dict)
                     createMedicineQtyColumn(despid);
+                    
                     
                 }
             });
@@ -134,7 +137,7 @@ function billDTable(){
     $(function(){
         $('#bill_table').append('<caption style="color: black;font-weight: bold; ;caption-side: top;text-align: center; text-decoration: underline">Selected Medicines To Remove</caption>');
         bill_datatable=$("#bill_table").DataTable({
-            data:datatable_patient_billlist,
+            data:[],
             columns: [
                 { title: "Id" },
                 { title:"Desp Id"},
@@ -164,24 +167,17 @@ function billDTable(){
                         var meddatadict={}
                         console.log("Bill Data",billdata);
                         var medname=data[1];
-                        var billmedname=billdata[3];
+                        var billmedname=billdata[2];
                         if (medname===billmedname){
-                            delete pbr_dict[medname]
-                            console.log("data[2]",data[2])
-                            console.log("data[3]",data[3])
-                            console.log("data[4]",data[4])
-
-                            console.log("billdata[4]",billdata[4])
-                            console.log("billdata[5]",billdata[5])
-                            console.log("billdata[6]",billdata[5])
-
-                            meddatadict['boxes_stored']=parseInt(data[2])+parseInt(billdata[4]);
+                            delete removal_med_dict[billdata[1]]
                            
-                            strips_stored=parseInt(data[3])+parseInt(billdata[5])
-                            
+                            meddatadict['boxes_stored']=parseInt(data[2])+parseInt(billdata[3]);
+                            strips_stored=data[3]
+                            if (data[3]!=="N/A"){
+                            strips_stored=parseInt(data[3])+parseInt(billdata[4])
+                            }
                             meddatadict['strip_stored']=strips_stored;
-                            meddatadict['piece_stored']=parseInt(data[4])+parseInt(billdata[6]);
-                            console.log("In if")
+                            meddatadict['piece_stored']=parseInt(data[4])+parseInt(billdata[5]);
                         }
                         else{
                             meddatadict['boxes_stored']=data[2]
@@ -229,6 +225,7 @@ function billDTable(){
     });
 }
 
+
 function createMedicineQtyColumn(despid){
     $("#desp_medicine_qty_form").empty();
     var col1=$("#desp_medicine_qty_form")
@@ -254,8 +251,11 @@ function createMedicineQtyColumn(despid){
                 sub_sub_row2.append(col1_sub_sub_row2);
                 sub_sub_row2.append(col2_sub_sub_row2);
                 var strip_unit=dspstck_dict[despid]['strip_unit'];
+                var strip_stored=dspstck_dict[despid]['strip_stored'];
+
                 console.log("strip_unit-->",strip_unit);
-                if (strip_unit!=="-" ){
+                // if (strip_unit!=="-" ){
+                if (strip_stored!=="N/A"){
                 var sub_sub_row3=$("<div class='row' style='padding-bottom:10px'></div>");
                     var col1_sub_sub_row3=$("<div class='col-md-4'></div>");
                         var label=$("<label class='form-control-static'>Total Strips</label>")
@@ -331,42 +331,42 @@ function addMedicineToMedRemoveDT(){
             meddatadict['name']=data[1];
             meddatadict['boxes_stored']=data[2];
             // if (data[3]=="N/A"){
-            //     strips_stored="-";
+            //     strip_unit="-";
             // }
             meddatadict['strip_stored']=strips_stored;
             meddatadict['piece_stored']=data[4];
             meddatadict['price_unit']=data[5];
-    
+            
             dspstck_dict[parseInt(data[0])]=meddatadict;
         } );
-        console.log("dspstck_dict",dspstck_dict)
-        // pbr_dict={}
+        console.log("dspstck_dict====",dspstck_dict)
+        // removal_med_dict={}
         bill_datatable.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
             var data = this.data();
             console.log("Bill DATA",data)
             var tempdict={}
             // tempdict['despid']=data[1]
-            tempdict['medname']=data[3]
+            tempdict['medname']=data[2]
     
             // tempdict['patientid']=data[2]
-            tempdict['boxes']=data[4];
+            tempdict['boxes']=data[3];
            
-            strips_stored=data[5]
+            strips_stored=data[4]
             
             tempdict['strips']=strips_stored;
     
-            tempdict['pieces']=data[6];
-            tempdict['priceperpiece']=data[7];
+            tempdict['pieces']=data[5];
+            tempdict['priceperpiece']=data[6];
     
-            tempdict['price']=data[8];
-            tempdict['amount']=data[9];
+            tempdict['price']=data[7];
+            tempdict['amount']=data[8];
     
     
-            // // pbr_dict[data[3]]=tempdict
-            // pbr_dict[data[1]]=tempdict
+            // // removal_med_dict[data[3]]=tempdict
+            removal_med_dict[data[1]]=tempdict
     
         } );
-        // console.log("pbr_dict",pbr_dict);
+        // console.log("removal_med_dict",removal_med_dict);
         // console.log("Patient Id", patientid);
         if (strips_wanted===undefined){
             no_strips="true";
@@ -386,59 +386,137 @@ function addMedicineToMedRemoveDT(){
                 "no_strips":no_strips,
                 "strips_wanted":strips_wanted,
                 "despStckDict":JSON.stringify(dspstck_dict),
+                "removal_med_dict":JSON.stringify(removal_med_dict)
             },
             url: '/retrieve_medicine_from_desp_for_internal_use',
             success: function(data){
-                dspstck_dict={};
-                datatable_med_desp_list=[];
-                datatable_pbr_list=[];
-                dspstck_dict=JSON.parse(data["despStckDict"]);
-                despmed_datatable.clear();
-    
-                for (dspstck in dspstck_dict){
-                    templist=[];
-                    templist.push(dspstck);
-                    templist.push(dspstck_dict[dspstck]['name']);
-                    templist.push(dspstck_dict[dspstck]['boxes_stored']);
-                    templist.push(dspstck_dict[dspstck]['strip_stored']);
-                    templist.push(dspstck_dict[dspstck]['piece_stored']);
-                    templist.push(dspstck_dict[dspstck]['price_unit']);               
-                    datatable_med_desp_list.push(templist);
-                    despmed_datatable.row.add( templist ).draw();
-    
-                } 
-                console.log("datatable_med_desp_list",datatable_med_desp_list)
-                pbr_dict=JSON.parse(data['pbr_dict'])
-                count=1;
-                bill_datatable.clear();
-                for (med in pbr_dict){
-                    templist=[];
-                    templist.push(count);
-                    templist.push(med);
-    
-                    // templist.push(pbr_dict[med]['despid']);
-                    // templist.push(pbr_dict[med]['patientid']);
-                    templist.push(pbr_dict[med]['medname']);
-    
-                    // templist.push(med);
-    
-                    templist.push(pbr_dict[med]['boxes']);
-                    templist.push(pbr_dict[med]['strips']);
-    
-                    templist.push(pbr_dict[med]['pieces']);
-                    templist.push(pbr_dict[med]['priceperpiece']);
-    
-                    templist.push(pbr_dict[med]['price']);
-    
-                    templist.push(pbr_dict[med]['amount']);
-                    datatable_pbr_list.push(templist);
-                    bill_datatable.row.add( templist ).draw();
-                    count++;
-    
+                if(data['errorflag']==="false"){
+                    dspstck_dict={};
+                    datatable_med_desp_list=[];
+                    datatable_pbr_list=[];
+                    dspstck_dict=JSON.parse(data["despStckDict"]);
+                    despmed_datatable.clear();
+        
+                    for (dspstck in dspstck_dict){
+                        templist=[];
+                        templist.push(dspstck);
+                        templist.push(dspstck_dict[dspstck]['name']);
+                        templist.push(dspstck_dict[dspstck]['boxes_stored']);
+                        templist.push(dspstck_dict[dspstck]['strip_stored']);
+                        templist.push(dspstck_dict[dspstck]['piece_stored']);
+                        templist.push(dspstck_dict[dspstck]['price_unit']);               
+                        datatable_med_desp_list.push(templist);
+                        despmed_datatable.row.add( templist ).draw();
+        
+                    } 
+                    console.log("datatable_med_desp_list",datatable_med_desp_list)
+                    removal_med_dict=JSON.parse(data['removal_med_dict'])
+                    count=1;
+                    bill_datatable.clear();
+                    for (med in removal_med_dict){
+                        templist=[];
+                        templist.push(count);
+                        templist.push(med);
+        
+                        // templist.push(removal_med_dict[med]['despid']);
+                        // templist.push(removal_med_dict[med]['patientid']);
+                        templist.push(removal_med_dict[med]['medname']);
+        
+                        // templist.push(med);
+        
+                        templist.push(removal_med_dict[med]['boxes']);
+                        templist.push(removal_med_dict[med]['strips']);
+        
+                        templist.push(removal_med_dict[med]['pieces']);
+                        templist.push(removal_med_dict[med]['priceperpiece']);
+        
+                        templist.push(removal_med_dict[med]['price']);
+        
+                        templist.push(removal_med_dict[med]['amount']);
+                        datatable_pbr_list.push(templist);
+                        bill_datatable.row.add( templist ).draw();
+                        count++;
+        
+                    }
+                    console.log("datatable_pbr_list",datatable_pbr_list)
                 }
-                console.log("datatable_pbr_list",datatable_pbr_list)
+                else{
+                    alert("Sorry This entry is not possible")
+                }
             }
-        });
+        });    
+    
+    }
+function createRemoveRow(){
+    var row_div_three=$("<div class='row' style='padding-bottom:18px'></div>");
+    var col_one__row_div_three=$("<div class='col-md-12'></div>");
+            var rem_button=$('<button id="rem_desp_btn" onclick="removeMedFromDesp()">Remove</button>')
+    col_one__row_div_three.append(rem_button);
+row_div_three.append(col_one__row_div_three);
+var main_col_div=$("#main_col_div")
+$(main_col_div).append(row_div_three);
+}
+function removeMedFromDesp(){
+    dspstck_dict={}
+    despmed_datatable.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
+        var data = this.data();
+        var meddatadict={}
+        meddatadict['name']=data[1];
+        meddatadict['boxes_stored']=data[2];
+        strips_stored=data[3]
+
+        if (data[3]=="N/A"){
+            strips_stored=0
+        }
+        meddatadict['strip_stored']=strips_stored;
+        meddatadict['piece_stored']=data[4]
+        meddatadict['price_unit']=data[5];
+
+        dspstck_dict[parseInt(data[0])]=meddatadict
+    } );
+    console.log("dspstck_dict",dspstck_dict);
+    removal_med_dict={};
+    bill_datatable.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
+        var data = this.data();
+        console.log("Bill DATA",data)
+        var tempdict={}
+        // tempdict['despid']=data[1];
+        tempdict['medname']=data[2];
+        // tempdict['patientid']=data[2];
+
+        tempdict['boxes']=data[3];
+        strips_stored=data[4];
+        // if (data[5]==null){
+        //     strips_stored=0
+        // }
+        tempdict['strips']=strips_stored;
+        tempdict['pieces']=data[5];
+        tempdict['priceperpiece']=data[6];
+
+        tempdict['price']=data[7];
+        tempdict['amount']=data[8];
+
+
+        // removal_med_dict[data[3]]=tempdict
+        removal_med_dict[data[1]]=tempdict
+    } );
+    $.ajax({
+        type: 'POST',
+        dataType: "json",
+        'data': {
+            "despStckDict":JSON.stringify(dspstck_dict),
+            "removal_med_dict":JSON.stringify(removal_med_dict),
+        },
+        url: '/save_desp_after_removal',
+        success: function(data){
+            alert("Medicines Extracted");
+            removal_med_dict={}
+            $("#desp-med-name").val("");
+            bill_datatable.clear();
+            bill_datatable.draw();
+
+        }
+    });
 }
 
 
