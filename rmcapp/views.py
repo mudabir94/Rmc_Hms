@@ -812,10 +812,13 @@ def sendAjaxReqToSaveMedicineToDb(request):
         selected_type = request.POST.get('selected_type')
         med_details = request.POST.get('med_details')
         add_charge_status=request.POST.get('add_charge_status')
+        med_weight=request.POST.get('med_weight')
         medicine_name = json.loads(medicine_name)
         selected_type = json.loads(selected_type)
         med_details = json.loads(med_details)
         add_charge_status = json.loads(add_charge_status)
+        med_weight = json.loads(med_weight)
+
 
 
         print(medicine_name)
@@ -827,6 +830,7 @@ def sendAjaxReqToSaveMedicineToDb(request):
         med_obj.medicine_name=medicine_name
         med_obj.medicine_details=med_details
         med_obj.add_charge=add_charge_status
+        med_obj.weight=med_weight
         med_obj.save()
         medicine_name_type_list=list(Medicine.objects.all().values_list('medicine_name',"medicine_type_id__medicine_type_name"))
 
@@ -1543,7 +1547,7 @@ def retirevePatientMedHistory(request):
             patVSumObjs=patientVisitSummary.objects.filter(patient=patObj)
             print("hee",patVSumObjs)
             if patVSumObjs.exists():
-
+                same_date_count=1
                 for patVSumObj in patVSumObjs:
                     presid=patVSumObj.pres.id
                     presid=int(presid)
@@ -1553,6 +1557,10 @@ def retirevePatientMedHistory(request):
 
                     date=patVSumObj.date_visited.date()
                     date=str(date)
+                    if date in date_visited_dict:
+                        date=date+"-"+str(same_date_count)
+                        same_date_count=same_date_count+1
+
                     date_visited_dict[date]=presid
                     temp_med_hist_dict={}
                     temp_med_hist_dict['patienttype']=presObj.patient_type.patient_type
@@ -1623,7 +1631,7 @@ def retirevePatientMedHistory(request):
                     except:
                         print("No Med record found")
                         med_info_list=[]
-                med_hist_dict[presid]=temp_med_hist_dict
+                    med_hist_dict[presid]=temp_med_hist_dict
 
             
 
@@ -1636,6 +1644,7 @@ def retirevePatientMedHistory(request):
         except:
             print("Patient not found in Pat visit summary")
         print("med_hist_dict",med_hist_dict)
+        print("date_visited_dict",date_visited_dict)
  
 
 
@@ -3929,4 +3938,24 @@ def retrieveMedicineFromDespForInternalUse(request):
             # 'main_list':medicine_list,
             # 'dspstck_dict':json.dumps(dspstck_dict),
         }
+        return JsonResponse(data)
+
+def updatePatMedicalHist(request):
+    if request.method=="POST":
+        presid=request.POST.get("presid")
+        presid=int(presid)
+        pat_med_history_dict=request.POST.get("pat_med_history_dict")
+        pat_med_history_dict=json.loads(pat_med_history_dict)
+        print("In POST",pat_med_history_dict)
+
+        presObj=patPrescriptionRecords.objects.get(id=presid)
+        presObj.sign_symtoms=pat_med_history_dict[str(presid)]["sign_symptom"]
+        presObj.provisional_diagnosis=pat_med_history_dict[str(presid)]["provisional_diagnosis"]
+        presObj.investigation=pat_med_history_dict[str(presid)]["investigation"]
+        presObj.diagnosis=pat_med_history_dict[str(presid)]["diagnosis"]
+        presObj.vitals=pat_med_history_dict[str(presid)]["vitals"]
+        presObj.rx=pat_med_history_dict[str(presid)]["rx"]
+
+        presObj.save()
+        data={}
         return JsonResponse(data)

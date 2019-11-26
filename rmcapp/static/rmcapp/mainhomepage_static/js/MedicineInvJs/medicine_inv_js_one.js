@@ -130,6 +130,7 @@ function addMedicineForm(){
         var row_div_three=$("<div class='row'></div>");
 
         var row_div_four=$("<div class='row'></div>");
+        var weight_div_row=$("<div class='row'></div>");
 
             col_one__row_div_one=$("<div class='col-md-6'></div>");
             row_div_one__col_one__row_div_one=$("<div class='row'></div>");
@@ -187,7 +188,21 @@ function addMedicineForm(){
 
             $(row_div_three).append(col_one__row_div_three)
             $(row_div_three).append(col_two__row_div_three)
-           
+
+
+
+            col_one__weight_div_row=$("<div class='col-md-6' style=' padding-top:10px'></div>");
+            p__col_one__weight_div_row=$("<label >Weight (mg)</label>");
+            col_one__weight_div_row.append(p__col_one__weight_div_row);
+
+            col_two__weight_div_row=$("<div class='col-md-6' style=' padding-top:10px'></div>");
+                p__col_two__weight_div_row=$("<input id='med_weight_input'></input>");
+
+            col_two__weight_div_row.append(p__col_two__weight_div_row);
+
+            $(weight_div_row).append(col_one__weight_div_row)
+            $(weight_div_row).append(col_two__weight_div_row)
+            
 
             col_one__row_div_four=$("<div class='col-md-2 offset-md-2'></div>");
                     save_btn_label=$("<button class='btn btn-success fa fa-save' style='width:inherit' onclick='saveMedicineToDb()'>  Save</button>");
@@ -200,6 +215,7 @@ function addMedicineForm(){
     $(main_col_div).append(row_div_one)
     $(main_col_div).append(package_info_row_div)
     $(main_col_div).append(row_div_three)
+    $(main_col_div).append(weight_div_row)
 
     $(main_col_div).append("<hr>")
     $(main_col_div).append(row_div_four);
@@ -260,8 +276,8 @@ function saveMedicineToDb(){
                     console.log("med_details",med_details);
                     // get Radio Button Value and Send it for Save
                     add_charge_status=$("input[name='YES_NO']:checked").val();
-                    alert(add_charge_status) 
-                    sendAjaxReqToSaveMedicineToDb(medicine_name,selected_type,med_details,add_charge_status);
+                    med_weight=$("#med_weight_input").val()
+                    sendAjaxReqToSaveMedicineToDb(medicine_name,selected_type,med_details,add_charge_status,med_weight);
 
                     $( this ).dialog( "close" );
                     medicine_name_type_list=[]
@@ -277,7 +293,7 @@ function saveMedicineToDb(){
     
     
 }
-function sendAjaxReqToSaveMedicineToDb(medicine_name,selected_type,med_details,add_charge_status){
+function sendAjaxReqToSaveMedicineToDb(medicine_name,selected_type,med_details,add_charge_status,med_weight){
     console.log("selected_type",selected_type)
     $.ajax({
         type: 'POST',
@@ -290,6 +306,7 @@ function sendAjaxReqToSaveMedicineToDb(medicine_name,selected_type,med_details,a
             "selected_type":JSON.stringify(selected_type),
             "med_details":JSON.stringify(med_details),
             "add_charge_status":JSON.stringify(add_charge_status),
+            "med_weight":JSON.stringify(med_weight),
         },
         
         success: function(data){

@@ -96,7 +96,8 @@ urlpatterns = [
 
   # path("remove_med_for_internal_use",views.removeMedForInternalUse,name="remove_med_for_internal_use"),
   path("retrieve_medicine_from_desp_for_internal_use",views.retrieveMedicineFromDespForInternalUse,name="retrieve_medicine_from_desp_for_internal_use"),
-  path("save_desp_after_removal",views.saveDespAfterRemoval,name="save_desp_after_removal")
+  path("save_desp_after_removal",views.saveDespAfterRemoval,name="save_desp_after_removal"),
+  path("update_pat_medical_hist",views.updatePatMedicalHist,name="update_pat_medical_hist")
 
 
 

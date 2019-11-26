@@ -1073,7 +1073,7 @@ function patientHistory(element){
 function createPatientHistory_DateList(){
     
     row_div_one=$("#row_div_one");
-        var sub_col_one=$("<div class='col-md-4' id='col1'></div>");
+        var sub_col_one=$("<div class='col-md-2' ></div>");
             var row_one__sub_col_one=$("<div class='row'></div>");
                 var col__row_one__sub_col_one=$("<div class='col-md-12'></div>");
                     var label=$("<label>Dates Visited</label>");
@@ -1098,10 +1098,10 @@ function createPatientHistory_DateList(){
     row_div_one.append(sub_col_one);
 }
 function createPatientHistoryForm(){ ///details in right col
-    $("#sub_col_two").remove();
+    $("#view_pat_med_hist_div").remove();
     var row_div_one=$("#row_div_one");
     var sub_col_two=$("#sub_col_two");
-    var sub_col_two=$("<div class='col-md-8' class='sub_col_two' id='sub_col_two'></div>");
+    var sub_col_two=$("<div class='col-md-10' class='sub_col_two' id='view_pat_med_hist_div' ></div>");
 
         var row_one__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
             var col__row_one__sub_col_two=$("<div class='col-md-12'></div>");
@@ -1516,7 +1516,7 @@ function searchUpdatePatientMedHistory(){
 function createUpdatePatientHistory_DateList(){
     
     row_div_one=$("#row_div_one");
-        var sub_col_one=$("<div class='col-md-4' id='col1'></div>");
+        var sub_col_one=$("<div class='col-md-2'></div>");
             var row_one__sub_col_one=$("<div class='row'></div>");
                 var col__row_one__sub_col_one=$("<div class='col-md-12'></div>");
                     var label=$("<label>Dates Visited</label>");
@@ -1552,7 +1552,7 @@ function createUpdatePatientHistoryForm(){ ///details in right col
     $("#sub_col_two").remove();
     var row_div_one=$("#row_div_one");
     var sub_col_two=$("#sub_col_two");
-    var sub_col_two=$("<div class='col-md-8' class='sub_col_two' id='sub_col_two'></div>");
+    var sub_col_two=$("<div class='col-md-10' class='sub_col_two' id='sub_col_two'></div>");
 
         var row_one__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
             var col__row_one__sub_col_two=$("<div class='col-md-12'></div>");
@@ -1574,7 +1574,7 @@ function createUpdatePatientHistoryForm(){ ///details in right col
                     var colmd1=$("<div class='col-md-3'>")
                     var colmd2=$("<div class='col-md-3'>")
                         var label=$("<label>Doctor Visited</label>");
-                        var input=$("<input id='pat_hist_docOnduty_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['doc_on_duty']+"' style='background:white' disabled></input>");
+                        var input=$("<input id='pat_hist_doconduty_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['doc_on_duty']+"' style='background:white' disabled></input>");
                     colmd1.append(label);
                     colmd2.append(input);
                 row_one__col__row_two__sub_col_two.append(colmd1)
@@ -1602,7 +1602,7 @@ function createUpdatePatientHistoryForm(){ ///details in right col
                     var colmd1=$("<div class='col-md-3'>")
                     var colmd2=$("<div class='col-md-3'>")
                         var label=$("<label>Sign Symptoms</label>");
-                        var input=$("<textarea id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['sign_symptom']+"'>"+pat_med_history_dict[pres_selected]['sign_symptom']+"</textarea>");
+                        var input=$("<textarea id='pat_hist_ss_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['sign_symptom']+"'>"+pat_med_history_dict[pres_selected]['sign_symptom']+"</textarea>");
                     colmd1.append(label);
                     colmd2.append(input);
                 row_one__col__row_four__sub_col_two.append(colmd1)
@@ -1616,7 +1616,7 @@ function createUpdatePatientHistoryForm(){ ///details in right col
                     var colmd1=$("<div class='col-md-3'>")
                     var colmd2=$("<div class='col-md-3'>")
                         var label=$("<label>Provisional Diagnosis</label>");
-                        var input=$("<textarea id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['provisional_diagnosis']+"'>"+pat_med_history_dict[pres_selected]['provisional_diagnosis']+"</textarea>");
+                        var input=$("<textarea id='pat_hist_pd_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['provisional_diagnosis']+"'>"+pat_med_history_dict[pres_selected]['provisional_diagnosis']+"</textarea>");
                     colmd1.append(label);
                     colmd2.append(input);
                 row_one__col__row_five__sub_col_two.append(colmd1)
@@ -1630,7 +1630,7 @@ function createUpdatePatientHistoryForm(){ ///details in right col
                     var colmd1=$("<div class='col-md-3'>")
                     var colmd2=$("<div class='col-md-3'>")
                         var label=$("<label>Investigation</label>");
-                        var input=$("<textarea id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['investigation']+"'>"+pat_med_history_dict[pres_selected]['investigation']+"</textarea>");
+                        var input=$("<textarea id='pat_hist_investigation_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['investigation']+"'>"+pat_med_history_dict[pres_selected]['investigation']+"</textarea>");
                     colmd1.append(label);
                     colmd2.append(input);
                 row_one__col__row_six__sub_col_two.append(colmd1)
@@ -1644,7 +1644,7 @@ function createUpdatePatientHistoryForm(){ ///details in right col
                     var colmd1=$("<div class='col-md-3'>")
                     var colmd2=$("<div class='col-md-3'>")
                         var label=$("<label>Diagnosis</label>");
-                        var input=$("<textarea id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['diagnosis']+"'>"+pat_med_history_dict[pres_selected]['diagnosis']+"</textarea>");
+                        var input=$("<textarea id='pat_hist_diagnosis_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['diagnosis']+"'>"+pat_med_history_dict[pres_selected]['diagnosis']+"</textarea>");
                     colmd1.append(label);
                     colmd2.append(input);
                 row_one__col__row_seven__sub_col_two.append(colmd1)
@@ -1658,7 +1658,7 @@ function createUpdatePatientHistoryForm(){ ///details in right col
                     var colmd1=$("<div class='col-md-3'>")
                     var colmd2=$("<div class='col-md-3'>")
                         var label=$("<label>RX</label>");
-                        var input=$("<textarea id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['rx']+"'>"+pat_med_history_dict[pres_selected]['rx']+"</textarea>");
+                        var input=$("<textarea id='pat_hist_rx_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['rx']+"'>"+pat_med_history_dict[pres_selected]['rx']+"</textarea>");
                     colmd1.append(label);
                     colmd2.append(input);
                 row_one__col__row_eight__sub_col_two.append(colmd1)
@@ -1673,7 +1673,7 @@ function createUpdatePatientHistoryForm(){ ///details in right col
                         var colmd1=$("<div class='col-md-2'>")
                         var colmd2=$("<div class='col-md-3'>")
                             var label=$("<label>Admission Reason</label>");
-                            var input=$("<textarea id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['admit_reason']+"'>"+pat_med_history_dict[pres_selected]['admit_reason']+"</textarea>");
+                            var input=$("<textarea id='pat_hist_admitreason_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['admit_reason']+"'>"+pat_med_history_dict[pres_selected]['admit_reason']+"</textarea>");
                         colmd1.append(label);
                         colmd2.append(input);
                     row_one__col__row_nine__sub_col_two.append(colmd1)
@@ -1818,7 +1818,7 @@ function createUpdatePatientHistoryForm(){ ///details in right col
             var col__row_thirteen__sub_col_two=$("<div class='col-md-12'></div>");
                 var row_one__col__row_thirteen__sub_col_two=$("<div class='row'></div>");
                     var colmd1=$("<div class='col-md-6 offset-md-3'></div>")
-                        var printBtn_label=$('<button class="btn btn-block fa fa-print" id="print_bttn" onclick="">Update Patient Visit Information</button>');
+                        var printBtn_label=$('<button class="btn btn-block fa fa-print" id="update_pat_med_hist_btn" onclick="UpdatePMedHist()">Update Patient Visit Information</button>');
                     colmd1.append(printBtn_label)
                 row_one__col__row_thirteen__sub_col_two.append(colmd1)
             col__row_thirteen__sub_col_two.append(row_one__col__row_thirteen__sub_col_two);
@@ -1841,7 +1841,34 @@ function createUpdatePatientHistoryForm(){ ///details in right col
 row_div_one.append(sub_col_two);
 }
 
+function UpdatePMedHist(){
+    pat_med_history_dict[pres_selected]['vitals']=$("#pat_hist_vitals_inp_"+pres_selected).val()
+    pat_med_history_dict[pres_selected]['sign_symptom']=$("#pat_hist_ss_inp_"+pres_selected).val()
+    pat_med_history_dict[pres_selected]['provisional_diagnosis']=$("#pat_hist_pd_inp_"+pres_selected).val()
+    pat_med_history_dict[pres_selected]['investigation']=$("#pat_hist_investigation_inp_"+pres_selected).val()
+    pat_med_history_dict[pres_selected]['diagnosis']=$("#pat_hist_diagnosis_inp_"+pres_selected).val()
+    pat_med_history_dict[pres_selected]['rx']=$("#pat_hist_rx_inp_"+pres_selected).val()
+    if($("#pat_hist_admitreason_inp_"+pres_selected).length!==0){
+        pat_med_history_dict[pres_selected]['admit_reason']=$("#pat_hist_admitreason_inp_"+pres_selected).val()
+    }
+    console.log("pat_med_history_dict--",pat_med_history_dict);
+    $.ajax({
+        type: 'POST',
+        dataType: "json",
+        'data': {
+            "presid":pres_selected,
+            "pat_med_history_dict":JSON.stringify(pat_med_history_dict),
+        },
+        url: '/update_pat_medical_hist',
+        success: function(data){
+           
 
+        },
+    }); 
+
+
+    
+}
 function createPatientDataTableInGenPres(){
     console.log("datatable_list",datatable_list)
     $(function(){
