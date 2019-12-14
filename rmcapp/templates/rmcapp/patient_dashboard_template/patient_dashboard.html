@@ -198,7 +198,7 @@
   <nav id="sidebar" class="sidebar-wrapper">
     <div class="sidebar-content">
       <div class="sidebar-brand">
-        <a href="#">pro sidebar</a>
+        <a href="#">-RMC-</a>
         <div id="close-sidebar">
           <i class="fas fa-times"></i>
         </div>
@@ -209,14 +209,22 @@
             alt="User picture">
         </div>
         <div class="user-info">
-          <span class="user-name">Admin
-            <strong>A</strong>
-          </span>
-          <span class="user-role">Administrator</span>
-          <span class="user-status">
-            <i class="fa fa-circle"></i>
-            <span>Online</span>
-          </span>
+
+            {% if user.is_authenticated %}
+            <span class="user-name">{{ user.get_username }}
+              <strong></strong>
+            </span>
+            {% endif %} 
+            {% if user.is_authenticated %}
+            <span class="user-role">{{ user.role.role_name }}</span>
+            {% endif %} 
+          
+            <span class="user-status">
+              <i class="fa fa-circle"></i>
+              <span>Active</span>
+            </span>
+  
+          
         </div>
       </div>
       

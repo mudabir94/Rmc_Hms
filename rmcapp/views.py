@@ -29,6 +29,7 @@ from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import ObjectDoesNotExist
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 
@@ -51,28 +52,47 @@ class mainHome(TemplateView):
     def post(self,request):
         pass
 
-class mainDashBoard(TemplateView):
+
+
+class mainDashBoard(LoginRequiredMixin,TemplateView):
     template_path_name="rmcapp/main_dashboard_template/main_dashboard.html"
+    login_url = '/accounts/login/'
+    # redirect_field_name = 'redirect_to'
     def get(self,request):
         return render(request,self.template_path_name)
 
     def post(self,request):
         pass
 
-class inventoryDashBoard(TemplateView):
+class inventoryDashBoard(LoginRequiredMixin,TemplateView):
+    login_url = '/accounts/login/'
+    # redirect_field_name = 'redirect_to'
     template_path_name="rmcapp/inventory_dashboard_template/inventory_dashboard.html"
     def get(self,request):
         return render(request,self.template_path_name)
     def post(self,request):
         pass
-class medicineDashBoard(TemplateView):
+class medicineDashBoard(LoginRequiredMixin,TemplateView):
+    login_url = '/accounts/login/'
+    # redirect_field_name = 'redirect_to'
     template_path_name="rmcapp/inventory_dashboard_template/medicine_inv_dashboard/med_inv_dashboard.html"
     def get(self,request):
         return render(request,self.template_path_name)
     def post(self,request):
         pass
-class staffDashboard(TemplateView):
+class staffDashboard(LoginRequiredMixin,TemplateView):
+    login_url = '/accounts/login/'
+    # redirect_field_name = 'redirect_to'
     template_path_name="rmcapp/staff_dashboard_template/staff_dashboard.html"
+    def get(self,request):
+        return render(request,self.template_path_name)
+    def post(self,request):
+        pass
+
+class patientDashboard(LoginRequiredMixin,TemplateView):
+    login_url = '/accounts/login/'
+
+    template_path_name="rmcapp/patient_dashboard_template/patient_dashboard.html"
     def get(self,request):
         return render(request,self.template_path_name)
     def post(self,request):
@@ -1219,23 +1239,22 @@ def saveMedicineToWhStockFromTempMedStock(tempMedWhStk_Med_Obj,medObj):
     obj.mwhs=mwh_stock_obj
     obj.save()
 
-class patientDashboard(TemplateView):
-    template_path_name="rmcapp/patient_dashboard_template/patient_dashboard.html"
-    def get(self,request):
-        return render(request,self.template_path_name)
-    def post(self,request):
-        pass
 
 def retrievePatientInfoInPresForm(request):
     if request.method=="GET":
         pat_name=request.GET.get("pat_name")
         contact_no=request.GET.get("contact_no")
-        cnic=request.GET.get("cnic")
-        contact_no=""
-        cnic=""
+     
+       
 
         # pat_objs=Patient.objects.filter(Q(pat_name=pat_name) | Q(phone_no=contact_no) | Q(cnic=cnic)| Q(id=id))
-        pat_objs=Patient.objects.filter(Q(pat_name__contains=pat_name) | Q(phone_no=contact_no) | Q(cnic=cnic))
+        if pat_name!="" and contact_no!="":
+            pat_objs=Patient.objects.filter(Q(pat_name__contains=pat_name) and Q(phone_no__contains=contact_no) )
+        elif contact_no=="":
+            pat_objs=Patient.objects.filter(Q(pat_name__contains=pat_name) )
+        else:
+            pat_objs=Patient.objects.filter(Q(phone_no__contains=contact_no))
+
 
         # pat_objs=Patient.objects.get(id=1)
         print("pat_objs",pat_objs)
@@ -1341,14 +1360,14 @@ def retrieveWardInfoInRoomWard(request):
 def retirevePatientInfo(request):
     if request.method=="GET":
         pat_name=request.GET.get("pat_name")
-        # contact_no=request.GET.get("contact_no")
+        contact_no=request.GET.get("contactno")
         # cnic=request.GET.get("cnic")
         contact_no=""
         cnic=""
         #phone_no=contact_no,cnic=cnic_no
 
         # pat_objs=Patient.objects.filter(Q(pat_name=pat_name) | Q(phone_no=contact_no) | Q(cnic=cnic)| Q(id=id))
-        pat_objs=Patient.objects.filter(Q(pat_name=pat_name) | Q(phone_no=contact_no) | Q(cnic=cnic))
+        pat_objs=Patient.objects.filter(Q(pat_name__contains=pat_name) | Q(phone_no__contains=contact_no))
 
         # pat_objs=Patient.objects.get(id=1)
         print("pat_objs",pat_objs)
@@ -2014,11 +2033,11 @@ def retrieveMedicineFromDesp(request):
 
         boxes_wanted=request.GET.get('boxes_wanted')
         print("boxes_wanted",boxes_wanted)
-        boxes_wanted=int(boxes_wanted)
-        pieces_wanted=int(pieces_wanted)
+        boxes_wanted=float(boxes_wanted)
+        pieces_wanted=float(pieces_wanted)
         print("strips wanted-->",strips_wanted)
         if no_strips=="false":
-            strips_wanted=int(strips_wanted)
+            strips_wanted=float(strips_wanted)
 
         despStckDict=request.GET.get('despStckDict')
         despStckDict=json.loads(despStckDict)
@@ -2134,9 +2153,9 @@ def NoStripCalculationDespToPat(despensoryStock,patientid,medicineobj,boxes_want
 
 
             pbr_dict[key]['boxes']=boxes_wanted
-            pieces_wanted=pieces_wanted+int(pbr_dict[key]['pieces'])
+            pieces_wanted=pieces_wanted+float(pbr_dict[key]['pieces'])
             pbr_dict[key]['pieces']=pieces_wanted
-            price=int(despensoryStock.piece_price_unit)*pieces_wanted
+            price=float(despensoryStock.piece_price_unit)*pieces_wanted
 
             pbr_dict[key]['price']=price+pbr_dict[key]['price']
             price=pbr_dict[key]['price']
@@ -2158,7 +2177,7 @@ def NoStripCalculationDespToPat(despensoryStock,patientid,medicineobj,boxes_want
             tempdict['boxes']=boxes_wanted
             tempdict['strips']=0
 
-            price=int(despensoryStock.piece_price_unit)*pieces_wanted
+            price=float(despensoryStock.piece_price_unit)*pieces_wanted
 
             tempdict['price']=price
             amount=0
@@ -2215,10 +2234,13 @@ def WithStripCalculationDespToPat(despensoryStock,medicineobj,boxes_wanted,strip
 
         else:
             sts= float(lps)/float(piece_unit)
-            sts= int(round(sts))
+            print("sts",sts)
+            #int
+            sts= math.ceil(sts)
             print("sts",sts)
             bss= float(sts)/float(strip_unit)
-            bss= int(round(bss))
+            #int
+            bss= math.ceil(bss)
             print("bss",bss)
 
         despStckDict[despid]['boxes_stored']=bss
@@ -2243,10 +2265,10 @@ def WithStripCalculationDespToPat(despensoryStock,medicineobj,boxes_wanted,strip
             # strips_wanted=strips_wanted+int(pbr_dict[key]['strips'])
 
             # pbr_dict[key]['strips']=strips_wanted
-            pieces_wanted=pieces_wanted+int(pbr_dict[key]['pieces'])
+            pieces_wanted=pieces_wanted+float(pbr_dict[key]['pieces'])
             pbr_dict[key]['pieces']=pieces_wanted
             strips_wanted=pieces_wanted/piece_unit
-            strips_wanted=int(round(strips_wanted))
+            strips_wanted=float(math.floor(strips_wanted))
             pbr_dict[key]['strips']=strips_wanted
 
 
@@ -2278,9 +2300,12 @@ def WithStripCalculationDespToPat(despensoryStock,medicineobj,boxes_wanted,strip
             pieces_wanted=pieces_wanted
             tempdict['pieces']=pieces_wanted
             strips_wanted=pieces_wanted/piece_unit
-            strips_wanted=int(round(strips_wanted))
+            print("strips_wanted",strips_wanted)
+            strips_wanted=float(math.floor(strips_wanted))
+            print("strips_wanted--",strips_wanted)
+
             tempdict['strips']=strips_wanted
-            price=int(despensoryStock.piece_price_unit)*pieces_wanted
+            price=float(despensoryStock.piece_price_unit)*pieces_wanted
             tempdict['price']=price
 
 
@@ -2384,9 +2409,9 @@ def NoStripCalculationDespInternal(despensoryStock,medicineobj,boxes_wanted,piec
 
 
             removal_med_dict[key]['boxes']=boxes_wanted
-            pieces_wanted=pieces_wanted+int(removal_med_dict[key]['pieces'])
+            pieces_wanted=pieces_wanted+float(removal_med_dict[key]['pieces'])
             removal_med_dict[key]['pieces']=pieces_wanted
-            price=int(despensoryStock.piece_price_unit)*pieces_wanted
+            price=float(despensoryStock.piece_price_unit)*pieces_wanted
 
             removal_med_dict[key]['price']=price+removal_med_dict[key]['price']
             price=removal_med_dict[key]['price']
@@ -2408,7 +2433,7 @@ def NoStripCalculationDespInternal(despensoryStock,medicineobj,boxes_wanted,piec
             tempdict['boxes']=boxes_wanted
             tempdict['strips']=0
 
-            price=int(despensoryStock.piece_price_unit)*pieces_wanted
+            price=float(despensoryStock.piece_price_unit)*pieces_wanted
 
             tempdict['price']=price
             amount=0
@@ -2466,10 +2491,10 @@ def WithStripCalculationDespInternal(despensoryStock,medicineobj,boxes_wanted,st
 
         else:
             sts= float(lps)/float(piece_unit)
-            sts= int(round(sts))
+            sts= float(math.ceil(sts))
             print("sts",sts)
             bss= float(sts)/float(strip_unit)
-            bss= int(round(bss))
+            bss= math.ceil(bss)
             print("bss",bss)
 
         despStckDict[despid]['boxes_stored']=bss
@@ -2494,14 +2519,14 @@ def WithStripCalculationDespInternal(despensoryStock,medicineobj,boxes_wanted,st
             # strips_wanted=strips_wanted+int(removal_med_dict[key]['strips'])
 
             # removal_med_dict[key]['strips']=strips_wanted
-            pieces_wanted=pieces_wanted+int(removal_med_dict[key]['pieces'])
+            pieces_wanted=pieces_wanted+float(removal_med_dict[key]['pieces'])
             removal_med_dict[key]['pieces']=pieces_wanted
             strips_wanted=pieces_wanted/piece_unit
-            strips_wanted=int(round(strips_wanted))
+            strips_wanted=float(round(strips_wanted))
             removal_med_dict[key]['strips']=strips_wanted
 
 
-            price=int(despensoryStock.piece_price_unit)*pieces_wanted
+            price=float(despensoryStock.piece_price_unit)*pieces_wanted
             removal_med_dict[key]['price']=price+removal_med_dict[key]['price']
             price=removal_med_dict[key]['price']
             if medicineobj.add_charge=="YES":
@@ -2529,12 +2554,10 @@ def WithStripCalculationDespInternal(despensoryStock,medicineobj,boxes_wanted,st
             pieces_wanted=pieces_wanted
             tempdict['pieces']=pieces_wanted
             strips_wanted=pieces_wanted/piece_unit
-            strips_wanted=int(round(strips_wanted))
+            strips_wanted=float(math.floor(strips_wanted))
             tempdict['strips']=strips_wanted
-            price=int(despensoryStock.piece_price_unit)*pieces_wanted
+            price=float(despensoryStock.piece_price_unit)*pieces_wanted
             tempdict['price']=price
-
-
             amount=0
             if medicineobj.add_charge=="YES":
                 amount=price
@@ -3885,11 +3908,11 @@ def retrieveMedicineFromDespForInternalUse(request):
 
         boxes_wanted=request.GET.get('boxes_wanted')
         print("boxes_wanted",boxes_wanted)
-        boxes_wanted=int(boxes_wanted)
-        pieces_wanted=int(pieces_wanted)
+        boxes_wanted=float(boxes_wanted)
+        pieces_wanted=float(pieces_wanted)
         print("strips wanted-->",strips_wanted)
         if no_strips=="false":
-            strips_wanted=int(strips_wanted)
+            strips_wanted=float(strips_wanted)
 
         despStckDict=request.GET.get('despStckDict')
         despStckDict=json.loads(despStckDict)
@@ -3959,3 +3982,45 @@ def updatePatMedicalHist(request):
         presObj.save()
         data={}
         return JsonResponse(data)
+
+
+def retrievePatientInfoIdName(request):
+    if request.method=="GET":
+        pat_name=request.GET.get("pat_name")
+        pat_id=request.GET.get("pat_id")
+     
+       
+
+        if pat_name!="" and pat_id!="":
+            print("pat_name--",pat_name)
+            print("pat_id",pat_id)
+            pat_objs=Patient.objects.filter(Q(pat_name__contains=pat_name) and Q(id=pat_id) )
+        elif pat_id=="":
+            print("pat_name??",pat_name)
+            print("pat_id",pat_id)
+            pat_objs=Patient.objects.filter(Q(pat_name__contains=pat_name) )
+        else:
+            print("pat_name>>",pat_name)
+            print("pat_id",pat_id)
+            pat_objs=Patient.objects.filter(Q(id=pat_id))
+        print("pat_Objs",pat_objs)
+        patient_dict={}
+        for pat_obj in pat_objs:
+            patient_info_dict={}
+            patient_info_dict['name']=pat_obj.pat_name
+            patient_info_dict['contact_no']=pat_obj.phone_no
+            patient_info_dict['gender']=pat_obj.gender
+            patient_info_dict['dob']=str(pat_obj.dob)
+            patient_info_dict['cnic']=pat_obj.cnic
+            patient_info_dict['guardian']=pat_obj.guardian
+            patient_info_dict['address']=pat_obj.address
+            patient_info_dict['bloodgroup']=pat_obj.bloodgroup
+            patient_info_dict['email']=pat_obj.email_address
+            patient_dict[pat_obj.id]=[]
+            patient_dict[pat_obj.id]=patient_info_dict
+        print("patient_dict",patient_dict)
+        data={
+            "patient_dict":json.dumps(patient_dict),
+        }
+        return JsonResponse(data)
+

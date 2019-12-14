@@ -394,7 +394,6 @@ function createPatientDataTable(){
             });
             $('#patient_table tbody').on( 'click', 'tr', function () {
                 if ( $(this).hasClass('selected') ) {
-                    alert("clicked same entry")
                 }
                 else{
                     patient_id_selected=$(this).find('td').eq(0).text()
@@ -415,7 +414,7 @@ function createPatientDataTable(){
                                                 var colmd1=$("<div class='col-md-4'></div>")
                                                 var colmd2=$("<div class='col-md-6'></div>")
                                                     var pat_name_label=$("<label for='emp_name_tag' class='custom_label_css'>Patient Name</label>");
-                                                    var pat_name_input=$("<input class='form-control' id='pat_name_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['name']+"' disabled>")
+                                                    var pat_name_input=$("<input class='form-control' id='pat_name_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['name'].toUpperCase()+"' disabled>")
                                                 colmd2.append(pat_name_input)
                                                 colmd1.append(pat_name_label)
                                             row__col_one__subrow_one.append(colmd1);
@@ -449,7 +448,7 @@ function createPatientDataTable(){
                                     colmd4=$("<div class='col-md-3'></div>")
                         
                                         var pat_gender_label=$("<label class='custom_label_css'>Gender</label>");
-                                        var pat_gender_input=$("<input class='form-control' id='gender_select' class='custom_input_css' value='"+patient_dict[patient_id_selected]['gender']+"' disabled>")
+                                        var pat_gender_input=$("<input class='form-control' id='gender_select' class='custom_input_css' value='"+patient_dict[patient_id_selected]['gender'].toUpperCase()+"' disabled>")
                                         
                                         var dob_label=$("<label class='custom_label_css'>DOB</label>");
                                         var dob_input=$("<input class='form-control' id='dob_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['dob']+"' ></input>")
@@ -490,7 +489,7 @@ function createPatientDataTable(){
                                     console.log("selected guardian",guradian_name)
 
                                         var guardian_name_label=$("<label  class='custom_label_css'>Guardian Name</label>");
-                                        var guardian_name_input=$("<input class='form-control' id='guardian_input' class='custom_input_css' value='"+guradian_name+"' ></input>")
+                                        var guardian_name_input=$("<input class='form-control' id='guardian_input' class='custom_input_css' value='"+guradian_name.toUpperCase()+"' ></input>")
                                     colmd1.append(guardian_name_label)
                                     colmd2.append(guardian_name_input);
                             
@@ -503,7 +502,7 @@ function createPatientDataTable(){
                                     var colmd1=$("<div class='col-md-4'></div>")
                                     var colmd2=$("<div class='col-md-6'></div>")
                                         var address_label=$("<label for='pat_address_tag' class='custom_label_css'>Address</label>");
-                                        var pat_address_input=$("<input class='form-control' id='pat_address_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['address']+"'>")
+                                        var pat_address_input=$("<input class='form-control' id='pat_address_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['address'].toUpperCase()+"'>")
                                     colmd1.append(address_label)
                                     colmd2.append(pat_address_input)
                     
@@ -521,7 +520,7 @@ function createPatientDataTable(){
                                     var colmd2=$("<div class='col-md-6'></div>")
             
                                         blood_group_label=$("<label for='blood_group_tag' class='custom_label_css'>Blood group</label>");
-                                        bloodgroup_input=$("<input class='form-control' id='blood_group_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['bloodgroup']+"'>")
+                                        bloodgroup_input=$("<input class='form-control' id='blood_group_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['bloodgroup'].toUpperCase()+"'>")
                                     colmd1.append(blood_group_label)
                                     colmd2.append(bloodgroup_input) 
             
@@ -578,12 +577,14 @@ function createPatientDataTable(){
 function savePatientData(){
     var patient_name=$("#pat_name_input").val();
     console.log("patient_name", patient_name);
+    patient_name=patient_name.toLowerCase();
     $("#pat_name_input").val("");
 
     var contact_number=$("#contact_numb_input").val();
     $("#contact_numb_input").val("")
     var gender=$("#gender_select").val();
     $("#gender_select").val("")
+    gender=gender.toLowerCase();
     console.log("gender", gender);
     var dob=$("#dob_input").val();
     $("#dob_input").val("");
@@ -591,13 +592,16 @@ function savePatientData(){
     $("#cnic_input").val("");
     var guardian=$("#guardian_input").val();
     console.log("guardian", guardian)
+    guardian=guardian.toLowerCase();
     $("#guardian_input").val("");
     var blood_group=$("#blood_group_input").val();
     $("#blood_group_input").val("");
+    blood_group=blood_group.toLowerCase();
     var emial_id=$("#email_id_input").val();
     $("#email_id_input").val("");
     var address=$("#pat_address_input").val();
     $("#pat_address_input").val("");
+    address=address.toLowerCase();
 
     console.log("emial_id",emial_id);
 
@@ -954,13 +958,22 @@ function printAllPatientData(){
 function updatePatientData(){
     var patient_id=patient_id_selected;
     var patient_name=$("#pat_name_input").val();
+    patient_name=patient_name.toLowerCase();
     var contact_number=$("#contact_numb_input").val();
     var gender=$("#gender_select").val();
+    gender=gender.toLowerCase();
+
     var dob=$("#dob_input").val();
     var cnic=$("#cnic_input").val();
     var guardian=$("#guardian_input").val();
+    guardian=guardian.toLowerCase();
+
     var address=$("#pat_address_input").val();
+    address=address.toLowerCase();
+
     var blood_group=$("#blood_group_input").val();
+    blood_group=blood_group.toLowerCase();
+
     var emial_id=$("#email_id_input").val();
     $.ajax({
         type: 'POST',
@@ -991,12 +1004,14 @@ function updatePatientData(){
    
 function retrievePatientInfo(pat_name,contact_no,id){
     datatable_lst=[];
-    console.log("id",id)
+    pat_name=pat_name.toLowerCase();
+
     $.ajax({
         type: 'GET',
         dataType: "json",
         'data': {
           "pat_name":pat_name,
+          "contactno":contact_no,
           'id':id,
         },
         url: '/retireve_patient_info',
@@ -1008,14 +1023,14 @@ function retrievePatientInfo(pat_name,contact_no,id){
                 templist=[]
                 console.log("pat",pat);
                 templist.push(pat)
-                templist.push(patient_dict[pat]['name'])
+                templist.push(patient_dict[pat]['name'].toUpperCase())
                 templist.push(patient_dict[pat]['contact_no'])
-                templist.push(patient_dict[pat]['gender'])
+                templist.push(patient_dict[pat]['gender'].toUpperCase())
                 templist.push(patient_dict[pat]['dob'])
                 templist.push(patient_dict[pat]['cnic'])
-                templist.push(patient_dict[pat]['guardian'])
-                templist.push(patient_dict[pat]['address'])
-                templist.push(patient_dict[pat]['bloodgroup'])
+                templist.push(patient_dict[pat]['guardian'].toUpperCase())
+                templist.push(patient_dict[pat]['address'].toUpperCase())
+                templist.push(patient_dict[pat]['bloodgroup'].toUpperCase())
                 templist.push(patient_dict[pat]['email']);
                 datatable_list.push(templist)
             }
@@ -1039,24 +1054,41 @@ function viewPatientHistory(){
             var row_div=$("<div class='row' id='row_div'></div>");
                 var col=$("<div class='col-md-12'></div>");
                     var sub_row_div=$("<div class='row' id='sub_row_div_spat'></div>");
-                        var subcol1=$("<div class='col-md-4'></div>");
+                        var subcol1=$("<div class='col-md-12'></div>");
                             var rw=$("<div class='row'></div>");
-                                var c1=$("<div class='col-md-4'></div>");
+                                var c1=$("<div class='col-md-1'></div>");
                                     var label=$("<label>Patient id</label>")
-                                var c2=$("<div class='col-md-4'></div>");
-                                    var input=$("<input class='form-control' id='searchpat_id_input'></input>");
-                                var c3=$("<div class='col-md-4'></div>");
-                                    var search_button=$("<button class='btn btn-block fa fa-search' onclick='searchPatientMedHistory()'>  Search Patient</button>")
+                                var c2=$("<div class='col-md-2'></div>");
+                                    var pat_id=$("<input class='form-control' id='searchpat_id_input'></input>");
+                                var c3=$("<div class='col-md-1'></div>");
+                                    var pat_name_label=$("<label>Patient Name</label>")
+                                var c4=$("<div class='col-md-2'></div>");
+                                    var pat_name=$("<input class='form-control' id='searchpat_name_input'></input>");
+                                var c5=$("<div class='col-md-2'></div>");
+                                    var search_button=$("<button class='btn btn-block fa fa-search' onclick='searchPatientMedHistory()'>Search Patient</button>")
                                 c1.append(label);
-                                c2.append(input);
-                                c3.append(search_button);
+                                c2.append(pat_id);
+                                c3.append(pat_name_label);
+                                c4.append(pat_name);
+                                c5.append(search_button);
                             rw.append(c1);
                             rw.append(c2);
                             rw.append(c3);
+                            rw.append(c4);
+                            rw.append(c5);
                         subcol1.append(rw);
                     sub_row_div.append(subcol1);
-                col.append(sub_row_div)
-            row_div.append(col)
+                    var search_pat_datatable_row=$("<div class='row' id='search_pat_datatable_row'></div>");
+                        var search_pat_datatable_div=$("<div id='search_pat_datatable_div'></div>");
+                            var search_datatable_table=$("<table id='search_pat_datatable_table'></table>");
+
+                        search_pat_datatable_div.append(search_datatable_table);
+                    search_pat_datatable_row.append(search_pat_datatable_div);
+
+                col.append(sub_row_div);
+                col.append(search_pat_datatable_row);
+
+            row_div.append(col);
 
         var row_div_one=$("<div class='row' id='row_div_one'></div>");   
 
@@ -1392,28 +1424,100 @@ row_div_one.append(sub_col_two);
 var date_visited_dict={}
 function searchPatientMedHistory(){
     var patient_id=$("#searchpat_id_input").val();
-    console.log("patient_id",patient_id)
-    if ($("#row_div_one")!==undefined){
-        $("#row_div_one").empty();
-    }
+    var pat_name=$("#searchpat_name_input").val();
+    pat_datatable_view_mh=[];
+    console.log("patient_id---",patient_id)
+    
     $.ajax({
-        type: 'POST',
+        type: 'GET',
         dataType: "json",
         'data': {
-          "patient_id":patient_id,
+          "pat_id":patient_id,
+          "pat_name":pat_name,
         },
-        url: '/retireve_patient_med_history',
+        url:'/retrieve_patient_info_id_name',
         success: function(data){
-            console.log("JSON.parse(data['pat_med_history_dict']);",JSON.parse(data['pat_med_history_dict']))
-            pat_med_history_dict=JSON.parse(data['pat_med_history_dict']);
-            date_visited_dict=JSON.parse(data['date_visited_dict']);
+            console.log("patient_dict",data["patient_dict"])
+            patient_info_dict={};
+            patient_info_dict=JSON.parse(data["patient_dict"])
+         
+            for (pat in patient_info_dict){
+                templist=[]
+                console.log("pat",pat);
+                templist.push(pat)
+                templist.push(patient_info_dict[pat]['name'])
+                templist.push(patient_info_dict[pat]['contact_no'])
+                templist.push(patient_info_dict[pat]['gender'])
+                templist.push(patient_info_dict[pat]['dob'])
+                templist.push(patient_info_dict[pat]['cnic'])
+                templist.push(patient_info_dict[pat]['guardian'])
+                templist.push(patient_info_dict[pat]['address'])
+                templist.push(patient_info_dict[pat]['bloodgroup'])
+                templist.push(patient_info_dict[pat]['email']);
+                pat_datatable_view_mh.push(templist)
+            }
+            if (pat_dt_mh!==undefined){
+                pat_dt_mh.destroy();
+            }
+            createPatientDataTableViewMedHist();
 
-            console.log("pat_med_history_dict",pat_med_history_dict)
-            createPatientHistory_DateList()
+           
         }
     });
 }
+var pat_dt_mh;
+var pat_datatable_view_mh=[];
+var pat_datatable_update_mh=[];
+function createPatientDataTableViewMedHist(){
+    $(function(){
+        pat_dt_mh=$("#search_pat_datatable_table").DataTable({
+            data:pat_datatable_view_mh,
+            columns: [
+                { title: "Id" },
+                { title: "Patient Name" },
+                { title: "Contact" },
+                { title: 'gender' },
+                { title: "dob" },
+                { title: "cnic" },
+                { title: "guardian" },
+                { title: "Address" },
+            ],
+            paging: false,
+            scrollY: 200,
+            scrollX: true,
+            ordering: true,
+            info:false,   
+            searching:false, 
+    
+            });
+            $('#search_pat_datatable_table tbody').on( 'click', 'tr', function () {
+                if ( $(this).hasClass('selected') ) {
+                    alert("clicked same entry")
+                }
+                else{
+                    patid=$(this).find('td').eq(0).text()
+                    $("#row_div_one").empty();
+                    $.ajax({
+                        type: 'POST',
+                        dataType: "json",
+                        'data': {
+                          "patient_id":patid,
+                         
+                        },
+                        url: '/retireve_patient_med_history',
+                        success: function(data){
+                            console.log("JSON.parse(data['pat_med_history_dict']);",JSON.parse(data['pat_med_history_dict']))
+                            pat_med_history_dict=JSON.parse(data['pat_med_history_dict']);
+                            date_visited_dict=JSON.parse(data['date_visited_dict']);
 
+                            console.log("pat_med_history_dict",pat_med_history_dict)
+                            createPatientHistory_DateList();
+                        }
+                    });
+                }
+            });
+    });
+}
 function PrintPatVisitInfo(){
     var content = $("#sub_col_two").clone();
     var mywindow = window.open('', 'Print', 'height=600,width=800');
@@ -1463,24 +1567,39 @@ function updatePatientHistory(){
             var row_div=$("<div class='row' id='row_div'></div>");
                 var col=$("<div class='col-md-12'></div>");
                     var sub_row_div=$("<div class='row' id='sub_row_div_spat'></div>");
-                        var subcol1=$("<div class='col-md-4'></div>");
+                        var subcol1=$("<div class='col-md-12'></div>");
                             var rw=$("<div class='row'></div>");
-                                var c1=$("<div class='col-md-4'></div>");
-                                    var label=$("<label>Patient id</label>")
-                                var c2=$("<div class='col-md-4'></div>");
-                                    var input=$("<input class='form-control' id='searchpat_id_input'></input>");
-                                var c3=$("<div class='col-md-4'></div>");
-                                    var search_button=$("<button class='btn btn-block fa fa-search' onclick='searchUpdatePatientMedHistory()'>  Search Patient</button>")
-                                c1.append(label);
-                                c2.append(input);
-                                c3.append(search_button);
-                            rw.append(c1);
-                            rw.append(c2);
-                            rw.append(c3);
+                            var c1=$("<div class='col-md-1'></div>");
+                                var label=$("<label>Patient id</label>")
+                            var c2=$("<div class='col-md-2'></div>");
+                                var pat_id=$("<input class='form-control' id='searchpat_id_input'></input>");
+                            var c3=$("<div class='col-md-1'></div>");
+                                var pat_name_label=$("<label>Patient Name</label>")
+                            var c4=$("<div class='col-md-2'></div>");
+                                var pat_name=$("<input class='form-control' id='searchpat_name_input'></input>");
+                            var c5=$("<div class='col-md-2'></div>");
+                                var search_button=$("<button class='btn btn-block fa fa-search' onclick='searchPatientMedHistory()'>Search Patient</button>")
+                            c1.append(label);
+                            c2.append(pat_id);
+                            c3.append(pat_name_label);
+                            c4.append(pat_name);
+                            c5.append(search_button);
+                        rw.append(c1);
+                        rw.append(c2);
+                        rw.append(c3);
+                        rw.append(c4);
+                        rw.append(c5);
                         subcol1.append(rw);
                     sub_row_div.append(subcol1);
-                col.append(sub_row_div)
-            row_div.append(col)
+                    var search_pat_datatable_row=$("<div class='row' id='search_pat_datatable_row'></div>");
+                        var search_pat_datatable_div=$("<div id='search_pat_datatable_div'></div>");
+                            var search_datatable_table=$("<table id='search_pat_datatable_table'></table>");
+
+                        search_pat_datatable_div.append(search_datatable_table);
+                    search_pat_datatable_row.append(search_pat_datatable_div);
+                col.append(sub_row_div);
+                col.append(search_pat_datatable_row);
+            row_div.append(col);
 
         var row_div_one=$("<div class='row' id='row_div_one'></div>");   
 
@@ -1491,28 +1610,105 @@ function updatePatientHistory(){
 var date_visited_dict={}
 function searchUpdatePatientMedHistory(){
     var patient_id=$("#searchpat_id_input").val();
-    console.log("patient_id",patient_id)
-    if ($("#row_div_one")!==undefined){
-        $("#row_div_one").empty();
-    }
+    var pat_name=$("#searchpat_name_input").val();
+    console.log("patient_id",patient_id);
+    pat_datatable_update_mh=[]
     $.ajax({
-        type: 'POST',
+        type: 'GET',
         dataType: "json",
         'data': {
-          "patient_id":patient_id,
+          "pat_id":patient_id,
+          "pat_name":pat_name,
         },
-        url: '/retireve_patient_med_history',
+        url:'/retrieve_patient_info_id_name',
         success: function(data){
-            console.log("JSON.parse(data['pat_med_history_dict']);",JSON.parse(data['pat_med_history_dict']))
-            pat_med_history_dict=JSON.parse(data['pat_med_history_dict']);
-            date_visited_dict=JSON.parse(data['date_visited_dict']);
 
-            console.log("pat_med_history_dict",pat_med_history_dict)
-            createUpdatePatientHistory_DateList()
+            console.log("patient_dict",data["patient_dict"])
+            patient_info_dict={};
+            patient_info_dict=JSON.parse(data["patient_dict"])
+         
+            for (pat in patient_info_dict){
+                templist=[]
+                console.log("pat",pat);
+                templist.push(pat)
+                templist.push(patient_info_dict[pat]['name'])
+                templist.push(patient_info_dict[pat]['contact_no'])
+                templist.push(patient_info_dict[pat]['gender'])
+                templist.push(patient_info_dict[pat]['dob'])
+                templist.push(patient_info_dict[pat]['cnic'])
+                templist.push(patient_info_dict[pat]['guardian'])
+                templist.push(patient_info_dict[pat]['address'])
+                templist.push(patient_info_dict[pat]['bloodgroup'])
+                templist.push(patient_info_dict[pat]['email']);
+                pat_datatable_update_mh.push(templist)
+            }
+            if (pat_dt_mh!==undefined){
+                pat_dt_mh.destroy();
+            }
+            createPatientDataTableUpdateMedHist();
+
         }
     });
-}
 
+
+    
+}
+function createPatientDataTableUpdateMedHist(){
+    $(function(){
+        pat_dt_mh=$("#search_pat_datatable_table").DataTable({
+            data:pat_datatable_update_mh,
+            columns: [
+                { title: "Id" },
+                { title: "Patient Name" },
+                { title: "Contact" },
+                { title: 'gender' },
+                { title: "dob" },
+                { title: "cnic" },
+                { title: "guardian" },
+                { title: "Address" },
+            ],
+            paging: false,
+            scrollY: 200,
+            scrollX: true,
+            ordering: true,
+            info:false,   
+            searching:false, 
+    
+            });
+            $('#search_pat_datatable_table tbody').on( 'click', 'tr', function () {
+                if ( $(this).hasClass('selected') ) {
+                    alert("clicked same entry")
+                }
+                else{
+                    
+                    $("#row_div_one").empty();
+                    
+                    patid=$(this).find('td').eq(0).text()
+                    
+                    $("#row_div_one").empty();
+                  
+                    $.ajax({
+                        type: 'POST',
+                        dataType: "json",
+                        'data': {
+                          "patient_id":patid,
+                         
+                        },
+                        url: '/retireve_patient_med_history',
+                        success: function(data){
+                            console.log("JSON.parse(data['pat_med_history_dict']);",JSON.parse(data['pat_med_history_dict']))
+                            pat_med_history_dict=JSON.parse(data['pat_med_history_dict']);
+                            date_visited_dict=JSON.parse(data['date_visited_dict']);
+                
+                            console.log("pat_med_history_dict",pat_med_history_dict)
+                            createUpdatePatientHistory_DateList()
+                        }
+                    });
+                }
+            });
+    });
+
+}
 function createUpdatePatientHistory_DateList(){
     
     row_div_one=$("#row_div_one");
@@ -2439,12 +2635,14 @@ function printPrescriptionForm(){
     var ward_type= $("#ward_type_input").val();
 
     var patient_name=patient_dict[patient_id_selected]['name'];
+    patient_name=patient_name.toUpperCase();
     console.log("patient_name", patient_name);
 
     var pat_id= patient_id_selected;
     console.log("patient id", pat_id);
 
     var patient_gender=patient_dict[patient_id_selected]['gender'];
+    patient_gender=patient_gender.toUpperCase();
     console.log("patient_gender", patient_gender);
 
     var today = new Date();
@@ -2520,7 +2718,7 @@ function printPrescriptionForm(){
     var pat_contact_no=patient_dict[patient_id_selected]['contact_no'];
     var pat_address=patient_dict[patient_id_selected]['address'];
     var bloodgroup=patient_dict[patient_id_selected]['bloodgroup'];
-
+    bloodgroup=bloodgroup.toUpperCase();
     var presData={};
     required_fields_left=false
     if (amountdue_input===""){
@@ -3017,6 +3215,7 @@ function retrievePatientInfoInGenPres(pat_name,contact_no){
         dataType: "json",
         'data': {
           "pat_name":pat_name,
+          "contact_no":contact_no,
         },
         url: '/retireve_patient_info_in_pres_form',
         success: function(data){
@@ -3069,6 +3268,7 @@ function searchPatientInGenPres(){
     rowDivThreeInGenPres();
 
     var pat_name=$("#search_pat_name_input").val();
+    pat_name=pat_name.toLowerCase();
     var contact_no=$("#search_contact_numb_input").val();
     if (pat_datatable!==undefined){
         pat_datatable.destroy();
