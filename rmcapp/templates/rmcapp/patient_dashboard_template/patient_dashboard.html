@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Responsive sidebar template with sliding effect and dropdown menu based on bootstrap 3">
     <title>Rafiq Medical Center</title>
+    <!-- <link href="{% static 'rmcapp/mainhomepage_static/img/favicon.png' %}" rel="icon"/> -->
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> -->
@@ -30,8 +31,8 @@
     <link  href="{% static 'rmcapp/mainhomepage_static/css/patientManagement/updatepatientbill.css' %}" rel="stylesheet">
 
     
-    
-    
+   
+     
     
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
@@ -57,7 +58,10 @@
     <script src="{% static 'rmcapp/mainhomepage_static/js/patientManagement/procSurgForm.js' %}"></script>
     <script src="{% static 'rmcapp/mainhomepage_static/js/patientManagement/room_ward_form.js' %}"></script>
 
-
+    <script type="text/javascript">
+      // var logoImg = "{% static 'rmcapp/mainhomepage_static/img/rmc.png' %}";
+       var logoImg=$("<img style='width: 160px;' src='/static/rmcapp/mainhomepage_static/img/rmc.png'><br>")
+  </script>
 
 
     <!-- <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script> -->
@@ -198,7 +202,7 @@
   <nav id="sidebar" class="sidebar-wrapper">
     <div class="sidebar-content">
       <div class="sidebar-brand">
-        <a href="#">-RMC-</a>
+        <a href="#">Patient Dashboard</a>
         <div id="close-sidebar">
           <i class="fas fa-times"></i>
         </div>
@@ -296,6 +300,10 @@
   
                       <li>
                         <a href="#" onclick="updatePrescriptionRecord()">Update Prescription Record 
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" onclick="ViewPrescriptionList()"> View Prescription List
                         </a>
                       </li>
                   </ul>
@@ -419,7 +427,7 @@
         <i class="fa fa-cog"></i>
         <span class="badge-sonar"></span>
       </a>
-      <a href="#">
+      <a href="{% url 'logout'%}">
         <i class="fa fa-power-off"></i>
       </a>
     </div>

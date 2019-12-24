@@ -19,8 +19,116 @@ $( document ).ready(function() {
     // retrieveEmployeeInfo();
 
 });
+function contactNumPatInfoOnInput(ele){
+   
+    var input = document.getElementById('contact_numb_input');
 
+    input.onkeydown = function() {
+        var key = event.keyCode || event.charCode;
 
+        if( key == 8 || key == 46 ){
+            
+        }
+        else{
+            value=ele.val();
+            if (value.length===4){
+                value=value+"-";
+                $("#contact_numb_input").val(value);
+            } 
+        }
+            
+    };
+}
+function cnicNumPatInfoOnInput(ele){
+   
+    var input = document.getElementById('cnic_input');
+
+    input.onkeydown = function() {
+        var key = event.keyCode || event.charCode;
+
+        if( key == 8 || key == 46 ){
+            
+        
+        }
+        else{
+            value=ele.val();
+            if (value.length===5){
+                value=value+"-";
+                $("#cnic_input").val(value);
+            } 
+            else if (value.length===13){
+                value=value+"-";
+                $("#cnic_input").val(value);
+            } 
+        }
+            
+    };
+
+}
+function contactNumPatInfoOnEdit(ele){
+    var input = document.getElementById('contact_numb_edit');
+
+    input.onkeydown = function() {
+        var key = event.keyCode || event.charCode;
+
+        if( key == 8 || key == 46 ){
+            
+        
+        }
+        else{
+            value=ele.val();
+            if (value.length===4){
+                value=value+"-";
+                $("#contact_numb_edit").val(value);
+            } 
+        }
+            
+};
+   
+}
+function cnicNumPatInfoOnEdit(ele){
+    var input = document.getElementById('cnic_edit');
+
+    input.onkeydown = function() {
+        var key = event.keyCode || event.charCode;
+
+        if( key == 8 || key == 46 ){
+            console.log("Backspace")
+        
+        }
+        else{
+            value=ele.val();
+            if (value.length===5){
+                value=value+"-";
+                $("#cnic_edit").val(value);
+            } 
+            else if (value.length===13){
+                value=value+"-";
+                $("#cnic_edit").val(value);
+            } 
+        }
+    };
+}
+function searchContactNumPatInfoOnEdit(ele){
+    var input = document.getElementById('search_contact_numb_input');
+
+    input.onkeydown = function() {
+        var key = event.keyCode || event.charCode;
+
+        if( key == 8 || key == 46 ){
+            
+        
+        }
+        else{
+            value=ele.val();
+            if (value.length===4){
+                value=value+"-";
+                $("#search_contact_numb_input").val(value);
+            } 
+        }
+            
+};
+}
 function addEmployee(){
     $('#main_page_content').empty()
     var container_empl_dashboard= $('#main_page_content').append('<div class="container-fluid" id="container-empl-dashboard"></div>');
@@ -61,7 +169,7 @@ function addEmployee(){
 
                     contact_type_label=$("<label class='custom_label_css'>Contact Number</label>");
                     colmd1.append(contact_type_label);
-                    contact_type_input=$("<input class='form-control' id='contact_numb_input' class='custom_input_css' placeholder='0312-3456789'></input>")
+                    contact_type_input=$("<input class='form-control' autocomplete='off' id='contact_numb_input' maxlength='12' oninput='contactNumPatInfoOnInput($(this))' class='custom_input_css' placeholder='0312-3456789'></input>")
                     colmd2.append(contact_type_input);
 
                 row__col_two__row_div_one.append(colmd1)
@@ -83,12 +191,12 @@ function addEmployee(){
 
                             emp_name_label=$("<label class='custom_label_css'>Gender</label>");
                             colmd1.append(emp_name_label)
-                            emp_name_input=$("<input class='form-control' id='gender_input'  class='custom_input_css' onfocusout='onfocusOutGenderInput($(this))'>")
+                            emp_name_input=$("<input class='form-control' autocomplete='off' id='gender_input'  class='custom_input_css' onfocusout='onfocusOutGenderInput($(this))'>")
                             colmd2.append(emp_name_input)
                 // DOB
                             contact_type_label=$("<label class='custom_label_css'>DOB</label>");
                             colmd3.append(contact_type_label);
-                            contact_type_input=$("<input class='form-control' id='dob_input' class='custom_input_css' ></input>")
+                            contact_type_input=$("<input class='form-control' autocomplete='off' id='dob_input' class='custom_input_css' ></input>")
                             colmd4.append(contact_type_input);
 
                         row__col_one__row_div_two.append(colmd1);
@@ -106,7 +214,7 @@ function addEmployee(){
 
                         contact_type_label=$("<label class='custom_label_css'>CNIC</label>");
                         colmd1.append(contact_type_label);
-                        contact_type_input=$("<input class='form-control' id='cnic_input' maxlength='15' class='custom_input_css' placeholder='xxxxx-xxxxxxx-x' ></input>")
+                        contact_type_input=$("<input class='form-control' autocomplete='off' id='cnic_input' oninput='cnicNumPatInfoOnInput($(this))' maxlength='15'  class='custom_input_css' placeholder='xxxxx-xxxxxxx-x' ></input>")
                         colmd2.append(contact_type_input);
 
                     row__col_three__row_div_two.append(colmd1)
@@ -151,7 +259,7 @@ function addEmployee(){
     
                         address_label=$("<label for='emp_address_tag' class='custom_label_css'>Address</label>");
                         colmd1.append(address_label)
-                        emp_address_input=$("<input class='form-control' id='emp_address_input' class='custom_input_css'>")
+                        emp_address_input=$("<input class='form-control' autocomplete='off' id='emp_address_input' class='custom_input_css'>")
                         colmd2.append(emp_address_input)
     
                         row__col_two__row_div_three.append(colmd1);
@@ -288,7 +396,7 @@ function editEmployee(){
                         colmd2=$("<div class='col-md-6'></div>")
                             contact_type_label=$("<label class='custom_label_css'>Contact Number</label>");
                         colmd1.append(contact_type_label);
-                            contact_type_input=$("<input class='form-control custom_input_css' id='search_contact_numb_input'  placeholder='0312-3456789'></input>")
+                            contact_type_input=$("<input class='form-control custom_input_css' id='search_contact_numb_input'   maxlength='12'  oninput='searchContactNumPatInfoOnEdit($(this))' placeholder='0312-3456789'></input>")
                         colmd2.append(contact_type_input);
                     row__col_two__row_div_one.append(colmd1)
                     row__col_two__row_div_one.append(colmd2)
@@ -321,6 +429,12 @@ function searchEmployee(){
    
     editEmployeeRowDivFiveCreation();
     var emp_name=$("#search_emp_name_input").val();
+    emp_name=emp_name.toLowerCase();
+    console.log("emp_name",emp_name)
+
+
+
+    
     var contact_no=$("#search_contact_numb_input").val();
     if (emp_datatable!==undefined){
         emp_datatable.destroy();
@@ -408,7 +522,7 @@ function createEmployeetDataTable(){
                 scrollX: true,
                 ordering: true,
                 info:false,
-                searching:false,
+                searching:true,
     
             });
             $('#employee_table tbody').on( 'click', 'tr', function () {
@@ -446,7 +560,7 @@ function createEmployeetDataTable(){
             
                                 contact_type_label=$("<label class='custom_label_css'>Contact Number</label>");
                                 colmd1.append(contact_type_label);
-                                contact_type_input=$("<input class='form-control' id='contact_numb_input' class='custom_input_css' value="+employee_dict[emp_id_selected]['phone']+"></input>")
+                                contact_type_input=$("<input class='form-control' id='contact_numb_edit'  maxlength='12'  oninput='contactNumPatInfoOnEdit($(this))' class='custom_input_css' value="+employee_dict[emp_id_selected]['phone']+"></input>")
                                 colmd2.append(contact_type_input);
             
                             row__col_two__row_div_one.append(colmd1)
@@ -491,7 +605,7 @@ function createEmployeetDataTable(){
             
                                     contact_type_label=$("<label class='custom_label_css'>CNIC</label>");
                                     colmd1.append(contact_type_label);
-                                    contact_type_input=$("<input class='form-control' id='cnic_input' maxlength='15' class='custom_input_css' value='"+employee_dict[emp_id_selected]['cnic']+"' ></input>")
+                                    contact_type_input=$("<input class='form-control' id='cnic_edit'  oninput='cnicNumPatInfoOnEdit($(this))' maxlength='15' maxlength='15' class='custom_input_css' value='"+employee_dict[emp_id_selected]['cnic']+"' ></input>")
                                     colmd2.append(contact_type_input);
             
                                 row__col_three__row_div_two.append(colmd1)
@@ -678,16 +792,23 @@ function saveEmployeeData(){
             },
             url: '/save_employee_data',
             success: function(data){
-                console.log(data['Success']);
-                $("#emp_name_input").val("")
-                $("#contact_numb_input").val("");
-                $("#gender_input").val("");
-                $("#dob_input").val("");
-                $("#cnic_input").val("");
-                $("#emp_address_input").val("");
-                $("#select_emp_type").val("");
-                $("#emp_qualif_input").val("");
-                $("#email_id_input").val("");
+                console.log(data['status_info']);
+                status_info=data['status_info'];
+                if (status_info=="New Person"){
+                    $("#emp_name_input").val("")
+                    $("#contact_numb_input").val("");
+                    $("#gender_input").val("");
+                    $("#dob_input").val("");
+                    $("#cnic_input").val("");
+                    $("#emp_address_input").val("");
+                    $("#select_emp_type").val("");
+                    $("#emp_qualif_input").val("");
+                    $("#email_id_input").val("");
+                }
+                else{
+                    alert("This Employee already exsists")
+                }
+                
             },
         
         });
@@ -696,10 +817,10 @@ function saveEmployeeData(){
 function updateEmployeeData(){
     var employee_id=emp_id_selected;
     var emplyee_name=$("#emp_name_input").val();
-    var contact_number=$("#contact_numb_input").val();
+    var contact_number=$("#contact_numb_edit").val();
     var gender=$("#gender_input").val();
     var dob=$("#dob_input").val();
-    var cnic=$("#cnic_input").val();
+    var cnic=$("#cnic_edit").val();
     var employee_type=$("#employee_type_input").val();
     var address=$("#emp_address_input").val();
     var qualification=$("#emp_qualif_input").val();
@@ -831,6 +952,7 @@ function createAllEmployeeDataTable(){
                 scrollX: true,
                 ordering: true,
                 info:false,
+                searching:true,
                 dom: 'Bfrtip',
                 buttons: [
                     {
@@ -942,10 +1064,10 @@ function createAllEmployeeDataTable(){
                                     var row__col_one__subrow_three=$("<div class='row'></div>");
                                         colmd1=$("<div class='col-md-4 text-right'></div>")
                                         colmd2=$("<div class='col-md-4'></div>")
-                                            var cnic_label=$("<label  class='custom_label_css font-weight-bold'>CNIC</label>");
-                                            var cnic_input=$("<label class='custom_label_css' id='guardian_input'>"+all_employee_dict[employee_id_selected]['cnic']+"</label>")
-                                        colmd1.append(cnic_label)
-                                        colmd2.append(cnic_input);
+                                            var guardian_label=$("<label  class='custom_label_css font-weight-bold'>CNIC</label>");
+                                            var guardian_input=$("<label class='custom_label_css' id='guardian_input'>"+all_employee_dict[employee_id_selected]['cnic']+"</label>")
+                                        colmd1.append(guardian_label);
+                                        colmd2.append(guardian_input);
                                     row__col_one__subrow_three.append(colmd1);
                                     row__col_one__subrow_three.append(colmd2);
                                 col_one__subrow_three.append(row__col_one__subrow_three);

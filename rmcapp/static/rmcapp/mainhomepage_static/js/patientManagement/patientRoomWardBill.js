@@ -378,7 +378,7 @@ function createBillDetailsWardBill(){
                             var colmd1=$("<div class='col-md-5'></div>")
                             var colmd2=$("<div class='col-md-6'></div>")
                                 var ward_label=$("<label for='floor_tag' class='custom_label_css'>Ward Number</label>");
-                                var ward_input=$("<label id='ward_input' class='form-control-static'>"+wardBill_dict['ward_no']+"</label>")
+                                var ward_input=$("<label id='ward_label' class='form-control-static'>"+wardBill_dict['ward_no']+"</label>")
                             colmd1.append(ward_label)
                             colmd2.append(ward_input)
                         row__col_one__subrow_two.append(colmd1);
@@ -390,7 +390,7 @@ function createBillDetailsWardBill(){
                             var colmd1=$("<div class='col-md-5'></div>")
                             var colmd2=$("<div class='col-md-6'></div>")
                                 var bed_label=$("<label class='custom_label_css'>Bed Number</label>");
-                                var bed_input=$("<label id='room_input' class='form-control-static'>"+wardBill_dict['bed_no']+"</label>")
+                                var bed_input=$("<label id='bedno_label' class='form-control-static'>"+wardBill_dict['bed_no']+"</label>")
                             colmd1.append(bed_label);
                             colmd2.append(bed_input);
                         row__col_two__subrow_two.append(colmd1)
@@ -477,16 +477,18 @@ function createBillDetailsWardBill(){
     });
 }
 function calculateRoomBill(){
-    $("#subrow_five").empty()
-    var checkInDate = $("#checkin_input").text()
-    var checkOutDate = $("#checkout_input").val()
-    if($("#checkout_input").val()==""){
+    $("#subrow_five").empty();
+    var checkInDate = $("#checkin_input").text();
+    var checkOutDate = $("#checkout_input").val();
+    console.log("checkInDate",checkInDate)
+    console.log("checkOutDate",checkOutDate)
+
+    if(checkOutDate==""){
         alert("Please Select Discharge Date first")
     }
     else if(checkInDate>checkOutDate){
-        alert("Date cannot be less than the Admision Date")
+        alert("Date cannot be less than the checkin Date")
     }
-
     else{
         var date1 = new Date(checkInDate); 
         var date2 = new Date(checkOutDate); 
@@ -675,7 +677,7 @@ function saveRoomBill(){
     });
 }
 function saveWardBill(){
-alert("")
+
     var pres_id=$("#prescription_input").text();
     console.log("pres_id", pres_id);
 
@@ -688,6 +690,9 @@ alert("")
     var total_no_of_days=$("#total_days").text();
     console.log("total_days11111", total_no_of_days);
     
+    var ward_no=$("#ward_label").text();
+    var bed_no=$("#bedno_label").text();
+
     $.ajax({
         type: 'POST',
         dataType: "json",
@@ -696,9 +701,12 @@ alert("")
             "checkout":JSON.stringify(checkout),
             "net_total":JSON.stringify(net_total),
             "total_no_of_days":JSON.stringify(total_no_of_days),
-    
+            "ward_no":JSON.stringify(ward_no),
+            "bed_no":JSON.stringify(bed_no),
+
+            
         },
-        // url: '/save_ward_bill',
+        url: '/save_ward_bill',
         success: function(data){
             console.log(data['Success']);
         },
@@ -814,35 +822,35 @@ function printWardBill(){
     $('#calc_bttn').show();
     $('#print_btn').show();
     $('#save_btn').show();
+    saveWardBill();
+    // var pres_id=$("#prescription_input").text();
+    // console.log("pres_id", pres_id);
 
-    var pres_id=$("#prescription_input").text();
-    console.log("pres_id", pres_id);
+    // var checkout=$("#checkout_input").val();
+    // $("#checkout_input").val(checkout)
 
-    var checkout=$("#checkout_input").val();
-    $("#checkout_input").val(checkout)
+    // var net_total=$("#net_total").text();
+    // console.log("net_total", net_total);
 
-    var net_total=$("#net_total").text();
-    console.log("net_total", net_total);
-
-    var total_no_of_days=$('#total_days').text();
+    // var total_no_of_days=$('#total_days').text();
 
 
     
-    $.ajax({
-        type: 'POST',
-        dataType: "json",
-        'data': {
-            "pres":JSON.stringify(pres_id),
-            "checkout":JSON.stringify(checkout),
-            "net_total":JSON.stringify(net_total),
-            "total_no_of_days":JSON.stringify(total_no_of_days),
+    // $.ajax({
+    //     type: 'POST',
+    //     dataType: "json",
+    //     'data': {
+    //         "pres":JSON.stringify(pres_id),
+    //         "checkout":JSON.stringify(checkout),
+    //         "net_total":JSON.stringify(net_total),
+    //         "total_no_of_days":JSON.stringify(total_no_of_days),
 
-        },
-        url: '/print_ward_bill',
-        success: function(data){
-            console.log(data['Success']);
-        },
-    });
+    //     },
+    //     url: '/print_ward_bill',
+    //     success: function(data){
+    //         console.log(data['Success']);
+    //     },
+    // });
 }
 function getCookie(name) {
     var cookieValue = null;

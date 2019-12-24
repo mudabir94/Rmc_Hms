@@ -100,5 +100,6 @@ urlpatterns = [
   path("update_pat_medical_hist",views.updatePatMedicalHist,name="update_pat_medical_hist"),
 
   path("retrieve_patient_info_id_name",views.retrievePatientInfoIdName,name="retrieve_patient_info_id_name"),
+  path("view_prescription_list",views.viewPrescriptionList,name="view_prescription_list")
 
 ]

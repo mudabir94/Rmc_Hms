@@ -36,6 +36,116 @@ var pbr_dict={}
 $(document).ready(function() {
     retrieveProcedureDetails();
 });
+function contactNumPatInfoOnInput(ele){
+   
+    var input = document.getElementById('contact_numb_input');
+
+    input.onkeydown = function() {
+        var key = event.keyCode || event.charCode;
+
+        if( key == 8 || key == 46 ){
+            
+        }
+        else{
+            value=ele.val();
+            if (value.length===4){
+                value=value+"-";
+                $("#contact_numb_input").val(value);
+            } 
+        }
+            
+    };
+}
+function cnicNumPatInfoOnInput(ele){
+   
+    var input = document.getElementById('cnic_input');
+
+    input.onkeydown = function() {
+        var key = event.keyCode || event.charCode;
+
+        if( key == 8 || key == 46 ){
+            
+        
+        }
+        else{
+            value=ele.val();
+            if (value.length===5){
+                value=value+"-";
+                $("#cnic_input").val(value);
+            } 
+            else if (value.length===13){
+                value=value+"-";
+                $("#cnic_input").val(value);
+            } 
+        }
+            
+    };
+
+}
+function contactNumPatInfoOnEdit(ele){
+    var input = document.getElementById('contact_numb_edit');
+
+    input.onkeydown = function() {
+        var key = event.keyCode || event.charCode;
+
+        if( key == 8 || key == 46 ){
+            
+        
+        }
+        else{
+            value=ele.val();
+            if (value.length===4){
+                value=value+"-";
+                $("#contact_numb_edit").val(value);
+            } 
+        }
+            
+};
+   
+}
+function cnicNumPatInfoOnEdit(ele){
+    var input = document.getElementById('cnic_edit');
+
+    input.onkeydown = function() {
+        var key = event.keyCode || event.charCode;
+
+        if( key == 8 || key == 46 ){
+            console.log("Backspace")
+        
+        }
+        else{
+            value=ele.val();
+            if (value.length===5){
+                value=value+"-";
+                $("#cnic_edit").val(value);
+            } 
+            else if (value.length===13){
+                value=value+"-";
+                $("#cnic_edit").val(value);
+            } 
+        }
+    };
+}
+function searchContactNumPatInfoOnEdit(ele){
+    var input = document.getElementById('search_contact_numb_input');
+
+    input.onkeydown = function() {
+        var key = event.keyCode || event.charCode;
+
+        if( key == 8 || key == 46 ){
+            
+        
+        }
+        else{
+            value=ele.val();
+            if (value.length===4){
+                value=value+"-";
+                $("#search_contact_numb_input").val(value);
+            } 
+        }
+            
+};
+}
 function retrieveProcedureDetails(){
     $.ajax({
         type: 'GET',
@@ -92,7 +202,7 @@ function addPatient(){
 
                     contact_type_label=$("<label class='custom_label_css font-weight-bold'>Contact Number</label>");
                     colmd1.append(contact_type_label);
-                    contact_type_input=$("<input class='form-control' id='contact_numb_input' class='custom_input_css' placeholder='0312-3456789'></input>")
+                    contact_type_input=$("<input class='form-control' autocomplete='off' id='contact_numb_input'  maxlength='12' oninput='contactNumPatInfoOnInput($(this))'  placeholder='0312-3456789'></input>")
                     colmd2.append(contact_type_input);
 
                 row__col_two__row_div_one.append(colmd1)
@@ -113,12 +223,12 @@ function addPatient(){
 
                     pat_name_label=$("<label class='custom_label_css font-weight-bold'>Gender</label>");
                     colmd1.append(pat_name_label)
-                    pat_name_input=$("<input class='form-control' id='gender_select' class='custom_input_css'>")
+                    pat_name_input=$("<input class='form-control' id='gender_select'  autocomplete='off' class='custom_input_css'>")
                     colmd2.append(pat_name_input)
         // DOB
                     dob_label=$("<label class='custom_label_css font-weight-bold'>DOB </label>");
                     colmd3.append(dob_label);
-                    dob_input=$("<input class='form-control custom_input_css' id='dob_input'></input>")
+                    dob_input=$("<input class='form-control custom_input_css'  autocomplete='off' id='dob_input'></input>")
                     colmd4.append(dob_input);
 
                 row__col_one__row_div_two.append(colmd1);
@@ -134,9 +244,9 @@ function addPatient(){
                     colmd1=$("<div class='col-md-4'></div>")
                     colmd2=$("<div class='col-md-6'></div>")
 
-                    cnic_label=$("<label class='custom_label_css font-weight-bold'>CNIC/Guardian CNIC</label>");
+                    cnic_label=$("<label class='custom_label_css  autocomplete='off' font-weight-bold'>CNIC/Guardian CNIC</label>");
                     colmd1.append(cnic_label);
-                    cnic_input=$("<input class='form-control' id='cnic_input' class='custom_input_css' placeholder='xxxxx-xxxxxxx-x' ></input>")
+                    cnic_input=$("<input class='form-control' id='cnic_input' oninput='cnicNumPatInfoOnInput($(this))' maxlength='15' class='custom_input_css' placeholder='xxxxx-xxxxxxx-x' ></input>")
                     colmd2.append(cnic_input);
 
                 row__col_two__row_div_two.append(colmd1)
@@ -264,6 +374,9 @@ function addPatient(){
                 source: availableTags
               });
 }
+
+
+
 function EditPatient(){
     $('#main_page_content').empty()
     var container_patient_dashboard= $('#main_page_content').append('<div class="container-fluid" id="container-patient-dashboard"></div>');
@@ -304,7 +417,7 @@ function EditPatient(){
 
                     contact_type_label=$("<label class='custom_label_css float-right'>Contact Number</label>");
                     colmd1.append(contact_type_label);
-                    contact_type_input=$("<input class='form-control custom_input_css' id='search_contact_numb_input'></input>")
+                    contact_type_input=$("<input class='form-control custom_input_css' id='search_contact_numb_input' maxlength='12'  oninput='searchContactNumPatInfoOnEdit($(this))'></input>")
                     colmd2.append(contact_type_input);
 
                 row__col_two__row_div_one.append(colmd1)
@@ -376,20 +489,20 @@ function createPatientDataTable(){
                 { title: "email" },
 
                 ],
-                paging: false,
+                paging: true,
                 scrollY: 200,
                 scrollX: true,
                 ordering: true,
                 info:false,
-                searching:false,
-                // dom: 'Bfrtip',
-                // buttons: [
-                //     {
-                //     extend: 'print',
-                //     text: 'ButtonLabelHere',
-                //     title: '',
-                //     }
-                // ],
+                searching:true,
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                    extend: 'print',
+                    text: 'Print',
+                    title: 'Patient Data',
+                    }
+                ],
     
             });
             $('#patient_table tbody').on( 'click', 'tr', function () {
@@ -427,7 +540,7 @@ function createPatientDataTable(){
                                             var colmd1=$("<div class='col-md-4'></div>")
                                             var colmd2=$("<div class='col-md-6'></div>")
                                                 var contact_type_label=$("<label class='custom_label_css'>Contact Number</label>");
-                                                var contact_type_input=$("<input class='form-control' id='contact_numb_input' class='custom_input_css' placeholder='0312-3456789' value='"+patient_dict[patient_id_selected]['contact_no']+"'></input>")
+                                                var contact_type_input=$("<input class='form-control' id='contact_numb_edit' maxlength='12'  oninput='contactNumPatInfoOnEdit($(this))' class='custom_input_css' placeholder='0312-3456789' value='"+patient_dict[patient_id_selected]['contact_no']+"'></input>")
                                             colmd1.append(contact_type_label);
                                             colmd2.append(contact_type_input);
                         
@@ -448,10 +561,10 @@ function createPatientDataTable(){
                                     colmd4=$("<div class='col-md-3'></div>")
                         
                                         var pat_gender_label=$("<label class='custom_label_css'>Gender</label>");
-                                        var pat_gender_input=$("<input class='form-control' id='gender_select' class='custom_input_css' value='"+patient_dict[patient_id_selected]['gender'].toUpperCase()+"' disabled>")
+                                        var pat_gender_input=$("<input class='form-control' id='gender_edit' class='custom_input_css' value='"+patient_dict[patient_id_selected]['gender'].toUpperCase()+"' disabled>")
                                         
                                         var dob_label=$("<label class='custom_label_css'>DOB</label>");
-                                        var dob_input=$("<input class='form-control' id='dob_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['dob']+"' ></input>")
+                                        var dob_input=$("<input class='form-control' id='dob_edit' class='custom_input_css' value='"+patient_dict[patient_id_selected]['dob']+"' ></input>")
                                     colmd1.append(pat_gender_label)
                                     colmd2.append(pat_gender_input)
                                     colmd3.append(dob_label);
@@ -469,7 +582,7 @@ function createPatientDataTable(){
                                     var colmd1=$("<div class='col-md-4'></div>")
                                     var colmd2=$("<div class='col-md-6'></div>")
                                         var cnic_label=$("<label class='custom_label_css'>CNIC/Guardian CNIC</label>");
-                                        var cnic_input=$("<input class='form-control' id='cnic_input' class='custom_input_css' placeholder='xxxxx-xxxxxxx-x' value='"+patient_dict[patient_id_selected]['cnic']+"'></input>")
+                                        var cnic_input=$("<input class='form-control' id='cnic_edit' oninput='cnicNumPatInfoOnEdit($(this))' maxlength='15' class='custom_input_css' placeholder='xxxxx-xxxxxxx-x' value='"+patient_dict[patient_id_selected]['cnic']+"'></input>")
                                     colmd1.append(cnic_label);
                                     colmd2.append(cnic_input);
             
@@ -489,7 +602,7 @@ function createPatientDataTable(){
                                     console.log("selected guardian",guradian_name)
 
                                         var guardian_name_label=$("<label  class='custom_label_css'>Guardian Name</label>");
-                                        var guardian_name_input=$("<input class='form-control' id='guardian_input' class='custom_input_css' value='"+guradian_name.toUpperCase()+"' ></input>")
+                                        var guardian_name_input=$("<input  class='form-control' id='guardian_edit' class='custom_input_css' value='"+guradian_name.toUpperCase()+"' ></input>")
                                     colmd1.append(guardian_name_label)
                                     colmd2.append(guardian_name_input);
                             
@@ -502,7 +615,7 @@ function createPatientDataTable(){
                                     var colmd1=$("<div class='col-md-4'></div>")
                                     var colmd2=$("<div class='col-md-6'></div>")
                                         var address_label=$("<label for='pat_address_tag' class='custom_label_css'>Address</label>");
-                                        var pat_address_input=$("<input class='form-control' id='pat_address_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['address'].toUpperCase()+"'>")
+                                        var pat_address_input=$("<input class='form-control' id='pat_address_edit' class='custom_input_css' value='"+patient_dict[patient_id_selected]['address'].toUpperCase()+"'>")
                                     colmd1.append(address_label)
                                     colmd2.append(pat_address_input)
                     
@@ -520,7 +633,7 @@ function createPatientDataTable(){
                                     var colmd2=$("<div class='col-md-6'></div>")
             
                                         blood_group_label=$("<label for='blood_group_tag' class='custom_label_css'>Blood group</label>");
-                                        bloodgroup_input=$("<input class='form-control' id='blood_group_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['bloodgroup'].toUpperCase()+"'>")
+                                        bloodgroup_input=$("<input class='form-control' id='blood_group_edit' class='custom_input_css' value='"+patient_dict[patient_id_selected]['bloodgroup'].toUpperCase()+"'>")
                                     colmd1.append(blood_group_label)
                                     colmd2.append(bloodgroup_input) 
             
@@ -533,7 +646,7 @@ function createPatientDataTable(){
                                     var colmd2=$("<div class='col-md-6'></div>")
                 
                                         var email_id_label=$("<label class='custom_label_css'>Email Address</label>");
-                                        var email_id_input=$("<input class='form-control' id='email_id_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['email']+"'></input>")
+                                        var email_id_input=$("<input class='form-control' id='email_id_edit' class='custom_input_css' value='"+patient_dict[patient_id_selected]['email']+"'></input>")
                                     colmd1.append(email_id_label);
                                     colmd2.append(email_id_input);
                 
@@ -605,7 +718,7 @@ function savePatientData(){
 
     console.log("emial_id",emial_id);
 
-    alert("sss")
+    
     $.ajax({
         type: 'POST',
         dataType: "json",
@@ -623,6 +736,7 @@ function savePatientData(){
         url: '/save_patient_data',
         success: function(data){
             console.log(data['Success']);
+            alert("Patient Successfully Added")
         },
     });
 }
@@ -959,22 +1073,22 @@ function updatePatientData(){
     var patient_id=patient_id_selected;
     var patient_name=$("#pat_name_input").val();
     patient_name=patient_name.toLowerCase();
-    var contact_number=$("#contact_numb_input").val();
-    var gender=$("#gender_select").val();
+    var contact_number=$("#contact_numb_edit").val();
+    var gender=$("#gender_edit").val();
     gender=gender.toLowerCase();
 
-    var dob=$("#dob_input").val();
-    var cnic=$("#cnic_input").val();
-    var guardian=$("#guardian_input").val();
+    var dob=$("#dob_edit").val();
+    var cnic=$("#cnic_edit").val();
+    var guardian=$("#guardian_edit").val();
     guardian=guardian.toLowerCase();
 
-    var address=$("#pat_address_input").val();
+    var address=$("#pat_address_edit").val();
     address=address.toLowerCase();
 
-    var blood_group=$("#blood_group_input").val();
+    var blood_group=$("#blood_group_edit").val();
     blood_group=blood_group.toLowerCase();
 
-    var emial_id=$("#email_id_input").val();
+    var emial_id=$("#email_id_edit").val();
     $.ajax({
         type: 'POST',
         dataType: "json",
@@ -1304,55 +1418,56 @@ function createPatientHistoryForm(){ ///details in right col
         } 
 
         
-        
-        if (pat_med_history_dict[pres_selected]['med_list'].length!==0){
-            var med_list=pat_med_history_dict[pres_selected]['med_list']
-            var row_eleven__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
-                var col__row_eleven__sub_col_two=$("<div class='col-md-12'></div>");
-                    var div=$("<div>")
-                        var med_table=$("<table></table>");
-                            var thead=$("<thead></thead>");
-                                var tr=$("<tr style='border-bottom:1px solid black'  >");
-                                    var th1=$("<th>")
-                                    th1.append("SrNo.")
-                                    var th2=$("<th>")
-                                    th2.append("Medicine Name")
-                                    var th3=$("<th>")
-                                    th3.append("Type")
-                                    var th4=$("<th>")
-                                    th4.append("Details")
-                                    var th5=$("<th>")
-                                    th5.append("Weight(mg)")
-                                    
-                                tr.append(th1);
-                                tr.append(th2);
-                                tr.append(th3);
-                                tr.append(th4);
-                                tr.append(th5);
-                            thead.append(tr);
-                        $(med_table).append(thead);
+        if (pat_med_history_dict[pres_selected]['med_list']!==undefined){
+            if (pat_med_history_dict[pres_selected]['med_list'].length!==0 ){
+                var med_list=pat_med_history_dict[pres_selected]['med_list']
+                var row_eleven__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
+                    var col__row_eleven__sub_col_two=$("<div class='col-md-12'></div>");
+                        var div=$("<div>")
+                            var med_table=$("<table></table>");
+                                var thead=$("<thead></thead>");
+                                    var tr=$("<tr style='border-bottom:1px solid black'  >");
+                                        var th1=$("<th>")
+                                        th1.append("SrNo.")
+                                        var th2=$("<th>")
+                                        th2.append("Medicine Name")
+                                        var th3=$("<th>")
+                                        th3.append("Type")
+                                        var th4=$("<th>")
+                                        th4.append("Details")
+                                        var th5=$("<th>")
+                                        th5.append("Weight(mg)")
+                                        
+                                    tr.append(th1);
+                                    tr.append(th2);
+                                    tr.append(th3);
+                                    tr.append(th4);
+                                    tr.append(th5);
+                                thead.append(tr);
+                            $(med_table).append(thead);
 
-                            var tbody=$("<tbody></tbody>");
-                        $(med_table).append(tbody);
-                                for (index in med_list){
-                                    console.log("index",index)
-                                    console.log("med_list--index",med_list[index])
-                                    onemed_list=med_list[index]
-                                    var tr=$("<tr style='border-bottom:1px solid black'>");
-                                    var td=$("<td>");
-                                    var count=parseInt(index)+1;
-                                    td.append(count)
-                                    tr.append(td)
-                                    for (var i in onemed_list){
-                                                var td=$("<td>");
-                                                td.append(onemed_list[i])
-                                            tr.append(td)
+                                var tbody=$("<tbody></tbody>");
+                            $(med_table).append(tbody);
+                                    for (index in med_list){
+                                        console.log("index",index)
+                                        console.log("med_list--index",med_list[index])
+                                        onemed_list=med_list[index]
+                                        var tr=$("<tr style='border-bottom:1px solid black'>");
+                                        var td=$("<td>");
+                                        var count=parseInt(index)+1;
+                                        td.append(count)
+                                        tr.append(td)
+                                        for (var i in onemed_list){
+                                                    var td=$("<td>");
+                                                    td.append(onemed_list[i])
+                                                tr.append(td)
+                                        }
+                                        tbody.append(tr);
                                     }
-                                    tbody.append(tr);
-                                }
-                    div.append(med_table)                        
-                col__row_eleven__sub_col_two.append(div);
-            row_eleven__sub_col_two.append(col__row_eleven__sub_col_two);
+                        div.append(med_table)                        
+                    col__row_eleven__sub_col_two.append(div);
+                row_eleven__sub_col_two.append(col__row_eleven__sub_col_two);
+            }
         }
 
         
@@ -1578,7 +1693,7 @@ function updatePatientHistory(){
                             var c4=$("<div class='col-md-2'></div>");
                                 var pat_name=$("<input class='form-control' id='searchpat_name_input'></input>");
                             var c5=$("<div class='col-md-2'></div>");
-                                var search_button=$("<button class='btn btn-block fa fa-search' onclick='searchPatientMedHistory()'>Search Patient</button>")
+                                var search_button=$("<button class='btn btn-block fa fa-search' onclick='searchUpdatePatientMedHistory()'>Search Patient</button>")
                             c1.append(label);
                             c2.append(pat_id);
                             c3.append(pat_name_label);
@@ -1877,7 +1992,7 @@ function createUpdatePatientHistoryForm(){ ///details in right col
                 col__row_nine__sub_col_two.append(row_one__col__row_nine__sub_col_two);
             row_nine__sub_col_two.append(col__row_nine__sub_col_two);
 
-            if (pat_med_history_dict[pres_selected]['surgery_names'].lenght!==0){
+            if (pat_med_history_dict[pres_selected]['surgery_names'].length!==0){
 
                 var row_ten__sub_col_two=$("<div class='row'></div>");
                     var surg_list=pat_med_history_dict[pres_selected]['surgery_names']
@@ -1919,59 +2034,60 @@ function createUpdatePatientHistoryForm(){ ///details in right col
         } 
 
         
-        
-        if (pat_med_history_dict[pres_selected]['med_list'].length!==0){
-            var med_list=pat_med_history_dict[pres_selected]['med_list']
-            var row_eleven__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
-                var col__row_eleven__sub_col_two=$("<div class='col-md-12'></div>");
-                    var div=$("<div>")
-                        var med_table=$("<table></table>");
-                            var thead=$("<thead></thead>");
-                                var tr=$("<tr style='border-bottom:1px solid black'  >");
-                                    var th1=$("<th>")
-                                    th1.append("SrNo.")
-                                    var th2=$("<th>")
-                                    th2.append("Medicine Name")
-                                    var th3=$("<th>")
-                                    th3.append("Type")
-                                    var th4=$("<th>")
-                                    th4.append("Details")
-                                    var th5=$("<th>")
-                                    th5.append("Weight(mg)")
-                                    
-                                tr.append(th1);
-                                tr.append(th2);
-                                tr.append(th3);
-                                tr.append(th4);
-                                tr.append(th5);
-                            thead.append(tr);
-                        $(med_table).append(thead);
+        if (pat_med_history_dict[pres_selected]['med_list']!==undefined){
+            if (pat_med_history_dict[pres_selected]['med_list'].length!==0){
+                var med_list=pat_med_history_dict[pres_selected]['med_list']
+                var row_eleven__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
+                    var col__row_eleven__sub_col_two=$("<div class='col-md-12'></div>");
+                        var div=$("<div>")
+                            var med_table=$("<table></table>");
+                                var thead=$("<thead></thead>");
+                                    var tr=$("<tr style='border-bottom:1px solid black'  >");
+                                        var th1=$("<th>")
+                                        th1.append("SrNo.")
+                                        var th2=$("<th>")
+                                        th2.append("Medicine Name")
+                                        var th3=$("<th>")
+                                        th3.append("Type")
+                                        var th4=$("<th>")
+                                        th4.append("Details")
+                                        var th5=$("<th>")
+                                        th5.append("Weight(mg)")
+                                        
+                                    tr.append(th1);
+                                    tr.append(th2);
+                                    tr.append(th3);
+                                    tr.append(th4);
+                                    tr.append(th5);
+                                thead.append(tr);
+                            $(med_table).append(thead);
 
-                            var tbody=$("<tbody></tbody>");
-                        $(med_table).append(tbody);
-                                for (index in med_list){
-                                    console.log("index",index)
-                                    console.log("med_list--index",med_list[index])
-                                    onemed_list=med_list[index]
-                                    var tr=$("<tr style='border-bottom:1px solid black'>");
-                                    var td=$("<td>");
-                                    var count=parseInt(index)+1;
-                                    td.append(count)
-                                    tr.append(td)
-                                    for (var i in onemed_list){
-                                                var td=$("<td>");
-                                                td.append(onemed_list[i])
-                                            tr.append(td)
+                                var tbody=$("<tbody></tbody>");
+                            $(med_table).append(tbody);
+                                    for (index in med_list){
+                                        console.log("index",index)
+                                        console.log("med_list--index",med_list[index])
+                                        onemed_list=med_list[index]
+                                        var tr=$("<tr style='border-bottom:1px solid black'>");
+                                        var td=$("<td>");
+                                        var count=parseInt(index)+1;
+                                        td.append(count)
+                                        tr.append(td)
+                                        for (var i in onemed_list){
+                                                    var td=$("<td>");
+                                                    td.append(onemed_list[i])
+                                                tr.append(td)
+                                        }
+                                        tbody.append(tr);
                                     }
-                                    tbody.append(tr);
-                                }
-                    div.append(med_table)                        
-                col__row_eleven__sub_col_two.append(div);
-            row_eleven__sub_col_two.append(col__row_eleven__sub_col_two);
+                        div.append(med_table)                        
+                    col__row_eleven__sub_col_two.append(div);
+                row_eleven__sub_col_two.append(col__row_eleven__sub_col_two);
+            }
         }
 
         
-        if (pat_med_history_dict[pres_selected]['procedure_names'].lenght!==0){
+        if (pat_med_history_dict[pres_selected]['procedure_names'].length!==0){
 
             var row_twelve__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
                 var proc_list=pat_med_history_dict[pres_selected]['procedure_names']
@@ -2085,7 +2201,7 @@ function createPatientDataTableInGenPres(){
             scrollX: true,
             ordering: true,
             info:false,   
-            searching:false, 
+            searching:true, 
     
             });
             $('#patient_table tbody').on( 'click', 'tr', function () {
@@ -2214,6 +2330,22 @@ function retrieveWardInfoInRoomWard(){
     }); 
 
 }
+function InDoorTotalAmountFocousOutGenPres(ele){
+    value=ele.val();
+    $("#discountamount_input").val("0");
+    $("#discountpercent_input").val("0");
+}
+function OutDoorTotalAmountFocousOutGenPres(ele){
+    value=ele.val();
+    $("#discountamount_input").val("0");
+    $("#discountpercent_input").val("0");
+}
+
+function EmergencyTotalAmountFocousOutGenPres(ele){
+    value=ele.val();
+    $("#discountamount_input").val("0");
+    $("#discountpercent_input").val("0");
+}
 function createOutDoorPresFormDiv(){
     var main_col_div=$('#main_col_div')
     var row_div_five=$("<div class='row' id='row_div_five'></div>");
@@ -2230,7 +2362,7 @@ function createOutDoorPresFormDiv(){
                                 var outdooramount_label=$("<label for='outdoorAmount_tag' class='custom_label_css'>Outdoor Fee</label>");
                                 colmd1.append(outdooramount_label)
 
-                                totalamount_input=$("<input class='form-control' id='totalamount_input' class='custom_input_css'>")
+                                totalamount_input=$("<input class='form-control' onfocusout='OutDoorTotalAmountFocousOutGenPres($(this))' id='totalamount_input' class='custom_input_css'>")
                                 colmd2.append(totalamount_input)
 
                         row__col_one__row_one.append(colmd1);
@@ -2381,10 +2513,10 @@ function createEmergencyPresFormDiv(){
                                 var colmd1=$("<div class='col-md-2'></div>")
                                 var colmd2=$("<div class='col-md-2'></div>")
                                 
-                                    var emergencyamount_label=$("<label for='outdoorAmount_tag' class='custom_label_css'>Emergency Fee</label>");
+                                    var emergencyamount_label=$("<label  class='custom_label_css'>Emergency Fee</label>");
                                     colmd1.append(emergencyamount_label)
 
-                                    emergencyamount_input=$("<input class='form-control' id='totalamount_input'  class='custom_input_css'>")
+                                    emergencyamount_input=$("<input class='form-control' onfocusout='EmergencyTotalAmountFocousOutGenPres($(this))' id='totalamount_input'  class='custom_input_css'>")
                                     colmd2.append(emergencyamount_input)
 
                             row__col_one__row_one.append(colmd1);
@@ -2995,7 +3127,7 @@ function createWardDataTable(){
                                         var colmd2=$("<div class='col-md-2'></div>")
                                         
                                             var indoor_admit_fee_label=$("<label for='indoor_fee_tag' class='custom_label_css'>Admission Fee</label>");
-                                            indoor_admit_fee_input=$("<input class='form-control' id='totalamount_input'  class='custom_input_css'>")
+                                            indoor_admit_fee_input=$("<input class='form-control' onfocusout='InDoorTotalAmountFocousOutGenPres($(this))' id='totalamount_input'  class='custom_input_css'>")
 
                                         colmd1.append(indoor_admit_fee_label)
                                         colmd2.append(indoor_admit_fee_input)
@@ -3315,7 +3447,7 @@ function generatePrescription(){
 
                     contact_type_label=$("<label class='custom_label_css'>Contact Number</label>");
                     colmd1.append(contact_type_label);
-                    contact_type_input=$("<input class='form-control custom_input_css' id='search_contact_numb_input'></input>")
+                    contact_type_input=$("<input class='form-control custom_input_css' id='search_contact_numb_input' maxlength='12'  oninput='searchContactNumPatInfoOnEdit($(this))'></input>")
                     colmd2.append(contact_type_input);
 
                 row__col_two__row_div_one.append(colmd1)
@@ -3464,7 +3596,7 @@ function createRoomDataTable(){
                                             var indoor_admit_fee_label=$("<label for='indoor_fee_tag' class='custom_label_css'>Admission Fee</label>");
                                             colmd1.append(indoor_admit_fee_label)
 
-                                            indoor_admit_fee_input=$("<input class='form-control' id='totalamount_input'  class='custom_input_css'>")
+                                            indoor_admit_fee_input=$("<input class='form-control' id='totalamount_input'  onfocusout='InDoorTotalAmountFocousOutGenPres($(this))' class='custom_input_css'>")
                                             colmd2.append(indoor_admit_fee_input)
 
                                     row__col_one__subrow_four.append(colmd1);
@@ -4225,6 +4357,9 @@ function addMedicineToPatientBill(){
 }
 
 function SaveAndPrintBill(){
+    totalamount_input=$("#totalamount_input").val();
+    if (totalamount_input!==""){
+
     dspstck_dict={}
     despmed_datatable.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
         var data = this.data();
@@ -4284,8 +4419,9 @@ function SaveAndPrintBill(){
     
         var center=$("<center id='top'></center>")
             var div_logo=$("<div class='logo'></div>");
-                var img_scr=$("<img style='width: 160px;' src='/static/rmcapp/mainhomepage_static/img/rmc.png'><br>")
-            div_logo.append(img_scr);
+                // var img_scr=$("<img style='width: 160px;' src='/static/rmcapp/mainhomepage_static/img/rmc.png'><br>")
+
+            div_logo.append(logoImg);
             var div_info=$("<div class='info'></div>");
                 var h2=$("<h2></h2>");
                 h2.append(rmc);
@@ -4426,6 +4562,10 @@ function SaveAndPrintBill(){
           $("#search_patient_id").val("")
         }
     });
+    }
+    else{
+        alert("Please Calculate before Printing");
+    }
 }
 
 function createRowDivFiveBill(){ ///Last Discount and total Bill row with Button
@@ -4455,7 +4595,7 @@ function createRowDivFiveBill(){ ///Last Discount and total Bill row with Button
                                 var outdooramount_label=$("<label class='custom_label_css'>Total Amount</label>");
                                 subcol1.append(outdooramount_label)
 
-                                var totalamount_input=$("<input class='form-control' id='totalamount_input' class='custom_input_css' disabled>")
+                                var totalamount_input=$("<input class='form-control' id='totalamount_input' onfocusout='totalAmountDespFocusOut($(this))' class='custom_input_css' disabled>")
                                 subcol2.append(totalamount_input)
 
                         row1__calculate_col2.append(subcol1);
@@ -4704,9 +4844,17 @@ function calculateDespProcBill(){
     });
   
     $("#totalamount_input").val(totalamount);
+    
+    $("#discountamount_input").val(0);
+    $("#discountpercent_input").val(0);
+   
+    $("#nettotal_input").val(totalamount);
 
 }
 function discountAmountFocousOut(element){
+    if (totalamount_input!==0){
+
+    
     var discountamount_input=$("#discountamount_input").val();
     if (discountamount_input==""){
         discountamount_input=0
@@ -4718,8 +4866,14 @@ function discountAmountFocousOut(element){
     } //true
 
     $("#discountpercent_input").val(discount_percentage);   
+    }
+    else{
+        $("#discountamount_input").val('0');
+        alert("You can't add discount.")
+    }
     
-}   
+} 
+
 function netTotalFocusIn(){
     var totalamount_input=$("#totalamount_input").val();
     var discountamount_input=$("#discountamount_input").val();
@@ -4734,7 +4888,10 @@ function netTotalFocusIn(){
 }
 function discountAmountFocousOutPres(element){
     var discountamount_input=$("#discountamount_input").val();
-    var discount_percentage=(discountamount_input/$("#totalamount_input").val())*100;
+    if ($("#totalamount_input").val()==""){
+        totalamount=0;
+    }
+    var discount_percentage=(discountamount_input/totalamount)*100;
     $("#discountpercent_input").val(discount_percentage);
     
 
@@ -4755,7 +4912,7 @@ function netTotalFocusInPres(){
 function updatePrescriptionRecord(){
         $('#main_page_content').empty()
         var container_update_prescription= $('#main_page_content').append('<div class="container-fluid" id="container-update-prescription"></div>');
-        $("#container-update-prescription").append("<h2 class ='text-center'>Update Prescription Records</h2>");
+        $("#container-update-prescription").append("<u><h2 class ='text-center'>Update Prescription Records</h2></u>");
         $("#container-update-prescription").append("<hr class='custom_hr'>");
     
         var main_row_div= $("<div class='row is-flex'></div>");
@@ -5011,6 +5168,77 @@ function UpdatePrescription(){
 
 
     
+}
+function ViewPrescriptionList(){
+    $('#main_page_content').empty()
+    var container_update_prescription= $('#main_page_content').append('<div class="container-fluid" id="container-update-prescription"></div>');
+    $("#container-update-prescription").append("<u><h2 class ='text-center'>Prescription List</h2></u>");
+    $("#container-update-prescription").append("<hr class='custom_hr'>");
+
+    var main_row_div= $("<div class='row is-flex'></div>");
+
+    $(container_update_prescription).append(main_row_div);
+    var main_col_div=$("<div class='col-md-12' id='main_col_div'></div>");
+       
+    $(main_row_div).append(main_col_div);
+
+    var row_div_one=$("<div class='row' style='padding-bottom: 10px;'></div>");
+        var preslist_div=$("<div id='preslist_div' style='width:-webkit-fill-available;'></div>");
+            var preslist_table=$("<table id='preslist_table'  class='display' width='100%' ></table>");
+        preslist_div.append(preslist_table);
+        row_div_one.append(preslist_div);
+    $(main_col_div).append(row_div_one);
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        'data': {
+           
+        },
+        url: '/view_prescription_list',
+        success: function(data){
+            prescription_list=data['pres_info_list'];
+            console.log("prescription_list--",prescription_list)
+            createDataTableViewPresList(prescription_list);
+        }
+    });
+           
+}
+function createDataTableViewPresList(prescription_list){
+  
+    $(function(){
+        view_pres_datatable=$("#preslist_table").DataTable({
+            data:prescription_list,
+            columns: [
+                { title: "Id" },
+                { title: "Patient Name" },
+                { title: "Patient Type" },
+                { title: 'Doctor' },
+                ],
+                paging: true,
+                scrollY: 200,
+                scrollX: true,
+                ordering: true,
+                info:true,
+                searching:true,
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                    extend: 'print',
+                    text: 'Print',
+                    title: 'Prescription List',
+                    }
+                ],
+    
+            });
+            $('#preslist_table tbody').on( 'click', 'tr', function () {
+                if ( $(this).hasClass('selected') ) {
+                }
+                else{
+                    view_pres_datatable.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+            });
+        });
 }
 function getCookie(name) {
     var cookieValue = null;

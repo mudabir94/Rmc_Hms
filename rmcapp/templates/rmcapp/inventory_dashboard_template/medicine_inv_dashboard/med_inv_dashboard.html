@@ -97,7 +97,7 @@
   <nav id="sidebar" class="sidebar-wrapper">
     <div class="sidebar-content">
       <div class="sidebar-brand">
-        <a href="#">-RMC-</a>
+        <a href="#">Medicine Dashboard</a>
         <div id="close-sidebar">
           <i class="fas fa-times"></i>
         </div>
@@ -178,9 +178,9 @@
                 <li>
                   <a href="#" onclick="removeMedForInternalUse()">Despensory Medicine Extraction</a> 
                 </li> 
-                <li>
+                <!-- <li>
                   <a href="#" onclick="removeExpiryMed()">Remove Expired Medicine</a> 
-                </li>                 
+                </li>                  -->
               </ul>
             </div>
           </li>
@@ -202,7 +202,7 @@
         <i class="fa fa-cog"></i>
         <span class="badge-sonar"></span>
       </a>
-      <a href="#">
+      <a href="{% url 'logout'%}">
         <i class="fa fa-power-off"></i>
       </a>
     </div>
@@ -258,12 +258,12 @@
         <div class="col-md-12">
       
           <div class="row dashboard-icon-rows">
-            <div class="col-md-3" >
+            <!-- <div class="col-md-3" >
               <div class="dashboard-icons" role="button" onclick="removeExpiryMed()">
                 <i class="fa fa-plus-square fa-5x icon_padding"></i></br>
                 <span class="exp_med">Remove Expired Medicine</span>
               </div>
-            </div>
+            </div> -->
             <!-- <div class="col-md-3">
               <div class='dashboard-icons' role="button" onclick="addMedicineToWhStockFrom()">
                 <i class="fa fa-medkit fa-5x icon_padding"></i></br>

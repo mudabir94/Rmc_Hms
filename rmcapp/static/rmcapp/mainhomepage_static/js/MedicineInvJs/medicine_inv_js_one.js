@@ -1350,7 +1350,7 @@ function addRowDivThree(){
         col_one__row_div_three=$("<div class='col-md-3'></div>");
             row_one__col_one__row_div_three=$("<div class='row'></div>");
                 manufact_date_label=$("<label for='from'>Manufactoring Date</label>");
-                manufact_input=$("<input class='form-control' id='manudatepicker'>");
+                manufact_input=$("<input class='form-control'  autocomplete='off' id='manudatepicker'>");
             row_one__col_one__row_div_three.append(manufact_date_label);
             row_one__col_one__row_div_three.append(manufact_input);
         col_one__row_div_three.append(row_one__col_one__row_div_three);
@@ -1358,7 +1358,7 @@ function addRowDivThree(){
         col_two__row_div_three=$("<div class='col-md-3 offset-md-1'></div>");
             row_one__col_two__row_div_three=$("<div class='row'></div>");
                 exp_date_label=$("<label for='to'>Expiration  Date</label>");
-                exp_date_input=$("<input class='form-control' id='expdatepicker'>");
+                exp_date_input=$("<input class='form-control'  autocomplete='off' id='expdatepicker'>");
             row_one__col_two__row_div_three.append(exp_date_label);
             row_one__col_two__row_div_three.append(exp_date_input);
         col_two__row_div_three.append(row_one__col_two__row_div_three);
@@ -2382,6 +2382,8 @@ function SaveToDespStock(){
             }
             else{
                 alert("Exceeding Limit!")
+                $("#noofboxes_input").val("0");
+                $("#noofpieces_input").val("0");
             }
         },
     });

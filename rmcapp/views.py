@@ -20,7 +20,7 @@ from rmcapp.models import (
     despBillRecord,procedureBillRecord,procedureRecords,procedureTable,
     patientVisitSummary,surgeryTable,
     surgeryRecords,surgeryBillRecord,procedureBillSummary,surgeryBillSummary,
-    tempDespensoryStock,
+    tempDespensoryStock,Role
 )
 from django.http import HttpResponse, JsonResponse
 from .Controllers.MedControllers.MedController import MedicineController  
@@ -30,7 +30,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import ObjectDoesNotExist
 
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from rmcapp.forms import WebUserCreationForm
 
 
 def printTest(request):
@@ -804,23 +804,32 @@ def saveEmployeeData(request):
         print(gender)
         print(email_address)
         print("employee_type",employee_type)
-        
-        emp_obj=Employee()
-        emptype_obj=employeeType.objects.get(type_name=employee_type)
-        emp_obj.employee_type=emptype_obj
-        emp_obj.name=name
-        emp_obj.dob=dob
-        emp_obj.gender=gender
-        emp_obj.phone_no=phone_number
-        emp_obj.address=address
-        emp_obj.qualification=qualification
-        emp_obj.email_address=email_address
-        emp_obj.cnic=cnic
+        try:
+            Employee.objects.get(name=name,cnic=cnic)
+            status_info="Same Person"
+        except:
+            emp_obj=Employee()
+            emptype_obj=employeeType.objects.get(type_name=employee_type)
+            emp_obj.employee_type=emptype_obj
+            emp_obj.name=name
+            emp_obj.dob=dob
+            emp_obj.gender=gender
+            emp_obj.phone_no=phone_number
+            emp_obj.address=address
+            emp_obj.qualification=qualification
+            emp_obj.email_address=email_address
+            emp_obj.cnic=cnic
+            emp_obj.save()
 
-        emp_obj.save()
+            webUser = WebUserCreationForm().save(commit=False, pwd="User123456!")
+            webUser.username = emp_obj.name
+            roleObj=Role.objects.get(role_name=employee_type)
+            webUser.role = roleObj
+            webUser.save()
+            status_info="New Person"
 
         data={
-            'success':"success"
+            'status_info':status_info,
         }
         return JsonResponse(data)
 
@@ -1762,11 +1771,23 @@ def generatePrescription(request):
                 wardBillObj.patient=patObj
                 wardBillObj.pres=presRecObj
                 wardBillObj.wards=wardObj
+                wardBillObj.checkin=presRecObj.created_at
                 # have to add check in date and time here. 
                 wardBillObj.save()
                 wardObj.status="Not Available"
                 wardObj.save()
         
+
+        try: 
+            patientVisitSummary.objects.get(pres=presRecObj)
+            pass
+        except:
+            pvsObj=patientVisitSummary()
+            pvsObj.pres=presRecObj
+           
+            pvsObj.patient=Patient.objects.get(id=presRecObj.patient.id)
+            pvsObj.date_visited=presRecObj.date_visited.date()
+            pvsObj.save()
 
 
         
@@ -1825,7 +1846,7 @@ def retrieveProcedureDetails(request):
 def retrieveEmployeeInfo(request):
     if request.method=="GET":
         emp_name=request.GET.get('emp_name')
-        emp_objs=Employee.objects.filter(Q(name=emp_name) | Q(phone_no=""))
+        emp_objs=Employee.objects.filter(Q(name__contains=emp_name))
         
 
         print("emp_objs",emp_objs)
@@ -3420,12 +3441,22 @@ def saveWardBill(request):
         total_days=request.POST.get('total_no_of_days')
         total_days=json.loads(total_days)
 
+        ward_no=request.POST.get('ward_no')
+        ward_no=json.loads(ward_no)
+
+        bed_no=request.POST.get('bed_no')
+        bed_no=json.loads(bed_no)
+
         print("total_days",total_days )
 
         wardbill_obj=patientWardBill.objects.get(pres=pres)
         wardbill_obj.checkout=checkout
         wardbill_obj.net_total=net_total
         wardbill_obj.total_days=total_days
+
+        wardObj=Ward.objects.get(id=wardbill_obj.wards.id)
+        wardObj.status="Available"
+        wardObj.save()
 
         wardbill_obj.save()
 
@@ -3456,6 +3487,11 @@ def saveRoomBill(request):
         roombill_obj.total_days=total_days
 
         roombill_obj.save()
+
+        roomObj=Rooms.objects.get(id=roombill_obj.rooms.id)
+        roomObj.status="Available"
+        roomObj.save()
+
 
         invObj=invoiceRecords.objects.get(pres=pres)
         net_total=int(net_total)
@@ -3978,7 +4014,7 @@ def updatePatMedicalHist(request):
         presObj.diagnosis=pat_med_history_dict[str(presid)]["diagnosis"]
         presObj.vitals=pat_med_history_dict[str(presid)]["vitals"]
         presObj.rx=pat_med_history_dict[str(presid)]["rx"]
-
+        presObj.admit_reason=pat_med_history_dict[str(presid)]["admit_reason"]
         presObj.save()
         data={}
         return JsonResponse(data)
@@ -4024,3 +4060,24 @@ def retrievePatientInfoIdName(request):
         }
         return JsonResponse(data)
 
+def viewPrescriptionList(request):
+    
+    if request.method=="GET":
+        presobjs=patPrescriptionRecords.objects.all()
+        pres_info_list=[]
+        for presObj in presobjs:
+            temp_pres_info_list=[]
+            temp_pres_info_list.append(presObj.id)
+            temp_pres_info_list.append(presObj.patient.pat_name)
+            temp_pres_info_list.append(presObj.patient_type.patient_type)
+            temp_pres_info_list.append(presObj.doc.name)
+            pres_info_list.append(temp_pres_info_list)
+            
+
+        print("pres_info_list",pres_info_list)
+        data={
+            "pres_info_list":pres_info_list,
+            }
+        return JsonResponse(data)
+    
+    
