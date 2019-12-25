@@ -221,10 +221,10 @@ function addPatient(){
                     colmd3=$("<div class='col-md-1'></div>")
                     colmd4=$("<div class='col-md-3'></div>")
 
-                    pat_name_label=$("<label class='custom_label_css font-weight-bold'>Gender</label>");
-                    colmd1.append(pat_name_label)
-                    pat_name_input=$("<input class='form-control' id='gender_select'  autocomplete='off' class='custom_input_css'>")
-                    colmd2.append(pat_name_input)
+                    gender_label=$("<label class='custom_label_css font-weight-bold'>Gender</label>");
+                    colmd1.append(gender_label)
+                    gender_input=$("<input class='form-control' id='gender_select'  autocomplete='off' class='custom_input_css'>")
+                    colmd2.append(gender_input)
         // DOB
                     dob_label=$("<label class='custom_label_css font-weight-bold'>DOB </label>");
                     colmd3.append(dob_label);
@@ -527,7 +527,7 @@ function createPatientDataTable(){
                                                 var colmd1=$("<div class='col-md-4'></div>")
                                                 var colmd2=$("<div class='col-md-6'></div>")
                                                     var pat_name_label=$("<label for='emp_name_tag' class='custom_label_css'>Patient Name</label>");
-                                                    var pat_name_input=$("<input class='form-control' id='pat_name_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['name'].toUpperCase()+"' disabled>")
+                                                    var pat_name_input=$("<input class='form-control' id='pat_name_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['name'].toUpperCase()+"' >")
                                                 colmd2.append(pat_name_input)
                                                 colmd1.append(pat_name_label)
                                             row__col_one__subrow_one.append(colmd1);
@@ -561,7 +561,7 @@ function createPatientDataTable(){
                                     colmd4=$("<div class='col-md-3'></div>")
                         
                                         var pat_gender_label=$("<label class='custom_label_css'>Gender</label>");
-                                        var pat_gender_input=$("<input class='form-control' id='gender_edit' class='custom_input_css' value='"+patient_dict[patient_id_selected]['gender'].toUpperCase()+"' disabled>")
+                                        var pat_gender_input=$("<input class='form-control' id='gender_edit' class='custom_input_css' value='"+patient_dict[patient_id_selected]['gender'].toUpperCase()+"' >")
                                         
                                         var dob_label=$("<label class='custom_label_css'>DOB</label>");
                                         var dob_input=$("<input class='form-control' id='dob_edit' class='custom_input_css' value='"+patient_dict[patient_id_selected]['dob']+"' ></input>")

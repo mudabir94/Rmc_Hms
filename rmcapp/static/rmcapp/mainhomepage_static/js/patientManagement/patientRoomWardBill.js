@@ -480,13 +480,15 @@ function calculateRoomBill(){
     $("#subrow_five").empty();
     var checkInDate = $("#checkin_input").text();
     var checkOutDate = $("#checkout_input").val();
+    checkInDate= new Date(checkInDate);
+    checkOutDate= new Date(checkOutDate);
     console.log("checkInDate",checkInDate)
     console.log("checkOutDate",checkOutDate)
 
-    if(checkOutDate==""){
+    if( $("#checkout_input").val()==""){
         alert("Please Select Discharge Date first")
     }
-    else if(checkInDate>checkOutDate){
+    else if(checkInDate > checkOutDate){
         alert("Date cannot be less than the checkin Date")
     }
     else{
@@ -647,7 +649,7 @@ function calculateWardBill(){
     }
 }
 function saveRoomBill(){
-
+    
     var pres_id=$("#prescription_input").text();
     console.log("pres_id", pres_id);
 
@@ -753,35 +755,37 @@ function printRoomBill(){
     $('#calc_bttn').show();
     $('#print_btn').show();
     $('#save_btn').show();
+    
+    saveRoomBill();
 
-    var pres_id=$("#prescription_input").text();
-    console.log("pres_id", pres_id);
+    // var pres_id=$("#prescription_input").text();
+    // console.log("pres_id", pres_id);
 
-    var checkout=$("#checkout_input").val();
-    $("#checkout_input").val("")
+    // var checkout=$("#checkout_input").val();
+    // $("#checkout_input").val("")
 
-    var net_total=$("#net_total").text();
-    console.log("net_total", net_total);
+    // var net_total=$("#net_total").text();
+    // console.log("net_total", net_total);
 
-    var total_no_of_days=$('#total_days').text();
+    // var total_no_of_days=$('#total_days').text();
 
-    $.ajax({
-        type: 'POST',
-        dataType: "json",
-        'data': {
-            "pres":JSON.stringify(pres_id),
-            "checkout":JSON.stringify(checkout),
-            "net_total":JSON.stringify(net_total),
-            "total_no_of_days":JSON.stringify(total_no_of_days),
+    // $.ajax({
+    //     type: 'POST',
+    //     dataType: "json",
+    //     'data': {
+    //         "pres":JSON.stringify(pres_id),
+    //         "checkout":JSON.stringify(checkout),
+    //         "net_total":JSON.stringify(net_total),
+    //         "total_no_of_days":JSON.stringify(total_no_of_days),
 
-        },
-        url: '/print_room_bill',
-        success: function(data){
-            console.log(data['Success']);
-            $("#subrow_five").remove()
+    //     },
+    //     url: '/print_room_bill',
+    //     success: function(data){
+    //         console.log(data['Success']);
+    //         $("#subrow_five").remove()
 
-        },
-    });
+    //     },
+    // });
 }
 function printWardBill(){
 

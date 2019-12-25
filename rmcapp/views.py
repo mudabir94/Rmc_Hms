@@ -3468,7 +3468,7 @@ def saveWardBill(request):
         return JsonResponse({})
 def saveRoomBill(request):      
     if request.method=="POST":
-
+        print("IN SAVE ROOM BILL")
         pres=request.POST.get('pres')
         pres=json.loads(pres)
 
@@ -3498,6 +3498,7 @@ def saveRoomBill(request):
         invObj.room_bill=roombill_obj
         invObj.net_total=invObj.net_total+net_total
         invObj.save()
+        print("save Room Bill")
         return JsonResponse({})
 
 def retrieveInvoiceBillRecord(request):
