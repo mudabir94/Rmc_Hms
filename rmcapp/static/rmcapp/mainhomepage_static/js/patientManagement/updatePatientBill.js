@@ -1331,12 +1331,12 @@ function valueFocusOutInvoiceStatus(element){
     var inv_stat=$(invoice_status).val();
 
     if(inv_stat==='Paid'){
-        $("#pres_status").val('Paid');
-        $("#desp_status").val('Paid');
-        $("#surg_status-"+id+"").val('Paid');
-        $("#proc_status-"+id+"").val('Paid');
-        $("#room_status").val('Paid');
         $("#ward_status").val('Paid');
+        $("#room_status").val('Paid');
+        $("#surg_status-"+id+"").val('Paid');
+        $("#desp_status").val('Paid');
+        $("#proc_status-"+id+"").val('Paid');
+        $("#pres_status").val('Paid');
     }
 
 }
