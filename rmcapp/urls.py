@@ -100,6 +100,14 @@ urlpatterns = [
   path("update_pat_medical_hist",views.updatePatMedicalHist,name="update_pat_medical_hist"),
 
   path("retrieve_patient_info_id_name",views.retrievePatientInfoIdName,name="retrieve_patient_info_id_name"),
-  path("view_prescription_list",views.viewPrescriptionList,name="view_prescription_list")
+  path("view_prescription_list",views.viewPrescriptionList,name="view_prescription_list"),
+  path("add_ward_form",views.addWardForm,name="add_ward_form"),
+  path("add_room_form",views.addRoomForm,name="add_room_form"),
+  path("room_ward_data_info",views.RoomWardDataInfo,name="room_ward_data_info"),
+  path("get_proc_surg_info",views.GetProcSurgInfo,name="get_proc_surg_info"),
+
+
+
+
 
 ]

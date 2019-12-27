@@ -826,7 +826,7 @@ function createAllPatientDataTable(){
                     {
                     extend: 'print',
                     text: ' Print all Patients Details',
-                    title: '',
+                    title: 'All Patients Details',
                     className: 'btn btn-default fa fa-print',
                     }
                 ],

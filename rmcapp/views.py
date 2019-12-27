@@ -20,7 +20,7 @@ from rmcapp.models import (
     despBillRecord,procedureBillRecord,procedureRecords,procedureTable,
     patientVisitSummary,surgeryTable,
     surgeryRecords,surgeryBillRecord,procedureBillSummary,surgeryBillSummary,
-    tempDespensoryStock,Role
+    tempDespensoryStock,Role,Rooms,Ward,
 )
 from django.http import HttpResponse, JsonResponse
 from .Controllers.MedControllers.MedController import MedicineController  
@@ -3225,7 +3225,7 @@ def updateWardData(request):
         for ward_obj in ward_objs:
             ward_info_dict={}
             ward_info_dict['ward_no']=ward_obj.ward_no
-            ward_info_dict['room_no']=ward_obj.bed_no
+            ward_info_dict['bed_no']=ward_obj.bed_no
             ward_info_dict['charge_per_day']=ward_obj.charge_per_day
             ward_info_dict['status']=ward_obj.status
             ward_dict[ward_obj.id]=[]
@@ -4081,4 +4081,169 @@ def viewPrescriptionList(request):
             }
         return JsonResponse(data)
     
-    
+def addRoomForm(request):
+    if request.method=="POST":
+        room_number=request.POST.get("room_number")
+        floor_no=request.POST.get("floor_no")
+        print("floor_no",floor_no)
+        room_charges=request.POST.get("room_charges")
+        ac_charges=request.POST.get("ac_charges")
+        status=request.POST.get("status")
+        try:
+            Rooms.objects.get(room_no=int(room_number),floor=int(floor_no))
+            roompresent="present"
+            print("roompresent",roompresent)
+        except:
+            
+            roomObj=Rooms()
+            roomObj.floor=int(floor_no)
+            roomObj.room_no=int(room_number)
+            roomObj.charge_per_day=int(room_charges)
+            roomObj.ac_charge_per_day=int(ac_charges)
+            roomObj.status=status
+            roomObj.save()
+            roompresent="notpresent"
+            print("roompresent",roompresent)
+        print("Room Saved")
+
+        room_objs=Rooms.objects.all()
+        print("room_objs//",room_objs)
+
+        room_dict={}
+        for room_obj in room_objs:
+            room_info_dict={}
+            room_info_dict['floor_no']=room_obj.floor
+            room_info_dict['room_no']=room_obj.room_no
+            room_info_dict['charge_per_day']=room_obj.charge_per_day
+            room_info_dict['ac_charge_per_day']=room_obj.ac_charge_per_day
+            room_info_dict['status']=room_obj.status
+            room_dict[room_obj.id]=[]
+            room_dict[room_obj.id]=room_info_dict
+
+
+        data={
+            'roompresent':roompresent,
+            "room_dict":json.dumps(room_dict)
+
+        }
+        return JsonResponse(data)
+def addWardForm(request):
+    if request.method=="POST":
+        ward_number=request.POST.get("ward_number")
+        bed_no=request.POST.get("bed_no")
+        bedCharges=request.POST.get("bedCharges")
+        status=request.POST.get("status")
+        try:
+            Ward.objects.get(ward_no=int(ward_number),bed_no=int(bed_no))
+            wardbedpresent="present"
+            print("wardbedpresent",wardbedpresent)
+
+        except:
+            
+            wardObj=Ward()
+            wardObj.ward_no=int(ward_number)
+            wardObj.bed_no=int(bed_no)
+            wardObj.charge_per_day=int(bedCharges)
+            wardObj.status=status
+            wardObj.save()
+            wardbedpresent="notpresent"
+            print("wardbedpresent",wardbedpresent)
+
+        print("Ward Saved")
+        ward_objs=Ward.objects.all()
+        print("ward_objs//",ward_objs)
+
+        ward_dict={}
+        for ward_obj in ward_objs:
+            ward_info_dict={}
+            ward_info_dict['ward_no']=ward_obj.ward_no
+            ward_info_dict['bed_no']=ward_obj.bed_no
+            ward_info_dict['charge_per_day']=ward_obj.charge_per_day
+            ward_info_dict['status']=ward_obj.status
+            ward_dict[ward_obj.id]=[]
+            ward_dict[ward_obj.id]=ward_info_dict
+        data={
+            "wardbedpresent":wardbedpresent,
+            "ward_dict":json.dumps(ward_dict),
+            }
+        return JsonResponse(data)
+
+
+     
+       
+        
+
+def RoomWardDataInfo(request):
+    if request.method=="GET":
+        room_objs=Rooms.objects.all()
+        print("room_objs//",room_objs)
+
+        room_dict={}
+        for room_obj in room_objs:
+            room_info_dict={}
+            room_info_dict['floor_no']=room_obj.floor
+            room_info_dict['room_no']=room_obj.room_no
+            room_info_dict['charge_per_day']=room_obj.charge_per_day
+            room_info_dict['ac_charge_per_day']=room_obj.ac_charge_per_day
+            room_info_dict['status']=room_obj.status
+            room_dict[room_obj.id]=[]
+            room_dict[room_obj.id]=room_info_dict
+
+        ward_objs=Ward.objects.all()
+        print("ward_objs//",ward_objs)
+
+        ward_dict={}
+        for ward_obj in ward_objs:
+            ward_info_dict={}
+            ward_info_dict['ward_no']=ward_obj.ward_no
+            ward_info_dict['bed_no']=ward_obj.bed_no
+            ward_info_dict['charge_per_day']=ward_obj.charge_per_day
+            ward_info_dict['status']=ward_obj.status
+            ward_dict[ward_obj.id]=[]
+            ward_dict[ward_obj.id]=ward_info_dict
+        data={
+            "ward_dict":json.dumps(ward_dict),
+            "room_dict":json.dumps(room_dict)
+
+        }
+        return JsonResponse(data)
+def GetProcSurgInfo(request):
+    if request.method=="GET":
+        surgObjs=surgeryTable.objects.all()
+        procObjs=procedureTable.objects.all()
+        surgery_list=[]
+        proc_list=[]
+        for obj in surgObjs:
+            surgery_name=obj.surgery_name
+            charges=obj.charges
+            surgeon_fee=obj.surgeon_fee
+            operation_theatre_fee=obj.operation_theater_fee
+            anesthesiologist_fee=obj.anesthesiologist_fee
+            surplus_fee=obj.surplus_fee
+            templist=[]
+            templist.append(obj.id)
+            templist.append(surgery_name)
+            templist.append(charges)
+            templist.append(surgeon_fee)
+            templist.append(operation_theatre_fee)
+            templist.append(anesthesiologist_fee)
+            templist.append(surplus_fee)
+            surgery_list.append(templist)
+        
+        for obj in procObjs:
+            procedure_name=obj.procedure_name
+            charges=obj.charges
+           
+            templist=[]
+            templist.append(obj.id)
+            templist.append(procedure_name)
+            templist.append(charges)
+            proc_list.append(templist)
+            
+
+        data={
+            "surgery_list":surgery_list,
+            "proc_list":proc_list,
+
+        }
+        return JsonResponse(data)

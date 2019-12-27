@@ -7,61 +7,79 @@ var proc_datatable;
 var proc_dict;
 var proc_id_selected=0;
 var proc_list=[]
-
+var surg_data_info_table;
+var proc_data_info_table
 
 $( document ).ready(function() {
+   
+});
+
+function addProcSurgForm(){
     $.ajax({
-        type: 'POST',
+        type: 'GET',
         dataType: "json",
         'data': { 
 
         },
-        url: '/proc_surg_form',
-        success: function(data){            
+        url: '/get_proc_surg_info',
+        success: function(data){   
+            $('#main_page_content').empty()
+            var container_procedure_surgery_dashboard= $('#main_page_content').append('<div class="container-fluid" id="container-procedure-surgery-dashboard"></div>');
+            $("#container-procedure-surgery-dashboard").append("<h2 class ='text-center'>Procedures & Surgeries</h2>");
+            $("#container-procedure-surgery-dashboard").append("<hr class='custom_hr'>");
+            var main_row_div= $("<div class='row is-flex'></div>");
+        
+            $(container_procedure_surgery_dashboard).append(main_row_div);
+            var main_col_div=$("<div class='col-md-6' id='main_col_div'></div>");
+               
+            $(main_row_div).append(main_col_div);
+        
+                var row_div_one=$("<div class='row' style='padding-bottom:10px'></div>");
+                    var col_one__row_div_one=$("<div class='col-md-6'></div>");
+                        row__col_one__row_div_one=$("<div class='row'></div>");
+                            colmd1=$("<div class='col-md-4'></div>")
+                            colmd2=$("<div class='col-md-6'></div>")
+        
+                            procedure_label=$("<label for='procedure_tag' class='custom_label_css'>Procedure/Surgery</label>");
+                            colmd1.append(procedure_label)
+                            var select=$("<select id='ps_type_select' class='form-control' onchange='proc_surgery_OnSelect($(this))'></select>");
+                                var option=$("<option selected='selected' value='--'>--</option>");
+                                var option1=$("<option id="+ps_type_list[0]+"-opt value="+ps_type_list[0]+">"+ps_type_list[0]+"</option>");
+        
+                                $(select).append(option);
+                                $(select).append(option1);
+                             colmd2.append(select) 
+                            
+                                for (var i=1;i<=ps_type_list.length;i++){
+                                    if (ps_type_list[i]!==undefined){
+                                        var option=$("<option id="+ps_type_list[i]+"-opt value="+ps_type_list[i]+">"+ps_type_list[i]+"</option>");
+                                        $(select).append(option);
+                                    }
+                                } 
+                        row__col_one__row_div_one.append(colmd1);
+                        row__col_one__row_div_one.append(colmd2);
+                    col_one__row_div_one.append(row__col_one__row_div_one);
+        
+            $(row_div_one).append(col_one__row_div_one);
+            $(main_col_div).append(row_div_one);
+            var main_col_div2=$("<div class='col-md-6' id='main_col_div2'></div>");
+                
+                var surg_table_div=$('<div id="surg_table_info_div">');
+                    var surg_table=$("<table id='surg_table_info'  class='display' width='100%'></table>")
+                surg_table_div.append(surg_table);
+                var proc_table_div=$('<div id="proc_table_info_div">');
+                    var proc_table=$("<table id='proc_table_info'  class='display' width='100%'></table>")
+                proc_table_div.append(proc_table);
+            main_col_div2.append(surg_table_div);
+            main_col_div2.append(proc_table_div);    
+            $(main_row_div).append(main_col_div2); 
+            surgery_list=data['surgery_list']        
+            proc_list=data['proc_list']  
+            createSurgTableInfo(surgery_list);
+            createProcTableInfo(proc_list);    
         },
     });
-});
-
-function addProcSurgForm(){
-    $('#main_page_content').empty()
-    var container_procedure_surgery_dashboard= $('#main_page_content').append('<div class="container-fluid" id="container-procedure-surgery-dashboard"></div>');
-    $("#container-procedure-surgery-dashboard").append("<h2 class ='text-center'>Procedures & Surgeries</h2>");
-    $("#container-procedure-surgery-dashboard").append("<hr class='custom_hr'>");
-    var main_row_div= $("<div class='row is-flex'></div>");
-
-    $(container_procedure_surgery_dashboard).append(main_row_div);
-    var main_col_div=$("<div class='col-md-12' id='main_col_div'></div>");
-       
-    $(main_row_div).append(main_col_div);
-
-        var row_div_one=$("<div class='row' style='padding-bottom:10px'></div>");
-            var col_one__row_div_one=$("<div class='col-md-6'></div>");
-                row__col_one__row_div_one=$("<div class='row'></div>");
-                    colmd1=$("<div class='col-md-4'></div>")
-                    colmd2=$("<div class='col-md-6'></div>")
-
-                    procedure_label=$("<label for='procedure_tag' class='custom_label_css'>Procedure/Surgery</label>");
-                    colmd1.append(procedure_label)
-                    var select=$("<select id='ps_type_select' class='form-control' onchange='proc_surgery_OnSelect($(this))'></select>");
-                        var option=$("<option selected='selected' value='--'>--</option>");
-                        var option1=$("<option id="+ps_type_list[0]+"-opt value="+ps_type_list[0]+">"+ps_type_list[0]+"</option>");
-
-                        $(select).append(option);
-                        $(select).append(option1);
-                     colmd2.append(select) 
-                    
-                        for (var i=1;i<=ps_type_list.length;i++){
-                            if (ps_type_list[i]!==undefined){
-                                var option=$("<option id="+ps_type_list[i]+"-opt value="+ps_type_list[i]+">"+ps_type_list[i]+"</option>");
-                                $(select).append(option);
-                            }
-                        } 
-                row__col_one__row_div_one.append(colmd1);
-                row__col_one__row_div_one.append(colmd2);
-            col_one__row_div_one.append(row__col_one__row_div_one);
-
-    $(row_div_one).append(col_one__row_div_one);
-    $(main_col_div).append(row_div_one);
+   
 
 }
 
@@ -701,5 +719,138 @@ function updateSurgData(){
             console.log("After Update",surg_dict);
             console.log(data['Success']);
         },
+    });
+}
+
+function createSurgTableInfo(surgery_list){
+    $(function(){
+        surg_data_info_table=$("#surg_table_info").DataTable({
+            data:surgery_list,
+            columns: [
+                { title: "Id" },
+                { title: "Surgery" },
+                { title: "charges" },
+                { title: 'surgeon_fee' },
+                { title: "operation_theatre_fee" },
+                { title: "anesthesiologist_fee" },
+                { title:"surplus_fee"},
+                ],
+                paging: false,
+                scrollY: 200,
+                scrollX: true,
+                ordering: true,
+                info:false,
+                searching:true,
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                    extend: 'print',
+                    text: ' Print',
+                    title: 'Surgery List',
+                    className: 'btn btn-default fa fa-print',
+                    }
+                ],
+
+            });
+            $('#available_room_ward_table tbody').on( 'click', 'tr', function () {
+                if ( $(this).hasClass('selected') ) {
+                    alert("clicked same entry")
+                }
+                else{
+            }
+        });
+    });
+}
+function createProcTableInfo(proc_list){
+    $(function(){
+        surg_data_info_table=$("#proc_table_info").DataTable({
+            data:proc_list,
+            columns: [
+                { title: "Id" },
+                { title: "Procedure" },
+                { title: "charges" },
+             
+                ],
+                paging: false,
+                scrollY: 200,
+                scrollX: true,
+                ordering: true,
+                info:false,
+                searching:true,
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                    extend: 'print',
+                    text: ' Print',
+                    title: 'Procedure list List',
+                    className: 'btn btn-default fa fa-print',
+                    }
+                ],
+
+            });
+            $('#available_room_ward_table tbody').on( 'click', 'tr', function () {
+                if ( $(this).hasClass('selected') ) {
+                    alert("clicked same entry")
+                }
+                else{
+            }
+        });
+    });
+}
+
+function ViewSurgList(){
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        'data': { 
+
+        },
+        url: '/get_proc_surg_info',
+        success: function(data){            
+            $('#main_page_content').empty()
+            var container_surg_viewlist= $('#main_page_content').append('<div class="container-fluid" id="container_surg_viewlist"></div>');
+            $("#container_surg_viewlist").append("<h2 class ='text-center'>View Surgery list</h2>");
+            $("#container_surg_viewlist").append("<hr class='custom_hr'>");
+            var main_row_div= $("<div class='row is-flex'></div>");
+
+            $(container_surg_viewlist).append(main_row_div);
+            var main_col_div=$("<div class='col-md-12' id='main_col_div'></div>");
+                var surg_table_div=$('<div id="surg_table_info_div">');
+                    var surg_table=$("<table id='surg_table_info'  class='display' width='100%'></table>")
+                surg_table_div.append(surg_table);
+            main_col_div.append(surg_table_div);
+            $(main_row_div).append(main_col_div);
+             
+            surgery_list=data['surgery_list']
+            createSurgTableInfo(surgery_list);
+        }
+    });
+}
+function ViewProcList(){
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        'data': { 
+
+        },
+        url: '/get_proc_surg_info',
+        success: function(data){            
+            $('#main_page_content').empty()
+            var container_proc_viewlist= $('#main_page_content').append('<div class="container-fluid" id="container_proc_viewlist"></div>');
+            $("#container_proc_viewlist").append("<h2 class ='text-center'>View Procedure list</h2>");
+            $("#container_proc_viewlist").append("<hr class='custom_hr'>");
+            var main_row_div= $("<div class='row is-flex'></div>");
+
+            $(container_proc_viewlist).append(main_row_div);
+            var main_col_div=$("<div class='col-md-12' id='main_col_div'></div>");
+                var proc_table_div=$('<div id="proc_table_info_div">');
+                    var proc_table=$("<table id='proc_table_info'  class='display' width='100%'></table>")
+                proc_table_div.append(proc_table);
+            main_col_div.append(proc_table_div);
+            $(main_row_div).append(main_col_div);
+             
+            proc_list=data['proc_list']
+            createProcTableInfo(proc_list);    
+        }
     });
 }
