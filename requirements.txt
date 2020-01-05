@@ -1,5 +1,5 @@
 altgraph==0.16.1
-Django==2.1.7
+Django==2.1.15
 et-xmlfile==1.0.1
 future==0.17.1
 jdcal==1.4.1
