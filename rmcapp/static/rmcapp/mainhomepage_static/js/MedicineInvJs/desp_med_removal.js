@@ -104,7 +104,7 @@ function createDespMedicineTable(){
         var col_one__row_div_three=$("<div class='col-md-12'></div>");
             row__col_one__row_div_three=$("<div class='row'></div>");
                 colmd1=$("<div class='col-md-12'></div>")
-                var table=$('<table id="desp_med_table" class="display" width="100%"></table>')
+                var table=$('<table id="desp_med_table" class="datatablecss_med"  width="100%"></table>')
                 colmd1.append(table);
             row__col_one__row_div_three.append(colmd1);
         col_one__row_div_three.append(row__col_one__row_div_three);
@@ -121,7 +121,7 @@ function createRowDivTwoBill(){
                     var row=$("<div class='row'></div>");
                         var col1=$("<div class='col-md-4' id='desp_medicine_qty_form'>");
                         var col2=$("<div class='col-md-8' id='medicine_added_to_form'>");
-                            table=$('<table id="bill_table" class="display" width="100%"></table>');
+                            table=$('<table id="bill_table" class="datatablecss_med"  width="100%"></table>');
                         col2.append(table)
                     row.append(col1);
                     row.append(col2);

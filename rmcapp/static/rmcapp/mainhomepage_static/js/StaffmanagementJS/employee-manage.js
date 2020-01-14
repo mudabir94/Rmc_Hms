@@ -452,7 +452,7 @@ function editEmployeeRowDivFiveCreation(){
         var col_one__row_div_five=$("<div class='col-md-12'></div>");
             var row__col_one__row_div_five=$("<div class='row'></div>");
                 var colmd1=$("<div class='col-md-12'></div>")
-                    var table=$('<table id="employee_table" class="display" width="100%"></table>')
+                    var table=$('<table id="employee_table" class="datatable_staff" width="100%"></table>')
                 colmd1.append(table)
             row__col_one__row_div_five.append(colmd1);
         col_one__row_div_five.append(row__col_one__row_div_five);
@@ -523,6 +523,27 @@ function createEmployeetDataTable(){
                 ordering: true,
                 info:false,
                 searching:true,
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                    extend: 'print',
+                    text: ' Print Employee Details',
+                    title: 'Print Employee Details',
+                    className: 'btn btn-default fa fa-print',
+                    },
+                    {
+                        extend: 'excel',
+                        text: 'Export to Excel',
+                        title: 'Print Employee Details',
+                        className: 'btn btn-default fas fa-file-excel',
+                    },
+                    {
+                        extend: 'pdf',
+                        text: 'Save As PDF',
+                        title: 'Print Employee Details',
+                        className: 'btn btn-default fas fa-file-pdf',
+                    }
+                ],
     
             });
             $('#employee_table tbody').on( 'click', 'tr', function () {
@@ -881,7 +902,7 @@ function viewAllEmployee(){
                 var col_one__row_div_one=$("<div class='col-md-12'></div>");
                     var row__col_one__row_div_one=$("<div class='row'></div>");
                         var colmd1=$("<div class='col-md-12'></div>")
-                            var all_employee_table=$('<table id="all_employee_table" class="display" width="100%"></table>')
+                            var all_employee_table=$('<table id="all_employee_table" class="datatable_staff" width="100%"></table>')
                         colmd1.append(all_employee_table)
                     row__col_one__row_div_one.append(colmd1);
                 col_one__row_div_one.append(row__col_one__row_div_one);
@@ -957,9 +978,21 @@ function createAllEmployeeDataTable(){
                 buttons: [
                     {
                     extend: 'print',
-                    text: ' Print all Employee Details',
-                    title: '',
+                    text: ' Print Employee Details',
+                    title: 'Print Employee Details',
                     className: 'btn btn-default fa fa-print',
+                    },
+                    {
+                        extend: 'excel',
+                        text: 'Export to Excel',
+                        title: 'Print Employee Details',
+                        className: 'btn btn-default fas fa-file-excel',
+                    },
+                    {
+                        extend: 'pdf',
+                        text: 'Save As PDF',
+                        title: 'Print Employee Details',
+                        className: 'btn btn-default fa fa-file-pdf',
                     }
                 ],
             });

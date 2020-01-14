@@ -2,6 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
     {%load static from staticfiles%}
 
     <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
@@ -10,10 +14,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="{% static 'rmcapp/maindashboard_static/stylepage.css' %}" rel="stylesheet">
-    <link href="{% static 'rmcapp/mainhomepage_static/css/MedicineInvCss/medicineinv.css' %}" rel="stylesheet">
+    <link href="{% static 'rmcapp/mainhomepage_static/css/StaffManagement/staffdash.css' %}" rel="stylesheet">
+
+    <!-- <link href="{% static 'rmcapp/mainhomepage_static/css/MedicineInvCss/medicineinv.css' %}" rel="stylesheet"> -->
     <!-- <link href="{% static 'rmcapp/mainhomepage_static/css/MedicineInvCss/jquery-ui.css' %}" type="text/css" rel="stylesheet"  /> -->
     <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+
+    
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 
     <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
@@ -27,20 +41,16 @@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
     <script type="text/javascript" charset="utf8" src="{% static 'rmcapp/mainhomepage_static/js/datatablefiles/dataTables.buttons.min.js' %}"></script>
 
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script type="text/javascript"  src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+    
     <script type="text/javascript" charset="utf8" src="{% static 'rmcapp/mainhomepage_static/js/datatablefiles/buttons.print.min.js' %}"></script>
 
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Responsive sidebar template with sliding effect and dropdown menu based on bootstrap 3">
-  
-    <title>Sidebar template</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous">
-    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
-
+ 
     <script src="{% static 'rmcapp/mainhomepage_static/js/StaffmanagementJS/employee-manage.js' %}"></script>
     <!-- <script src="{% static 'rmcapp/mainhomepage_static/js/jsprint/jQuery.print.js' %}"></script> -->
 
@@ -148,6 +158,13 @@
                 </li>
                 <li>
                   <a href="{%url 'staff_dashboard'%}">Staff Management</a>
+
+                </li>
+                <li>
+                  <a href="{%url 'main_dashboard'%}">Main Dashboard</a>
+                </li>
+                <li>
+                  <a href="{%url 'mainhomepage'%}">Home Page</a>
                 </li>
               </ul>
             </div>

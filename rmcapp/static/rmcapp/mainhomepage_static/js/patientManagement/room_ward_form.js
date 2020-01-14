@@ -1,15 +1,18 @@
 var rw_type_list=['Room','Ward'];
 var room_status_list=['Available', 'Not Available']
-var ward_datatable;
+
 var ward_dict;
 var ward_id_selected=0;
 var ward_list=[]
-var room_datatable;
 var room_dict;
 var room_id_selected=0;
 var room_list=[]
 var room_data_info_table;
 var ward_data_info_table;
+
+var ward_datatable;
+var room_datatable;
+
 
 $( document ).ready(function() {
   
@@ -70,10 +73,10 @@ function addRoomWardForm(){
             var main_col_div2=$("<div class='col-md-6' id='main_col_div2'></div>");
         
                 var room_table_div=$('<div id="room_table_info_div">');
-                    var room_table=$("<table id='room_table_info'  class='display' width='100%'></table>")
+                    var room_table=$("<table id='room_table_info'  class='datatable_roomward' width='100%'></table>")
                 room_table_div.append(room_table);
                 var ward_table_div=$('<div id="ward_table_info_div">');
-                    var ward_table=$("<table id='ward_table_info'  class='display' width='100%'></table>")
+                    var ward_table=$("<table id='ward_table_info'  class='datatable_roomward' width='100%'></table>")
                 ward_table_div.append(ward_table);
             main_col_div2.append(room_table_div);
             main_col_div2.append(ward_table_div);    
@@ -602,7 +605,7 @@ function availableRoomWardRowDivTwo(){
             var col_one__row_div_two=$("<div class='col-md-12'></div>");
                 var row__col_one__row_div_two=$("<div class='row'></div>");
                     var colmd1=$("<div class='col-md-12'></div>")
-                        var available_room_ward_table=$('<table id="available_room_ward_table" class="display" width="100%"></table>')
+                        var available_room_ward_table=$('<table id="available_room_ward_table" class="datatable_roomward" width="100%"></table>')
 
                     colmd1.append(available_room_ward_table)
                 row__col_one__row_div_two.append(colmd1);
@@ -698,6 +701,44 @@ function createRoomDTable(){
                 ordering: true,
                 info:false,
                 searching:false,
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'print',
+                        text: 'Print',
+                        title: 'Rooms Available',
+                        className: 'btn btn-default fa fa-print',
+
+                    },
+                     {
+                        extend: 'excel',
+                        text: 'Export Data in Excel',
+                        title: 'Rooms Available',
+                        className: 'btn btn-default  fas fa-file-excel',
+
+                    },
+                     {
+                        extend: 'csv',
+                        text: 'Export Data in CSV',
+                        title: 'Rooms Available',
+                        className: 'btn btn-default fa fa-file',
+
+                    },
+                    {
+                        extend: 'pdf',
+                        text: 'Export Data in PDF',
+                        title:'Rooms Available',
+                        className: 'btn btn-default fas fa-file-pdf',
+
+                    },
+                    {
+                        extend: 'copy',
+                        text: 'Copy to Clipboard',
+                        title: 'Rooms Available',
+                        className: 'btn btn-default fas fa-copy',
+
+                    },
+                ],
 
             });
             $('#available_room_ward_table tbody').on( 'click', 'tr', function () {
@@ -856,6 +897,44 @@ function createWardDTable(){
                 scrollX: true,
                 ordering: true,
                 info:false,
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'print',
+                        text: 'Print',
+                        title: 'Available Beds in Wards',
+                        className: 'btn btn-default fa fa-print',
+
+                    },
+                     {
+                        extend: 'excel',
+                        text: 'Export Data in Excel',
+                        title: 'Available Beds in Wards',
+                        className: 'btn btn-default  fas fa-file-excel',
+
+                    },
+                     {
+                        extend: 'csv',
+                        text: 'Export Data in CSV',
+                        title:'Available Beds in Wards',
+                        className: 'btn btn-default fa fa-file',
+
+                    },
+                    {
+                        extend: 'pdf',
+                        text: 'Export Data in PDF',
+                        title: 'Available Beds in Wards',
+                        className: 'btn btn-default fas fa-file-pdf',
+
+                    },
+                    {
+                        extend: 'copy',
+                        text: 'Copy to Clipboard',
+                        title: 'Available Beds in Wards',
+                        className: 'btn btn-default fas fa-copy',
+
+                    },
+                ],
     
             });
             $('#available_room_ward_table tbody').on( 'click', 'tr', function () {
@@ -1151,7 +1230,13 @@ function createRoomTableInfo(room_info_list){
                     text: ' Print',
                     title: 'Rooms List',
                     className: 'btn btn-default fa fa-print',
-                    }
+                    },
+                    {
+                        extend: 'excel',
+                        text: 'Export to Excel',
+                        title: 'Rooms List',
+                        className: 'btn btn-default fa fa-print',
+                    },
                 ],
 
             });
@@ -1188,7 +1273,13 @@ function createWardTableInfo(ward_info_list){
                     text: ' Print',
                     title: 'Wards List',
                     className: 'btn btn-default fa fa-print',
-                    }
+                    },
+                    {
+                        extend: 'excel',
+                        text: ' Export to Excel',
+                        title: 'Wards List',
+                        className: 'btn btn-default fa fa-print',
+                        }
                 ],
     
             });
@@ -1220,7 +1311,7 @@ function ViewRoomList(){
             $(container_room_viewlist).append(main_row_div);
             var main_col_div=$("<div class='col-md-12' id='main_col_div'></div>");
                 var room_table_div=$('<div id="room_table_info_div">');
-                    var room_table=$("<table id='room_table_info'  class='display' width='100%'></table>")
+                    var room_table=$("<table id='room_table_info'  class='datatable_roomward' width='100%'></table>")
                 room_table_div.append(room_table);
             main_col_div.append(room_table_div);
             $(main_row_div).append(main_col_div);
@@ -1262,7 +1353,7 @@ function ViewWardList(){
             $(container_ward_viewlist).append(main_row_div);
             var main_col_div=$("<div class='col-md-12' id='main_col_div'></div>");
                 var ward_table_div=$('<div id="ward_table_info_div">');
-                    var ward_table=$("<table id='ward_table_info'  class='display' width='100%'></table>")
+                    var ward_table=$("<table id='ward_table_info'  class='datatable_roomward' width='100%'></table>")
                 ward_table_div.append(ward_table);
             main_col_div.append(ward_table_div);
             $(main_row_div).append(main_col_div);

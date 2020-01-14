@@ -724,6 +724,69 @@ def retrieveMedicineTempStockFromTempStock(request):
         }
         return JsonResponse(data)
 
+def retrieveAllMedStockInfo(request):
+    allMedStockInfoList=[]
+    if request.method=="GET":
+       
+        mwhs_objs=medicineWarehouseStock.objects.filter(status="In Use")
+        print("mwhs_objs",mwhs_objs)
+        for mwhs_obj in mwhs_objs:
+            medbatch_obj=medicineBatches.objects.get(medicine_strg=mwhs_obj)
+            if medbatch_obj.status=="Active":
+                templist=[]
+                medbatchno=medbatch_obj.batch_no
+                medname=mwhs_obj.medicine.medicine_name
+                boxes_stored=mwhs_obj.box_stored
+                strips_stored=mwhs_obj.strip_stored
+                pieces_stored=mwhs_obj.piece_stored
+
+                templist.append(medname)
+                templist.append(medbatchno)
+                templist.append(boxes_stored)
+                templist.append(strips_stored)
+                templist.append(pieces_stored)
+                allMedStockInfoList.append(templist)
+                
+        data={
+           "allMedStockInfoList":allMedStockInfoList,
+        }
+        return JsonResponse(data)
+        
+
+
+def retrieveAllMedDespInfo(request):
+    allMedDespInfoList=[]
+    if request.method=="GET":
+        
+        despMedObjs=despensoryStock.objects.filter(status="In Use")
+        
+        for despMedObj in despMedObjs:
+        
+            
+            medbatch_obj=medicineBatches.objects.get(medicine_strg=despMedObj.medicine_strg)
+            if medbatch_obj.status=="Active":
+                templist=[]
+                medbatchno=medbatch_obj.batch_no
+                medname=mwhs_obj.medicine.medicine_name
+                boxes_stored=despMedObj.box_stored
+                strips_stored=despMedObj.strip_stored
+                pieces_stored=despMedObj.piece_stored
+
+                templist.append(medname)
+                templist.append(medbatchno)
+                templist.append(boxes_stored)
+                templist.append(strips_stored)
+                templist.append(pieces_stored)
+                allMedDespInfoList.append(templist)
+                
+        data={
+           "allMedDespInfoList":allMedDespInfoList,
+        }
+        return JsonResponse(data)
+    
+
+
+
 def savePatientData(request):
     if request.method=="POST":
         name = request.POST.get('name')

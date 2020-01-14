@@ -87,3 +87,19 @@ calc_res_info_form
     font-size: 38px !important;
     text-decoration: underline;
   }
+  .datatablecss_med{
+  }
+  .datatablecss_med td, .datatablecss_med th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  .datatablecss_med tr:nth-child(even){background-color: #f2f2f2;}
+
+  .datatablecss_med  tr:hover {background-color: #ddd;}
+  .datatablecss_med th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+  }

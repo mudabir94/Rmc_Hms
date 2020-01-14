@@ -1,0 +1,18 @@
+.datatable_procsurg{
+
+}
+
+.datatable_procsurg td, .datatable_procsurg th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+.datatable_procsurg tr:nth-child(even){background-color: #f2f2f2;}
+
+.datatable_procsurg  tr:hover {background-color: rgba(119, 5, 5, 0.342);}
+.datatable_procsurg th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: rgb(119, 5, 5);
+  color: white;
+}

@@ -1,5 +1,6 @@
 
 
+var patient_prescription_div;
 
 // var presData={'id': '2', 'name': 'Ali', 'token': '3', 'age': '33', 'gender': 'Male',
 //  'discount': '100', 'discount_percent': '50', 'discount_reason': 'poor', 'doctor': 'd1', 
@@ -37,7 +38,6 @@ $(document).ready(function() {
     });
 
 });
-var patient_prescription_div;
 function loadPresForm(){
     patient_prescription_div=$("#patient_prescription_div").append('<div class="container-fluid" id="container-print-patient-prescription"></div>');
     var main_row_div= $("<div class='row is-flex'></div>");

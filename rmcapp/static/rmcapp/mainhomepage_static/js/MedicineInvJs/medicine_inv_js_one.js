@@ -209,7 +209,7 @@ function addMedicineForm(){
                 col_one__row_div_four.append(save_btn_label);
             row_div_four.append(col_one__row_div_four)
 
-            var table=$('<table id="med_table"  class="display"></table>')
+            var table=$('<table id="med_table"  class="datatablecss_med" ></table>')
         $(main_col2_div).append(table)
 
     $(main_col_div).append(row_div_one)
@@ -416,11 +416,11 @@ function addMedicineToWhStockFrom(){
       $("#main_col_div1").append();
 
     //   var row_two__col_one__row_div_one=$("<div class='row datatablePadding'></div>");
-        var table=$('<table id="med_table" class="display" style="width: 100%;"></table>')
+        var table=$('<table id="med_table" class="datatablecss_med"  style="width: 100%;"></table>')
     //   row_two__col_one__row_div_one.append(table)
       $(main_col_div1).append(table)
 
-      var table=$('<table id="med_in_stock" class="display" style="width: 100%;" ></table>')
+      var table=$('<table id="med_in_stock" class="datatablecss_med"  style="width: 100%;" ></table>')
       $(main_col_div1).append(table)
       console.log("medicine_name_list",medicine_name_list)
       createMedTStckT();
@@ -2043,7 +2043,7 @@ function addMedicineToDespStockForm(){
                                         row1__col_one__row_div_three.append(label);
                     
                                         var row2__col_one__row_div_three=$("<div class='row'></div>");
-                                                table=$('<table id="med_in_temp_stock" class="display"></table>')
+                                                table=$('<table id="med_in_temp_stock" class="datatablecss_med" ></table>')
                                         row2__col_one__row_div_three.append(table);
                     
                                     col_one__row_div_three.append(row1__col_one__row_div_three);         
@@ -2099,7 +2099,7 @@ function addMedicineToDespStockForm(){
             //         row1__col_one__row_div_three.append(label);
 
             //         var row2__col_one__row_div_three=$("<div class='row'></div>");
-            //                 table=$('<table id="med_in_temp_stock" class="display"></table>')
+            //                 table=$('<table id="med_in_temp_stock" class="datatablecss_med" ></table>')
             //         row2__col_one__row_div_three.append(table);
 
             //     col_one__row_div_three.append(row1__col_one__row_div_three);         
@@ -2225,7 +2225,7 @@ function despMedFormMainColTwo(main_col_div_2){
     var row_div_one=$("<div class='row despstorage_second_col_div_three_rows' id='med_in_stock_table_row'></div>");
         var col_one__row_div_one=$("<div class='col '></div>");
             var row__col_one__row_div_one=$("<div class='row'></div>");
-                var table=$('<table id="med_in_stock" class="display" width="100%"></table>')
+                var table=$('<table id="med_in_stock" class="datatablecss_med"  width="100%"></table>')
                 
             row__col_one__row_div_one.append(table)
         col_one__row_div_one.append(row__col_one__row_div_one);         

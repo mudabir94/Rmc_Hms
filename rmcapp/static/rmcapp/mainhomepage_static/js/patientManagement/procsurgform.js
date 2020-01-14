@@ -1,15 +1,14 @@
 var ps_type_list=['Minor Procedures','Surgeries'];
-var surg_datatable;
 var surg_dict;
 var surg_id_selected=0;
 var surg_list=[]
-var proc_datatable;
 var proc_dict;
 var proc_id_selected=0;
 var proc_list=[]
 var surg_data_info_table;
 var proc_data_info_table
-
+var proc_datatable;
+var surg_datatable;
 $( document ).ready(function() {
    
 });
@@ -65,10 +64,10 @@ function addProcSurgForm(){
             var main_col_div2=$("<div class='col-md-6' id='main_col_div2'></div>");
                 
                 var surg_table_div=$('<div id="surg_table_info_div">');
-                    var surg_table=$("<table id='surg_table_info'  class='display' width='100%'></table>")
+                    var surg_table=$("<table id='surg_table_info'  class='datatable_procsurg' width='100%'></table>")
                 surg_table_div.append(surg_table);
                 var proc_table_div=$('<div id="proc_table_info_div">');
-                    var proc_table=$("<table id='proc_table_info'  class='display' width='100%'></table>")
+                    var proc_table=$("<table id='proc_table_info'  class='datatable_procsurg' width='100%'></table>")
                 proc_table_div.append(proc_table);
             main_col_div2.append(surg_table_div);
             main_col_div2.append(proc_table_div);    
@@ -395,7 +394,7 @@ function availablePSRowDivTwo(){
             var col_one__row_div_two=$("<div class='col-md-12'></div>");
                 var row__col_one__row_div_two=$("<div class='row'></div>");
                     var colmd1=$("<div class='col-md-12'></div>")
-                        var available_proc_surg_table=$('<table id="available_proc_surg_table" class="display" width="100%"></table>')
+                        var available_proc_surg_table=$('<table id="available_proc_surg_table" class="datatable_procsurg" width="100%"></table>')
 
                     colmd1.append(available_proc_surg_table)
                 row__col_one__row_div_two.append(colmd1);
@@ -465,7 +464,6 @@ function retrieveAllProcInfo(){
     }); 
 }
 function createProcDataTable(){
-    console.log("proc_list----------",proc_list)
     $(function(){
         proc_datatable=$("#available_proc_surg_table").DataTable({
             data:proc_list,
@@ -480,6 +478,44 @@ function createProcDataTable(){
                 ordering: true,
                 info:false,
                 searching:false,
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'print',
+                        text: 'Print',
+                        title: 'Procedures',
+                        className: 'btn btn-default fa fa-print',
+
+                    },
+                     {
+                        extend: 'excel',
+                        text: 'Export Data in Excel',
+                        title: 'Procedures',
+                        className: 'btn btn-default  fas fa-file-excel',
+
+                    },
+                     {
+                        extend: 'csv',
+                        text: 'Export Data in CSV',
+                        title: 'Procedures',
+                        className: 'btn btn-default fa fa-file',
+
+                    },
+                    {
+                        extend: 'pdf',
+                        text: 'Export Data in PDF',
+                        title: 'Procedures',
+                        className: 'btn btn-default fas fa-file-pdf',
+
+                    },
+                    {
+                        extend: 'copy',
+                        text: 'Copy to Clipboard',
+                        title: 'Procedures',
+                        className: 'btn btn-default fas fa-copy',
+
+                    },
+                ],
             });
             $('#available_proc_surg_table tbody').on( 'click', 'tr', function () {
                 if ( $(this).hasClass('selected') ) {
@@ -574,6 +610,44 @@ function createSurgDataTable(){
                 ordering: true,
                 info:false,
                 searching:false,
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'print',
+                        text: 'Print',
+                        title: 'Surgeries',
+                        className: 'btn btn-default fa fa-print',
+
+                    },
+                     {
+                        extend: 'excel',
+                        text: 'Export Data in Excel',
+                        title: 'Surgeries',
+                        className: 'btn btn-default  fas fa-file-excel',
+
+                    },
+                     {
+                        extend: 'csv',
+                        text: 'Export Data in CSV',
+                        title: 'Surgeries',
+                        className: 'btn btn-default fa fa-file',
+
+                    },
+                    {
+                        extend: 'pdf',
+                        text: 'Export Data in PDF',
+                        title: 'Surgeries',
+                        className: 'btn btn-default fas fa-file-pdf',
+
+                    },
+                    {
+                        extend: 'copy',
+                        text: 'Copy to Clipboard',
+                        title: 'Surgeries',
+                        className: 'btn btn-default fas fa-copy',
+
+                    },
+                ],
             });
             $('#available_proc_surg_table tbody').on( 'click', 'tr', function () {
                 if ( $(this).hasClass('selected') ) {
@@ -744,11 +818,40 @@ function createSurgTableInfo(surgery_list){
                 dom: 'Bfrtip',
                 buttons: [
                     {
-                    extend: 'print',
-                    text: ' Print',
-                    title: 'Surgery List',
-                    className: 'btn btn-default fa fa-print',
-                    }
+                        extend: 'print',
+                        text: 'Print',
+                        title: 'Surgies List',
+                        className: 'btn btn-default fa fa-print',
+
+                    },
+                     {
+                        extend: 'excel',
+                        text: 'Export Data in Excel',
+                        title: 'Surgies List',
+                        className: 'btn btn-default  fas fa-file-excel',
+
+                    },
+                     {
+                        extend: 'csv',
+                        text: 'Export Data in CSV',
+                        title:'Surgies List',
+                        className: 'btn btn-default fa fa-file',
+
+                    },
+                    {
+                        extend: 'pdf',
+                        text: 'Export Data in PDF',
+                        title: 'Surgies List',
+                        className: 'btn btn-default fas fa-file-pdf',
+
+                    },
+                    {
+                        extend: 'copy',
+                        text: 'Copy to Clipboard',
+                        title: 'Surgies List',
+                        className: 'btn btn-default fas fa-copy',
+
+                    },
                 ],
 
             });
@@ -780,11 +883,40 @@ function createProcTableInfo(proc_list){
                 dom: 'Bfrtip',
                 buttons: [
                     {
-                    extend: 'print',
-                    text: ' Print',
-                    title: 'Procedure list List',
-                    className: 'btn btn-default fa fa-print',
-                    }
+                        extend: 'print',
+                        text: 'Print',
+                        title: 'Procedure List',
+                        className: 'btn btn-default fa fa-print',
+
+                    },
+                     {
+                        extend: 'excel',
+                        text: 'Export Data in Excel',
+                        title: 'Procedure List',
+                        className: 'btn btn-default  fas fa-file-excel',
+
+                    },
+                     {
+                        extend: 'csv',
+                        text: 'Export Data in CSV',
+                        title: 'Procedure List',
+                        className: 'btn btn-default fa fa-file',
+
+                    },
+                    {
+                        extend: 'pdf',
+                        text: 'Export Data in PDF',
+                        title: 'Procedure List',
+                        className: 'btn btn-default fas fa-file-pdf',
+
+                    },
+                    {
+                        extend: 'copy',
+                        text: 'Copy to Clipboard',
+                        title: 'Procedure List',
+                        className: 'btn btn-default fas fa-copy',
+
+                    },
                 ],
 
             });
@@ -816,7 +948,7 @@ function ViewSurgList(){
             $(container_surg_viewlist).append(main_row_div);
             var main_col_div=$("<div class='col-md-12' id='main_col_div'></div>");
                 var surg_table_div=$('<div id="surg_table_info_div">');
-                    var surg_table=$("<table id='surg_table_info'  class='display' width='100%'></table>")
+                    var surg_table=$("<table id='surg_table_info'  class='datatable_procsurg' width='100%'></table>")
                 surg_table_div.append(surg_table);
             main_col_div.append(surg_table_div);
             $(main_row_div).append(main_col_div);
@@ -844,7 +976,7 @@ function ViewProcList(){
             $(container_proc_viewlist).append(main_row_div);
             var main_col_div=$("<div class='col-md-12' id='main_col_div'></div>");
                 var proc_table_div=$('<div id="proc_table_info_div">');
-                    var proc_table=$("<table id='proc_table_info'  class='display' width='100%'></table>")
+                    var proc_table=$("<table id='proc_table_info'  class='datatable_procsurg' width='100%'></table>")
                 proc_table_div.append(proc_table);
             main_col_div.append(proc_table_div);
             $(main_row_div).append(main_col_div);

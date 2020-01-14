@@ -1,14 +1,13 @@
 // Functions for populating html to employee page content.
 var blood_group_list=['A+ve','A-ve', 'B+ve','B-ve','O+ve','O-ve','AB+ve','AB-ve'];
 var patient_info_dict={}
-var pat_datatable;
-var allPat_datatable;
+
 var patient_id_selected=0;
 var date_selected=''
 var patient_dict={};
 var datelist=[]
 var pat_med_history_dict={}
-var prescription_datatable;
+
 var datatable_list=[]
 var allPatient_list=[]
 var pat_type_list=['Outdoor','Emergency','Indoor'];
@@ -16,13 +15,11 @@ var ward_type_list=['Room','Ward'];
 var datatable_desp_med_list=[];
 var datatable_patient_billlist=[];
 var despid='';
-var bill_datatable;
-var despmed_datatable;
-var ward_datatable;
+
 var ward_dict;
 var ward_id_selected=0;
-var ward_list=[]
-var room_datatable;
+var ward_list=[];
+
 var room_dict;
 var room_id_selected=0;
 var room_list=[]
@@ -32,6 +29,15 @@ var token_Number;
 var optionSelected;
 var procedure_data=[];
 var pbr_dict={}
+
+var prescription_datatable;
+var pat_datatable;
+var allPat_datatable;
+var room_datatable;
+var bill_datatable;
+var despmed_datatable;
+var ward_datatable;
+var view_pres_datatable;
 
 $(document).ready(function() {
     retrieveProcedureDetails();
@@ -448,7 +454,7 @@ function editPatientRowDivThreeCreation(){
         var col_one__row_div_three=$("<div class='col-md-12'></div>");
             var row__col_one__row_div_three=$("<div class='row'></div>");
                 var colmd1=$("<div class='col-md-12'></div>")
-                    var table=$('<table id="patient_table" class="display" width="100%"></table>')
+                    var table=$('<table id="patient_table" class="datatable_pat" width="100%"></table>')
                 colmd1.append(table)
             row__col_one__row_div_three.append(colmd1);
         col_one__row_div_three.append(row__col_one__row_div_three);
@@ -498,10 +504,40 @@ function createPatientDataTable(){
                 dom: 'Bfrtip',
                 buttons: [
                     {
-                    extend: 'print',
-                    text: 'Print',
-                    title: 'Patient Data',
-                    }
+                        extend: 'print',
+                        text: 'Print',
+                        title: 'Patient Data',
+                        className: 'btn btn-default fa fa-print',
+
+                    },
+                     {
+                        extend: 'excel',
+                        text: 'Export Data in Excel',
+                        title: 'Patient Data',
+                        className: 'btn btn-default  fas fa-file-excel',
+
+                    },
+                     {
+                        extend: 'csv',
+                        text: 'Export Data in CSV',
+                        title: 'Patient Data',
+                        className: 'btn btn-default fa fa-file',
+
+                    },
+                    {
+                        extend: 'pdf',
+                        text: 'Export Data in PDF',
+                        title: 'Patient Data',
+                        className: 'btn btn-default fas fa-file-pdf',
+
+                    },
+                    {
+                        extend: 'copy',
+                        text: 'Copy to Clipboard',
+                        title: 'Patient Data',
+                        className: 'btn btn-default fas fa-copy',
+
+                    },
                 ],
     
             });
@@ -753,7 +789,7 @@ function viewAllPatients(){
                 var col_one__row_div_one=$("<div class='col-md-12'></div>");
                     var row__col_one__row_div_one=$("<div class='row'></div>");
                         var colmd1=$("<div class='col-md-12'></div>")
-                            var all_patient_table=$('<table id="all_patient_table" class="display" width="100%"></table>')
+                            var all_patient_table=$('<table id="all_patient_table" class="datatable_pat" width="100%"></table>')
                         colmd1.append(all_patient_table)
                     row__col_one__row_div_one.append(colmd1);
                 col_one__row_div_one.append(row__col_one__row_div_one);
@@ -824,11 +860,40 @@ function createAllPatientDataTable(){
                 dom: 'Bfrtip',
                 buttons: [
                     {
-                    extend: 'print',
-                    text: ' Print all Patients Details',
-                    title: 'All Patients Details',
-                    className: 'btn btn-default fa fa-print',
-                    }
+                        extend: 'print',
+                        text: 'Print',
+                        title: 'Patient Data',
+                        className: 'btn btn-default fa fa-print',
+
+                    },
+                     {
+                        extend: 'excel',
+                        text: 'Export Data in Excel',
+                        title: 'Patient Data',
+                        className: 'btn btn-default  fas fa-file-excel',
+
+                    },
+                     {
+                        extend: 'csv',
+                        text: 'Export Data in CSV',
+                        title: 'Patient Data',
+                        className: 'btn btn-default fa fa-file',
+
+                    },
+                    {
+                        extend: 'pdf',
+                        text: 'Export Data in PDF',
+                        title: 'Patient Data',
+                        className: 'btn btn-default fas fa-file-pdf',
+
+                    },
+                    {
+                        extend: 'copy',
+                        text: 'Copy to Clipboard',
+                        title: 'Patient Data',
+                        className: 'btn btn-default fas fa-copy',
+
+                    },
                 ],
     
             });
@@ -1194,7 +1259,7 @@ function viewPatientHistory(){
                     sub_row_div.append(subcol1);
                     var search_pat_datatable_row=$("<div class='row' id='search_pat_datatable_row'></div>");
                         var search_pat_datatable_div=$("<div id='search_pat_datatable_div'></div>");
-                            var search_datatable_table=$("<table id='search_pat_datatable_table'></table>");
+                            var search_datatable_table=$("<table id='search_pat_datatable_table' class='datatable_pat'></table>");
 
                         search_pat_datatable_div.append(search_datatable_table);
                     search_pat_datatable_row.append(search_pat_datatable_div);
@@ -1603,6 +1668,21 @@ function createPatientDataTableViewMedHist(){
             ordering: true,
             info:false,   
             searching:false, 
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                extend: 'print',
+                text: ' Print',
+                title: 'Patient List',
+                className: 'btn btn-default fa fa-print',
+                },
+                {
+                    extend: 'excel',
+                    text: ' Export to Excel',
+                    title: 'Patient List',
+                    className: 'btn btn-default fa fa-print',
+                    }
+            ],
     
             });
             $('#search_pat_datatable_table tbody').on( 'click', 'tr', function () {
@@ -1708,7 +1788,7 @@ function updatePatientHistory(){
                     sub_row_div.append(subcol1);
                     var search_pat_datatable_row=$("<div class='row' id='search_pat_datatable_row'></div>");
                         var search_pat_datatable_div=$("<div id='search_pat_datatable_div'></div>");
-                            var search_datatable_table=$("<table id='search_pat_datatable_table'></table>");
+                            var search_datatable_table=$("<table id='search_pat_datatable_table' class='datatable_pat'></table>");
 
                         search_pat_datatable_div.append(search_datatable_table);
                     search_pat_datatable_row.append(search_pat_datatable_div);
@@ -3011,6 +3091,44 @@ function createWardDataTable(){
                 ordering: true,
                 info:false,
                 searching:false,
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'print',
+                        text: 'Print',
+                        title: 'Ward Info',
+                        className: 'btn btn-default fa fa-print',
+
+                    },
+                     {
+                        extend: 'excel',
+                        text: 'Export Data in Excel',
+                        title:'Ward Info',
+                        className: 'btn btn-default  fas fa-file-excel',
+
+                    },
+                     {
+                        extend: 'csv',
+                        text: 'Export Data in CSV',
+                        title: 'Ward Info',
+                        className: 'btn btn-default fa fa-file',
+
+                    },
+                    {
+                        extend: 'pdf',
+                        text: 'Export Data in PDF',
+                        title: 'Ward Info',
+                        className: 'btn btn-default fas fa-file-pdf',
+
+                    },
+                    {
+                        extend: 'copy',
+                        text: 'Copy to Clipboard',
+                        title:'Ward Info',
+                        className: 'btn btn-default fas fa-copy',
+
+                    },
+                ],
     
             });
             $('#available_room_table tbody').on( 'click', 'tr', function () {
@@ -3255,7 +3373,7 @@ function availableRoomWardRowDivSixCreation(){
         var col_one__row_div_six=$("<div class='col-md-12'></div>");
             var row__col_one__row_div_six=$("<div class='row'></div>");
                 var colmd1=$("<div class='col-md-12'></div>")
-                    var available_room_table=$('<table id="available_room_table" class="display" width="100%"></table>')
+                    var available_room_table=$('<table id="available_room_table" class="datatable_pat" width="100%"></table>')
                 colmd1.append(available_room_table)
 
             row__col_one__row_div_six.append(colmd1);
@@ -3386,7 +3504,7 @@ function rowDivThreeInGenPres(){
         var col_one__row_div_three=$("<div class='col-md-12'></div>");
             var row__col_one__row_div_three=$("<div class='row'></div>");
                 var colmd1=$("<div class='col-md-12'></div>")
-                    var table=$('<table id="patient_table" class="display" width="100%"></table>')
+                    var table=$('<table id="patient_table" class="datatable_pat" width="100%"></table>')
                 colmd1.append(table)
             row__col_one__row_div_three.append(colmd1);
         col_one__row_div_three.append(row__col_one__row_div_three);
@@ -3488,7 +3606,45 @@ function createRoomDataTable(){
                 scrollY: 130,
                 scrollX: true,
                 ordering: true,
-                info:false,
+                info:true,
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'print',
+                        text: 'Print',
+                        title: 'Room Info',
+                        className: 'btn btn-default fa fa-print',
+
+                    },
+                     {
+                        extend: 'excel',
+                        text: 'Export Data in Excel',
+                        title: 'Room Info',
+                        className: 'btn btn-default  fas fa-file-excel',
+
+                    },
+                     {
+                        extend: 'csv',
+                        text: 'Export Data in CSV',
+                        title:'Room Info',
+                        className: 'btn btn-default fa fa-file',
+
+                    },
+                    {
+                        extend: 'pdf',
+                        text: 'Export Data in PDF',
+                        title: 'Room Info',
+                        className: 'btn btn-default fas fa-file-pdf',
+
+                    },
+                    {
+                        extend: 'copy',
+                        text: 'Copy to Clipboard',
+                        title:'Room Info',
+                        className: 'btn btn-default fas fa-copy',
+
+                    },
+                ],
 
             });
             $('#available_room_table tbody').on( 'click', 'tr', function () {
@@ -3995,6 +4151,44 @@ function createDespDataTable(){
                 scrollX: true,
                 ordering: true,
                 info:false,
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'print',
+                        text: 'Print',
+                        title: 'Despensory Data',
+                        className: 'btn btn-default fa fa-print',
+
+                    },
+                     {
+                        extend: 'excel',
+                        text: 'Export Data in Excel',
+                        title: 'Despensory Data',
+                        className: 'btn btn-default  fas fa-file-excel',
+
+                    },
+                     {
+                        extend: 'csv',
+                        text: 'Export Data in CSV',
+                        title: 'Despensory Data',
+                        className: 'btn btn-default fa fa-file',
+
+                    },
+                    {
+                        extend: 'pdf',
+                        text: 'Export Data in PDF',
+                        title: 'Despensory Data',
+                        className: 'btn btn-default fas fa-file-pdf',
+
+                    },
+                    {
+                        extend: 'copy',
+                        text: 'Copy to Clipboard',
+                        title: 'Despensory Data',
+                        className: 'btn btn-default fas fa-copy',
+
+                    },
+                ],
     
             });
             $('#desp-med-table tbody').on( 'click', 'tr', function () {
@@ -4036,6 +4230,44 @@ function billDataTable(){
                 ordering: true,
                 info:false,
                 searching:false,
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'print',
+                        text: 'Print',
+                        title: 'Patient Bill',
+                        className: 'btn btn-default fa fa-print',
+
+                    },
+                     {
+                        extend: 'excel',
+                        text: 'Export Data in Excel',
+                        title:'Patient Bill',
+                        className: 'btn btn-default  fas fa-file-excel',
+
+                    },
+                     {
+                        extend: 'csv',
+                        text: 'Export Data in CSV',
+                        title: 'Patient Bill',
+                        className: 'btn btn-default fa fa-file',
+
+                    },
+                    {
+                        extend: 'pdf',
+                        text: 'Export Data in PDF',
+                        title: 'Patient Bill',
+                        className: 'btn btn-default fas fa-file-pdf',
+
+                    },
+                    {
+                        extend: 'copy',
+                        text: 'Copy to Clipboard',
+                        title: 'Patient Bill',
+                        className: 'btn btn-default fas fa-copy',
+
+                    },
+                ],
                 
             });
             $('#bill_table tbody').on( 'click', 'tr', function () {
@@ -4111,7 +4343,7 @@ function createDespensoryMedTable(){
         var col_one__row_div_three=$("<div class='col-md-12'></div>");
             row__col_one__row_div_three=$("<div class='row'></div>");
                 colmd1=$("<div class='col-md-12'></div>")
-                var table=$('<table id="desp-med-table" class="display" width="100%"></table>')
+                var table=$('<table id="desp-med-table" class="datatable_pat" width="100%"></table>')
                 colmd1.append(table);
             row__col_one__row_div_three.append(colmd1);
         col_one__row_div_three.append(row__col_one__row_div_three);
@@ -4127,7 +4359,7 @@ function createRowDivFourBill(){
                     var row=$("<div class='row'></div>");
                         var col1=$("<div class='col-md-4' id='desp-med-qty-form'>");
                         var col2=$("<div class='col-md-8' id='medicine-addedto-form'>");
-                            table=$('<table id="bill_table" class="display" width="100%"></table>');
+                            table=$('<table id="bill_table" class="datatable_pat" width="100%"></table>');
                         col2.append(table)
                     row.append(col1);
                     row.append(col2);
@@ -5101,7 +5333,7 @@ function createPresMedDataTableRow(){
         var col_one__row_div_three=$("<div class='col-md-12'></div>");
             row__col_one__row_div_three=$("<div class='row'></div>");
                 colmd1=$("<div class='col-md-12'></div>")
-                    var table=$('<table id="pres-med-table" class="display" width="100%"></table>')
+                    var table=$('<table id="pres-med-table" class="datatable_pat" width="100%"></table>')
                 colmd1.append(table);
             row__col_one__row_div_three.append(colmd1);
         col_one__row_div_three.append(row__col_one__row_div_three);
@@ -5187,7 +5419,7 @@ function ViewPrescriptionList(){
 
     var row_div_one=$("<div class='row' style='padding-bottom: 10px;'></div>");
         var preslist_div=$("<div id='preslist_div' style='width:-webkit-fill-available;'></div>");
-            var preslist_table=$("<table id='preslist_table'  class='display' width='100%' ></table>");
+            var preslist_table=$("<table id='preslist_table'  class='datatable_pat' width='100%' ></table>");
         preslist_div.append(preslist_table);
         row_div_one.append(preslist_div);
     $(main_col_div).append(row_div_one);
@@ -5226,10 +5458,40 @@ function createDataTableViewPresList(prescription_list){
                 dom: 'Bfrtip',
                 buttons: [
                     {
-                    extend: 'print',
-                    text: 'Print',
-                    title: 'Prescription List',
-                    }
+                        extend: 'print',
+                        text: 'Print',
+                        title: 'Prescription List',
+                        className: 'btn btn-default fa fa-print',
+
+                    },
+                     {
+                        extend: 'excel',
+                        text: 'Export Data in Excel',
+                        title: 'Prescription List',
+                        className: 'btn btn-default  fas fa-file-excel',
+
+                    },
+                     {
+                        extend: 'csv',
+                        text: 'Export Data in CSV',
+                        title: 'Prescription List',
+                        className: 'btn btn-default fa fa-file',
+
+                    },
+                    {
+                        extend: 'pdf',
+                        text: 'Export Data in PDF',
+                        title: 'Prescription List',
+                        className: 'btn btn-default fas fa-file-pdf',
+
+                    },
+                    {
+                        extend: 'copy',
+                        text: 'Copy to Clipboard',
+                        title: 'Prescription List',
+                        className: 'btn btn-default fas fa-copy',
+
+                    },
                 ],
     
             });
