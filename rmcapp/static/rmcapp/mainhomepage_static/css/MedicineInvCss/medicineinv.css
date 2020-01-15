@@ -95,7 +95,7 @@ calc_res_info_form
   }
   .datatablecss_med tr:nth-child(even){background-color: #f2f2f2;}
 
-  .datatablecss_med  tr:hover {background-color: #ddd;}
+  .datatablecss_med  tr:hover {background-color: rgba(76, 175, 79, 0.349);}
   .datatablecss_med th {
     padding-top: 12px;
     padding-bottom: 12px;

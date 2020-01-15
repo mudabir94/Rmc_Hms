@@ -91,6 +91,7 @@
   /*----------------show sidebar button----------------*/
   #show-sidebar {
     position: fixed;
+    /* z-index: 111; */
     left: 0;
     top: 10px;
     border-radius: 0 4px 4px 0px;
