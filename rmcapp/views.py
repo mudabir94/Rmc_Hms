@@ -1501,7 +1501,7 @@ def retrievePatientInfoInPatientBill(request):
         patient_dict[pat_obj.id]=patient_info_dict
         print("patient_dict",patient_dict)
         patient_id=pat_obj.id
-        emptype_obj=employeeType.objects.get(type_name="Doctor")
+        emptype_obj=employeeType.objects.get(type_name="doctor")
         embobjs=Employee.objects.filter(employee_type=emptype_obj)
         empdict={}
         for obj in embobjs:
