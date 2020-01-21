@@ -247,7 +247,7 @@ function createMedDespDatatableView(allMedDespInfoList){
        
 
         $('#med_desp_vw_table').empty();
-       
+       console.log("allMedDespInfoList",allMedDespInfoList)
         $('#med_desp_vw_table').append('<caption style="color: black;font-weight: bold; ;caption-side: top;text-align: center;">Medicines in Despensory</caption>');
                 med_desp_vw_datatable=$("#med_desp_vw_table").DataTable({
                 data: allMedDespInfoList,

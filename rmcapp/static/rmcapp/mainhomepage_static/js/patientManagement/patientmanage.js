@@ -1,5 +1,5 @@
 // Functions for populating html to employee page content.
-var blood_group_list=['A+ve','A-ve', 'B+ve','B-ve','O+ve','O-ve','AB+ve','AB-ve'];
+var blood_group_list=["---",'A+ve','A-ve', 'B+ve','B-ve','O+ve','O-ve','AB+ve','AB-ve'];
 var patient_info_dict={}
 
 var patient_id_selected=0;
@@ -731,12 +731,26 @@ function savePatientData(){
 
     var contact_number=$("#contact_numb_input").val();
     $("#contact_numb_input").val("")
+    if (patient_name===""){
+        alert("Please Enter Patient Name")
+        return;
+    }
+    if ( contact_number===""){
+        alert("Please Enter Contact Number")
+        return;
+    }
+    
     var gender=$("#gender_select").val();
     $("#gender_select").val("")
     gender=gender.toLowerCase();
     console.log("gender", gender);
     var dob=$("#dob_input").val();
     $("#dob_input").val("");
+
+    if ( dob===""){
+        alert("Please Enter Date of Birth ")
+        return;
+    }
     var cnic=$("#cnic_input").val();
     $("#cnic_input").val("");
     var guardian=$("#guardian_input").val();
@@ -745,7 +759,10 @@ function savePatientData(){
     $("#guardian_input").val("");
     var blood_group=$("#blood_group_input").val();
     $("#blood_group_input").val("");
-    blood_group=blood_group.toLowerCase();
+    if (blood_group!=="---") {
+        blood_group=blood_group.toLowerCase();
+    }
+    
     var emial_id=$("#email_id_input").val();
     $("#email_id_input").val("");
     var address=$("#pat_address_input").val();
@@ -2415,17 +2432,22 @@ function retrieveWardInfoInRoomWard(){
 }
 function InDoorTotalAmountFocousOutGenPres(ele){
     value=ele.val();
+    $("#amountdue_input").val(value);
     $("#discountamount_input").val("0");
     $("#discountpercent_input").val("0");
 }
 function OutDoorTotalAmountFocousOutGenPres(ele){
     value=ele.val();
+    $("#amountdue_input").val(value);
+
     $("#discountamount_input").val("0");
     $("#discountpercent_input").val("0");
 }
 
 function EmergencyTotalAmountFocousOutGenPres(ele){
     value=ele.val();
+    $("#amountdue_input").val(value);
+
     $("#discountamount_input").val("0");
     $("#discountpercent_input").val("0");
 }
@@ -2739,7 +2761,7 @@ function createEmergencyPresFormDiv(){
 
 }
 function pat_type_OnSelect(element){
-
+    
      optionSelected = $(element).val()
    
     console.log("optionSelected",optionSelected)
@@ -2749,14 +2771,18 @@ function pat_type_OnSelect(element){
        
         if (room_datatable!==undefined){
             room_datatable.destroy();
-            $("#row_div_six").remove();
+            room_datatable =undefined;
+
+            $("#genpres_room_datatablediv").remove();
             $("#row_div_seven").remove();
 
         }
         else if (ward_datatable!==undefined){
 
             ward_datatable.destroy();
-            $("#row_div_six").remove();
+            ward_datatable =undefined;
+
+            $("#genpres_ward_datatablediv").remove();
             $("#row_div_seven").remove();
 
         }
@@ -2766,6 +2792,25 @@ function pat_type_OnSelect(element){
 }
     else if (optionSelected==='Emergency'){
         $('#row_div_five').remove();
+       
+        if (room_datatable!==undefined){
+            room_datatable.destroy();
+            room_datatable =undefined;
+
+            $("#genpres_room_datatablediv").remove();
+            $("#row_div_seven").remove();
+
+        }
+        else if (ward_datatable!==undefined){
+
+            ward_datatable.destroy();
+            ward_datatable =undefined;
+
+            $("#genpres_ward_datatablediv").remove();
+            $("#row_div_seven").remove();
+
+        }
+
         $('#tokenNumber_label').show();
         $('#tokenNumber_disp').show();
         createEmergencyPresFormDiv();
@@ -2818,12 +2863,16 @@ function pat_type_OnSelect(element){
         $('#row_div_five').remove();
         if (room_datatable!==undefined){
             room_datatable.destroy();
-            $("#row_div_six").remove();
+            room_datatable =undefined;
+
+            $("#genpres_room_datatablediv").remove();
             $("#row_div_seven").remove();
         }
         else if (ward_datatable!==undefined){
             ward_datatable.destroy();
-            $("#row_div_six").remove();
+            ward_datatable =undefined;
+
+            $("#genpres_ward_datatablediv").remove();
             $("#row_div_seven").remove();
         }
 
@@ -3076,7 +3125,7 @@ function printPrescriptionForm(){
 function createWardDataTable(){
     console.log("ward_list",ward_list)
     $(function(){
-        ward_datatable=$("#available_room_table").DataTable({
+        ward_datatable=$("#available_ward_table").DataTable({
             data:ward_list,
             columns: [
                 { title: "Id" },
@@ -3131,7 +3180,7 @@ function createWardDataTable(){
                 ],
     
             });
-            $('#available_room_table tbody').on( 'click', 'tr', function () {
+            $('#available_ward_table tbody').on( 'click', 'tr', function () {
                 if ( $(this).hasClass('selected') ) {
                     alert("clicked same entry")
                 }
@@ -3367,13 +3416,27 @@ function createWardDataTable(){
             });
         });
 }
-function availableRoomWardRowDivSixCreation(){
+function availableRoomRowDivSixCreation(){
     var main_col_div=$("#main_col_div");
-    var row_div_six=$("<div class='row' id='row_div_six'></div>");
+    var row_div_six=$("<div class='row' id='genpres_room_datatablediv'></div>");
         var col_one__row_div_six=$("<div class='col-md-12'></div>");
             var row__col_one__row_div_six=$("<div class='row'></div>");
                 var colmd1=$("<div class='col-md-12'></div>")
                     var available_room_table=$('<table id="available_room_table" class="datatable_pat" width="100%"></table>')
+                colmd1.append(available_room_table)
+
+            row__col_one__row_div_six.append(colmd1);
+        col_one__row_div_six.append(row__col_one__row_div_six);
+    $(row_div_six).append(col_one__row_div_six);
+    main_col_div.append(row_div_six)
+}
+function availableWardRowDivSixCreation(){
+    var main_col_div=$("#main_col_div");
+    var row_div_six=$("<div class='row' id='genpres_ward_datatablediv'></div>");
+        var col_one__row_div_six=$("<div class='col-md-12'></div>");
+            var row__col_one__row_div_six=$("<div class='row'></div>");
+                var colmd1=$("<div class='col-md-12'></div>")
+                    var available_room_table=$('<table id="available_ward_table" class="datatable_pat" width="100%"></table>')
                 colmd1.append(available_room_table)
 
             row__col_one__row_div_six.append(colmd1);
@@ -3389,74 +3452,115 @@ function onSelectWardRoom(element){
         alert(Room_WardSelected)
 
         $("#row_div_seven").remove();
+       
+        console.log("room_datatable",room_datatable)
+        console.log("ward_datatable",ward_datatable)
 
         if (room_datatable!==undefined){
-            
+            alert("room datatable not empty")
             room_datatable.destroy();
-            $("#row_div_six").remove();
+            room_datatable =undefined;
+            $("#available_room_table").empty();
+
+            $("#genpres_room_datatablediv").remove();
+
             
-            availableRoomWardRowDivSixCreation()
+            availableRoomRowDivSixCreation()
             retrieveRoomInfoInRoomWard()
 
         }
-        else if (ward_datatable!==undefined){
+         else if (ward_datatable!==undefined){
+            alert("ward room not empty")
+
 
             ward_datatable.destroy();
-            $("#row_div_six").remove();
+            ward_datatable =undefined;
 
-            availableRoomWardRowDivSixCreation()
+            $("#available_ward_table").empty();
+
+            $("#genpres_ward_datatablediv").remove();
+
+
+            availableRoomRowDivSixCreation()
             retrieveRoomInfoInRoomWard()
 
         }
         else{
-            availableRoomWardRowDivSixCreation()
+            alert("Creatoing new Room datatable")
+            availableRoomRowDivSixCreation()
             retrieveRoomInfoInRoomWard()
         }
         
     }
     else if (Room_WardSelected==='Ward'){
         $("#row_div_seven").remove();
+     
         alert(Room_WardSelected)
 
 
         if (room_datatable!==undefined){
-            room_datatable.destroy();
-            $("#row_div_six").remove();
+            alert("Room datatable not empty")
 
-            availableRoomWardRowDivSixCreation()
+
+            room_datatable.destroy();
+
+            room_datatable =undefined;
+
+            $("#available_room_table").remove();
+
+            $("#genpres_room_datatablediv").remove();
+
+
+            availableWardRowDivSixCreation()
             retrieveWardInfoInRoomWard()
+            return
 
         }
         else if (ward_datatable!==undefined){
+            alert(" ward datatable not empty")
+
 
             ward_datatable.destroy();
-            $("#row_div_six").remove();
+            ward_datatable =undefined;
 
-            availableRoomWardRowDivSixCreation()
+            $("#available_ward_table").empty();
+
+            $("#genpres_ward_datatablediv").remove();
+
+
+            availableWardRowDivSixCreation()
             retrieveWardInfoInRoomWard()
+            return
+
 
         }
-        else{
-            availableRoomWardRowDivSixCreation()
+       else{
+            alert("Creating new Ward Datatable")
+
+            availableWardRowDivSixCreation()
             retrieveWardInfoInRoomWard()
         }
 
     }
-    else{
-        $("#row_div_seven").remove();
-        if (room_datatable!==undefined){
-            room_datatable.destroy();
-            $("#row_div_six").remove();
+    // else{
+    //     $("#row_div_seven").remove();
+    //     if (room_datatable!==undefined){
+    //         room_datatable.destroy();
+    //         $("#available_room_table").empty();
+
+    //         $("#genpres_room_datatablediv").remove();
 
          
-        }
-        else if (ward_datatable!==undefined){
+    //     }
+    //     else if (ward_datatable!==undefined){
 
-            ward_datatable.destroy();
-            $("#row_div_six").remove();
-        }
+    //         ward_datatable.destroy();
+    //         $("#available_ward_table").empty();
 
-    }
+    //         $("#genpres_ward_datatablediv").remove();
+    //     }
+
+    // }
 
 }
 var empdict={}
@@ -3511,10 +3615,21 @@ function rowDivThreeInGenPres(){
     $(row_div_three).append(col_one__row_div_three);
     main_col_div.append(row_div_three)
 }
+
 function searchPatientInGenPres(){
+
     $("#row_div_four").remove();
     $("#row_div_three").remove();
     $('#row_div_five').remove();
+
+    $("#genpres_room_datatablediv").remove();
+    $("#genpres_ward_datatablediv").remove();
+
+    $("#row_div_seven").remove();
+    room_datatable =undefined;
+    ward_datatable =undefined;
+
+
 
     patient_dict={}
     datatable_list=[]
@@ -3669,7 +3784,7 @@ function createRoomDataTable(){
                                                 var colmd1=$("<div class='col-md-4'></div>")
                                                 var colmd2=$("<div class='col-md-2'></div>")
                                                     var roomNo_label=$("<label for='roomNo_label' class='custom_label_css'>Room Number</label>");
-                                                    var roomNo_input=$("<input id='roomNo_input' class='custom_input_css form-control' style='background: white;' value='"+room_id_selected+"' disabled>")
+                                                    var roomNo_input=$("<input id='roomNo_input' class='custom_input_css form-control' style='background: white;' value='"+room_dict[room_id_selected]['room_no']+"' disabled>")
 
                                                     colmd1.append(roomNo_label)
                                                 colmd2.append(roomNo_input)
@@ -3907,6 +4022,10 @@ function createPatientBill(){
     
 function searchPatientInCreateBill(){
     var pres_id=$("#search_patient_id").val()
+    if (pres_id===""){
+        alert("Please Insert Valid Pres id")
+        return
+    }
         retrievePatientInfoInCreateBill("","","",pres_id)    
 }
 var patientid=0
@@ -3923,6 +4042,10 @@ function retrievePatientInfoInCreateBill(pat_name,contact_no,cnic_no,id){
         },
         url: '/retrieve_patient_info_in_createbill',
         success: function(data){
+            if (data['pres_id']===""){
+                alert("Please Insert Valid Pres id")
+                return
+            }
             console.log("patient_dict",data["patient_dict"])
             patient_dict={};
             patient_dict=JSON.parse(data["patient_dict"])
@@ -4788,11 +4911,13 @@ function SaveAndPrintBill(){
         success: function(data){
        
           $("#row_div_two").remove();
-          $("#row_div_six").empty();
-          $("#row_div_six").remove();
+          $("#procdiv_despbill").remove();
+        //   $("#row_div_six").empty();
+        //   $("#row_div_six").remove();
+          $("#calculate_despbill_div").remove();      
           $("#row_div_three").remove();
           $("#row_div_four").remove();
-          $("#row_div_five").remove();
+          $("#totaldespbilldiv").remove();
           
           $("#search_patient_id").val("")
         }
@@ -4805,7 +4930,7 @@ function SaveAndPrintBill(){
 
 function createRowDivFiveBill(){ ///Last Discount and total Bill row with Button
     var main_col_div=$("#main_col_div");
-    var row_div_five=$("<div class='row' id='row_div_five' style='padding-top:15px;padding-bottom:15px'></div>");
+    var row_div_five=$("<div class='row' id='calculate_despbill_div' style='padding-top:15px;padding-bottom:15px'></div>");
         var col_one__row_div_five=$("<div class='col-md-12'></div>");
             var button=$("<button class='btn btn-block fa fa-calculator' onclick='calculateDespProcBill()'> Calculate Total Bill</button>")
         col_one__row_div_five.append(button);
@@ -4813,7 +4938,7 @@ function createRowDivFiveBill(){ ///Last Discount and total Bill row with Button
         col_one__row_div_five.append(row__col_one__row_div_five);
     row_div_five.append(col_one__row_div_five);
 
-    var row_div_six=$("<div class='row' id='row_div_six'></div>");
+    var row_div_six=$("<div class='row' id='totaldespbilldiv'></div>");
     var col_one__row_div_five=$("<div class='col-md-12'></div>");
         var row__col_one__row_div_five=$("<div class='row'></div>");
             var  colmd1=$("<div class='col-md-12'></div>");
@@ -4938,7 +5063,7 @@ main_col_div.append(row_div_six);
 }
 function createRowDivSixDespBill(){
     var main_col_div=$("#main_col_div");
-        var row_div_six=$("<div class='row' id='row_div_six' style='padding-top:18px'></div>");
+        var row_div_six=$("<div class='row' id='procdiv_despbill' style='padding-top:18px'></div>");
             var col_one__row_div_six=$("<div class='col-md-12'></div>");
                 var row__col_one__row_div_six=$("<div class='row'></div>");
                     var  colmd1=$("<div class='col-md-12'></div>");
@@ -5110,8 +5235,8 @@ function discountAmountFocousOut(element){
 } 
 
 function netTotalFocusIn(){
-    var totalamount_input=$("#totalamount_input").val();
-    var discountamount_input=$("#discountamount_input").val();
+    var totalamount_input=parseFloat($("#totalamount_input").val());
+    var discountamount_input=parseFloat($("#discountamount_input").val());
     console.log("discountamount_input",discountamount_input);
     if(discountamount_input!==""){
         var nettotal=totalamount_input-discountamount_input
@@ -5122,12 +5247,28 @@ function netTotalFocusIn(){
     $("#nettotal_input").val(nettotal);
 }
 function discountAmountFocousOutPres(element){
-    var discountamount_input=$("#discountamount_input").val();
+    var discountamount_input=parseFloat($("#discountamount_input").val());
+    var totalamount=parseFloat($("#totalamount_input").val())
+   
+
     if ($("#totalamount_input").val()==""){
         totalamount=0;
     }
+
+    if (discountamount_input>totalamount){
+        alert("Discount price can't be greater than Actual Price")
+        $("#discountamount_input").val("0")
+        $("#discountpercent_input").val("0");
+
+        $("#amountdue_input").val("0");
+        $("#amountdue_input").val(totalamount);
+        return
+    }
+    
     var discount_percentage=(discountamount_input/totalamount)*100;
     $("#discountpercent_input").val(discount_percentage);
+    
+    netTotalFocusInPres()
     
 
 }   
@@ -5136,7 +5277,9 @@ function netTotalFocusInPres(){
     var discountamount_input=$("#discountamount_input").val();
     console.log("discountamount_input",discountamount_input);
     if(discountamount_input!==""){
+
         var nettotal=totalamount_input-discountamount_input
+        
     }
     else{
         var nettotal=totalamount_input;
@@ -5185,6 +5328,10 @@ function updatePrescriptionRecord(){
 }
 function searchPatPresc(){
     presid=$("#presc_input_id").val()
+    if (presid===""){
+        alert("Please insert Valid Pres id")
+        return
+    }
     $.ajax({
         type: 'GET',
         dataType: "json",

@@ -278,7 +278,7 @@ function createMedicineQtyColumn(despid){
                 var sub_sub_row5=$("<div class='row'></div>");
                     var col1_sub_sub_row5=$("<div class='col-md-4'></div>");
                     var col2_sub_sub_row5=$("<div class='col-md-6'></div>");
-                        var button=$("<button class='btn btn-blocl fa fa-plus-circle' id='add_med_desp' onclick='addMedicineToMedRemoveDT()' style='width:inherit'></button>")
+                        var button=$("<button class='btn btn-blocl fa fa-plus-circle' id='add_med_desp' onclick='addMedicineToMedRemoveDT()' style='width:inherit'>Add</button>")
                     col2_sub_sub_row5.append(button);
     
                 sub_sub_row5.append(col1_sub_sub_row5);
@@ -457,6 +457,10 @@ var main_col_div=$("#main_col_div")
 $(main_col_div).append(row_div_three);
 }
 function removeMedFromDesp(){
+    if ( ! bill_datatable.data().any() ) {
+        alert( 'Please Add Medicine To Remove' );
+        return;
+    }
     dspstck_dict={}
     despmed_datatable.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
         var data = this.data();

@@ -61,6 +61,10 @@ function retrieveInvoiceBillRecordForView(){
     $("#total_amount_div").remove();
 
     var pres_id=$("#pres_id_input").val()
+    if (pres_id===""){
+        alert("Please Insert Valid Pres No")
+        return
+    }
     prescription_id=pres_id
     $.ajax({
         type: 'GET',
@@ -70,6 +74,14 @@ function retrieveInvoiceBillRecordForView(){
         },
         url: '/retrieve_invoice_bill_record_for_view',
         success: function(data){
+            if (data['pres_id']===""){
+                alert("Please Insert Valid Pres No")
+                return
+            }
+            if (data['status']==="Not Found"){
+                alert("Record Not Found")
+                return
+            }
             patRoomBillView_dict={};
             patWardBillView_dict={};
             surgBillRecordView_dict={};

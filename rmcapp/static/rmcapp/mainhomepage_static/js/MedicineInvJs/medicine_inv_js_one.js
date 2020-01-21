@@ -224,7 +224,7 @@ function addMedicineForm(){
 
 }
 function saveMedicineToDb(){
-    alert($("#med_name_input").val())
+    alert($("#med_name_input").val().toLowerCase())
    
     console.log("med_name_input",$("#med_name_input").val())
     if ($("#med_name_input").val()===""){
@@ -233,7 +233,7 @@ function saveMedicineToDb(){
         alert("Medicine name empty")
         return;
     }
-    var med_name= $("#med_name_input").val()
+    var med_name= $("#med_name_input").val().toLowerCase();
     var med_type= $("#med_type_sel").val()
     var med_lst= []
     med_lst.push(med_name)
@@ -244,7 +244,7 @@ function saveMedicineToDb(){
     for (lst in medicine_name_type_list){
         console.log("lst",medicine_name_type_list[lst])
         if(JSON.stringify(med_lst)==JSON.stringify(medicine_name_type_list[lst])) {
-            alert("found")
+            alert("Already Registered")
             same_med_found_flag=true
             break
         }
@@ -265,7 +265,7 @@ function saveMedicineToDb(){
                     med_table_datatable.destroy();
                     $("#med_table").remove();
         
-                    medicine_name=$("#med_name_input").val()
+                    medicine_name=$("#med_name_input").val().toLowerCase();
                     console.log("medicine_name",medicine_name)
                     $("#med_name_input").val("");
                     selected_type = $("#med_type_sel").children("option:selected").val();
@@ -317,6 +317,7 @@ function sendAjaxReqToSaveMedicineToDb(medicine_name,selected_type,med_details,a
     });
 }
 function medicineDataTableGenerator(list){
+    $('#med_table').empty();
     $(function(){
         $('#med_table').append('<caption style="color: black;font-weight: bold; ;caption-side: top;text-align: center;">Registered Medicines</caption>');
         med_table_datatable=$("#med_table").DataTable({

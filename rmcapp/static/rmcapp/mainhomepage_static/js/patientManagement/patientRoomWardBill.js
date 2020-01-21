@@ -46,8 +46,11 @@ function createRoomWardBill(){
 
 }
 function searchPatientInRoomWardBill(){
-    var pres_id=$("#search_pres_id").val()
-  
+    var pres_id=$("#search_pres_id").val();
+    if (pres_id===""){
+        alert("Please Insert Valid Pres id")
+        return
+    }
     retrieveRoomWardBill(pres_id)
     // $("#row_div_two").remove()
     // $("#row_div_three").remove()
@@ -63,6 +66,11 @@ function retrieveRoomWardBill(pres_id){
         },
         url: '/retrieve_room_ward_bill',
         success: function(data){
+            
+            if (data['pres_id']===""){
+                alert("Please Insert Valid Pres id")
+                return
+            }
             roomBill_dict={}
             wardBill_dict={}
             roomBill_dict=JSON.parse(data["roomBill_dict"])

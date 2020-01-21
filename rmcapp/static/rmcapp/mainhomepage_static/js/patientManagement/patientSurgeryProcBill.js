@@ -46,6 +46,10 @@ function surgeryProcFrom(){
 
 function searchPrescription(){
     var pres_id=$("#search_prescription_id").val()
+    if (pres_id===""){
+        alert("Please Insert Valid Pres id")
+        return
+    }
     retrievePresInfoSurgProcBill(pres_id)    
 }
 function retrievePresInfoSurgProcBill(id){
@@ -58,6 +62,10 @@ function retrievePresInfoSurgProcBill(id){
         },
         url: '/retrieve_pres_info_surg_proc_bill',
         success: function(data){
+            if (data['pres_id']===""){
+                alert("Please Insert Valid Pres Id")
+                return
+            }
             surgery_dict=JSON.parse(data["surgery_dict"])
             procedure_dict=JSON.parse(data["procedure_dict"])
             already_discount=data["already_discount"]
