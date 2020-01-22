@@ -11,7 +11,7 @@ function removeMedForInternalUse(){
     $('#main_page_content').empty()
     var container_med_dashboard= $('#main_page_content').append('<div class="container-fluid" id="container-med-dashboard"></div>');
 
-    $("#container-med-dashboard").append("<h2 class ='text-center'>Despensory Medicine Removal</h2>");
+    $("#container-med-dashboard").append("<h2 class='center_h_tag_forms' >Despensory Medicine Removal</h2>");
     $("#container-med-dashboard").append("<hr class='custom_hr'>");
     var main_row_div= $("<div class='row is-flex'></div>");
     $(container_med_dashboard).append(main_row_div);

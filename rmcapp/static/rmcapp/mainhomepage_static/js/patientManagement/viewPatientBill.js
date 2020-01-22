@@ -15,7 +15,7 @@ $(document).ready(function() {
 function viewPatientBill(){
     $('#main_page_content').empty()
     var container= $('#main_page_content').append('<div class="container-fluid" id="container_view_pat_bill"></div>');
-    $("#container_view_pat_bill").append("<h2 class ='text-center'>View Patient Bill</h2>");
+    $("#container_view_pat_bill").append("<h2 class ='center_h_tag_forms'>View Patient Bill</h2>");
     $("#container_view_pat_bill").append("<hr class='custom_hr'>");
 
     var main_row_div= $("<div class='row is-flex'></div>");

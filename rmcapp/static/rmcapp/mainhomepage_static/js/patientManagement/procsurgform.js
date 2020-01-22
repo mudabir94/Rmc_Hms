@@ -25,7 +25,7 @@ function addProcSurgForm(){
         success: function(data){   
             $('#main_page_content').empty()
             var container_procedure_surgery_dashboard= $('#main_page_content').append('<div class="container-fluid" id="container-procedure-surgery-dashboard"></div>');
-            $("#container-procedure-surgery-dashboard").append("<h2 class ='text-center'>Procedures & Surgeries</h2>");
+            $("#container-procedure-surgery-dashboard").append("<h2 class ='center_h_tag_forms'>Procedures & Surgeries</h2>");
             $("#container-procedure-surgery-dashboard").append("<hr class='custom_hr'>");
             var main_row_div= $("<div class='row is-flex'></div>");
         
@@ -278,7 +278,7 @@ function updateProcSurgForm(){
 
     $('#main_page_content').empty()
     var container_update_ps_dashboard= $('#main_page_content').append('<div class="container-fluid" id="container-update-ps-dashboard"></div>');
-    $("#container-update-ps-dashboard").append("<h2 class ='text-center'>Update Procedures/Surgeries</h2>");
+    $("#container-update-ps-dashboard").append("<h2 class ='center_h_tag_forms'>Update Procedures/Surgeries</h2>");
     $("#container-update-ps-dashboard").append("<hr class='custom_hr'>");
     var main_row_div= $("<div class='row is-flex'></div>");
 
@@ -809,7 +809,7 @@ function ViewSurgList(){
         success: function(data){            
             $('#main_page_content').empty()
             var container_surg_viewlist= $('#main_page_content').append('<div class="container-fluid" id="container_surg_viewlist"></div>');
-            $("#container_surg_viewlist").append("<h2 class ='text-center'>View Surgery list</h2>");
+            $("#container_surg_viewlist").append("<h2 class ='center_h_tag_forms'>View Surgery list</h2>");
             $("#container_surg_viewlist").append("<hr class='custom_hr'>");
             var main_row_div= $("<div class='row is-flex'></div>");
 
@@ -837,7 +837,7 @@ function ViewProcList(){
         success: function(data){            
             $('#main_page_content').empty()
             var container_proc_viewlist= $('#main_page_content').append('<div class="container-fluid" id="container_proc_viewlist"></div>');
-            $("#container_proc_viewlist").append("<h2 class ='text-center'>View Procedure list</h2>");
+            $("#container_proc_viewlist").append("<h2 class ='center_h_tag_forms'>View Procedure list</h2>");
             $("#container_proc_viewlist").append("<hr class='custom_hr'>");
             var main_row_div= $("<div class='row is-flex'></div>");
 

@@ -115,7 +115,7 @@ function addMedicineForm(){
     $('#main_page_content').empty();
     var main_page_content= $('#main_page_content').append('<div class="container-fluid" id="container-med-dashboard"></div>');
 
-    $("#container-med-dashboard").append("<h2>Add Medicine To Inventory</h2>");
+    $("#container-med-dashboard").append("<h2 class='center_h_tag_forms'>Add Medicine To Inventory</h2>");
     $("#container-med-dashboard").append("<hr>");
     var main_row_div= $("<div class='row is-flex backgroundcss_medToInv'></div>");
     $("#container-med-dashboard").append(main_row_div);
@@ -349,7 +349,7 @@ function addMedicineToWhStockFrom(){
 
     $('#main_page_content').empty();
     $('#main_page_content').append('<div class="container-fluid" id="container-med-dashboard"></div>');
-    $("#container-med-dashboard").append("<h2>Add Medicine To Storage</h2>");
+    $("#container-med-dashboard").append("<h2 class='center_h_tag_forms'>Add Medicine To Storage</h2>");
     $("#container-med-dashboard").append("<hr class='custom_hr'>");
     var main_row_div= $("<div class='row is-flex'></div>");
     $("#container-med-dashboard").append(main_row_div);
@@ -1919,7 +1919,7 @@ function addMedicineToDespStockForm(){
     
     $('#main_page_content').empty();
     var main_page_content= $('#main_page_content').append('<div class="container-fluid" id="container-med-dashboard"></div>');
-    $("#container-med-dashboard").append("<h2>Add Medicine To Despensory</h2>");
+    $("#container-med-dashboard").append("<h2 class='center_h_tag_forms'>Add Medicine To Despensory</h2>");
     $("#container-med-dashboard").append("<hr class='custom_hr'>");
     var main_row_div= $("<div class='row is-flex'></div>");
     $("#container-med-dashboard").append(main_row_div);

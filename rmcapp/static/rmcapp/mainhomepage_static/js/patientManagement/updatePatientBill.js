@@ -22,7 +22,7 @@ function updatePatientBill(){
     $('#main_col_div').empty()
 
     var container= $('#main_page_content').append('<div class="container-fluid" id="container_pat_surg_proc_bill"></div>');
-    $("#container_pat_surg_proc_bill").append("<h2 class ='text-center'>Update Patient Bill</h2>");
+    $("#container_pat_surg_proc_bill").append("<h2 class ='center_h_tag_forms'>Update Patient Bill</h2>");
     $("#container_pat_surg_proc_bill").append("<hr class='custom_hr'>");
 
     var main_row_div= $("<div class='row is-flex'></div>");

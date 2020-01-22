@@ -12,7 +12,7 @@ $(document).ready(function() {
 function createRoomWardBill(){
     $('#main_page_content').empty()
     var container_room_ward_bill_prescription= $('#main_page_content').append('<div class="container-fluid" id="container-room-ward-bill"></div>');
-    $("#container-room-ward-bill").append("<h1 class ='text-center'>Room/Ward Bill</h1>");
+    $("#container-room-ward-bill").append("<h1 class ='center_h_tag_forms'>Room/Ward Bill</h1>");
     $("#container-room-ward-bill").append("<hr class='custom_hr'>");
 
     var main_row_div= $("<div class='row is-flex'></div>");

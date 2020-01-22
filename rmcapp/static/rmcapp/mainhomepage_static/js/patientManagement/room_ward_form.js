@@ -25,7 +25,7 @@ function addRoomWardForm(){
         success: function(data){            
             $('#main_page_content').empty()
             var container_update_room_ward_dashboard= $('#main_page_content').append('<div class="container-fluid" id="container-update-room-ward-dashboard"></div>');
-            $("#container-update-room-ward-dashboard").append("<h2 class ='text-center'>Add Room/Ward Bed</h2>");
+            $("#container-update-room-ward-dashboard").append("<h2 class ='center_h_tag_forms'>Add Room/Ward Bed</h2>");
             $("#container-update-room-ward-dashboard").append("<hr class='custom_hr'>");
             var main_row_div= $("<div class='row is-flex'></div>");
         
@@ -556,7 +556,7 @@ function saveRoomWard(){
 function updateRoomWardForm(){
     $('#main_page_content').empty()
     var container_update_room_ward_dashboard= $('#main_page_content').append('<div class="container-fluid" id="container-update-room-ward-dashboard"></div>');
-    $("#container-update-room-ward-dashboard").append("<h2 class ='text-center'>Update Room/Ward Info</h2>");
+    $("#container-update-room-ward-dashboard").append("<h2 class ='center_h_tag_forms'>Update Room/Ward Info</h2>");
     $("#container-update-room-ward-dashboard").append("<hr class='custom_hr'>");
     var main_row_div= $("<div class='row is-flex'></div>");
 
@@ -1015,6 +1015,7 @@ function updateRoomData(){
             }
             console.log("After Update",room_dict);
             console.log(data['Success']);
+            alert("Updated")
         },
     });
 }
@@ -1212,7 +1213,7 @@ function ViewRoomList(){
         success: function(data){            
             $('#main_page_content').empty()
             var container_room_viewlist= $('#main_page_content').append('<div class="container-fluid" id="container_room_viewlist"></div>');
-            $("#container_room_viewlist").append("<h2 class ='text-center'>View Rooms</h2>");
+            $("#container_room_viewlist").append("<h2 class ='center_h_tag_forms'>View Rooms</h2>");
             $("#container_room_viewlist").append("<hr class='custom_hr'>");
             var main_row_div= $("<div class='row is-flex'></div>");
 
@@ -1253,7 +1254,7 @@ function ViewWardList(){
         success: function(data){       
             $('#main_page_content').empty()
             var container_ward_viewlist= $('#main_page_content').append('<div class="container-fluid" id="container_ward_viewlist"></div>');
-            $("#container_ward_viewlist").append("<h2 class ='text-center'>View Ward Beds</h2>");
+            $("#container_ward_viewlist").append("<h2 class ='center_h_tag_forms'>View Ward Beds</h2>");
             $("#container_ward_viewlist").append("<hr class='custom_hr'>");
             
             var main_row_div= $("<div class='row is-flex'></div>");

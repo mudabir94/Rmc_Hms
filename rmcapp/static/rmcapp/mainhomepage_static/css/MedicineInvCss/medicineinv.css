@@ -80,3 +80,10 @@ calc_res_info_form
 /* #container-med-dashboard{
     background: lightcyan;
 } */
+
+.center_h_tag_forms{
+    text-align:center;
+    font-family:Arial;
+    font-size: 38px !important;
+    text-decoration: underline;
+  }

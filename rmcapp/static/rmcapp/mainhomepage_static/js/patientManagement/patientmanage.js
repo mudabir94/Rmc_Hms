@@ -167,7 +167,7 @@ function addPatient(){
     $("#dialog-confirm").hide()
     $('#main_page_content').empty()
     var container_patient_dashboard= $('#main_page_content').append('<div class="container-fluid" id="container-patient-dashboard"></div>');
-    $("#container-patient-dashboard").append("<h2 class ='text-center'>Patient Information</h2>");
+    $("#container-patient-dashboard").append("<h2 class ='center_h_tag_forms'>Patient Information</h2>");
     $("#container-patient-dashboard").append("<hr class='custom_hr'>");
     $("#container-patient-dashboard").append("<h5>Please fill in the form below</h5>");
     var main_row_div= $("<div class='row is-flex'></div>");
@@ -380,7 +380,7 @@ function addPatient(){
 function EditPatient(){
     $('#main_page_content').empty()
     var container_patient_dashboard= $('#main_page_content').append('<div class="container-fluid" id="container-patient-dashboard"></div>');
-    $("#container-patient-dashboard").append("<h2 class ='text-center'>Edit Patient Information</h2>");
+    $("#container-patient-dashboard").append("<h2 class ='center_h_tag_forms'>Edit Patient Information</h2>");
     $("#container-patient-dashboard").append("<hr class='custom_hr'>");
     var main_row_div= $("<div class='row is-flex'></div>");
 
@@ -743,7 +743,7 @@ function savePatientData(){
 function viewAllPatients(){
     $('#main_page_content').empty()
     var container_view_all_pateints_dashboard= $('#main_page_content').append('<div class="container-fluid" id="container-view-all-patient-dashboard"></div>');
-    $("#container-view-all-patient-dashboard").append("<h2 class ='text-center'>Patients List</h2>");
+    $("#container-view-all-patient-dashboard").append("<h2 class ='center_h_tag_forms'>Patients List</h2>");
     $("#container-view-all-patient-dashboard").append("<hr class='custom_hr'>");
     var main_row_div= $("<div class='row is-flex'></div>");
 
@@ -1157,7 +1157,7 @@ function retrievePatientInfo(pat_name,contact_no,id){
 function viewPatientHistory(){
     $('#main_page_content').empty()
     var container_patient_dashboard= $('#main_page_content').append('<div class="container-fluid" id="container-patient-dashboard"></div>');
-    $("#container-patient-dashboard").append("<h2 class ='text-center'>Patient Medical History</h2>");
+    $("#container-patient-dashboard").append("<h2 class ='center_h_tag_forms'>Patient Medical History</h2>");
     $("#container-patient-dashboard").append("<hr class='custom_hr'>");
     var main_row_div= $("<div class='row is-flex'></div>");
     $(container_patient_dashboard).append(main_row_div);
@@ -1671,7 +1671,7 @@ function PrintPatVisitInfo(){
 function updatePatientHistory(){
     $('#main_page_content').empty()
     var container_patient_dashboard= $('#main_page_content').append('<div class="container-fluid" id="container-patient-dashboard"></div>');
-    $("#container-patient-dashboard").append("<h2 class ='text-center'>Update Patient Medical History</h2>");
+    $("#container-patient-dashboard").append("<h2 class ='center_h_tag_forms'>Update Patient Medical History</h2>");
     $("#container-patient-dashboard").append("<hr class='custom_hr'>");
     var main_row_div= $("<div class='row is-flex'></div>");
     $(container_patient_dashboard).append(main_row_div);
@@ -1795,7 +1795,9 @@ function createPatientDataTableUpdateMedHist(){
                     alert("clicked same entry")
                 }
                 else{
-                    
+                    pat_dt_mh.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+
                     $("#row_div_one").empty();
                     
                     patid=$(this).find('td').eq(0).text()
@@ -2173,8 +2175,9 @@ function UpdatePMedHist(){
         },
         url: '/update_pat_medical_hist',
         success: function(data){
-           
-
+          
+                alert("Updated")     
+          
         },
     }); 
 
@@ -3412,7 +3415,7 @@ function generatePrescription(){
     $('#dialog-confirm').hide()
     $('#main_page_content').empty()
     var generate_prescription_div=$("#main_page_content").append('<div class="container-fluid" id="container-generate-prescription"></div>');
-    $("#main_page_content").append("<h3 class ='text-center'>Generate Prescription</h3>");
+    $("#main_page_content").append("<h3 class ='center_h_tag_forms'>Generate Prescription</h3>");
     $("#main_page_content").append("<hr class='custom_hr'>");
     var main_row_div= $("<div class='row is-flex'></div>");
     $(generate_prescription_div).append(main_row_div);
@@ -3711,7 +3714,7 @@ function createRoomDataTable(){
 function createPatientBill(){
         $('#main_page_content').empty()
         var container_patient_prescription= $('#main_page_content').append('<div class="container-fluid" id="container-patient-bill"></div>');
-        $("#container-patient-bill").append("<h2 class ='text-center'>Pateint Bill</h2>");
+        $("#container-patient-bill").append("<h2 class ='center_h_tag_forms'>Pateint Bill</h2>");
         $("#container-patient-bill").append("<hr class='custom_hr'>");
     
         var main_row_div= $("<div class='row is-flex'></div>");
@@ -4912,7 +4915,7 @@ function netTotalFocusInPres(){
 function updatePrescriptionRecord(){
         $('#main_page_content').empty()
         var container_update_prescription= $('#main_page_content').append('<div class="container-fluid" id="container-update-prescription"></div>');
-        $("#container-update-prescription").append("<u><h2 class ='text-center'>Update Prescription Records</h2></u>");
+        $("#container-update-prescription").append("<u><h2 class ='center_h_tag_forms'>Update Prescription Records</h2></u>");
         $("#container-update-prescription").append("<hr class='custom_hr'>");
     
         var main_row_div= $("<div class='row is-flex'></div>");
@@ -5172,7 +5175,7 @@ function UpdatePrescription(){
 function ViewPrescriptionList(){
     $('#main_page_content').empty()
     var container_update_prescription= $('#main_page_content').append('<div class="container-fluid" id="container-update-prescription"></div>');
-    $("#container-update-prescription").append("<u><h2 class ='text-center'>Prescription List</h2></u>");
+    $("#container-update-prescription").append("<u><h2 class ='center_h_tag_forms'>Prescription List</h2></u>");
     $("#container-update-prescription").append("<hr class='custom_hr'>");
 
     var main_row_div= $("<div class='row is-flex'></div>");
