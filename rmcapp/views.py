@@ -20,7 +20,7 @@ from rmcapp.models import (
     despBillRecord,procedureBillRecord,procedureRecords,procedureTable,
     patientVisitSummary,surgeryTable,
     surgeryRecords,surgeryBillRecord,procedureBillSummary,surgeryBillSummary,
-    tempDespensoryStock,Role,Rooms,Ward,
+    tempDespensoryStock,Role,Rooms,Ward,tokenRecords,tokenGenerator
 )
 from django.http import HttpResponse, JsonResponse
 from .Controllers.MedControllers.MedController import MedicineController  
@@ -254,7 +254,8 @@ def WithStripCalculation(medicineWarehouseStock_obj,medicineobj,numofboxes,numof
                 despStrgHist_obj.piece_stored=despStrg_obj.piece_stored
                 
                 despStrgHist_obj.box_price_unit=medicineWarehouseStock_obj.box_price_unit
-                despStrgHist_obj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
+                # despStrgHist_obj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
+                despStrgHist_obj.piece_price_unit=medicineWarehouseStock_obj.sell_piece_price_unit
                 despStrgHist_obj.status="Updated"
                 despStrgHist_obj.save()
             else:
@@ -283,7 +284,9 @@ def WithStripCalculation(medicineWarehouseStock_obj,medicineobj,numofboxes,numof
 
                 tempDespStrgObj.box_price_unit=medicineWarehouseStock_obj.box_price_unit
                 tempDespStrgObj.strip_price_unit=medicineWarehouseStock_obj.strip_price_unit
-                tempDespStrgObj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
+                # tempDespStrgObj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
+                tempDespStrgObj.piece_price_unit=medicineWarehouseStock_obj.sell_piece_price_unit
+
                 print("printing line8")
 
                 tempDespStrgObj.save()
@@ -328,7 +331,8 @@ def WithStripCalculation(medicineWarehouseStock_obj,medicineobj,numofboxes,numof
 
             despStrg_obj.box_price_unit=medicineWarehouseStock_obj.box_price_unit
             despStrg_obj.strip_price_unit=medicineWarehouseStock_obj.strip_price_unit
-            despStrg_obj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
+            # despStrg_obj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
+            despStrg_obj.piece_price_unit=medicineWarehouseStock_obj.sell_piece_price_unit
             despStrg_obj.status="In Use"
             despStrg_obj.save()
 
@@ -344,7 +348,8 @@ def WithStripCalculation(medicineWarehouseStock_obj,medicineobj,numofboxes,numof
             # despStrgHist_obj.piece_stored=medicineWarehouseStock_obj.piece_stored-pieces_in_storage_left
             despStrgHist_obj.piece_stored=despStrg_obj.piece_stored
             despStrgHist_obj.box_price_unit=medicineWarehouseStock_obj.box_price_unit
-            despStrgHist_obj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
+            # despStrgHist_obj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
+            despStrgHist_obj.piece_price_unit=medicineWarehouseStock_obj.sell_piece_price_unit
             despStrgHist_obj.status="Added"
             despStrgHist_obj.save()
             ttmds_obj=tt_Medicine_DespensoryStock()
@@ -466,7 +471,9 @@ def NoStripCalculation(medicineWarehouseStock_obj,medicineobj,noofboxes,noofpiec
                 despStrgHist_obj.piece_stored=despStrg_obj.piece_stored
                 
                 despStrgHist_obj.box_price_unit=medicineWarehouseStock_obj.box_price_unit
-                despStrgHist_obj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
+                # despStrgHist_obj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
+                despStrgHist_obj.piece_price_unit=medicineWarehouseStock_obj.sell_piece_price_unit
+
                 despStrgHist_obj.status="Updated"
                 despStrgHist_obj.save()
             else:
@@ -494,7 +501,10 @@ def NoStripCalculation(medicineWarehouseStock_obj,medicineobj,noofboxes,noofpiec
 
                 tempDespStrgObj.box_price_unit=medicineWarehouseStock_obj.box_price_unit
                 tempDespStrgObj.strip_price_unit=medicineWarehouseStock_obj.strip_price_unit
-                tempDespStrgObj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
+                # tempDespStrgObj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
+                tempDespStrgObj.piece_price_unit=medicineWarehouseStock_obj.sell_piece_price_unit
+
+                
                 print("printing line8")
 
                 tempDespStrgObj.save()
@@ -513,7 +523,10 @@ def NoStripCalculation(medicineWarehouseStock_obj,medicineobj,noofboxes,noofpiec
             despStrg_obj.box_stored=boxes
             despStrg_obj.piece_stored=medicineWarehouseStock_obj.piece_stored-pieces_leftin_stock
             despStrg_obj.box_price_unit=medicineWarehouseStock_obj.box_price_unit
-            despStrg_obj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
+            # despStrg_obj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
+            despStrg_obj.piece_price_unit=medicineWarehouseStock_obj.sell_piece_price_unit
+
+
             despStrg_obj.status="In Use"
             despStrg_obj.save()
 
@@ -527,7 +540,7 @@ def NoStripCalculation(medicineWarehouseStock_obj,medicineobj,noofboxes,noofpiec
             despStrgHist_obj.box_stored=boxes
             despStrgHist_obj.piece_stored=medicineWarehouseStock_obj.piece_stored-pieces_leftin_stock
             despStrgHist_obj.box_price_unit=medicineWarehouseStock_obj.box_price_unit
-            despStrgHist_obj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
+            despStrgHist_obj.piece_price_unit=medicineWarehouseStock_obj.sell_piece_price_unit
             despStrgHist_obj.status="Added"
             despStrgHist_obj.save()
             ttmds_obj=tt_Medicine_DespensoryStock()
@@ -650,52 +663,63 @@ def retrieveMedicineStockDataFromStock(request):
     medstockdatafromstock_allval_dict={}
     medicine_batch_in_tempstock_list=[]
     if request.method=="POST":
+        medInStorage="true"
         medicine_name=request.POST.get("medicine_name")
         medicine_obj=Medicine.objects.get(medicine_name=medicine_name)
-        mwhs_objs=medicineWarehouseStock.objects.get(medicine=medicine_obj,status="In Use")
-        
-        boxes=mwhs_objs.box_stored
-        strips=mwhs_objs.strip_stored
-        strip_unit=mwhs_objs.strip_unit
-        print("Strips",strips)
-        if strip_unit==None :
-            strip_unit="-"
-        if strips==None :
-            strips=0
-        pieces=mwhs_objs.piece_stored
-        
-        medstockdatafromstock_allval_dict["boxes"]=boxes
-        medstockdatafromstock_allval_dict["strips"]=strips
-        medstockdatafromstock_allval_dict["pieces"]=pieces
-        # medstockdatafromstock_allval_dict["strip_unit"]=strip_unit
+        try:
+            mwhs_objs=medicineWarehouseStock.objects.get(medicine=medicine_obj,status="In Use")
+            
+            boxes=mwhs_objs.box_stored
+            strips=mwhs_objs.strip_stored
+            strip_unit=mwhs_objs.strip_unit
+            print("Strips",strips)
+            if strip_unit==None :
+                strip_unit="-"
+            if strips==None :
+                strips=0
+            pieces=mwhs_objs.piece_stored
+            
+            medstockdatafromstock_allval_dict["boxes"]=boxes
+            medstockdatafromstock_allval_dict["strips"]=strips
+            medstockdatafromstock_allval_dict["pieces"]=pieces
+            # medstockdatafromstock_allval_dict["strip_unit"]=strip_unit
 
-        medicine_obj=Medicine.objects.get(medicine_name=medicine_name)
-        tempmedwhstk_objs=tt_tempMedWhStk_Med.objects.filter(medicine=medicine_obj)
-        for tempmedwhstk_obj in tempmedwhstk_objs:
-            templist=[]
-            templist.append(medicine_name)
-            templist.append(tempmedwhstk_obj.batch_no)
-            templist.append(tempmedwhstk_obj.box_stored)
-            templist.append(tempmedwhstk_obj.strip_stored)
+            medicine_obj=Medicine.objects.get(medicine_name=medicine_name)
+            tempmedwhstk_objs=tt_tempMedWhStk_Med.objects.filter(medicine=medicine_obj)
+            for tempmedwhstk_obj in tempmedwhstk_objs:
+                templist=[]
+                templist.append(medicine_name)
+                templist.append(tempmedwhstk_obj.batch_no)
+                templist.append(tempmedwhstk_obj.box_stored)
+                templist.append(tempmedwhstk_obj.strip_stored)
 
-            templist.append(tempmedwhstk_obj.piece_stored)
-            medicine_batch_in_tempstock_list.append(templist)
-        print("medicine_batch_in_tempstock_list",medicine_batch_in_tempstock_list)
-
-
-        
-
-
-
-        data={
+                templist.append(tempmedwhstk_obj.piece_stored)
+                medicine_batch_in_tempstock_list.append(templist)
+            print("medicine_batch_in_tempstock_list",medicine_batch_in_tempstock_list)
+            data={
             "medstockdatafromstock_allval_dict":json.dumps(medstockdatafromstock_allval_dict),
             "medicine_batch_in_tempstock_list":medicine_batch_in_tempstock_list,
             "boxes":boxes,
             "strips":strips,
             "pieces":pieces,
             "strip_unit":strip_unit,
-        }
-        return JsonResponse(data)
+            "medInStorage":medInStorage,
+
+            }
+            return JsonResponse(data)
+        except:
+            medInStorage="false"
+            print("No Medicine Found")
+            data={
+                "medInStorage":medInStorage,
+                }            
+            return JsonResponse(data)
+
+        
+
+
+
+       
         # mwhs_objs=medicineWarehouseStock.objects.get.
         # for mwhs_obj in mwhs_objs:
         #     # print("mwhs_obj--",mwhs_obj.medicine.medicine_name)
@@ -739,19 +763,82 @@ def retrieveAllMedStockInfo(request):
                 boxes_stored=mwhs_obj.box_stored
                 strips_stored=mwhs_obj.strip_stored
                 pieces_stored=mwhs_obj.piece_stored
+                piece_price_unit=mwhs_obj.piece_price_unit
 
                 templist.append(medname)
                 templist.append(medbatchno)
                 templist.append(boxes_stored)
                 templist.append(strips_stored)
                 templist.append(pieces_stored)
+                templist.append(piece_price_unit)
                 allMedStockInfoList.append(templist)
                 
         data={
            "allMedStockInfoList":allMedStockInfoList,
         }
         return JsonResponse(data)
-        
+
+
+def retrieveAllMedStockInfoForEdit(request):
+    allMedStockInfoList=[]
+    if request.method=="GET":
+       
+        mwhs_objs=medicineWarehouseStock.objects.filter(status="In Use")
+        print("mwhs_objs",mwhs_objs)
+        medStckDict={}
+        for mwhs_obj in mwhs_objs:
+            medbatch_obj=medicineBatches.objects.get(medicine_strg=mwhs_obj)
+            if medbatch_obj.status=="Active":
+                templist=[]
+                tempdict={}
+                id=mwhs_obj.id
+                medbatchno=medbatch_obj.batch_no
+                medname=mwhs_obj.medicine.medicine_name
+                boxes_stored=mwhs_obj.box_stored
+                strips_stored=mwhs_obj.strip_stored
+                pieces_stored=mwhs_obj.piece_stored
+                piece_price_unit=mwhs_obj.piece_price_unit
+                sell_piece_price_unit=mwhs_obj.sell_piece_price_unit
+
+                templist.append(id)
+                templist.append(medname)
+                templist.append(medbatchno)
+                templist.append(boxes_stored)
+                templist.append(strips_stored)
+                templist.append(pieces_stored)
+                templist.append(piece_price_unit)
+                templist.append(sell_piece_price_unit)
+                
+
+                tempdict["medicinename"]=medname
+                tempdict["sell_piece_price_unit"]=sell_piece_price_unit
+
+
+
+                allMedStockInfoList.append(templist)
+                medStckDict[id]=tempdict
+                
+        data={
+           "allMedStockInfoList":allMedStockInfoList,
+           "medStckDict":json.dumps(medStckDict)
+        }
+        return JsonResponse(data)
+def updateAllMedStockInfoForEdit(request):
+    if request.method=="POST":
+        medStckDict = request.POST.get('medStckDict')
+        medStckDict=json.loads(medStckDict)
+        for key in medStckDict:
+            try:
+                print("key",key)
+                mwhs_obj=medicineWarehouseStock.objects.get(id=key)
+                mwhs_obj.sell_piece_price_unit=medStckDict[key]['sell_piece_price_unit']
+                mwhs_obj.save()
+                print("Updated")
+            except:
+                print("No Stck Found")
+        return JsonResponse({})
+
+
 
 
 def retrieveAllMedDespInfo(request):
@@ -890,6 +977,9 @@ def saveEmployeeData(request):
             webUser.role = roleObj
             webUser.save()
             status_info="New Person"
+            emp_obj.user=webUser
+            emp_obj.save()
+
 
         data={
             'status_info':status_info,
@@ -910,7 +1000,7 @@ def sendAjaxReqToSaveMedicineToDb(request):
         med_details = json.loads(med_details)
         add_charge_status = json.loads(add_charge_status)
         med_weight = json.loads(med_weight)
-
+        med_weight=int(med_weight)
 
 
         print(medicine_name)
@@ -922,7 +1012,8 @@ def sendAjaxReqToSaveMedicineToDb(request):
         med_obj.medicine_name=medicine_name
         med_obj.medicine_details=med_details
         med_obj.add_charge=add_charge_status
-        med_obj.weight=med_weight
+        if med_weight > -1:
+            med_obj.weight=med_weight
         med_obj.save()
         medicine_name_type_list=list(Medicine.objects.all().values_list('medicine_name',"medicine_type_id__medicine_type_name"))
 
@@ -1224,7 +1315,7 @@ def saveToDespStock(request):
         noofstrips=int(noofstrips)
         noofpieces=request.POST.get("noofpieces")
         noofpieces=int(noofpieces)
-
+        medInStorage="true"
         print("medicine_name",medicine_name)
         print("batchno",batchno)
         print("noofboxes",noofboxes)
@@ -1232,16 +1323,27 @@ def saveToDespStock(request):
 
 
         medicine_obj=Medicine.objects.get(medicine_name=medicine_name)
-        medicineWarehouseStock_obj=medicineWarehouseStock.objects.get(medicine=medicine_obj,status="In Use")
-        if medicineWarehouseStock_obj:
+        try:
+            medicineWarehouseStock_obj=medicineWarehouseStock.objects.get(medicine=medicine_obj,status="In Use")
+        
             if(medicineWarehouseStock_obj.strip_stored==0 or medicineWarehouseStock_obj.strip_stored==None ):
                 finaldata=NoStripCalculation(medicineWarehouseStock_obj,medicine_obj,noofboxes,noofpieces)
 
             else:
                 finaldata=WithStripCalculation(medicineWarehouseStock_obj,medicine_obj,noofboxes,noofstrips,noofpieces)
+        except: 
+            medInStorage="false"
+            print("No Medicine Found")
+            data={
+                "medInStorage":medInStorage,
+                }            
+            return JsonResponse(data)
+
+
         medicine_batch_in_stock_dict={}
         medicine_batch_in_stock_list=[]
         print("final Data--",finaldata[0])
+        
 
         if finaldata[0]!="Error":
             # retrieving medicine in stock data
@@ -1263,6 +1365,8 @@ def saveToDespStock(request):
         data={
             "medicine_batch_in_stock_list":medicine_batch_in_stock_list,
             "errorflag":errorflag,
+            "medInStorage":medInStorage,
+
         }
         return JsonResponse(data)
 def saveMedicineToWhStockFromTempMedStock(tempMedWhStk_Med_Obj,medObj):
@@ -1529,6 +1633,32 @@ def retrievePatientInfoInPatientBill(request):
 
         }
         return JsonResponse(data)
+def retrievePatientInfoInVitalRecord(request):
+    if request.method=="GET":
+    
+        id=request.GET.get("id")
+        id=int(id)
+        try: 
+            patPresRecObj=patPrescriptionRecords.objects.get(id=id)
+            pat_obj=patPresRecObj.patient
+            pres_id=id
+
+            patient_info_dict={}
+            patient_info_dict['id']=pat_obj.id
+            patient_info_dict['name']=pat_obj.pat_name
+            patient_info_dict['contact_no']=pat_obj.phone_no
+            patient_info_dict['gender']=pat_obj.gender
+            patient_info_dict['cnic']=pat_obj.cnic         
+            patient_info_dict['bloodgroup']=pat_obj.bloodgroup
+        except:
+            pres_id=""
+            patient_dict={}
+        data={
+            "patient_dict":json.dumps(patient_info_dict),
+            "pres_id":pres_id,
+        }
+        return JsonResponse(data)
+
 
 def viewPatientHistory(request):
     if request.method=="GET":
@@ -1869,9 +1999,58 @@ def generatePrescription(request):
 
 
         
+        token_no=tokenGen()
+        presData["token_no"]=token_no
+        tknRecObj=tokenRecords()
+        tknRecObj.patient=patObj
+        tknRecObj.pres=presRecObj
+        tknRecObj.token_no=token_no
+        tknRecObj.save()
+        print("TokenNo",token_no)
+
+        
         data={}
         return JsonResponse(data)
 
+def viewTokenRecords(request):
+    if request.method=="GET":
+        tknObjs=tokenRecords.objects.all()
+        tokenrecordlist=[]
+        for tknObj in tknObjs:
+            templist=[]
+            templist.append(tknObj.patient.pat_name)
+            templist.append(tknObj.pres.id)
+            templist.append(tknObj.token_no)
+
+            tokenrecordlist.append(templist)
+
+        data={
+            "tokenrecordlist":tokenrecordlist,
+        }
+    return JsonResponse(data)
+
+def viewTokenGeneratorTable(request):
+    if request.method=="GET":
+        tknGenObjs=tokenGenerator.objects.all()
+        tokengeneratorlist=[]
+        for tknGenObj in tknGenObjs:
+            templist=[]
+            templist.append(tknGenObj.id)
+            templist.append(tknGenObj.token_no)
+            tokengeneratorlist.append(templist)
+
+        data={
+            "tokengeneratorlist":tokengeneratorlist,
+        }
+        return JsonResponse(data)
+
+def resetTokens(request):
+    if request.method=="GET":
+        ResetTokens()
+        data={
+            'status':"Resetted"
+        }
+        return JsonResponse(data)
 
 # def outPrescform():
 #     if request.method=="POST":
@@ -2681,21 +2860,43 @@ def WithStripCalculationDespInternal(despensoryStock,medicineobj,boxes_wanted,st
 
 
 
+def ResetTokens():
+    tokenGenerator.objects.all().delete()
 
 
+def tokenGen():
+    data=maxTokenNo()
+    if (data['status']== "Max No Found"):
+        tokGenObj=tokenGenerator()
+        tokGenObj.token_no=data["tokenNumber"]+1
+        tokGenObj.save()
+        tokenno=data["tokenNumber"]+1
+
+    else:
+        print("Token created in Max Token No")
+        tokenno=data['tokenNumber']
+   
+    return tokenno
+    
 
 
-# def maxTokenNo(request):
-#     if request.method=="GET":
-         
-#         # Retrieve token no from the model Token
-#         tokRecObj=tokenRecords.objects.latest('token_no')
-#         print("tokRecObj",tokRecObj.token_no)
-#         maxTokenNumber=tokRecObj.token_no
-#         tokenNumber=int(maxTokenNumber)
-#         data={"tokenNo":tokenNumber}
-
-#         return JsonResponse(data)
+def maxTokenNo():
+    try:
+        tokGenObj=tokenGenerator.objects.latest('token_no')
+        maxTokenNumber=tokGenObj.token_no
+        tokenNumber=int(maxTokenNumber)   
+        status="Max No Found" 
+    except:
+        tokGenObj=tokenGenerator()
+        tokGenObj.token_no=1
+        tokGenObj.save()
+        status="Default Token Generated"
+        tokenNumber=1
+    data ={
+        "status":status,
+        "tokenNumber":tokenNumber
+    }                                                                       
+    return data
 
 def savePatientBill(request):
     if request.method=='POST':
@@ -3052,9 +3253,19 @@ def addProcedure(request):
         proc_obj.procedure_name=procedure_name
         proc_obj.charges=charges
         proc_obj.save()
+        procObjs=procedureTable.objects.all()
+        procedurList=[]
+        for procObj in procObjs:
+            templist=[]
+            templist.append(procObj.id)
+            templist.append(procObj.procedure_name)
+            templist.append(procObj.charges)
+            procedurList.append(templist)
+
         
         data={
-           'success':"success"
+           'success':"success",
+           "procedurList":procedurList
         }
         return JsonResponse(data)
 def addSurgery(request):
@@ -3063,13 +3274,42 @@ def addSurgery(request):
         surgery_name=json.loads(surgery_name)
         charges=request.POST.get('charges')
         charges=json.loads(charges)
+        surgeon_fee=request.POST.get('surgeon_fee')
+        surgeon_fee=json.loads(surgeon_fee)
+        optheatre_fee=request.POST.get('optheatre_fee')
+        optheatre_fee=json.loads(optheatre_fee)
+        anesth_fee=request.POST.get('anesth_fee')
+        anesth_fee=json.loads(anesth_fee)
+        surplus_charge=request.POST.get('surplus_charge')
+        surplus_charge=json.loads(surplus_charge)
+
         surg_obj=surgeryTable()
         surg_obj.surgery_name=surgery_name
         surg_obj.charges=charges
+        surg_obj.surgeon_fee=surgeon_fee
+        surg_obj.operation_theater_fee=optheatre_fee
+        surg_obj.anesthesiologist_fee=anesth_fee
+        surg_obj.surplus_fee=surplus_charge
         surg_obj.save()
+
+        surgObjs=surgeryTable.objects.all()
+        surgList=[]
+        for surgObj in surgObjs:
+            templist=[]
+            templist.append(surgObj.id)
+            templist.append(surgObj.surgery_name)
+            templist.append(surgObj.charges)
+            templist.append(surgObj.surgeon_fee)
+            templist.append(surgObj.operation_theater_fee)
+            templist.append(surgObj.anesthesiologist_fee)
+            templist.append(surgObj.surplus_fee)
+
+            surgList.append(templist)
+
         
         data={
-           'success':"success"
+           'success':"success",
+           "surgList":surgList,
         }
         return JsonResponse(data)
 def retrieveAllProcInfo(request):
@@ -3100,6 +3340,11 @@ def retrieveAllSurgInfo(request):
             surg_info_dict={}
             surg_info_dict['surgery_name']=surg_obj.surgery_name
             surg_info_dict['charges']=surg_obj.charges
+            surg_info_dict['surgeon_fee']=surg_obj.surgeon_fee
+            surg_info_dict['operation_theater_fee']=surg_obj.operation_theater_fee
+            surg_info_dict['anesthesiologist_fee']=surg_obj.anesthesiologist_fee
+            surg_info_dict['surplus_fee']=surg_obj.surplus_fee
+
             surg_dict[surg_obj.id]=[]
             surg_dict[surg_obj.id]=surg_info_dict
         print("surg_dict", surg_dict)
@@ -3116,7 +3361,11 @@ def updateSurgData(request):
         surgery_name=surgery_name
 
         charges=request.POST.get('charges')
-        charges=charges
+       
+        surgeon_fee=request.POST.get('surgeon_fee')
+        operation_theater_fee=request.POST.get('operation_theater_fee')     
+        anesthesiologist_fee=request.POST.get('anesthesiologist_fee')
+        surplus_fee=request.POST.get('surplus_fee')
 
         id=request.POST.get('id')
         id=id
@@ -3124,7 +3373,10 @@ def updateSurgData(request):
         surg_obj=surgeryTable.objects.get(id=id)
         surg_obj.surgery_name=surgery_name
         surg_obj.charges=charges
-
+        surg_obj.surgeon_fee=surgeon_fee
+        surg_obj.operation_theater_fee=operation_theater_fee
+        surg_obj.anesthesiologist_fee=anesthesiologist_fee
+        surg_obj.surplus_fee=surplus_fee
         surg_obj.save()
 
         surg_objs=surgeryTable.objects.all()
@@ -3135,6 +3387,10 @@ def updateSurgData(request):
             surg_info_dict={}
             surg_info_dict['surgery_name']=surg_obj.surgery_name
             surg_info_dict['charges']=surg_obj.charges
+            surg_info_dict['surgeon_fee']=surg_obj.surgeon_fee
+            surg_info_dict['operation_theater_fee']=surg_obj.operation_theater_fee
+            surg_info_dict['anesthesiologist_fee']=surg_obj.anesthesiologist_fee
+            surg_info_dict['surplus_fee']=surg_obj.surplus_fee
             surg_dict[surg_obj.id]=[]
             surg_dict[surg_obj.id]=surg_info_dict
         print("surg_dict", surg_dict)
@@ -3251,8 +3507,7 @@ def updateRoomData(request):
         status=json.loads(status)
 
 
-        room_obj=Rooms.objects.get(id=room_no)
-        room_obj.room_no=room_no
+        room_obj=Rooms.objects.get(floor=floor,room_no=room_no)
         room_obj.charge_per_day=charge_per_day
         room_obj.ac_charge_per_day=ac_charge_per_day
         room_obj.status=status
@@ -3291,8 +3546,7 @@ def updateWardData(request):
         status=json.loads(status)
 
 
-        ward_obj=Ward.objects.get(id=ward_no)
-        ward_obj.bed_no=bed_no
+        ward_obj=Ward.objects.get(ward_no=ward_no,bed_no=bed_no)
         ward_obj.charge_per_day=charge_per_day
         ward_obj.status=status
         ward_obj.save()
@@ -3571,7 +3825,6 @@ def saveWardBill(request):
         return JsonResponse({})
 def saveRoomBill(request):      
     if request.method=="POST":
-        print("IN SAVE ROOM BILL")
         pres=request.POST.get('pres')
         pres=json.loads(pres)
 
@@ -3585,24 +3838,29 @@ def saveRoomBill(request):
         total_days=json.loads(total_days)
 
         roombill_obj=patientRoomsBill.objects.get(pres=pres)
-        roombill_obj.checkout=checkout
-        roombill_obj.net_total=net_total
-        roombill_obj.total_days=total_days
+        if roombill_obj.net_total==0:
+            roombill_obj.checkout=checkout
+            roombill_obj.net_total=net_total
+            roombill_obj.total_days=total_days
+            roombill_obj.save()
+            roomObj=Rooms.objects.get(id=roombill_obj.rooms.id)
 
-        roombill_obj.save()
-
-        roomObj=Rooms.objects.get(id=roombill_obj.rooms.id)
-        roomObj.status="Available"
-        roomObj.save()
+            roomObj.status="Available"
+            roomObj.save()
 
 
-        invObj=invoiceRecords.objects.get(pres=pres)
-        net_total=int(net_total)
-        invObj.room_bill=roombill_obj
-        invObj.net_total=invObj.net_total+net_total
-        invObj.save()
-        print("save Room Bill")
-        return JsonResponse({})
+            invObj=invoiceRecords.objects.get(pres=pres)
+            net_total=int(net_total)
+            invObj.room_bill=roombill_obj
+            invObj.net_total=invObj.net_total+net_total
+            invObj.save()
+            room_bill_status="Creating Room Bill"
+        else:
+            room_bill_status="Room Bill Already Created"
+        data ={
+            'room_bill_status':room_bill_status
+        }
+        return JsonResponse(data)
 
 def retrieveInvoiceBillRecord(request):
      if request.method=="GET":
@@ -4190,6 +4448,7 @@ def retrievePatientInfoIdName(request):
             "patient_dict":json.dumps(patient_dict),
         }
         return JsonResponse(data)
+
 
 def viewPrescriptionList(request):
     

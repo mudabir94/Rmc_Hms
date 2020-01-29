@@ -71,7 +71,8 @@ function loadPresForm(){
 
                     colmd1=$("<div class='col-md-1'></div>")
                     colmd2=$("<div class='col-md-2'></div>")
-                    colmd3=$("<div class='col-md-2 offset-md-2 '></div>")
+                    colmd7=$("<div class='col-md-1'></div>")
+                    colmd3=$("<div class='col-md-2'></div>")
                     colmd4=$("<div class='col-md-1'></div>")
                     colmd5=$("<div class='col-md-2 '></div>")
                     colmd6=$("<div class='col-md-1'></div>")                
@@ -80,19 +81,22 @@ function loadPresForm(){
                     colmd1.append(pat_name_label)
                     var pat_name=$("<label id='pat_name' class='form-control-static'>"+presData['name']+"</label>")                    
                     colmd2.append(pat_name)
-
+                    var tokenno=$("<label id='token_no' class='form-control-static'>Token No : "+presData['token_no']+"</label>")                    
+                    colmd7.append(tokenno)
                     var pat_id_label=$("<label class='form-control-static float-right' style='font-weight: bold;'>Patient ID</label>");
                     colmd3.append(pat_id_label)
                     var pat_id=$("<label id='pat_id' class='form-control-static'>"+presData['pat_id']+"</label>")                    
                     colmd4.append(pat_id)
 
-                    var pres_id_label=$("<label class='form-control-static float-right' style='font-weight: bold;'>Prescription Id</label>");
+                    var pres_id_label=$("<label class='form-control-static float-right' style='font-weight: bold;'>Prescription No</label>");
                     colmd5.append(pres_id_label);
                     var pres_id_input=$("<label id='pres_id' class='form-control-static'>"+presData['pres_id']+"</label>")
                     colmd6.append(pres_id_input);
+                    
 
                 row__col_one__row_div_two.append(colmd1);
                 row__col_one__row_div_two.append(colmd2);
+                row__col_one__row_div_two.append(colmd7);
                 row__col_one__row_div_two.append(colmd3);
                 row__col_one__row_div_two.append(colmd4);
                 row__col_one__row_div_two.append(colmd5);

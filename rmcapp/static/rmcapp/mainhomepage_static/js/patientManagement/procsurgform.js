@@ -5,8 +5,8 @@ var surg_list=[]
 var proc_dict;
 var proc_id_selected=0;
 var proc_list=[]
-var surg_data_info_table;
-var proc_data_info_table
+var surg_data_info_datatable;
+var proc_data_info_datatable;
 var proc_datatable;
 var surg_datatable;
 $( document ).ready(function() {
@@ -138,7 +138,7 @@ function proc_surgery_OnSelect(element){
                         row__col_one__row_three=$("<div class='row'></div>");
                         colmd1=$("<div class='col-md-4 offset-md-5'></div>")
 
-                        addprocedure_button=$('<button class="btn btn-success btn-block fa fa-plus-circle" onclick="addProcedure()">  Add Procedure</button>')
+                        addprocedure_button=$('<button class="btn btn-success fa fa-plus-circle" onclick="addProcedure()">  Add Procedure</button>')
                         colmd1.append(addprocedure_button)
 
                         row__col_one__row_three.append(colmd1);
@@ -182,6 +182,7 @@ function proc_surgery_OnSelect(element){
 
                     var row_two=$("<div class='row' style='padding-bottom:10px'></div>")
 
+
                     var col_one__row_two=$("<div class='col-md-12'></div>");
                             row__col_one__row_two=$("<div class='row'></div>");
                             colmd1=$("<div class='col-md-2'></div>")
@@ -189,14 +190,81 @@ function proc_surgery_OnSelect(element){
         
                                 price_label=$("<label for='price_tag' class='custom_label_css'>Treatment Cost</label>");
                                 colmd1.append(price_label)
-                                price_input=$("<input id='price_input' class='custom_input_css form-control'>")
+                                price_input=$("<input id='price_input' value='0' class='custom_input_css form-control'>")
                                 colmd2.append(price_input)
         
                             row__col_one__row_two.append(colmd1);
                             row__col_one__row_two.append(colmd2);
 
-                        col_one__row_two.append(row__col_one__row_two);
+                    col_one__row_two.append(row__col_one__row_two);
+
+                    var col_one__row_three=$("<div class='col-md-12'></div>");
+                            row__col_one__row_three=$("<div class='row'></div>");
+                            colmd1=$("<div class='col-md-2'></div>")
+                            colmd2=$("<div class='col-md-3'></div>")
+        
+                                surgeon_fee_label=$("<label class='custom_label_css'>Surgeon Fee</label>");
+                                colmd1.append(surgeon_fee_label)
+                                surgeon_fee_input=$("<input id='surgeon_fee'  value='0' class='custom_input_css form-control'>")
+                                colmd2.append(surgeon_fee_input)
+        
+                            row__col_one__row_three.append(colmd1);
+                            row__col_one__row_three.append(colmd2);
+
+                        col_one__row_three.append(row__col_one__row_three);
+
+                    var col_one__row_four=$("<div class='col-md-12'></div>");
+                            row__col_one__row_four=$("<div class='row'></div>");
+                            colmd1=$("<div class='col-md-2'></div>")
+                            colmd2=$("<div class='col-md-3'></div>")
+        
+                                opth_fee_label=$("<label  class='custom_label_css'>Operation Theatre Fee</label>");
+                                colmd1.append(opth_fee_label)
+                                optheatre_fee_input=$("<input id='optheatre_fee'  value='0' class='custom_input_css form-control'>")
+                                colmd2.append(optheatre_fee_input)
+        
+                            row__col_one__row_four.append(colmd1);
+                            row__col_one__row_four.append(colmd2);
+
+                    col_one__row_four.append(row__col_one__row_four);
+
+                    var col_one__row_five=$("<div class='col-md-12'></div>");
+                            row__col_one__row_five=$("<div class='row'></div>");
+                            colmd1=$("<div class='col-md-2'></div>")
+                            colmd2=$("<div class='col-md-3'></div>")
+        
+                                anesth_fee_label=$("<label for='price_tag' class='custom_label_css'>Anestheologist Fee</label>");
+                                colmd1.append(anesth_fee_label)
+                                anesth_fee_input=$("<input id='anesth_fee'  value='0' class='custom_input_css form-control'>")
+                                colmd2.append(anesth_fee_input)
+        
+                            row__col_one__row_five.append(colmd1);
+                            row__col_one__row_five.append(colmd2);
+
+                    col_one__row_five.append(row__col_one__row_five);
+
+                    var col_one__row_six=$("<div class='col-md-12'></div>");
+                            row__col_one__row_six=$("<div class='row'></div>");
+                            colmd1=$("<div class='col-md-2'></div>")
+                            colmd2=$("<div class='col-md-3'></div>")
+        
+                                surplus_charge_label=$("<label for='price_tag' class='custom_label_css'>Surplus Charges</label>");
+                                colmd1.append(surplus_charge_label)
+                                surplus_charge_input=$("<input id='surplus_charge'  value='0' class='custom_input_css form-control'>")
+                                colmd2.append(surplus_charge_input)
+        
+                            row__col_one__row_six.append(colmd1);
+                            row__col_one__row_six.append(colmd2);
+
+                        col_one__row_six.append(row__col_one__row_six);
+
+
                 row_two.append(col_one__row_two)
+                row_two.append(col_one__row_three)
+                row_two.append(col_one__row_four)
+                row_two.append(col_one__row_five)
+                row_two.append(col_one__row_six)
+
                 
                 var row_three=$("<div class='row'></div>")
 
@@ -204,7 +272,7 @@ function proc_surgery_OnSelect(element){
                             row__col_one__row_three=$("<div class='row'></div>");
                             colmd1=$("<div class='col-md-4 offset-md-5'></div>")
 
-                            addSurgery_button=$('<button class="btn btn-success btn-block fa fa-plus-circle" onclick="addSurgery()">  Add Surgery</button>')
+                            addSurgery_button=$('<button class="btn btn-success fa fa-plus-circle" onclick="addSurgery()">  Add Surgery</button>')
                             colmd1.append(addSurgery_button)
 
                             row__col_one__row_three.append(colmd1);
@@ -243,20 +311,29 @@ function addProcedure(){
         },
         url: '/add_procedure',
         success: function(data){
-        console.log(data['Success']);
-        $("#row_div_two").remove();        
+            procedurList=data["procedurList"]
+            proc_data_info_datatable.clear().draw()
+            for (var i in procedurList){
+                proc_data_info_datatable.row.add( procedurList[i] ).draw();
+            } 
         },
     });
 }
 function addSurgery(){
 
     var surgery_name=$("#surgery_input").val();
-    console.log("surgery_name", surgery_name);
     $("#surgery_input").val("");
     var surgery_price=$("#price_input").val();
-    console.log("surgery_price", surgery_price);
     $("#price_input").val("");
-    
+    var surgeon_fee=$("#surgeon_fee").val();
+    $("#surgeon_fee").val("");
+    var optheatre_fee=$("#optheatre_fee").val();
+    $("#optheatre_fee").val("");
+    var anesth_fee=$("#anesth_fee").val();
+    $("#anesth_fee").val("");
+    var surplus_charge=$("#surplus_charge").val();
+    $("#surplus_charge").val("");
+
 
     $.ajax({
         type: 'POST',
@@ -264,11 +341,19 @@ function addSurgery(){
         'data': {
             "surgery_name":JSON.stringify(surgery_name),
             "charges":JSON.stringify(surgery_price),
+            "surgeon_fee":JSON.stringify(surgeon_fee),
+            "optheatre_fee":JSON.stringify(optheatre_fee),
+            "anesth_fee":JSON.stringify(anesth_fee),
+            "surplus_charge":JSON.stringify(surplus_charge),
+
         },
         url: '/add_surgery',
         success: function(data){
-        console.log(data['Success']);
-        $("#row_div_two").remove();        
+            surgList=data['surgList'];
+            surg_data_info_datatable.clear().draw()
+            for (var i in surgList){
+                surg_data_info_datatable.row.add( surgList[i] ).draw();
+            } 
         },
     });
 }
@@ -329,7 +414,7 @@ function ps_OnSelect(element){
             proc_datatable.destroy();
             $("#row_div_two").remove();
             
-            availablePSRowDivTwo()
+            availableProcedureRowDivTwo()
             retrieveAllProcInfo()
         }
         else if (surg_datatable!==undefined){
@@ -337,11 +422,11 @@ function ps_OnSelect(element){
             surg_datatable.destroy();
             $("#row_div_two").remove();
 
-            availablePSRowDivTwo()
+            availableProcedureRowDivTwo()
             retrieveAllProcInfo()
         }
         else{
-            availablePSRowDivTwo()
+            availableProcedureRowDivTwo()
             retrieveAllProcInfo()
         }
         
@@ -353,7 +438,7 @@ function ps_OnSelect(element){
             proc_datatable.destroy();
             $("#row_div_two").remove();
 
-            availablePSRowDivTwo()
+            availableSurgeryRowDivTwo()
             retrieveAllSurgInfo()
 
         }
@@ -362,12 +447,12 @@ function ps_OnSelect(element){
             surg_datatable.destroy();
             $("#row_div_two").remove();
 
-            availablePSRowDivTwo()
+            availableSurgeryRowDivTwo()
             retrieveAllSurgInfo()
 
         }
         else{
-            availablePSRowDivTwo()
+            availableSurgeryRowDivTwo()
             retrieveAllSurgInfo()
         }
     
@@ -376,27 +461,45 @@ function ps_OnSelect(element){
         $("#row_div_three").remove();
         if (proc_datatable!==undefined){
             proc_datatable.destroy();
+            proc_datatable=undefined
             $("#row_div_two").remove();
         }
         else if (surg_datatable!==undefined){
 
             surg_datatable.destroy();
+            surg_datatable=undefined;
             $("#row_div_two").remove();
         }
     }
 
 }
 
-function availablePSRowDivTwo(){
+function availableSurgeryRowDivTwo(){
     var main_col_div=$("#main_col_div");
         var row_div_two=$("<div class='row' id='row_div_two'></div>");
         // Datatable Name
             var col_one__row_div_two=$("<div class='col-md-12'></div>");
                 var row__col_one__row_div_two=$("<div class='row'></div>");
                     var colmd1=$("<div class='col-md-12'></div>")
-                        var available_proc_surg_table=$('<table id="available_proc_surg_table" class="datatable_procsurg" width="100%"></table>')
+                        var available_surg_table=$('<table id="available_surg_table" class="datatable_procsurg" width="100%"></table>')
 
-                    colmd1.append(available_proc_surg_table)
+                    colmd1.append(available_surg_table)
+                row__col_one__row_div_two.append(colmd1);
+
+            col_one__row_div_two.append(row__col_one__row_div_two);
+        $(row_div_two).append(col_one__row_div_two);
+    main_col_div.append(row_div_two)
+}
+function availableProcedureRowDivTwo(){
+    var main_col_div=$("#main_col_div");
+        var row_div_two=$("<div class='row' id='row_div_two'></div>");
+        // Datatable Name
+            var col_one__row_div_two=$("<div class='col-md-12'></div>");
+                var row__col_one__row_div_two=$("<div class='row'></div>");
+                    var colmd1=$("<div class='col-md-12'></div>")
+                        var available_proc_table=$('<table id="available_proc_table" class="datatable_procsurg" width="100%"></table>')
+
+                        colmd1.append(available_proc_table)
                 row__col_one__row_div_two.append(colmd1);
 
             col_one__row_div_two.append(row__col_one__row_div_two);
@@ -423,11 +526,15 @@ function retrieveAllSurgInfo(){
                 templist.push(surg)
                 templist.push(surg_dict[surg]['surgery_name'])
                 templist.push(surg_dict[surg]['charges'])
+                templist.push(surg_dict[surg]['surgeon_fee'])
+                templist.push(surg_dict[surg]['operation_theater_fee'])
+                templist.push(surg_dict[surg]['anesthesiologist_fee'])
+                templist.push(surg_dict[surg]['surplus_fee'])
                 surg_list.push(templist)
             }
             console.log("surg_dict",surg_dict);
             console.log(surg_list)
-            $('#available_proc_surg_table').show()
+            $('#available_surg_table').show()
 
             createSurgDataTable()
         },
@@ -465,7 +572,7 @@ function retrieveAllProcInfo(){
 }
 function createProcDataTable(){
     $(function(){
-        proc_datatable=$("#available_proc_surg_table").DataTable({
+        proc_datatable=$("#available_proc_table").DataTable({
             data:proc_list,
             columns: [
                 { title: "Id" },
@@ -517,7 +624,7 @@ function createProcDataTable(){
                     },
                 ],
             });
-            $('#available_proc_surg_table tbody').on( 'click', 'tr', function () {
+            $('#available_proc_table tbody').on( 'click', 'tr', function () {
                 if ( $(this).hasClass('selected') ) {
                     alert("clicked same entry")
                 }
@@ -597,12 +704,16 @@ function createProcDataTable(){
 function createSurgDataTable(){
     console.log("surg_list----------",surg_list)
     $(function(){
-        surg_datatable=$("#available_proc_surg_table").DataTable({
+        surg_datatable=$("#available_surg_table").DataTable({
             data:surg_list,
             columns: [
                 { title: "Id" },
                 { title: "Surgeries" },
-                { title: "Charges" },
+                { title: "Total Charges" },
+                { title: "Surgeon Fee" },
+                { title: "Operation Theatre Fee" },
+                { title: "anestheiologist_fee" },
+                { title: "surplus_fee" },
                 ],
                 paging: false,
                 scrollY: 200,
@@ -640,16 +751,10 @@ function createSurgDataTable(){
                         className: 'btn btn-default fas fa-file-pdf',
 
                     },
-                    {
-                        extend: 'copy',
-                        text: 'Copy to Clipboard',
-                        title: 'Surgeries',
-                        className: 'btn btn-default fas fa-copy',
-
-                    },
+               
                 ],
             });
-            $('#available_proc_surg_table tbody').on( 'click', 'tr', function () {
+            $('#available_surg_table tbody').on( 'click', 'tr', function () {
                 if ( $(this).hasClass('selected') ) {
                     alert("clicked same entry")
                 }
@@ -696,9 +801,75 @@ function createSurgDataTable(){
                                     row__col_one_subrow_two.append(colmd2);
                             
                                 col_one_subrow_two.append(row__col_one_subrow_two);
+                                    var col_one_subrow_three=$("<div class='col-md-12'></div>");
+                                        var row__col_one_subrow_three=$("<div class='row'></div>");
+                                            colmd1=$("<div class='col-md-2'></div>")
+                                            colmd2=$("<div class='col-md-2'></div>")
+
+                                                var surgCharges_label=$("<label class='custom_label_css'>Surgeon Fee</label>");
+                                                var surgCharges_input=$("<input  id='surgeon_fee_input' class='form-control' value='"+surg_dict[surg_id_selected]['surgeon_fee']+"'>")
+
+                                            colmd1.append(surgCharges_label)
+                                            colmd2.append(surgCharges_input)
+                                
+                                        row__col_one_subrow_three.append(colmd1);
+                                        row__col_one_subrow_three.append(colmd2);
+                                
+                                    col_one_subrow_three.append(row__col_one_subrow_three);
+                                var col_one_subrow_four=$("<div class='col-md-12'></div>");
+                                    var row__col_one_subrow_four=$("<div class='row'></div>");
+                                        colmd1=$("<div class='col-md-2'></div>")
+                                        colmd2=$("<div class='col-md-2'></div>")
+
+                                            var operation_theater_fee_label=$("<label class='custom_label_css'>Operation Theatre Fee</label>");
+                                            var operation_theater_fee_input=$("<input  id='operation_theater_fee_input' class='form-control' value='"+surg_dict[surg_id_selected]['operation_theater_fee']+"'>")
+
+                                        colmd1.append(operation_theater_fee_label)
+                                        colmd2.append(operation_theater_fee_input)
+                            
+                                    row__col_one_subrow_four.append(colmd1);
+                                    row__col_one_subrow_four.append(colmd2);
+                            
+                                col_one_subrow_four.append(row__col_one_subrow_four);
+
+                                var col_one_subrow_five=$("<div class='col-md-12'></div>");
+                                    var row__col_one_subrow_five=$("<div class='row'></div>");
+                                        colmd1=$("<div class='col-md-2'></div>")
+                                        colmd2=$("<div class='col-md-2'></div>")
+
+                                            var anesthesiologist_fee_label=$("<label class='custom_label_css'>Anestheologist Fee</label>");
+                                            var anesthesiologist_fee_input=$("<input  id='anesthesiologist_fee_input' class='form-control' value='"+surg_dict[surg_id_selected]['anesthesiologist_fee']+"'>")
+
+                                        colmd1.append(anesthesiologist_fee_label)
+                                        colmd2.append(anesthesiologist_fee_input)
+                            
+                                    row__col_one_subrow_five.append(colmd1);
+                                    row__col_one_subrow_five.append(colmd2);
+                            
+                                col_one_subrow_five.append(row__col_one_subrow_five);
+
+                                var col_one_subrow_six=$("<div class='col-md-12'></div>");
+                                    var row__col_one_subrow_six=$("<div class='row'></div>");
+                                        colmd1=$("<div class='col-md-2'></div>")
+                                        colmd2=$("<div class='col-md-2'></div>")
+
+                                            var surplus_fee_label=$("<label class='custom_label_css'>Surplus Charges</label>");
+                                            var surplus_fee_input=$("<input  id='surplus_fee_input' class='form-control' value='"+surg_dict[surg_id_selected]['surplus_fee']+"'>")
+
+                                        colmd1.append(surplus_fee_label)
+                                        colmd2.append(surplus_fee_input)
+                            
+                                    row__col_one_subrow_six.append(colmd1);
+                                    row__col_one_subrow_six.append(colmd2);
+                            
+                                col_one_subrow_six.append(row__col_one_subrow_six);
 
                             subrow_two.append(col_one_subrow_two)
-
+                            subrow_two.append(col_one_subrow_three)
+                            subrow_two.append(col_one_subrow_four)
+                            subrow_two.append(col_one_subrow_five)
+                            subrow_two.append(col_one_subrow_six)
+                            
                             var subrow_three=$("<div class='row'></div>")
                                 var col_one__subrow_three=$("<div class='col-md-12'></div>");
                                     var row__col_one__subrow_three=$("<div class='row'></div>");
@@ -764,6 +935,10 @@ function updateProcData(){
 function updateSurgData(){
     var surgery_name=$("#surg_input").val();;
     var charges=$("#surgCharges_input").val();
+    var surgeon_fee_input=$("#surgeon_fee_input").val();
+    var operation_theater_fee_input=$("#operation_theater_fee_input").val();
+    var anesthesiologist_fee_input= $("#anesthesiologist_fee_input").val();
+    var surplus_fee_input=$("#surplus_fee_input").val()
     var id=surg_id_selected
 
     
@@ -773,6 +948,10 @@ function updateSurgData(){
         'data': {
             "surgery_name":surgery_name,
             "charges":charges,
+            "surgeon_fee":surgeon_fee_input,
+            "operation_theater_fee":operation_theater_fee_input,
+            "anesthesiologist_fee":anesthesiologist_fee_input,
+            "surplus_fee":surplus_fee_input,
             "id":id,
 
         },
@@ -786,7 +965,12 @@ function updateSurgData(){
                 temp_list.push(key)
                 temp_list.push(surg_dict[key]['surgery_name'])
                 temp_list.push(surg_dict[key]['charges'])
+                temp_list.push(surg_dict[key]['surgeon_fee'])
+                temp_list.push(surg_dict[key]['operation_theater_fee'])
+                temp_list.push(surg_dict[key]['anesthesiologist_fee'])
+                temp_list.push(surg_dict[key]['surplus_fee'])
                 temp_list.push(surg_dict[key]['id'])
+
 
                 surg_datatable.row.add(temp_list).draw();
             }
@@ -798,7 +982,7 @@ function updateSurgData(){
 
 function createSurgTableInfo(surgery_list){
     $(function(){
-        surg_data_info_table=$("#surg_table_info").DataTable({
+        surg_data_info_datatable=$("#surg_table_info").DataTable({
             data:surgery_list,
             columns: [
                 { title: "Id" },
@@ -855,7 +1039,7 @@ function createSurgTableInfo(surgery_list){
                 ],
 
             });
-            $('#available_room_ward_table tbody').on( 'click', 'tr', function () {
+            $('#surg_table_info tbody').on( 'click', 'tr', function () {
                 if ( $(this).hasClass('selected') ) {
                     alert("clicked same entry")
                 }
@@ -866,7 +1050,7 @@ function createSurgTableInfo(surgery_list){
 }
 function createProcTableInfo(proc_list){
     $(function(){
-        surg_data_info_table=$("#proc_table_info").DataTable({
+        proc_data_info_datatable=$("#proc_table_info").DataTable({
             data:proc_list,
             columns: [
                 { title: "Id" },
@@ -920,7 +1104,7 @@ function createProcTableInfo(proc_list){
                 ],
 
             });
-            $('#available_room_ward_table tbody').on( 'click', 'tr', function () {
+            $('#proc_table_info tbody').on( 'click', 'tr', function () {
                 if ( $(this).hasClass('selected') ) {
                     alert("clicked same entry")
                 }

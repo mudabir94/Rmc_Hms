@@ -662,7 +662,6 @@ function saveRoomBill(){
     console.log("pres_id", pres_id);
 
     var checkout=$("#checkout_input").val();
-    $("#checkout_input").val("")
 
     var net_total=$("#net_total").text();
     console.log("net_total", net_total);
@@ -682,7 +681,11 @@ function saveRoomBill(){
         },
         url: '/save_room_bill',
         success: function(data){
-            console.log(data['Success']);
+            room_bill_status=data['room_bill_status']
+            if (room_bill_status==="Room Bill Already Created"){
+                alert("Bill Has Already Been Generated, New Changes Are Not Saved")
+                return;
+            }
         },
     });
 }

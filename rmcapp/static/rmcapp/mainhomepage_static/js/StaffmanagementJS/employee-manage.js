@@ -6,7 +6,7 @@ var emp_datatable;
 var emp_id_selected=0;
 var employee_dict={};
 var all_employee_dict={};
-var datatable_list=[];
+var emp_datatable_list=[];
 var allEmployee_list=[];
 var employee_id_selected=0;
 var allEmp_datatable;
@@ -425,7 +425,7 @@ function searchEmployee(){
     $("#form-row").remove();
     $("#row_div_five").remove();
     employee_dict={}
-    datatable_list=[]
+    emp_datatable_list=[]
    
     editEmployeeRowDivFiveCreation();
     var emp_name=$("#search_emp_name_input").val();
@@ -461,7 +461,7 @@ function editEmployeeRowDivFiveCreation(){
 }
 
 function retrieveEmployeeInfo(emp_name,contact_no){
-    datatable_lst=[];
+    emp_datatable_list=[];
 
     $.ajax({
         type: 'GET',
@@ -476,6 +476,7 @@ function retrieveEmployeeInfo(emp_name,contact_no){
             console.log("employee_dict",data["employee_dict"])
             employee_dict={}
             employee_dict=JSON.parse(data["employee_dict"])
+            emp_datatable_list=[]
             for (emp in employee_dict){
                 templist=[]
                 console.log("pat",emp);
@@ -489,21 +490,21 @@ function retrieveEmployeeInfo(emp_name,contact_no){
                 templist.push(employee_dict[emp]['address'])
                 templist.push(employee_dict[emp]['employee_type'])
                 templist.push(employee_dict[emp]['email']);
-                datatable_list.push(templist)
+                emp_datatable_list.push(templist)
             }
             createEmployeetDataTable();
 
             console.log("employee_dict",employee_dict);
-            console.log(datatable_list)
+            console.log(emp_datatable_list)
         },
     }); 
 
 }
 function createEmployeetDataTable(){
-    console.log("datatable_list",datatable_list)
+    console.log("emp_datatable_list",emp_datatable_list)
     $(function(){
         emp_datatable=$("#employee_table").DataTable({
-            data:datatable_list,
+            data:emp_datatable_list,
             columns: [
                 { title: "Id" },
                 { title: "Employee_Name" },
@@ -769,7 +770,7 @@ function saveEmployeeData(){
        
      });
      if (count!=totalinputs){
-        alert("ppp")
+        alert("Please fill the required Fields")
         return;
 
     }
@@ -816,6 +817,7 @@ function saveEmployeeData(){
                 console.log(data['status_info']);
                 status_info=data['status_info'];
                 if (status_info=="New Person"){
+                    alert("Employee Registered!")
                     $("#emp_name_input").val("")
                     $("#contact_numb_input").val("");
                     $("#gender_input").val("");
@@ -866,7 +868,7 @@ function updateEmployeeData(){
             $("#form-row").remove();
             $("#row_div_five").remove();
             employee_dict={}
-            datatable_list=[]
+            emp_datatable_list=[]
         },
     });
 
@@ -914,7 +916,6 @@ function viewAllEmployee(){
 }
 
 function retrieve_all_employee_info(){
-    datatable_lst=[];
 
     $.ajax({
         type: 'GET',
@@ -925,6 +926,8 @@ function retrieve_all_employee_info(){
         success: function(data){
             console.log("all_employee_dict",data["all_employee_dict"])
             all_employee_dict={}
+            emp_datatable_list=[];
+
             all_employee_dict=JSON.parse(data["all_employee_dict"])
             for (emp in all_employee_dict){
                 templist=[]
@@ -939,22 +942,22 @@ function retrieve_all_employee_info(){
                 templist.push(all_employee_dict[emp]['address'])
                 templist.push(all_employee_dict[emp]['employee_type'])
                 templist.push(all_employee_dict[emp]['email']);
-                datatable_list.push(templist)
+                emp_datatable_list.push(templist)
             }
             createAllEmployeeDataTable();
 
             console.log("all_employee_dict",all_employee_dict);
-            console.log(datatable_list)
+            console.log("emp_datatable_list",emp_datatable_list)
         },
     }); 
 
 }
 
 function createAllEmployeeDataTable(){
-    console.log("allEmployee_list",allEmployee_list)
+    
     $(function(){
         allEmp_datatable=$("#all_employee_table").DataTable({
-            data:datatable_list,
+            data:emp_datatable_list,
             columns: [
                 { title: "Id" },
                 { title: "Employee_Name" },

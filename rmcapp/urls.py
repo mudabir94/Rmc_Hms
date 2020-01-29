@@ -29,6 +29,10 @@ urlpatterns = [
   path("retrieve_medicine_stock_data_from_stock",views.retrieveMedicineStockDataFromStock,name="retrieve_medicine_stock_data_from_stock"),
 
   path("retrieve_all_med_stock_info",views.retrieveAllMedStockInfo,name="retrieve_all_med_stock_info"),
+  path("retrieve_all_med_stock_info_for_edit",views.retrieveAllMedStockInfoForEdit,name="retrieve_all_med_stock_info_for_edit"),
+  path("update_all_med_stock_info_from_edit",views.updateAllMedStockInfoForEdit,name="update_all_med_stock_info_from_edit"),
+
+  
   path("retrieve_all_med_desp_info",views.retrieveAllMedDespInfo,name="retrieve_all_med_desp_info"),
 
   
@@ -61,6 +65,8 @@ urlpatterns = [
   
   path('retireve_patient_info_in_pres_form',views.retrievePatientInfoInPresForm,name='retireve_patient_info_in_pres_form'),
   path('retrieve_patient_info_in_createbill',views.retrievePatientInfoInPatientBill,name='retrieve_patient_info_in_createbill'),
+  path('retrieve_patient_info_in_vital_record',views.retrievePatientInfoInVitalRecord,name='retrieve_patient_info_in_vital_record'),
+
   path('retrieve_all_patient_info',views.retrieveAllPatientInfo,name='retrieve_all_patient_info'),
 
   path('retireve_room_info_in_room_ward',views.retrieveRoomInfoInRoomWard,name='retireve_room_info_in_room_ward'),
@@ -112,6 +118,11 @@ urlpatterns = [
   path("get_proc_surg_info",views.GetProcSurgInfo,name="get_proc_surg_info"),
 
 
+  path("view_token_records",views.viewTokenRecords,name="view_token_records"),
+  path("view_token_generator_table",views.viewTokenGeneratorTable,name="view_token_generator_table"),
+  path("reset_tokens",views.resetTokens,name="reset_tokens"),
+
+  
 
 
 

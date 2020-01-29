@@ -20,6 +20,7 @@ $( document ).ready(function() {
     retrieveMedicineNames();
     retrieveMedicineGenDataFromStock();
     // retrievePackageTypes();
+    $("#dialog-confirm").hide()
    
 });
 
@@ -68,8 +69,7 @@ function retrieveMedicineNames(){
             medicine_name_list=data["medicine_name_list"];
             med_name_type_dict=JSON.parse(data["med_name_type_dict"]);
             medicine_name_type_list=JSON.parse(JSON.stringify(data['medicine_name_type_list']));
-            console.log("med_name_type_dict",med_name_type_dict)
-            console.log("success",medicine_name_list);
+       
         },
       
     });
@@ -130,7 +130,7 @@ function addMedicineForm(){
         var row_div_three=$("<div class='row'></div>");
 
         var row_div_four=$("<div class='row'></div>");
-        var weight_div_row=$("<div class='row'></div>");
+        var weight_div_row=$("<div class='row' id='weight_div_row'></div>");
 
             col_one__row_div_one=$("<div class='col-md-6'></div>");
             row_div_one__col_one__row_div_one=$("<div class='row'></div>");
@@ -147,7 +147,7 @@ function addMedicineForm(){
             $(col_two__row_div_one).append(row_div_one__col_two__row_div_one);
             col_one__row_div_one__col_two__row_div_one=$("<div class='col-md-4' style=' padding-top:10px'><label class='float-right'>Medicine Type</label></div>");
                 
-                var select=$("<select id='med_type_sel' class='form-control'></select>");
+                var select=$("<select id='med_type_sel' onchange='checkMedTypeReg($(this))' class='form-control'></select>");
                     var option=$("<option selected='selected' id="+medicine_type_list[0]+"-opt value="+medicine_type_list[0]+">"+medicine_type_list[0]+"</option>");
                         $(select).append(option);
 
@@ -191,12 +191,12 @@ function addMedicineForm(){
 
 
 
-            col_one__weight_div_row=$("<div class='col-md-6' style=' padding-top:10px'></div>");
+            col_one__weight_div_row=$("<div  class='col-md-6' style=' padding-top:10px'></div>");
             p__col_one__weight_div_row=$("<label >Weight (mg)</label>");
             col_one__weight_div_row.append(p__col_one__weight_div_row);
 
             col_two__weight_div_row=$("<div class='col-md-6' style=' padding-top:10px'></div>");
-                p__col_two__weight_div_row=$("<input id='med_weight_input'></input>");
+                p__col_two__weight_div_row=$("<input type='number' min=0 id='med_weight_input'></input>");
 
             col_two__weight_div_row.append(p__col_two__weight_div_row);
 
@@ -223,7 +223,22 @@ function addMedicineForm(){
     medicineDataTableGenerator(medicine_name_type_list)
 
 }
+
+function checkMedTypeReg(ele){
+    console.log("value",ele.val())
+    value=ele.val();
+    $("#weight_div_row").show()
+    if (value!=="Tablet" )
+    {
+        $("#weight_div_row").hide()
+    }
+}
 function saveMedicineToDb(){
+    med_weight=$("#med_weight_input").val()
+    if (med_weight=="" && $('#weight_div_row').css('display') !== 'none'){
+        alert("Please enter weight")
+        return
+    }
     alert($("#med_name_input").val().toLowerCase())
    
     console.log("med_name_input",$("#med_name_input").val())
@@ -254,7 +269,7 @@ function saveMedicineToDb(){
     }
     else {
             $( function() {
-
+            $( "#dialog-confirm" ).show()
             $( "#dialog-confirm" ).dialog({
             resizable: false,
             height: "auto",
@@ -277,6 +292,11 @@ function saveMedicineToDb(){
                     // get Radio Button Value and Send it for Save
                     add_charge_status=$("input[name='YES_NO']:checked").val();
                     med_weight=$("#med_weight_input").val()
+                    
+                    if($('#weight_div_row').css('display') == 'none')
+                    {
+                        med_weight=-1;
+                    }
                     sendAjaxReqToSaveMedicineToDb(medicine_name,selected_type,med_details,add_charge_status,med_weight);
 
                     $( this ).dialog( "close" );
@@ -332,7 +352,7 @@ function medicineDataTableGenerator(list){
                 scrollX: true,
                 ordering: false,
                 info:false,
-                searching:false,
+                searching:true,
                 columnDefs: [
                     { width: '100%', targets: '_all' }
                 ],
@@ -344,7 +364,7 @@ function medicineDataTableGenerator(list){
 
 function addMedicineToWhStockFrom(){
     //  Create MedStorage Form. 
-    retrieveMedicineType();
+    // retrieveMedicineType();
     retrieveMedicineNames();
     retrieveMedicineGenDataFromStock();
 
@@ -408,24 +428,24 @@ function addMedicineToWhStockFrom(){
         $(row_div_one).append(col_three__row_div_one);
         
     $(main_col_div).append(row_div_one);
+    $( "#medicine_name_tag" ).val();
+    $( "#medicine_name_tag" ).autocomplete({
+    source: medicine_name_list
+    });
    
-      $( "#medicine_name_tag" ).autocomplete({
-        source: medicine_name_list
-      });
-   
 
-      $("#main_col_div1").append();
+    $("#main_col_div1").append();
 
-    //   var row_two__col_one__row_div_one=$("<div class='row datatablePadding'></div>");
-        var table=$('<table id="med_table" class="datatablecss_med"  style="width: 100%;"></table>')
-    //   row_two__col_one__row_div_one.append(table)
-      $(main_col_div1).append(table)
+//   var row_two__col_one__row_div_one=$("<div class='row datatablePadding'></div>");
+    var table=$('<table id="med_table" class="datatablecss_med"  style="width: 100%;"></table>')
+//   row_two__col_one__row_div_one.append(table)
+    $(main_col_div1).append(table)
 
-      var table=$('<table id="med_in_stock" class="datatablecss_med"  style="width: 100%;" ></table>')
-      $(main_col_div1).append(table)
-      console.log("medicine_name_list",medicine_name_list)
-      createMedTStckT();
-    //   updateMedTStckT();
+    var table=$('<table id="med_in_stock" class="datatablecss_med"  style="width: 100%;" ></table>')
+    $(main_col_div1).append(table)
+    console.log("medicine_name_list",medicine_name_list)
+    createMedTStckT();
+//   updateMedTStckT();
      
 
 }
@@ -455,7 +475,7 @@ function createMedTStckT(){
                 scrollX: true,
                 ordering: true,
                 info:false,
-                searching:false,
+                searching:true,
                 columnDefs: [
                     { width: '100%', targets: '_all' }
                 ],
@@ -882,7 +902,9 @@ function calculateFunc(){
     console.log("sublevel_data",sublevel_data);
     // calculate purchase price of one main  package. 
     priceperpack=purchaseprice/quantity_mainpackage;
-    priceperpack=Math.round(priceperpack)
+    // priceperpack=Math.round(priceperpack)
+    priceperpack=priceperpack.toFixed(3)
+
     // check sublevel1 and store its vals use those vals for sublevels 2,3.. 
     // sublevels=['Strip','Piece']
     var j=1;
@@ -923,7 +945,8 @@ function calculateFunc(){
         // price of 1 piece 
         
         priceof1piece=priceperpack/sublevel_data[0][2]
-        priceof1piece=Math.round(priceof1piece);
+        // priceof1piece=Math.round(priceof1piece);
+        priceof1piece=priceof1piece.toFixed(3)
         
         
         console.log("totalnoofpieces--",totalnoofpieces)
@@ -1002,7 +1025,9 @@ function recursiveFunc(list_length){
             console.log("Total no of strips",totalofsublevel1);
             // price of 1 piece 
             priceof1sublevel=priceperpack/quantityofsublevel
-            priceof1sublevel=Math.round(priceof1sublevel)
+            // priceof1sublevel=Math.round(priceof1sublevel)
+            priceof1sublevel=priceof1sublevel.toFixed(3)
+
             console.log("price of one strip",priceof1sublevel)
             var temp_list=[sublevel,package_name,quantityofsublevel,priceof1sublevel];
             previous_sublevel_data.push(temp_list);
@@ -1056,7 +1081,9 @@ function recursiveFunc(list_length){
             totalnoofsublevel=quantityofsublevel*quant1*quantity_mainpackage;
             totalnoofsublevel=Math.round(totalnoofsublevel);
             price=priceof1sublevel/quant1;
-            price=Math.round(price);
+            // price=Math.round(price);
+            price=price.toFixed(3);
+
             console.log("total no of pieces",totalnoofsublevel);
             console.log("price of one piece",price);
             temp_list=[sublevel1,package_name1,quant1,price];
@@ -1111,22 +1138,31 @@ function recursiveFunc(list_length){
 packages_priceandquant_dict={}
 
 function saveMedicineToWhStock(){
+    var flag=true
+
     if ($('#calc_res_info_form').is(':empty')){
         alert("Please Calculate")
+        return
     }
     else{
-        var flag=true
-        $('#calc_res_info_form input').each(function() {
-            console.log("sss",$(this).val())
-            if ($(this).val()==="NaN"){
+        $('#calc_res_info_form span').each(function() {
+            if ($(this).text()=== "NaN"){
                 flag=false;
-                alert("Please Correct your calcs")
+                alert("Please Correct your Calculations")
                 return;
             }
        });
     }
+    manudatepicker=$("#manudatepicker").val()
+    expdatepicker=$("#expdatepicker").val()
+    if (expdatepicker===""|| manudatepicker ===""){
+        alert("Please Add Dates")
+        return
+    }
     if (flag===true){
                 $( function() {
+                    $( "#dialog-confirm" ).show()
+
                     $( "#dialog-confirm" ).dialog({
                     resizable: false,
                     height: "auto",
@@ -1193,12 +1229,12 @@ function saveMedicineToWhStock(){
                                     price_or_quant=split2[1]
                                     
                                     
-                                    // total no of pieces
+                                    // total no of pieces ... PRICE
                                     if  (packages_priceandquant_dict[package_name]===undefined){
-                                        packages_priceandquant_dict[package_name]=[parseInt(package_name_unit_or_total)]
+                                        packages_priceandquant_dict[package_name]=[package_name_unit_or_total]
                                     }
                                     else{
-                                        packages_priceandquant_dict[package_name].push(parseInt(package_name_unit_or_total))
+                                        packages_priceandquant_dict[package_name].push(package_name_unit_or_total)
                                     }
                                 }).get();
                             
@@ -1378,6 +1414,10 @@ function addRowDivThree(){
           .datepicker({
             defaultDate: "+1w",
             changeMonth: true,
+            changeYear: true,
+          
+
+
             numberOfMonths: 3
           })
           .on( "change", function() {
@@ -1386,6 +1426,9 @@ function addRowDivThree(){
         to = $( "#expdatepicker" ).datepicker({
           defaultDate: "+1w",
           changeMonth: true,
+          changeYear: true,
+          
+
           numberOfMonths: 3
         })
         .on( "change", function() {
@@ -1444,7 +1487,7 @@ function addRowDivTwoCustomSyrup(){
                 var row_one__col_one__package_info_row_div=$("<div class='row' style='padding-bottom:10px;padding-top: 23px;'></div>");
                     var colmd1=$("<div class='col-md-6'></div>")
                     var colmd2=$("<div class='col-md-3'></div>")
-                        mainpackage_type_label=$("<label>Main Med Package Type</label>");
+                        mainpackage_type_label=$("<label>Main Package Type</label>");
                         var mainpackage_type_select=$("<select class='form-control' onchange='customPackage_typeOnSelect($(this))' id='mainpackage_type_select'></select>");
                         var option=$("<option value='--'>--</option>");
                         $(mainpackage_type_select).append(option);
@@ -1467,8 +1510,8 @@ function addRowDivTwoCustomSyrup(){
                 row_two__col_one__package_info_row_div=$("<div class='row main_inputfields_bottle' style='padding-bottom:10px' ></div>");
                     var colmd1=$("<div class='col-md-6'></div>")
                     var colmd2=$("<div class='col-md-3'></div>")
-                        ml_quantity_mainpackage_type_label=$("<label>Amount of ml in Main Package(def-Bottle):</label>");
-                        ml_quantity_mainpackage_type_input=$("<input class='form-control' type='number'  step='1.00' min='1'  id='main_ml_quant_input' name='main_ml_quant_input'></input>");
+                        ml_quantity_mainpackage_type_label=$("<label>Amount of ML in Main Package:</label>");
+                        ml_quantity_mainpackage_type_input=$("<input class='form-control' type='number'  step='5.00' min='1'  id='main_ml_quant_input' name='main_ml_quant_input'></input>");
                     colmd1.append(ml_quantity_mainpackage_type_label);
                     colmd2.append(ml_quantity_mainpackage_type_input)
                 row_two__col_one__package_info_row_div.append(colmd1);
@@ -1487,7 +1530,7 @@ function addRowDivTwoCustomSyrup(){
                 row_four__col_one__package_info_row_div=$("<div class='row' style='padding-bottom:10px'></div>");
                     var colmd1=$("<div class='col-md-6'></div>")
                     var colmd2=$("<div class='col-md-3'></div>")
-                        quantityofpackage_label=$("<label>Quantity of Main Package(def-Bottle) :</label>");
+                        quantityofpackage_label=$("<label>Quantity of Main Package :</label>");
                         quantityofpackage_input=$("<input class='form-control' type='number' step='1.00' min='0'  id='main_quantity_input' name='main_quantity_input'></input>");
                     colmd1.append(quantityofpackage_label);
                     colmd2.append(quantityofpackage_input)
@@ -1563,18 +1606,13 @@ function saveMedicineToWhStock_Bottle(){
     DispensoryBottle_unit_quant=parseFloat($("#DispensoryBottle_unit-quant").text());
     DispensoryBottle_total_quant=parseFloat($("#DispensoryBottle_total-quant").text());
     DispensoryBottle_unit_price=parseFloat($("#DispensoryBottle_unit-price").text());
-    console.log("medicine_name",medicine_name)
-    console.log("batchno",batchno)
-    console.log("purchaserate",purchaserate)
-    console.log("manufactor_date",manufactor_date)
-    console.log("exp_date",exp_date)
-    console.log("MainBottle_total_quant",MainBottle_total_quant)
-    console.log("MainBottle_unit_price",MainBottle_unit_price)
-    console.log("DispensoryBottle_unit_quant",DispensoryBottle_unit_quant)
-    console.log("DispensoryBottle_total_quant",DispensoryBottle_total_quant)
-    console.log("DispensoryBottle_unit_price",DispensoryBottle_unit_price)
 
-
+    if (purchaserate==="" || manufactor_date==="" || exp_date ==="" || MainBottle_total_quant===NaN || MainBottle_unit_price===NaN 
+        || DispensoryBottle_unit_quant===NaN || DispensoryBottle_unit_quant===NaN ||  DispensoryBottle_total_quant===NaN || DispensoryBottle_unit_price===NaN){
+            alert("Please Complete the Form")
+            return
+        }
+  
 
     
     
@@ -1601,6 +1639,7 @@ function saveMedicineToWhStock_Bottle(){
             medicine_batch_in_stock_list=data['medicine_batch_in_stock_list']
 
             console.log(data['Success']);
+            alert("Medicine Added To Stock")
             refreshMedTStckT();
 
         },
@@ -1615,7 +1654,7 @@ function customPackage_typeOnSelect(element){
     sublevel_custom_list=[];
     $("[id^=subpack_custom_row_div_sublevel]").remove();
     $("#calc_res_info_form").empty();
-    $("#main_ml_quant_input").val(1)
+    $("#main_ml_quant_input").val(100)
     $("#main_priceperpack_input").val(0);
     $("#main_quantity_input").val(0);
 
@@ -1670,7 +1709,7 @@ function subPackageCustomHtml(pack_type,sublevel_custom,subpack_customtype_list)
                     var colmd2=$("<div class='col-md-3'></div>");
                     var colmd3=$("<div class='col-md-3'></div>");
 
-                        var quantity_subpack_customtype_label=$("<label>Capicity of Disp Bottle(ml):</label>"); 
+                        var quantity_subpack_customtype_label=$("<label>Capicity of Dispensory Bottle ( ML ) : </label>"); 
                         var quantity_subpack_customtype_input=$("<input class='form-control' type='number' step='1.00' min='1' id='sublevel"+sublevel_custom+"' name='sublevel_input'></input>");
                         var delete_btn=$("<button class='fa fa-times-circle' id= 'delBtn' onclick='deleteSubPackCustomdiv($(this))'></button>");
                     colmd1.append(quantity_subpack_customtype_label);
@@ -1728,7 +1767,7 @@ function subpackageCustom_typeOnButtonDel(parent_id,package_type){
         if (sublevel_custom==1){
                 $("[id^=subpack_custom_row_div_]").remove();
                 $("#mainpackage_type_select").val("--");
-                $("#main_ml_quant_input").val(1)
+                $("#main_ml_quant_input").val(100)
                 $("#main_priceperpack_input").val(0);
                 $("#main_quantity_input").val(0);
 
@@ -1767,7 +1806,8 @@ function calculate_medPriceQuantity_Custom(){
     mlinonebottle=amount;
     totalpurchaserate=purchaseprice;
     priceofonebottle=totalpurchaserate/noofbottles;
-    priceofonebottle=Math.round(priceofonebottle)
+    // priceofonebottle=Math.round(priceofonebottle)
+    priceofonebottle=priceofonebottle.toFixed(3)
     console.log("sublevel_customtemplist[2]",sublevel_customtemplist[0][2])
     mlinoneminibottle=parseInt(sublevel_customtemplist[0][2])
     
@@ -1778,7 +1818,9 @@ function calculate_medPriceQuantity_Custom(){
     totaldespbottle=Math.round(totaldespbottle);
     
     priceofonedespbottle=totalpurchaserate/totaldespbottle;
-    priceofonedespbottle=Math.round(priceofonedespbottle);
+    // priceofonedespbottle=Math.round(priceofonedespbottle);
+    priceofonedespbottle=priceofonedespbottle.toFixed(3);
+
     console.log("noofbottles",noofbottles);
     console.log("mlinonebottle",mlinonebottle);
     console.log("totalpurchaserate",totalpurchaserate);
@@ -1961,197 +2003,127 @@ function addMedicineToDespStockForm(){
                 var medicine_name=$(this).find('td').eq(0).text()
                 medstck_datatable.$('tr.selected').removeClass('selected');
                 $(this).addClass('selected');
-                $(".add_all_stk").show();
 
-                // if (inactive_datatable!==undefined){
-                //     inactive_datatable.destroy();
-                // }
+                $(".add_all_stk").show();
                 $("#med_in_temp_stock_datatable_row").remove();
                 $("#active_batch_data_row").remove();
                 $("#medicine_name_tag").val(medicine_name);
                 focusOut_medicineNameDesp($("#medicine_name_tag"));
                 
-                var active_row_div_two=$("<div class='row despstorage_second_col_div_three_rows' id='active_batch_data_row'></div>");
-                    var col_one__row_div_two=$("<div class='col'></div>");
-                        var row__col_one__row_div_two=$("<div class='row'></div>");
-                            label=$("<lable>Active Batch Stock Data</label>")
-                        row__col_one__row_div_two.append(label)
+                // var active_row_div_two=$("<div class='row despstorage_second_col_div_three_rows' id='active_batch_data_row'></div>");
+                //     var col_one__row_div_two=$("<div class='col'></div>");
+                //         var row__col_one__row_div_two=$("<div class='row'></div>");
+                //             label=$("<lable>Active Batch Stock Data</label>")
+                //         row__col_one__row_div_two.append(label)
 
-                        var row1__col_one__row_div_two=$("<div class='row'></div>");
-                        var row3__col_one__row_div_two=$("<div class='row'></div>");
-                        var row2__col_one__row_div_two=$("<div class='row'></div>");
+                //         var row1__col_one__row_div_two=$("<div class='row'></div>");
+                //         var row3__col_one__row_div_two=$("<div class='row'></div>");
+                //         var row2__col_one__row_div_two=$("<div class='row'></div>");
                     
-                                    // based on medicine name and get current data in stock through ajax,
-                                    $.ajax({
-                                        type:"POST",
-                                        dataType:"json",
-                                        'data':{
-                                            "medicine_name":medicine_name,
-                                        },
-                                        url:"/retrieve_medicine_stock_data_from_stock",
-                                        success:function (data){
-                                            var medicine_batch_in_tempstock_list=data["medicine_batch_in_tempstock_list"];
-                                            var boxes=data["boxes"]
-                                            var strips=data['strips']
-                                            var pieces=data["pieces"]
-                                            var strip_unit=data['strip_unit']
-                                            console.log("boxes--",boxes)
-                                            console.log("strips--",strips)
+                //                     // based on medicine name and get current data in stock through ajax,
+                //                     $.ajax({
+                //                         type:"POST",
+                //                         dataType:"json",
+                //                         'data':{
+                //                             "medicine_name":medicine_name,
+                //                         },
+                //                         url:"/retrieve_medicine_stock_data_from_stock",
+                //                         success:function (data){
+                //                             var medicine_batch_in_tempstock_list=data["medicine_batch_in_tempstock_list"];
+                //                             var boxes=data["boxes"]
+                //                             var strips=data['strips']
+                //                             var pieces=data["pieces"]
+                //                             var strip_unit=data['strip_unit']
+                //                             console.log("boxes--",boxes)
+                //                             console.log("strips--",strips)
 
-                                            console.log("pieces",pieces)
+                //                             console.log("pieces",pieces)
 
 
-                                                var colmd1=$("<div class='col-md-6'></div>")
-                                                    boxamount_label=$("<label class='custom_label_css'>No of Boxes Stored:</label>");
-                                                colmd1.append(boxamount_label)
-                                                var colmd2=$("<div class='col-md-6'></div>")
-                                                        boxamount_input=$("<input class='form-control' type='number' id='active_box_input' class='custom_input_css' value='"+boxes+"' disabled> </input>")
-                                                colmd2.append(boxamount_input)
-                                                row1__col_one__row_div_two.append(colmd1);
-                                                row1__col_one__row_div_two.append(colmd2);
-                                            if (strip_unit!=="-"){
-                                                    var colmd1=$("<div class='col-md-6'></div>")
-                                                        pieceamount_label=$("<label class='custom_label_css'>No of Strips Stored:</label>");
-                                                    colmd1.append(pieceamount_label)
-                                                    var colmd2=$("<div class='col-md-6'></div>")
-                                                        pieceamount_input=$("<input class='form-control' type='number' id='active_strip_input' value='"+strips+"'  class='custom_input_css' disabled> </input>")
-                                                    colmd2.append(pieceamount_input)
-                                                row3__col_one__row_div_two.append(colmd1);
-                                                row3__col_one__row_div_two.append(colmd2);
-                                            }
+                //                                 var colmd1=$("<div class='col-md-6'></div>")
+                //                                     boxamount_label=$("<label class='custom_label_css'>No of Boxes Stored:</label>");
+                //                                 colmd1.append(boxamount_label)
+                //                                 var colmd2=$("<div class='col-md-6'></div>")
+                //                                         boxamount_input=$("<input class='form-control' type='number' id='active_box_input' class='custom_input_css' value='"+boxes+"' disabled> </input>")
+                //                                 colmd2.append(boxamount_input)
+                //                                 row1__col_one__row_div_two.append(colmd1);
+                //                                 row1__col_one__row_div_two.append(colmd2);
+                //                             if (strip_unit!=="-"){
+                //                                     var colmd1=$("<div class='col-md-6'></div>")
+                //                                         pieceamount_label=$("<label class='custom_label_css'>No of Strips Stored:</label>");
+                //                                     colmd1.append(pieceamount_label)
+                //                                     var colmd2=$("<div class='col-md-6'></div>")
+                //                                         pieceamount_input=$("<input class='form-control' type='number' id='active_strip_input' value='"+strips+"'  class='custom_input_css' disabled> </input>")
+                //                                     colmd2.append(pieceamount_input)
+                //                                 row3__col_one__row_div_two.append(colmd1);
+                //                                 row3__col_one__row_div_two.append(colmd2);
+                //                             }
             
-                                                var colmd1=$("<div class='col-md-6'></div>")
-                                                    pieceamount_label=$("<label class='custom_label_css'>No of Pieces Stored:</label>");
-                                                colmd1.append(pieceamount_label)
-                                                var colmd2=$("<div class='col-md-6'></div>")
-                                                    pieceamount_input=$("<input class='form-control' type='number' id='active_piece_input' value='"+pieces+"'  class='custom_input_css' disabled> </input>")
-                                                colmd2.append(pieceamount_input)
-                                            row2__col_one__row_div_two.append(colmd1);
-                                            row2__col_one__row_div_two.append(colmd2);
-                                        col_one__row_div_two.append(row__col_one__row_div_two)
-                                        col_one__row_div_two.append(row1__col_one__row_div_two);         
-                                        col_one__row_div_two.append(row2__col_one__row_div_two);         
-                                        col_one__row_div_two.append(row3__col_one__row_div_two);         
-                                    active_row_div_two.append(col_one__row_div_two);    
-                                    $(main_col_div_2).append(active_row_div_two);
+                //                                 var colmd1=$("<div class='col-md-6'></div>")
+                //                                     pieceamount_label=$("<label class='custom_label_css'>No of Pieces Stored:</label>");
+                //                                 colmd1.append(pieceamount_label)
+                //                                 var colmd2=$("<div class='col-md-6'></div>")
+                //                                     pieceamount_input=$("<input class='form-control' type='number' id='active_piece_input' value='"+pieces+"'  class='custom_input_css' disabled> </input>")
+                //                                 colmd2.append(pieceamount_input)
+                //                             row2__col_one__row_div_two.append(colmd1);
+                //                             row2__col_one__row_div_two.append(colmd2);
+                //                         col_one__row_div_two.append(row__col_one__row_div_two)
+                //                         col_one__row_div_two.append(row1__col_one__row_div_two);         
+                //                         col_one__row_div_two.append(row2__col_one__row_div_two);         
+                //                         col_one__row_div_two.append(row3__col_one__row_div_two);         
+                //                     active_row_div_two.append(col_one__row_div_two);    
+                //                     $(main_col_div_2).append(active_row_div_two);
                     
                     
-                                    var temp_row_div_three=$("<div class='row despstorage_second_col_div_three_rows' id='med_in_temp_stock_datatable_row'></div>");
-                                    var col_one__row_div_three=$("<div class='col'></div>");
+                //                     var temp_row_div_three=$("<div class='row despstorage_second_col_div_three_rows' id='med_in_temp_stock_datatable_row'></div>");
+                //                     var col_one__row_div_three=$("<div class='col'></div>");
                     
-                                        var row1__col_one__row_div_three=$("<div class='row'></div>");
-                                            var label=$("<label>InActive Batches of Medicine </label>")
-                                        row1__col_one__row_div_three.append(label);
+                //                         var row1__col_one__row_div_three=$("<div class='row'></div>");
+                //                             var label=$("<label>InActive Batches of Medicine </label>")
+                //                         row1__col_one__row_div_three.append(label);
                     
-                                        var row2__col_one__row_div_three=$("<div class='row'></div>");
-                                                table=$('<table id="med_in_temp_stock" class="datatablecss_med" ></table>')
-                                        row2__col_one__row_div_three.append(table);
+                //                         var row2__col_one__row_div_three=$("<div class='row'></div>");
+                //                                 table=$('<table id="med_in_temp_stock" class="datatablecss_med" ></table>')
+                //                         row2__col_one__row_div_three.append(table);
                     
-                                    col_one__row_div_three.append(row1__col_one__row_div_three);         
-                                    col_one__row_div_three.append(row2__col_one__row_div_three);   
+                //                     col_one__row_div_three.append(row1__col_one__row_div_three);         
+                //                     col_one__row_div_three.append(row2__col_one__row_div_three);   
                                             
-                                temp_row_div_three.append(col_one__row_div_three);    
-                                $(main_col_div_2).append(temp_row_div_three);
-                                console.log("medicine_batch_in_tempstock_list",medicine_batch_in_tempstock_list)
-                                $(function(){
+                //                 temp_row_div_three.append(col_one__row_div_three);    
+                //                 $(main_col_div_2).append(temp_row_div_three);
+                //                 console.log("medicine_batch_in_tempstock_list",medicine_batch_in_tempstock_list)
+                //                 $(function(){
                                 
-                                        inactive_datatable=$("#med_in_temp_stock").DataTable({
-                                        data:medicine_batch_in_tempstock_list ,
-                                        columns: [
-                                            { title: "Med" },
-                                            { title: "BatNo" },
+                //                         inactive_datatable=$("#med_in_temp_stock").DataTable({
+                //                         data:medicine_batch_in_tempstock_list ,
+                //                         columns: [
+                //                             { title: "Med" },
+                //                             { title: "BatNo" },
                                             
-                                            { title: "boxes" },
-                                            { title: "Strips" },
+                //                             { title: "boxes" },
+                //                             { title: "Strips" },
             
-                                            { title: "pieces" },
+                //                             { title: "pieces" },
                                         
-                                            ],
+                //                             ],
                                             
-                                            paging: false,
-                                            "scrollY": 100,
-                                            "scrollX": 50,
-                                            "ordering": true,
-                                            "searching":false,
-                                            "autoWidth": false,
-                                            info:false,
+                //                             paging: false,
+                //                             "scrollY": 100,
+                //                             "scrollX": 50,
+                //                             "ordering": true,
+                //                             "searching":false,
+                //                             "autoWidth": false,
+                //                             info:false,
                                 
-                                        });
+                //                         });
                                 
                                     
-                                });
+                //                 });
                                
 
-                            },
-                        });
-            //         col_one__row_div_two.append(row__col_one__row_div_two)
-            //         col_one__row_div_two.append(row1__col_one__row_div_two);         
-            //         col_one__row_div_two.append(row2__col_one__row_div_two);         
-            //         col_one__row_div_two.append(row3__col_one__row_div_two);         
-            //     active_row_div_two.append(col_one__row_div_two);    
-            //     $(main_col_div_2).append(active_row_div_two);
-
-
-            //     var temp_row_div_three=$("<div class='row despstorage_second_col_div_three_rows' id='med_in_temp_stock_datatable_row'></div>");
-            //     var col_one__row_div_three=$("<div class='col'></div>");
-
-            //         var row1__col_one__row_div_three=$("<div class='row'></div>");
-            //             var label=$("<label>InActive Batches of Medicine </label>")
-            //         row1__col_one__row_div_three.append(label);
-
-            //         var row2__col_one__row_div_three=$("<div class='row'></div>");
-            //                 table=$('<table id="med_in_temp_stock" class="datatablecss_med" ></table>')
-            //         row2__col_one__row_div_three.append(table);
-
-            //     col_one__row_div_three.append(row1__col_one__row_div_three);         
-            //     col_one__row_div_three.append(row2__col_one__row_div_three);   
-                      
-            // temp_row_div_three.append(col_one__row_div_three);    
-            // $(main_col_div_2).append(temp_row_div_three);
-            // $.ajax({
-            //     type:"POST",
-            //     dataType:"json",
-            //     'data':{
-            //         "medicine_name":medicine_name,
-            //     },
-            //     url:"/retrieve_medicine_tempstock_from_tempstock",
-            //     success:function (data){
-                   
-            //         medicine_batch_in_tempstock_list=data['medicine_batch_in_tempstock_list'];
-
-
-                    // console.log(medicine_batch_in_tempstock_list)
-                    // $(function(){
-                    
-                    //         inactive_datatable=$("#med_in_temp_stock").DataTable({
-                    //         data:medicine_batch_in_tempstock_list ,
-                    //         columns: [
-                    //             { title: "Med" },
-                    //             { title: "BatNo" },
-                                
-                    //             { title: "boxes" },
-                    //             { title: "Strips" },
-
-                    //             { title: "pieces" },
-                            
-                    //             ],
-                                
-                    //             paging: false,
-                    //             "scrollY": 100,
-                    //             "scrollX": 50,
-                    //             "ordering": true,
-                    //             "searching":false,
-                    //             "autoWidth": false,
-                    //             info:false,
-                    
-                    //         });
-                    
-                        
-                    // });
-           
-
-            //     },
-            // });
+                //             },
+                //         });
+     
         
             }   
         } );
@@ -2255,8 +2227,12 @@ function refreshAddMedicineToDespStockForm(){
     $("#despstorage_second_col_div_three_rows").remove()
 }
 function focusOut_medicineNameDesp(element){
+  
     var medicine_name=$(element).val();
     if (medicine_batch_in_stock_dict[medicine_name]!==undefined){
+        $(".add_all_stk").show();
+        $("#med_in_temp_stock_datatable_row").remove();
+        $("#active_batch_data_row").remove();
         batchno=medicine_batch_in_stock_dict[medicine_name];
         $('#batchno_input').val(parseInt(batchno));
         $("#batchno_input").prop('disabled',true);   
@@ -2268,9 +2244,15 @@ function focusOut_medicineNameDesp(element){
             },
             url:"/retrieve_medicine_stock_data_from_stock",
             success:function (data){
-                boxes=data["boxes"]
-                strips=data['strips'];
-                pieces=data["pieces"];
+                if  (data["medInStorage"]==="false"){
+                    alert("Medicine in Stock not found")
+                    $(".add_all_stk").hide();
+                    return
+                }
+                var medicine_batch_in_tempstock_list=data["medicine_batch_in_tempstock_list"];
+                var boxes=data["boxes"]
+                var strips=data['strips']
+                var pieces=data["pieces"]
                 var strip_unit=data['strip_unit']
 
                 $("#row_div_two").remove()
@@ -2327,15 +2309,111 @@ function focusOut_medicineNameDesp(element){
                     row_div_three.append(col_one__row_div_three);
 
                 $(despstorage_first_col_div).append(row_div_two);
-                $(despstorage_first_col_div).append(row_div_three);        
+                $(despstorage_first_col_div).append(row_div_three);    
+                
+                // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                main_col_div_2=$("#despstorage_second_col_div")
+                var active_row_div_two=$("<div class='row despstorage_second_col_div_three_rows' id='active_batch_data_row'></div>");
+                    var col_one__row_div_two=$("<div class='col'></div>");
+                        var row__col_one__row_div_two=$("<div class='row'></div>");
+                            label=$("<lable>Active Batch Stock Data</label>")
+                        row__col_one__row_div_two.append(label)
+
+                        var row1__col_one__row_div_two=$("<div class='row'></div>");
+                        var row3__col_one__row_div_two=$("<div class='row'></div>");
+                        var row2__col_one__row_div_two=$("<div class='row'></div>");
+            
+                        var colmd1=$("<div class='col-md-6'></div>")
+                        boxamount_label=$("<label class='custom_label_css'>No of Boxes Stored:</label>");
+                    colmd1.append(boxamount_label)
+                    var colmd2=$("<div class='col-md-6'></div>")
+                            boxamount_input=$("<input class='form-control' type='number' id='active_box_input' class='custom_input_css' value='"+boxes+"' disabled> </input>")
+                    colmd2.append(boxamount_input)
+                    row1__col_one__row_div_two.append(colmd1);
+                    row1__col_one__row_div_two.append(colmd2);
+                if (strip_unit!=="-"){
+                        var colmd1=$("<div class='col-md-6'></div>")
+                            pieceamount_label=$("<label class='custom_label_css'>No of Strips Stored:</label>");
+                        colmd1.append(pieceamount_label)
+                        var colmd2=$("<div class='col-md-6'></div>")
+                            pieceamount_input=$("<input class='form-control' type='number' id='active_strip_input' value='"+strips+"'  class='custom_input_css' disabled> </input>")
+                        colmd2.append(pieceamount_input)
+                    row3__col_one__row_div_two.append(colmd1);
+                    row3__col_one__row_div_two.append(colmd2);
+                }
+
+                    var colmd1=$("<div class='col-md-6'></div>")
+                        pieceamount_label=$("<label class='custom_label_css'>No of Pieces Stored:</label>");
+                    colmd1.append(pieceamount_label)
+                    var colmd2=$("<div class='col-md-6'></div>")
+                        pieceamount_input=$("<input class='form-control' type='number' id='active_piece_input' value='"+pieces+"'  class='custom_input_css' disabled> </input>")
+                    colmd2.append(pieceamount_input)
+                row2__col_one__row_div_two.append(colmd1);
+                row2__col_one__row_div_two.append(colmd2);
+            col_one__row_div_two.append(row__col_one__row_div_two)
+            col_one__row_div_two.append(row1__col_one__row_div_two);         
+            col_one__row_div_two.append(row2__col_one__row_div_two);         
+            col_one__row_div_two.append(row3__col_one__row_div_two);         
+        active_row_div_two.append(col_one__row_div_two);    
+        $(main_col_div_2).append(active_row_div_two);
+
+
+        var temp_row_div_three=$("<div class='row despstorage_second_col_div_three_rows' id='med_in_temp_stock_datatable_row'></div>");
+        var col_one__row_div_three=$("<div class='col'></div>");
+
+            var row1__col_one__row_div_three=$("<div class='row'></div>");
+                var label=$("<label>InActive Batches of Medicine </label>")
+            row1__col_one__row_div_three.append(label);
+
+            var row2__col_one__row_div_three=$("<div class='row'></div>");
+                    table=$('<table id="med_in_temp_stock" class="datatablecss_med" ></table>')
+            row2__col_one__row_div_three.append(table);
+
+        col_one__row_div_three.append(row1__col_one__row_div_three);         
+        col_one__row_div_three.append(row2__col_one__row_div_three);   
+                
+    temp_row_div_three.append(col_one__row_div_three);    
+    $(main_col_div_2).append(temp_row_div_three);
+    console.log("medicine_batch_in_tempstock_list",medicine_batch_in_tempstock_list)
+    $(function(){
+    
+            inactive_datatable=$("#med_in_temp_stock").DataTable({
+            data:medicine_batch_in_tempstock_list ,
+            columns: [
+                { title: "Med" },
+                { title: "BatNo" },
+                
+                { title: "boxes" },
+                { title: "Strips" },
+
+                { title: "pieces" },
+            
+                ],
+                
+                paging: false,
+                "scrollY": 100,
+                "scrollX": 50,
+                "ordering": true,
+                "searching":false,
+                "autoWidth": false,
+                info:false,
+    
+            });
+    
+        
+    });
+     
+            
             },
         });
-
         
     }
     else{
         console.log("Please enter a valid Medicine Name")
         $("#medicine_name_tag").focus()
+        $(".add_all_stk").hide();
+        $("#med_in_temp_stock_datatable_row").remove();
+        $("#active_batch_data_row").remove();
     }
 
 }
@@ -2376,6 +2454,12 @@ function SaveToDespStock(){
         },
         url:"/save_to_desp_stock",
         success:function (data){
+            if(data['medInStorage']==="false"){
+                
+                alert("Medicine Not In Stock")
+                $(".add_all_stk").hide()
+                return
+            }
             // 'medicine_batch_in_stock_dict':JSON.parse(medicine_batch_in_stock_dict),
             if (data['errorflag']==="false"){
                 medicine_batch_in_stock_list=data['medicine_batch_in_stock_list'],
@@ -2386,6 +2470,7 @@ function SaveToDespStock(){
                 $("#noofboxes_input").val("0");
                 $("#noofpieces_input").val("0");
             }
+            
         },
     });
 

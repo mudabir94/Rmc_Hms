@@ -178,7 +178,7 @@ function rw_OnSelect(element){
 
                                     roomPrice_label=$("<label for='roomPrice_tag' class='custom_label_css'>Room Cost Per Day</label>");
                                     colmd1.append(roomPrice_label)
-                                    room_price_input=$("<input id='room_price_input' class='custom_input_css form-control'>")
+                                    room_price_input=$("<input id='room_price_input' value= '0' class='custom_input_css form-control'>")
                                     colmd2.append(room_price_input)
 
                             row__col_one__row_three.append(colmd1);
@@ -198,7 +198,7 @@ function rw_OnSelect(element){
 
                                     acPrice_label=$("<label for='acPrice_tag' class='custom_label_css'>A/C Cost Per Day</label>");
                                     colmd1.append(acPrice_label)
-                                    acPrice_input=$("<input id='acPrice_input' class='custom_input_css form-control'>")
+                                    acPrice_input=$("<input id='acPrice_input' value= '0' class='custom_input_css form-control'>")
                                     colmd2.append(acPrice_input)
 
                             row__col_one__row_four.append(colmd1);
@@ -218,7 +218,7 @@ function rw_OnSelect(element){
                                         colmd1.append(room_status_label)
                                         var select=$("<select id='status_input' class='form-control'></select>");
                                         var option=$("<option selected='selected' value='--'>--</option>");
-                                        var option1=$("<option id="+room_status_list[0]+"-opt value="+room_status_list[0]+">"+room_status_list[0]+"</option>");
+                                        var option1=$("<option id='"+room_status_list[0]+"-opt' value='"+room_status_list[0]+"'>"+room_status_list[0]+"</option>");
 
                                         $(select).append(option);
                                         $(select).append(option1);
@@ -226,7 +226,7 @@ function rw_OnSelect(element){
                                 
                                         for (var i=1;i<=room_status_list.length;i++){
                                             if (room_status_list[i]!==undefined){
-                                                var option=$("<option id="+room_status_list[i]+"-opt value="+room_status_list[i]+">"+room_status_list[i]+"</option>");
+                                                var option=$("<option id='"+room_status_list[i]+"-opt' value='"+room_status_list[i]+"'>"+room_status_list[i]+"</option>");
                                                 $(select).append(option);
                                             }
                                         } 
@@ -335,7 +335,7 @@ function rw_OnSelect(element){
                                     colmd1.append(bed_status_label)
                                     var select=$("<select id='status_input' class='form-control'></select>");
                                     var option=$("<option selected='selected' value='--'>--</option>");
-                                    var option1=$("<option id="+room_status_list[0]+"-opt value="+room_status_list[0]+">"+room_status_list[0]+"</option>");
+                                    var option1=$("<option id='"+room_status_list[0]+"-opt' value='"+room_status_list[0]+"'>"+room_status_list[0]+"</option>");
 
                                     $(select).append(option);
                                     $(select).append(option1);
@@ -343,7 +343,7 @@ function rw_OnSelect(element){
                             
                                     for (var i=1;i<=room_status_list.length;i++){
                                         if (room_status_list[i]!==undefined){
-                                            var option=$("<option id="+room_status_list[i]+"-opt value="+room_status_list[i]+">"+room_status_list[i]+"</option>");
+                                            var option=$("<option id='"+room_status_list[i]+"-opt' value='"+room_status_list[i]+"'>"+room_status_list[i]+"</option>");
                                             $(select).append(option);
                                         }
                                     } 
@@ -423,6 +423,45 @@ function saveRoomWard(){
                 $("#empty_name_check_div_floor_no_input").remove();
             }
         }
+        if (roomCharge===""){
+            $("#empty_name_check_div_room_charge_input").remove();
+            var div=$("<div class='empty_name_check_div' id='empty_name_check_div_room_charge_input'><span  class='glyphicon' style='color:red'>&#x2a;Required</span></div>")
+            $("#room_price_input").parent().append(div);
+            required_fields_left=true
+        }
+        else{
+            if($("#room_price_input").parent().find(".empty_name_check_div").length > 0){
+                $("#empty_name_check_div_room_charge_input").remove();
+            }
+        }
+
+        if (ac_price===""){
+            $("#empty_name_check_div_ac_price_input").remove();
+            var div=$("<div class='empty_name_check_div' id='empty_name_check_div_ac_price_input'><span  class='glyphicon' style='color:red'>&#x2a;Required</span></div>")
+            $("#acPrice_input").parent().append(div);
+            required_fields_left=true
+        }
+        else{
+            if($("#acPrice_input").parent().find(".empty_name_check_div").length > 0){
+                $("#empty_name_check_div_ac_price_input").remove();
+            }
+        }
+
+        if (status==="--"){
+            $("#empty_name_check_div_status_input").remove();
+            var div=$("<div class='empty_name_check_div' id='empty_name_check_div_status_input'><span  class='glyphicon' style='color:red'>&#x2a;Required</span></div>")
+            $("#status_input").parent().append(div);
+            required_fields_left=true
+        }
+        else{
+            if($("#status_input").parent().find(".empty_name_check_div").length > 0){
+                $("#empty_name_check_div_status_input").remove();
+            }
+        }
+
+
+
+
         if (required_fields_left===true){
             return;
         }
@@ -508,6 +547,28 @@ function saveRoomWard(){
         else{
             if($("#bed_no_input").parent().find(".empty_name_check_div").length > 0){
                 $("#empty_name_check_div_bed_no_input").remove();
+            }
+        }
+        if (bedCharges===""){
+            $("#empty_name_check_div_bed_price_input").remove();
+            var div=$("<div class='empty_name_check_div' id='empty_name_check_div_bed_price_input'><span  class='glyphicon' style='color:red'>&#x2a;Required</span></div>")
+            $("#bed_price_input").parent().append(div);
+            required_fields_left=true
+        }
+        else{
+            if($("#bed_price_input").parent().find(".empty_name_check_div").length > 0){
+                $("#empty_name_check_div_bed_price_input").remove();
+            }
+        }
+        if (status==="--"){
+            $("#empty_name_check_div_status_input").remove();
+            var div=$("<div class='empty_name_check_div' id='empty_name_check_div_status_input'><span  class='glyphicon' style='color:red'>&#x2a;Required</span></div>")
+            $("#status_input").parent().append(div);
+            required_fields_left=true
+        }
+        else{
+            if($("#status_input").parent().find(".empty_name_check_div").length > 0){
+                $("#empty_name_check_div_status_input").remove();
             }
         }
         if (required_fields_left===true){
@@ -598,16 +659,32 @@ function updateRoomWardForm(){
     $(main_col_div).append(row_div_one);
 
 }
-function availableRoomWardRowDivTwo(){
+function availableRoomRowDivTwo(){
     var main_col_div=$("#main_col_div");
         var row_div_two=$("<div class='row' id='row_div_two'></div>");
         // Datatable Name
             var col_one__row_div_two=$("<div class='col-md-12'></div>");
                 var row__col_one__row_div_two=$("<div class='row'></div>");
                     var colmd1=$("<div class='col-md-12'></div>")
-                        var available_room_ward_table=$('<table id="available_room_ward_table" class="datatable_roomward" width="100%"></table>')
+                        var available_room_table=$('<table id="available_room_table" class="datatable_roomward" width="100%"></table>')
 
-                    colmd1.append(available_room_ward_table)
+                    colmd1.append(available_room_table)
+                row__col_one__row_div_two.append(colmd1);
+
+            col_one__row_div_two.append(row__col_one__row_div_two);
+        $(row_div_two).append(col_one__row_div_two);
+    main_col_div.append(row_div_two)
+}
+function availableWardRowDivTwo(){
+    var main_col_div=$("#main_col_div");
+        var row_div_two=$("<div class='row' id='row_div_two'></div>");
+        // Datatable Name
+            var col_one__row_div_two=$("<div class='col-md-12'></div>");
+                var row__col_one__row_div_two=$("<div class='row'></div>");
+                    var colmd1=$("<div class='col-md-12'></div>")
+                        var available_ward_table=$('<table id="available_ward_table" class="datatable_roomward" width="100%"></table>')
+
+                    colmd1.append(available_ward_table)
                 row__col_one__row_div_two.append(colmd1);
 
             col_one__row_div_two.append(row__col_one__row_div_two);
@@ -625,14 +702,16 @@ function update_rw_OnSelect(element){
 
         if (room_datatable!==undefined){
             room_datatable.destroy();
+            room_datatable=undefined
 
         }
         if (ward_datatable!==undefined){
             ward_datatable.destroy();
+            ward_datatable=undefined;
 
         }
     
-        availableRoomWardRowDivTwo();
+        availableRoomRowDivTwo();
         retrieveAllRoomInfoInRoomWard();
        
         // else if (ward_datatable!==undefined){
@@ -655,15 +734,19 @@ function update_rw_OnSelect(element){
 
         if (room_datatable!==undefined){
             room_datatable.destroy();
+            room_datatable=undefined
+
 
         }
         if (ward_datatable!==undefined){
             ward_datatable.destroy();
+            ward_datatable=undefined
+
 
         }
     
         
-        availableRoomWardRowDivTwo();
+        availableWardRowDivTwo();
         retrieveAllWardInfoInRoomWard();
     
 
@@ -672,11 +755,13 @@ function update_rw_OnSelect(element){
         $("#row_div_three").remove();
         if (room_datatable!==undefined){
             room_datatable.destroy();
+            room_datatable=undefined
             $("#row_div_two").remove();
         }
         else if (ward_datatable!==undefined){
 
             ward_datatable.destroy();
+            ward_datatable=undefined
             $("#row_div_two").remove();
         }
     }
@@ -685,7 +770,7 @@ function update_rw_OnSelect(element){
 function createRoomDTable(){
     console.log("room_list----------",room_list)
     $(function(){
-        room_datatable=$("#available_room_ward_table").DataTable({
+        room_datatable=$("#available_room_table").DataTable({
             data:room_list,
             columns: [
                 { title: "Id" },
@@ -741,7 +826,7 @@ function createRoomDTable(){
                 ],
 
             });
-            $('#available_room_ward_table tbody').on( 'click', 'tr', function () {
+            $('#available_room_table tbody').on( 'click', 'tr', function () {
                 if ( $(this).hasClass('selected') ) {
                     alert("clicked same entry")
                 }
@@ -882,7 +967,7 @@ function createRoomDTable(){
 function createWardDTable(){
     console.log("ward_list",ward_list)
     $(function(){
-        ward_datatable=$("#available_room_ward_table").DataTable({
+        ward_datatable=$("#available_ward_table").DataTable({
             data:ward_list,
             columns: [
                 { title: "Id" },
@@ -937,7 +1022,7 @@ function createWardDTable(){
                 ],
     
             });
-            $('#available_room_ward_table tbody').on( 'click', 'tr', function () {
+            $('#available_ward_table tbody').on( 'click', 'tr', function () {
                 if ( $(this).hasClass('selected') ) {
                     alert("clicked same entry")
                 }
@@ -1011,7 +1096,7 @@ function createWardDTable(){
                                     
                                             for (var i=0;i<=room_status_list.length;i++){
                                                 if (room_status_list[i]!==undefined){
-                                                    var option=$("<option id="+room_status_list[i]+"-opt  value='"+room_status_list[i]+"'>"+room_status_list[i]+"</option>");
+                                                    var option=$("<option id='"+room_status_list[i]+"-opt'  value='"+room_status_list[i]+"'>"+room_status_list[i]+"</option>");
                                                     $(select).append(option);
                                                     if(ward_dict[ward_id_selected]['status']==room_status_list[i]){
                                                         $(option).attr('selected', 'selected');
@@ -1063,6 +1148,72 @@ function updateRoomData(){
     var charge_per_day=$("#room_charges_input").val();
     var ac_charge_per_day=$("#ac_charges_input").val();
     var status=$("#status_input").val();
+    required_fields_left=false
+
+    if (room_no===""){
+        $("#empty_name_check_div_room_no_input").remove();
+        var div=$("<div class='empty_name_check_div' id='empty_name_check_div_room_no_input'><span  class='glyphicon' style='color:red'>&#x2a;Required</span></div>")
+        $("#room_no_input").parent().append(div);
+        required_fields_left=true
+    }
+    else{
+        if($("#room_no_input").parent().find(".empty_name_check_div").length > 0){
+            $("#empty_name_check_div_room_no_input").remove();
+        }
+    }
+    if (charge_per_day===""){
+        $("#empty_name_check_div_room_charges_input").remove();
+        var div=$("<div class='empty_name_check_div' id='empty_name_check_div_room_charges_input'><span  class='glyphicon' style='color:red'>&#x2a;Required</span></div>")
+        $("#room_charges_input").parent().append(div);
+        required_fields_left=true
+    }
+    else{
+        if($("#room_charges_input").parent().find(".empty_name_check_div").length > 0){
+            $("#empty_name_check_div_room_charges_input").remove();
+        }
+    }
+    if (ac_charge_per_day===""){
+        $("#empty_name_check_div_ac_charges_input").remove();
+        var div=$("<div class='empty_name_check_div' id='empty_name_check_div_ac_charges_input'><span  class='glyphicon' style='color:red'>&#x2a;Required</span></div>")
+        $("#ac_charges_input").parent().append(div);
+        required_fields_left=true
+    }
+    else{
+        if($("#ac_charges_input").parent().find(".empty_name_check_div").length > 0){
+            $("#empty_name_check_div_ac_charges_input").remove();
+        }
+    }
+
+    if (floor===""){
+        $("#empty_name_check_div_floor_no_input").remove();
+        var div=$("<div class='empty_name_check_div' id='empty_name_check_div_floor_no_input'><span  class='glyphicon' style='color:red'>&#x2a;Required</span></div>")
+        $("#floor_no_input").parent().append(div);
+        required_fields_left=true
+    }
+    else{
+        if($("#floor_no_input").parent().find(".empty_name_check_div").length > 0){
+            $("#empty_name_check_div_floor_no_input").remove();
+        }
+    }
+
+    if (status==="--"){
+        $("#empty_name_check_div_status_input").remove();
+        var div=$("<div class='empty_name_check_div' id='empty_name_check_div_status_input'><span  class='glyphicon' style='color:red'>&#x2a;Required</span></div>")
+        $("#status_input").parent().append(div);
+        required_fields_left=true
+    }
+    else{
+        if($("#status_input").parent().find(".empty_name_check_div").length > 0){
+            $("#empty_name_check_div_status_input").remove();
+        }
+    }
+
+
+
+
+    if (required_fields_left===true){
+        return;
+    }
     
     $.ajax({
         type: 'POST',
@@ -1103,7 +1254,23 @@ function updateWardData(){
     var bed_no=$("#bed_no_input").val();
     var charge_per_day=$("#room_charges_input").val();
     var status=$("#status_input").val();
+    required_fields_left=false
+
+    if (charge_per_day===""){
+        $("#empty_name_check_div_room_charges_input").remove();
+        var div=$("<div class='empty_name_check_div' id='empty_name_check_div_room_charges_input'><span  class='glyphicon' style='color:red'>&#x2a;Required</span></div>")
+        $("#room_charges_input").parent().append(div);
+        required_fields_left=true
+    }
+    else{
+        if($("#room_charges_input").parent().find(".empty_name_check_div").length > 0){
+            $("#empty_name_check_div_room_charges_input").remove();
+        }
+    }
     
+    if (required_fields_left===true){
+        return;
+    }
     $.ajax({
         type: 'POST',
         dataType: "json",

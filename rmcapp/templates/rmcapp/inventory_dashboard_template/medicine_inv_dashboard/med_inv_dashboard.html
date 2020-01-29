@@ -19,10 +19,11 @@
 
     <link href="{% static 'rmcapp/maindashboard_static/stylepage.css' %}" rel="stylesheet">
     <link href="{% static 'rmcapp/mainhomepage_static/css/MedicineInvCss/medicineinv.css' %}" rel="stylesheet">
-    <!-- <link href="{% static 'rmcapp/mainhomepage_static/css/MedicineInvCss/jquery-ui.css' %}" type="text/css" rel="stylesheet"  /> -->
-    <link href="{% static 'rmcapp/maindashboard_static/generalcssfiles/jquery-ui.css' %}" rel="stylesheet"></link>
-    <link rel="stylesheet" type="text/css" href="{% static 'rmcapp/maindashboard_static/generalcssfiles/jquery.datatables.css' %}">
-   
+
+    <!-- <link href="{% static 'rmcapp/maindashboard_static/generalcssfiles/jquery-ui.css' %}" rel="stylesheet"></link>
+    <link rel="stylesheet" type="text/css" href="{% static 'rmcapp/maindashboard_static/generalcssfiles/jquery.datatables.css' %}"> -->
+    <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
    
     <script src="{% static 'rmcapp/maindashboard_static/generaljsfiles/jquery-3.3.1.js' %}"></script>
 
@@ -50,6 +51,9 @@
     <script type="text/javascript" charset="utf8" src="{% static 'rmcapp/mainhomepage_static/js/datatablefiles/dataTables.responsive.min.js' %}"></script>
     <script type="text/javascript" charset="utf8" src="{% static 'rmcapp/mainhomepage_static/js/datatablefiles/dataTables.buttons.min.js' %}"></script>
     <script type="text/javascript" charset="utf8" src="{% static 'rmcapp/mainhomepage_static/js/datatablefiles/buttons.print.min.js' %}"></script>
+    <script type="text/javascript" charset="utf8" src="{% static 'rmcapp/mainhomepage_static/js/datatablefiles/buttons.print.min.js' %}"></script>
+  
+
 
     <!-- <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js"></script> -->
     <script type="text/javascript" src="{% static 'rmcapp/maindashboard_static/generaljsfiles/buttons.flash.min.js' %}"></script>
@@ -239,6 +243,27 @@
                       <!-- <span class="badge badge-pill badge-success">Pro</span> -->
                     </a>
                   </li>
+                  
+         
+                
+              </ul>
+
+            </div>
+          </li>
+          <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="fa fa-tachometer-alt"></i>
+              <span>Edit Medicines Price</span>
+              <!-- <span class="badge badge-pill badge-warning">New</span> -->
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a href="#" onclick="editMedicinePriceInStock()">Edit Medicine Price In Stock
+                    <!-- <span class="badge badge-pill badge-success">Pro</span> -->
+                  </a>
+                </li>
+             
          
                 
               </ul>
@@ -280,7 +305,7 @@
 <input type="text" id="from" name="from">
 <label for="to">to</label>
 <input type="text" id="to" name="to"> -->
-<div id="dialog-confirm" title="Empty the recycle bin?">
+<div id="dialog-confirm" title="Do You Want To Save Changes?">
 
   <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>Do you want to Save?</p>
 </div>

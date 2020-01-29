@@ -30,7 +30,7 @@ procedureTable,
 procedureRecords,procedureBillRecord,
 despBillRecord,
 patientVisitSummary,invoiceRecords,
-surgeryBillSummary
+surgeryBillSummary,tokenRecords,tokenGenerator
 )
 
 
@@ -56,7 +56,7 @@ class medicineWarehouseStockAdmin(admin.ModelAdmin):
     list_display= ("id",'medicine',"purchase_rate","status",\
     "carton_unit","box_unit","strip_unit","piece_unit",\
     "carton_stored","box_stored","strip_stored","piece_stored",\
-    "carton_price_unit","box_price_unit","strip_price_unit","piece_price_unit",\
+    "carton_price_unit","box_price_unit","strip_price_unit","piece_price_unit","sell_piece_price_unit",\
     "manufac_date",'exp_date','created_at','update_at')
 class medicineWhStockHistoryAdmin(admin.ModelAdmin):
     list_display= ("id","medicine_wh_stock","purchase_rate","status",\
@@ -182,7 +182,10 @@ class procedureBillSummaryAdmin(admin.ModelAdmin):
     list_display=('id','procbr','pres')
 class surgeryBillSummaryAdmin(admin.ModelAdmin):
     list_display=('id','sbr','pres')
-
+class tokenRecordsAdmin(admin.ModelAdmin):
+    list_display=('id','patient','pres',"token_no")
+class tokenGeneratorAdmin(admin.ModelAdmin):
+    list_display=("id","token_no")
 
 admin.site.register(medicineType, medicineTypeAdmin)
 admin.site.register(packageType, packageTypeAdmin)
@@ -245,7 +248,9 @@ admin.site.register(surgeryBillSummary, surgeryBillSummaryAdmin)
 
 
 
+admin.site.register(tokenGenerator, tokenGeneratorAdmin)
 
+admin.site.register(tokenRecords, tokenRecordsAdmin)
 
 
 

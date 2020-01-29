@@ -2788,6 +2788,7 @@ function pat_type_OnSelect(element){
         }
         createOutDoorPresFormDiv();
         retrievePatTypeFee();
+        $("#totalamount_input").focus();
 
 }
     else if (optionSelected==='Emergency'){
@@ -2815,6 +2816,8 @@ function pat_type_OnSelect(element){
         $('#tokenNumber_disp').show();
         createEmergencyPresFormDiv();
         retrievePatTypeFee()
+        $("#totalamount_input").focus();
+
     
     }
     else if (optionSelected==='Indoor'){
@@ -2858,6 +2861,7 @@ function pat_type_OnSelect(element){
         row_div_five.append(main_col__row_five)
         
     main_col_div.append(row_div_five)
+
     }
     else{
         $('#row_div_five').remove();
@@ -3411,7 +3415,7 @@ function createWardDataTable(){
                 row_div_seven.append(main_subcol)
             var main_col_div=$("#main_col_div");
             main_col_div.append(row_div_seven)
-                  
+            $("#admit_reason_input").focus();
                 }
             });
         });
@@ -3976,7 +3980,7 @@ function createRoomDataTable(){
                 row_div_seven.append(main_subcol)
             var main_col_div=$("#main_col_div");
         main_col_div.append(row_div_seven)
-                    
+        $("#admit_reason_input").focus();
                 }
             });
         });
@@ -4007,7 +4011,7 @@ function createPatientBill(){
                 colmd1.append(pres_id_label)
                     pres_id_input=$("<input class='form-control' id='search_patient_id' class='custom_input_css'>")
                 colmd2.append(pres_id_input);
-                    var search_button=$('<button class="btn btn-block fa fa-search" onclick="searchPatientInCreateBill()">Search</button>');
+                    var search_button=$('<button class="btn btn-block fa fa-search" onclick="searchPatientInCreateBill(event)">Search</button>');
                 colmd3.append(search_button);
     
             row__col_one__row_div_one.append(colmd1);
@@ -4020,7 +4024,8 @@ function createPatientBill(){
 
 }
     
-function searchPatientInCreateBill(){
+function searchPatientInCreateBill(e){
+    e.preventDefault()
     var pres_id=$("#search_patient_id").val()
     if (pres_id===""){
         alert("Please Insert Valid Pres id")
@@ -4519,9 +4524,19 @@ var col1=$("#desp-med-qty-form")
                 col2_sub_sub_row2.append(input);
             sub_sub_row2.append(col1_sub_sub_row2);
             sub_sub_row2.append(col2_sub_sub_row2);
-            var strip_unit=dspstck_dict[despid]['strip_unit'];
-            console.log("strip_unit-->",strip_unit);
-            if (strip_unit!=="-" ){
+            // var strip_unit=""
+            var strip_stored=""
+
+            // if(dspstck_dict[despid]['strip_unit']){
+            //     strip_unit=dspstck_dict[despid]['strip_unit'];
+            // }
+            if(dspstck_dict[despid]['strip_stored']){
+                strip_stored=dspstck_dict[despid]['strip_stored'];
+                
+
+            }
+            if (strip_stored!=="N/A"  ){
+           
             var sub_sub_row3=$("<div class='row' style='padding-bottom:10px'></div>");
                 var col1_sub_sub_row3=$("<div class='col-md-4'></div>");
                     var label=$("<label class='form-control-static'>Total Strips</label>")
@@ -4552,7 +4567,7 @@ var col1=$("#desp-med-qty-form")
         sub_col.append(sub_sub_row1);
         sub_col.append(sub_sub_row2);
 
-        if (strip_unit!=="-" ){
+        if ( strip_stored!=="N/A"   ){
             sub_col.append(sub_sub_row3);
         }
 
@@ -4889,7 +4904,7 @@ function SaveAndPrintBill(){
     despmed_datatable.destroy();
     procedure_bill_table.destroy();
     bill_datatable.destroy();
-
+    console.log("despmedbillamount--",despmedbillamount)
 
     $.ajax({
         type: 'POST',
@@ -5187,9 +5202,14 @@ function calculateDespProcBill(){
     if (pbr_dict!==undefined){
         for (var index in pbr_dict){
             totalamount=pbr_dict[index].amount+totalamount;
-            despmedbillamount=pbr_dict[index].price+despmedbillamount
+            console.log("pbr_dict.amount",pbr_dict[index].amount)
+            if (pbr_dict[index].amount === 0){
+                despmedbillamount=pbr_dict[index].price+despmedbillamount
+            }
+            
         }
     }
+    console.log("despmedbillamount",despmedbillamount)
     addchargeamount=totalamount;
     
     console.log("totalamount",totalamount);
@@ -5652,6 +5672,174 @@ function createDataTableViewPresList(prescription_list){
             });
         });
 }
+
+function viewTokenRecords(){
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        'data': {
+           
+        },
+        url: '/view_token_records',
+        success: function(data){
+            tokenrecordlist=data["tokenrecordlist"]
+            $('#main_page_content').empty()
+            var container_view_token_records= $('#main_page_content').append('<div class="container-fluid" id="container-view-token-records"></div>');
+            $("#container-view-token-records").append("<u><h2 class ='center_h_tag_forms'>Token Record List</h2></u>");
+            $("#container-view-token-records").append("<hr class='custom_hr'>");
+        
+            var main_row_div= $("<div class='row is-flex'></div>");
+        
+            $(container_view_token_records).append(main_row_div);
+            var main_col_div=$("<div class='col-md-12' id='main_col_div'></div>");
+               
+            $(main_row_div).append(main_col_div);
+        
+            var row_div_one=$("<div class='row' style='padding-bottom: 10px;'></div>");
+                var token_record_list_div=$("<div id='token_record_list_div' style='width:-webkit-fill-available;'></div>");
+                    var tokenrecord_table=$("<table id='tokenrecord_table'  class='datatable_pat' width='100%' ></table>");
+                token_record_list_div.append(tokenrecord_table);
+                row_div_one.append(token_record_list_div);
+            $(main_col_div).append(row_div_one);
+            $(function(){
+                tokenrecord_datatable=$("#tokenrecord_table").DataTable({
+                    data:tokenrecordlist,
+                    columns: [
+                        { title: "Patient Name" },
+                        { title: "Prescription No" },
+                        { title: 'Token No' },
+                        ],
+                        paging: true,
+                        scrollY: 200,
+                        scrollX: true,
+                        ordering: true,
+                        info:true,
+                        searching:true,
+                        dom: 'Bfrtip',
+                        buttons: [
+                            {
+                                extend: 'print',
+                                text: 'Print',
+                                title: 'Token Record List',
+                                className: 'btn btn-default fa fa-print',
+        
+                            },
+                             {
+                                extend: 'excel',
+                                text: 'Export Data in Excel',
+                                title: 'Token Record List',
+                                className: 'btn btn-default  fas fa-file-excel',
+        
+                            },
+                        ]
+                    });
+                    $('#tokenrecord_table tbody').on( 'click', 'tr', function () {
+                        if ( $(this).hasClass('selected') ) {
+                        }
+                        else{
+                            tokenrecord_datatable.$('tr.selected').removeClass('selected');
+                            $(this).addClass('selected');
+                        }
+                    });
+                });
+         
+        }
+    });
+}
+
+
+function viewTokenGeneratorTable(){
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        'data': {
+           
+        },
+        url: '/view_token_generator_table',
+        success: function(data){
+            tokengeneratorlist=data['tokengeneratorlist']
+            $('#main_page_content').empty()
+            var container_view_token_generator= $('#main_page_content').append('<div class="container-fluid" id="container-view-token-generator"></div>');
+            $("#container-view-token-generator").append("<u><h2 class ='center_h_tag_forms'>Token Generator List</h2></u>");
+            $("#container-view-token-generator").append("<hr class='custom_hr'>");
+        
+            var main_row_div= $("<div class='row is-flex'></div>");
+        
+            $(container_view_token_generator).append(main_row_div);
+            var main_col_div=$("<div class='col-md-12' id='main_col_div'></div>");
+               
+            $(main_row_div).append(main_col_div);
+        
+            var row_div_one=$("<div class='row' style='padding-bottom: 10px;'></div>");
+                var token_generator_list_div=$("<div id='token_generator_list_div' style='width:-webkit-fill-available;'></div>");
+                    var token_generator_table=$("<table id='token_generator_table'  class='datatable_pat' width='100%' ></table>");
+                token_generator_list_div.append(token_generator_table);
+                row_div_one.append(token_generator_list_div);
+            $(main_col_div).append(row_div_one);
+
+            $(function(){
+                tokengenerator_datatable=$("#token_generator_table").DataTable({
+                    data:tokengeneratorlist,
+                    columns: [
+                        { title: "Id" },
+                        { title: 'Token No' },
+                        ],
+                        paging: true,
+                        scrollY: 200,
+                        scrollX: true,
+                        ordering: true,
+                        info:true,
+                        searching:true,
+                        dom: 'Bfrtip',
+                        buttons: [
+                            {
+                                extend: 'print',
+                                text: 'Print',
+                                title: 'Token Generator List',
+                                className: 'btn btn-default fa fa-print',
+        
+                            },
+                             {
+                                extend: 'excel',
+                                text: 'Export Data in Excel',
+                                title: 'Token Generator List',
+                                className: 'btn btn-default  fas fa-file-excel',
+        
+                            },
+                        ]
+                    });
+                    $('#tokenrecord_table tbody').on( 'click', 'tr', function () {
+                        if ( $(this).hasClass('selected') ) {
+                        }
+                        else{
+                            tokengenerator_datatable.$('tr.selected').removeClass('selected');
+                            $(this).addClass('selected');
+                        }
+                    });
+                });
+         
+        }
+    });
+}
+
+
+function resetTokens(){
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        'data': {
+           
+        },
+        url: '/reset_tokens',
+        success: function(data){
+            status=data['status']
+            if (status==="Resetted"){
+                alert("Tokens are Reset to Zero")
+            }
+        }
+    });
+}
+
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== "") {

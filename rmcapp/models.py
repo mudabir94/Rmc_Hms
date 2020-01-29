@@ -100,6 +100,8 @@ class medicineWarehouseStock(models.Model):
     box_price_unit=models.FloatField( null=True, blank=True)
     strip_price_unit=models.FloatField( null=True, blank=True)
     piece_price_unit=models.FloatField( null=True, blank=True)
+    sell_piece_price_unit=models.FloatField( null=True, blank=True,default=None)
+
     manufac_date=models.DateTimeField(blank=True,null=True)
 
     exp_date=models.DateTimeField(blank=True,null=True)
@@ -325,17 +327,6 @@ class Employee(models.Model):
 
 
 
-
-# class tokenRecords(models.Model):
-#     patient=models.ForeignKey(Patient, on_delete=models.CASCADE,default=None,null=True,blank=True)
-#     token_no=models.IntegerField(null=True,blank=True)
-#     created_at = models.DateTimeField(auto_now_add=True, blank=True)
-#     update_at = models.DateTimeField(auto_now_add=True, blank=True)
-#     def __str__(self):
-#         return str(self.id)
-#     class Meta:
-#         verbose_name_plural="Token Records"
-#         ordering=['pk']
 class patientType(models.Model):
     patient_type=models.CharField(max_length=50,null=True,blank=True)
     charges=models.IntegerField(null=True,blank=True)
@@ -370,6 +361,19 @@ class patPrescriptionRecords(models.Model):
         ordering=['pk']
 
 
+class tokenGenerator(models.Model):
+    token_no=models.IntegerField(null=True,blank=True)
+class tokenRecords(models.Model):
+    patient=models.ForeignKey(Patient,default=None,null=True,blank=True,on_delete=models.DO_NOTHING)
+    pres=models.ForeignKey(patPrescriptionRecords,default=None,null=True,blank=True,on_delete=models.CASCADE)
+    token_no=models.IntegerField(null=True,blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True)
+    update_at = models.DateTimeField(auto_now_add=True, blank=True)
+    def __str__(self):
+        return str(self.id)
+    class Meta:
+        verbose_name_plural="Token Records"
+        ordering=['pk']
 
 
 class patientBillRecords(models.Model):
