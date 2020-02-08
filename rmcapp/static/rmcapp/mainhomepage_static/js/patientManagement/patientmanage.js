@@ -40,6 +40,7 @@ var ward_datatable;
 var view_pres_datatable;
 
 $(document).ready(function() {
+    $("#dialog-confirm").hide();
     retrieveProcedureDetails();
 });
 function contactNumPatInfoOnInput(ele){
@@ -192,7 +193,7 @@ function addPatient(){
 
                     pat_name_label=$("<label for='emp_name_tag' class='custom_label_css font-weight-bold'>Patient Name</label>");
                     colmd1.append(pat_name_label)
-                    pat_name_input=$("<input class='form-control' id='pat_name_input' class='custom_input_css'>")
+                    pat_name_input=$("<input class='form-control-custom' id='pat_name_input' class='custom_input_css'>")
                     colmd2.append(pat_name_input)
 
                 row__col_one__row_div_one.append(colmd1);
@@ -208,7 +209,7 @@ function addPatient(){
 
                     contact_type_label=$("<label class='custom_label_css font-weight-bold'>Contact Number</label>");
                     colmd1.append(contact_type_label);
-                    contact_type_input=$("<input class='form-control' autocomplete='off' id='contact_numb_input'  maxlength='12' oninput='contactNumPatInfoOnInput($(this))'  placeholder='0312-3456789'></input>")
+                    contact_type_input=$("<input class='form-control-custom' autocomplete='off' id='contact_numb_input'  maxlength='12' oninput='contactNumPatInfoOnInput($(this))'  placeholder='0312-3456789'></input>")
                     colmd2.append(contact_type_input);
 
                 row__col_two__row_div_one.append(colmd1)
@@ -229,12 +230,12 @@ function addPatient(){
 
                     gender_label=$("<label class='custom_label_css font-weight-bold'>Gender</label>");
                     colmd1.append(gender_label)
-                    gender_input=$("<input class='form-control' id='gender_select'  autocomplete='off' class='custom_input_css'>")
+                    gender_input=$("<input class='form-control-custom' id='gender_select'  autocomplete='off' class='custom_input_css'>")
                     colmd2.append(gender_input)
         // DOB
                     dob_label=$("<label class='custom_label_css font-weight-bold'>DOB </label>");
                     colmd3.append(dob_label);
-                    dob_input=$("<input class='form-control custom_input_css'  autocomplete='off' id='dob_input'></input>")
+                    dob_input=$("<input class='form-control-custom custom_input_css'  autocomplete='off' id='dob_input'></input>")
                     colmd4.append(dob_input);
 
                 row__col_one__row_div_two.append(colmd1);
@@ -252,7 +253,7 @@ function addPatient(){
 
                     cnic_label=$("<label class='custom_label_css  autocomplete='off' font-weight-bold'>CNIC/Guardian CNIC</label>");
                     colmd1.append(cnic_label);
-                    cnic_input=$("<input class='form-control' id='cnic_input' oninput='cnicNumPatInfoOnInput($(this))' maxlength='15' class='custom_input_css' placeholder='xxxxx-xxxxxxx-x' ></input>")
+                    cnic_input=$("<input class='form-control-custom' id='cnic_input' oninput='cnicNumPatInfoOnInput($(this))' maxlength='15' class='custom_input_css' placeholder='xxxxx-xxxxxxx-x' ></input>")
                     colmd2.append(cnic_input);
 
                 row__col_two__row_div_two.append(colmd1)
@@ -271,7 +272,7 @@ function addPatient(){
 
                     guardian_name_label=$("<label for='emp_name_tag' class='custom_label_css font-weight-bold'>Guardian Name</label>");
                     colmd1.append(guardian_name_label)
-                    guardian_name_input=$("<input class='form-control' id='guardian_input' class='custom_input_css' ></input>")
+                    guardian_name_input=$("<input class='form-control-custom' id='guardian_input' class='custom_input_css' ></input>")
                     colmd2.append(guardian_name_input);
 
                 row__col_one__row_div_three.append(colmd1);
@@ -286,7 +287,7 @@ function addPatient(){
 
                         address_label=$("<label for='pat_address_tag' class='custom_label_css font-weight-bold'>Address</label>");
                     colmd1.append(address_label)
-                        pat_address_input=$("<input class='form-control' id='pat_address_input' class='custom_input_css'>")
+                        pat_address_input=$("<input class='form-control-custom' id='pat_address_input' class='custom_input_css'>")
                     colmd2.append(pat_address_input)
 
                 row__col_two__row_div_three.append(colmd1);
@@ -306,7 +307,7 @@ function addPatient(){
                             blood_group_label=$("<label for='blood_group_tag' class='custom_label_css font-weight-bold'>Blood group</label>");
                             colmd1.append(blood_group_label)
                             
-                            var select=$("<select id='blood_group_input' class='form-control'></select>");
+                            var select=$("<select id='blood_group_input' class='form-control-custom'></select>");
                                 var option=$("<option selected='selected' id="+blood_group_list[0]+"-opt value="+blood_group_list[0]+">"+blood_group_list[0]+"</option>");
                             $(select).append(option);
                             for (var i=1;i<=blood_group_list.length;i++){
@@ -330,7 +331,7 @@ function addPatient(){
         
                             email_id_label=$("<label class='custom_label_css font-weight-bold'>Email Address</label>");
                             colmd1.append(email_id_label);
-                            email_id_input=$("<input class='form-control' id='email_id_input' class='custom_input_css'></input>")
+                            email_id_input=$("<input class='form-control-custom' id='email_id_input' class='custom_input_css'></input>")
                             colmd2.append(email_id_input);
         
                         row__col_two__row_div_four.append(colmd1)
@@ -405,7 +406,7 @@ function EditPatient(){
                     pat_name_label=$("<label for='emp_name_tag' class='custom_label_css float-right'>Patient Name</label>");
                     colmd1.append(pat_name_label)
 
-                    pat_name_input=$("<input class='form-control' id='search_pat_name_input' class='custom_input_css'>")
+                    pat_name_input=$("<input class='form-control-custom' id='search_pat_name_input' class='custom_input_css'>")
 
                     colmd2.append(pat_name_input)
 
@@ -423,7 +424,7 @@ function EditPatient(){
 
                     contact_type_label=$("<label class='custom_label_css float-right'>Contact Number</label>");
                     colmd1.append(contact_type_label);
-                    contact_type_input=$("<input class='form-control custom_input_css' id='search_contact_numb_input' maxlength='12'  oninput='searchContactNumPatInfoOnEdit($(this))'></input>")
+                    contact_type_input=$("<input class='form-control-custom custom_input_css' id='search_contact_numb_input' maxlength='12'  oninput='searchContactNumPatInfoOnEdit($(this))'></input>")
                     colmd2.append(contact_type_input);
 
                 row__col_two__row_div_one.append(colmd1)
@@ -495,8 +496,25 @@ function createPatientDataTable(){
                 { title: "email" },
 
                 ],
+                columnDefs: [
+                    { "width": "2%", "targets": 0 },
+                    { "width": "18.5%", "targets": 1 },
+                    { "width": "7.5%", "targets": 2 },
+                    { "width": "1%", "targets": 3 },
+                    { "width": "7%", "targets": 4 },
+                    { "width": "11.5%", "targets": 5 },
+                    { "width": "14%", "targets": 6 },
+                    { "width": "21.5%", "targets": 7 },
+                    { "width": "1%", "targets": 8 },
+                    { "width": "15%", "targets": 9 },
+
+
+
+
+                   ],
                 paging: true,
-                scrollY: 200,
+                pageLength: 5,
+                scrollY: 100,
                 scrollX: true,
                 ordering: true,
                 info:false,
@@ -507,37 +525,31 @@ function createPatientDataTable(){
                         extend: 'print',
                         text: 'Print',
                         title: 'Patient Data',
-                        className: 'btn btn-default fa fa-print',
+                        className: 'datatable_button fa fa-print',
 
                     },
                      {
                         extend: 'excel',
                         text: 'Export Data in Excel',
                         title: 'Patient Data',
-                        className: 'btn btn-default  fas fa-file-excel',
+                        className: 'datatable_button  fas fa-file-excel',
 
                     },
                      {
                         extend: 'csv',
                         text: 'Export Data in CSV',
                         title: 'Patient Data',
-                        className: 'btn btn-default fa fa-file',
+                        className: 'datatable_button fa fa-file',
 
                     },
                     {
                         extend: 'pdf',
                         text: 'Export Data in PDF',
                         title: 'Patient Data',
-                        className: 'btn btn-default fas fa-file-pdf',
+                        className: 'datatable_button fas fa-file-pdf',
 
                     },
-                    {
-                        extend: 'copy',
-                        text: 'Copy to Clipboard',
-                        title: 'Patient Data',
-                        className: 'btn btn-default fas fa-copy',
-
-                    },
+                 
                 ],
     
             });
@@ -563,7 +575,7 @@ function createPatientDataTable(){
                                                 var colmd1=$("<div class='col-md-4'></div>")
                                                 var colmd2=$("<div class='col-md-6'></div>")
                                                     var pat_name_label=$("<label for='emp_name_tag' class='custom_label_css'>Patient Name</label>");
-                                                    var pat_name_input=$("<input class='form-control' id='pat_name_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['name'].toUpperCase()+"' >")
+                                                    var pat_name_input=$("<input class='form-control-custom' id='pat_name_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['name'].toUpperCase()+"' >")
                                                 colmd2.append(pat_name_input)
                                                 colmd1.append(pat_name_label)
                                             row__col_one__subrow_one.append(colmd1);
@@ -576,7 +588,7 @@ function createPatientDataTable(){
                                             var colmd1=$("<div class='col-md-4'></div>")
                                             var colmd2=$("<div class='col-md-6'></div>")
                                                 var contact_type_label=$("<label class='custom_label_css'>Contact Number</label>");
-                                                var contact_type_input=$("<input class='form-control' id='contact_numb_edit' maxlength='12'  oninput='contactNumPatInfoOnEdit($(this))' class='custom_input_css' placeholder='0312-3456789' value='"+patient_dict[patient_id_selected]['contact_no']+"'></input>")
+                                                var contact_type_input=$("<input class='form-control-custom' id='contact_numb_edit' maxlength='12'  oninput='contactNumPatInfoOnEdit($(this))' class='custom_input_css' placeholder='0312-3456789' value='"+patient_dict[patient_id_selected]['contact_no']+"'></input>")
                                             colmd1.append(contact_type_label);
                                             colmd2.append(contact_type_input);
                         
@@ -597,10 +609,10 @@ function createPatientDataTable(){
                                     colmd4=$("<div class='col-md-3'></div>")
                         
                                         var pat_gender_label=$("<label class='custom_label_css'>Gender</label>");
-                                        var pat_gender_input=$("<input class='form-control' id='gender_edit' class='custom_input_css' value='"+patient_dict[patient_id_selected]['gender'].toUpperCase()+"' >")
+                                        var pat_gender_input=$("<input class='form-control-custom' id='gender_edit' class='custom_input_css' value='"+patient_dict[patient_id_selected]['gender'].toUpperCase()+"' >")
                                         
                                         var dob_label=$("<label class='custom_label_css'>DOB</label>");
-                                        var dob_input=$("<input class='form-control' id='dob_edit' class='custom_input_css' value='"+patient_dict[patient_id_selected]['dob']+"' ></input>")
+                                        var dob_input=$("<input class='form-control-custom' id='dob_edit' class='custom_input_css' value='"+patient_dict[patient_id_selected]['dob']+"' ></input>")
                                     colmd1.append(pat_gender_label)
                                     colmd2.append(pat_gender_input)
                                     colmd3.append(dob_label);
@@ -618,7 +630,7 @@ function createPatientDataTable(){
                                     var colmd1=$("<div class='col-md-4'></div>")
                                     var colmd2=$("<div class='col-md-6'></div>")
                                         var cnic_label=$("<label class='custom_label_css'>CNIC/Guardian CNIC</label>");
-                                        var cnic_input=$("<input class='form-control' id='cnic_edit' oninput='cnicNumPatInfoOnEdit($(this))' maxlength='15' class='custom_input_css' placeholder='xxxxx-xxxxxxx-x' value='"+patient_dict[patient_id_selected]['cnic']+"'></input>")
+                                        var cnic_input=$("<input class='form-control-custom' id='cnic_edit' oninput='cnicNumPatInfoOnEdit($(this))' maxlength='15' class='custom_input_css' placeholder='xxxxx-xxxxxxx-x' value='"+patient_dict[patient_id_selected]['cnic']+"'></input>")
                                     colmd1.append(cnic_label);
                                     colmd2.append(cnic_input);
             
@@ -638,7 +650,7 @@ function createPatientDataTable(){
                                     console.log("selected guardian",guradian_name)
 
                                         var guardian_name_label=$("<label  class='custom_label_css'>Guardian Name</label>");
-                                        var guardian_name_input=$("<input  class='form-control' id='guardian_edit' class='custom_input_css' value='"+guradian_name.toUpperCase()+"' ></input>")
+                                        var guardian_name_input=$("<input  class='form-control-custom' id='guardian_edit' class='custom_input_css' value='"+guradian_name.toUpperCase()+"' ></input>")
                                     colmd1.append(guardian_name_label)
                                     colmd2.append(guardian_name_input);
                             
@@ -651,7 +663,7 @@ function createPatientDataTable(){
                                     var colmd1=$("<div class='col-md-4'></div>")
                                     var colmd2=$("<div class='col-md-6'></div>")
                                         var address_label=$("<label for='pat_address_tag' class='custom_label_css'>Address</label>");
-                                        var pat_address_input=$("<input class='form-control' id='pat_address_edit' class='custom_input_css' value='"+patient_dict[patient_id_selected]['address'].toUpperCase()+"'>")
+                                        var pat_address_input=$("<input class='form-control-custom' id='pat_address_edit' class='custom_input_css' value='"+patient_dict[patient_id_selected]['address'].toUpperCase()+"'>")
                                     colmd1.append(address_label)
                                     colmd2.append(pat_address_input)
                     
@@ -669,7 +681,7 @@ function createPatientDataTable(){
                                     var colmd2=$("<div class='col-md-6'></div>")
             
                                         blood_group_label=$("<label for='blood_group_tag' class='custom_label_css'>Blood group</label>");
-                                        bloodgroup_input=$("<input class='form-control' id='blood_group_edit' class='custom_input_css' value='"+patient_dict[patient_id_selected]['bloodgroup'].toUpperCase()+"'>")
+                                        bloodgroup_input=$("<input class='form-control-custom' id='blood_group_edit' class='custom_input_css' value='"+patient_dict[patient_id_selected]['bloodgroup'].toUpperCase()+"'>")
                                     colmd1.append(blood_group_label)
                                     colmd2.append(bloodgroup_input) 
             
@@ -682,7 +694,7 @@ function createPatientDataTable(){
                                     var colmd2=$("<div class='col-md-6'></div>")
                 
                                         var email_id_label=$("<label class='custom_label_css'>Email Address</label>");
-                                        var email_id_input=$("<input class='form-control' id='email_id_edit' class='custom_input_css' value='"+patient_dict[patient_id_selected]['email']+"'></input>")
+                                        var email_id_input=$("<input class='form-control-custom' id='email_id_edit' class='custom_input_css' value='"+patient_dict[patient_id_selected]['email']+"'></input>")
                                     colmd1.append(email_id_label);
                                     colmd2.append(email_id_input);
                 
@@ -880,37 +892,31 @@ function createAllPatientDataTable(){
                         extend: 'print',
                         text: 'Print',
                         title: 'Patient Data',
-                        className: 'btn btn-default fa fa-print',
+                        className: 'datatable_button fa fa-print',
 
                     },
                      {
                         extend: 'excel',
                         text: 'Export Data in Excel',
                         title: 'Patient Data',
-                        className: 'btn btn-default  fas fa-file-excel',
+                        className: 'datatable_button  fas fa-file-excel',
 
                     },
                      {
                         extend: 'csv',
                         text: 'Export Data in CSV',
                         title: 'Patient Data',
-                        className: 'btn btn-default fa fa-file',
+                        className: 'datatable_button fa fa-file',
 
                     },
                     {
                         extend: 'pdf',
                         text: 'Export Data in PDF',
                         title: 'Patient Data',
-                        className: 'btn btn-default fas fa-file-pdf',
+                        className: 'datatable_button fas fa-file-pdf',
 
                     },
-                    {
-                        extend: 'copy',
-                        text: 'Copy to Clipboard',
-                        title: 'Patient Data',
-                        className: 'btn btn-default fas fa-copy',
-
-                    },
+                  
                 ],
     
             });
@@ -1124,7 +1130,7 @@ function createAllPatientDataTable(){
         $('.dataTables_filter  input[type="search"]').
         attr('placeholder','Search patient ....').
         css({'width':'200px','display':'inline-block'});
-        $('.dataTables_filter input').addClass('form-control');
+        $('.dataTables_filter input').addClass('form-control-custom');
     });
 }
 function printAllPatientData(){
@@ -1255,11 +1261,11 @@ function viewPatientHistory(){
                                 var c1=$("<div class='col-md-1'></div>");
                                     var label=$("<label>Patient id</label>")
                                 var c2=$("<div class='col-md-2'></div>");
-                                    var pat_id=$("<input class='form-control' id='searchpat_id_input'></input>");
+                                    var pat_id=$("<input class='form-control-custom' id='searchpat_id_input'></input>");
                                 var c3=$("<div class='col-md-1'></div>");
                                     var pat_name_label=$("<label>Patient Name</label>")
                                 var c4=$("<div class='col-md-2'></div>");
-                                    var pat_name=$("<input class='form-control' id='searchpat_name_input'></input>");
+                                    var pat_name=$("<input class='form-control-custom' id='searchpat_name_input'></input>");
                                 var c5=$("<div class='col-md-2'></div>");
                                     var search_button=$("<button class='btn btn-block fa fa-search' onclick='searchPatientMedHistory()'>Search Patient</button>")
                                 c1.append(label);
@@ -1337,7 +1343,7 @@ function createPatientHistoryForm(){ ///details in right col
                     var colmd1=$("<div class='col-md-3'>")
                     var colmd2=$("<div class='col-md-3'>")
                         var label=$("<label>Patient Type</label>");
-                        var input=$("<input id='pat_hist_pattype_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['patienttype']+"' style='background:white' disabled></input>");
+                        var input=$("<input id='pat_hist_pattype_inp_"+pres_selected+"' class='form-control-custom' value='"+pat_med_history_dict[pres_selected]['patienttype']+"' style='background:white' disabled></input>");
                     colmd1.append(label);
                     colmd2.append(input);
                 row_one__col__row_one__sub_col_two.append(colmd1)
@@ -1351,7 +1357,7 @@ function createPatientHistoryForm(){ ///details in right col
                     var colmd1=$("<div class='col-md-3'>")
                     var colmd2=$("<div class='col-md-3'>")
                         var label=$("<label>Doctor Visited</label>");
-                        var input=$("<input id='pat_hist_docOnduty_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['doc_on_duty']+"' style='background:white' disabled></input>");
+                        var input=$("<input id='pat_hist_docOnduty_inp_"+pres_selected+"' class='form-control-custom' value='"+pat_med_history_dict[pres_selected]['doc_on_duty']+"' style='background:white' disabled></input>");
                     colmd1.append(label);
                     colmd2.append(input);
                 row_one__col__row_two__sub_col_two.append(colmd1)
@@ -1365,7 +1371,7 @@ function createPatientHistoryForm(){ ///details in right col
                     var colmd1=$("<div class='col-md-3'>")
                     var colmd2=$("<div class='col-md-3'>")
                         var label=$("<label>Vitals</label>");
-                        var input=$("<textarea id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['vitals']+"' style='background:white' disabled></textarea>");
+                        var input=$("<textarea id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control-custom' value='"+pat_med_history_dict[pres_selected]['vitals']+"' style='background:white' disabled></textarea>");
                     colmd1.append(label);
                     colmd2.append(input);
                 row_one__col__row_three__sub_col_two.append(colmd1)
@@ -1379,7 +1385,7 @@ function createPatientHistoryForm(){ ///details in right col
                     var colmd1=$("<div class='col-md-3'>")
                     var colmd2=$("<div class='col-md-3'>")
                         var label=$("<label>Sign Symptoms</label>");
-                        var input=$("<input id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['sign_symptom']+"' style='background:white' disabled></input>");
+                        var input=$("<input id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control-custom' value='"+pat_med_history_dict[pres_selected]['sign_symptom']+"' style='background:white' disabled></input>");
                     colmd1.append(label);
                     colmd2.append(input);
                 row_one__col__row_four__sub_col_two.append(colmd1)
@@ -1393,7 +1399,7 @@ function createPatientHistoryForm(){ ///details in right col
                     var colmd1=$("<div class='col-md-3'>")
                     var colmd2=$("<div class='col-md-3'>")
                         var label=$("<label>Provisional Diagnosis</label>");
-                        var input=$("<input id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['provisional_diagnosis']+"' style='background:white' disabled></input>");
+                        var input=$("<input id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control-custom' value='"+pat_med_history_dict[pres_selected]['provisional_diagnosis']+"' style='background:white' disabled></input>");
                     colmd1.append(label);
                     colmd2.append(input);
                 row_one__col__row_five__sub_col_two.append(colmd1)
@@ -1407,7 +1413,7 @@ function createPatientHistoryForm(){ ///details in right col
                     var colmd1=$("<div class='col-md-3'>")
                     var colmd2=$("<div class='col-md-3'>")
                         var label=$("<label>Investigation</label>");
-                        var input=$("<input id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['investigation']+"' style='background:white' disabled></input>");
+                        var input=$("<input id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control-custom' value='"+pat_med_history_dict[pres_selected]['investigation']+"' style='background:white' disabled></input>");
                     colmd1.append(label);
                     colmd2.append(input);
                 row_one__col__row_six__sub_col_two.append(colmd1)
@@ -1421,7 +1427,7 @@ function createPatientHistoryForm(){ ///details in right col
                     var colmd1=$("<div class='col-md-3'>")
                     var colmd2=$("<div class='col-md-3'>")
                         var label=$("<label>Diagnosis</label>");
-                        var input=$("<input id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['diagnosis']+"' style='background:white' disabled></input>");
+                        var input=$("<input id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control-custom' value='"+pat_med_history_dict[pres_selected]['diagnosis']+"' style='background:white' disabled></input>");
                     colmd1.append(label);
                     colmd2.append(input);
                 row_one__col__row_seven__sub_col_two.append(colmd1)
@@ -1435,7 +1441,7 @@ function createPatientHistoryForm(){ ///details in right col
                     var colmd1=$("<div class='col-md-3'>")
                     var colmd2=$("<div class='col-md-3'>")
                         var label=$("<label>RX</label>");
-                        var input=$("<input id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['rx']+"' style='background:white' disabled></input>");
+                        var input=$("<input id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control-custom' value='"+pat_med_history_dict[pres_selected]['rx']+"' style='background:white' disabled></input>");
                     colmd1.append(label);
                     colmd2.append(input);
                 row_one__col__row_eight__sub_col_two.append(colmd1)
@@ -1450,7 +1456,7 @@ function createPatientHistoryForm(){ ///details in right col
                         var colmd1=$("<div class='col-md-2'>")
                         var colmd2=$("<div class='col-md-3'>")
                             var label=$("<label>Admission Reason</label>");
-                            var input=$("<label id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control-static'>"+pat_med_history_dict[pres_selected]['admit_reason']+"</label>");
+                            var input=$("<label id='pat_hist_vitals_inp_"+pres_selected+"' class='custom_label_css'>"+pat_med_history_dict[pres_selected]['admit_reason']+"</label>");
                         colmd1.append(label);
                         colmd2.append(input);
                     row_one__col__row_nine__sub_col_two.append(colmd1)
@@ -1691,13 +1697,13 @@ function createPatientDataTableViewMedHist(){
                 extend: 'print',
                 text: ' Print',
                 title: 'Patient List',
-                className: 'btn btn-default fa fa-print',
+                className: 'datatable_button fa fa-print',
                 },
                 {
                     extend: 'excel',
                     text: ' Export to Excel',
                     title: 'Patient List',
-                    className: 'btn btn-default fa fa-print',
+                    className: 'datatable_button fa fa-print',
                     }
             ],
     
@@ -1784,11 +1790,11 @@ function updatePatientHistory(){
                             var c1=$("<div class='col-md-1'></div>");
                                 var label=$("<label>Patient id</label>")
                             var c2=$("<div class='col-md-2'></div>");
-                                var pat_id=$("<input class='form-control' id='searchpat_id_input'></input>");
+                                var pat_id=$("<input class='form-control-custom' id='searchpat_id_input'></input>");
                             var c3=$("<div class='col-md-1'></div>");
                                 var pat_name_label=$("<label>Patient Name</label>")
                             var c4=$("<div class='col-md-2'></div>");
-                                var pat_name=$("<input class='form-control' id='searchpat_name_input'></input>");
+                                var pat_name=$("<input class='form-control-custom' id='searchpat_name_input'></input>");
                             var c5=$("<div class='col-md-2'></div>");
                                 var search_button=$("<button class='btn btn-block fa fa-search' onclick='searchUpdatePatientMedHistory()'>Search Patient</button>")
                             c1.append(label);
@@ -1970,7 +1976,7 @@ function createUpdatePatientHistoryForm(){ ///details in right col
                     var colmd1=$("<div class='col-md-3'>")
                     var colmd2=$("<div class='col-md-3'>")
                         var label=$("<label>Patient Type</label>");
-                        var input=$("<input id='pat_hist_pattype_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['patienttype']+"' style='background:white' disabled></input>");
+                        var input=$("<input id='pat_hist_pattype_inp_"+pres_selected+"' class='form-control-custom' value='"+pat_med_history_dict[pres_selected]['patienttype']+"' style='background:white' disabled></input>");
                     colmd1.append(label);
                     colmd2.append(input);
                 row_one__col__row_one__sub_col_two.append(colmd1)
@@ -1984,7 +1990,7 @@ function createUpdatePatientHistoryForm(){ ///details in right col
                     var colmd1=$("<div class='col-md-3'>")
                     var colmd2=$("<div class='col-md-3'>")
                         var label=$("<label>Doctor Visited</label>");
-                        var input=$("<input id='pat_hist_doconduty_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['doc_on_duty']+"' style='background:white' disabled></input>");
+                        var input=$("<input id='pat_hist_doconduty_inp_"+pres_selected+"' class='form-control-custom' value='"+pat_med_history_dict[pres_selected]['doc_on_duty']+"' style='background:white' disabled></input>");
                     colmd1.append(label);
                     colmd2.append(input);
                 row_one__col__row_two__sub_col_two.append(colmd1)
@@ -1998,7 +2004,7 @@ function createUpdatePatientHistoryForm(){ ///details in right col
                     var colmd1=$("<div class='col-md-3'>")
                     var colmd2=$("<div class='col-md-3'>")
                         var label=$("<label>Vitals</label>");
-                        var input=$("<textarea id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['vitals']+"'> "+pat_med_history_dict[pres_selected]['vitals']+"</textarea>");
+                        var input=$("<textarea id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control-custom' value='"+pat_med_history_dict[pres_selected]['vitals']+"'> "+pat_med_history_dict[pres_selected]['vitals']+"</textarea>");
                     colmd1.append(label);
                     colmd2.append(input);
                 row_one__col__row_three__sub_col_two.append(colmd1)
@@ -2012,7 +2018,7 @@ function createUpdatePatientHistoryForm(){ ///details in right col
                     var colmd1=$("<div class='col-md-3'>")
                     var colmd2=$("<div class='col-md-3'>")
                         var label=$("<label>Sign Symptoms</label>");
-                        var input=$("<textarea id='pat_hist_ss_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['sign_symptom']+"'>"+pat_med_history_dict[pres_selected]['sign_symptom']+"</textarea>");
+                        var input=$("<textarea id='pat_hist_ss_inp_"+pres_selected+"' class='form-control-custom' value='"+pat_med_history_dict[pres_selected]['sign_symptom']+"'>"+pat_med_history_dict[pres_selected]['sign_symptom']+"</textarea>");
                     colmd1.append(label);
                     colmd2.append(input);
                 row_one__col__row_four__sub_col_two.append(colmd1)
@@ -2026,7 +2032,7 @@ function createUpdatePatientHistoryForm(){ ///details in right col
                     var colmd1=$("<div class='col-md-3'>")
                     var colmd2=$("<div class='col-md-3'>")
                         var label=$("<label>Provisional Diagnosis</label>");
-                        var input=$("<textarea id='pat_hist_pd_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['provisional_diagnosis']+"'>"+pat_med_history_dict[pres_selected]['provisional_diagnosis']+"</textarea>");
+                        var input=$("<textarea id='pat_hist_pd_inp_"+pres_selected+"' class='form-control-custom' value='"+pat_med_history_dict[pres_selected]['provisional_diagnosis']+"'>"+pat_med_history_dict[pres_selected]['provisional_diagnosis']+"</textarea>");
                     colmd1.append(label);
                     colmd2.append(input);
                 row_one__col__row_five__sub_col_two.append(colmd1)
@@ -2040,7 +2046,7 @@ function createUpdatePatientHistoryForm(){ ///details in right col
                     var colmd1=$("<div class='col-md-3'>")
                     var colmd2=$("<div class='col-md-3'>")
                         var label=$("<label>Investigation</label>");
-                        var input=$("<textarea id='pat_hist_investigation_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['investigation']+"'>"+pat_med_history_dict[pres_selected]['investigation']+"</textarea>");
+                        var input=$("<textarea id='pat_hist_investigation_inp_"+pres_selected+"' class='form-control-custom' value='"+pat_med_history_dict[pres_selected]['investigation']+"'>"+pat_med_history_dict[pres_selected]['investigation']+"</textarea>");
                     colmd1.append(label);
                     colmd2.append(input);
                 row_one__col__row_six__sub_col_two.append(colmd1)
@@ -2054,7 +2060,7 @@ function createUpdatePatientHistoryForm(){ ///details in right col
                     var colmd1=$("<div class='col-md-3'>")
                     var colmd2=$("<div class='col-md-3'>")
                         var label=$("<label>Diagnosis</label>");
-                        var input=$("<textarea id='pat_hist_diagnosis_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['diagnosis']+"'>"+pat_med_history_dict[pres_selected]['diagnosis']+"</textarea>");
+                        var input=$("<textarea id='pat_hist_diagnosis_inp_"+pres_selected+"' class='form-control-custom' value='"+pat_med_history_dict[pres_selected]['diagnosis']+"'>"+pat_med_history_dict[pres_selected]['diagnosis']+"</textarea>");
                     colmd1.append(label);
                     colmd2.append(input);
                 row_one__col__row_seven__sub_col_two.append(colmd1)
@@ -2068,7 +2074,7 @@ function createUpdatePatientHistoryForm(){ ///details in right col
                     var colmd1=$("<div class='col-md-3'>")
                     var colmd2=$("<div class='col-md-3'>")
                         var label=$("<label>RX</label>");
-                        var input=$("<textarea id='pat_hist_rx_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['rx']+"'>"+pat_med_history_dict[pres_selected]['rx']+"</textarea>");
+                        var input=$("<textarea id='pat_hist_rx_inp_"+pres_selected+"' class='form-control-custom' value='"+pat_med_history_dict[pres_selected]['rx']+"'>"+pat_med_history_dict[pres_selected]['rx']+"</textarea>");
                     colmd1.append(label);
                     colmd2.append(input);
                 row_one__col__row_eight__sub_col_two.append(colmd1)
@@ -2083,7 +2089,7 @@ function createUpdatePatientHistoryForm(){ ///details in right col
                         var colmd1=$("<div class='col-md-2'>")
                         var colmd2=$("<div class='col-md-3'>")
                             var label=$("<label>Admission Reason</label>");
-                            var input=$("<textarea id='pat_hist_admitreason_inp_"+pres_selected+"' class='form-control' value='"+pat_med_history_dict[pres_selected]['admit_reason']+"'>"+pat_med_history_dict[pres_selected]['admit_reason']+"</textarea>");
+                            var input=$("<textarea id='pat_hist_admitreason_inp_"+pres_selected+"' class='form-control-custom' value='"+pat_med_history_dict[pres_selected]['admit_reason']+"'>"+pat_med_history_dict[pres_selected]['admit_reason']+"</textarea>");
                         colmd1.append(label);
                         colmd2.append(input);
                     row_one__col__row_nine__sub_col_two.append(colmd1)
@@ -2335,7 +2341,7 @@ function createPatientDataTableInGenPres(){
                                                 var pat_type_label=$("<label for='emp_name_tag' class='custom_label_css'>Patient Type</label>");
                                                     colmd1.append(pat_type_label)
 
-                                                var select=$("<select id='pat_type_input' class='form-control' onchange='pat_type_OnSelect($(this))'></select>");
+                                                var select=$("<select id='pat_type_input' class='form-control-custom' onchange='pat_type_OnSelect($(this))'></select>");
                                                     var option=$("<option selected='selected' value='--'>--</option>");
                                                     var option1=$("<option id="+pat_type_list[0]+"-opt value="+pat_type_list[0]+">"+pat_type_list[0]+"</option>");
 
@@ -2467,7 +2473,7 @@ function createOutDoorPresFormDiv(){
                                 var outdooramount_label=$("<label for='outdoorAmount_tag' class='custom_label_css'>Outdoor Fee</label>");
                                 colmd1.append(outdooramount_label)
 
-                                totalamount_input=$("<input class='form-control' onfocusout='OutDoorTotalAmountFocousOutGenPres($(this))' id='totalamount_input' class='custom_input_css'>")
+                                totalamount_input=$("<input class='form-control-custom' onfocusout='OutDoorTotalAmountFocousOutGenPres($(this))' id='totalamount_input' class='custom_input_css'>")
                                 colmd2.append(totalamount_input)
 
                         row__col_one__row_one.append(colmd1);
@@ -2490,19 +2496,19 @@ function createOutDoorPresFormDiv(){
                             var discountamount_label=$("<label for='outdoorAmount_tag' class='custom_label_css'>Discount Amount</label>");
                             colmd1.append(discountamount_label)
 
-                            discountamount_input=$("<input class='form-control' id='discountamount_input' onfocusout='discountAmountFocousOutPres($(this))' class='custom_input_css'>")
+                            discountamount_input=$("<input class='form-control-custom' id='discountamount_input' onfocusout='discountAmountFocousOutPres($(this))' class='custom_input_css'>")
                             colmd2.append(discountamount_input)
 
                             var discountPercernt_label=$("<label for='discountpercernt_label' class='custom_label_css float-right'>Discount Percent</label>");
                             colmd3.append(discountPercernt_label)
 
-                            discountpercent_input=$("<input class='form-control' id='discountpercent_input' class='custom_input_css'>")
+                            discountpercent_input=$("<input class='form-control-custom' id='discountpercent_input' class='custom_input_css'>")
                             colmd4.append(discountpercent_input)
 
                             var amountDue_label=$("<label for='amountDue_label' class='custom_label_css float-right'>Net Total</label>");
                             colmd5.append(amountDue_label)
 
-                            amountdue_input=$("<input class='form-control' onfocusin='netTotalFocusInPres()' id='amountdue_input'>")
+                            amountdue_input=$("<input class='form-control-custom' onfocusin='netTotalFocusInPres()' id='amountdue_input'>")
                             colmd6.append(amountdue_input)
 
                         row__col_one__row_two.append(colmd1);
@@ -2523,7 +2529,7 @@ function createOutDoorPresFormDiv(){
                         var colmd2=$("<div class='col-md-9'></div>")
                             var reason_label=$("<label for='reason_label' class='custom_label_css'>Discount Reason</label>");
                         colmd1.append(reason_label)
-                            discount_reason_input=$("<input class='form-control' id='discount_reason_input' class='custom_input_css'>")
+                            discount_reason_input=$("<input class='form-control-custom' id='discount_reason_input' class='custom_input_css'>")
                         colmd2.append(discount_reason_input)
                     row__col_one__row_three.append(colmd1);
                     row__col_one__row_three.append(colmd2);
@@ -2560,7 +2566,7 @@ function createOutDoorPresFormDiv(){
                                     var doctor=$("<label for='doctor_label' class='custom_label_css'>Doctor</label>");
                                     colmd1.append(doctor)
 
-                                    var select=$("<select id='selecteddoctor' class='form-control'></select>");
+                                    var select=$("<select id='selecteddoctor' class='form-control-custom'></select>");
                                         var option=$("<option selected='selected' value='--'>--</option>");
                                     $(select).append(option);
 
@@ -2621,7 +2627,7 @@ function createEmergencyPresFormDiv(){
                                     var emergencyamount_label=$("<label  class='custom_label_css'>Emergency Fee</label>");
                                     colmd1.append(emergencyamount_label)
 
-                                    emergencyamount_input=$("<input class='form-control' onfocusout='EmergencyTotalAmountFocousOutGenPres($(this))' id='totalamount_input'  class='custom_input_css'>")
+                                    emergencyamount_input=$("<input class='form-control-custom' onfocusout='EmergencyTotalAmountFocousOutGenPres($(this))' id='totalamount_input'  class='custom_input_css'>")
                                     colmd2.append(emergencyamount_input)
 
                             row__col_one__row_one.append(colmd1);
@@ -2644,19 +2650,19 @@ function createEmergencyPresFormDiv(){
                                 var discountamount_label=$("<label for='outdoorAmount_tag' class='custom_label_css'>Discount Amount</label>");
                                 colmd1.append(discountamount_label)
 
-                                discountamount_input=$("<input class='form-control' id='discountamount_input' onfocusout='discountAmountFocousOutPres($(this))' class='custom_input_css'>")
+                                discountamount_input=$("<input class='form-control-custom' id='discountamount_input' onfocusout='discountAmountFocousOutPres($(this))' class='custom_input_css'>")
                                 colmd2.append(discountamount_input)
 
                                 var discountPercernt_label=$("<label for='discountPercernt_label' class='custom_label_css float-right'>Discount Percent</label>");
                                 colmd3.append(discountPercernt_label)
 
-                                discountpercent_input=$("<input class='form-control' id='discountpercent_input' class='custom_input_css'>")
+                                discountpercent_input=$("<input class='form-control-custom' id='discountpercent_input' class='custom_input_css'>")
                                 colmd4.append(discountpercent_input)
 
                                 var amountDue_label=$("<label for='amountdue_label' class='custom_label_css float-right'>Net Total</label>");
                                 colmd5.append(amountDue_label)
 
-                                amountdue_input=$("<input class='form-control' onfocusin='netTotalFocusInPres()' id='amountdue_input'>")
+                                amountdue_input=$("<input class='form-control-custom' onfocusin='netTotalFocusInPres()' id='amountdue_input'>")
                                 colmd6.append(amountdue_input)
 
                             row__col_one__row_two.append(colmd1);
@@ -2678,7 +2684,7 @@ function createEmergencyPresFormDiv(){
                                 var colmd2=$("<div class='col-md-9'></div>")
                                     var reason_label=$("<label for='reason_label' class='custom_label_css'>Discount Reason</label>");
                                 colmd1.append(reason_label)
-                                    discount_reason_input=$("<input class='form-control' id='discount_reason_input' class='custom_input_css'>")
+                                    discount_reason_input=$("<input class='form-control-custom' id='discount_reason_input' class='custom_input_css'>")
                                 colmd2.append(discount_reason_input)
                             row__col_one__row_three.append(colmd1);
                             row__col_one__row_three.append(colmd2);
@@ -2714,7 +2720,7 @@ function createEmergencyPresFormDiv(){
                                     var doctor=$("<label for='doctor_label' class='custom_label_css'>Doctor</label>");
                                     colmd1.append(doctor)
 
-                                    var select=$("<select id='selecteddoctor' class='form-control'></select>");
+                                    var select=$("<select id='selecteddoctor' class='form-control-custom'></select>");
                                         var option=$("<option selected='selected' value='--'>--</option>");
                                     $(select).append(option);
 
@@ -2837,7 +2843,7 @@ function pat_type_OnSelect(element){
                                 var ward_type_label=$("<label for='ward_type_tag' class='custom_label_css'>Ward/Room</label>");
                                 colmd1.append(ward_type_label)
 
-                                var select=$("<select id='ward_type_input' class='form-control' onchange='onSelectWardRoom($(this))'></select>");
+                                var select=$("<select id='ward_type_input' class='form-control-custom' onchange='onSelectWardRoom($(this))'></select>");
                                     var option=$("<option selected='selected' value='--'>--</option>");
                                     var option1=$("<option id="+ward_type_list[0]+"-opt value="+ward_type_list[0]+">"+ward_type_list[0]+"</option>");
                                 $(select).append(option);
@@ -3150,37 +3156,31 @@ function createWardDataTable(){
                         extend: 'print',
                         text: 'Print',
                         title: 'Ward Info',
-                        className: 'btn btn-default fa fa-print',
+                        className: 'datatable_button fa fa-print',
 
                     },
                      {
                         extend: 'excel',
                         text: 'Export Data in Excel',
                         title:'Ward Info',
-                        className: 'btn btn-default  fas fa-file-excel',
+                        className: 'datatable_button  fas fa-file-excel',
 
                     },
                      {
                         extend: 'csv',
                         text: 'Export Data in CSV',
                         title: 'Ward Info',
-                        className: 'btn btn-default fa fa-file',
+                        className: 'datatable_button fa fa-file',
 
                     },
                     {
                         extend: 'pdf',
                         text: 'Export Data in PDF',
                         title: 'Ward Info',
-                        className: 'btn btn-default fas fa-file-pdf',
+                        className: 'datatable_button fas fa-file-pdf',
 
                     },
-                    {
-                        extend: 'copy',
-                        text: 'Copy to Clipboard',
-                        title:'Ward Info',
-                        className: 'btn btn-default fas fa-copy',
-
-                    },
+                    
                 ],
     
             });
@@ -3208,10 +3208,10 @@ function createWardDataTable(){
                                         var colmd4=$("<div class='col-md-1'></div>")
 
                                             var wardNo_label=$("<label for='wardno_label' class='custom_label_css'>Ward No</label>");
-                                            var wardNo_input=$("<input  id='wardno_input' class='custom_input_css form-control' style='background: white;' value='"+ward_dict[ward_id_selected]['ward_no']+"' disabled>")
+                                            var wardNo_input=$("<input  id='wardno_input' class='custom_input_css form-control-custom' style='background: white;' value='"+ward_dict[ward_id_selected]['ward_no']+"' disabled>")
 
                                             var bedNo_label=$("<label for='bedno_label' class='custom_label_css float-right'>Bed No</label>");
-                                            var BedNo_input=$("<input  id='bedno_input' class='custom_input_css form-control' style='background: white;' value='"+ward_dict[ward_id_selected]['bed_no']+"' disabled>")
+                                            var BedNo_input=$("<input  id='bedno_input' class='custom_input_css form-control-custom' style='background: white;' value='"+ward_dict[ward_id_selected]['bed_no']+"' disabled>")
                                             
                                         colmd1.append(wardNo_label)
                                         colmd2.append(wardNo_input)
@@ -3233,7 +3233,7 @@ function createWardDataTable(){
                                         colmd1=$("<div class='col-md-3'></div>")
                                         colmd2=$("<div class='col-md-9'></div>")
 
-                                            var admit_reason_label=$("<label class=' form-control custom_label_css' >Admit reason</label>");
+                                            var admit_reason_label=$("<label class=' form-control-custom custom_label_css' >Admit reason</label>");
                                             var admit_reason_input=$("<textarea type='text' id='admit_reason_input' class='custom_input_css' style='width:inherit;'></textarea>")
 
                                         colmd1.append(admit_reason_label)
@@ -3252,7 +3252,7 @@ function createWardDataTable(){
                                         var colmd2=$("<div class='col-md-6'></div>")
                                         
                                             var doconduty_label=$("<label  class='custom_label_css'>Doctor on Duty</label>");
-                                            var select=$("<select id='selecteddoctor' class='form-control'></select>");
+                                            var select=$("<select id='selecteddoctor' class='form-control-custom'></select>");
                                                 var option=$("<option selected='selected' value='--'>--</option>");
                                             $(select).append(option);
 
@@ -3273,7 +3273,7 @@ function createWardDataTable(){
                                         var colmd1=$("<div class='col-md-6'></div>")
                                         var colmd2=$("<div class='col-md-6'></div>")
                                             var consultant_label=$("<label for='Consultant_label' class='custom_label_css float-right'>Consultant</label>");
-                                            var select=$("<select id='selectedconsultant' class='form-control'></select>");
+                                            var select=$("<select id='selectedconsultant' class='form-control-custom'></select>");
                                                 var option=$("<option selected='selected' value='--'>--</option>");
                                             $(select).append(option);
 
@@ -3301,7 +3301,7 @@ function createWardDataTable(){
                                         var colmd2=$("<div class='col-md-2'></div>")
                                         
                                             var indoor_admit_fee_label=$("<label for='indoor_fee_tag' class='custom_label_css'>Admission Fee</label>");
-                                            indoor_admit_fee_input=$("<input class='form-control' onfocusout='InDoorTotalAmountFocousOutGenPres($(this))' id='totalamount_input'  class='custom_input_css'>")
+                                            indoor_admit_fee_input=$("<input class='form-control-custom' onfocusout='InDoorTotalAmountFocousOutGenPres($(this))' id='totalamount_input'  class='custom_input_css'>")
 
                                         colmd1.append(indoor_admit_fee_label)
                                         colmd2.append(indoor_admit_fee_input)
@@ -3325,11 +3325,11 @@ function createWardDataTable(){
                                         var colmd6=$("<div class='col-md-2'></div>")
 
                                             var discountamount_label=$("<label for='indoor_disc_tag' class='custom_label_css'>Discount Amount</label>");
-                                            var discountamount_input=$("<input class='form-control' id='discountamount_input' onfocusout='discountAmountFocousOutPres($(this))' class='custom_input_css'>")
+                                            var discountamount_input=$("<input class='form-control-custom' id='discountamount_input' onfocusout='discountAmountFocousOutPres($(this))' class='custom_input_css'>")
                                             var discountPercernt_label=$("<label for='discountPercernt_label' class='custom_label_css float-right'>Discount Percent</label>");
-                                            var discountpercent_input=$("<input class='form-control' id='discountpercent_input' class='custom_input_css'>")
+                                            var discountpercent_input=$("<input class='form-control-custom' id='discountpercent_input' class='custom_input_css'>")
                                             var amountDue_label=$("<label for='amountDue_label' class='custom_label_css float-right'>Net Total</label>");
-                                            var amountdue_input=$("<input class='form-control' onfocusin='netTotalFocusInPres()' id='amountdue_input'>")
+                                            var amountdue_input=$("<input class='form-control-custom' onfocusin='netTotalFocusInPres()' id='amountdue_input'>")
 
                                         colmd1.append(discountamount_label)
                                         colmd2.append(discountamount_input)
@@ -3356,7 +3356,7 @@ function createWardDataTable(){
                                         var colmd1=$("<div class='col-md-3'></div>")
                                         var colmd2=$("<div class='col-md-9'></div>")
                                             var reason_label=$("<label for='discount_reason_label' class='custom_label_css'>Discount Reason</label>");
-                                            reason_input=$("<input class='form-control' id='discount_reason_input' class='custom_input_css'>")
+                                            reason_input=$("<input class='form-control-custom' id='discount_reason_input' class='custom_input_css'>")
                                         colmd1.append(reason_label)
                                         colmd2.append(reason_input)
                                     row__col_one__subrow_seven.append(colmd1);
@@ -3671,7 +3671,7 @@ function generatePrescription(){
                     pat_name_label=$("<label for='emp_name_tag' class='custom_label_css'>Patient Name</label>");
                     colmd1.append(pat_name_label)
 
-                    pat_name_input=$("<input class='form-control' id='search_pat_name_input' class='custom_input_css'>")
+                    pat_name_input=$("<input class='form-control-custom' id='search_pat_name_input' class='custom_input_css'>")
 
                     colmd2.append(pat_name_input)
 
@@ -3687,7 +3687,7 @@ function generatePrescription(){
 
                     contact_type_label=$("<label class='custom_label_css'>Contact Number</label>");
                     colmd1.append(contact_type_label);
-                    contact_type_input=$("<input class='form-control custom_input_css' id='search_contact_numb_input' maxlength='12'  oninput='searchContactNumPatInfoOnEdit($(this))'></input>")
+                    contact_type_input=$("<input class='form-control-custom custom_input_css' id='search_contact_numb_input' maxlength='12'  oninput='searchContactNumPatInfoOnEdit($(this))'></input>")
                     colmd2.append(contact_type_input);
 
                 row__col_two__row_div_one.append(colmd1)
@@ -3732,37 +3732,31 @@ function createRoomDataTable(){
                         extend: 'print',
                         text: 'Print',
                         title: 'Room Info',
-                        className: 'btn btn-default fa fa-print',
+                        className: 'datatable_button fa fa-print',
 
                     },
                      {
                         extend: 'excel',
                         text: 'Export Data in Excel',
                         title: 'Room Info',
-                        className: 'btn btn-default  fas fa-file-excel',
+                        className: 'datatable_button fas fa-file-excel',
 
                     },
                      {
                         extend: 'csv',
                         text: 'Export Data in CSV',
                         title:'Room Info',
-                        className: 'btn btn-default fa fa-file',
+                        className: 'datatable_button fa fa-file',
 
                     },
                     {
                         extend: 'pdf',
                         text: 'Export Data in PDF',
                         title: 'Room Info',
-                        className: 'btn btn-default fas fa-file-pdf',
+                        className: 'datatable_button fas fa-file-pdf',
 
                     },
-                    {
-                        extend: 'copy',
-                        text: 'Copy to Clipboard',
-                        title:'Room Info',
-                        className: 'btn btn-default fas fa-copy',
-
-                    },
+                 
                 ],
 
             });
@@ -3788,7 +3782,7 @@ function createRoomDataTable(){
                                                 var colmd1=$("<div class='col-md-4'></div>")
                                                 var colmd2=$("<div class='col-md-2'></div>")
                                                     var roomNo_label=$("<label for='roomNo_label' class='custom_label_css'>Room Number</label>");
-                                                    var roomNo_input=$("<input id='roomNo_input' class='custom_input_css form-control' style='background: white;' value='"+room_dict[room_id_selected]['room_no']+"' disabled>")
+                                                    var roomNo_input=$("<input id='roomNo_input' class='custom_input_css form-control-custom' style='background: white;' value='"+room_dict[room_id_selected]['room_no']+"' disabled>")
 
                                                     colmd1.append(roomNo_label)
                                                 colmd2.append(roomNo_input)
@@ -3805,7 +3799,7 @@ function createRoomDataTable(){
                                     colmd2=$("<div class='col-md-9'></div>")
 
                                         var admit_reason_label=$("<label class='custom_label_css'>Admit Reason</label>");
-                                        var admit_reason_input=$("<textarea type='text'  id='admit_reason_input' class='form-control custom_input_css' style='width:inherit;'>")
+                                        var admit_reason_input=$("<textarea type='text'  id='admit_reason_input' class='form-control-custom custom_input_css' style='width:inherit;'>")
 
                                     colmd1.append(admit_reason_label)
                                     colmd2.append(admit_reason_input)
@@ -3823,7 +3817,7 @@ function createRoomDataTable(){
                                     var colmd2=$("<div class='col-md-6'></div>")
                                     
                                         var doconduty_label=$("<label  class='custom_label_css'>Doctor on Duty</label>");
-                                        var select=$("<select id='selecteddoctor' class='form-control'></select>");
+                                        var select=$("<select id='selecteddoctor' class='form-control-custom'></select>");
                                             var option=$("<option selected='selected' value='--'>--</option>");
                                         $(select).append(option);
 
@@ -3844,7 +3838,7 @@ function createRoomDataTable(){
                                     var colmd1=$("<div class='col-md-6'></div>")
                                     var colmd2=$("<div class='col-md-6'></div>")
                                         var consultant_label=$("<label for='Consultant_label' class='custom_label_css float-right'>Consultant</label>");
-                                        var select=$("<select id='selectedconsultant' class='form-control'></select>");
+                                        var select=$("<select id='selectedconsultant' class='form-control-custom'></select>");
                                             var option=$("<option selected='selected' value='--'>--</option>");
                                         $(select).append(option);
 
@@ -3874,7 +3868,7 @@ function createRoomDataTable(){
                                             var indoor_admit_fee_label=$("<label for='indoor_fee_tag' class='custom_label_css'>Admission Fee</label>");
                                             colmd1.append(indoor_admit_fee_label)
 
-                                            indoor_admit_fee_input=$("<input class='form-control' id='totalamount_input'  onfocusout='InDoorTotalAmountFocousOutGenPres($(this))' class='custom_input_css'>")
+                                            indoor_admit_fee_input=$("<input class='form-control-custom' id='totalamount_input'  onfocusout='InDoorTotalAmountFocousOutGenPres($(this))' class='custom_input_css'>")
                                             colmd2.append(indoor_admit_fee_input)
 
                                     row__col_one__subrow_four.append(colmd1);
@@ -3895,15 +3889,15 @@ function createRoomDataTable(){
                                     var colmd6=$("<div class='col-md-2'></div>")
                                         var discountamount_label=$("<label for='indoor_disc_tag' class='custom_label_css'>Discount Amount</label>");
                                     colmd1.append(discountamount_label)
-                                        discountamount_input=$("<input class='form-control' id='discountamount_input' onfocusout='discountAmountFocousOutPres($(this))' class='custom_input_css'>")
+                                        discountamount_input=$("<input class='form-control-custom' id='discountamount_input' onfocusout='discountAmountFocousOutPres($(this))' class='custom_input_css'>")
                                     colmd2.append(discountamount_input)
                                         var discountPercernt_label=$("<label for='discountPercernt_label' class='custom_label_css float-right'>Discount Percent</label>");
                                     colmd3.append(discountPercernt_label)
-                                        discountpercent_input=$("<input class='form-control' id='discountpercent_input' class='custom_input_css'>")
+                                        discountpercent_input=$("<input class='form-control-custom' id='discountpercent_input' class='custom_input_css'>")
                                     colmd4.append(discountpercent_input)
                                         var amountDue_label=$("<label for='amountDue_label' class='custom_label_css float-right'>Net Total</label>");
                                     colmd5.append(amountDue_label)
-                                        amountdue_input=$("<input class='form-control' onfocusin='netTotalFocusInPres()' id='amountdue_input'>")
+                                        amountdue_input=$("<input class='form-control-custom' onfocusin='netTotalFocusInPres()' id='amountdue_input'>")
                                     colmd6.append(amountdue_input)
                                 row__col_one__subrow_five.append(colmd1);
                                 row__col_one__subrow_five.append(colmd2);
@@ -3921,7 +3915,7 @@ function createRoomDataTable(){
                                     var colmd2=$("<div class='col-md-9'></div>")
                                         var reason_label=$("<label for='discount_reason_label' class='custom_label_css'>Discount Reason</label>");
                                     colmd1.append(reason_label)
-                                        reason_input=$("<input class='form-control' id='discount_reason_input' class='custom_input_css'>")
+                                        reason_input=$("<input class='form-control-custom' id='discount_reason_input' class='custom_input_css'>")
                                     colmd2.append(reason_input)
                                 row__col_one__subrow_six.append(colmd1);
                                 row__col_one__subrow_six.append(colmd2);
@@ -4009,7 +4003,7 @@ function createPatientBill(){
 
                     pres_id_label=$("<label class='custom_label_css'>Prescription id</label>");
                 colmd1.append(pres_id_label)
-                    pres_id_input=$("<input class='form-control' id='search_patient_id' class='custom_input_css'>")
+                    pres_id_input=$("<input class='form-control-custom' id='search_patient_id' class='custom_input_css'>")
                 colmd2.append(pres_id_input);
                     var search_button=$('<button class="btn btn-block fa fa-search" onclick="searchPatientInCreateBill(event)">Search</button>');
                 colmd3.append(search_button);
@@ -4086,7 +4080,7 @@ function createPatientDetailsHtmlInCreateBill(){
                             var colmd1=$("<div class='col-md-5'></div>")
                             var colmd2=$("<div class='col-md-6'></div>")
                                 var pat_name_label=$("<label for='emp_name_tag' class='custom_label_css'>Patient Name</label>");
-                                var pat_name_input=$("<label class='form-control-static' id='pat_name_input'>"+patient_dict[patient_id_selected]['name']+"</label>")
+                                var pat_name_input=$("<label class='custom_label_css' id='pat_name_input'>"+patient_dict[patient_id_selected]['name']+"</label>")
                             colmd2.append(pat_name_input)
                             colmd1.append(pat_name_label)
                         row__col_one__subrow_one.append(colmd1);
@@ -4098,7 +4092,7 @@ function createPatientDetailsHtmlInCreateBill(){
                         var colmd1=$("<div class='col-md-5'></div>")
                         var colmd2=$("<div class='col-md-6'></div>")
                             var contact_type_label=$("<label class='custom_label_css'>Contact Number</label>");
-                            var contact_type_input=$("<label class='form-control-static' id='contact_numb_input'>"+patient_dict[patient_id_selected]['contact_no']+"</label>")
+                            var contact_type_input=$("<label class='custom_label_css' id='contact_numb_input'>"+patient_dict[patient_id_selected]['contact_no']+"</label>")
                         colmd1.append(contact_type_label);
                         colmd2.append(contact_type_input);
     
@@ -4118,10 +4112,10 @@ function createPatientDetailsHtmlInCreateBill(){
         //             colmd4=$("<div class='col-md-3'></div>")
         
         //                 var pat_name_label=$("<label class='custom_label_css'>Gender</label>");
-        //                 var pat_name_input=$("<input class='form-control' id='gender_select' class='custom_input_css' value='"+patient_dict[patient_id_selected]['gender']+"' disabled>")
+        //                 var pat_name_input=$("<input class='form-control-custom' id='gender_select' class='custom_input_css' value='"+patient_dict[patient_id_selected]['gender']+"' disabled>")
         //             // DOB
         //                 var dob_label=$("<label class='custom_label_css'>DOB</label>");
-        //                 var dob_input=$("<input class='form-control' id='dob_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['dob']+"' ></input>")
+        //                 var dob_input=$("<input class='form-control-custom' id='dob_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['dob']+"' ></input>")
         //             colmd1.append(pat_name_label)
         //             colmd2.append(pat_name_input)
         //             colmd3.append(dob_label);
@@ -4140,7 +4134,7 @@ function createPatientDetailsHtmlInCreateBill(){
         //             var colmd1=$("<div class='col-md-4'></div>")
         //             var colmd2=$("<div class='col-md-6'></div>")
         //                 var cnic_label=$("<label class='custom_label_css'>CNIC/Guardian CNIC</label>");
-        //                 var cnic_input=$("<input class='form-control' id='cnic_input' class='custom_input_css' placeholder='xxxxx-xxxxxxx-x' value='"+patient_dict[patient_id_selected]['cnic']+"'></input>")
+        //                 var cnic_input=$("<input class='form-control-custom' id='cnic_input' class='custom_input_css' placeholder='xxxxx-xxxxxxx-x' value='"+patient_dict[patient_id_selected]['cnic']+"'></input>")
         //             colmd1.append(cnic_label);
         //             colmd2.append(cnic_input);
 
@@ -4160,7 +4154,7 @@ function createPatientDetailsHtmlInCreateBill(){
         //             console.log("selected guardian",guradian_name)
 
         //                 var guardian_name_label=$("<label  class='custom_label_css'>Guardian Name</label>");
-        //                 var guardian_name_input=$("<input class='form-control' id='guardian_input' class='custom_input_css' value='"+guradian_name+"' ></input>")
+        //                 var guardian_name_input=$("<input class='form-control-custom' id='guardian_input' class='custom_input_css' value='"+guradian_name+"' ></input>")
         //             colmd1.append(guardian_name_label)
         //             colmd2.append(guardian_name_input);
             
@@ -4173,7 +4167,7 @@ function createPatientDetailsHtmlInCreateBill(){
         //             var colmd1=$("<div class='col-md-4'></div>")
         //             var colmd2=$("<div class='col-md-6'></div>")
         //                 var address_label=$("<label for='pat_address_tag' class='custom_label_css'>Address</label>");
-        //                 var pat_address_input=$("<input class='form-control' id='pat_address_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['address']+"'>")
+        //                 var pat_address_input=$("<input class='form-control-custom' id='pat_address_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['address']+"'>")
         //             colmd1.append(address_label)
         //             colmd2.append(pat_address_input)
 
@@ -4192,7 +4186,7 @@ function createPatientDetailsHtmlInCreateBill(){
         //             var colmd2=$("<div class='col-md-6'></div>")
 
         //                 blood_group_label=$("<label for='blood_group_tag' class='custom_label_css'>Blood group</label>");
-        //                 bloodgroup_input=$("<input class='form-control' id='blood_group_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['bloodgroup']+"'>")
+        //                 bloodgroup_input=$("<input class='form-control-custom' id='blood_group_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['bloodgroup']+"'>")
         //             colmd1.append(blood_group_label)
         //             colmd2.append(bloodgroup_input) 
 
@@ -4205,7 +4199,7 @@ function createPatientDetailsHtmlInCreateBill(){
         //             var colmd2=$("<div class='col-md-6'></div>")
 
         //                 var email_id_label=$("<label class='custom_label_css'>Email Address</label>");
-        //                 var email_id_input=$("<input class='form-control' id='email_id_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['email']+"'></input>")
+        //                 var email_id_input=$("<input class='form-control-custom' id='email_id_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['email']+"'></input>")
         //             colmd1.append(email_id_label);
         //             colmd2.append(email_id_input);
 
@@ -4275,7 +4269,7 @@ function createDespDataTable(){
 
                 ],
                 paging: false,
-                scrollY: 200,
+                scrollY: 150,
                 scrollX: true,
                 ordering: true,
                 info:false,
@@ -4285,37 +4279,31 @@ function createDespDataTable(){
                         extend: 'print',
                         text: 'Print',
                         title: 'Despensory Data',
-                        className: 'btn btn-default fa fa-print',
+                        className: 'datatable_button fa fa-print',
 
                     },
                      {
                         extend: 'excel',
                         text: 'Export Data in Excel',
                         title: 'Despensory Data',
-                        className: 'btn btn-default  fas fa-file-excel',
+                        className: 'datatable_button fas fa-file-excel',
 
                     },
                      {
                         extend: 'csv',
                         text: 'Export Data in CSV',
                         title: 'Despensory Data',
-                        className: 'btn btn-default fa fa-file',
+                        className: 'datatable_button fa fa-file',
 
                     },
                     {
                         extend: 'pdf',
                         text: 'Export Data in PDF',
                         title: 'Despensory Data',
-                        className: 'btn btn-default fas fa-file-pdf',
+                        className: 'datatable_button fas fa-file-pdf',
 
                     },
-                    {
-                        extend: 'copy',
-                        text: 'Copy to Clipboard',
-                        title: 'Despensory Data',
-                        className: 'btn btn-default fas fa-copy',
-
-                    },
+                
                 ],
     
             });
@@ -4333,7 +4321,7 @@ function createDespDataTable(){
         $('.dataTables_filter  input[type="search"]').
         attr('placeholder','Search Medicine ....').
         css({'width':'200px','display':'inline-block'});
-        $('.dataTables_filter input').addClass('form-control');
+        $('.dataTables_filter input').addClass('form-control-custom');
     });
 }
 function billDataTable(){
@@ -4353,7 +4341,7 @@ function billDataTable(){
                 { title: "Amount" },
                 ],
                 paging: false,
-                scrollY: 200,
+                scrollY: 100,
                 scrollX: true,
                 ordering: true,
                 info:false,
@@ -4364,37 +4352,31 @@ function billDataTable(){
                         extend: 'print',
                         text: 'Print',
                         title: 'Patient Bill',
-                        className: 'btn btn-default fa fa-print',
+                        className: 'datatable_button fa fa-print',
 
                     },
                      {
                         extend: 'excel',
                         text: 'Export Data in Excel',
                         title:'Patient Bill',
-                        className: 'btn btn-default  fas fa-file-excel',
+                        className: 'datatable_button  fas fa-file-excel',
 
                     },
                      {
                         extend: 'csv',
                         text: 'Export Data in CSV',
                         title: 'Patient Bill',
-                        className: 'btn btn-default fa fa-file',
+                        className: 'datatable_button fa fa-file',
 
                     },
                     {
                         extend: 'pdf',
                         text: 'Export Data in PDF',
                         title: 'Patient Bill',
-                        className: 'btn btn-default fas fa-file-pdf',
+                        className: 'datatable_button fas fa-file-pdf',
 
                     },
-                    {
-                        extend: 'copy',
-                        text: 'Copy to Clipboard',
-                        title: 'Patient Bill',
-                        className: 'btn btn-default fas fa-copy',
-
-                    },
+                 
                 ],
                 
             });
@@ -4507,20 +4489,20 @@ var col1=$("#desp-med-qty-form")
         var sub_col=$("<div class='col-md-12'></div>")
             var sub_sub_row1=$("<div class='row' style='padding-top:60px; padding-bottom:10px'></div>");
                 var col1_sub_sub_row1=$("<div class='col-md-4'></div>");
-                    var label=$("<label class='form-control-static'>Medicine Name</label>")
+                    var label=$("<label class='custom_label_css'>Medicine Name</label>")
                 col1_sub_sub_row1.append(label);
                 var col2_sub_sub_row1=$("<div class='col-md-6'></div>");
-                    var input=$("<input id='desp-med-name' class='form-control' value='"+dspstck_dict[despid]['name']+"'></input>")
+                    var input=$("<input id='desp-med-name' class='form-control-custom' value='"+dspstck_dict[despid]['name']+"'></input>")
                 col2_sub_sub_row1.append(input);
             sub_sub_row1.append(col1_sub_sub_row1);
             sub_sub_row1.append(col2_sub_sub_row1);
 
             var sub_sub_row2=$("<div class='row' style='padding-bottom:10px'></div>");
                 var col1_sub_sub_row2=$("<div class='col-md-4'></div>");
-                    var label=$("<label class='form-control-static'>Boxes</label>")
+                    var label=$("<label class='custom_label_css'>Boxes</label>")
                 col1_sub_sub_row2.append(label);
                 var col2_sub_sub_row2=$("<div class='col-md-6'></div>");
-                    var input=$("<input class='form-control' id='boxes_stored'></input>")
+                    var input=$("<input class='form-control-custom' id='boxes_stored'></input>")
                 col2_sub_sub_row2.append(input);
             sub_sub_row2.append(col1_sub_sub_row2);
             sub_sub_row2.append(col2_sub_sub_row2);
@@ -4539,20 +4521,20 @@ var col1=$("#desp-med-qty-form")
            
             var sub_sub_row3=$("<div class='row' style='padding-bottom:10px'></div>");
                 var col1_sub_sub_row3=$("<div class='col-md-4'></div>");
-                    var label=$("<label class='form-control-static'>Total Strips</label>")
+                    var label=$("<label class='custom_label_css'>Total Strips</label>")
                 col1_sub_sub_row3.append(label);
                 var col2_sub_sub_row3=$("<div class='col-md-6'></div>");
-                    var input=$("<input class='form-control' id='strips_stored'></input>")
+                    var input=$("<input class='form-control-custom' id='strips_stored'></input>")
                 col2_sub_sub_row3.append(input);
             sub_sub_row3.append(col1_sub_sub_row3);
             sub_sub_row3.append(col2_sub_sub_row3);
             }
             var sub_sub_row4=$("<div class='row' style='padding-bottom:10px'></div>");
                 var col1_sub_sub_row4=$("<div class='col-md-4'></div>");
-                    var label=$("<label class='form-control-static'>Total Pieces</label>")
+                    var label=$("<label class='custom_label_css'>Total Pieces</label>")
                 col1_sub_sub_row4.append(label);
                 var col2_sub_sub_row4=$("<div class='col-md-6'></div>");
-                    var input=$("<input class='form-control' id='pieces_stored' ></input>")
+                    var input=$("<input class='form-control-custom' id='pieces_stored' ></input>")
                 col2_sub_sub_row4.append(input);
             sub_sub_row4.append(col1_sub_sub_row4);
             sub_sub_row4.append(col2_sub_sub_row4);
@@ -4970,7 +4952,7 @@ function createRowDivFiveBill(){ ///Last Discount and total Bill row with Button
                                 var outdooramount_label=$("<label class='custom_label_css'>Total Amount</label>");
                                 subcol1.append(outdooramount_label)
 
-                                var totalamount_input=$("<input class='form-control' id='totalamount_input' onfocusout='totalAmountDespFocusOut($(this))' class='custom_input_css' disabled>")
+                                var totalamount_input=$("<input class='form-control-custom' id='totalamount_input' onfocusout='totalAmountDespFocusOut($(this))' class='custom_input_css' disabled>")
                                 subcol2.append(totalamount_input)
 
                         row1__calculate_col2.append(subcol1);
@@ -4989,19 +4971,19 @@ function createRowDivFiveBill(){ ///Last Discount and total Bill row with Button
                                     var discountamount_label=$("<label for='outdoorAmount_tag' class='custom_label_css'>Discount Amount</label>");
                                     c1.append(discountamount_label)
 
-                                    discountamount_input=$("<input class='form-control' id='discountamount_input' onfocusout='discountAmountFocousOut($(this))' class='custom_input_css'>")
+                                    discountamount_input=$("<input class='form-control-custom' id='discountamount_input' onfocusout='discountAmountFocousOut($(this))' class='custom_input_css'>")
                                     c2.append(discountamount_input)
 
                                     var discountPercernt_label=$("<label for='discountPercernt_label' class='custom_label_css float-right' >Discount Percent %</label>");
                                     c3.append(discountPercernt_label)
 
-                                    discountpercent_input=$("<input class='form-control' id='discountpercent_input' class='custom_input_css' >")
+                                    discountpercent_input=$("<input class='form-control-custom' id='discountpercent_input' class='custom_input_css' >")
                                     c4.append(discountpercent_input);
 
                                     var nettotal_label=$("<label for='nettotal_label' class='custom_label_css float-right'>Net Total</label>");
                                     c5.append(nettotal_label)
 
-                                    nettotal_input=$("<input class='form-control custom_input_css'onfocusin='netTotalFocusIn()'  id='nettotal_input'>")
+                                    nettotal_input=$("<input class='form-control-custom custom_input_css'onfocusin='netTotalFocusIn()'  id='nettotal_input'>")
                                     c6.append(nettotal_input)
 
                                     row1__subcol1.append(c1);
@@ -5023,7 +5005,7 @@ function createRowDivFiveBill(){ ///Last Discount and total Bill row with Button
                                         var reason_label=$("<label for='reason_label' class='custom_label_css'>Discount Reason</label>");
                                         c1.append(reason_label)
     
-                                        var discount_reason_input=$("<input class='form-control' id='discount_reason_input' class='custom_input_css'>")
+                                        var discount_reason_input=$("<input class='form-control-custom' id='discount_reason_input' class='custom_input_css'>")
                                         c2.append(discount_reason_input)
     
                                     row1__subcol1.append(c1);
@@ -5086,11 +5068,11 @@ function createRowDivSixDespBill(){
                             var procedure_col1=$("<div class='col-md-4' id='procedure_col1'></div>");
                                 var sub_row1=$("<div class='row' style='padding-top:80px;padding-bottom:10px'></div>");
                                     var subcol1_subrow1=$("<div class='col-md-4'></div>");
-                                        var label=$("<label class= 'form-control-static'>Procedures</label>");
+                                        var label=$("<label class= 'custom_label_css'>Procedures</label>");
                                     subcol1_subrow1.append(label)
 
                                     var subcol2_subrow1=$("<div class='col-md-6'></div>");
-                                        var select=$("<select id='procedure_select' class='form-control' onchange='getProcedureCharge($(this))'></select>");
+                                        var select=$("<select id='procedure_select' class='form-control-custom' onchange='getProcedureCharge($(this))'></select>");
                                             var option=$("<option selected='selected' value='--'>--</option>");
                                         $(select).append(option);
                                             for (var i in procedure_data){
@@ -5106,11 +5088,11 @@ function createRowDivSixDespBill(){
 
                                 var sub_row2=$("<div class='row' style='padding-bottom:10px'></div>");
                                     var subcol1_subrow2=$("<div class='col-md-4'></div>");
-                                        var label=$("<label class= 'form-control-static'>Charges</label>");
+                                        var label=$("<label class= 'custom_label_css'>Charges</label>");
                                     subcol1_subrow2.append(label)
 
                                     var subcol2_subrow2=$("<div class='col-md-6'></div>");
-                                        var input=$("<input class='form-control' id='procedure_charge_input' value=''></input>");
+                                        var input=$("<input class='form-control-custom' id='procedure_charge_input' value=''></input>");
                                     subcol2_subrow2.append(input)
 
                                 sub_row2.append(subcol1_subrow2);
@@ -5151,7 +5133,7 @@ function procedureBillDespDataTable(){
              
                 ],
                 paging: false,
-                scrollY: 200,
+                scrollY: 100,
                 scrollX: true,
                 ordering: true,
                 info:false,
@@ -5330,7 +5312,7 @@ function updatePrescriptionRecord(){
                         presc_id_label=$("<label class='custom_label_css'>Prescription Id</label>");
                         colmd1.append(presc_id_label)
     
-                        presc_input=$("<input id='presc_input_id' class='form-control'>")
+                        presc_input=$("<input id='presc_input_id' class='form-control-custom'>")
                         colmd2.append(presc_input)
 
                         var search_button=$("<button  class='btn btn-light btn-lg' onclick='searchPatPresc()'>Search</button>")
@@ -5373,7 +5355,7 @@ function searchPatPresc(){
                         var colmd1=$("<div class='col-md-4 text-center'></div>")
                         var colmd2=$("<div class='col-md-8' style='padding-bottom:10px;'></div>")
                             var ss_label=$("<label for='ss_tag' class='custom_label_css'>Signs/Symptoms</label>");
-                            var ss_input=$("<textarea id='ss_input' class='form-control custom_input_css' style='height: 140px;' value='"+pres_data_dict['sign_symtoms']+"'>"+pres_data_dict['sign_symtoms']+"</textarea>")
+                            var ss_input=$("<textarea id='ss_input' class='form-control-custom custom_input_css' style='height: 140px;' value='"+pres_data_dict['sign_symtoms']+"'>"+pres_data_dict['sign_symtoms']+"</textarea>")
                         colmd1.append(ss_label)
                         colmd2.append(ss_input)
                     
@@ -5387,7 +5369,7 @@ function searchPatPresc(){
                         var colmd1=$("<div class='col-md-4 text-center'></div>")
                         var colmd2=$("<div class='col-md-8' style='padding-bottom:10px;'></div>")
                             var pd_label=$("<label class='custom_label_css'>Provisonal Diagnosis</label>");
-                            var pd_input=$("<textarea id='pd_input' class='form-control custom_input_css' style='height: 140px;'  value='"+pres_data_dict['provisional_diagnosis']+"'>"+pres_data_dict['provisional_diagnosis']+"</textarea>")
+                            var pd_input=$("<textarea id='pd_input' class='form-control-custom custom_input_css' style='height: 140px;'  value='"+pres_data_dict['provisional_diagnosis']+"'>"+pres_data_dict['provisional_diagnosis']+"</textarea>")
                         colmd1.append(pd_label);
                         colmd2.append(pd_input);
     
@@ -5406,7 +5388,7 @@ function searchPatPresc(){
                         var colmd1=$("<div class='col-md-4 text-center'></div>")
                         var colmd2=$("<div class='col-md-8' style='padding-bottom:10px;'></div>")
                             var investigation_label=$("<label for='ss_tag' class='custom_label_css'>Investigation</label>");
-                            var investigation_input=$("<textarea id='investigation_input' class='form-control custom_input_css' style='height: 140px;'  value='"+pres_data_dict['investigation']+"'>"+pres_data_dict['investigation']+"</textarea>")
+                            var investigation_input=$("<textarea id='investigation_input' class='form-control-custom custom_input_css' style='height: 140px;'  value='"+pres_data_dict['investigation']+"'>"+pres_data_dict['investigation']+"</textarea>")
                         colmd1.append(investigation_label)
                         colmd2.append(investigation_input)
 
@@ -5420,7 +5402,7 @@ function searchPatPresc(){
                         var colmd1=$("<div class='col-md-4 text-center'></div>")
                         var colmd2=$("<div class='col-md-8' style='padding-bottom:10px;'></div>")
                             var pd_label=$("<label class='custom_label_css'>Diagnosis</label>");
-                            var pd_input=$("<textarea id='diagnosis_input' class='form-control custom_input_css' style='height: 140px;'  value='"+pres_data_dict['diagnosis']+"'>"+pres_data_dict['diagnosis']+"</textarea>")
+                            var pd_input=$("<textarea id='diagnosis_input' class='form-control-custom custom_input_css' style='height: 140px;'  value='"+pres_data_dict['diagnosis']+"'>"+pres_data_dict['diagnosis']+"</textarea>")
                         colmd1.append(pd_label);
                         colmd2.append(pd_input);
 
@@ -5439,7 +5421,7 @@ function searchPatPresc(){
                         var colmd1=$("<div class='col-md-4 text-center'></div>")
                         var colmd2=$("<div class='col-md-8' style='padding-bottom:10px;'></div>")
                             var vitals_label=$("<label for='v_tag' class='custom_label_css'>Vitals</label>");
-                            var vitals_input=$("<textarea id='vitals_input' class='form-control custom_input_css' style='height: 140px;'  value='"+pres_data_dict['vitals']+"'>"+pres_data_dict['vitals']+"</textarea>")
+                            var vitals_input=$("<textarea id='vitals_input' class='form-control-custom custom_input_css' style='height: 140px;'  value='"+pres_data_dict['vitals']+"'>"+pres_data_dict['vitals']+"</textarea>")
                         colmd1.append(vitals_label)
                         colmd2.append(vitals_input)
 
@@ -5453,7 +5435,7 @@ function searchPatPresc(){
                         var colmd1=$("<div class='col-md-4 text-center'></div>")
                         var colmd2=$("<div class='col-md-8' style='padding-bottom:10px;'></div>")
                             var rx_label=$("<label for='rx_tag' class='custom_label_css'>RX</label>");
-                            var rx_input=$("<textarea id='rx_input' class='form-control custom_input_css' style='height: 140px;' value='"+pres_data_dict['rx']+"'>"+pres_data_dict['rx']+"</textarea>")
+                            var rx_input=$("<textarea id='rx_input' class='form-control-custom custom_input_css' style='height: 140px;' value='"+pres_data_dict['rx']+"'>"+pres_data_dict['rx']+"</textarea>")
                         colmd1.append(rx_label)
                         colmd2.append(rx_input)
 
@@ -5628,37 +5610,31 @@ function createDataTableViewPresList(prescription_list){
                         extend: 'print',
                         text: 'Print',
                         title: 'Prescription List',
-                        className: 'btn btn-default fa fa-print',
+                        className: 'datatable_button fa fa-print',
 
                     },
                      {
                         extend: 'excel',
                         text: 'Export Data in Excel',
                         title: 'Prescription List',
-                        className: 'btn btn-default  fas fa-file-excel',
+                        className: 'datatable_button fas fa-file-excel',
 
                     },
                      {
                         extend: 'csv',
                         text: 'Export Data in CSV',
                         title: 'Prescription List',
-                        className: 'btn btn-default fa fa-file',
+                        className: 'datatable_button fa fa-file',
 
                     },
                     {
                         extend: 'pdf',
                         text: 'Export Data in PDF',
                         title: 'Prescription List',
-                        className: 'btn btn-default fas fa-file-pdf',
+                        className: 'datatable_button fas fa-file-pdf',
 
                     },
-                    {
-                        extend: 'copy',
-                        text: 'Copy to Clipboard',
-                        title: 'Prescription List',
-                        className: 'btn btn-default fas fa-copy',
-
-                    },
+                   
                 ],
     
             });
@@ -5721,14 +5697,14 @@ function viewTokenRecords(){
                                 extend: 'print',
                                 text: 'Print',
                                 title: 'Token Record List',
-                                className: 'btn btn-default fa fa-print',
+                                className: 'datatable_button fa fa-print',
         
                             },
                              {
                                 extend: 'excel',
                                 text: 'Export Data in Excel',
                                 title: 'Token Record List',
-                                className: 'btn btn-default  fas fa-file-excel',
+                                className: 'datatable_button  fas fa-file-excel',
         
                             },
                         ]
@@ -5796,14 +5772,14 @@ function viewTokenGeneratorTable(){
                                 extend: 'print',
                                 text: 'Print',
                                 title: 'Token Generator List',
-                                className: 'btn btn-default fa fa-print',
+                                className: 'datatable_button fa fa-print',
         
                             },
                              {
                                 extend: 'excel',
                                 text: 'Export Data in Excel',
                                 title: 'Token Generator List',
-                                className: 'btn btn-default  fas fa-file-excel',
+                                className: 'datatable_button  fas fa-file-excel',
         
                             },
                         ]

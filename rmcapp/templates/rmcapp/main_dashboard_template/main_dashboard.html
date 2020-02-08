@@ -9,7 +9,10 @@
     <title>RMC</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{% static 'rmcapp/maindashboard_static/generalcssfiles/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'rmcapp/maindashboard_static/generalcssfiles/maindashboardstyle.css' %}" rel="stylesheet">
+
     <link href="{% static 'rmcapp/maindashboard_static/stylepage.css' %}" rel="stylesheet">
+    <!-- <link href="{% static 'rmcapp/mainhomepage_static/css/style.css' %}" rel="stylesheet"> -->
 
     <script src="{% static 'rmcapp/maindashboard_static/generaljsfiles/jquery-1.11.1.min.js' %}"></script>
     <script src="{% static 'rmcapp/maindashboard_static/generaljsfiles/bootstrap.min.js' %}"></script>
@@ -26,102 +29,7 @@
     <!-- <link href="{% static 'rmcapp/maindashboard_static/generalcssfiles/all.css' %}" rel="stylesheet"> -->
 
     <style>
-      .dashboard-icons{
-            width:100%;
-            border-radius: 2px;
-            height:200px;
-            background:#476589;
-            box-shadow: 0 0 5px 3px #555;
-        }
-        .dashboard-icon-rows{
-          padding:10px;
-          padding-top:  50px;
-        }
-        .dashboard-icons:hover{
-          background:#4c7c9a;
-
-        }
-
-        .icon_padding{
-          padding:32px 0px 0px 210px;
-          opacity: 0.2;
-          color:white;
-        }
-        .pat, .staff, .inventory{
-          font-size: 30px;
-          opacity: 0.5;
-          color:white;
-        }
-        .pat{
-          padding: 0px 0px 0px 150px;
-
-        }
-        .inventory{
-          padding: 0px 0px 0px 120px;
-
-        }
-        .staff{
-          padding: 0px 0px 0px 165px;
-
-        }
-      .card-counter{
-        box-shadow: 2px 2px 10px #DADADA;
-        margin: 5px;
-        padding: 24px 17px;
-        background-color: #fff;
-        height: 120px;
-        border-radius: 5px;
-        transition: .3s linear all;
-      }
-
-      .card-counter:hover{
-        box-shadow: 4px 4px 20px #DADADA;
-        transition: .3s linear all;
-      }
-
-      .card-counter.primary{
-        background-color: #007bff;
-        color: #FFF;
-      }
-
-      .card-counter.danger{
-        background-color: #ef5350;
-        color: #FFF;
-      }  
-
-      .card-counter.success{
-        background-color: #66bb6a;
-        color: #FFF;
-      }  
-
-      .card-counter.info{
-        background-color: #26c6da;
-        color: #FFF;
-      }  
-
-      .card-counter i{
-        font-size: 5em;
-        opacity: 0.2;
-      }
-
-      .card-counter .counter-count{
-        position: absolute;
-        right: 35px;
-        top: 20px;
-        font-size: 32px;
-        display: block;
-      }
-
-      .card-counter .count-name{
-        position: absolute;
-        right: 35px;
-        top: 65px;
-        font-style: italic;
-        text-transform: capitalize;
-        opacity: 0.5;
-        display: block;
-        font-size: 18px;
-      }
+     
   </style>
  
 
@@ -132,183 +40,243 @@
   <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
     <i class="fas fa-bars"></i>
   </a>
-  <nav id="sidebar" class="sidebar-wrapper">
-    <div class="sidebar-content">
-      <div class="sidebar-brand">
-        <a href="#">Main-Dashboard</a>
-        <div id="close-sidebar">
-          <i class="fas fa-times"></i>
+  <div class='row'>
+    <div class="col-md-2">
+       <!-- sidebar-wrapper  -->
+      <nav id="sidebar" class="sidebar-wrapper">
+      <div class="sidebar-content">
+        <div class="sidebar-brand">
+          <a href="#">Main-Dashboard</a>
+          <div id="close-sidebar">
+            <i class="fas fa-times"></i>
+          </div>
         </div>
-      </div>
-      <div class="sidebar-header">
-        <div class="user-pic">
-          <!-- <img class="img-responsive img-rounded" src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg" alt="User picture"> -->
+        <div class="sidebar-header">
+          <div class="user-pic">
+            <!-- <img class="img-responsive img-rounded" src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg" alt="User picture"> -->
+          </div>
+          <div class="user-info">
+  
+            {% if user.is_authenticated %}
+            <span class="user-name">{{ user.get_username }}
+              <strong></strong>
+            </span>
+            {% endif %} 
+            {% if user.is_authenticated %}
+            <span class="user-role">{{ user.role.role_name }}</span>
+            {% endif %} 
+          
+            <span class="user-status">
+              <i class="fa fa-circle"></i>
+              <span>Active</span>
+            </span>
+  
+          </div>
         </div>
-        <div class="user-info">
-
-          {% if user.is_authenticated %}
-          <span class="user-name">{{ user.get_username }}
-            <strong></strong>
-          </span>
-          {% endif %} 
-          {% if user.is_authenticated %}
-          <span class="user-role">{{ user.role.role_name }}</span>
-          {% endif %} 
         
-          <span class="user-status">
-            <i class="fa fa-circle"></i>
-            <span>Active</span>
-          </span>
-
-        </div>
-      </div>
-      
-      
-      <!-- sidebar-search  -->
-      <div class="sidebar-menu">
-        <ul>
-          <li class="header-menu">
-            <span>General</span>
-          </li>
-          <li class="sidebar-dropdown">
-            <a href="#">
-              <i class="fa fa-tachometer-alt"></i>
-              <span>Dashboard</span>
-              <!-- <span class="badge badge-pill badge-warning">New</span> -->
-            </a>
-            <div class="sidebar-submenu">
-              <ul>
-                <li>
-                  <a href="{%url 'inventory_dashboard'%}">Inventory Management
-                    <!-- <span class="badge badge-pill badge-success">Pro</span> -->
-                  </a>
-                </li>
-                <li>
-                  <a href="{%url 'patient_dashboard'%}">Patient Management</a>
-                </li>
-                <li>
-                  <a href="{%url 'staff_dashboard'%}">Staff Management</a>
-                </li>
-                <li>
-                  <a href="{%url 'main_dashboard'%}">Main Dashboard</a>
-                </li>
-                <li>
-                  <a href="{%url 'mainhomepage'%}">Home Page</a>
-                </li>
-                
-              </ul>
-            </div>
-          </li>
-         
-       
-         
         
-        </ul>
-      </div>
-      <!-- sidebar-menu  -->
-    </div>
-    <!-- sidebar-content  -->
-    <div class="sidebar-footer">
-      <a href="#">
-        <i class="fa fa-bell"></i>
-        <span class="badge badge-pill badge-warning notification">3</span>
-      </a>
-      <a href="#">
-        <i class="fa fa-envelope"></i>
-        <span class="badge badge-pill badge-success notification">7</span>
-      </a>
-      <a href="#">
-        <i class="fa fa-cog"></i>
-        <span class="badge-sonar"></span>
-      </a>
-    
-      <a href="{% url 'logout'%}">
-             <i class="fa fa-power-off"></i>
-      </a>
-
-      
-    </div>
-  </nav>
-  <!-- sidebar-wrapper  -->
-  <main class="page-content">
-    <div class="container-fluid">
-      <h2>Main Dashboard</h2>
-      <hr>
-      <div class="col-md-12">
-        <div class="row">
-          <div class="col-md-3">
-            <div class="card-counter primary">
-              <i class="fa fa-user-circle"></i>
-              <span class="counter-count">12</span>
-              <span class="count-name">Total Patients</span>
-            </div>
-          </div>
-      
-          <div class="col-md-3">
-            <div class="card-counter danger">
-              <i class="fa fa-user-md"></i>
-              <span class="counter-count">599</span>
-              <span class="count-name">Total Doctors</span>
-            </div>
-          </div>
-      
-          <div class="col-md-3">
-            <div class="card-counter success">
-              <i class="fa fa-users"></i>
-              <span class="counter-count">6875</span>
-              <span class="count-name">Total Employees</span>
-            </div>
-          </div>
-      
-          <div class="col-md-3">
-            <div class="card-counter info">
-              <i class="fa  fa-database"></i>
-              <span class="counter-count">35</span>
-              <span class="count-name">Patients Visit This Month</span>
-            </div>
-          </div>
+        <!-- sidebar-search  -->
+        <div class="sidebar-menu">
+          <ul>
+            <li class="header-menu">
+              <span>General</span>
+            </li>
+            <li class="sidebar-dropdown">
+              <a href="#">
+                <i class="fa fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+                <!-- <span class="badge badge-pill badge-warning">New</span> -->
+              </a>
+              <div class="sidebar-submenu">
+                <ul>
+                  <li>
+                    <a href="{%url 'inventory_dashboard'%}">Inventory Management
+                      <!-- <span class="badge badge-pill badge-success">Pro</span> -->
+                    </a>
+                  </li>
+                  <li>
+                    <a href="{%url 'patient_dashboard'%}">Patient Management</a>
+                  </li>
+                  <li>
+                    <a href="{%url 'staff_dashboard'%}">Staff Management</a>
+                  </li>
+                  <li>
+                    <a href="{%url 'main_dashboard'%}">Main Dashboard</a>
+                  </li>
+                  <li>
+                    <a href="{%url 'mainhomepage'%}">Home Page</a>
+                  </li>
+                  
+                </ul>
+              </div>
+            </li>
+           
+         
+           
+          
+          </ul>
         </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="row dashboard-icon-rows">
-              <div class="col-md-4" >
-                  <a href="{%url 'inventory_dashboard'%}" style="text-decoration: none;">
-                    <div class="dashboard-icons" role="application" >
-                    <i class="fa fa-plus fa-5x icon_padding"></i></br>
-                    <span class="inventory">Inventory Dashboard</span>
+        <!-- sidebar-menu  -->
+      </div>
+      <!-- sidebar-content  -->
+      <div class="sidebar-footer">
+        <a href="#">
+          <i class="fa fa-bell"></i>
+          <span class="badge badge-pill badge-warning notification">3</span>
+        </a>
+        <a href="#">
+          <i class="fa fa-envelope"></i>
+          <span class="badge badge-pill badge-success notification">7</span>
+        </a>
+        <a href="#">
+          <i class="fa fa-cog"></i>
+          <span class="badge-sonar"></span>
+        </a>
+      
+        <a href="{% url 'logout'%}">
+               <i class="fa fa-power-off"></i>
+        </a>
+  
+        
+      </div>
+      </nav>  
+    </div>
+    <div class="col-md-10"  id="page-content">
+        <main class="page-content">
+            <div class="container-fluid">
+              <h4>Main Dashboard</h4>
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="card-counter primary">
+                      <i class="fa fa-user-circle"></i>
+                      <span class="counter-count">12</span>
+                      <span class="count-name">Total Patients</span>
                     </div>
-                  </a>
-              </div>
-              <div class="col-md-4">
-                <a href="{%url 'patient_dashboard'%}" style="text-decoration: none;">
-                  <div class='dashboard-icons' role="button" >
-                  <i class="fa fa-user-plus fa-5x icon_padding"></i></br>
-                  <span class="pat">Patient Dashboard</span>
                   </div>
-                </a>
-              </div>
-              <div class="col-md-4">
-                <a href="{%url 'staff_dashboard'%}" style="text-decoration: none;">
-                  <div class='dashboard-icons' role="button" >
-                  <i class="fa fa-users fa-5x icon_padding"></i></br>
-                  <span class="staff" >Staff Dashboard</span>
+              
+                  <div class="col-md-3">
+                    <div class="card-counter danger">
+                      <i class="fa fa-user-md"></i>
+                      <span class="counter-count">599</span>
+                      <span class="count-name">Total Doctors</span>
+                    </div>
                   </div>
-                </a>
+              
+                  <div class="col-md-3">
+                    <div class="card-counter success">
+                      <i class="fa fa-users"></i>
+                      <span class="counter-count">6875</span>
+                      <span class="count-name">Total Employees</span>
+                    </div>
+                  </div>
+              
+                  <div class="col-md-3">
+                    <div class="card-counter info">
+                      <i class="fa  fa-database"></i>
+                      <span class="counter-count">35</span>
+                      <span class="count-name">Patients Visit This Month</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="row dashboard-icon-rows">
+                      <div class="col-md-4" >
+                          <a href="{%url 'inventory_dashboard'%}" style="text-decoration: none;">
+                            <div class="dashboard-icons" role="application" >
+                                <div class="col-md-12 subdashboard-icon" >
+                                    <div class="row">
+                                      <div class="col-md-2"></div>
+                                      <div class="col-md-8 text-center ">
+                                          <i class="fa fa-plus fa-3x icon_padding"></i></br>
+                                        </div>
+                                      <div class="col-md-2"></div>
+            
+                                    </div>  
+                                    <div class="row">
+                                        <div class="col-md-3"></div>
+                                        <div class="col-md-6 text-center">
+                                            <span class="inventory">Inventory Dashboard</span>
+                                          </div>
+                                        <div class="col-md-3"></div>
+            
+                                    </div> 
+                                </div>
+                            </div>
+                          </a>
+                      </div>
+                      <div class="col-md-4">
+                        <a href="{%url 'patient_dashboard'%}" style="text-decoration: none;">
+                          <div class='dashboard-icons' role="button" >
+
+                              <div class="col-md-12 subdashboard-icon" >
+                                  <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-8 text-center ">
+                                        <i class="fa fa-user-plus fa-3x icon_padding"></i></br>
+                                      </div>
+                                    <div class="col-md-2"></div>
+          
+                                  </div>  
+                                  <div class="row">
+                                      <div class="col-md-3"></div>
+                                      <div class="col-md-6 text-center">
+                                          <span class="pat">Patient Dashboard</span>
+                                        </div>
+                                      <div class="col-md-3"></div>
+          
+                                  </div> 
+                              </div>
+                          </div>
+                        </a>
+                      </div>
+                      <div class="col-md-4">
+                        <a href="{%url 'staff_dashboard'%}" style="text-decoration: none;">
+                          <div class='dashboard-icons' role="button" >
+                              <div class="col-md-12 subdashboard-icon" >
+                                  <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-8 text-center ">
+                                        <i class="fa fa-users fa-3x icon_padding"></i></br>
+                                      </div>
+                                    <div class="col-md-2"></div>
+          
+                                  </div>  
+                                  <div class="row">
+                                      <div class="col-md-3"></div>
+                                      <div class="col-md-6 text-center">
+                                          <span class="staff" >Staff Dashboard</span>
+                                        </div>
+                                      <div class="col-md-3"></div>
+          
+                                  </div> 
+                              </div>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                </div>
               </div>
             </div>
-        </div>
-      </div>
+          </div>
+        </main>
     </div>
-  </div>
-</main>
+ 
+ 
   <!-- page-content" -->
 </div>
+
+
+
+
+
 <!-- page-wrapper -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
     
 </body>
 
@@ -338,10 +306,15 @@ jQuery(function ($) {
   }
 });
 
+
 $("#close-sidebar").click(function() {
+  $('#page-content').removeClass('col-md-10');
+  $('#page-content').addClass('col-md-12');
   $(".page-wrapper").removeClass("toggled");
 });
 $("#show-sidebar").click(function() {
+  $('#page-content').removeClass('col-md-12');
+  $('#page-content').addClass('col-md-10');
   $(".page-wrapper").addClass("toggled");
 });
 

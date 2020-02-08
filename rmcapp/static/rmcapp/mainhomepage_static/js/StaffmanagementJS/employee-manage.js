@@ -16,6 +16,7 @@ var all_employee_info_dict={};
 
 $( document ).ready(function() {
     retrieveEmployeeType();
+    $("#dialog-confirm").hide()
     // retrieveEmployeeInfo();
 
 });
@@ -133,7 +134,6 @@ function addEmployee(){
     $('#main_page_content').empty()
     var container_empl_dashboard= $('#main_page_content').append('<div class="container-fluid" id="container-empl-dashboard"></div>');
     $("#container-empl-dashboard").append("<h2 class ='text-center'>Employee Information</h2>");
-    $("#container-empl-dashboard").append("<hr class='custom_hr'>");
     $("#container-empl-dashboard").append("<h5>Please fill in the form below</h5>");
     var main_row_div= $("<div class='row is-flex'></div>");
 
@@ -152,7 +152,7 @@ function addEmployee(){
 
                     emp_name_label=$("<label for='emp_name_tag' class='custom_label_css'>Employee Name</label>");
                     colmd1.append(emp_name_label)
-                    emp_name_input=$("<input class='form-control' id='emp_name_input' class='custom_input_css'>")
+                    emp_name_input=$("<input class='form-control-custom' id='emp_name_input' class='custom_input_css'>")
                     colmd2.append(emp_name_input)
 
                 row__col_one__row_div_one.append(colmd1);
@@ -169,7 +169,7 @@ function addEmployee(){
 
                     contact_type_label=$("<label class='custom_label_css'>Contact Number</label>");
                     colmd1.append(contact_type_label);
-                    contact_type_input=$("<input class='form-control' autocomplete='off' id='contact_numb_input' maxlength='12' oninput='contactNumPatInfoOnInput($(this))' class='custom_input_css' placeholder='0312-3456789'></input>")
+                    contact_type_input=$("<input class='form-control-custom' autocomplete='off' id='contact_numb_input' maxlength='12' oninput='contactNumPatInfoOnInput($(this))' class='custom_input_css' placeholder='0312-3456789'></input>")
                     colmd2.append(contact_type_input);
 
                 row__col_two__row_div_one.append(colmd1)
@@ -191,12 +191,12 @@ function addEmployee(){
 
                             emp_name_label=$("<label class='custom_label_css'>Gender</label>");
                             colmd1.append(emp_name_label)
-                            emp_name_input=$("<input class='form-control' autocomplete='off' id='gender_input'  class='custom_input_css' onfocusout='onfocusOutGenderInput($(this))'>")
+                            emp_name_input=$("<input class='form-control-custom' autocomplete='off' id='gender_input'  class='custom_input_css' onfocusout='onfocusOutGenderInput($(this))'>")
                             colmd2.append(emp_name_input)
                 // DOB
                             contact_type_label=$("<label class='custom_label_css'>DOB</label>");
                             colmd3.append(contact_type_label);
-                            contact_type_input=$("<input class='form-control' autocomplete='off' id='dob_input' class='custom_input_css' ></input>")
+                            contact_type_input=$("<input class='form-control-custom' autocomplete='off' id='dob_input' class='custom_input_css' ></input>")
                             colmd4.append(contact_type_input);
 
                         row__col_one__row_div_two.append(colmd1);
@@ -214,7 +214,7 @@ function addEmployee(){
 
                         contact_type_label=$("<label class='custom_label_css'>CNIC</label>");
                         colmd1.append(contact_type_label);
-                        contact_type_input=$("<input class='form-control' autocomplete='off' id='cnic_input' oninput='cnicNumPatInfoOnInput($(this))' maxlength='15'  class='custom_input_css' placeholder='xxxxx-xxxxxxx-x' ></input>")
+                        contact_type_input=$("<input class='form-control-custom' autocomplete='off' id='cnic_input' oninput='cnicNumPatInfoOnInput($(this))' maxlength='15'  class='custom_input_css' placeholder='xxxxx-xxxxxxx-x' ></input>")
                         colmd2.append(contact_type_input);
 
                     row__col_three__row_div_two.append(colmd1)
@@ -237,7 +237,7 @@ function addEmployee(){
                         colmd1.append(emp_type_label)
 
 
-                            var select=$("<select id='select_emp_type' class='form-control'></select>");
+                            var select=$("<select id='select_emp_type' class='form-control-custom'></select>");
                                 var option=$("<option selected='selected' id="+employee_type_list[0]+"-opt value='"+employee_type_list[0]+"'>"+employee_type_list[0]+"</option>");
                             $(select).append(option);
                             for (var i=1;i<=employee_type_list.length;i++){
@@ -259,7 +259,7 @@ function addEmployee(){
     
                         address_label=$("<label for='emp_address_tag' class='custom_label_css'>Address</label>");
                         colmd1.append(address_label)
-                        emp_address_input=$("<input class='form-control' autocomplete='off' id='emp_address_input' class='custom_input_css'>")
+                        emp_address_input=$("<input class='form-control-custom' autocomplete='off' id='emp_address_input' class='custom_input_css'>")
                         colmd2.append(emp_address_input)
     
                         row__col_two__row_div_three.append(colmd1);
@@ -280,7 +280,7 @@ function addEmployee(){
         
                             emp_qualif_label=$("<label for='emp_qualif_tag' class='custom_label_css'>Qualification</label>");
                             colmd1.append(emp_qualif_label)
-                            emp_qualif_input=$("<input class='form-control custom_input_css' id='emp_qualif_input' type='text' />")
+                            emp_qualif_input=$("<input class='form-control-custom custom_input_css' id='emp_qualif_input' type='text' />")
                             colmd2.append(emp_qualif_input)
         
                         row__col_one__row_div_four.append(colmd1);
@@ -297,7 +297,7 @@ function addEmployee(){
         
                             email_id_label=$("<label class='custom_label_css'>Email Address</label>");
                             colmd1.append(email_id_label);
-                            email_id_input=$("<input class='form-control' id='email_id_input' class='custom_input_css'></input>")
+                            email_id_input=$("<input class='form-control-custom' id='email_id_input' class='custom_input_css'></input>")
                             colmd2.append(email_id_input);
         
                         row__col_two__row_div_four.append(colmd1)
@@ -376,7 +376,7 @@ function editEmployee(){
 
        
         $(main_row_div).append(main_col_div);
-            var row_div_one=$("<div class='row' style='padding-bottom:50px'></div>");
+            var row_div_one=$("<div class='row' style='padding-bottom:20px'></div>");
                 // Patient Name
                 var col_one__row_div_one=$("<div class='col-md-4'></div>");
                     row__col_one__row_div_one=$("<div class='row'></div>");
@@ -384,7 +384,7 @@ function editEmployee(){
                         colmd2=$("<div class='col-md-6'></div>")
                             pat_name_label=$("<label for='emp_name_tag' class='custom_label_css'>Emplyee Name</label>");
                         colmd1.append(pat_name_label)
-                            pat_name_input=$("<input class='form-control' id='search_emp_name_input' class='custom_input_css'>")
+                            pat_name_input=$("<input class='form-control-custom' id='search_emp_name_input' class='custom_input_css'>")
                         colmd2.append(pat_name_input)
                     row__col_one__row_div_one.append(colmd1);
                     row__col_one__row_div_one.append(colmd2);
@@ -396,7 +396,7 @@ function editEmployee(){
                         colmd2=$("<div class='col-md-6'></div>")
                             contact_type_label=$("<label class='custom_label_css'>Contact Number</label>");
                         colmd1.append(contact_type_label);
-                            contact_type_input=$("<input class='form-control custom_input_css' id='search_contact_numb_input'   maxlength='12'  oninput='searchContactNumPatInfoOnEdit($(this))' placeholder='0312-3456789'></input>")
+                            contact_type_input=$("<input class='form-control-custom custom_input_css' id='search_contact_numb_input'   maxlength='12'  oninput='searchContactNumPatInfoOnEdit($(this))' placeholder='0312-3456789'></input>")
                         colmd2.append(contact_type_input);
                     row__col_two__row_div_one.append(colmd1)
                     row__col_two__row_div_one.append(colmd2)
@@ -422,7 +422,7 @@ function editEmployee(){
 
 function searchEmployee(){
 
-    $("#form-row").remove();
+    $("#edit-emplyee-info-form").remove();
     $("#row_div_five").remove();
     employee_dict={}
     emp_datatable_list=[]
@@ -530,19 +530,19 @@ function createEmployeetDataTable(){
                     extend: 'print',
                     text: ' Print Employee Details',
                     title: 'Print Employee Details',
-                    className: 'btn btn-default fa fa-print',
+                    className: 'datatable_button fa fa-print',
                     },
                     {
                         extend: 'excel',
                         text: 'Export to Excel',
                         title: 'Print Employee Details',
-                        className: 'btn btn-default fas fa-file-excel',
+                        className: 'datatable_button fas fa-file-excel',
                     },
                     {
                         extend: 'pdf',
                         text: 'Save As PDF',
                         title: 'Print Employee Details',
-                        className: 'btn btn-default fas fa-file-pdf',
+                        className: 'datatable_button fas fa-file-pdf',
                     }
                 ],
     
@@ -553,10 +553,10 @@ function createEmployeetDataTable(){
                 }
                 else{
                     emp_id_selected=$(this).find('td').eq(0).text()
-                    $('#form-row').remove();
+                    $('#edit-emplyee-info-form').remove();
                     emp_datatable.$('tr.selected').removeClass('selected');
                     $(this).addClass('selected');
-                    var form_row=$("<div class='row' id='form-row'></div>")
+                    var form_row=$("<div class='row' id='edit-emplyee-info-form'><h5> Employee Details</h5></div>")
                     var form_col=$("<div class='col-md-12'></div>");
                     form_row.append(form_col)
                     var row_div_one=$("<div class='row' id='row_div_three_editpat'></div>");
@@ -568,7 +568,7 @@ function createEmployeetDataTable(){
             
                                 emp_name_label=$("<label for='emp_name_tag' class='custom_label_css'>Employee Name</label>");
                                 colmd1.append(emp_name_label)
-                                emp_name_input=$("<input class='form-control' id='emp_name_input' class='custom_input_css' value="+employee_dict[emp_id_selected]['name']+" disabled></input>")
+                                emp_name_input=$("<input class='form-control-custom' id='emp_name_input' class='custom_input_css' value="+employee_dict[emp_id_selected]['name']+" disabled></input>")
                                 colmd2.append(emp_name_input)
             
                             row__col_one__row_div_one.append(colmd1);
@@ -582,7 +582,7 @@ function createEmployeetDataTable(){
             
                                 contact_type_label=$("<label class='custom_label_css'>Contact Number</label>");
                                 colmd1.append(contact_type_label);
-                                contact_type_input=$("<input class='form-control' id='contact_numb_edit'  maxlength='12'  oninput='contactNumPatInfoOnEdit($(this))' class='custom_input_css' value="+employee_dict[emp_id_selected]['phone']+"></input>")
+                                contact_type_input=$("<input class='form-control-custom' id='contact_numb_edit'  maxlength='12'  oninput='contactNumPatInfoOnEdit($(this))' class='custom_input_css' value="+employee_dict[emp_id_selected]['phone']+"></input>")
                                 colmd2.append(contact_type_input);
             
                             row__col_two__row_div_one.append(colmd1)
@@ -604,12 +604,12 @@ function createEmployeetDataTable(){
             
                                         emp_name_label=$("<label class='custom_label_css'>Gender</label>");
                                         colmd1.append(emp_name_label)
-                                        emp_name_input=$("<input class='form-control' id='gender_input'  class='custom_input_css' value='"+employee_dict[emp_id_selected]['gender']+"' disabled>")
+                                        emp_name_input=$("<input class='form-control-custom' id='gender_input'  class='custom_input_css' value='"+employee_dict[emp_id_selected]['gender']+"' disabled>")
                                         colmd2.append(emp_name_input)
                             // DOB
                                         contact_type_label=$("<label class='custom_label_css'>DOB</label>");
                                         colmd3.append(contact_type_label);
-                                        contact_type_input=$("<input class='form-control' id='dob_input' class='custom_input_css' value='"+employee_dict[emp_id_selected]['dob']+"' disabled></input>")
+                                        contact_type_input=$("<input class='form-control-custom' id='dob_input' class='custom_input_css' value='"+employee_dict[emp_id_selected]['dob']+"' disabled></input>")
                                         colmd4.append(contact_type_input);
             
                                     row__col_one__row_div_two.append(colmd1);
@@ -627,7 +627,7 @@ function createEmployeetDataTable(){
             
                                     contact_type_label=$("<label class='custom_label_css'>CNIC</label>");
                                     colmd1.append(contact_type_label);
-                                    contact_type_input=$("<input class='form-control' id='cnic_edit'  oninput='cnicNumPatInfoOnEdit($(this))' maxlength='15' maxlength='15' class='custom_input_css' value='"+employee_dict[emp_id_selected]['cnic']+"' ></input>")
+                                    contact_type_input=$("<input class='form-control-custom' id='cnic_edit'  oninput='cnicNumPatInfoOnEdit($(this))' maxlength='15' maxlength='15' class='custom_input_css' value='"+employee_dict[emp_id_selected]['cnic']+"' ></input>")
                                     colmd2.append(contact_type_input);
             
                                 row__col_three__row_div_two.append(colmd1)
@@ -650,8 +650,8 @@ function createEmployeetDataTable(){
                                     colmd1.append(emp_type_label)
             
             
-                                    var select=$("<select id='select_emp_type' class='form-control'></select>");
-                                    Employee_type_input=$("<input class='form-control' id='employee_type_input' value='"+employee_dict[emp_id_selected]['employee_type']+"' disabled>")
+                                    var select=$("<select id='select_emp_type' class='form-control-custom'></select>");
+                                    Employee_type_input=$("<input class='form-control-custom' id='employee_type_input' value='"+employee_dict[emp_id_selected]['employee_type']+"' disabled>")
                                             
                                     colmd2.append(Employee_type_input) 
                                 row__col_one__row_div_three.append(colmd1);
@@ -665,7 +665,7 @@ function createEmployeetDataTable(){
                                     colmd2=$("<div class='col-md-6' id='emp_address_input_div'></div>")
                                         address_label=$("<label for='emp_address_tag' class='custom_label_css'>Address</label>");
                                     colmd1.append(address_label)
-                                        emp_address_input=$("<input class='form-control' id='emp_address_input' value='"+employee_dict[emp_id_selected]['address']+"' class='custom_input_css'>")
+                                        emp_address_input=$("<input class='form-control-custom' id='emp_address_input' value='"+employee_dict[emp_id_selected]['address']+"' class='custom_input_css'>")
                                     colmd2.append(emp_address_input)
                                 row__col_two__row_div_three.append(colmd1);
                                 row__col_two__row_div_three.append(colmd2);
@@ -681,7 +681,7 @@ function createEmployeetDataTable(){
                                     colmd2=$("<div class='col-md-6' id='emp_qualif_input_div'></div>")
                                         emp_qualif_label=$("<label for='emp_qualif_tag' class='custom_label_css'>Qualification</label>");
                                     colmd1.append(emp_qualif_label)
-                                        emp_qualif_input=$("<input class='form-control custom_input_css' id='emp_qualif_input' value='"+employee_dict[emp_id_selected]['qualification']+"' type='text'>")
+                                        emp_qualif_input=$("<input class='form-control-custom custom_input_css' id='emp_qualif_input' value='"+employee_dict[emp_id_selected]['qualification']+"' type='text'>")
                                     colmd2.append(emp_qualif_input)
                                 row__col_one__row_div_four.append(colmd1);
                                 row__col_one__row_div_four.append(colmd2);
@@ -693,7 +693,7 @@ function createEmployeetDataTable(){
                                     colmd2=$("<div class='col-md-6' id='email_id_input_div'></div>")
                                         email_id_label=$("<label class='custom_label_css'>Email Address</label>");
                                     colmd1.append(email_id_label);
-                                        email_id_input=$("<input class='form-control' id='email_id_input' class='custom_input_css' value='"+employee_dict[emp_id_selected]['email']+"'></input>")
+                                        email_id_input=$("<input class='form-control-custom' id='email_id_input' class='custom_input_css' value='"+employee_dict[emp_id_selected]['email']+"'></input>")
                                     colmd2.append(email_id_input);
                                 row__col_two__row_div_four.append(colmd1)
                                 row__col_two__row_div_four.append(colmd2)
@@ -865,7 +865,7 @@ function updateEmployeeData(){
         },
         url: '/update_employee_data',
         success: function(data){
-            $("#form-row").remove();
+            $("#edit-emplyee-info-form").remove();
             $("#row_div_five").remove();
             employee_dict={}
             emp_datatable_list=[]
@@ -983,19 +983,19 @@ function createAllEmployeeDataTable(){
                     extend: 'print',
                     text: ' Print Employee Details',
                     title: 'Print Employee Details',
-                    className: 'btn btn-default fa fa-print',
+                    className: 'datatable_button fa fa-print',
                     },
                     {
                         extend: 'excel',
                         text: 'Export to Excel',
                         title: 'Print Employee Details',
-                        className: 'btn btn-default fas fa-file-excel',
+                        className: 'datatable_button fas fa-file-excel',
                     },
                     {
                         extend: 'pdf',
                         text: 'Save As PDF',
                         title: 'Print Employee Details',
-                        className: 'btn btn-default fa fa-file-pdf',
+                        className: 'datatable_button fa fa-file-pdf',
                     }
                 ],
             });
@@ -1232,7 +1232,7 @@ function createAllEmployeeDataTable(){
         $('.dataTables_filter  input[type="search"]').
         attr('placeholder','Search employee ....').
         css({'width':'200px','display':'inline-block'});
-        $('.dataTables_filter input').addClass('form-control');
+        $('.dataTables_filter input').addClass('form-control-custom');
     });
 }
 

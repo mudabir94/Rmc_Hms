@@ -57,216 +57,235 @@
     <!-- <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script> -->
     <style>
     
-    .dashboard-icons{
-            width:100%;
-            border-radius: 2px;
-            height:200px;
-            background:#b0b0b0;
-            box-shadow: 0 0 5px 3px #555;
-        }
-        .dashboard-icon-rows{
-          padding:10px;
-        }
-        .dashboard-icons:hover{
-          background:grey;
 
-        }
-        .icon_padding{
-          padding:32px 0px 0px 215px;
-          opacity: 0.2;
-          color:white;
-        }
-        .view_all, .edit_info, .add_emp{
-          font-size: 30px;
-          opacity: 0.5;
-          color:white;
-        }
-        .add_emp{
-          padding: 0px 0px 0px 160px;
-
-        }
-        .edit_info{
-          padding: 0px 0px 0px 91px;
-
-        }
-        .view_all{
-          padding: 0px 0px 0px 58px;
-
-        }
     </style>
 </head>
 
 <body>
+<div id="dialog-confirm" title="Empty the recycle bin?">
+
+    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>Do you want to Save?</p>
+  </div>
 <div class="page-wrapper chiller-theme toggled">
   <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
     <i class="fas fa-bars"></i>
   </a>
+  <div class="row">
+    <div class="col-md-2">
+      <!-- sidebar-wrapper  -->
   <nav id="sidebar" class="sidebar-wrapper">
-    <div class="sidebar-content">
-      <div class="sidebar-brand">
-        <a href="#">Staff Dashboard</a>
-        <div id="close-sidebar">
-          <i class="fas fa-times"></i>
+      <div class="sidebar-content">
+        <div class="sidebar-brand">
+          <a href="#">Staff Dashboard</a>
+          <div id="close-sidebar">
+            <i class="fas fa-times"></i>
+          </div>
         </div>
-      </div>
-      <div class="sidebar-header">
-        <div class="user-pic">
-          <img class="img-responsive img-rounded" src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"
-            alt="User picture">
-        </div>
-        <div class="user-info">
-
+        <div class="sidebar-header">
+          <div class="user-pic">
+            <img class="img-responsive img-rounded" src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"
+              alt="User picture">
+          </div>
+          <div class="user-info">
+  
+              {% if user.is_authenticated %}
+            <span class="user-name">{{ user.get_username }}
+              <strong></strong>
+            </span>
+            {% endif %} 
             {% if user.is_authenticated %}
-          <span class="user-name">{{ user.get_username }}
-            <strong></strong>
-          </span>
-          {% endif %} 
-          {% if user.is_authenticated %}
-          <span class="user-role">{{ user.role.role_name }}</span>
-          {% endif %} 
-        
-          <span class="user-status">
-            <i class="fa fa-circle"></i>
-            <span>Active</span>
-          </span>
-
+            <span class="user-role">{{ user.role.role_name }}</span>
+            {% endif %} 
+          
+            <span class="user-status">
+              <i class="fa fa-circle"></i>
+              <span>Active</span>
+            </span>
+  
+          </div>
         </div>
-      </div>
-      
-      
-      <!-- sidebar-search  -->
-      <div class="sidebar-menu">
-        <ul>
-          <li class="header-menu">
-            <span>General</span>
-          </li>
-          <li class="sidebar-dropdown">
-            <a href="#">
-              <i class="fa fa-tachometer-alt"></i>
-              <span>Dashboard</span>
-              <!-- <span class="badge badge-pill badge-warning">New</span> -->
-            </a>
-            <div class="sidebar-submenu">
-              <ul>
-                <li>
-                  <a href="{%url 'inventory_dashboard'%}">Inventory Management
-                    <!-- <span class="badge badge-pill badge-success">Pro</span> -->
+        
+        
+        <!-- sidebar-search  -->
+        <div class="sidebar-menu">
+          <ul>
+            <li class="header-menu">
+              <span>General</span>
+            </li>
+            <li class="sidebar-dropdown">
+              <a href="#">
+                <i class="fa fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+                <!-- <span class="badge badge-pill badge-warning">New</span> -->
+              </a>
+              <div class="sidebar-submenu">
+                <ul>
+                  <li>
+                    <a href="{%url 'inventory_dashboard'%}">Inventory Management
+                      <!-- <span class="badge badge-pill badge-success">Pro</span> -->
+                    </a>
+                  </li>
+                  <li>
+                    <a href="{%url 'patient_dashboard'%}">Patient Management</a>
+                  </li>
+                  <li>
+                    <a href="{%url 'staff_dashboard'%}">Staff Management</a>
+  
+                  </li>
+                  <li>
+                    <a href="{%url 'main_dashboard'%}">Main Dashboard</a>
+                  </li>
+                  <li>
+                    <a href="{%url 'mainhomepage'%}">Home Page</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="sidebar-dropdown">
+                  <a href="#">
+                    <i class="fa fa-tachometer-alt"></i>
+                    <span>Forms</span>
+                    <!-- <span class="badge badge-pill badge-warning">New</span> -->
                   </a>
+                  <div class="sidebar-submenu">
+                    <ul>
+                   
+                      
+                      <li>
+                        <a href="#" onclick="addEmployee()">Add Employee
+                        </a>
+                      </li>
+  
+                      <li>
+                        <a href="#" onclick="editEmployee()">Edit Employee Info
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" onclick="viewAllEmployee()">View All Employees Info
+                        </a>
+                      </li>
+                      
+                    </ul>
+                  </div>
                 </li>
-                <li>
-                  <a href="{%url 'patient_dashboard'%}">Patient Management</a>
-                </li>
-                <li>
-                  <a href="{%url 'staff_dashboard'%}">Staff Management</a>
-
-                </li>
-                <li>
-                  <a href="{%url 'main_dashboard'%}">Main Dashboard</a>
-                </li>
-                <li>
-                  <a href="{%url 'mainhomepage'%}">Home Page</a>
-                </li>
-              </ul>
-            </div>
-          </li>
-          <li class="sidebar-dropdown">
-                <a href="#">
-                  <i class="fa fa-tachometer-alt"></i>
-                  <span>Forms</span>
-                  <!-- <span class="badge badge-pill badge-warning">New</span> -->
-                </a>
-                <div class="sidebar-submenu">
-                  <ul>
-                 
-                    
-                    <li>
-                      <a href="#" onclick="addEmployee()">Add Employee
-                      </a>
-                    </li>
-
-                    <li>
-                      <a href="#" onclick="editEmployee()">Edit Employee Info
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" onclick="viewAllEmployee()">View All Employees Info
-                      </a>
-                    </li>
-                    
-                  </ul>
-                </div>
-              </li>
+           
          
-       
-         
-        
-        </ul>
+           
+          
+          </ul>
+        </div>
+        <!-- sidebar-menu  -->
       </div>
-      <!-- sidebar-menu  -->
+      <!-- sidebar-content  -->
+      <div class="sidebar-footer">
+        <a href="#">
+          <i class="fa fa-bell"></i>
+          <span class="badge badge-pill badge-warning notification">3</span>
+        </a>
+        <a href="#">
+          <i class="fa fa-envelope"></i>
+          <span class="badge badge-pill badge-success notification">7</span>
+        </a>
+        <a href="#">
+          <i class="fa fa-cog"></i>
+          <span class="badge-sonar"></span>
+        </a>
+        <a href="{% url 'logout'%}">
+          <i class="fa fa-power-off"></i>
+        </a>
+      </div>
+    </nav>
+    
     </div>
-    <!-- sidebar-content  -->
-    <div class="sidebar-footer">
-      <a href="#">
-        <i class="fa fa-bell"></i>
-        <span class="badge badge-pill badge-warning notification">3</span>
-      </a>
-      <a href="#">
-        <i class="fa fa-envelope"></i>
-        <span class="badge badge-pill badge-success notification">7</span>
-      </a>
-      <a href="#">
-        <i class="fa fa-cog"></i>
-        <span class="badge-sonar"></span>
-      </a>
-      <a href="{% url 'logout'%}">
-        <i class="fa fa-power-off"></i>
-      </a>
-    </div>
-  </nav>
-  <!-- sidebar-wrapper  -->
-  <!-- <label for="from">From</label>
-<input type="text" id="from" name="from">
-<label for="to">to</label>
-<input type="text" id="to" name="to"> -->
-<div id="dialog-confirm" title="Empty the recycle bin?">
+    <div class="col-md-10" id="page-content">
+       <!-- page-content" -->
 
-  <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>Do you want to Save?</p>
-</div>
-  <main class="page-content" id="main_page_content">
+    <main class="page-content" id="main_page_content">
 
-    <div class="container-fluid">
-      <h2 class='center_h_tag_forms'> Staff Dashboard</h2>
-      <hr>
-      <div class="row">
-          <div class="col-md-12">
-        
-            <div class="row dashboard-icon-rows">
-              <div class="col-md-4" >
-                <div class="dashboard-icons" role="button" onclick="addEmployee()">
-                  <i class="fa fa-plus-square fa-5x icon_padding"></i></br>
-                  <span class="add_emp">Add Employee</span>
+      <div class="container-fluid">
+        <h2 class='center_h_tag_forms'> Staff Dashboard</h2>
+        <div class="row">
+            <div class="col-md-12 ">
+          
+              <div class="row dashboard-icon-rows">
+                <div class="col-md-4" >
+                  
+                    <div class="dashboard-icons" role="button" onclick="addEmployee()">
+                      <div class="col-md-12 subdashboard-icon" >
+                        <div class="row">
+                          <div class="col-md-2"></div>
+                          <div class="col-md-8 text-center ">
+                            <i class="fa fa-plus-square fa-3x icon_padding"></i></br>
+                          </div>
+                          <div class="col-md-2"></div>
+
+                        </div>  
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6 text-center">
+                              <span class="add_emp">Add Employee</span>
+                            </div>
+                            <div class="col-md-3"></div>
+
+                        </div> 
+                      </div>
+                    </div>
                 </div>
-              </div>
-              <div class="col-md-4">
-                <div class='dashboard-icons' role="button" onclick="editEmployee()">
-                  <i class="fa fa-pencil-square-o fa-5x icon_padding"></i></br>
-                  <span class="edit_info">Edit Employee Information</span>
+                <div class="col-md-4">
+                  <div class='dashboard-icons' role="button" onclick="editEmployee()">
+                      <div class="col-md-12 subdashboard-icon" >
+                          <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8 text-center ">
+                                <i class="fa fa-pencil-square-o fa-3x icon_padding"></i></br>
+                              </div>
+                            <div class="col-md-2"></div>
+  
+                          </div>  
+                          <div class="row">
+                              <div class="col-md-3"></div>
+                              <div class="col-md-6 text-center">
+                                  <span class="edit_info">Edit Employee Information</span>
+                              </div>
+                              <div class="col-md-3"></div>
+  
+                          </div> 
+                      </div>
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-4">
-                <div class='dashboard-icons' role="button" onclick="viewAllEmployee()">
-                  <i class="fa fa-list-alt fa-5x icon_padding"></i></br>
-                  <span class="view_all" >View All Employees Information</span>
+                <div class="col-md-4">
+                  <div class='dashboard-icons' role="button" onclick="viewAllEmployee()">
+                      <div class="col-md-12 subdashboard-icon" >
+                          <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8 text-center ">
+                                <i class="fa fa-list-alt fa-3x icon_padding"></i></br>
+                              </div>
+                            <div class="col-md-2"></div>
+  
+                          </div>  
+                          <div class="row">
+                              <div class="col-md-3"></div>
+                              <div class="col-md-6 text-center">
+                                  <span class="view_all" >View All Employees Information</span>
+                              </div>
+                              <div class="col-md-3"></div>
+  
+                          </div> 
+                      </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-   
+     
+      </div>
+    
+    </main>
     </div>
+  </div>
   
-  </main>
-  <!-- page-content" -->
+ 
 </div>
 <!-- page-wrapper -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>     -->
@@ -309,14 +328,17 @@ jQuery(function ($) {
   }
 });
 
+
 $("#close-sidebar").click(function() {
+  $('#page-content').removeClass('col-md-10');
+  $('#page-content').addClass('col-md-12');
   $(".page-wrapper").removeClass("toggled");
 });
 $("#show-sidebar").click(function() {
+  $('#page-content').removeClass('col-md-12');
+  $('#page-content').addClass('col-md-10');
   $(".page-wrapper").addClass("toggled");
 });
-
-
    
    
 });

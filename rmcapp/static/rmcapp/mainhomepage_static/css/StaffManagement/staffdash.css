@@ -1,5 +1,5 @@
 .datatable_staff{
-
+  
 }
 
 .datatable_staff td, .datatable_staff th {
@@ -15,4 +15,88 @@
   text-align: left;
   background-color: rgb(119, 5, 5);
   color: white;
+}
+.datatable_button{
+    background: grey;
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 0.5rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    cursor:pointer;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.dashboard-icons{
+  width:100%;
+  border-radius: 2px;
+  height:100px;
+  background:#b0b0b0;
+  box-shadow: 0 0 5px 3px #555;
+}
+.dashboard-icon-rows{
+   padding:10px;
+}
+.dashboard-icons:hover{
+background:grey;
+
+}
+.subdashboard-icon{
+  top:20px;
+}
+.icon_padding{
+  /* padding:32px 0px 0px 210px; */
+  opacity: 0.2;
+  color:white;
+  /* My Changes */
+  /* padding: 5px 0px 0px 125px; */
+
+}
+.view_all, .edit_info, .add_emp{
+  font-size: 0.9rem;
+  opacity: 0.5;
+  color:white;
+}
+.add_emp{
+
+  /* padding: 0px 0px 0px 50px; */
+
+}
+.edit_info{
+  /* padding: 0px 0px 0px 50px; */
+
+}
+.view_all{
+  /* padding: 0px 0px 0px 50px; */
+
+}
+.form-control-custom{
+  display: block;
+  width: 100%;
+  padding: .375rem .75rem;
+  font-size: 0.5rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.custom_label_css{
+  font-size: 0.5rem;
+  font-weight: 500;
+}
+#edit-emplyee-info-form{
+  padding: 20px 50px 30px 100px;
+
 }

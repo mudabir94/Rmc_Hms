@@ -12,7 +12,10 @@
 body {
   background: #fff;
   color: #2f3138;
+
   font-family: "Open Sans", sans-serif;
+  /* mychanges */
+  font-size:0.5rem;
   
 }
 
