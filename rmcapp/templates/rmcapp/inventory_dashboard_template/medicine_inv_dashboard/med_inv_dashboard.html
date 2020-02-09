@@ -123,265 +123,270 @@
   <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
     <i class="fas fa-bars"></i>
   </a>
-  <nav id="sidebar" class="sidebar-wrapper">
-    <div class="sidebar-content">
-      <div class="sidebar-brand">
-        <a href="#">Medicine Dashboard</a>
-        <div id="close-sidebar">
-          <i class="fas fa-times"></i>
-        </div>
-      </div>
-      <div class="sidebar-header">
-        <div class="user-pic">
-          <img class="img-responsive img-rounded" src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"
-            alt="User picture">
-        </div>
-        <div class="user-info">
-
-            {% if user.is_authenticated %}
-            <span class="user-name">{{ user.get_username }}
-              <strong></strong>
-            </span>
-            {% endif %} 
-            {% if user.is_authenticated %}
-            <span class="user-role">{{ user.role.role_name }}</span>
-            {% endif %} 
+  <div class="row">
+    <div class="col-md-2">
+        <nav id="sidebar" class="sidebar-wrapper">
+            <div class="sidebar-content">
+              <div class="sidebar-brand">
+                <a href="#">Medicine Dashboard</a>
+                <div id="close-sidebar">
+                  <i class="fas fa-times"></i>
+                </div>
+              </div>
+              <div class="sidebar-header">
+                <div class="user-pic">
+                  <img class="img-responsive img-rounded" src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"
+                    alt="User picture">
+                </div>
+                <div class="user-info">
+        
+                    {% if user.is_authenticated %}
+                    <span class="user-name">{{ user.get_username }}
+                      <strong></strong>
+                    </span>
+                    {% endif %} 
+                    {% if user.is_authenticated %}
+                    <span class="user-role">{{ user.role.role_name }}</span>
+                    {% endif %} 
+                  
+                    <span class="user-status">
+                      <i class="fa fa-circle"></i>
+                      <span>Active</span>
+                    </span>
           
-            <span class="user-status">
-              <i class="fa fa-circle"></i>
-              <span>Active</span>
-            </span>
-  
-
-        </div>
-      </div>
-      
-      
-      <!-- sidebar-search  -->
-      <div class="sidebar-menu">
-        <ul>
-          <li class="header-menu">
-            <span>General</span>
-          </li>
-          <li class="sidebar-dropdown">
-            <a href="#">
-              <i class="fa fa-tachometer-alt"></i>
-              <span>Dashboard</span>
-              <!-- <span class="badge badge-pill badge-warning">New</span> -->
-            </a>
-            <div class="sidebar-submenu">
-              <ul>
-                <li>
-                  <a href="{%url 'inventory_dashboard'%}">Inventory Management
-                    <!-- <span class="badge badge-pill badge-success">Pro</span> -->
-                  </a>
-                </li>
-                <li>
-                  <a href="{%url 'patient_dashboard'%}">Patient Management</a>
-                </li>
-                <li>
-                  <a href="{%url 'staff_dashboard'%}">Staff Management</a>
-                </li>
-                <li>
-                  <a href="{%url 'main_dashboard'%}">Main Dashboard</a>
-                </li>
-                <li>
-                  <a href="{%url 'mainhomepage'%}">Home Page</a>
-                </li>
-                
-              </ul>
-            </div>
-          </li>
-          <li class="sidebar-dropdown">
-            <a href="#">
-              <i class="fa fa-tachometer-alt"></i>
-              <span>Forms</span>
-              <!-- <span class="badge badge-pill badge-warning">New</span> -->
-            </a>
-            <div class="sidebar-submenu">
-              <ul>
-                <li>
-                  <a href="#" onclick="addMedicineForm()">Add New Medicine 
-                    <!-- <span class="badge badge-pill badge-success">Pro</span> -->
-                  </a>
-                </li>
-                <li>
-                  <a href="#" onclick="addMedicineToWhStockFrom()">Add Medicine To Stock</a>
-                </li>
-                <li>
-                  <a href="#" onclick="addMedicineToDespStockForm()">Add Medicine To Dispensory</a>
-                </li>   
-                <li>
-                  <a href="#" onclick="removeMedForInternalUse()">Despensory Medicine Extraction</a> 
-                </li> 
-                <!-- <li>
-                  <a href="#" onclick="removeExpiryMed()">Remove Expired Medicine</a> 
-                </li>                  -->
-              </ul>
-            </div>
-          </li>
-          <li class="sidebar-dropdown">
-            <a href="#">
-              <i class="fa fa-tachometer-alt"></i>
-              <span>View Medicines</span>
-              <!-- <span class="badge badge-pill badge-warning">New</span> -->
-            </a>
-            <div class="sidebar-submenu">
-              <ul>
-                <li>
-                  <a href="#" onclick="viewMedicineRegistered()">Medicine Registered
-                    <!-- <span class="badge badge-pill badge-success">Pro</span> -->
-                  </a>
-                </li>
-                <li>
-                  <a href="#"  onclick="viewMedicineInStock()">Medicine in Stock
-                    <!-- <span class="badge badge-pill badge-success">Pro</span> -->
-                  </a>
-                </li>
-                <li>
-                    <a href="#"  onclick="viewMedicineInDespensory()">Medicine in Despensory
+        
+                </div>
+              </div>
+              
+              
+              <!-- sidebar-search  -->
+              <div class="sidebar-menu">
+                <ul>
+                  <li class="header-menu">
+                    <span>General</span>
+                  </li>
+                  <li class="sidebar-dropdown">
+                    <a href="#">
+                      <i class="fa fa-tachometer-alt"></i>
+                      <span>Dashboard</span>
+                      <!-- <span class="badge badge-pill badge-warning">New</span> -->
+                    </a>
+                    <div class="sidebar-submenu">
+                      <ul>
+                        <li>
+                          <a href="{%url 'inventory_dashboard'%}">Inventory Management
+                            <!-- <span class="badge badge-pill badge-success">Pro</span> -->
+                          </a>
+                        </li>
+                        <li>
+                          <a href="{%url 'patient_dashboard'%}">Patient Management</a>
+                        </li>
+                        <li>
+                          <a href="{%url 'staff_dashboard'%}">Staff Management</a>
+                        </li>
+                        <li>
+                          <a href="{%url 'main_dashboard'%}">Main Dashboard</a>
+                        </li>
+                        <li>
+                          <a href="{%url 'mainhomepage'%}">Home Page</a>
+                        </li>
+                        
+                      </ul>
+                    </div>
+                  </li>
+                  <li class="sidebar-dropdown">
+                    <a href="#">
+                      <i class="fa fa-tachometer-alt"></i>
+                      <span>Forms</span>
+                      <!-- <span class="badge badge-pill badge-warning">New</span> -->
+                    </a>
+                    <div class="sidebar-submenu">
+                      <ul>
+                        <li>
+                          <a href="#" onclick="addMedicineForm()">Add New Medicine 
+                            <!-- <span class="badge badge-pill badge-success">Pro</span> -->
+                          </a>
+                        </li>
+                        <li>
+                          <a href="#" onclick="addMedicineToWhStockFrom()">Add Medicine To Stock</a>
+                        </li>
+                        <li>
+                          <a href="#" onclick="addMedicineToDespStockForm()">Add Medicine To Dispensory</a>
+                        </li>   
+                        <li>
+                          <a href="#" onclick="removeMedForInternalUse()">Despensory Medicine Extraction</a> 
+                        </li> 
+                        <!-- <li>
+                          <a href="#" onclick="removeExpiryMed()">Remove Expired Medicine</a> 
+                        </li>                  -->
+                      </ul>
+                    </div>
+                  </li>
+                  <li class="sidebar-dropdown">
+                    <a href="#">
+                      <i class="fa fa-tachometer-alt"></i>
+                      <span>View Medicines</span>
+                      <!-- <span class="badge badge-pill badge-warning">New</span> -->
+                    </a>
+                    <div class="sidebar-submenu">
+                      <ul>
+                        <li>
+                          <a href="#" onclick="viewMedicineRegistered()">Medicine Registered
+                            <!-- <span class="badge badge-pill badge-success">Pro</span> -->
+                          </a>
+                        </li>
+                        <li>
+                          <a href="#"  onclick="viewMedicineInStock()">Medicine in Stock
+                            <!-- <span class="badge badge-pill badge-success">Pro</span> -->
+                          </a>
+                        </li>
+                        <li>
+                            <a href="#"  onclick="viewMedicineInDespensory()">Medicine in Despensory
+                              <!-- <span class="badge badge-pill badge-success">Pro</span> -->
+                            </a>
+                          </li>
+                          
+                 
+                        
+                      </ul>
+        
+                    </div>
+                  </li>
+                  <li class="sidebar-dropdown">
+                    <a href="#">
+                      <i class="fa fa-tachometer-alt"></i>
+                      <span>Edit Medicines Price</span>
+                      <!-- <span class="badge badge-pill badge-warning">New</span> -->
+                    </a>
+                    <div class="sidebar-submenu">
+                      <ul>
+                        <li>
+                          <a href="#" onclick="editMedicinePriceInStock()">Edit Medicine Price In Stock
+                            <!-- <span class="badge badge-pill badge-success">Pro</span> -->
+                          </a>
+                        </li>
+                     
+                 
+                        
+                      </ul>
+        
+                    </div>
+                  </li>
+                  <li>
+                    <a href="{%url 'medicine_dashboard'%}">
+                        <i class="fa fa-tachometer-alt"></i>
+                      <span>Medicine Dashboard</span>
                       <!-- <span class="badge badge-pill badge-success">Pro</span> -->
                     </a>
                   </li>
-                  
-         
-                
-              </ul>
-
+                </ul>
+              </div>
+              <!-- sidebar-menu  -->
             </div>
-          </li>
-          <li class="sidebar-dropdown">
-            <a href="#">
-              <i class="fa fa-tachometer-alt"></i>
-              <span>Edit Medicines Price</span>
-              <!-- <span class="badge badge-pill badge-warning">New</span> -->
-            </a>
-            <div class="sidebar-submenu">
-              <ul>
-                <li>
-                  <a href="#" onclick="editMedicinePriceInStock()">Edit Medicine Price In Stock
-                    <!-- <span class="badge badge-pill badge-success">Pro</span> -->
-                  </a>
-                </li>
-             
-         
-                
-              </ul>
-
+            <!-- sidebar-content  -->
+            <div class="sidebar-footer">
+              <a href="#">
+                <i class="fa fa-bell"></i>
+                <span class="badge badge-pill badge-warning notification">3</span>
+              </a>
+              <a href="#">
+                <i class="fa fa-envelope"></i>
+                <span class="badge badge-pill badge-success notification">7</span>
+              </a>
+              <a href="#">
+                <i class="fa fa-cog"></i>
+                <span class="badge-sonar"></span>
+              </a>
+              <a href="{% url 'logout'%}">
+                <i class="fa fa-power-off"></i>
+              </a>
             </div>
-          </li>
-          <li>
-            <a href="{%url 'medicine_dashboard'%}">
-                <i class="fa fa-tachometer-alt"></i>
-              <span>Medicine Dashboard</span>
-              <!-- <span class="badge badge-pill badge-success">Pro</span> -->
-            </a>
-          </li>
-        </ul>
-      </div>
-      <!-- sidebar-menu  -->
+          </nav>
     </div>
-    <!-- sidebar-content  -->
-    <div class="sidebar-footer">
-      <a href="#">
-        <i class="fa fa-bell"></i>
-        <span class="badge badge-pill badge-warning notification">3</span>
-      </a>
-      <a href="#">
-        <i class="fa fa-envelope"></i>
-        <span class="badge badge-pill badge-success notification">7</span>
-      </a>
-      <a href="#">
-        <i class="fa fa-cog"></i>
-        <span class="badge-sonar"></span>
-      </a>
-      <a href="{% url 'logout'%}">
-        <i class="fa fa-power-off"></i>
-      </a>
+    <div class="col-md-10" id="page-content">
+        <main class="page-content" id="main_page_content">
+
+            <div class="container-fluid">
+              <h2 class="center_h_tag_forms">Medicine Dashboard</h2>
+              <hr>
+              
+              <div class="row">
+                <div class="col-md-12">
+              
+                  <div class="row dashboard-icon-rows">
+                    <div class="col-md-3" >
+                      <div class="dashboard-icons" role="button" onclick="addMedicineForm()">
+                        <i class="fa fa-plus-square fa-5x icon_padding"></i></br>
+                        <span class="add_med">Add New Medicine</span>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class='dashboard-icons' role="button" onclick="addMedicineToWhStockFrom()">
+                        <i class="fa fa-medkit fa-5x icon_padding"></i></br>
+                        <span class="med_stck">Add Medicine To Stock</span>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class='dashboard-icons' role="button" onclick="addMedicineToDespStockForm()">
+                        <i class="fa fa-list-alt fa-5x icon_padding"></i></br>
+                        <span class="med_desp" >Add Medicine To Dispensory</span>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class='dashboard-icons' role="button" onclick="removeMedForInternalUse()">
+                        <i class="fa fa-list-alt fa-5x icon_padding"></i></br>
+                        <span class="remove_med" >Despensory Medicine Extraction</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        
+              <div class="row">
+                <div class="col-md-12">
+              
+                  <div class="row dashboard-icon-rows">
+                    <!-- <div class="col-md-3" >
+                      <div class="dashboard-icons" role="button" onclick="removeExpiryMed()">
+                        <i class="fa fa-plus-square fa-5x icon_padding"></i></br>
+                        <span class="exp_med">Remove Expired Medicine</span>
+                      </div>
+                    </div> -->
+                    <!-- <div class="col-md-3">
+                      <div class='dashboard-icons' role="button" onclick="addMedicineToWhStockFrom()">
+                        <i class="fa fa-medkit fa-5x icon_padding"></i></br>
+                        <span class="med_stck">Add Medicine To Stock</span>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class='dashboard-icons' role="button" onclick="addMedicineToDespStockForm()">
+                        <i class="fa fa-list-alt fa-5x icon_padding"></i></br>
+                        <span class="med_desp" >Add Medicine To Dispensory</span>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class='dashboard-icons' role="button" onclick="removeMedForInternalUse()">
+                        <i class="fa fa-list-alt fa-5x icon_padding"></i></br>
+                        <span class="remove_med" >Despensory Medicine Extraction</span>
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+        
+            </div>
+          
+          </main>
     </div>
-  </nav>
+  </div>
   <!-- sidebar-wrapper  -->
-  <!-- <label for="from">From</label>
-<input type="text" id="from" name="from">
-<label for="to">to</label>
-<input type="text" id="to" name="to"> -->
-<div id="dialog-confirm" title="Do You Want To Save Changes?">
 
+  
+
+<div id="dialog-confirm" title="Do You Want To Save Changes?">
   <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>Do you want to Save?</p>
 </div>
-  <main class="page-content" id="main_page_content">
 
-    <div class="container-fluid">
-      <h2 class="center_h_tag_forms">Medicine Dashboard</h2>
-      <hr>
-      
-      <div class="row">
-        <div class="col-md-12">
-      
-          <div class="row dashboard-icon-rows">
-            <div class="col-md-3" >
-              <div class="dashboard-icons" role="button" onclick="addMedicineForm()">
-                <i class="fa fa-plus-square fa-5x icon_padding"></i></br>
-                <span class="add_med">Add New Medicine</span>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class='dashboard-icons' role="button" onclick="addMedicineToWhStockFrom()">
-                <i class="fa fa-medkit fa-5x icon_padding"></i></br>
-                <span class="med_stck">Add Medicine To Stock</span>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class='dashboard-icons' role="button" onclick="addMedicineToDespStockForm()">
-                <i class="fa fa-list-alt fa-5x icon_padding"></i></br>
-                <span class="med_desp" >Add Medicine To Dispensory</span>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class='dashboard-icons' role="button" onclick="removeMedForInternalUse()">
-                <i class="fa fa-list-alt fa-5x icon_padding"></i></br>
-                <span class="remove_med" >Despensory Medicine Extraction</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-12">
-      
-          <div class="row dashboard-icon-rows">
-            <!-- <div class="col-md-3" >
-              <div class="dashboard-icons" role="button" onclick="removeExpiryMed()">
-                <i class="fa fa-plus-square fa-5x icon_padding"></i></br>
-                <span class="exp_med">Remove Expired Medicine</span>
-              </div>
-            </div> -->
-            <!-- <div class="col-md-3">
-              <div class='dashboard-icons' role="button" onclick="addMedicineToWhStockFrom()">
-                <i class="fa fa-medkit fa-5x icon_padding"></i></br>
-                <span class="med_stck">Add Medicine To Stock</span>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class='dashboard-icons' role="button" onclick="addMedicineToDespStockForm()">
-                <i class="fa fa-list-alt fa-5x icon_padding"></i></br>
-                <span class="med_desp" >Add Medicine To Dispensory</span>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class='dashboard-icons' role="button" onclick="removeMedForInternalUse()">
-                <i class="fa fa-list-alt fa-5x icon_padding"></i></br>
-                <span class="remove_med" >Despensory Medicine Extraction</span>
-              </div> -->
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  
-  </main>
   <!-- page-content" -->
 </div>
 <!-- page-wrapper -->
@@ -425,13 +430,17 @@ jQuery(function ($) {
 });
 
 $("#close-sidebar").click(function() {
+  $('#page-content').removeClass('col-md-10');
+  $('#page-content').addClass('col-md-12');
   $(".page-wrapper").removeClass("toggled");
 });
 $("#show-sidebar").click(function() {
+  $('#page-content').removeClass('col-md-12');
+  $('#page-content').addClass('col-md-10');
   $(".page-wrapper").addClass("toggled");
 });
-
-
+   
+   
    
    
 });
