@@ -41,7 +41,7 @@ border: none;
     padding:25px;
 
 }
-calc_res_info_form
+/* calc_res_info_form  */
 .despstorage_second_col_div_three_rows{
     padding-bottom: 30px;
 }
@@ -72,11 +72,7 @@ calc_res_info_form
     padding-bottom: 10px;
 }
 
-.dashboard-icons{
-    width:500px;
-    height:500px;
-    background:grey;
-}
+
 /* #container-med-dashboard{
     background: lightcyan;
 } */
@@ -102,4 +98,52 @@ calc_res_info_form
     text-align: left;
     background-color: #4CAF50;
     color: white;
+  }
+ 
+.dashboard-icons{
+    width:100%;
+    border-radius: 2px;
+    height:150px;
+    background:#b0b0b0;
+    box-shadow: 0 0 5px 3px #555;
+  }
+  .dashboard-icon-rows{
+     padding:10px;
+  }
+  .dashboard-icons:hover{
+  background:grey;
+  
+  }
+  .subdashboard-icon{
+    top:20px;
+  }
+  .icon_padding{
+    /* padding:32px 0px 0px 210px; */
+    opacity: 0.2;
+    color:white;
+    /* My Changes */
+    /* padding: 5px 0px 0px 125px; */
+  
+  }
+  .med_desp, .med_stck, .add_med, .remove_med{
+    font-size: 0.9rem;
+    opacity: 0.5;
+    color:white;
+  }
+  .form-control-custom{
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 0.5rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  }
+  .custom_label_css{
+    font-size: 0.5rem;
+    font-weight: 500;
   }

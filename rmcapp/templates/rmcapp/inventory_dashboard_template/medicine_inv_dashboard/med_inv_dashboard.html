@@ -73,48 +73,7 @@
 
     <!-- <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script> -->
     <style>
-    
-        .dashboard-icons{
-            width:100%;
-            border-radius: 2px;
-            height:200px;
-            background:#b0b0b0;
-            box-shadow: 0 0 5px 3px #555;
-        }
-        .dashboard-icon-rows{
-          padding:10px;
-        }
-        .dashboard-icons:hover{
-          background:grey;
-
-        }
-
-        .icon_padding{
-          padding:32px 0px 0px 155px;
-          opacity: 0.2;
-          color:white;
-        }
-        .add_med, .med_stck, .med_desp, .remove_med{
-          font-size: 26px;
-          opacity: 0.5;
-          color:white;
-        }
-        .add_med{
-          padding: 0px 0px 0px 85px;
-
-        }
-        .med_stck{
-          padding: 0px 0px 0px 63px;
-
-        }
-        .med_desp{
-          padding: 0px 0px 0px 28px;
-
-        }
-        .remove_med{
-          padding: 0px 0px 0px 8px;
-
-        }
+  
     </style>
 </head>
 
@@ -316,26 +275,90 @@
                   <div class="row dashboard-icon-rows">
                     <div class="col-md-3" >
                       <div class="dashboard-icons" role="button" onclick="addMedicineForm()">
-                        <i class="fa fa-plus-square fa-5x icon_padding"></i></br>
-                        <span class="add_med">Add New Medicine</span>
+                        <div class="col-md-12 subdashboard-icon" >
+                          <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8 text-center ">
+                              <i class="fa fa-plus-square fa-5x icon_padding"></i></br>
+                              </div>
+                            <div class="col-md-2"></div>
+  
+                          </div>  
+                          <div class="row">
+                              <div class="col-md-3"></div>
+                              <div class="col-md-6 text-center">
+                                <span class="add_med">Add New Medicine</span>
+                                </div>
+                              <div class="col-md-3"></div>
+  
+                          </div> 
+                        </div> 
                       </div>
                     </div>
                     <div class="col-md-3">
                       <div class='dashboard-icons' role="button" onclick="addMedicineToWhStockFrom()">
-                        <i class="fa fa-medkit fa-5x icon_padding"></i></br>
-                        <span class="med_stck">Add Medicine To Stock</span>
+                        <div class="col-md-12 subdashboard-icon" >
+                          <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8 text-center ">
+                              <i class="fa fa-medkit fa-5x icon_padding"></i></br>
+                            </div>
+                            <div class="col-md-2"></div>
+  
+                          </div>  
+                          <div class="row">
+                              <div class="col-md-3"></div>
+                              <div class="col-md-6 text-center">
+                                <span class="med_stck">Add Medicine To Stock</span>
+                              </div>
+                              <div class="col-md-3"></div>
+  
+                          </div> 
+                      </div>
                       </div>
                     </div>
                     <div class="col-md-3">
                       <div class='dashboard-icons' role="button" onclick="addMedicineToDespStockForm()">
-                        <i class="fa fa-list-alt fa-5x icon_padding"></i></br>
-                        <span class="med_desp" >Add Medicine To Dispensory</span>
+                        <div class="col-md-12 subdashboard-icon" >
+                          <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8 text-center ">
+                              <i class="fa fa-list-alt fa-5x icon_padding"></i></br>
+                            </div>
+                            <div class="col-md-2"></div>
+  
+                          </div>  
+                          <div class="row">
+                              <div class="col-md-3"></div>
+                              <div class="col-md-6 text-center">
+                                <span class="med_desp" >Add Medicine To Dispensory</span>
+                              </div>
+                              <div class="col-md-3"></div>
+  
+                          </div> 
+                      </div>
                       </div>
                     </div>
                     <div class="col-md-3">
                       <div class='dashboard-icons' role="button" onclick="removeMedForInternalUse()">
-                        <i class="fa fa-list-alt fa-5x icon_padding"></i></br>
-                        <span class="remove_med" >Despensory Medicine Extraction</span>
+                        <div class="col-md-12 subdashboard-icon" >
+                          <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8 text-center ">
+                              <i class="fa fa-list-alt fa-5x icon_padding"></i></br>
+                            </div>
+                            <div class="col-md-2"></div>
+  
+                          </div>  
+                          <div class="row">
+                              <div class="col-md-3"></div>
+                              <div class="col-md-6 text-center">
+                                <span class="remove_med" >Despensory Medicine Extraction</span>
+                              </div>
+                              <div class="col-md-3"></div>
+  
+                          </div> 
+                      </div>
                       </div>
                     </div>
                   </div>

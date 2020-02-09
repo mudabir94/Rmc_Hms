@@ -137,7 +137,7 @@ function addMedicineForm(){
             $(col_one__row_div_one).append(row_div_one__col_one__row_div_one);
             col_one__row_div_one__col_one__row_div_one=$("<div class='col-md-4' style=' padding-top:10px'><label>Medicine</label></div>");
             
-            col_two__row_div_one__col_one__row_div_one=$("<div class='col-md-6' style=' padding-top:10px' onfocusout='focusOut_medicineNameAddMedForm($(this))'id='med_name_input_div'><input type='text' id='med_name_input' class='form-control'></input></div>");
+            col_two__row_div_one__col_one__row_div_one=$("<div class='col-md-6' style=' padding-top:10px' onfocusout='focusOut_medicineNameAddMedForm($(this))'id='med_name_input_div'><input type='text' id='med_name_input' class='form-control-custom'></input></div>");
 
             $(row_div_one__col_one__row_div_one).append(col_one__row_div_one__col_one__row_div_one);
             $(row_div_one__col_one__row_div_one).append(col_two__row_div_one__col_one__row_div_one);
@@ -147,7 +147,7 @@ function addMedicineForm(){
             $(col_two__row_div_one).append(row_div_one__col_two__row_div_one);
             col_one__row_div_one__col_two__row_div_one=$("<div class='col-md-4' style=' padding-top:10px'><label class='float-right'>Medicine Type</label></div>");
                 
-                var select=$("<select id='med_type_sel' onchange='checkMedTypeReg($(this))' class='form-control'></select>");
+                var select=$("<select id='med_type_sel' onchange='checkMedTypeReg($(this))' class='form-control-custom'></select>");
                     var option=$("<option selected='selected' id="+medicine_type_list[0]+"-opt value="+medicine_type_list[0]+">"+medicine_type_list[0]+"</option>");
                         $(select).append(option);
 
@@ -171,7 +171,7 @@ function addMedicineForm(){
             p__col_one__package_info_row_div=$("<label >Medicine Details</label>");
             col_one__package_info_row_div.append(p__col_one__package_info_row_div);
             col_two__package_info_row_div=$("<div class='col-md-8' style=' padding-top:10px'></div>");
-            p__col_two__package_info_row_div=$("<input type='textarea' class='form-control' id='med_details'></input>");
+            p__col_two__package_info_row_div=$("<input type='textarea' class='form-control-custom' id='med_details'></input>");
             col_two__package_info_row_div.append(p__col_two__package_info_row_div);
             package_info_row_div.append(col_one__package_info_row_div)
             package_info_row_div.append(col_two__package_info_row_div)
@@ -388,7 +388,7 @@ function addMedicineToWhStockFrom(){
                     colmd2=$("<div class='col-md-7'></div>")
 
                         med_name_label=$("<label for='medicine_name_tag' class='custom_label_css'>Medicine Name</label>");
-                        med_name_input=$("<input class='form-control custom_input_css' id='medicine_name_tag' onfocusout='focusOut_medicineName($(this))'>")
+                        med_name_input=$("<input class='form-control-custom custom_input_css' id='medicine_name_tag' onfocusout='focusOut_medicineName($(this))'>")
 
                     colmd1.append(med_name_label);
                     colmd2.append(med_name_input);
@@ -403,7 +403,7 @@ function addMedicineToWhStockFrom(){
                     colmd2=$("<div class='col-md-5'></div>")
                         med_type_label=$("<label class='custom_label_css float-right'>Medicine Type</label>");
                     colmd1.append(med_type_label);
-                        med_type_input=$("<input class='form-control custom_input_css' id='medicine_type_input' ></input>")
+                        med_type_input=$("<input class='form-control-custom custom_input_css' id='medicine_type_input' ></input>")
                     colmd2.append(med_type_input);
 
                 row__col_two__row_div_one.append(colmd1)
@@ -417,7 +417,7 @@ function addMedicineToWhStockFrom(){
                     colmd2=$("<div class='col-md-3'></div>")
                     batchno_label=$("<label class='custom_label_css float-right'>batchno</label>");
                     colmd1.append(batchno_label)
-                    batchno_input=$("<input class='form-control custom_input_css' id='batchno_input' onfocus='checkBatchNo()'></input>")
+                    batchno_input=$("<input class='form-control-custom custom_input_css' id='batchno_input' onfocus='checkBatchNo()'></input>")
                     colmd2.append(batchno_input)
                 row__col_three__row_div_one.append(colmd1)
                 row__col_three__row_div_one.append(colmd2)
@@ -772,7 +772,7 @@ function subPackageHtml(pack_type,sublevel,subpack_type_list){
                         var subpackage_type_label=$("<label>Sub Package Type</label>");
                         colmd1.append(subpackage_type_label);
 
-                        var subpackage_type_select=$("<select onchange='subpackage_typeOnSelect($(this))' id='subpackage_type_select"+pack_type+"' class='form-control'></select>");
+                        var subpackage_type_select=$("<select onchange='subpackage_typeOnSelect($(this))' id='subpackage_type_select"+pack_type+"' class='form-control-custom'></select>");
                             var option=$("<option value='--'>--</option>");
                             $(subpackage_type_select).append(option);
                             
@@ -795,7 +795,7 @@ function subPackageHtml(pack_type,sublevel,subpack_type_list){
 
 
                     //         var subpackage_type_label=$("<label>Sub Package Type</label>");
-                    //         var subpackage_type_select=$("<select onchange='subpackage_typeOnSelect($(this))' id='subpackage_type_select"+pack_type+"' class='form-control'></select>");
+                    //         var subpackage_type_select=$("<select onchange='subpackage_typeOnSelect($(this))' id='subpackage_type_select"+pack_type+"' class='form-control-custom'></select>");
                     //         var option=$("<option value='--'>--</option>");
                     //         $(subpackage_type_select).append(option);
                             
@@ -815,7 +815,7 @@ function subPackageHtml(pack_type,sublevel,subpack_type_list){
                 // old version
                 //     row_two__col_one__row_div=$("<div class='row'></div>");
                 //         quantity_subpackage_type_label=$("<label>Quantity:</label>");
-                //         quantity_subpackage_type_input=$("<input class='form-control' type='number'  step='1.00' min='1' id='sublevel"+sublevel+"' name='sublevel_input'></input>");
+                //         quantity_subpackage_type_input=$("<input class='form-control-custom' type='number'  step='1.00' min='1' id='sublevel"+sublevel+"' name='sublevel_input'></input>");
                     
                 //     row_two__col_one__row_div.append(quantity_subpackage_type_label);
                 //     row_two__col_one__row_div.append(quantity_subpackage_type_input);
@@ -826,7 +826,7 @@ function subPackageHtml(pack_type,sublevel,subpack_type_list){
                     var colmd2=$("<div class='col-md-4'></div>")
 
                         quantity_subpackage_type_label=$("<label>Quantity:</label>");
-                        quantity_subpackage_type_input=$("<input class='form-control' type='number'  step='1.00' min='1' id='sublevel"+sublevel+"' name='sublevel_input'></input>");
+                        quantity_subpackage_type_input=$("<input class='form-control-custom' type='number'  step='1.00' min='1' id='sublevel"+sublevel+"' name='sublevel_input'></input>");
                     colmd1.append(quantity_subpackage_type_label)
                     colmd2.append(quantity_subpackage_type_input)
 
@@ -922,7 +922,7 @@ function calculateFunc(){
                                     var colmd1=$("<div class='col-md-9'></div>")
                                     var colmd2=$("<div class='col-md-2'></div>")                                    
                                         priceofonepack_label=$("<label id='"+selectedoption+"_unit-label' >Price of one "+selectedoption +":</label>");
-                                        priceofonepack_input=$("<span id='"+selectedoption+"_unit-price' class='form-control-static'>"+priceperpack+"</span>");
+                                        priceofonepack_input=$("<span id='"+selectedoption+"_unit-price' class='form-control-custom-static'>"+priceperpack+"</span>");
                                     colmd1.append(priceofonepack_label)
                                     colmd2.append(priceofonepack_input)
                                 row0_col_one__row_div_zero.append(colmd1);
@@ -962,7 +962,7 @@ function calculateFunc(){
                                 var colmd1=$("<div class='col-md-9'></div>")
                                 var colmd2=$("<div class='col-md-2'></div>")
                                     priceofonepack_label=$("<label id='"+selectedoption+"_unit-label' value="+selectedoption+">Price of one "+selectedoption +":</label>");
-                                    priceofonepack_input=$("<span id='"+selectedoption+"_unit-price' class='form-control-static'>"+priceperpack+"</span>");
+                                    priceofonepack_input=$("<span id='"+selectedoption+"_unit-price' class='form-control-custom-static'>"+priceperpack+"</span>");
                                 colmd1.append(priceofonepack_label)
                                 colmd2.append(priceofonepack_input)
                             row1_col_one__row_div.append(colmd1);
@@ -976,7 +976,7 @@ function calculateFunc(){
                                 var colmd1=$("<div class='col-md-9'></div>")
                                 var colmd2=$("<div class='col-md-2'></div>") 
                                     totalnoofpieces_label=$("<label id='Piece_total-label' value='Piece'>Total no of Pieces:</label>");
-                                    totalnoofpieces_input=$("<span id='Piece_total-quant' class= 'form-control-static'>"+totalnoofpieces+"</span>");
+                                    totalnoofpieces_input=$("<span id='Piece_total-quant' class= 'form-control-custom-static'>"+totalnoofpieces+"</span>");
                                 colmd1.append(totalnoofpieces_label);
                                 colmd2.append(totalnoofpieces_input);
                             row1_col_one__row_div.append(colmd1);
@@ -990,7 +990,7 @@ function calculateFunc(){
                                 var colmd1=$("<div class='col-md-9'></div>")
                                 var colmd2=$("<div class='col-md-2'></div>") 
                                     var prieceofonepiece_label=$("<label id='Piece_unit-label ' value='Piece' >Price of Piece:</label>");
-                                    var prieceofonepiece_input=$("<span id='Piece_unit-price' class='form-control-static'>"+priceof1piece+" </span>");
+                                    var prieceofonepiece_input=$("<span id='Piece_unit-price' class='form-control-custom-static'>"+priceof1piece+" </span>");
                                 colmd1.append(prieceofonepiece_label);
                                 colmd2.append(prieceofonepiece_input);
                             row2_col_one__row_div.append(colmd1);
@@ -1040,7 +1040,7 @@ function recursiveFunc(list_length){
                             var colmd1=$("<div class='col-md-9'></div>")
                             var colmd2=$("<div class='col-md-2'></div>")                                
                                 var totalofsublevel_label=$("<label id='"+package_name+"_total-label' >Total no of "+package_name +":</label>");
-                                var totalofsublevel_input=$("<span id='"+package_name+"_total-quant' class='form-control-static'>"+totalofsublevel1+" </span>");
+                                var totalofsublevel_input=$("<span id='"+package_name+"_total-quant' class='form-control-custom-static'>"+totalofsublevel1+" </span>");
                                 colmd1.append(totalofsublevel_label)
                                 colmd2.append(totalofsublevel_input)
                         row1_col_one__row_div.append(colmd1);
@@ -1054,7 +1054,7 @@ function recursiveFunc(list_length){
                         var colmd1=$("<div class='col-md-9'></div>")
                         var colmd2=$("<div class='col-md-2'></div>")                            
                             var priceofonepack_label=$("<label id='"+package_name+"_unit-label'>Price of one "+package_name +":</label>");
-                            var priceofonepack_input=$("<span id='"+package_name+"_unit-price' class='form-control-static'>"+priceof1sublevel+"</span>");
+                            var priceofonepack_input=$("<span id='"+package_name+"_unit-price' class='form-control-custom-static'>"+priceof1sublevel+"</span>");
                             colmd1.append(priceofonepack_label)
                             colmd2.append(priceofonepack_input)
                         row2_col_one__row_div.append(colmd1);
@@ -1098,7 +1098,7 @@ function recursiveFunc(list_length){
                         var colmd1=$("<div class='col-md-9'></div>")
                         var colmd2=$("<div class='col-md-2'></div>")
                             var priceofonepack_label=$("<label  id='"+package_name1+"_total-label'>Total no of "+package_name1 +":</label>");
-                            var priceofonepack_input=$("<span  id='"+package_name1+"_total-price' class='form-control-static'>"+totalnoofsublevel+"</span>");
+                            var priceofonepack_input=$("<span  id='"+package_name1+"_total-price' class='form-control-custom-static'>"+totalnoofsublevel+"</span>");
                         colmd1.append(priceofonepack_label)
                         colmd2.append(priceofonepack_input)
                     row1_col_one__row_div.append(colmd1);
@@ -1112,7 +1112,7 @@ function recursiveFunc(list_length){
                         var colmd1=$("<div class='col-md-9'></div>")
                         var colmd2=$("<div class='col-md-2'></div>")
                             var priceofonepack_label=$("<label id='"+package_name1+"_unit-label' >Price  of one "+package_name1 +":</label>");
-                            var priceofonepack_input=$("<span id='"+package_name1+"_unit-price' class='form-control-static'>"+price+" </span>");
+                            var priceofonepack_input=$("<span id='"+package_name1+"_unit-price' class='form-control-custom-static'>"+price+" </span>");
                         colmd1.append(priceofonepack_label)
                         colmd2.append(priceofonepack_input)
                     row2_col_one__row_div.append(colmd1);
@@ -1307,7 +1307,7 @@ function addRowDivTwo()
                             mainpackage_type_label=$("<label>Main Package Type</label>");
                         colmd1.append(mainpackage_type_label)
 
-                            var mainpackage_type_select=$("<select class='form-control' onchange='package_typeOnSelect($(this))' id='mainpackage_type_select'></select>");
+                            var mainpackage_type_select=$("<select class='form-control-custom' onchange='package_typeOnSelect($(this))' id='mainpackage_type_select'></select>");
                                 var option=$("<option value='--'>--</option>");
                             $(mainpackage_type_select).append(option);
                             // if medicine type is syrup then populate with this data 
@@ -1336,7 +1336,7 @@ function addRowDivTwo()
 
                             quantity_mainpackage_type_label=$("<label>Quantity</label>");
                         colmd1.append(quantity_mainpackage_type_label)
-                            quantity_mainpackage_type_input=$("<input class='form-control' type='number'  step='1.00' min='1'  id='main_quantity_input' name='main_quantity_input'></input>")
+                            quantity_mainpackage_type_input=$("<input class='form-control-custom' type='number'  step='1.00' min='1'  id='main_quantity_input' name='main_quantity_input'></input>")
                         colmd2.append(quantity_mainpackage_type_input);
 
                     row__col_one__row_two__col_one__package_info_row_div.append(colmd1);
@@ -1352,7 +1352,7 @@ function addRowDivTwo()
 
                             priceperpackage_label=$("<label>Purchase Rate</label>");
                         colmd1.append(priceperpackage_label)
-                            priceperpackage_input=$("<input class='form-control' type='number'  step='50.00' min='0'  id='main_priceperpack_input' name='main_priceperpack_input'></input>")
+                            priceperpackage_input=$("<input class='form-control-custom' type='number'  step='50.00' min='0'  id='main_priceperpack_input' name='main_priceperpack_input'></input>")
                         colmd2.append(priceperpackage_input);
 
                     row__row_three__col_one__package_info_row_div.append(colmd1);
@@ -1387,7 +1387,7 @@ function addRowDivThree(){
         col_one__row_div_three=$("<div class='col-md-3'></div>");
             row_one__col_one__row_div_three=$("<div class='row'></div>");
                 manufact_date_label=$("<label for='from'>Manufactoring Date</label>");
-                manufact_input=$("<input class='form-control'  autocomplete='off' id='manudatepicker'>");
+                manufact_input=$("<input class='form-control-custom'  autocomplete='off' id='manudatepicker'>");
             row_one__col_one__row_div_three.append(manufact_date_label);
             row_one__col_one__row_div_three.append(manufact_input);
         col_one__row_div_three.append(row_one__col_one__row_div_three);
@@ -1395,7 +1395,7 @@ function addRowDivThree(){
         col_two__row_div_three=$("<div class='col-md-3 offset-md-1'></div>");
             row_one__col_two__row_div_three=$("<div class='row'></div>");
                 exp_date_label=$("<label for='to'>Expiration  Date</label>");
-                exp_date_input=$("<input class='form-control'  autocomplete='off' id='expdatepicker'>");
+                exp_date_input=$("<input class='form-control-custom'  autocomplete='off' id='expdatepicker'>");
             row_one__col_two__row_div_three.append(exp_date_label);
             row_one__col_two__row_div_three.append(exp_date_input);
         col_two__row_div_three.append(row_one__col_two__row_div_three);
@@ -1488,7 +1488,7 @@ function addRowDivTwoCustomSyrup(){
                     var colmd1=$("<div class='col-md-6'></div>")
                     var colmd2=$("<div class='col-md-3'></div>")
                         mainpackage_type_label=$("<label>Main Package Type</label>");
-                        var mainpackage_type_select=$("<select class='form-control' onchange='customPackage_typeOnSelect($(this))' id='mainpackage_type_select'></select>");
+                        var mainpackage_type_select=$("<select class='form-control-custom' onchange='customPackage_typeOnSelect($(this))' id='mainpackage_type_select'></select>");
                         var option=$("<option value='--'>--</option>");
                         $(mainpackage_type_select).append(option);
                         // if medicine type is syrup then populate with this data 
@@ -1511,7 +1511,7 @@ function addRowDivTwoCustomSyrup(){
                     var colmd1=$("<div class='col-md-6'></div>")
                     var colmd2=$("<div class='col-md-3'></div>")
                         ml_quantity_mainpackage_type_label=$("<label>Amount of ML in Main Package:</label>");
-                        ml_quantity_mainpackage_type_input=$("<input class='form-control' type='number'  step='5.00' min='1'  id='main_ml_quant_input' name='main_ml_quant_input'></input>");
+                        ml_quantity_mainpackage_type_input=$("<input class='form-control-custom' type='number'  step='5.00' min='1'  id='main_ml_quant_input' name='main_ml_quant_input'></input>");
                     colmd1.append(ml_quantity_mainpackage_type_label);
                     colmd2.append(ml_quantity_mainpackage_type_input)
                 row_two__col_one__package_info_row_div.append(colmd1);
@@ -1521,7 +1521,7 @@ function addRowDivTwoCustomSyrup(){
                     var colmd1=$("<div class='col-md-6'></div>")
                     var colmd2=$("<div class='col-md-3'></div>")
                         priceperpackage_label=$("<label>Total Purchase Rate:</label>");
-                        priceperpackage_input=$("<input class='form-control' type='number'  step='50.00' min='0'  id='main_priceperpack_input' name='main_priceperpack_input'></input>");
+                        priceperpackage_input=$("<input class='form-control-custom' type='number'  step='50.00' min='0'  id='main_priceperpack_input' name='main_priceperpack_input'></input>");
                     colmd1.append(priceperpackage_label);
                     colmd2.append(priceperpackage_input)
                 row_three__col_one__package_info_row_div.append(colmd1)
@@ -1531,7 +1531,7 @@ function addRowDivTwoCustomSyrup(){
                     var colmd1=$("<div class='col-md-6'></div>")
                     var colmd2=$("<div class='col-md-3'></div>")
                         quantityofpackage_label=$("<label>Quantity of Main Package :</label>");
-                        quantityofpackage_input=$("<input class='form-control' type='number' step='1.00' min='0'  id='main_quantity_input' name='main_quantity_input'></input>");
+                        quantityofpackage_input=$("<input class='form-control-custom' type='number' step='1.00' min='0'  id='main_quantity_input' name='main_quantity_input'></input>");
                     colmd1.append(quantityofpackage_label);
                     colmd2.append(quantityofpackage_input)
                 row_four__col_one__package_info_row_div.append(colmd1)
@@ -1684,7 +1684,7 @@ function subPackageCustomHtml(pack_type,sublevel_custom,subpack_customtype_list)
                     var colmd1=$("<div class='col-md-6'></div>")
                     var colmd2=$("<div class='col-md-3'></div>");
                     var subpack_customtype_label=$("<label>Sub Package Type</label>");
-                        var subpack_customtype_select=$("<select class='form-control' onchange='subpack_customtypeOnSelect($(this))' id='subpack_customtype_select"+pack_type+"'></select>");
+                        var subpack_customtype_select=$("<select class='form-control-custom' onchange='subpack_customtypeOnSelect($(this))' id='subpack_customtype_select"+pack_type+"'></select>");
                         var option=$("<option value='--'>--</option>");
                         $(subpack_customtype_select).append(option);
                         
@@ -1710,7 +1710,7 @@ function subPackageCustomHtml(pack_type,sublevel_custom,subpack_customtype_list)
                     var colmd3=$("<div class='col-md-3'></div>");
 
                         var quantity_subpack_customtype_label=$("<label>Capicity of Dispensory Bottle ( ML ) : </label>"); 
-                        var quantity_subpack_customtype_input=$("<input class='form-control' type='number' step='1.00' min='1' id='sublevel"+sublevel_custom+"' name='sublevel_input'></input>");
+                        var quantity_subpack_customtype_input=$("<input class='form-control-custom' type='number' step='1.00' min='1' id='sublevel"+sublevel_custom+"' name='sublevel_input'></input>");
                         var delete_btn=$("<button class='fa fa-times-circle' id= 'delBtn' onclick='deleteSubPackCustomdiv($(this))'></button>");
                     colmd1.append(quantity_subpack_customtype_label);
                     colmd2.append(quantity_subpack_customtype_input)
@@ -1840,7 +1840,7 @@ function calculate_medPriceQuantity_Custom(){
                             colmd1=$("<div class='col-md-9'></div>")
                             colmd2=$("<div class='col-md-2'></div>")                                
                                 quanttotal_label=$("<label id='"+selectedoption+"_total' >No of Bottles:</label>");
-                                quanttotal_input=$("<span id='"+selectedoption+"_total-quant' class='form-control-static'>"+noofbottles+"</span>");
+                                quanttotal_input=$("<span id='"+selectedoption+"_total-quant' class='form-control-custom-static'>"+noofbottles+"</span>");
                             colmd1.append(quanttotal_label)
                             colmd2.append(quanttotal_input)
                         row1_col_one__row_div.append(colmd1)
@@ -1854,7 +1854,7 @@ function calculate_medPriceQuantity_Custom(){
                             colmd1=$("<div class='col-md-9'></div>")
                             colmd2=$("<div class='col-md-2'></div>")
                                 mlperunit_label=$("<label id='"+selectedoption+"_unit' >ML in 1 Bottle:</label>");
-                                mlperunit_input=$("<span id='"+selectedoption+"_unit-ml' class='form-control-static'>"+mlinonebottle+"</span>");
+                                mlperunit_input=$("<span id='"+selectedoption+"_unit-ml' class='form-control-custom-static'>"+mlinonebottle+"</span>");
                             colmd1.append(mlperunit_label)
                             colmd2.append(mlperunit_input)
                         row2_col_one__row_div.append(colmd1);
@@ -1868,7 +1868,7 @@ function calculate_medPriceQuantity_Custom(){
                             colmd1=$("<div class='col-md-9'></div>")
                             colmd2=$("<div class='col-md-2'></div>")
                                 priceofonepack_label=$("<label id='"+selectedoption+"_unit' >Price of one Bottle:</label>");
-                                priceofonepack_input=$("<span id='"+selectedoption+"_unit-price' class='form-control-static'>"+priceofonebottle+"</span>");
+                                priceofonepack_input=$("<span id='"+selectedoption+"_unit-price' class='form-control-custom-static'>"+priceofonebottle+"</span>");
                             colmd1.append(priceofonepack_label)
                             colmd2.append(priceofonepack_input)
                         row3_col_one__row_div.append(colmd1);
@@ -1882,7 +1882,7 @@ function calculate_medPriceQuantity_Custom(){
                                 colmd1=$("<div class='col-md-9'></div>")
                                 colmd2=$("<div class='col-md-2'></div>")
                                     quantperunit_label=$("<label id='"+sublevel_customtemplist[0][1]+"_unit' >No of Dispensory Bottles in 1 Bottle :</label>");
-                                    quantperunit_input=$("<span id='"+sublevel_customtemplist[0][1]+"_unit-quant' class='form-control-static'>"+noofdespbottleinonebottle+"</span>");
+                                    quantperunit_input=$("<span id='"+sublevel_customtemplist[0][1]+"_unit-quant' class='form-control-custom-static'>"+noofdespbottleinonebottle+"</span>");
                                 colmd1.append(quantperunit_label)
                                 colmd2.append(quantperunit_input)
                             row4_col_one__row_div.append(colmd1);
@@ -1896,7 +1896,7 @@ function calculate_medPriceQuantity_Custom(){
                             colmd1=$("<div class='col-md-9'></div>")
                             colmd2=$("<div class='col-md-2'></div>")                            
                                 mlperunit_label=$("<label id='"+sublevel_customtemplist[0][1]+"_unit' >Ml in one Dispensory Bottles :</label>");
-                                mlperunit_input=$("<span id='"+sublevel_customtemplist[0][1]+"_unit-ml' class='form-control-static'>"+mlinoneminibottle+"</span>");
+                                mlperunit_input=$("<span id='"+sublevel_customtemplist[0][1]+"_unit-ml' class='form-control-custom-static'>"+mlinoneminibottle+"</span>");
                             colmd1.append(mlperunit_label)
                             colmd2.append(mlperunit_input)
                         row5_col_one__row_div.append(colmd1);
@@ -1910,7 +1910,7 @@ function calculate_medPriceQuantity_Custom(){
                             colmd1=$("<div class='col-md-9'></div>")
                             colmd2=$("<div class='col-md-2'></div>")
                                 quantTotal_label=$("<label id='"+sublevel_customtemplist[0][1]+"_total' >Total Dispensory Bottles:</label>");
-                                quantTotal_input=$("<span id='"+sublevel_customtemplist[0][1]+"_total-quant' class='form-control-static'>"+totaldespbottle+"</span>");
+                                quantTotal_input=$("<span id='"+sublevel_customtemplist[0][1]+"_total-quant' class='form-control-custom-static'>"+totaldespbottle+"</span>");
                             colmd1.append(quantTotal_label)
                             colmd2.append(quantTotal_input)
                         row6_col_one__row_div.append(colmd1);
@@ -1924,7 +1924,7 @@ function calculate_medPriceQuantity_Custom(){
                             colmd1=$("<div class='col-md-9'></div>")
                             colmd2=$("<div class='col-md-2'></div>")                            
                                 priceperunit_label=$("<label id='"+sublevel_customtemplist[0][1]+"_unit' >Price of one Dispensory Bottle:</label>");
-                                priceperunit_input=$("<span id='"+sublevel_customtemplist[0][1]+"_unit-price' class='form-control-static'>"+priceofonedespbottle+"</span>");
+                                priceperunit_input=$("<span id='"+sublevel_customtemplist[0][1]+"_unit-price' class='form-control-custom-static'>"+priceofonedespbottle+"</span>");
                             colmd1.append(priceperunit_label)
                             colmd2.append(priceperunit_input)
                         row7_col_one__row_div.append(colmd1);
@@ -2044,7 +2044,7 @@ function addMedicineToDespStockForm(){
                 //                                     boxamount_label=$("<label class='custom_label_css'>No of Boxes Stored:</label>");
                 //                                 colmd1.append(boxamount_label)
                 //                                 var colmd2=$("<div class='col-md-6'></div>")
-                //                                         boxamount_input=$("<input class='form-control' type='number' id='active_box_input' class='custom_input_css' value='"+boxes+"' disabled> </input>")
+                //                                         boxamount_input=$("<input class='form-control-custom' type='number' id='active_box_input' class='custom_input_css' value='"+boxes+"' disabled> </input>")
                 //                                 colmd2.append(boxamount_input)
                 //                                 row1__col_one__row_div_two.append(colmd1);
                 //                                 row1__col_one__row_div_two.append(colmd2);
@@ -2053,7 +2053,7 @@ function addMedicineToDespStockForm(){
                 //                                         pieceamount_label=$("<label class='custom_label_css'>No of Strips Stored:</label>");
                 //                                     colmd1.append(pieceamount_label)
                 //                                     var colmd2=$("<div class='col-md-6'></div>")
-                //                                         pieceamount_input=$("<input class='form-control' type='number' id='active_strip_input' value='"+strips+"'  class='custom_input_css' disabled> </input>")
+                //                                         pieceamount_input=$("<input class='form-control-custom' type='number' id='active_strip_input' value='"+strips+"'  class='custom_input_css' disabled> </input>")
                 //                                     colmd2.append(pieceamount_input)
                 //                                 row3__col_one__row_div_two.append(colmd1);
                 //                                 row3__col_one__row_div_two.append(colmd2);
@@ -2063,7 +2063,7 @@ function addMedicineToDespStockForm(){
                 //                                     pieceamount_label=$("<label class='custom_label_css'>No of Pieces Stored:</label>");
                 //                                 colmd1.append(pieceamount_label)
                 //                                 var colmd2=$("<div class='col-md-6'></div>")
-                //                                     pieceamount_input=$("<input class='form-control' type='number' id='active_piece_input' value='"+pieces+"'  class='custom_input_css' disabled> </input>")
+                //                                     pieceamount_input=$("<input class='form-control-custom' type='number' id='active_piece_input' value='"+pieces+"'  class='custom_input_css' disabled> </input>")
                 //                                 colmd2.append(pieceamount_input)
                 //                             row2__col_one__row_div_two.append(colmd1);
                 //                             row2__col_one__row_div_two.append(colmd2);
@@ -2141,7 +2141,7 @@ function despMedFormMainColOne(main_col_div_1){
 
                 med_name_label=$("<label for='medicine_name_tag' class='custom_label_css'>Medicine</label>");
             colmd1.append(med_name_label)
-                med_name_input=$("<input class='form-control' id='medicine_name_tag' onfocusout='focusOut_medicineNameDesp($(this))'  class='custom_input_css'>")
+                med_name_input=$("<input class='form-control-custom' id='medicine_name_tag' onfocusout='focusOut_medicineNameDesp($(this))'  class='custom_input_css'>")
             colmd2.append(med_name_input)
         row__col_one__row_div_one.append(colmd1);
         row__col_one__row_div_one.append(colmd2);
@@ -2154,7 +2154,7 @@ function despMedFormMainColOne(main_col_div_1){
             colmd2=$("<div class='col-md-6'></div>")
                 batchno_label=$("<label class='custom_label_css float-right'>Batch Number </label>");
             colmd1.append(batchno_label)
-                batchno_input=$("<input class='form-control' type='number'  id='batchno_input'  class='custom_input_css'></input>")
+                batchno_input=$("<input class='form-control-custom' type='number'  id='batchno_input'  class='custom_input_css'></input>")
             colmd2.append(batchno_input)
         row__col_three__row_div_one.append(colmd1)
         row__col_three__row_div_one.append(colmd2)
@@ -2265,7 +2265,7 @@ function focusOut_medicineNameDesp(element){
                                 var colmd2=$("<div class='col-md-2'></div>")
                                 boxamount_label=$("<label class='custom_label_css'>Number of Boxes:</label>");
                                 colmd1.append(boxamount_label)
-                                boxamount_input=$("<input class='form-control' type='number' id='noofboxes_input' class='custom_input_css' value='0'> </input>")
+                                boxamount_input=$("<input class='form-control-custom' type='number' id='noofboxes_input' class='custom_input_css' value='0'> </input>")
                                 colmd2.append(boxamount_input)
                             row1__col_one__row_div_two.append(colmd1);
                             row1__col_one__row_div_two.append(colmd2);
@@ -2275,7 +2275,7 @@ function focusOut_medicineNameDesp(element){
                                 var colmd2=$("<div class='col-md-2'></div>")
                                 pieceamount_label=$("<label class='custom_label_css'>No of Strips:</label>");
                                 colmd1.append(pieceamount_label)
-                                pieceamount_input=$("<input class='form-control' type='number' id='noofstrips_input' value='0'  class='custom_input_css'> </input>")
+                                pieceamount_input=$("<input class='form-control-custom' type='number' id='noofstrips_input' value='0'  class='custom_input_css'> </input>")
                                 colmd2.append(pieceamount_input)
                             row3__col_one__row_div_two.append(colmd1);
                             row3__col_one__row_div_two.append(colmd2);
@@ -2286,7 +2286,7 @@ function focusOut_medicineNameDesp(element){
                                 var colmd2=$("<div class='col-md-2'></div>")
                                 pieceamount_label=$("<label class='custom_label_css'>No of Pieces:</label>");
                                 colmd1.append(pieceamount_label)
-                                pieceamount_input=$("<input class='form-control' type='number' id='noofpieces_input' value='0'  class='custom_input_css'> </input>")
+                                pieceamount_input=$("<input class='form-control-custom' type='number' id='noofpieces_input' value='0'  class='custom_input_css'> </input>")
                                 colmd2.append(pieceamount_input)
                             row2__col_one__row_div_two.append(colmd1);
                             row2__col_one__row_div_two.append(colmd2);
@@ -2327,7 +2327,7 @@ function focusOut_medicineNameDesp(element){
                         boxamount_label=$("<label class='custom_label_css'>No of Boxes Stored:</label>");
                     colmd1.append(boxamount_label)
                     var colmd2=$("<div class='col-md-6'></div>")
-                            boxamount_input=$("<input class='form-control' type='number' id='active_box_input' class='custom_input_css' value='"+boxes+"' disabled> </input>")
+                            boxamount_input=$("<input class='form-control-custom' type='number' id='active_box_input' class='custom_input_css' value='"+boxes+"' disabled> </input>")
                     colmd2.append(boxamount_input)
                     row1__col_one__row_div_two.append(colmd1);
                     row1__col_one__row_div_two.append(colmd2);
@@ -2336,7 +2336,7 @@ function focusOut_medicineNameDesp(element){
                             pieceamount_label=$("<label class='custom_label_css'>No of Strips Stored:</label>");
                         colmd1.append(pieceamount_label)
                         var colmd2=$("<div class='col-md-6'></div>")
-                            pieceamount_input=$("<input class='form-control' type='number' id='active_strip_input' value='"+strips+"'  class='custom_input_css' disabled> </input>")
+                            pieceamount_input=$("<input class='form-control-custom' type='number' id='active_strip_input' value='"+strips+"'  class='custom_input_css' disabled> </input>")
                         colmd2.append(pieceamount_input)
                     row3__col_one__row_div_two.append(colmd1);
                     row3__col_one__row_div_two.append(colmd2);
@@ -2346,7 +2346,7 @@ function focusOut_medicineNameDesp(element){
                         pieceamount_label=$("<label class='custom_label_css'>No of Pieces Stored:</label>");
                     colmd1.append(pieceamount_label)
                     var colmd2=$("<div class='col-md-6'></div>")
-                        pieceamount_input=$("<input class='form-control' type='number' id='active_piece_input' value='"+pieces+"'  class='custom_input_css' disabled> </input>")
+                        pieceamount_input=$("<input class='form-control-custom' type='number' id='active_piece_input' value='"+pieces+"'  class='custom_input_css' disabled> </input>")
                     colmd2.append(pieceamount_input)
                 row2__col_one__row_div_two.append(colmd1);
                 row2__col_one__row_div_two.append(colmd2);

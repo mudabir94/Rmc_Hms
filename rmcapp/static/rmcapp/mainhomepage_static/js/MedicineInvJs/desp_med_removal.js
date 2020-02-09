@@ -96,7 +96,7 @@ function createDespensoryDataTable(){
         $('.dataTables_filter  input[type="search"]').
         attr('placeholder','Search Medicine ....').
         css({'width':'200px','display':'inline-block'});
-        $('.dataTables_filter input').addClass('form-control');
+        $('.dataTables_filter input').addClass('form-control-custom');
     });
 }
 function createDespMedicineTable(){
@@ -233,20 +233,20 @@ function createMedicineQtyColumn(despid){
             var sub_col=$("<div class='col-md-12'></div>")
                 var sub_sub_row1=$("<div class='row' style='padding-top:60px; padding-bottom:10px'></div>");
                     var col1_sub_sub_row1=$("<div class='col-md-4'></div>");
-                        var label=$("<label class='form-control-static'>Medicine Name</label>")
+                        var label=$("<label class='form-control-custom-static'>Medicine Name</label>")
                     col1_sub_sub_row1.append(label);
                     var col2_sub_sub_row1=$("<div class='col-md-6'></div>");
-                        var input=$("<input id='desp-med-name' class='form-control' value='"+dspstck_dict[despid]['name']+"'></input>")
+                        var input=$("<input id='desp-med-name' class='form-control-custom' value='"+dspstck_dict[despid]['name']+"'></input>")
                     col2_sub_sub_row1.append(input);
                 sub_sub_row1.append(col1_sub_sub_row1);
                 sub_sub_row1.append(col2_sub_sub_row1);
     
                 var sub_sub_row2=$("<div class='row' style='padding-bottom:10px'></div>");
                     var col1_sub_sub_row2=$("<div class='col-md-4'></div>");
-                        var label=$("<label class='form-control-static'>Boxes</label>")
+                        var label=$("<label class='form-control-custom-static'>Boxes</label>")
                     col1_sub_sub_row2.append(label);
                     var col2_sub_sub_row2=$("<div class='col-md-6'></div>");
-                        var input=$("<input class='form-control' id='boxes_stored'></input>")
+                        var input=$("<input class='form-control-custom' id='boxes_stored'></input>")
                     col2_sub_sub_row2.append(input);
                 sub_sub_row2.append(col1_sub_sub_row2);
                 sub_sub_row2.append(col2_sub_sub_row2);
@@ -258,20 +258,20 @@ function createMedicineQtyColumn(despid){
                 if (strip_stored!=="N/A"){
                 var sub_sub_row3=$("<div class='row' style='padding-bottom:10px'></div>");
                     var col1_sub_sub_row3=$("<div class='col-md-4'></div>");
-                        var label=$("<label class='form-control-static'>Total Strips</label>")
+                        var label=$("<label class='form-control-custom-static'>Total Strips</label>")
                     col1_sub_sub_row3.append(label);
                     var col2_sub_sub_row3=$("<div class='col-md-6'></div>");
-                        var input=$("<input class='form-control' id='strips_stored'></input>")
+                        var input=$("<input class='form-control-custom' id='strips_stored'></input>")
                     col2_sub_sub_row3.append(input);
                 sub_sub_row3.append(col1_sub_sub_row3);
                 sub_sub_row3.append(col2_sub_sub_row3);
                 }
                 var sub_sub_row4=$("<div class='row' style='padding-bottom:10px'></div>");
                     var col1_sub_sub_row4=$("<div class='col-md-4'></div>");
-                        var label=$("<label class='form-control-static'>Total Pieces</label>")
+                        var label=$("<label class='form-control-custom-static'>Total Pieces</label>")
                     col1_sub_sub_row4.append(label);
                     var col2_sub_sub_row4=$("<div class='col-md-6'></div>");
-                        var input=$("<input class='form-control' id='pieces_stored' ></input>")
+                        var input=$("<input class='form-control-custom' id='pieces_stored' ></input>")
                     col2_sub_sub_row4.append(input);
                 sub_sub_row4.append(col1_sub_sub_row4);
                 sub_sub_row4.append(col2_sub_sub_row4);
