@@ -5261,7 +5261,7 @@ function SaveAndPrintBill(){
 
         var mid_div=$("<div id='mid'></div>");
             var div_info=$("<div class='info'></div>");
-                    var p=$("<p> Name   :"+patient_name+" </br> Phone   : "+phoneno+"</br></p>")
+                    var p=$("<p> Name   :  "+patient_name.toUpperCase()+" </br> Phone   :  "+phoneno+"</br></p>")
             div_info.append(p);
         mid_div.append(div_info);
 
@@ -5297,7 +5297,7 @@ function SaveAndPrintBill(){
                     var table=$("<table>")
                         var tr=$('<tr class="tabletitle"></tr>')
                             var td1=$('<td class="item"><p style="font-size:20px">Medicine Name</p></td>')
-                            var td2=$('<td class="item"><p style="font-size:20px">Medicine Times</p></td>')
+                            var td2=$('<td class="item"><p style="font-size:20px">Take Medicine (Timing) </p></td>')
 
                         tr.append(td1);
                         tr.append(td2);
@@ -5366,8 +5366,14 @@ function SaveAndPrintBill(){
             div_table.append(table);
 
             var legalcopy=$("<div id='legalcopy'>");
-                var p=$('<p class="legal"><strong>Thank you for visiting!</strong>  </p>')
-            legalcopy.append(p)
+                var p=$('<p class="legal"><strong>Thank you for visiting RMC!</strong>  </p>')
+                var p1=$('<p class="legal"><strong>CONTACT NO : 0321-2312313</strong>  </p>')
+                var p2=$('<p class="legal"><strong>Adress  : Badami Bagh, Lahore</strong>  </p>')
+
+            legalcopy.append(p);
+            legalcopy.append(p1);
+            legalcopy.append(p2);
+
         bot_div.append(div_table);
         bot_div.append(legalcopy);
 
@@ -5376,18 +5382,18 @@ function SaveAndPrintBill(){
     invoice_pos.append(bot_div);    
     
 
-    // var restorepage = $('#patient_dash_first_div').html();
+    // // // var restorepage = $('#patient_dash_first_div').html();
     $('#patient_dash_first_div').hide();
     var printcontent = $(invoice_pos).clone();
-    // $('#recipet_div').empty().html(printcontent);
+    // // // $('#recipet_div').empty().html(printcontent);
   
     window.print();
     $('#patient_dash_first_div').show();
     $('#invoice-POS').empty();
    
-    despmed_datatable.destroy();
-    procedure_bill_table.destroy();
-    bill_datatable.destroy();
+    // //despmed_datatable.destroy();
+    // // procedure_bill_table.destroy();
+    // // bill_datatable.destroy();
     console.log("despmedbillamount--",despmedbillamount)
 
     // $.ajax({
@@ -5636,7 +5642,7 @@ function createRowDivFiveBill(){ ///Last Discount and total Bill row with Button
                         var row4__calculate_col2=$("<div class='row'></div>");
                             var subcol1=$("<div class='col-md-12'></div>")
                                 var row1__subcol1=$("<div class='row'></div>");
-                                var c2=$("<div class='col-md-6 offset-md-3'></div>")
+                                var c2=$("<div class='col-md-6'></div>")
                                         var save_button=$("<button class='btn btn-block fa fa-print' id='save_desp_bill' onclick='SaveDespBill()'>Save </button>")
                                     c2.append(save_button)
                                     var c1=$("<div class='col-md-6'></div>")

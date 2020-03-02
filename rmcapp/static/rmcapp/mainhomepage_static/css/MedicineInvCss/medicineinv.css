@@ -134,7 +134,7 @@ border: none;
     display: block;
     width: 100%;
     padding: .375rem .75rem;
-    font-size: 0.5rem;
+    font-size: 0.7rem;
     line-height: 1.5;
     color: #495057;
     background-color: #fff;
@@ -144,6 +144,6 @@ border: none;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
   }
   .custom_label_css{
-    font-size: 0.5rem;
+    font-size: 0.7rem;
     font-weight: 500;
   }

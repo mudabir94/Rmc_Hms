@@ -27,7 +27,7 @@ procedureBillSummary,
 surgeryTable,
 surgeryRecords,surgeryBillRecord,
 procedureTable,
-procedureRecords,procedureBillRecord,patPrescriptionBillRecordHistory,
+procedureRecords,procedureBillRecord,patPrescriptionBillRecordHistory,presBillSummary,
 despBillRecord,
 patientVisitSummary,invoiceRecords,
 surgeryBillSummary,tokenRecords,tokenGenerator
@@ -112,8 +112,9 @@ class patientBillRecordsAdmin(admin.ModelAdmin):
     list_display=("id","patient","desp","pres","medicine","boxes_stored","strips_stored","pieces_stored",'amount',"datevisited")
     
 class patPrescriptionBillRecordHistoryAdmin(admin.ModelAdmin):
-    list_display=("id","pres","total","paid_amount","status")
-
+    list_display=("id","pres","total","paid_amount","amount_given","change","status")
+class presBillSummaryAdmin(admin.ModelAdmin):
+    list_display=("id","pres","net_total","paid_amount","amount_given","change","status")
 
 class patientMedRecordsAdmin(admin.ModelAdmin):
     list_display=("id","patient","emp_doc","pres","medicine","prescription","datevisited")
@@ -215,7 +216,7 @@ admin.site.register(patientMedRecords, patientMedRecordsAdmin)
 admin.site.register(User, UserAdmin)
 admin.site.register(Role, RoleAdmin)
 admin.site.register(patientType, patientTypeAdmin)
-
+admin.site.register(presBillSummary,presBillSummaryAdmin)
 
 admin.site.register(patPrescriptionBill, patPrescriptionBillAdmin)
 admin.site.register(Rooms, RoomsAdmin)

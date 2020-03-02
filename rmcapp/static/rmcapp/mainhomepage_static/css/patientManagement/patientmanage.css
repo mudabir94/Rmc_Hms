@@ -218,7 +218,7 @@ background:#4c7c9a;
   display: block;
   width: 100%;
   padding: .375rem .75rem;
-  font-size: 0.5rem;
+  font-size: 0.7rem;
   line-height: 1.5;
   color: #495057;
   background-color: #fff;
@@ -228,8 +228,9 @@ background:#4c7c9a;
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 .custom_label_css{
-  font-size: 0.5rem;
+  font-size: 0.7rem;
   font-weight: 500;
+  text-transform: uppercase;
 }
 #edit-patient-info-form{
   padding: 20px 50px 30px 100px;

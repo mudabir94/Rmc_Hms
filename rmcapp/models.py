@@ -437,7 +437,6 @@ class patPrescriptionBill(models.Model):
 class patPrescriptionBillRecordHistory(models.Model):
     pres=models.ForeignKey(patPrescriptionRecords, on_delete=models.CASCADE,default=None,null=True,blank=True)
     total=models.IntegerField(null=True,blank=True)
-    paid_amount=models.IntegerField(null=True,blank=True)
     amount_given=models.IntegerField(null=True,blank=True)
     change=models.IntegerField(null=True,blank=True)
     paid_amount=models.IntegerField(null=True,blank=True)
@@ -447,7 +446,18 @@ class patPrescriptionBillRecordHistory(models.Model):
     class Meta:
         verbose_name_plural="Patient Prescription Bill History"
         ordering=['pk']
-
+class presBillSummary(models.Model):
+    pres=models.ForeignKey(patPrescriptionRecords, on_delete=models.CASCADE,default=None,null=True,blank=True)
+    net_total=models.IntegerField(null=True,blank=True)
+    paid_amount=models.IntegerField(null=True,blank=True)
+    amount_given=models.IntegerField(null=True,blank=True)
+    change=models.IntegerField(null=True,blank=True)
+    status=models.CharField(max_length=50,null=True,blank=True,default='NotPaid')
+    def __str__(self):
+        return str(self.id)
+    class Meta:
+        verbose_name_plural="Prescription Bill Summary"
+        ordering=['pk']
 class surgeryTable(models.Model):         #### NEW  ######
     surgery_name=models.CharField(max_length=50,null=True,blank=True)
     charges=models.IntegerField(null=True,blank=True)

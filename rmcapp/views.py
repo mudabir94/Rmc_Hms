@@ -18,7 +18,7 @@ from rmcapp.models import (
     patientType,
     procedureTable,patPrescriptionRecords,patPrescriptionBill,patPrescriptionBillRecordHistory,invoiceRecords,
     despBillRecord,procedureBillRecord,procedureRecords,procedureTable,
-    patientVisitSummary,surgeryTable,
+    patientVisitSummary,surgeryTable,presBillSummary,
     surgeryRecords,surgeryBillRecord,procedureBillSummary,surgeryBillSummary,
     tempDespensoryStock,Role,Rooms,Ward,tokenRecords,tokenGenerator
 )
@@ -1981,8 +1981,15 @@ def generatePrescription(request):
         ppbrhObj.paid_amount=presData['net_total']
         ppbrhObj.save()
 
+        presBSumObj=presBillSummary()
+        presBSumObj.pres=presRecObj
+        presBSumObj.net_total=presData['net_total']
+        presBSumObj.status=presData['status']
+        presBSumObj.amount_given=presData['amount_recieved']
+        presBSumObj.change=presData['change_amount']
+        presBSumObj.paid_amount=presData['net_total']
         
-        
+        presBSumObj.save()
         
         
         # Adding Data to invoice Records
@@ -3946,8 +3953,12 @@ def retrieveInvoiceBillRecord(request):
                     patPresRecord_dict['pat_name']=InvoiceObj.pres.patient.pat_name
                     patPresRecord_dict['date_visited']=str(InvoiceObj.pres.date_visited)
                     pPresBObj=patPrescriptionBill.objects.get(pres=patPresObj)
-                    patPresRecord_dict['pres_bill']=pPresBObj.net_total
-                    patPresRecord_dict['status']=pPresBObj.status
+
+                    presBillSumObj=presBillSummary.objects.get(pres=patPresObj)
+
+                    patPresRecord_dict['pres_bill']=presBillSumObj.net_total
+                    patPresRecord_dict['status']=presBillSumObj.status
+
                     patPresRecord_dict['total_bill']=InvoiceObj.net_total
                     patPresRecord_dict['invoice_status']=InvoiceObj.status
 
@@ -4672,11 +4683,25 @@ def saveAddChargeExisPres(request):
     if request.method=="POST":
         presid=request.POST.get("presid")
         addcharge_exsist_pres=request.POST.get("addcharge_exsist_pres")
+        addcharge_exsist_pres=int(addcharge_exsist_pres)
         print("PRES ID",presid)
         
         presObj=patPrescriptionRecords.objects.get(id=presid)
-        presBillObj=patPrescriptionBill.objects.get(pres=presObj)
-        # presBillObj.net_total
+        presBillObj=patPrescriptionBill()
+        presBillObj.pres=presObj
+        presBillObj.net_total=addcharge_exsist_pres
+        presBillObj.status="Paid"
+        presBillObj.save()
+
+        presBSumObj=presBillSummary.objects.get(pres=presObj)
+        presBSumObj.net_total=presBSumObj.net_total+addcharge_exsist_pres
+        presBSumObj.status="Paid"
+        presBSumObj.paid_amount=presBSumObj.paid_amount+addcharge_exsist_pres
+        presBSumObj.save()
+
+        invRecObj=invoiceRecords.objects.get(pres=presObj)
+        invRecObj.net_total=invRecObj.net_total+addcharge_exsist_pres
+        invRecObj.save()
         print("IN saveAddChargeExisPres",presBillObj)
         data={}
         return JsonResponse(data)
