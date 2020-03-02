@@ -232,10 +232,15 @@
                         </a>
                         <div class="sidebar-submenu">
                             <ul>
+
                                 <li>
                                   <a href="#"onclick="createPatientBill()" >Create Desp/Procedure Bill
                                   </a>
                                 </li>
+                                <li>
+                                    <a href="#"onclick="addChargeExsistingPres()" >Add Charge To Exsisting Prescription
+                                    </a>
+                                  </li>
             
                                 <li>
                                   <a href="#" onclick="surgeryProcFrom()">Create Surgery/Procedure Bill
@@ -710,5 +715,18 @@ $('.counter-count').each(function () {
             }
         });
     });
+
+
+  $("#close-sidebar").click(function() {
+    $('#page-content').removeClass('col-md-10');
+    $('#page-content').addClass('col-md-12');
+    $(".page-wrapper").removeClass("toggled");
+  });
+  $("#show-sidebar").click(function() {
+    $('#page-content').removeClass('col-md-12');
+    $('#page-content').addClass('col-md-10');
+    $(".page-wrapper").addClass("toggled");
+  });
+
 
 </script>

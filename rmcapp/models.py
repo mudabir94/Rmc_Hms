@@ -423,6 +423,9 @@ class patPrescriptionBill(models.Model):
     discount_percentage=models.FloatField(null=True,blank=True)
     discount_reason=models.CharField(max_length=50,null=True,blank=True)
     net_total=models.IntegerField(null=True,blank=True)
+    amount_given=models.IntegerField(null=True,blank=True)
+    change=models.IntegerField(null=True,blank=True)
+    paid_amount=models.IntegerField(null=True,blank=True)
     status=models.CharField(max_length=50,null=True,blank=True,default='NotPaid')
 
     def __str__(self):
@@ -431,7 +434,19 @@ class patPrescriptionBill(models.Model):
         verbose_name_plural="Patient Prescription Bill"
         ordering=['pk']
 
-
+class patPrescriptionBillRecordHistory(models.Model):
+    pres=models.ForeignKey(patPrescriptionRecords, on_delete=models.CASCADE,default=None,null=True,blank=True)
+    total=models.IntegerField(null=True,blank=True)
+    paid_amount=models.IntegerField(null=True,blank=True)
+    amount_given=models.IntegerField(null=True,blank=True)
+    change=models.IntegerField(null=True,blank=True)
+    paid_amount=models.IntegerField(null=True,blank=True)
+    status=models.CharField(max_length=50,null=True,blank=True,default='NotPaid')
+    def __str__(self):
+        return str(self.id)
+    class Meta:
+        verbose_name_plural="Patient Prescription Bill History"
+        ordering=['pk']
 
 class surgeryTable(models.Model):         #### NEW  ######
     surgery_name=models.CharField(max_length=50,null=True,blank=True)
@@ -658,6 +673,7 @@ class invoiceRecords(models.Model):
     discount=models.IntegerField(null=True,blank=True)
     discount_percentage=models.FloatField(null=True,blank=True)
     net_total=models.IntegerField(null=True,blank=True,default=0)
+    paid_amount=models.IntegerField(null=True,blank=True,default=0)
     status=models.CharField(max_length=50,null=True,blank=True,default='NotPaid')
     def __str__(self):
         return str(self.id)

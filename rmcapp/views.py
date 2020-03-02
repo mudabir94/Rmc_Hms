@@ -16,7 +16,7 @@ from rmcapp.models import (
     packageType,
     employeeType,Employee,Patient,patientMedRecords,patientBillRecords,Rooms,Ward,patientRoomsBill,patientWardBill,
     patientType,
-    procedureTable,patPrescriptionRecords,patPrescriptionBill,invoiceRecords,
+    procedureTable,patPrescriptionRecords,patPrescriptionBill,patPrescriptionBillRecordHistory,invoiceRecords,
     despBillRecord,procedureBillRecord,procedureRecords,procedureTable,
     patientVisitSummary,surgeryTable,
     surgeryRecords,surgeryBillRecord,procedureBillSummary,surgeryBillSummary,
@@ -1849,19 +1849,31 @@ def retirevePatientMedHistory(request):
                     try:
                         medlist=patientMedRecords.objects.get(pres=presObj).prescription
                         print("Med list",medlist)
-                        medObjs=Medicine.objects.filter(id__in=medlist)
+                        # medObjs=Medicine.objects.filter(id__in=medlist)
                         med_info_list=[]
-                        for count,medObj in enumerate(medObjs):
-                            templist=[]
+                        # for count,medObj in enumerate(medObjs):
+                        #     templist=[]
 
+                        #     templist.append(medObj.medicine_name)
+                        #     templist.append(medObj.medicine_type_id.medicine_type_name)
+                        #     templist.append(medObj.medicine_details)
+                        #     templist.append(medObj.weight)
+
+                        #     med_info_list.append(templist)
+                        for med in medlist:
+                            medObj=Medicine.objects.get(id=int(med))
+                            print("WORKING",med)
+                            templist=[]
                             templist.append(medObj.medicine_name)
                             templist.append(medObj.medicine_type_id.medicine_type_name)
                             templist.append(medObj.medicine_details)
                             templist.append(medObj.weight)
-
                             med_info_list.append(templist)
+                            print("Com Working")
 
-                        print("medObjs",medObjs)
+
+
+
                         temp_med_hist_dict['med_list']=med_info_list
 
                     except:
@@ -1934,7 +1946,7 @@ def generatePrescription(request):
         presRecObj.doc=empObj
         patTypeObj=patientType.objects.get(patient_type=patient_type)
         presRecObj.patient_type=patTypeObj
-        
+     
         presRecObj.save()
         presRecObj.date_visited=presRecObj.created_at
         if 'admitreason' in presData:
@@ -1948,12 +1960,31 @@ def generatePrescription(request):
         patPresBillObj.pres=presRecObj
         patPresBillObj.discount=presData['discount']
         patPresBillObj.discount_percentage=presData['discount_percent']
+
         # Discount Reason Missing --patPresBillObj.discount_reason=presData['discount_reason']
         if presData['discount_reason']:
             patPresBillObj.discount_reason=presData['discount_reason']
         patPresBillObj.net_total=presData['net_total']
+        patPresBillObj.amount_given=presData['amount_recieved']
+        patPresBillObj.change=presData['change_amount']
+        patPresBillObj.paid_amount=presData['net_total']
         patPresBillObj.status=presData['status']
         patPresBillObj.save()
+
+
+        ppbrhObj=patPrescriptionBillRecordHistory()
+        ppbrhObj.pres=presRecObj
+        ppbrhObj.total=presData['net_total']
+        ppbrhObj.status=presData['status']
+        ppbrhObj.amount_given=presData['amount_recieved']
+        ppbrhObj.change=presData['change_amount']
+        ppbrhObj.paid_amount=presData['net_total']
+        ppbrhObj.save()
+
+        
+        
+        
+        
         # Adding Data to invoice Records
         invObj=invoiceRecords()
         invObj.pres=presRecObj
@@ -2314,6 +2345,7 @@ def retrieveMedicineFromDesp(request):
         print("boxes_wanted",boxes_wanted)
         boxes_wanted=float(boxes_wanted)
         pieces_wanted=float(pieces_wanted)
+        print("pieces_wanted",pieces_wanted)
         print("strips wanted-->",strips_wanted)
         if no_strips=="false":
             strips_wanted=float(strips_wanted)
@@ -4635,4 +4667,16 @@ def GetProcSurgInfo(request):
             "proc_list":proc_list,
 
         }
+        return JsonResponse(data)
+def saveAddChargeExisPres(request):
+    if request.method=="POST":
+        presid=request.POST.get("presid")
+        addcharge_exsist_pres=request.POST.get("addcharge_exsist_pres")
+        print("PRES ID",presid)
+        
+        presObj=patPrescriptionRecords.objects.get(id=presid)
+        presBillObj=patPrescriptionBill.objects.get(pres=presObj)
+        # presBillObj.net_total
+        print("IN saveAddChargeExisPres",presBillObj)
+        data={}
         return JsonResponse(data)

@@ -51,172 +51,178 @@
   <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
     <i class="fas fa-bars"></i>
   </a>
-  <nav id="sidebar" class="sidebar-wrapper">
-    <div class="sidebar-content">
-      <div class="sidebar-brand">
-        <a href="#">Inventory Dashboard</a>
-        <div id="close-sidebar">
-          <i class="fas fa-times"></i>
-        </div>
-      </div>
-      <div class="sidebar-header">
-        <div class="user-pic">
-          <img class="img-responsive img-rounded" src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"
-            alt="User picture">
-        </div>
-        <div class="user-info">
+   <div class="row">
+      <div class="col-md-2">
+          <!-- sidebar-wrapper  -->
 
-            {% if user.is_authenticated %}
-          <span class="user-name">{{ user.get_username }}
-            <strong></strong>
-          </span>
-          {% endif %} 
-          {% if user.is_authenticated %}
-          <span class="user-role">{{ user.role.role_name }}</span>
-          {% endif %} 
-        
-          <span class="user-status">
-            <i class="fa fa-circle"></i>
-            <span>Active</span>
-          </span>
+        <nav id="sidebar" class="sidebar-wrapper">
+          <div class="sidebar-content">
+            <div class="sidebar-brand">
+              <a href="#">Inventory Dashboard</a>
+              <div id="close-sidebar">
+                <i class="fas fa-times"></i>
+              </div>
+            </div>
+            <div class="sidebar-header">
+              <div class="user-pic">
+                <img class="img-responsive img-rounded" src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"
+                  alt="User picture">
+              </div>
+              <div class="user-info">
+
+                  {% if user.is_authenticated %}
+                <span class="user-name">{{ user.get_username }}
+                  <strong></strong>
+                </span>
+                {% endif %} 
+                {% if user.is_authenticated %}
+                <span class="user-role">{{ user.role.role_name }}</span>
+                {% endif %} 
+              
+                <span class="user-status">
+                  <i class="fa fa-circle"></i>
+                  <span>Active</span>
+                </span>
 
 
-        </div>
-      </div>
-      
-      
-      <!-- sidebar-search  -->
-      <div class="sidebar-menu">
-        <ul>
-          <li class="header-menu">
-            <span>General</span>
-          </li>
-          <li class="sidebar-dropdown">
-            <a href="#">
-              <i class="fa fa-tachometer-alt"></i>
-              <span>Dashboard</span>
-              <!-- <span class="badge badge-pill badge-warning">New</span> -->
-            </a>
-            <div class="sidebar-submenu">
+              </div>
+            </div>
+            
+            
+            <!-- sidebar-search  -->
+            <div class="sidebar-menu">
               <ul>
-                <li>
-                  <a href="{%url 'inventory_dashboard'%}">Inventory Management
-                    <!-- <span class="badge badge-pill badge-success">Pro</span> -->
+                <li class="header-menu">
+                  <span>General</span>
+                </li>
+                <li class="sidebar-dropdown">
+                  <a href="#">
+                    <i class="fa fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                    <!-- <span class="badge badge-pill badge-warning">New</span> -->
                   </a>
+                  <div class="sidebar-submenu">
+                    <ul>
+                      <li>
+                        <a href="{%url 'inventory_dashboard'%}">Inventory Management
+                          <!-- <span class="badge badge-pill badge-success">Pro</span> -->
+                        </a>
+                      </li>
+                      <li>
+                        <a href="{%url 'patient_dashboard'%}">Patient Management</a>
+                      </li>
+                      <li>
+                        <a href="{%url 'staff_dashboard'%}">Staff Management</a>
+                      </li>
+                      <li>
+                        <a href="{%url 'main_dashboard'%}">Main Dashboard</a>
+                      </li>
+                      <li>
+                        <a href="{%url 'mainhomepage'%}">Home Page</a>
+                      </li>
+                    </ul>
+                  </div>
                 </li>
-                <li>
-                  <a href="{%url 'patient_dashboard'%}">Patient Management</a>
-                </li>
-                <li>
-                  <a href="{%url 'staff_dashboard'%}">Staff Management</a>
-                </li>
-                <li>
-                  <a href="{%url 'main_dashboard'%}">Main Dashboard</a>
-                </li>
-                <li>
-                  <a href="{%url 'mainhomepage'%}">Home Page</a>
-                </li>
+                <li class="sidebar-dropdown">
+                      <a href="#">
+                        <i class="fa fa-tachometer-alt"></i>
+                        <span>Categories</span>
+                        <!-- <span class="badge badge-pill badge-warning">New</span> -->
+                      </a>
+                      <div class="sidebar-submenu">
+                        <ul>
+                          <li>
+                            <a href="{%url 'medicine_dashboard'%}">Medicines
+                              <!-- <span class="badge badge-pill badge-success">Pro</span> -->
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#">Electronics</a>
+                          </li>
+                        
+                        </ul>
+                      </div>
+                    </li>
+              
+            
+              
+              
               </ul>
             </div>
-          </li>
-          <li class="sidebar-dropdown">
-                <a href="#">
-                  <i class="fa fa-tachometer-alt"></i>
-                  <span>Categories</span>
-                  <!-- <span class="badge badge-pill badge-warning">New</span> -->
-                </a>
-                <div class="sidebar-submenu">
-                  <ul>
-                    <li>
-                      <a href="{%url 'medicine_dashboard'%}">Medicines
-                        <!-- <span class="badge badge-pill badge-success">Pro</span> -->
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">Electronics</a>
-                    </li>
-                  
-                  </ul>
-                </div>
-              </li>
-         
-       
-         
-        
-        </ul>
+            <!-- sidebar-menu  -->
+          </div>
+          <!-- sidebar-content  -->
+          <div class="sidebar-footer">
+            <a href="#">
+              <i class="fa fa-bell"></i>
+              <span class="badge badge-pill badge-warning notification">3</span>
+            </a>
+            <a href="#">
+              <i class="fa fa-envelope"></i>
+              <span class="badge badge-pill badge-success notification">7</span>
+            </a>
+            <a href="#">
+              <i class="fa fa-cog"></i>
+              <span class="badge-sonar"></span>
+            </a>
+            <a href="{% url 'logout'%}">
+              <i class="fa fa-power-off"></i>
+            </a>
+          </div>
+        </nav>
       </div>
-      <!-- sidebar-menu  -->
-    </div>
-    <!-- sidebar-content  -->
-    <div class="sidebar-footer">
-      <a href="#">
-        <i class="fa fa-bell"></i>
-        <span class="badge badge-pill badge-warning notification">3</span>
-      </a>
-      <a href="#">
-        <i class="fa fa-envelope"></i>
-        <span class="badge badge-pill badge-success notification">7</span>
-      </a>
-      <a href="#">
-        <i class="fa fa-cog"></i>
-        <span class="badge-sonar"></span>
-      </a>
-      <a href="{% url 'logout'%}">
-        <i class="fa fa-power-off"></i>
-      </a>
-    </div>
-  </nav>
-  <!-- sidebar-wrapper  -->
-  <main class="page-content">
-    <div class="container-fluid">
-      <h2> Inventory Dashboard</h2>
-      <hr>
-      <div class="row">
-        <div class="form-group col-md-12">
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-            when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-            It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
-            It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
-            and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
-        </div>
-      </div>
-    
-      <div class="row">
-          <div class="col-md-12">
-        
-            <div class="row dashboard-icon-rows">
-                <div class="col-md-4" >
-                    <div class="dashboard-icons" ></div>
-                </div>
-                <div class="col-md-4">
-                  <div class='dashboard-icons'></div>
-                </div>
-                <div class="col-md-4">
-                  <div class='dashboard-icons'></div>
-                </div>
-            </div>
+  <div class="col-md-10" id="page-content">
+    <!-- page-content" -->
 
-            <div class="row dashboard-icon-rows" >
-                <div class="col-md-4" >
-                    <div class="dashboard-icons" ></div>
-                </div>
-                <div class="col-md-4">
-                  <div class='dashboard-icons'></div>
-                </div>
-                <div class="col-md-4">
-                  <div class='dashboard-icons'></div>
-                </div>
-            </div>
+    <main class="page-content">
+      <div class="container-fluid">
+        <h2> Inventory Dashboard</h2>
+        <hr>
+        <div class="row">
+          <div class="form-group col-md-12">
+            <p>
+              Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+              when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+              It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
+              It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
+              and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
+          </div>
         </div>
-      </div>
-    
-   
-    </div>
+      
+        <div class="row">
+            <div class="col-md-12">
+          
+              <div class="row dashboard-icon-rows">
+                  <div class="col-md-4" >
+                      <div class="dashboard-icons" ></div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class='dashboard-icons'></div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class='dashboard-icons'></div>
+                  </div>
+              </div>
 
-  </main>
-  <!-- page-content" -->
+              <div class="row dashboard-icon-rows" >
+                  <div class="col-md-4" >
+                      <div class="dashboard-icons" ></div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class='dashboard-icons'></div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class='dashboard-icons'></div>
+                  </div>
+              </div>
+          </div>
+        </div>
+      
+    
+      </div>
+    </main>
+  </div>
 </div>
 <!-- page-wrapper -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -253,12 +259,17 @@ jQuery(function ($) {
   }
 });
 
-$("#close-sidebar").click(function() {
-  $(".page-wrapper").removeClass("toggled");
-});
-$("#show-sidebar").click(function() {
-  $(".page-wrapper").addClass("toggled");
-});
+
+  $("#close-sidebar").click(function() {
+    $('#page-content').removeClass('col-md-10');
+    $('#page-content').addClass('col-md-12');
+    $(".page-wrapper").removeClass("toggled");
+  });
+  $("#show-sidebar").click(function() {
+    $('#page-content').removeClass('col-md-12');
+    $('#page-content').addClass('col-md-10');
+    $(".page-wrapper").addClass("toggled");
+  });
 
 
    
