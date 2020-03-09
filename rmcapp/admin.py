@@ -9,7 +9,7 @@ from .models import (
 medicineType,
 Medicine,
 medicineCategory,Category,
-medicineWarehouseStock,medicineWhStockHistory,medicineBatches,
+medicineWarehouseStock,medicineWhStockHistory,medicineBatches,medInfoRecord,
 tt_MedicineMedWhStock,tt_tempMedWhStk_Med,
 despensoryStock,despensoryStockHistory,
 tt_Medicine_DespensoryStock,
@@ -29,7 +29,7 @@ surgeryRecords,surgeryBillRecord,
 procedureTable,
 procedureRecords,procedureBillRecord,patPrescriptionBillRecordHistory,presBillSummary,
 despBillRecord,
-patientVisitSummary,invoiceRecords,
+patientVisitSummary,invoiceRecords,revisitHistory,
 surgeryBillSummary,tokenRecords,tokenGenerator
 )
 
@@ -119,6 +119,8 @@ class presBillSummaryAdmin(admin.ModelAdmin):
 class patientMedRecordsAdmin(admin.ModelAdmin):
     list_display=("id","patient","emp_doc","pres","medicine","prescription","datevisited")
 
+class medInfoRecordAdmin(admin.ModelAdmin):
+    list_display=("id","patient","medicine","pres","timing","datevisited",)
 class employeeTypeAdmin(admin.ModelAdmin):
     list_display=("id","type_name")
 class patientTypeAdmin(admin.ModelAdmin):
@@ -180,6 +182,9 @@ class patientWardBillAdmin(admin.ModelAdmin):
         'checkin','checkout','total_days','net_total','status')
 class patientVisitSummaryAdmin(admin.ModelAdmin):
     list_display=('id','patient','pmr','pres','date_visited')
+class revisitHistoryAdmin(admin.ModelAdmin):
+    list_display=("id","patient","patient_type","doc","pres","sign_symtoms","provisional_diagnosis","investigation","diagnosis","vitals","rx","admit_reason","date_visited")
+
 class invoiceRecordsAdmin(admin.ModelAdmin):
     list_display=('id','pres','desp_bill','procedure_id','surgery_bill','ward_bill',\
         'room_bill','discount','discount_percentage',\
@@ -213,6 +218,7 @@ admin.site.register(Employee, EmployeeAdmin)
 admin.site.register(employeeType, employeeTypeAdmin)
 admin.site.register(patientBillRecords, patientBillRecordsAdmin)
 admin.site.register(patientMedRecords, patientMedRecordsAdmin)
+admin.site.register(medInfoRecord,medInfoRecordAdmin)
 admin.site.register(User, UserAdmin)
 admin.site.register(Role, RoleAdmin)
 admin.site.register(patientType, patientTypeAdmin)
@@ -238,7 +244,7 @@ admin.site.register(procedureTable, procedureTableAdmin)
 admin.site.register(procedureBillRecord, procedureBillRecordAdmin)
 admin.site.register(patPrescriptionBillRecordHistory, patPrescriptionBillRecordHistoryAdmin)
 
-
+admin.site.register(revisitHistory,revisitHistoryAdmin)
 
 admin.site.register(procedureRecords, procedureRecordsAdmin)
 

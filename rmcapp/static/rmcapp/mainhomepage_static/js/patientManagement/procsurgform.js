@@ -34,9 +34,9 @@ function addProcSurgForm(){
             $(main_row_div).append(main_col_div);
         
                 var row_div_one=$("<div class='row' style='padding-bottom:10px'></div>");
-                    var col_one__row_div_one=$("<div class='col-md-6'></div>");
+                    var col_one__row_div_one=$("<div class='col-md-12'></div>");
                         row__col_one__row_div_one=$("<div class='row'></div>");
-                            colmd1=$("<div class='col-md-4'></div>")
+                            colmd1=$("<div class='col-md-6'></div>")
                             colmd2=$("<div class='col-md-6'></div>")
         
                             procedure_label=$("<label for='procedure_tag' class='custom_label_css'>Procedure/Surgery</label>");
@@ -98,8 +98,8 @@ function proc_surgery_OnSelect(element){
 
                         var col_one__row_one=$("<div class='col-md-12'></div>");
                                 row__col_one__row_one=$("<div class='row'></div>");
-                                colmd1=$("<div class='col-md-2'></div>")
-                                colmd2=$("<div class='col-md-3'></div>")
+                                colmd1=$("<div class='col-md-6'></div>")
+                                colmd2=$("<div class='col-md-6'></div>")
             
                                     procedure_label=$("<label for='procedure_tag' class='custom_label_css'>Procedure Name</label>");
                                     colmd1.append(procedure_label)
@@ -117,8 +117,8 @@ function proc_surgery_OnSelect(element){
 
                     var col_one__row_two=$("<div class='col-md-12'></div>");
                             row__col_one__row_two=$("<div class='row'></div>");
-                            colmd1=$("<div class='col-md-2'></div>")
-                            colmd2=$("<div class='col-md-3'></div>")
+                            colmd1=$("<div class='col-md-6'></div>")
+                            colmd2=$("<div class='col-md-6'></div>")
         
                                 price_label=$("<label for='price_label' class='custom_label_css'>Treatment Cost</label>");
                                 colmd1.append(price_label)
@@ -165,8 +165,8 @@ function proc_surgery_OnSelect(element){
 
                         var col_one__row_one=$("<div class='col-md-12'></div>");
                                 row__col_one__row_one=$("<div class='row'></div>");
-                                colmd1=$("<div class='col-md-2'></div>")
-                                colmd2=$("<div class='col-md-3'></div>")
+                                colmd1=$("<div class='col-md-6'></div>")
+                                colmd2=$("<div class='col-md-6'></div>")
             
                                     surgery_label=$("<label for='surgery_tag' class='custom_label_css'>Surgery Name</label>");
                                     colmd1.append(surgery_label)
@@ -185,8 +185,8 @@ function proc_surgery_OnSelect(element){
 
                     var col_one__row_two=$("<div class='col-md-12'></div>");
                             row__col_one__row_two=$("<div class='row'></div>");
-                            colmd1=$("<div class='col-md-2'></div>")
-                            colmd2=$("<div class='col-md-3'></div>")
+                            colmd1=$("<div class='col-md-6'></div>")
+                            colmd2=$("<div class='col-md-6'></div>")
         
                                 price_label=$("<label for='price_tag' class='custom_label_css'>Treatment Cost</label>");
                                 colmd1.append(price_label)
@@ -200,8 +200,8 @@ function proc_surgery_OnSelect(element){
 
                     var col_one__row_three=$("<div class='col-md-12'></div>");
                             row__col_one__row_three=$("<div class='row'></div>");
-                            colmd1=$("<div class='col-md-2'></div>")
-                            colmd2=$("<div class='col-md-3'></div>")
+                            colmd1=$("<div class='col-md-6'></div>")
+                            colmd2=$("<div class='col-md-6'></div>")
         
                                 surgeon_fee_label=$("<label class='custom_label_css'>Surgeon Fee</label>");
                                 colmd1.append(surgeon_fee_label)
@@ -215,8 +215,8 @@ function proc_surgery_OnSelect(element){
 
                     var col_one__row_four=$("<div class='col-md-12'></div>");
                             row__col_one__row_four=$("<div class='row'></div>");
-                            colmd1=$("<div class='col-md-2'></div>")
-                            colmd2=$("<div class='col-md-3'></div>")
+                            colmd1=$("<div class='col-md-6'></div>")
+                            colmd2=$("<div class='col-md-6'></div>")
         
                                 opth_fee_label=$("<label  class='custom_label_css'>Operation Theatre Fee</label>");
                                 colmd1.append(opth_fee_label)
@@ -230,8 +230,8 @@ function proc_surgery_OnSelect(element){
 
                     var col_one__row_five=$("<div class='col-md-12'></div>");
                             row__col_one__row_five=$("<div class='row'></div>");
-                            colmd1=$("<div class='col-md-2'></div>")
-                            colmd2=$("<div class='col-md-3'></div>")
+                            colmd1=$("<div class='col-md-6'></div>")
+                            colmd2=$("<div class='col-md-6'></div>")
         
                                 anesth_fee_label=$("<label for='price_tag' class='custom_label_css'>Anestheologist Fee</label>");
                                 colmd1.append(anesth_fee_label)
@@ -245,8 +245,8 @@ function proc_surgery_OnSelect(element){
 
                     var col_one__row_six=$("<div class='col-md-12'></div>");
                             row__col_one__row_six=$("<div class='row'></div>");
-                            colmd1=$("<div class='col-md-2'></div>")
-                            colmd2=$("<div class='col-md-3'></div>")
+                            colmd1=$("<div class='col-md-6'></div>")
+                            colmd2=$("<div class='col-md-6'></div>")
         
                                 surplus_charge_label=$("<label for='price_tag' class='custom_label_css'>Surplus Charges</label>");
                                 colmd1.append(surplus_charge_label)

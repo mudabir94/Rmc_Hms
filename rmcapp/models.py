@@ -392,7 +392,7 @@ class patientBillRecords(models.Model):
     def __str__(self):
         return str(self.id)
     class Meta:
-        verbose_name_plural="Patient Bill Records"
+        verbose_name_plural="Medicine Bill Records"
         ordering=['pk']
 
 class patientMedRecords(models.Model):
@@ -408,10 +408,26 @@ class patientMedRecords(models.Model):
     def __str__(self):
         return str(self.id)
     class Meta:
-        verbose_name_plural="Patient Medicine Records"
+        verbose_name_plural=" Medicine Records"
         ordering=['pk']
 
 
+class medInfoRecord(models.Model):
+    patient=models.ForeignKey(Patient, on_delete=models.CASCADE,default=None,null=True,blank=True)
+    medicine=models.ForeignKey(Medicine, on_delete=models.CASCADE,default=None,null=True,blank=True)
+    pres=models.ForeignKey(patPrescriptionRecords, on_delete=models.CASCADE,default=None,null=True,blank=True)#### NEW ######
+    timing=models.CharField(max_length=50,null=True,blank=True)
+    datevisited=models.DateField(null=True,blank=True)
+    def __str__(self):
+        return str(self.id)
+    class Meta:
+        verbose_name_plural="Medicine Info Records"
+        ordering=['pk']
+
+
+
+
+    
 
 ########################################## new ########################################################################
 
@@ -458,6 +474,9 @@ class presBillSummary(models.Model):
     class Meta:
         verbose_name_plural="Prescription Bill Summary"
         ordering=['pk']
+
+
+
 class surgeryTable(models.Model):         #### NEW  ######
     surgery_name=models.CharField(max_length=50,null=True,blank=True)
     charges=models.IntegerField(null=True,blank=True)
@@ -651,6 +670,28 @@ class patientVisitSummary(models.Model):
         return str(self.id)
     class Meta:
         verbose_name_plural="Pateint Visit Summary"
+        ordering=['pk']
+class revisitHistory(models.Model):
+    patient=models.ForeignKey(Patient, on_delete=models.CASCADE,default=None,null=True,blank=True)
+    pres=models.ForeignKey(patPrescriptionRecords, on_delete=models.CASCADE,default=None,null=True,blank=True)##### NEW ##########
+    patient_type=models.ForeignKey(patientType, on_delete=models.CASCADE,default=None,null=True,blank=True)
+    doc=models.ForeignKey(Employee, on_delete=models.CASCADE,default=None,null=True,blank=True)
+    sign_symtoms=models.TextField(default="-",null=True,blank=True)
+    provisional_diagnosis=models.TextField(default="-",null=True,blank=True)
+    investigation=models.TextField(default="-",null=True,blank=True)
+    diagnosis=models.TextField(default="-",null=True,blank=True)
+    vitals=models.CharField(max_length=50,default="-",null=True,blank=True)
+    rx=models.TextField(default="-",null=True,blank=True)
+    admit_reason=models.CharField(max_length=200,default="-",null=True,blank=True)
+    date_visited = models.DateTimeField(default=None,null=True, blank=True)
+    
+    created_at = models.DateTimeField(auto_now_add=True, blank=True)
+    update_at = models.DateTimeField(auto_now_add=True, blank=True)
+
+    def __str__(self):
+        return str(self.id)
+    class Meta:
+        verbose_name_plural="Revisit History"
         ordering=['pk']
 
 

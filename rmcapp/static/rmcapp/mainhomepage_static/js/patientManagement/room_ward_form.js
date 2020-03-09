@@ -38,7 +38,7 @@ function addRoomWardForm(){
             $(main_row_div).append(main_col_div);
         
                 var row_div_one=$("<div class='row' id= 'row_div_one' style='padding-bottom:10px'></div>");
-                    var col_one__row_div_one=$("<div class='col-md-6'></div>");
+                    var col_one__row_div_one=$("<div class='col-md-12'></div>");
                         row__col_one__row_div_one=$("<div class='row'></div>");
                             colmd1=$("<div class='col-md-4'></div>")
                             colmd2=$("<div class='col-md-4'></div>")
@@ -134,8 +134,8 @@ function rw_OnSelect(element){
 
                         var col_one__row_one=$("<div class='col-md-12'></div>");
                                 row__col_one__row_one=$("<div class='row'></div>");
-                                colmd1=$("<div class='col-md-2'></div>")
-                                colmd2=$("<div class='col-md-2'></div>")
+                                colmd1=$("<div class='col-md-4'></div>")
+                                colmd2=$("<div class='col-md-4'></div>")
             
                                     roomNo_label=$("<label for='roomNo_tag' class='custom_label_css'>Room Number</label>");
                                     colmd1.append(roomNo_label)
@@ -153,8 +153,8 @@ function rw_OnSelect(element){
 
                         var col_one__row_two=$("<div class='col-md-12'></div>");
                                 row__col_one__row_two=$("<div class='row'></div>");
-                                colmd1=$("<div class='col-md-2'></div>")
-                                colmd2=$("<div class='col-md-2'></div>")
+                                colmd1=$("<div class='col-md-4'></div>")
+                                colmd2=$("<div class='col-md-4'></div>")
             
                                     floorNo_label=$("<label for='floorNo_tag' class='custom_label_css'>Floor Number</label>");
                                     colmd1.append(floorNo_label)
@@ -172,8 +172,8 @@ function rw_OnSelect(element){
 
                         var col_one__row_three=$("<div class='col-md-12'></div>");
                             row__col_one__row_three=$("<div class='row'></div>");
-                                colmd1=$("<div class='col-md-2'></div>")
-                                colmd2=$("<div class='col-md-2'></div>")
+                                colmd1=$("<div class='col-md-4'></div>")
+                                colmd2=$("<div class='col-md-4'></div>")
 
 
                                     roomPrice_label=$("<label for='roomPrice_tag' class='custom_label_css'>Room Cost Per Day</label>");
@@ -193,8 +193,8 @@ function rw_OnSelect(element){
                         var col_one__row_four=$("<div class='col-md-12'></div>");
                             row__col_one__row_four=$("<div class='row'></div>");
                                
-                                colmd1=$("<div class='col-md-2'></div>")
-                                colmd2=$("<div class='col-md-2'></div>")
+                                colmd1=$("<div class='col-md-4'></div>")
+                                colmd2=$("<div class='col-md-4'></div>")
 
                                     acPrice_label=$("<label for='acPrice_tag' class='custom_label_css'>A/C Cost Per Day</label>");
                                     colmd1.append(acPrice_label)
@@ -211,8 +211,8 @@ function rw_OnSelect(element){
 
                         var col_one__row_five=$("<div class='col-md-12'></div>");
                                 row__col_one__row_five=$("<div class='row'></div>");
-                                    colmd1=$("<div class='col-md-2'></div>")
-                                    colmd2=$("<div class='col-md-2'></div>")
+                                    colmd1=$("<div class='col-md-4'></div>")
+                                    colmd2=$("<div class='col-md-4'></div>")
 
                                         room_status_label=$("<label for='acPrice_tag' class='custom_label_css'>Status</label>")
                                         colmd1.append(room_status_label)
@@ -270,8 +270,8 @@ function rw_OnSelect(element){
 
                     var col_one__row_one=$("<div class='col-md-12'></div>");
                             row__col_one__row_one=$("<div class='row'></div>");
-                            colmd1=$("<div class='col-md-2'></div>")
-                            colmd2=$("<div class='col-md-2'></div>")
+                            colmd1=$("<div class='col-md-4'></div>")
+                            colmd2=$("<div class='col-md-4'></div>")
         
                                 wardNo_label=$("<label for='wardNo_tag' class='custom_label_css'>Ward Number</label>");
                                 colmd1.append(wardNo_label)
@@ -289,8 +289,8 @@ function rw_OnSelect(element){
 
                     var col_one__row_two=$("<div class='col-md-12'></div>");
                             row__col_one__row_two=$("<div class='row'></div>");
-                            colmd1=$("<div class='col-md-2'></div>")
-                            colmd2=$("<div class='col-md-2'></div>")
+                            colmd1=$("<div class='col-md-4'></div>")
+                            colmd2=$("<div class='col-md-4'></div>")
         
                                 bedNo_label=$("<label for='bedNo_tag' class='custom_label_css'>Bed Number</label>");
                                 colmd1.append(bedNo_label)
@@ -308,8 +308,8 @@ function rw_OnSelect(element){
 
                     var col_one__row_three=$("<div class='col-md-12'></div>");
                         row__col_one__row_three=$("<div class='row'></div>");
-                            colmd1=$("<div class='col-md-2'></div>")
-                            colmd2=$("<div class='col-md-2'></div>")
+                            colmd1=$("<div class='col-md-4'></div>")
+                            colmd2=$("<div class='col-md-4'></div>")
 
 
                                 bedPrice_label=$("<label for='bedPrice_tag' class='custom_label_css'>Cost Per Day</label>");
@@ -328,8 +328,8 @@ function rw_OnSelect(element){
 
                     var col_one__row_four=$("<div class='col-md-12'></div>");
                             row__col_one__row_four=$("<div class='row'></div>");
-                                colmd1=$("<div class='col-md-2'></div>")
-                                colmd2=$("<div class='col-md-2'></div>")
+                                colmd1=$("<div class='col-md-4'></div>")
+                                colmd2=$("<div class='col-md-4'></div>")
 
                                     bed_status_label=$("<label for='status_tag' class='custom_label_css'>Status</label>")
                                     colmd1.append(bed_status_label)
