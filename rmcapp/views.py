@@ -1778,10 +1778,12 @@ def retirevePatientMedHistory(request):
         # DateVisited dict key="datevisited", value="presid"
         # med_hist_dict    key="pres" value="Multiple Dictionarys... " 
         patObj=Patient.objects.get(id=patient_id)
-
+        pres_records_dict={}
+        med_info_rec_list=[]
         try:
             patVSumObjs=patientVisitSummary.objects.filter(patient=patObj)
             print("hee",patVSumObjs)
+            
             if patVSumObjs.exists():
                 same_date_count=1
                 for patVSumObj in patVSumObjs:
@@ -1798,6 +1800,8 @@ def retirevePatientMedHistory(request):
                         same_date_count=same_date_count+1
 
                     date_visited_dict[date]=presid
+                    pres_records_dict[presid]=[]
+
                     temp_med_hist_dict={}
                     temp_med_hist_dict['patienttype']=presObj.patient_type.patient_type
                     temp_med_hist_dict['doc_on_duty']=presObj.doc.name
@@ -1810,6 +1814,41 @@ def retirevePatientMedHistory(request):
                     temp_med_hist_dict['admit_reason']=presObj.admit_reason   
                     temp_med_hist_dict['diagnosis']=presObj.diagnosis
                     print("temp_med_hist_dict",temp_med_hist_dict)
+                    temp_pres_records_list=[]
+
+
+                    date=presObj.date_visited
+                    date=str(date)
+                    temp_pres_records_list.append(date)
+                    temp_pres_records_list.append(presObj.doc.name)
+                    temp_pres_records_list.append(presObj.sign_symtoms)
+                    temp_pres_records_list.append(presObj.provisional_diagnosis)
+                    temp_pres_records_list.append(presObj.investigation)
+                    temp_pres_records_list.append(presObj.diagnosis)
+                    temp_pres_records_list.append(presObj.vitals)
+                    temp_pres_records_list.append(presObj.rx)
+                    
+                    pres_records_dict[presid].append(temp_pres_records_list)
+                    print("pres_records_dict",pres_records_dict)
+                    try:
+                        reVisitHObjs=revisitHistory.objects.filter(pres=presObj)
+                        for revObj in reVisitHObjs:
+                            temp_pres_records_list=[]
+                            date=revObj.date_visited
+                            date=str(date)
+                            temp_pres_records_list.append(date)
+                            temp_pres_records_list.append(revObj.doc.name)
+                            temp_pres_records_list.append(revObj.sign_symtoms)
+                            temp_pres_records_list.append(revObj.provisional_diagnosis)
+                            temp_pres_records_list.append(revObj.investigation)
+                            temp_pres_records_list.append(revObj.diagnosis)
+                            temp_pres_records_list.append(revObj.vitals)
+                            temp_pres_records_list.append(revObj.rx)
+                            pres_records_dict[presid].append(temp_pres_records_list)
+                    except:
+                        print("No Revisits")
+                    print("pres_records_list",pres_records_dict)
+                    
                     # Surgery Info
                     try:
                         surgRecObj=surgeryRecords.objects.get(pres=presObj)
@@ -1827,8 +1866,12 @@ def retirevePatientMedHistory(request):
                     try:
                         procBRecObjs=procedureBillRecord.objects.filter(pres=presObj)
                         procedure_name_list=[]
+                        proccountno=1
                         for procBRecObj in procBRecObjs:
-                            procedure_name_list.append(procBRecObj.procedure.procedure_name)
+                            date=procBRecObj.created_at.date()
+                            date=str(date)
+                            procedure_name_list.append([proccountno,procBRecObj.procedure.procedure_name,date])
+                            proccountno+=1
                         
                         temp_med_hist_dict['procedure_names']=procedure_name_list
 
@@ -1848,9 +1891,9 @@ def retirevePatientMedHistory(request):
                         print("No Room Record found")
                     try:
                         medlist=patientMedRecords.objects.get(pres=presObj).prescription
-                        print("Med list",medlist)
                         # medObjs=Medicine.objects.filter(id__in=medlist)
                         med_info_list=[]
+                        med_info_rec_list=[]
                         # for count,medObj in enumerate(medObjs):
                         #     templist=[]
 
@@ -1870,11 +1913,34 @@ def retirevePatientMedHistory(request):
                             templist.append(medObj.weight)
                             med_info_list.append(templist)
                             print("Com Working")
-
-
-
-
                         temp_med_hist_dict['med_list']=med_info_list
+                        try:
+                            medInfoRecObjs=medInfoRecord.objects.filter(pres=presObj)
+                        
+                            print(":SSSSSSSSSSSSSSSSSSSSSSSSSSS",medInfoRecObjs)
+                            countsrno=1
+                            for medInfoObj in medInfoRecObjs:
+                                print(">>>",medInfoObj.id)
+                                tempmedlist=[]
+                                medObj=medInfoObj.medicine
+                                tempmedlist.append(countsrno)
+                                date=str(medInfoObj.datevisited)
+                                tempmedlist.append(date)
+                                print("<M<<<<<<<<<<<<<")
+
+                                tempmedlist.append(medObj.medicine_name)
+                                print("<MPPPPPPPPPPPPPPPPPPPPPPP")
+
+                                tempmedlist.append(medObj.medicine_type_id.medicine_type_name)
+                                tempmedlist.append(medObj.medicine_details)
+                                tempmedlist.append(medObj.weight)
+                                tempmedlist.append(medInfoObj.timing)
+
+                                med_info_rec_list.append(tempmedlist)
+                                countsrno+=1
+                            temp_med_hist_dict['med_info_rec']=med_info_rec_list
+                        except:
+                            print("SOmething went wrong")
 
                     except:
                         print("No Med record found")
@@ -1894,7 +1960,7 @@ def retirevePatientMedHistory(request):
         print("med_hist_dict",med_hist_dict)
         print("date_visited_dict",date_visited_dict)
  
-
+    
 
 
         
@@ -1904,6 +1970,8 @@ def retirevePatientMedHistory(request):
             'datelist':datelist,
             "date_visited_dict":json.dumps(date_visited_dict),
             'pat_med_history_dict':json.dumps(med_hist_dict),
+            "pres_records_dict":json.dumps(pres_records_dict),
+            "med_info_rec_list":med_info_rec_list,
         }
         return JsonResponse(data)
 presData={}
@@ -2942,8 +3010,10 @@ def savePatientBill(request):
         prescription_id=request.POST.get('prescription_id')
         prescription_id=int(prescription_id)
 
-        proceduredata_dict=request.POST.get('proceduredata_dict')
-        proceduredata_dict=json.loads(proceduredata_dict)
+        proceduredata_list=request.POST.get('proceduredata_list')
+        proceduredata_list=json.loads(proceduredata_list)
+
+        print("proceduredata_list",proceduredata_list)
         despStckDict=request.POST.get('despStckDict')
         despStckDict=json.loads(despStckDict)
         pbr_dict=request.POST.get('pbr_dict')
@@ -3054,8 +3124,11 @@ def savePatientBill(request):
                 medInfoRecObj.medicine=medObj
                 medInfoRecObj.pres=patPresRecObj
                 medInfoRecObj.timing=med_time_dict[pbr_dict[despid]['medname']]
-                medInfoRecObj.datevisited=pbrObj.datevisited
                 medInfoRecObj.save()
+                medInfoRecObj.datevisited=medInfoRecObj.created_at
+                medInfoRecObj.save()
+
+
             try:
                 pmrObj=patientMedRecords.objects.get(pres=patPresRecObj)
                 # pmr_exst_list=[]
@@ -3096,15 +3169,15 @@ def savePatientBill(request):
                 invObj.desp_bill=despBillRecObj
 
         
-        if proceduredata_dict:
-            for procname in proceduredata_dict:
-
-                procedureTable.objects.get(procedure_name=procname)
+        if proceduredata_list:
+            print("proceduredata_list",proceduredata_list)
+            for index in range(len(proceduredata_list)):
+              
                 procBillRecObj=procedureBillRecord()
-                procObj=procedureTable.objects.get(procedure_name=procname)
+                procObj=procedureTable.objects.get(procedure_name=proceduredata_list[index][0])
                 procBillRecObj.procedure=procObj
                 procBillRecObj.pres=patPresRecObj
-                procBillRecObj.net_total=int(proceduredata_dict[procname])
+                procBillRecObj.net_total=int(proceduredata_list[index][1])
                 procBillRecObj.status=status
                 procBillRecObj.save()
                 procedure_id_list.append(procBillRecObj.id)
@@ -3225,17 +3298,85 @@ def saveDespAfterRemoval(request):
 def updatePrescriptionRecord(request):
     if request.method=="GET":
         pres_data_dict={}
-        print("pres_data_dict", pres_data_dict)
+        pres_records_dict={}
+        pres_records_list=[]
+        med_info_rec_list=[]
+        temp_med_hist_dict={}
+
         presid=request.GET.get('presid')
         presid=int(presid)
-        presObj=patPrescriptionRecords.objects.get(id=presid)
-        pres_data_dict["sign_symtoms"]=presObj.sign_symtoms
-        pres_data_dict["provisional_diagnosis"]=presObj.provisional_diagnosis
-        pres_data_dict["investigation"]=presObj.investigation
-        pres_data_dict["diagnosis"]=presObj.diagnosis
-        pres_data_dict["vitals"]=presObj.vitals
-        pres_data_dict["rx"]=presObj.rx
+        try:
+            presObj=patPrescriptionRecords.objects.get(id=presid)
 
+            # pres_data_dict["sign_symptoms"]=presObj.sign_symtoms
+            # pres_data_dict["provisional_diagnosis"]=presObj.provisional_diagnosis
+            # pres_data_dict["investigation"]=presObj.investigation
+            # pres_data_dict["diagnosis"]=presObj.diagnosis
+            # pres_data_dict["vitals"]=presObj.vitals
+            # pres_data_dict["rx"]=presObj.rx
+
+            temp_pres_records_list=[]
+            date=presObj.date_visited
+            date=str(date)
+            no_count=1
+            temp_pres_records_list.append(no_count)
+            temp_pres_records_list.append(date)
+            temp_pres_records_list.append("First Visit")
+
+            temp_pres_records_list.append(presObj.doc.name)
+            temp_pres_records_list.append(presObj.sign_symtoms)
+            temp_pres_records_list.append(presObj.provisional_diagnosis)
+            temp_pres_records_list.append(presObj.investigation)
+            temp_pres_records_list.append(presObj.diagnosis)
+            temp_pres_records_list.append(presObj.vitals)
+            temp_pres_records_list.append(presObj.rx)
+            pres_records_list.append(temp_pres_records_list)
+            print("pres_records_list---",pres_records_list)
+            temp_pres_data_dict={}
+            temp_pres_data_dict["sign_symptoms"]=presObj.sign_symtoms
+            temp_pres_data_dict["provisional_diagnosis"]=presObj.provisional_diagnosis
+            temp_pres_data_dict["investigation"]=presObj.investigation
+            temp_pres_data_dict["diagnosis"]=presObj.diagnosis
+            temp_pres_data_dict["vitals"]=presObj.vitals
+            temp_pres_data_dict["rx"]=presObj.rx
+            pres_records_dict[date]=temp_pres_data_dict
+            temp_pres_data_dict["visiting"]="first"
+
+            try:
+                reVisitHObjs=revisitHistory.objects.filter(pres=presObj)
+                for revObj in reVisitHObjs:
+                    temp_pres_records_list=[]
+                    date=revObj.date_visited
+                    date=str(date)
+                    no_count+=1
+                    temp_pres_records_list.append(no_count)
+
+                    temp_pres_records_list.append(date)
+                    temp_pres_records_list.append("Revisit")
+
+                    temp_pres_records_list.append(revObj.doc.name)
+                    temp_pres_records_list.append(revObj.sign_symtoms)
+                    temp_pres_records_list.append(revObj.provisional_diagnosis)
+                    temp_pres_records_list.append(revObj.investigation)
+                    temp_pres_records_list.append(revObj.diagnosis)
+                    temp_pres_records_list.append(revObj.vitals)
+                    temp_pres_records_list.append(revObj.rx)
+                    pres_records_list.append(temp_pres_records_list)
+
+                    temp_pres_data_dict={}
+                    temp_pres_data_dict["sign_symptoms"]=revObj.sign_symtoms
+                    temp_pres_data_dict["provisional_diagnosis"]=revObj.provisional_diagnosis
+                    temp_pres_data_dict["investigation"]=revObj.investigation
+                    temp_pres_data_dict["diagnosis"]=revObj.diagnosis
+                    temp_pres_data_dict["vitals"]=revObj.vitals
+                    temp_pres_data_dict["rx"]=revObj.rx
+                    temp_pres_data_dict["visiting"]="revisiting"
+
+                    pres_records_dict[date]=temp_pres_data_dict
+            except:
+                print("No Revisits")
+        except:
+            print("No prescription Record")
 
         try:
     
@@ -3255,12 +3396,41 @@ def updatePrescriptionRecord(request):
             print("medObjs",medObjs)
         except:
             med_info_list=[]
+        try:
+           
+            medInfoRecObjs=medInfoRecord.objects.filter(pres=presObj)
+            print("",medInfoRecObjs)
+            countsrno=1
+            for medInfoObj in medInfoRecObjs:
+                tempmedlist=[]
+                medObj=medInfoObj.medicine
+                tempmedlist.append(countsrno)
+                date=str(medInfoObj.datevisited)
+                tempmedlist.append(date)
+
+                tempmedlist.append(medObj.medicine_name)
+
+                tempmedlist.append(medObj.medicine_type_id.medicine_type_name)
+                tempmedlist.append(medObj.medicine_details)
+                tempmedlist.append(medObj.weight)
+                tempmedlist.append(medInfoObj.timing)
+
+                med_info_rec_list.append(tempmedlist)
+                countsrno+=1
+            temp_med_hist_dict['med_info_rec']=med_info_rec_list
+        except:
+            print("Something went wrong")
 
 
 
+        print("pres_records_list",pres_records_list)
         data={
             "med_info_list":med_info_list,
             "pres_data_dict":json.dumps(pres_data_dict),
+            "pres_records_dict":json.dumps(pres_records_dict),
+            "pres_records_list":pres_records_list,
+            # "med_hist_dict":json.dumps(temp_med_hist_dict),
+            "med_info_rec_list":med_info_rec_list,
         }
         return JsonResponse(data)      
     elif request.method=="POST":
@@ -3268,16 +3438,40 @@ def updatePrescriptionRecord(request):
         presid=int(presid)
         pres_data_dict=request.POST.get("pres_data_dict")
         pres_data_dict=json.loads(pres_data_dict)
-        print("In POST",pres_data_dict)
-        presObj=patPrescriptionRecords.objects.get(id=presid)
-        presObj.sign_symtoms=pres_data_dict["ss"]
-        presObj.provisional_diagnosis=pres_data_dict["pd"]
-        presObj.investigation=pres_data_dict["investigation"]
-        presObj.diagnosis=pres_data_dict["diagnosis"]
-        presObj.vitals=pres_data_dict["vitals"]
-        presObj.rx=pres_data_dict["rx"]
 
-        presObj.save()
+        pres_records_dict_for_update=request.POST.get("pres_records_dict_for_update")
+        pres_records_dict_for_update=json.loads(pres_records_dict_for_update)
+
+        
+
+
+        presObj=patPrescriptionRecords.objects.get(id=presid)
+        for date in pres_records_dict_for_update:
+            if pres_records_dict_for_update[date]['visiting']=='first':
+                presObj=patPrescriptionRecords.objects.get(date_visited=date)
+                presObj.sign_symtoms=pres_records_dict_for_update[date]["sign_symptoms"]
+                presObj.provisional_diagnosis=pres_records_dict_for_update[date]["provisional_diagnosis"]
+                presObj.investigation=pres_records_dict_for_update[date]["investigation"]
+                presObj.diagnosis=pres_records_dict_for_update[date]["diagnosis"]
+                presObj.vitals=pres_records_dict_for_update[date]["vitals"]
+                presObj.rx=pres_records_dict_for_update[date]["rx"]
+                presObj.save()
+                print("presObj---",presObj.id)
+            else:
+                revObj=revisitHistory.objects.get(date_visited=date)
+                print("revObj---",revObj.id)
+                revObj.sign_symtoms=pres_records_dict_for_update[date]["sign_symptoms"]
+                revObj.provisional_diagnosis=pres_records_dict_for_update[date]["provisional_diagnosis"]
+                revObj.investigation=pres_records_dict_for_update[date]["investigation"]
+                revObj.diagnosis=pres_records_dict_for_update[date]["diagnosis"]
+                revObj.vitals=pres_records_dict_for_update[date]["vitals"]
+                revObj.rx=pres_records_dict_for_update[date]["rx"]
+                revObj.save()
+
+
+        
+
+
 
 
         data={}
@@ -3929,6 +4123,7 @@ def retrieveInvoiceBillRecord(request):
                 # print("floor--", InvoiceObj.room_bill.rooms.status)
                 if InvoiceObj.room_bill!=None:
                     patRoomBill_dict={}
+                    print("ROOM")
                     patRoomBill_dict['floor']=InvoiceObj.room_bill.rooms.floor
                     patRoomBill_dict['room_no']=InvoiceObj.room_bill.rooms.room_no
                     patRoomBill_dict['charge_per_day']=InvoiceObj.room_bill.rooms.charge_per_day
@@ -3939,7 +4134,8 @@ def retrieveInvoiceBillRecord(request):
                     print("patRoomBill_dict", patRoomBill_dict)
 
                 if InvoiceObj.ward_bill!=None:
-                    patWardBill_dict={}          
+                    patWardBill_dict={} 
+                    print("WARD")         
                     patWardBill_dict['ward_no']=InvoiceObj.ward_bill.wards.ward_no
                     patWardBill_dict['bed_no']=InvoiceObj.ward_bill.wards.bed_no
                     patWardBill_dict['charge_per_day']=InvoiceObj.ward_bill.wards.charge_per_day
@@ -3950,6 +4146,7 @@ def retrieveInvoiceBillRecord(request):
 
                 if InvoiceObj.desp_bill!=None:
                     DespBill_dict={}
+                    print("DESP Bill")
                     DespBill_dict['desp_bill']=InvoiceObj.desp_bill.despcharge_bill
                     DespBill_dict['add_med_bill']=InvoiceObj.desp_bill.addcharge_bill
                     DespBill_dict['total_bill']=InvoiceObj.desp_bill.net_total
@@ -3957,10 +4154,12 @@ def retrieveInvoiceBillRecord(request):
                     print("DespBill_dict", DespBill_dict)
 
                 if InvoiceObj.pres!=None:
+                    print("PRES")
                     patPresRecord_dict={}
                     patPresRecord_dict['pat_name']=InvoiceObj.pres.patient.pat_name
                     patPresRecord_dict['date_visited']=str(InvoiceObj.pres.date_visited)
-                    pPresBObj=patPrescriptionBill.objects.get(pres=patPresObj)
+                    # pPresBObj=patPrescriptionBill.objects.get(pres=patPresObj)
+                    print("Prescription Found")
 
                     presBillSumObj=presBillSummary.objects.get(pres=patPresObj)
 
@@ -3975,6 +4174,7 @@ def retrieveInvoiceBillRecord(request):
                     print("patPresRecord_dict",patPresRecord_dict)
 
                 if InvoiceObj.surgery_bill!=None:
+                    print("Surgery")
                     surgBillRecord_dict={}
                     # surgBill_List=list(InvoiceObj.surgery_bill)
                     surgBillSummary_Obj= InvoiceObj.surgery_bill
@@ -4001,6 +4201,7 @@ def retrieveInvoiceBillRecord(request):
                 print("surgBillRecord_dict", surgBillRecord_dict)
 
                 if InvoiceObj.procedure_id!=None:
+                    print("PROCEDIte")
                     procBillRecord_dict={}
                     procBillSummary_Obj= InvoiceObj.procedure_id
                     print("procBillSummary_Obj", procBillSummary_Obj)
@@ -4295,11 +4496,17 @@ def retrieveInvoiceBillRecordForView(request):
                     patPresRecordView_dict={}
                     patPresRecordView_dict['pat_name']=InvoiceObj.pres.patient.pat_name
                     patPresRecordView_dict['date_visited']=str(InvoiceObj.pres.date_visited)
-                    pPresBObj=patPrescriptionBill.objects.get(pres=patPresObj)
-                    patPresRecordView_dict['pres_bill']=pPresBObj.net_total
-                    patPresRecordView_dict['status']=pPresBObj.status
+                    presBillSumObj=presBillSummary.objects.get(pres=patPresObj)
+                    patPresRecordView_dict['pres_bill']=presBillSumObj.net_total
+                    patPresRecordView_dict['status']=presBillSumObj.status
+                    
+
+                    # pPresBObj=patPrescriptionBill.objects.get(pres=patPresObj)
+
+                    # patPresRecordView_dict['pres_bill']=pPresBObj.net_total
+                    # patPresRecordView_dict['status']=pPresBObj.status
                     patPresRecordView_dict['total_bill']=InvoiceObj.net_total
-                    patPresRecordView_dict['status']=pPresBObj.status
+                    # patPresRecordView_dict['status']=pPresBObj.status
                     patPresRecordView_dict['invoice_no']=InvoiceObj.id
                     print("patPresRecordView_dict",patPresRecordView_dict)
 
@@ -4717,7 +4924,7 @@ def saveAddChargeExisPres(request):
         revHisObj.vitals=vital_textarea
         revHisObj.rx=rx_textarea
         revHisObj.save()
-        revHisObj.date_visited=revHisObj.created_at.date()
+        revHisObj.date_visited=revHisObj.created_at
         revHisObj.save()
 
         if addcharge_exsist_pres!='':

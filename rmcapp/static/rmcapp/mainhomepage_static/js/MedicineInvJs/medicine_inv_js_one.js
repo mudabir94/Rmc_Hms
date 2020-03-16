@@ -516,6 +516,21 @@ function createMedTStckT(){
                     { width: 200, targets: 0 }
                 ],
                 fixedColumns: true,
+                dom: 'Bfrtip',
+                buttons: [
+                {
+                extend: 'print',
+                text: ' Print',
+                title: 'Medicine Record',
+                className: 'datatable_button fa fa-print',
+                },
+                {
+                    extend: 'excel',
+                    text: ' Export to Excel',
+                    title: 'Medicine Record',
+                    className: 'datatable_button fa fa-print',
+                    }
+            ],
 
             });
             $('#med_in_stock tbody').on( 'click', 'tr', function () {

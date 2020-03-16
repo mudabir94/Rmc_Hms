@@ -418,6 +418,8 @@ class medInfoRecord(models.Model):
     pres=models.ForeignKey(patPrescriptionRecords, on_delete=models.CASCADE,default=None,null=True,blank=True)#### NEW ######
     timing=models.CharField(max_length=50,null=True,blank=True)
     datevisited=models.DateField(null=True,blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True)
+    update_at = models.DateTimeField(auto_now_add=True, blank=True)
     def __str__(self):
         return str(self.id)
     class Meta:

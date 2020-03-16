@@ -303,9 +303,9 @@ function loadPresForm(){
 
                     col_two_heading=$("<p class='offset-md-2' style='margin-top:25px;'><img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsybPkmCpEkmWbC3xAXE5EzJuEB9spMJVbjge0jn5X4yh2jPUK' alt='RX' width='38' height='38' style='text-decoration:underline';></p>");
                     colmd2.append(col_two_heading)
-
-                    col_three_heading=$("<p class='text-center' style='font-weight: bold; padding-top:20px;text-decoration: underline;font-size: 20px;'>VITALS</p>");
-                    colmd3.append(col_three_heading)
+                    // >>>>>>>>>>  VITALS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                    // col_three_heading=$("<p class='text-center' style='font-weight: bold; padding-top:20px;text-decoration: underline;font-size: 20px;'>VITALS</p>");
+                    // colmd3.append(col_three_heading)
 
                 row__col_one__row_div_five.append(colmd1);
                 row__col_one__row_div_five.append(colmd2);
@@ -320,7 +320,7 @@ function loadPresForm(){
                 var row__col_one__row_div_six=$("<div class='row'></div>");
                     colmd1=$("<div class='col-md-12 setHeight' style='background:#f7f7f7'></div>")
 
-                    pd_heading=$("<p class='text-center' style='font-weight: bold; padding-top:20px;text-decoration: underline;font-size: 20px;'>Provisonal Diagnosis</p>");
+                    pd_heading=$("<p class='text-center' style='font-weight: bold; padding-top:20px;text-decoration: underline;font-size: 20px;'>VITALS</p>");
                     colmd1.append(pd_heading)
 
                 row__col_one__row_div_six.append(colmd1);

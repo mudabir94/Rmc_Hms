@@ -236,3 +236,24 @@ background:#4c7c9a;
   padding: 20px 50px 30px 100px;
 
 }
+#view_patient_datevisited_div{
+  background: wheat;
+}
+#pat-date-visited-ul{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow:scroll;
+}
+#pat-date-visited-ul li{
+  font-size:10px;
+}
+
+#pat-date-visited-ul li:hover {
+  font-size: 15px;
+  color:white;
+  font: bold;
+  background: rgb(119, 5, 5);
+  cursor: pointer;
+
+}
