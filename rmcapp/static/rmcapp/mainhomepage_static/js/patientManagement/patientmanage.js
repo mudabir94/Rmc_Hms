@@ -224,24 +224,41 @@ function addPatient(){
             var col_one__row_div_two=$("<div class='col-md-6'></div>");
                 var row__col_one__row_div_two=$("<div class='row'></div>");
                     colmd1=$("<div class='col-md-2'></div>")
-                    colmd2=$("<div class='col-md-2 offset-md-2'></div>")
+                    colmd2=$("<div class='col-md-2'></div>")
                     colmd3=$("<div class='col-md-1'></div>")
                     colmd4=$("<div class='col-md-3'></div>")
+                    colmd5=$("<div class='col-md-1'></div>")
+                    colmd6=$("<div class='col-md-2'></div>")
 
                     gender_label=$("<label class='custom_label_css font-weight-bold'>Gender</label>");
                     colmd1.append(gender_label)
                     gender_input=$("<input class='form-control-custom' id='gender_select'  autocomplete='off' class='custom_input_css'>")
                     colmd2.append(gender_input)
-        // DOB
+            // DOB
                     dob_label=$("<label class='custom_label_css font-weight-bold'>DOB </label>");
                     colmd3.append(dob_label);
                     dob_input=$("<input class='form-control-custom custom_input_css'  autocomplete='off' id='dob_input'></input>")
                     colmd4.append(dob_input);
+            // Age
+                    age_label=$("<label class='custom_label_css font-weight-bold'>AGE </label>");
+                    colmd5.append(age_label);
+                    age_input=$("<input class='form-control-custom custom_input_css' type='number' min='1' id='age_input'></input>")
+                    colmd6.append(age_input)
+
+
+
+
+
+
+
+                
 
                 row__col_one__row_div_two.append(colmd1);
                 row__col_one__row_div_two.append(colmd2);
                 row__col_one__row_div_two.append(colmd3);
                 row__col_one__row_div_two.append(colmd4);
+                row__col_one__row_div_two.append(colmd5);
+                row__col_one__row_div_two.append(colmd6);
 
             col_one__row_div_two.append(row__col_one__row_div_two);
 
@@ -487,13 +504,13 @@ function createPatientDataTable(){
                 { title: "Id" },
                 { title: "Patient Name" },
                 { title: "Contact" },
-                { title: 'gender' },
-                { title: "dob" },
-                { title: "cnic" },
-                { title: "guardian" },
+                { title: 'Gender' },
+                { title: "DOB" },
+                { title: "CNIC" },
+                { title: "Guardian" },
                 { title: "Address" },
-                { title: "bloodgroup" },
-                { title: "email" },
+                { title: "BloodGroup" },
+                { title: "Email" },
 
                 ],
                 columnDefs: [
@@ -510,7 +527,7 @@ function createPatientDataTable(){
                    ],
                 paging: true,
                 pageLength: 5,
-                scrollY: 100,
+                scrollY: 150,
                 scrollX: true,
                 ordering: true,
                 info:false,
@@ -755,10 +772,10 @@ function savePatientData(){
     var dob=$("#dob_input").val();
     $("#dob_input").val("");
 
-    if ( dob===""){
-        alert("Please Enter Date of Birth ")
-        return;
-    }
+    // if ( dob===""){
+    //     alert("Please Enter Date of Birth ")
+    //     return;
+    // }
     var cnic=$("#cnic_input").val();
     $("#cnic_input").val("");
     var guardian=$("#guardian_input").val();
@@ -776,7 +793,8 @@ function savePatientData(){
     var address=$("#pat_address_input").val();
     $("#pat_address_input").val("");
     address=address.toLowerCase();
-
+    age=$("#age_input").val();
+    $("#age_input").val("");
     console.log("emial_id",emial_id);
 
     
@@ -793,6 +811,7 @@ function savePatientData(){
             "blood_group":JSON.stringify(blood_group),
             'email_address':JSON.stringify(emial_id),
             "cnic":JSON.stringify(cnic),
+            "age":age,
         },
         url: '/save_patient_data',
         success: function(data){
@@ -6288,7 +6307,7 @@ function netTotalFocusInPres(){
 function updatePrescriptionRecord(){
         $('#main_page_content').empty()
         var container_update_prescription= $('#main_page_content').append('<div class="container-fluid" id="container-update-prescription"></div>');
-        $("#container-update-prescription").append("<u><h2 class ='center_h_tag_forms'>Update Prescription Records</h2></u>");
+        $("#container-update-prescription").append("<h2 class ='center_h_tag_forms'>Update Prescription Records</h2>");
         $("#container-update-prescription").append("<hr class='custom_hr'>");
     
         var main_row_div= $("<div class='row is-flex'></div>");
@@ -6689,7 +6708,7 @@ function updatePresDataFocusOut(ele){
 function ViewPrescriptionList(){
     $('#main_page_content').empty()
     var container_update_prescription= $('#main_page_content').append('<div class="container-fluid" id="container-update-prescription"></div>');
-    $("#container-update-prescription").append("<u><h2 class ='center_h_tag_forms'>Prescription List</h2></u>");
+    $("#container-update-prescription").append("<h2 class ='center_h_tag_forms'>Prescription List</h2>");
     $("#container-update-prescription").append("<hr class='custom_hr'>");
 
     var main_row_div= $("<div class='row is-flex'></div>");

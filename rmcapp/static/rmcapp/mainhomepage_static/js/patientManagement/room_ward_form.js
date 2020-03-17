@@ -792,35 +792,35 @@ function createRoomDTable(){
                         extend: 'print',
                         text: 'Print',
                         title: 'Rooms Available',
-                        className: 'btn btn-default fa fa-print',
+                        className: 'datatable_button fa fa-print',
 
                     },
                      {
                         extend: 'excel',
                         text: 'Export Data in Excel',
                         title: 'Rooms Available',
-                        className: 'btn btn-default  fas fa-file-excel',
+                        className: 'datatable_button  fas fa-file-excel',
 
                     },
                      {
                         extend: 'csv',
                         text: 'Export Data in CSV',
                         title: 'Rooms Available',
-                        className: 'btn btn-default fa fa-file',
+                        className: 'datatable_button fa fa-file',
 
                     },
                     {
                         extend: 'pdf',
                         text: 'Export Data in PDF',
                         title:'Rooms Available',
-                        className: 'btn btn-default fas fa-file-pdf',
+                        className: 'datatable_button fas fa-file-pdf',
 
                     },
                     {
                         extend: 'copy',
                         text: 'Copy to Clipboard',
                         title: 'Rooms Available',
-                        className: 'btn btn-default fas fa-copy',
+                        className: 'datatable_button fas fa-copy',
 
                     },
                 ],

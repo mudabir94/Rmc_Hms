@@ -1005,35 +1005,35 @@ function createSurgTableInfo(surgery_list){
                         extend: 'print',
                         text: 'Print',
                         title: 'Surgies List',
-                        className: 'btn btn-default fa fa-print',
+                        className: 'datatable_button fa fa-print',
 
                     },
                      {
                         extend: 'excel',
                         text: 'Export Data in Excel',
                         title: 'Surgies List',
-                        className: 'btn btn-default  fas fa-file-excel',
+                        className: 'datatable_button  fas fa-file-excel',
 
                     },
                      {
                         extend: 'csv',
                         text: 'Export Data in CSV',
                         title:'Surgies List',
-                        className: 'btn btn-default fa fa-file',
+                        className: 'datatable_button fa fa-file',
 
                     },
                     {
                         extend: 'pdf',
                         text: 'Export Data in PDF',
                         title: 'Surgies List',
-                        className: 'btn btn-default fas fa-file-pdf',
+                        className: 'datatable_button fas fa-file-pdf',
 
                     },
                     {
                         extend: 'copy',
                         text: 'Copy to Clipboard',
                         title: 'Surgies List',
-                        className: 'btn btn-default fas fa-copy',
+                        className: 'datatable_button fas fa-copy',
 
                     },
                 ],
@@ -1070,35 +1070,35 @@ function createProcTableInfo(proc_list){
                         extend: 'print',
                         text: 'Print',
                         title: 'Procedure List',
-                        className: 'btn btn-default fa fa-print',
+                        className: 'datatable_button fa fa-print',
 
                     },
                      {
                         extend: 'excel',
                         text: 'Export Data in Excel',
                         title: 'Procedure List',
-                        className: 'btn btn-default  fas fa-file-excel',
+                        className: 'datatable_button  fas fa-file-excel',
 
                     },
                      {
                         extend: 'csv',
                         text: 'Export Data in CSV',
                         title: 'Procedure List',
-                        className: 'btn btn-default fa fa-file',
+                        className: 'datatable_button fa fa-file',
 
                     },
                     {
                         extend: 'pdf',
                         text: 'Export Data in PDF',
                         title: 'Procedure List',
-                        className: 'btn btn-default fas fa-file-pdf',
+                        className: 'datatable_button fas fa-file-pdf',
 
                     },
                     {
                         extend: 'copy',
                         text: 'Copy to Clipboard',
                         title: 'Procedure List',
-                        className: 'btn btn-default fas fa-copy',
+                        className: 'datatable_button fas fa-copy',
 
                     },
                 ],

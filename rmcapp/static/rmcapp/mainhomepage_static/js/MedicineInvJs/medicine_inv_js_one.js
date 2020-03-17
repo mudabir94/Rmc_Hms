@@ -339,7 +339,7 @@ function sendAjaxReqToSaveMedicineToDb(medicine_name,selected_type,med_details,a
 function medicineDataTableGenerator(list){
     $('#med_table').empty();
     $(function(){
-        $('#med_table').append('<caption style="color: black;font-weight: bold; ;caption-side: top;text-align: center;">Registered Medicines</caption>');
+        $('#med_table').append('<caption style="caption-side: top;text-align: center;" class="datatable_heading_label">Registered Medicines</caption>');
         med_table_datatable=$("#med_table").DataTable({
             
             data: list,
@@ -462,7 +462,7 @@ function updateMedTStckT(){
 }
 function createMedTStckT(){
     $(function(){
-        $('#med_table').append('<caption style="color: black;font-weight: bold; ;caption-side: top;text-align: center;">Regestered Medicines</caption>');
+        $('#med_table').append('<caption style="caption-side: top;text-align: center;" class="datatable_heading_label">Regestered Medicines</caption>');
         med_table_datatable=$("#med_table").DataTable({
 
             data: medicine_name_type_list,
@@ -498,7 +498,7 @@ function createMedTStckT(){
 
     $('#med_in_stock').empty();
    
-    $('#med_in_stock').append('<caption style="color: black;font-weight: bold; ;caption-side: top;text-align: center;">Medicines in Stock</caption>');
+    $('#med_in_stock').append('<caption style="caption-side: top;text-align: center;" class="datatable_heading_label">Medicines in Stock</caption>');
         medstck_datatable=$("#med_in_stock").DataTable({
             data: medicine_batch_in_stock_list,
             columns: [
@@ -1991,7 +1991,7 @@ function addMedicineToDespStockForm(){
     despMedFormMainColTwo(main_col_div_2);
     $(function(){
     
-    $('#med_in_stock').append('<caption style="color: black;font-weight: bold; ;caption-side: top;text-align: center;">Medicines in Stock</caption>');
+    $('#med_in_stock').append('<caption style="caption-side: top;text-align: center;" class="datatable_heading_label">Medicines in Stock</caption>');
     medstck_datatable=$("#med_in_stock").DataTable({
         data: medicine_batch_in_stock_list,
         columns: [

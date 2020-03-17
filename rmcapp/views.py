@@ -887,6 +887,7 @@ def savePatientData(request):
         email_address = request.POST.get('email_address')
         cnic = request.POST.get('cnic')
         blood_group = request.POST.get('blood_group')
+        age = request.POST.get('age')
 
         name = json.loads(name)
         dob = json.loads(dob)
@@ -905,7 +906,9 @@ def savePatientData(request):
         pat_obj=Patient()
         pat_obj.guardian=guardian
         pat_obj.pat_name=name
-        pat_obj.dob=dob
+        if dob !='':
+            pat_obj.dob=dob
+        pat_obj.age=age
         pat_obj.gender=gender
         pat_obj.phone_no=phone_number
         pat_obj.address=address

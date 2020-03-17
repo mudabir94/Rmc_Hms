@@ -23,14 +23,16 @@ border-width: thin;
     text-align:center;
     font-family:Arial;
     font-size: 38px !important;
-    text-decoration: underline;
+    text-shadow: 2px 2px 0px #e62929;
+    color:cornflowerblue;
+
   }
   .custom_hr{
       color: red;
   }
 /* DataTable CSS */
 .datatable_pat{
-  font-size:0.5rem;
+  font-size:0.6rem;
 }
 
 .datatable_pat td, .datatable_pat th {
@@ -64,7 +66,7 @@ border-width: thin;
   user-select: none;
   border: 1px solid transparent;
   padding: .375rem .75rem;
-  font-size: 0.5rem;
+  font-size: 0.7rem;
   line-height: 1.5;
   border-radius: .25rem;
   cursor:pointer;

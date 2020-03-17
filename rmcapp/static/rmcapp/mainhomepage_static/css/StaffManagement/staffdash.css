@@ -29,7 +29,7 @@
     user-select: none;
     border: 1px solid transparent;
     padding: .375rem .75rem;
-    font-size: 0.5rem;
+    font-size: 0.7rem;
     line-height: 1.5;
     border-radius: .25rem;
     cursor:pointer;
@@ -98,5 +98,14 @@ background:grey;
 }
 #edit-emplyee-info-form{
   padding: 20px 50px 30px 100px;
+
+}
+.center_h_tag_forms{
+  text-align:center;
+  font-family:Arial;
+  font-size: 38px !important;
+  text-shadow: 2px 2px 0px #e62929;
+  color:cornflowerblue;
+  font-weight: 900;
 
 }

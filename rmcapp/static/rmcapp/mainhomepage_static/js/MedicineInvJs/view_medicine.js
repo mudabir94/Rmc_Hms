@@ -27,7 +27,7 @@ function retrieveMedicineRegistered(){
 }
 function createMedRegisteredTable(medicine_name_type_list){
     $("#med_registered_vw_table").empty();
-    $('#med_registered_vw_table').append('<caption style="color: black;font-weight: bold; ;caption-side: top;text-align: center;">Regestered Medicines</caption>');
+    $('#med_registered_vw_table').append('<caption style="caption-side: top;text-align: center;" class="datatable_heading_label">Regestered Medicines</caption>');
         med_registered_vw_datatable=$("#med_registered_vw_table").DataTable({
 
             data: medicine_name_type_list,
@@ -41,48 +41,48 @@ function createMedRegisteredTable(medicine_name_type_list){
                 ordering: true,
                 info:false,
                 searching:true,
-                columnDefs: [
-                    { width: '100%', targets: '_all' }
-                ],
+                // columnDefs: [
+                //     { width: '100%', targets: '_all' }
+                // ],
                 dom: 'Bfrtip',
                 buttons: [
                     {
                         extend: 'print',
                         text: 'Print',
                         title: 'Medicine Registered List',
-                        className: 'btn btn-default fa fa-print',
+                        className: 'datatable_button fa fa-print',
 
                     },
                      {
                         extend: 'excel',
                         text: 'Export Data in Excel',
                         title: 'Medicine Registered List',
-                        className: 'btn btn-default  fas fa-file-excel',
+                        className: 'datatable_button  fas fa-file-excel',
 
                     },
                      {
                         extend: 'csv',
                         text: 'Export Data in CSV',
                         title: 'Medicine Registered List',
-                        className: 'btn btn-default fa fa-file',
+                        className: 'datatable_button fa fa-file',
 
                     },
                     {
                         extend: 'pdf',
                         text: 'Export Data in PDF',
                         title:'Medicine Registered List',
-                        className: 'btn btn-default fas fa-file-pdf',
+                        className: 'datatable_button fas fa-file-pdf',
 
                     },
                     {
                         extend: 'copy',
                         text: 'Copy to Clipboard',
                         title: 'Medicine Registered List',
-                        className: 'btn btn-default fas fa-copy',
+                        className: 'datatable_button fas fa-copy',
 
                     },
                 ],
-                fixedColumns: false,
+                // fixedColumns: false,
 
             });
             $('#med_registered_vw_table tbody').on( 'click', 'tr', function () {
@@ -109,7 +109,7 @@ function viewMedicineRegistered(){
     $("#container-med-registered-view").append(main_row_div);
     var main_col_div=$("<div class='col-md-12' style='background: lightyellow;'></div>");
         var med_registered_vw_div=$("<div>")
-            var med_registered_vw_table=$('<table id="med_registered_vw_table" class="datatablecss_med" ></table>')
+            var med_registered_vw_table=$('<table id="med_registered_vw_table" width="100%" class="datatablecss_med" ></table>')
         med_registered_vw_div.append(med_registered_vw_table);
     main_col_div.append(med_registered_vw_div)
 
@@ -139,7 +139,7 @@ function createMedStckDatatableView(allMedStockInfoList){
 
     $('#med_stock_vw_table').empty();
    
-    $('#med_stock_vw_table').append('<caption style="color: black;font-weight: bold; ;caption-side: top;text-align: center;">Medicines in Stock</caption>');
+    $('#med_stock_vw_table').append('<caption style="caption-side: top;text-align: center;"class="datatable_heading_label">Medicines in Stock</caption>');
             med_stock_vw_datatable=$("#med_stock_vw_table").DataTable({
             data: allMedStockInfoList,
             columns: [
@@ -165,41 +165,41 @@ function createMedStckDatatableView(allMedStockInfoList){
                         extend: 'print',
                         text: 'Print',
                         title: 'Medicine Stock List',
-                        className: 'btn btn-default fa fa-print',
+                        className: 'datatable_button fa fa-print',
 
                     },
                      {
                         extend: 'excel',
                         text: 'Export Data in Excel',
                         title: 'Medicine Stock List',
-                        className: 'btn btn-default  fas fa-file-excel',
+                        className: 'datatable_button  fas fa-file-excel',
 
                     },
                      {
                         extend: 'csv',
                         text: 'Export Data in CSV',
                         title: 'Medicine Stock List',
-                        className: 'btn btn-default fa fa-file',
+                        className: 'datatable_button fa fa-file',
 
                     },
                     {
                         extend: 'pdf',
                         text: 'Export Data in PDF',
                         title: 'Medicine Stock List',
-                        className: 'btn btn-default fas fa-file-pdf',
+                        className: 'datatable_button fas fa-file-pdf',
 
                     },
                     {
                         extend: 'copy',
                         text: 'Copy to Clipboard',
                         title: 'Medicine Stock List',
-                        className: 'btn btn-default fas fa-copy',
+                        className: 'datatable_button fas fa-copy',
 
                     },
                 ],
-                columnDefs: [
-                    { width: "100%", targets: "_all" }
-                ],
+                // columnDefs: [
+                //     { width: "100%", targets: "_all" }
+                // ],
             });
             $('#med_stock_vw_table tbody').on( 'click', 'tr', function () {
                 if ( $(this).hasClass('selected') ) {
@@ -225,7 +225,7 @@ function viewMedicineInStock(){
     $("#container-med-view-stock").append(main_row_div);
     var main_col_div=$("<div class='col-md-12' style='background: lightyellow;'></div>");
     var med_stock_vw_div=$("<div>")
-            var med_stock_vw_table=$('<table id="med_stock_vw_table" class="datatablecss_med" ></table>')
+            var med_stock_vw_table=$('<table id="med_stock_vw_table" class="datatablecss_med"  width="100%"></table>')
         med_stock_vw_div.append(med_stock_vw_table);
     main_col_div.append(med_stock_vw_div)
     $(main_row_div).append(main_col_div);
@@ -251,7 +251,7 @@ function createMedDespDatatableView(allMedDespInfoList){
 
         $('#med_desp_vw_table').empty();
        console.log("allMedDespInfoList",allMedDespInfoList)
-        $('#med_desp_vw_table').append('<caption style="color: black;font-weight: bold; ;caption-side: top;text-align: center;">Medicines in Despensory</caption>');
+        $('#med_desp_vw_table').append('<caption style="caption-side: top;text-align: center;" class="datatable_heading_label">Medicines in Despensory</caption>');
                 med_desp_vw_datatable=$("#med_desp_vw_table").DataTable({
                 data: allMedDespInfoList,
                 columns: [
@@ -277,42 +277,42 @@ function createMedDespDatatableView(allMedDespInfoList){
                             extend: 'print',
                             text: 'Print',
                             title: 'Medicine Despenosry List',
-                            className: 'btn btn-default fa fa-print',
+                            className: 'datatable_button fa fa-print',
 
                         },
                          {
                             extend: 'excel',
                             text: 'Export Data in Excel',
                             title: 'Medicine Despenosry List',
-                            className: 'btn btn-default  fas fa-file-excel',
+                            className: 'datatable_button  fas fa-file-excel',
 
                         },
                          {
                             extend: 'csv',
                             text: 'Export Data in CSV',
                             title: 'Medicine Despenosry List',
-                            className: 'btn btn-default fa fa-file',
+                            className: 'datatable_button fa fa-file',
 
                         },
                         {
                             extend: 'pdf',
                             text: 'Export Data in PDF',
                             title: 'Medicine Despenosry List',
-                            className: 'btn btn-default fas fa-file-pdf',
+                            className: 'datatable_button fas fa-file-pdf',
 
                         },
                         {
                             extend: 'copy',
                             text: 'Copy to Clipboard',
                             title: 'Medicine Despenosry List',
-                            className: 'btn btn-default fas fa-copy',
+                            className: 'datatable_button fas fa-copy',
 
                         },
                      
                     ],
-                    columnDefs: [
-                        { width: "100%", targets: "_all" }
-                    ],
+                    // columnDefs: [
+                    //     { width: "100%", targets: "_all" }
+                    // ],
                 });
                 $('#med_desp_vw_table tbody').on( 'click', 'tr', function () {
                     if ( $(this).hasClass('selected') ) {
@@ -338,7 +338,7 @@ function viewMedicineInDespensory(){
     $("#container-med-view-desp").append(main_row_div);
     var main_col_div=$("<div class='col-md-12' style='background: lightyellow;'></div>");
     var med_desp_vw_div=$("<div id='med_desp_vw_div'>")
-            var med_desp_vw_table=$('<table id="med_desp_vw_table" class="datatablecss_med" ></table>')
+            var med_desp_vw_table=$('<table id="med_desp_vw_table" width="100%" class="datatablecss_med" ></table>')
     med_desp_vw_div.append(med_desp_vw_table);
  
     main_col_div.append(med_desp_vw_div)   
@@ -358,7 +358,7 @@ function editMedicinePriceInStock(){
     $("#container-med-view-stock").append(main_row_div);
     var main_col_div=$("<div class='col-md-12' style='background: lightyellow;'></div>");
     var med_stock_edit_div=$("<div>")
-            var med_stock_edit_table=$('<table id="med_stock_edit_table" class="datatablecss_med" ></table>')
+            var med_stock_edit_table=$('<table id="med_stock_edit_table" width="100%" class="datatablecss_med" ></table>')
         med_stock_edit_div.append(med_stock_edit_table);
     var med_dialog_editdiv=$("<div id='med_dialog_editdiv'></div>");
         var med_label_tag=$("<label id='med_label_tag'></label>")
@@ -402,7 +402,7 @@ function createMedStckDatatableEdit(allMedStockInfoList)
 
         $('#med_stock_vw_table').empty();
        
-        $('#med_stock_vw_table').append('<caption style="color: black;font-weight: bold; ;caption-side: top;text-align: center;">Medicines in Stock</caption>');
+        $('#med_stock_vw_table').append('<caption style="caption-side: top;text-align: center;" class="datatable_heading_label">Medicines in Stock</caption>');
                 med_stock_edit_datatable=$("#med_stock_edit_table").DataTable({
                 data: allMedStockInfoList,
                 columns: [
@@ -430,41 +430,41 @@ function createMedStckDatatableEdit(allMedStockInfoList)
                             extend: 'print',
                             text: 'Print',
                             title: 'Medicine Stock List',
-                            className: 'btn btn-default fa fa-print',
+                            className: 'datatable_button fa fa-print',
     
                         },
                          {
                             extend: 'excel',
                             text: 'Export Data in Excel',
                             title: 'Medicine Stock List',
-                            className: 'btn btn-default  fas fa-file-excel',
+                            className: 'datatable_button  fas fa-file-excel',
     
                         },
                          {
                             extend: 'csv',
                             text: 'Export Data in CSV',
                             title: 'Medicine Stock List',
-                            className: 'btn btn-default fa fa-file',
+                            className: 'datatable_button fa fa-file',
     
                         },
                         {
                             extend: 'pdf',
                             text: 'Export Data in PDF',
                             title: 'Medicine Stock List',
-                            className: 'btn btn-default fas fa-file-pdf',
+                            className: 'datatable_button fas fa-file-pdf',
     
                         },
                         {
                             extend: 'copy',
                             text: 'Copy to Clipboard',
                             title: 'Medicine Stock List',
-                            className: 'btn btn-default fas fa-copy',
+                            className: 'datatable_button fas fa-copy',
     
                         },
                     ],
-                    columnDefs: [
-                        { width: "100%", targets: "_all" }
-                    ],
+                    // columnDefs: [
+                    //     { width: "100%", targets: "_all" }
+                    // ],
                 });
                 $('#med_stock_edit_table tbody').on( 'click', 'tr', function () {
                     med_stock_edit_selectedrow=this

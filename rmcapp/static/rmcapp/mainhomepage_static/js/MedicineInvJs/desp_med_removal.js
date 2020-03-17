@@ -59,7 +59,7 @@ function retrieveDespensoryMedicine(){
 
 function createDespensoryDataTable(){
     $(function(){
-        $('#desp_med_table').append('<caption style="color: black;font-weight: bold; ;caption-side: top;text-align: center; text-decoration: underline">Medicines In Despensory</caption>');
+        $('#desp_med_table').append('<caption style="caption-side: top;text-align: center;" class="datatable_heading_label">Medicines In Despensory</caption>');
 
         despmed_datatable=$("#desp_med_table").DataTable({
             data:datatable_med_desp_list,
@@ -135,7 +135,7 @@ billDTable()
 }
 function billDTable(){
     $(function(){
-        $('#bill_table').append('<caption style="color: black;font-weight: bold; ;caption-side: top;text-align: center; text-decoration: underline">Selected Medicines To Remove</caption>');
+        $('#bill_table').append('<caption style="caption-side: top;text-align: center;" class="datatable_heading_label">Selected Medicines To Remove</caption>');
         bill_datatable=$("#bill_table").DataTable({
             data:[],
             columns: [

@@ -290,6 +290,7 @@ class Patient(models.Model):
     address=models.CharField(max_length=300,null=True,blank=True)
     email_address=models.CharField(max_length=30,null=True,blank=True)
     bloodgroup=models.CharField(max_length=30,null=True,blank=True)
+    age=models.IntegerField(max_length=30,null=True,blank=True)
     cnic=models.CharField(max_length=20,null=True,blank=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
     update_at = models.DateTimeField(auto_now_add=True, blank=True)
@@ -420,6 +421,7 @@ class medInfoRecord(models.Model):
     datevisited=models.DateField(null=True,blank=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
     update_at = models.DateTimeField(auto_now_add=True, blank=True)
+
     def __str__(self):
         return str(self.id)
     class Meta:
