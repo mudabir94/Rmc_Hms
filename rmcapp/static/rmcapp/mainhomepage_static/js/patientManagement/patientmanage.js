@@ -5313,7 +5313,7 @@ var col1=$("#desp-med-qty-form")
                     var label=$("<label class='custom_label_css'>Boxes</label>")
                 col1_sub_sub_row2.append(label);
                 var col2_sub_sub_row2=$("<div class='col-md-6'></div>");
-                    var input=$("<input class='form-control-custom' id='boxes_stored'></input>")
+                    var input=$("<input class='form-control-custom' type='number' id='boxes_stored'></input>")
                 col2_sub_sub_row2.append(input);
             sub_sub_row2.append(col1_sub_sub_row2);
             sub_sub_row2.append(col2_sub_sub_row2);
@@ -5335,7 +5335,7 @@ var col1=$("#desp-med-qty-form")
                     var label=$("<label class='custom_label_css'>Total Strips</label>")
                 col1_sub_sub_row3.append(label);
                 var col2_sub_sub_row3=$("<div class='col-md-6'></div>");
-                    var input=$("<input class='form-control-custom' id='strips_stored'></input>")
+                    var input=$("<input class='form-control-custom' type='number' id='strips_stored'></input>")
                 col2_sub_sub_row3.append(input);
             sub_sub_row3.append(col1_sub_sub_row3);
             sub_sub_row3.append(col2_sub_sub_row3);
@@ -5345,14 +5345,14 @@ var col1=$("#desp-med-qty-form")
                     var label=$("<label class='custom_label_css'>Total Pieces</label>")
                 col1_sub_sub_row4.append(label);
                 var col2_sub_sub_row4=$("<div class='col-md-6'></div>");
-                    var input=$("<input class='form-control-custom' id='pieces_stored' ></input>")
+                    var input=$("<input class='form-control-custom' type='number' id='pieces_stored' ></input>")
                 col2_sub_sub_row4.append(input);
             sub_sub_row4.append(col1_sub_sub_row4);
             sub_sub_row4.append(col2_sub_sub_row4);
             var sub_sub_row6=$("<div class='row'></div>");
                 var col1_sub_sub_row6=$("<div class='col-md-4'>Medicine Timing</div>");
                 var col2_sub_sub_row6=$("<div class='col-md-6'></div>");
-                    var text=$("<textarea id='med_timing_text'></textarea>")
+                    var text=$("<textarea class='form-control-custom' id='med_timing_text'></textarea>")
                 col2_sub_sub_row6.append(text);
 
             sub_sub_row6.append(col1_sub_sub_row6);
@@ -5599,14 +5599,16 @@ function SaveAndPrintBill(){
     $("#invoice-POS").empty();
     var invoice_pos=$("#invoice-POS");
     
-        var center=$("<center id='top'></center>")
+        // var center=$("<center id='top'></center>")
+        var center=$("<div id='top'></div>")
+
             var div_logo=$("<div class='logo'></div>");
                 // var img_scr=$("<img style='width: 160px;' src='/static/rmcapp/mainhomepage_static/img/rmc.png'><br>")
 
             div_logo.append(logoImg);
             var div_info=$("<div class='info'></div>");
                 var h2=$("<h2></h2>");
-                h2.append(rmc);
+                    h2.append(rmc);
             div_info.append(h2);
         center.append(div_logo);
         center.append(div_info);
@@ -5619,39 +5621,12 @@ function SaveAndPrintBill(){
             div_info.append(p);
         mid_div.append(div_info);
 
-        // var bot_div=$("<div id='bot'></div>");
-        //     var div_table=$("<div id='table'></div>");
-        //         var table=$("<table>")
-        //             var tr=$('<tr class="tabletitle"></tr>')
-        //                 var td1=$('<td class="item"><p style="font-size:20px">Item</p></td>')
-        //                 var td2=$('<td class="Hours"><p style="font-size:20px">Qty</p></td>')
-        //                 var td3=$('<td class="Rate"><p style="font-size:20px">Sub Total</p></td>')
-        //             tr.append(td1);
-        //             tr.append(td2);
-        //             tr.append(td3);
-        //         table.append(tr);
-        //         for (var key in pbr_dict){
-        //             // item=key;
-        //             item=pbr_dict[key]['medname']
-        //             qty=pbr_dict[key]['pieces']
-        //             subtotal=pbr_dict[key]['amount']
-        //             var tr=$('<tr class="service"></tr>')
-        //                 var td1=$('<td class="tableitem"><p>'+item+'</p></td>')
-        //                 var td2=$('<td class="tableitem"><p>'+qty+'</p></td>')
-        //                 var td3=$('<td class="tableitem"><p>'+subtotal+'</p></td>')
-        //             tr.append(td1);
-        //             tr.append(td2);
-        //             tr.append(td3);
-        //         table.append(tr);
-
-        //         }
-
-                var bot_div=$("<div id='bot'></div>");
+            var bot_div=$("<div id='bot'></div>");
                 var div_table=$("<div id='table'></div>");
                     var table=$("<table>")
                         var tr=$('<tr class="tabletitle"></tr>')
                             var td1=$('<td class="item"><p style="font-size:20px">Medicine Name</p></td>')
-                            var td2=$('<td class="item"><p style="font-size:20px">Take Medicine (Timing) </p></td>')
+                            var td2=$('<td class="item"><p style="font-size:20px"> (Timings) </p></td>')
 
                         tr.append(td1);
                         tr.append(td2);
@@ -5715,8 +5690,6 @@ function SaveAndPrintBill(){
                         tr.append(td3);
                     table.append(tr);
                 }
-               
-
             div_table.append(table);
 
             var legalcopy=$("<div id='legalcopy'>");
@@ -5728,7 +5701,7 @@ function SaveAndPrintBill(){
                 }
                 var p=$('<p class="legal"><strong>Thank you for visiting RMC!</strong>  </p>')
                 var p1=$('<p class="legal"><strong>CONTACT NO : 0321-2312313</strong>  </p>')
-                var p2=$('<p class="legal"><strong>Adress  : Badami Bagh, Lahore</strong>  </p>')
+                var p2=$('<p class="legal"><strong>Address  : Badami Bagh, Lahore</strong>  </p>')
             legalcopy.append(p);
             legalcopy.append(p1);
             legalcopy.append(p2);
@@ -5752,7 +5725,6 @@ function SaveAndPrintBill(){
     // //despmed_datatable.destroy();
     // // procedure_bill_table.destroy();
     // // bill_datatable.destroy();
-    console.log("despmedbillamount--",despmedbillamount)
 
     // $.ajax({
     //     type: 'POST',
@@ -6081,7 +6053,7 @@ function createRowDivSixDespBill(){
                     var  colmd1=$("<div class='col-md-12'></div>");
                         var row=$("<div class='row' ></div>");
                             var procedure_col1=$("<div class='col-md-4' id='procedure_col1'></div>");
-                                var sub_row1=$("<div class='row' style='padding-top:80px;padding-bottom:10px'></div>");
+                                var sub_row1=$("<div class='row' style='padding-bottom:10px'></div>");
                                     var subcol1_subrow1=$("<div class='col-md-4'></div>");
                                         var label=$("<label class= 'custom_label_css'>Procedures</label>");
                                     subcol1_subrow1.append(label)
@@ -6107,7 +6079,7 @@ function createRowDivSixDespBill(){
                                     subcol1_subrow2.append(label)
 
                                     var subcol2_subrow2=$("<div class='col-md-6'></div>");
-                                        var input=$("<input class='form-control-custom' id='procedure_charge_input' value=''></input>");
+                                        var input=$("<input class='form-control-custom' type='number' id='procedure_charge_input' value=''></input>");
                                     subcol2_subrow2.append(input)
 
                                 sub_row2.append(subcol1_subrow2);
@@ -7003,6 +6975,301 @@ function  addChargeExsistingPres(){
     row_div_one.append(col_one__row_div_one);
 $(main_col_div).append(row_div_one);
 }
+function consultationSlip(){
+    $('#main_page_content').empty()
+    var container_addchargeexisting_pres= $('#main_page_content').append('<div class="container-fluid" id="container-addcharge-existing-pres"></div>');
+    $("#container-addcharge-existing-pres").append("<h2 class ='center_h_tag_forms'>Consulation Slip</h2>");
+    $("#container-addcharge-existing-pres").append("<hr class='custom_hr'>");
+
+    var main_row_div= $("<div class='row is-flex'></div>");
+
+    $(container_addchargeexisting_pres).append(main_row_div);
+    var main_col_div=$("<div class='col-md-12' id='main_col_div'></div>");
+       
+    $(main_row_div).append(main_col_div);
+
+    var row_div_one=$("<div class='row'></div>");
+        // Patient Name
+        var col_one__row_div_one=$("<div class='col-md-12'></div>");
+        row__col_one__row_div_one=$("<div class='row'></div>");
+            colmd1=$("<div class='col-md-2'></div>")
+            colmd2=$("<div class='col-md-2'></div>")                
+            colmd3=$("<div class='col-md-2'></div>")
+
+                pres_id_label=$("<label class='custom_label_css'>Prescription id</label>");
+            colmd1.append(pres_id_label)
+                pres_id_input=$("<input class='form-control-custom' id='search_patient_id' class='custom_input_css'>")
+            colmd2.append(pres_id_input);
+                var search_button=$('<button class="btn btn-block fa fa-search" onclick="searchPatientInConsultationSlip()">Search</button>');
+            colmd3.append(search_button);
+
+        row__col_one__row_div_one.append(colmd1);
+        row__col_one__row_div_one.append(colmd2);
+        row__col_one__row_div_one.append(colmd3);
+
+        col_one__row_div_one.append(row__col_one__row_div_one);
+    row_div_one.append(col_one__row_div_one);
+$(main_col_div).append(row_div_one);
+}
+
+
+
+function searchPatientInConsultationSlip(){
+    var pres_id=$("#search_patient_id").val()
+    if (pres_id===""){
+        alert("Please Insert Valid Pres id")
+        return
+    }
+        retrievePatientInfoInConsultationSlip("","","",pres_id)    
+
+}
+function retrievePatientInfoInConsultationSlip(pat_name,contact_no,cnic_no,id){
+    datatable_lst=[];
+    patientid=id;
+    prescription_id=id
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        'data': {
+            "id":prescription_id,
+        },
+        url: '/retrieve_patient_info_in_createbill',
+        success: function(data){
+            if (data['pres_id']===""){
+                alert("Please Insert Valid Pres id")
+                return
+            }
+            console.log("patient_dict",data["patient_dict"])
+            patient_dict={};
+            patient_dict=JSON.parse(data["patient_dict"])
+            patient_id_selected=JSON.parse(data["id"])
+            for (pat in patient_dict){
+                templist=[]
+                console.log("pat",pat);
+                templist.push(pat)
+                templist.push(patient_dict[pat]['name'])
+                templist.push(patient_dict[pat]['contact_no'])
+                templist.push(patient_dict[pat]['gender'])
+                templist.push(patient_dict[pat]['dob'])
+                templist.push(patient_dict[pat]['cnic'])
+                templist.push(patient_dict[pat]['guardian'])
+                templist.push(patient_dict[pat]['address'])
+                templist.push(patient_dict[pat]['bloodgroup'])
+                templist.push(patient_dict[pat]['email']);
+                datatable_list.push(templist)
+            }
+            empdict=JSON.parse(data['empdict']);
+            createPatientDetailsHtmlInConsultationSlip();
+        },
+    }); 
+}
+function createPatientDetailsHtmlInConsultationSlip(){
+    var row_div_two=$("<div class='row' id='row_div_two'></div>");
+        var main_subcol=$("<div class='col-md-12'></div>");
+
+            var subrow_one=$("<div class='row' style='padding-top:20px'></div>")
+
+                var col_one__subrow_one=$("<div class='col-md-3'></div>");
+                        row__col_one__subrow_one=$("<div class='row'></div>");
+                            var colmd1=$("<div class='col-md-5'></div>")
+                            var colmd2=$("<div class='col-md-6'></div>")
+                                var pat_name_label=$("<label for='emp_name_tag' class='custom_label_css'>Patient Name</label>");
+                                var pat_name_input=$("<label class='custom_label_css' id='pat_name_input'>"+patient_dict[patient_id_selected]['name']+"</label>")
+                            colmd2.append(pat_name_input)
+                            colmd1.append(pat_name_label)
+                        row__col_one__subrow_one.append(colmd1);
+                        row__col_one__subrow_one.append(colmd2);
+                    col_one__subrow_one.append(row__col_one__subrow_one);
+
+                var col_two__subrow_one=$("<div class='col-md-3'></div>");
+                    var row__col_two__subrow_one=$("<div class='row'></div>");
+                        var colmd1=$("<div class='col-md-5'></div>")
+                        var colmd2=$("<div class='col-md-6'></div>")
+                            var contact_type_label=$("<label class='custom_label_css'>Contact Number</label>");
+                            var contact_type_input=$("<label class='custom_label_css' id='contact_numb_input'>"+patient_dict[patient_id_selected]['contact_no']+"</label>")
+                        colmd1.append(contact_type_label);
+                        colmd2.append(contact_type_input);
+    
+                    row__col_two__subrow_one.append(colmd1)
+                    row__col_two__subrow_one.append(colmd2)
+                col_two__subrow_one.append(row__col_two__subrow_one)
+
+            subrow_one.append(col_one__subrow_one)
+            subrow_one.append(col_two__subrow_one)
+
+        
+        
+        
+        main_subcol.append(subrow_one)
+
+
+    row_div_two.append(main_subcol)
+    var main_col_div=$("#main_col_div");
+    main_col_div.append(row_div_two);
+    createConsultationSlipForm()
+}
+function createConsultationSlipForm(){
+    var main_col_div=$('#main_col_div')
+    var row_div_five=$("<div class='row' id='createOutDoorPresFormDiv'></div>");
+
+        var main_col__row_five=$("<div class='col-md-12'></div>");
+
+           
+
+            
+            var row_one=$("<div class='row' style=' padding-bottom:10px;'></div>")
+
+                var col_one__row_one=$("<div class='col-md-12'></div>");
+                        row__col_one__row_one=$("<div class='row'></div>");
+                            var colmd1=$("<div class='col-md-2'></div>")
+                            var colmd2=$("<div class='col-md-2'></div>")
+                            
+                                var doctor=$("<label for='doctor_label' class='custom_label_css'>Doctor</label>");
+                                colmd1.append(doctor)
+
+                                var select=$("<select id='selecteddoctor' class='form-control-custom'></select>");
+                                        var option=$("<option selected='selected' value='--'>--</option>");
+                                    $(select).append(option);
+
+                                    for (var key in empdict){
+                                        var option=$("<option id='"+key+"_doc-opt' value='"+key+"'>"+empdict[key]+"</option>");
+                                        $(select).append(option);
+                                    } 
+                                colmd2.append(select)
+
+                        row__col_one__row_one.append(colmd1);
+                        row__col_one__row_one.append(colmd2);
+
+                    col_one__row_one.append(row__col_one__row_one);
+
+            row_one.append(col_one__row_one)
+
+            var row_two=$("<div class='row' style=' padding-bottom:10px;'></div>")
+
+                var col_one__row_two=$("<div class='col-md-12'></div>");
+                        row__col_one__row_two=$("<div class='row'></div>");
+                            var colmd1=$("<div class='col-md-2'></div>")
+                            var colmd2=$("<div class='col-md-2'></div>")
+                            
+                                var ss_label=$("<label  class='custom_label_css'>Medicines</label>");
+                                colmd1.append(ss_label)
+
+                                var ss_text=$("<textarea  class='form-control-custom'style='height:150px;' id='med_consult_textarea'></textarea>")
+                                colmd2.append(ss_text)
+
+                        row__col_one__row_two.append(colmd1);
+                        row__col_one__row_two.append(colmd2);
+
+                col_one__row_two.append(row__col_one__row_two);
+
+            row_two.append(col_one__row_two)
+
+            
+
+            var row_nine=$("<div class='row' style='padding-bottom:10px;'></div>")
+
+                var col_one__row_nine=$("<div class='col-md-12'></div>");
+                        row__col_one__row_nine=$("<div class='row'></div>");
+                            colmd1=$("<div class='col-md-3'></div>")
+                                print_consult_button=$('<button class="btn btn-block fa fa-print" onclick="printConsultationSlip()">Print</button>')
+                                colmd1.append(print_consult_button)
+                            colmd2=$("<div class='col-md-6'></div>")
+                            colmd3=$("<div class='col-md-3'></div>")
+
+                            GenPres_button=$('<button class="btn btn-success btn-block fa fa-print" >Save</button>')
+                            colmd2.append(GenPres_button)
+                            
+                        row__col_one__row_nine.append(colmd1);
+                        row__col_one__row_nine.append(colmd2);
+                        row__col_one__row_nine.append(colmd3);
+
+                    col_one__row_nine.append(row__col_one__row_nine);
+
+            row_nine.append(col_one__row_nine)
+
+        main_col__row_five.append(row_one)
+        main_col__row_five.append(row_two)
+        main_col__row_five.append(row_nine)
+
+    row_div_five.append(main_col__row_five)
+ main_col_div.append(row_div_five)
+}
+function printConsultationSlip(){
+    var rmc="RMC HOSPITAL";
+    var patient_name=$("#pat_name_input").text();
+    var phoneno=$("#contact_numb_input").text();
+    var selecteddoctor=$("#selecteddoctor").val()
+    $("#invoice-POS").empty();
+    var invoice_pos=$("#invoice-POS");
+    
+        var center=$("<div id='top'></div>")
+
+            var div_logo=$("<div class='logo'></div>");
+                // var img_scr=$("<img style='width: 100px;' src='/static/rmcapp/mainhomepage_static/img/rmc.png'><br>")
+
+            div_logo.append(logoImg);
+            var div_info=$("<div class='info'></div>");
+                var h2=$("<h2></h2>");
+                h2.append(rmc);
+            div_info.append(h2);
+        center.append(div_logo);
+        center.append(div_info);
+        invoice_pos.append(center);   
+
+
+        var mid_div=$("<div id='mid'></div>");
+            var div_info=$("<div class='info'></div>");
+                var p1=$("<p> Name   :  "+patient_name.toUpperCase()+" </br> Phone   :  "+phoneno+"</br></p>")
+                var p=$("<p> Doctor : "+empdict[selecteddoctor]+"<p>")
+            div_info.append(p);
+            div_info.append(p1);
+
+         
+        mid_div.append(div_info);
+
+   
+        var bot_div=$("<div id='bot'></div>");
+        var div_table=$("<div id='table'></div>");
+            var table=$("<table>")
+                var tr=$('<tr class="tabletitle"></tr>')
+                    var td1=$('<td class="item"><p style="font-size:20px">Description</p></td>')
+                    // var td2=$('<td class="item"><p style="font-size:20px"> (Timings) </p></td>')
+
+                tr.append(td1);
+                // tr.append(td2);
+
+            table.append(tr);
+        div_table.append(table);
+
+                    
+            
+             
+
+            var legalcopy=$("<div id='legalcopy'>");
+                var p4=$('<p class="consult_text"><strong>'+$("#med_consult_textarea").val()+'</strong>  </p>')
+                var p=$('<p class="legal"><strong>Thank you for visiting RMC!</strong>  </p>')
+                var p1=$('<p class="legal"><strong>CONTACT NO : 0321-2312313</strong>  </p>')
+                var p2=$('<p class="legal"><strong>Address  : Badami Bagh, Lahore</strong>  </p>')
+            
+            legalcopy.append(p4);
+            legalcopy.append(p);
+            legalcopy.append(p1);
+            legalcopy.append(p2);
+        bot_div.append(div_table);
+        bot_div.append(legalcopy);
+
+
+    invoice_pos.append(mid_div);    
+    invoice_pos.append(bot_div);    
+    
+
+    $('#patient_dash_first_div').hide();
+    var printcontent = $(invoice_pos).clone();
+  
+    // window.print();
+    // $('#patient_dash_first_div').show();
+    // $('#invoice-POS').empty();
+}
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== "") {
@@ -7018,7 +7285,6 @@ function getCookie(name) {
     }
     return cookieValue;
 }
-
 function csrfSafeMethod(method) {
     // these HTTP methods do not require CSRF protection
     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));

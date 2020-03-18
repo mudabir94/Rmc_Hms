@@ -54,10 +54,10 @@ function loadPresForm(){
                     colmd3=$("<div class='col-md-1 '></div>")
                     button=$("<button class= 'btttn' onclick='PrintPres()'> Print </button>");
                     colmd1.append(button);
-                    var tokenno=$("<label id='token_no' class='form-control-static'>Token:"+presData['token_no']+"</label>")                    
+                    var tokenno=$("<label id='token_no' style='font-size: large;font-weight: bold;' class='form-control-static'>Token: "+presData['token_no']+"</label>")                    
                     colmd3.append(tokenno)
 
-                    rmc_tag=$("<p class='text-center font-weight-bold' style='font-size:2vw;' id='rmc_label'>RAFIQ MEDICAL CENTER</p>");
+                    rmc_tag=$("<p class='text-center font-weight-bold' style='font-size:2vw;text-decoration: underline;' id='rmc_label'>RAFIQ MEDICAL CENTER</p>");
                     colmd2.append(rmc_tag)
 
                 row__col_one__row_div_one.append(colmd1);
@@ -86,11 +86,11 @@ function loadPresForm(){
                     colmd1.append(pat_name_label)
                     var pat_name=$("<label id='pat_name' class='form-control-static'>"+presData['name']+"</label>")                    
                     colmd2.append(pat_name)
-                    var pat_type_label=$("<label class='form-control-static'>Patient Type :</label>")                    
+                    var pat_type_label=$("<label class='form-control-static' style='font-weight: bold;'>Patient Type :</label>")                    
                     colmd7.append(pat_type_label)
-                    var pat_type=$("<label id='pat_type' class='form-control-static'> "+presData['pat_type']+"</label>")                    
+                    var pat_type=$("<label id='pat_type'    class='form-control-static'> "+presData['pat_type'].toUpperCase()+"</label>")                    
                     colmd8.append(pat_type)
-                    var pat_id_label=$("<label class='form-control-static float-right' style='font-weight: bold;'>Patient ID</label>");
+                    var pat_id_label=$("<label class='form-control-static float-right' style='font-weight: bold;'>Patient No</label>");
                     colmd3.append(pat_id_label)
                     var pat_id=$("<label id='pat_id' class='form-control-static'>"+presData['pat_id']+"</label>")                    
                     colmd4.append(pat_id)
@@ -298,7 +298,7 @@ function loadPresForm(){
                     colmd3=$("<div class='col-md-3' style= 'border-color: black;border-top-style: solid;border-width: thin;'></div>")
 
 
-                    col_one_heading=$("<p class='text-center' style='font-weight: bold; padding-top:20px;text-decoration: underline;font-size: 20px; '>SIGNS/SYMPTOMS</p>");
+                    col_one_heading=$("<p class='text-center' style='font-weight: bold; padding-top:20px;text-decoration: underline;font-size: 20px; '>SIGNS-SYMPTOMS</p>");
                     colmd1.append(col_one_heading)
 
                     col_two_heading=$("<p class='offset-md-2' style='margin-top:25px;'><img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsybPkmCpEkmWbC3xAXE5EzJuEB9spMJVbjge0jn5X4yh2jPUK' alt='RX' width='38' height='38' style='text-decoration:underline';></p>");

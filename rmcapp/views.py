@@ -33,14 +33,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from rmcapp.forms import WebUserCreationForm
 
 
-def printTest(request):
-    template_path_name="rmcapp/mainhomepage_template/printtest.html"
-    return render(request,template_path_name)
-
-
-
-
-
 
 
 # Create your views here.

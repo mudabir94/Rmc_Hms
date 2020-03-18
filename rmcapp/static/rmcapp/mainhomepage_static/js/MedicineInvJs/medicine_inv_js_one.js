@@ -1276,6 +1276,7 @@ function saveMedicineToWhStock(){
                                 url: '/save_medicine_to_wh_stock',
                                 success: function(data){
                                     medicine_batch_in_stock_list=data['medicine_batch_in_stock_list']
+                                    
                                     // retrieveMedicineGenDataFromStock()
                                     refreshMedTStckT()
                                     // addMedicineToWhStockFrom();

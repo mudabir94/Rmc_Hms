@@ -869,6 +869,7 @@ function updateEmployeeData(){
             $("#row_div_five").remove();
             employee_dict={}
             emp_datatable_list=[]
+            alert("Updated")
         },
     });
 

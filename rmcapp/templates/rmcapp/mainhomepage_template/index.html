@@ -78,8 +78,10 @@
           <li><a href="#contact">Contact</a></li>
           {% if  user.is_authenticated %}
           <li><a href="{% url 'main_dashboard' %}">Main Dashboard</a></li>
-          {%endif%} 
+          {% else %}
           <li ><a href="{% url 'login'%}">Login</a></li>
+          {%endif%} 
+
         </ul>
       </nav><!-- #nav-menu-container -->
     </div>

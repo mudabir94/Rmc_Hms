@@ -2,7 +2,7 @@ from django.conf.urls import url, include
 from django.urls import path
 from . import views 
 urlpatterns = [
- 
+
   path('', views.mainHome.as_view(), name='mainhomepage'),
   path("maindashboard",views.mainDashBoard.as_view(),name="main_dashboard"),
   path("inventorydashboard",views.inventoryDashBoard.as_view(),name="inventory_dashboard"),
@@ -103,7 +103,6 @@ urlpatterns = [
   path('retrieve_invoice_bill_record_for_view',views.retrieveInvoiceBillRecordForView,name='retrieve_invoice_bill_record_for_view'),
 
   path('update_invoice',views.updateInvoice,name="update_invoice"),
-  path("printtest",views.printTest,name="printtest"),
 
   # path("remove_med_for_internal_use",views.removeMedForInternalUse,name="remove_med_for_internal_use"),
   path("retrieve_medicine_from_desp_for_internal_use",views.retrieveMedicineFromDespForInternalUse,name="retrieve_medicine_from_desp_for_internal_use"),

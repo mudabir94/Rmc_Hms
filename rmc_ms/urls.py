@@ -23,6 +23,6 @@ urlpatterns = [
     path('',include('rmcapp.urls')),
 
     path('admin/', admin.site.urls),
+
     path('accounts/', include('django.contrib.auth.urls'))
-    # path('login', include('django.contrib.auth.urls'))
 ]
