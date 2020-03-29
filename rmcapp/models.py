@@ -290,7 +290,7 @@ class Patient(models.Model):
     address=models.CharField(max_length=300,null=True,blank=True)
     email_address=models.CharField(max_length=30,null=True,blank=True)
     bloodgroup=models.CharField(max_length=30,null=True,blank=True)
-    age=models.IntegerField(max_length=30,null=True,blank=True)
+    age=models.IntegerField(null=True,blank=True)
     cnic=models.CharField(max_length=20,null=True,blank=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
     update_at = models.DateTimeField(auto_now_add=True, blank=True)
@@ -736,3 +736,20 @@ class invoiceRecords(models.Model):
         verbose_name_plural="Invoices"
         ordering=['pk']
 
+class consulatationRecords(models.Model):
+    pres=models.ForeignKey(patPrescriptionRecords, on_delete=models.CASCADE,default=None,null=True,blank=True)
+    doc=models.ForeignKey(Employee, on_delete=models.CASCADE,default=None,null=True,blank=True)
+    medicine_details=models.TextField(default="-",null=True,blank=True)
+    date_visited = models.DateTimeField(default=None,null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True)
+    update_at = models.DateTimeField(auto_now_add=True, blank=True)
+    def __str__(self):
+        return str(self.id)
+    class Meta:
+        verbose_name_plural="Consultation Records"
+        ordering=['pk']
+
+class Photo(models.Model):
+    title = models.CharField(max_length=255, blank=True)
+    file = models.FileField(upload_to='photos/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)

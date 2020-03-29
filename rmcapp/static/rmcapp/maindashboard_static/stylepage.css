@@ -81,6 +81,7 @@
   
   .page-wrapper.toggled .sidebar-wrapper {
     left: 0px;
+    height:730px;
   }
   
   @media screen and (min-width: 768px) {
@@ -107,12 +108,12 @@
   
   .sidebar-wrapper {
     /* width: 260px; */
-    width:200px;
+    /* width:200px; */
     height: 100%;
     max-height: 100%;
-    position: fixed;
+    position: relative;
     top: 0;
-    left: -300px;
+    /* left: -300px; */
     z-index: 999;
   }
   

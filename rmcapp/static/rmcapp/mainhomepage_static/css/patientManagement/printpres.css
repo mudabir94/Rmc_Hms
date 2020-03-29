@@ -68,6 +68,16 @@
        }
 }
 
+.pres_token_date_subdivs{
+  padding-left: 10px;
+  text-decoration: underline;
+}
+.pres_token_date_rowdiv{
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
 /* #row_div_four{ */
   /* background-color: rgb(255, 255, 255);
 

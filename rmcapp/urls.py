@@ -121,11 +121,15 @@ urlpatterns = [
   path("view_token_generator_table",views.viewTokenGeneratorTable,name="view_token_generator_table"),
   path("reset_tokens",views.resetTokens,name="reset_tokens"),
   path("save_add_charge_exist_pres",views.saveAddChargeExisPres,name="save_add_charge_exist_pres"),
+  path("print_pres_ajax",views.printPresAjax,name="print_pres_ajax"),
 
+  path("consulatation_records",views.consulatationRecordsView,name="consulatation_records"),
+  path("retrieve_patient_info_and_consultationdata",views.retrievePatientInfoAndConsultationData,name="consulatation_records"),
+  path('retrieve_patient_info_createconsultationdata',views.retrievePatientInfoCreateConsultationData,name='retrieve_patient_info_createconsultationdata'),
 
+  path("update_consulatation_records",views.updateConsulatationRecords,name="update_consulatation_records"),
+  path("view_consultation_slip_records",views.viewConsultationSlipRecords,name="view_consultation_slip_records"),
 
-  
-
-
+  url(r'^basic_upload/$', views.BasicUploadView.as_view(), name='basic_upload'),
 
 ]

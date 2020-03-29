@@ -12,7 +12,9 @@
     <link rel="icon" href="{% static 'rmcapp/mainhomepage_static/img/icons/hospital.png' %}">
     <title>RMC-Rafiq Medical Complex</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="{% static 'rmcapp/maindashboard_static/generalcssfiles/bootstrap.min.css' %}" rel="stylesheet">
+
     <link href="{% static 'rmcapp/maindashboard_static/stylepage.css' %}" rel="stylesheet">
     <link href="{% static 'rmcapp/mainhomepage_static/css/StaffManagement/staffdash.css' %}" rel="stylesheet">
 
@@ -21,9 +23,9 @@
     <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
     
-    
+<!--     
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous">
+        crossorigin="anonymous"> -->
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
 
@@ -70,7 +72,7 @@
   <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
     <i class="fas fa-bars"></i>
   </a>
-  <div class="row">
+  <div class="row custom_main_row_css">
     <div class="col-md-2">
       <!-- sidebar-wrapper  -->
   <nav id="sidebar" class="sidebar-wrapper">

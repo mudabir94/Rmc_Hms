@@ -2,6 +2,8 @@ from django.forms import ModelForm
 from django import forms
 from rmcapp.models import Employee
 from rmcapp.models import User as WebUser 
+from .models import Photo
+
 # class EmployeeForm(ModelForm):
 #     class Meta:
 #         model=Employee
@@ -22,3 +24,10 @@ class WebUserCreationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+
+
+class PhotoForm(forms.ModelForm):
+    class Meta:
+        model = Photo
+        fields = ('file', )

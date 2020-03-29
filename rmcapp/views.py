@@ -15,7 +15,7 @@ from rmcapp.models import (
     medicineBatches,
     packageType,
     employeeType,Employee,Patient,patientMedRecords,patientBillRecords,Rooms,Ward,patientRoomsBill,patientWardBill,
-    patientType,
+    patientType,consulatationRecords,
     procedureTable,patPrescriptionRecords,patPrescriptionBill,patPrescriptionBillRecordHistory,invoiceRecords,
     despBillRecord,procedureBillRecord,procedureRecords,procedureTable,
     patientVisitSummary,surgeryTable,presBillSummary,revisitHistory,
@@ -32,6 +32,9 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.mixins import LoginRequiredMixin
 from rmcapp.forms import WebUserCreationForm
 
+from django.views import View
+from .forms import PhotoForm
+from .models import Photo
 
 
 
@@ -869,7 +872,6 @@ def retrieveAllMedDespInfo(request):
 def savePatientData(request):
     if request.method=="POST":
         name = request.POST.get('name')
-        print(name)
         dob = request.POST.get('dob')
 
         gender = request.POST.get('gender')
@@ -882,7 +884,10 @@ def savePatientData(request):
         age = request.POST.get('age')
 
         name = json.loads(name)
-        dob = json.loads(dob)
+        print("dob",type(dob))
+
+        if dob !='':
+            dob = json.loads(dob)
         gender = json.loads(gender)
         phone_number = json.loads(phone_number)
         address = json.loads(address)
@@ -891,16 +896,22 @@ def savePatientData(request):
         cnic = json.loads(cnic)
         blood_group = json.loads(blood_group)
 
-        print(name)
-        print(gender)
-        print(email_address)
+        print("name",name)
+        print("dob",dob)
+        print("age",age)
+        print("name",name)
+        print("name",name)
+
+        print("gender",gender)
+        print("email_address",email_address)
         
         pat_obj=Patient()
         pat_obj.guardian=guardian
         pat_obj.pat_name=name
         if dob !='':
             pat_obj.dob=dob
-        pat_obj.age=age
+        if age!="":
+            pat_obj.age=age
         pat_obj.gender=gender
         pat_obj.phone_no=phone_number
         pat_obj.address=address
@@ -1532,13 +1543,20 @@ def retirevePatientInfo(request):
     if request.method=="GET":
         pat_name=request.GET.get("pat_name")
         contact_no=request.GET.get("contactno")
+        print("contact_no",contact_no)
         # cnic=request.GET.get("cnic")
-        contact_no=""
-        cnic=""
+        # contact_no=""
+        # cnic=""
         #phone_no=contact_no,cnic=cnic_no
 
         # pat_objs=Patient.objects.filter(Q(pat_name=pat_name) | Q(phone_no=contact_no) | Q(cnic=cnic)| Q(id=id))
-        pat_objs=Patient.objects.filter(Q(pat_name__contains=pat_name) | Q(phone_no__contains=contact_no))
+        # pat_objs=Patient.objects.filter(Q(pat_name__contains=pat_name) | Q(phone_no__contains=contact_no))
+        if pat_name!="" and contact_no!="":
+            pat_objs=Patient.objects.filter(Q(pat_name__contains=pat_name) and Q(phone_no__contains=contact_no) )
+        elif contact_no=="":
+            pat_objs=Patient.objects.filter(Q(pat_name__contains=pat_name) )
+        else:
+            pat_objs=Patient.objects.filter(Q(phone_no__contains=contact_no))
 
         # pat_objs=Patient.objects.get(id=1)
         print("pat_objs",pat_objs)
@@ -1549,6 +1567,7 @@ def retirevePatientInfo(request):
             patient_info_dict['contact_no']=pat_obj.phone_no
             patient_info_dict['gender']=pat_obj.gender
             patient_info_dict['dob']=str(pat_obj.dob)
+            patient_info_dict['age']=pat_obj.age
             patient_info_dict['cnic']=pat_obj.cnic
             patient_info_dict['guardian']=pat_obj.guardian
             patient_info_dict['address']=pat_obj.address
@@ -1582,6 +1601,7 @@ def retrievePatientInfoInPatientBill(request):
       
         id=request.GET.get("id")
         id=int(id)
+        token_no=""
         try: 
             patPresRecObj=patPrescriptionRecords.objects.get(id=id)
             pat_obj=patPresRecObj.patient
@@ -1598,10 +1618,12 @@ def retrievePatientInfoInPatientBill(request):
             patient_info_dict['address']=pat_obj.address
             patient_info_dict['bloodgroup']=pat_obj.bloodgroup
             patient_info_dict['email']=pat_obj.email_address
+
             patient_dict[pat_obj.id]=[]
             patient_dict[pat_obj.id]=patient_info_dict
             print("patient_dict",patient_dict)
             patient_id=pat_obj.id
+
 
         except:
             pres_id=""
@@ -1698,7 +1720,9 @@ def updatePatientData(request):
        
         dob=request.POST.get('dob')
         dob=json.loads(dob)
-
+        print("DOB",dob)
+        age=request.POST.get('age')
+        age=json.loads(age)
 
         pat_obj=Patient.objects.get(id=patient_id)
         # if pat_obj.pat_name!=patient_name:
@@ -1706,12 +1730,16 @@ def updatePatientData(request):
         pat_obj.phone_no=phone_number
         pat_obj.gender=gender
         pat_obj.guardian=guardian
-        pat_obj.dob=dob
+        if dob!=None:
+            pat_obj.dob=dob
+        if age!="":
+            pat_obj.age=int(age)
         pat_obj.address=address
         pat_obj.email_address=email_address
         pat_obj.bloodgroup=blood_group
         pat_obj.cnic=cnic
         pat_obj.save()
+        print("pat info",pat_obj)
         return JsonResponse({})
 
 def retirevePatientMedHistory(request):
@@ -1972,25 +2000,59 @@ def retirevePatientMedHistory(request):
 presData={}
 def printPatientPrescription(request):
     template_path_name="rmcapp/patient_dashboard_template/patient_pres.html"
-    global presData
     if request.method=='GET':
-        if request.is_ajax():
-            
-            print("LOADING PATIENT PRES")
-            data={'presData':json.dumps(presData)}
-            return JsonResponse(data)     
         data={}   
-    return render(request,template_path_name,data)
+        return render(request,template_path_name,data)
     if request.method=="POST":
         pass
-        # if request.is_ajax():
-        #     print("In Ajax")
-        #     print("presData",presData)
-        #     data={
-        #         'presData':json.dumps(presData),
-        #     }
-        #     return JsonResponse(data)
         
+def printPresAjax(request):
+    global presData
+    if request.method=='POST':
+
+        if request.is_ajax:
+            prev_rec_nos=[]
+            patObj=Patient.objects.get(id=int(presData['pat_id']))
+            print("IN PRINT PRES AJAX")
+            try:
+                toKenRecObjs = tokenRecords.objects.filter(patient=patObj)
+                if len(toKenRecObjs)>3:
+                    numOfRecs=3
+                else:
+                    numOfRecs=len(toKenRecObjs)
+                toKenRecObjs = tokenRecords.objects.filter(patient=patObj).order_by('-id')[:numOfRecs][::-1]
+                for toKenRecObj in toKenRecObjs:
+                    date=str(toKenRecObj.created_at.date())
+                    print("date",date)
+                    presid=toKenRecObj.pres.id
+                    token_no=toKenRecObj.token_no
+                    temp_list=[]
+                    temp_list.append(date)
+                    temp_list.append(presid)
+                    temp_list.append(token_no)
+                    prev_rec_nos.append(temp_list)
+
+            except:
+                print("Record Not Found")
+
+
+            data={
+                'message':"Ajax",
+                'presData':json.dumps(presData),
+                "prev_rec_nos":prev_rec_nos,
+                }
+            data=json.dumps(data)
+        else:
+            print("IN PRINT PRES NOT AJAx")
+            data={
+                'message':"Not Ajax",
+            
+            }
+            data=json.dumps(data)
+
+        
+    return  HttpResponse(data)
+
 @csrf_exempt 
 def generatePrescription(request):
     global presData
@@ -1998,12 +2060,11 @@ def generatePrescription(request):
     if request.method=="GET":
         presData=request.GET.get('presData')
         presData=json.loads(presData)
-        print("presData",presData)
         patient_type=presData['pat_type']
         # Add data to Prescription Record
         presRecObj=patPrescriptionRecords()
         patObj=Patient.objects.get(id=int(presData['pat_id']))
-        presRecObj.patient=patObj
+        presRecObj.patient=patObj   
         doc_id=int(presData['doctor'])
         empObj=Employee.objects.get(id=doc_id)
         presRecObj.doc=empObj
@@ -2012,6 +2073,9 @@ def generatePrescription(request):
      
         presRecObj.save()
         presRecObj.date_visited=presRecObj.created_at
+        
+
+
         if 'admitreason' in presData:
             presRecObj.admit_reason=presData['admitreason']
         presRecObj.save()
@@ -2110,7 +2174,8 @@ def generatePrescription(request):
         print("TokenNo",token_no)
 
         
-        data={}
+        data={
+            }
         return JsonResponse(data)
 
 def viewTokenRecords(request):
@@ -2119,12 +2184,13 @@ def viewTokenRecords(request):
         tokenrecordlist=[]
         for tknObj in tknObjs:
             templist=[]
-            templist.append(tknObj.patient.pat_name)
             templist.append(tknObj.pres.id)
             templist.append(tknObj.token_no)
+            templist.append(tknObj.patient.pat_name)
+          
 
             tokenrecordlist.append(templist)
-
+        print(tokenrecordlist)
         data={
             "tokenrecordlist":tokenrecordlist,
         }
@@ -4941,4 +5007,231 @@ def saveAddChargeExisPres(request):
             invRecObj.save()
         print("IN saveAddChargeExisPres",presBillObj)
         data={}
+        return JsonResponse(data)
+
+def consulatationRecordsView(request):
+    
+    if request.method=="POST":
+        presid=request.POST.get("presid")
+        doc=request.POST.get("doc")
+        medicine_details=request.POST.get("medicine_details")
+        presObj=patPrescriptionRecords.objects.get(id=int(presid))
+
+        try:
+            consulatationRecords.objects.get(pres=presObj)
+            message="consultation exsists"
+        except:
+            conRecObj=consulatationRecords()
+            conRecObj.pres=presObj
+            if doc!='--':
+                docObj=Employee.objects.get(id=int(doc))
+                conRecObj.doc=docObj
+            conRecObj.medicine_details=medicine_details
+            conRecObj.save()
+            conRecObj.date_visited=conRecObj.created_at
+            conRecObj.save()
+            message="new consultation"
+
+        data={
+            'message':message,
+        }
+        return JsonResponse(data)
+
+def retrievePatientInfoCreateConsultationData(request):
+    
+    if request.method=="GET":
+        id=request.GET.get("id")
+        id=int(id)
+        try: 
+            patPresRecObj=patPrescriptionRecords.objects.get(id=id)
+            pat_obj=patPresRecObj.patient
+            pres_id=id
+        
+            patient_dict={}
+            patient_info_dict={}
+            patient_info_dict['name']=pat_obj.pat_name
+            patient_info_dict['contact_no']=pat_obj.phone_no
+            patient_info_dict['gender']=pat_obj.gender
+            patient_info_dict['dob']=str(pat_obj.dob)
+            patient_info_dict['cnic']=pat_obj.cnic
+            patient_info_dict['guardian']=pat_obj.guardian
+            patient_info_dict['address']=pat_obj.address
+            patient_info_dict['bloodgroup']=pat_obj.bloodgroup
+            patient_info_dict['email']=pat_obj.email_address
+
+            patient_dict[pat_obj.id]=[]
+            patient_dict[pat_obj.id]=patient_info_dict
+            print("patient_dict",patient_dict)
+            patient_id=pat_obj.id
+
+
+        except:
+            pres_id=""
+            patient_dict={}
+            patient_id=0
+
+        try:
+            emptype_obj=employeeType.objects.get(type_name="doctor")
+            embobjs=Employee.objects.filter(employee_type=emptype_obj)
+            empdict={}
+            for obj in embobjs:
+                empdict[obj.id]=obj.name
+                print("Emp Name",obj.name)
+        except:
+            empdict={}
+            print("Employee type not found. ")
+        try:
+            presRecObj=patPrescriptionRecords.objects.get(id=id)
+            conRecObj=consulatationRecords.objects.get(pres=presRecObj)
+            message="Exsists"
+        except:
+            message="Doesnt Exsist",
+           
+
+
+
+
+
+        
+
+        data={
+            "patient_dict":json.dumps(patient_dict),
+            'id':str(patient_id),
+            "empdict":json.dumps(empdict),
+            "pres_id":pres_id,
+            'message':message,
+
+        }
+        return JsonResponse(data)
+
+def retrievePatientInfoAndConsultationData(request):
+    if request.method=="GET":
+        id=request.GET.get("id")
+        id=int(id)
+        try: 
+            patPresRecObj=patPrescriptionRecords.objects.get(id=id)
+            pat_obj=patPresRecObj.patient
+            pres_id=id
+        
+            patient_dict={}
+            patient_info_dict={}
+            patient_info_dict['name']=pat_obj.pat_name
+            patient_info_dict['contact_no']=pat_obj.phone_no
+            patient_info_dict['gender']=pat_obj.gender
+            patient_info_dict['dob']=str(pat_obj.dob)
+            patient_info_dict['cnic']=pat_obj.cnic
+            patient_info_dict['guardian']=pat_obj.guardian
+            patient_info_dict['address']=pat_obj.address
+            patient_info_dict['bloodgroup']=pat_obj.bloodgroup
+            patient_info_dict['email']=pat_obj.email_address
+
+            patient_dict[pat_obj.id]=[]
+            patient_dict[pat_obj.id]=patient_info_dict
+            print("patient_dict",patient_dict)
+            patient_id=pat_obj.id
+
+
+        except:
+            pres_id=""
+            patient_dict={}
+            patient_id=0
+
+        try:
+            emptype_obj=employeeType.objects.get(type_name="doctor")
+            embobjs=Employee.objects.filter(employee_type=emptype_obj)
+            empdict={}
+            for obj in embobjs:
+                empdict[obj.id]=obj.name
+                print("Emp Name",obj.name)
+        except:
+            empdict={}
+            print("Employee type not found. ")
+        try:
+            presRecObj=patPrescriptionRecords.objects.get(id=id)
+            consultation_data={}
+            conRecObj=consulatationRecords.objects.get(pres=presRecObj)
+            consultation_data['medicine_details']=conRecObj.medicine_details
+            consultation_data['doc_name']=conRecObj.doc.name
+            consultation_data["date_visited"]=str(conRecObj.date_visited)
+            consultation_data['message']="data present"
+        except:
+            consultation_data={
+                'message':"no data",
+            }
+
+
+
+
+
+        
+
+        data={
+            "patient_dict":json.dumps(patient_dict),
+            "consulatation_data":json.dumps(consultation_data),
+            'id':str(patient_id),
+            "empdict":json.dumps(empdict),
+            "pres_id":pres_id,
+
+        }
+        return JsonResponse(data)
+def updateConsulatationRecords(request):
+    if request.method=="POST":
+        presid=request.POST.get("presid")
+        medicine_details=request.POST.get("medicine_details")
+        presObj=patPrescriptionRecords.objects.get(id=int(presid))
+
+        try:
+            conRecObj=consulatationRecords.objects.get(pres=presObj)
+            conRecObj.medicine_details=medicine_details
+            conRecObj.save()
+            message="RecordFound"
+        except:
+            print("NoRecordFound")
+            message="NoRecordFound"
+
+        data={
+            "message":message,
+        }
+        return JsonResponse(data)
+
+
+def viewConsultationSlipRecords(request):
+    if request.method=="GET":
+        consultation_list=[]
+        try:
+            conRecObjs=consulatationRecords.objects.all()
+            countsr=1
+            for conRecObj in conRecObjs:
+                templist=[]
+
+                templist.append(countsr)
+                templist.append(conRecObj.pres.patient.pat_name)
+
+                templist.append(conRecObj.pres.id)
+                templist.append(conRecObj.doc.name)
+                templist.append(conRecObj.medicine_details)
+                templist.append(str(conRecObj.date_visited))    
+                consultation_list.append(templist)
+                countsr+=1
+
+        except:
+            consultation_list=[]
+        data={
+            'consultation_list':consultation_list,
+        }
+        return JsonResponse(data)
+
+class BasicUploadView(View):
+    def get(self, request):
+        photos_list = Photo.objects.all()
+        return render(self.request, 'rmcapp/fileuploadtest/base.html', {'photos': photos_list})
+
+    def post(self, request):
+        form = PhotoForm(self.request.POST, self.request.FILES)
+        print("PHOTO FORM",PhotoForm)
+        if form.is_valid():
+            photo = form.save()
+            data = {'is_valid': True, 'name': photo.file.name, 'url': photo.file.url}
+        else:
+            data = {'is_valid': False}
         return JsonResponse(data)

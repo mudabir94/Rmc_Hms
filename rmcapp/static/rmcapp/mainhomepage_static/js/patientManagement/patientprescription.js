@@ -6,36 +6,50 @@ var patient_prescription_div;
 //  'discount': '100', 'discount_percent': '50', 'discount_reason': 'poor', 'doctor': 'd1', 
 //  'pat_type': 'Outdoor'}
 var presData={}
+var prev_rec_nos=[]
+
 var today = new Date();
 var dd = today.getDate();
 
 var mm = today.getMonth()+1; 
 var yyyy = today.getFullYear();
-if(dd<10) 
-{
+if(dd<10) {
     dd='0'+dd;
 } 
 
-if(mm<10) 
-{
+if(mm<10) {
     mm='0'+mm;
 } 
 today = mm+'-'+dd+'-'+yyyy;
-console.log(today);
-$(document).ready(function() {
-    $.ajax({
-        type: 'GET',
-        dataType: "json",
-       
-        url: '/print_patient_prescription',
-        success: function(data){
-            console.log("presData----",JSON.parse(data['presData']));
-            presData= JSON.parse(data['presData'])
-            console.log("iddd", presData['pres_id'])
-            loadPresForm();
 
-        },
-    });
+
+$(document).ready(function() {
+    // $.ajax({
+    //     type: 'POST',
+    //     dataType: "json",
+       
+    //     url: '/print_patient_prescription',
+    //     success: function(data){
+    //         console.log("presData----",JSON.parse(data['presData']));
+    //         presData= JSON.parse(data['presData'])
+    //         prev_rec_nos=data['prev_rec_nos']
+    //         console.log("iddd", presData['pres_id'])
+    //         loadPresForm();
+
+    //     },
+    // });
+    $.post("/print_pres_ajax",function(data){
+       console.log(data)
+        if (data['message']=="Ajax"){
+            presData= JSON.parse(data['presData'])
+            prev_rec_nos=data['prev_rec_nos']
+            loadPresForm();
+        }
+        else{
+            alert(data['message'])
+        }
+     
+    },"json");
 
 });
 function loadPresForm(){
@@ -50,7 +64,17 @@ function loadPresForm(){
             var col_one__row_div_one=$("<div class='col-md-12'></div>");
                 row__col_one__row_div_one=$("<div class='row'></div>");
                     colmd1=$("<div class='col-md-1'></div>")
-                    colmd2=$("<div class='col-md-6 offset-md-2'></div>")
+                    colmd4=$("<div class='col-md-3'></div>")
+                        div=$("<div class='pres_token_date_rowdiv'></div>")
+                        for (var i in prev_rec_nos){
+                            console.log("PREV",prev_rec_nos[i][0])
+                            var div1=$("<div class='pres_token_date_subdivs'>"+prev_rec_nos[i][0]+":"+prev_rec_nos[i][1]+":"+prev_rec_nos[i][2]+"</div>")
+
+                            div.append(div1)
+                        }
+                    colmd4.append(div)
+
+                    colmd2=$("<div class='col-md-6'></div>")
                     colmd3=$("<div class='col-md-1 '></div>")
                     button=$("<button class= 'btttn' onclick='PrintPres()'> Print </button>");
                     colmd1.append(button);
@@ -61,8 +85,11 @@ function loadPresForm(){
                     colmd2.append(rmc_tag)
 
                 row__col_one__row_div_one.append(colmd1);
+                row__col_one__row_div_one.append(colmd4);
+
                 row__col_one__row_div_one.append(colmd2);
                 row__col_one__row_div_one.append(colmd3);
+
                 
 
             col_one__row_div_one.append(row__col_one__row_div_one);
