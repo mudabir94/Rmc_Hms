@@ -1,0 +1,64 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Photos Library - Simple is Better Than Complex{% endblock %}</title>
+    <link href="{% static 'rmcapp/maindashboard_static/generalcssfiles/bootstrap.min.css' %}" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+        <button type="button" class="btn btn-success js-upload-photos">
+            <span class="glyphicon glyphicon-cloud-upload"></span> Upload photos
+        </button>
+          
+          {# 2. FILE INPUT TO BE USED BY THE PLUG-IN #}
+        <input id="fileupload" type="file" name="file" multiple
+            style="display: none;"
+            data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>
+       
+          {# 3. TABLE TO DISPLAY THE UPLOADED PHOTOS #}
+        <table id="gallery" class="table table-bordered">
+        <thead>
+            <tr>
+            <th>File Name</th>
+            <th>Size</th>
+            <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for photo in photos %}
+            <tr>
+                <td>
+                    <a href="{{ photo.file.url }}">{{ photo.file.name }}</a> 
+                </td>
+                <td>
+                    <p>Size: {{photo.size}} KB </p>
+                </td>
+                <td>
+                    
+                    <button id="{{ photo.file.name }}" class='btn btn-danger delete' onclick='deleteUploadFile($(this))'>    Delete </button>
+                </td>
+
+                    
+
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    </div>
+    <script src="{% static 'rmcapp/maindashboard_static/generaljsfiles/jquery-3.3.1.js' %}"></script>
+
+    <script src="{% static 'rmcapp/maindashboard_static/generaljsfiles/bootstrap.min.js' %}"></script>
+    <script src="{% static 'rmcapp/mainhomepage_static/js/fileuploadfiles/jquery.ui.widget.js' %}"></script>
+    <script src="{% static 'rmcapp/mainhomepage_static/js/fileuploadfiles/jquery.iframe-transport.js' %}"></script>
+    <script src="{% static 'rmcapp/mainhomepage_static/js/fileuploadfiles/jquery.fileupload.js' %}"></script>
+    <script src="{% static 'rmcapp/mainhomepage_static/js/fileuploadfiles/basic_upload.js' %}"></script>
+
+  </body>
+</html>

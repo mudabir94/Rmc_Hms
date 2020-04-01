@@ -246,7 +246,7 @@ function createMedicineQtyColumn(despid){
                         var label=$("<label class='form-control-custom-static'>Boxes</label>")
                     col1_sub_sub_row2.append(label);
                     var col2_sub_sub_row2=$("<div class='col-md-6'></div>");
-                        var input=$("<input class='form-control-custom' id='boxes_stored'></input>")
+                        var input=$("<input class='form-control-custom' type='number' min='1' id='boxes_stored'></input>")
                     col2_sub_sub_row2.append(input);
                 sub_sub_row2.append(col1_sub_sub_row2);
                 sub_sub_row2.append(col2_sub_sub_row2);
@@ -261,7 +261,7 @@ function createMedicineQtyColumn(despid){
                         var label=$("<label class='form-control-custom-static'>Total Strips</label>")
                     col1_sub_sub_row3.append(label);
                     var col2_sub_sub_row3=$("<div class='col-md-6'></div>");
-                        var input=$("<input class='form-control-custom' id='strips_stored'></input>")
+                        var input=$("<input class='form-control-custom' type='number' min='1' id='strips_stored'></input>")
                     col2_sub_sub_row3.append(input);
                 sub_sub_row3.append(col1_sub_sub_row3);
                 sub_sub_row3.append(col2_sub_sub_row3);
@@ -271,7 +271,7 @@ function createMedicineQtyColumn(despid){
                         var label=$("<label class='form-control-custom-static'>Total Pieces</label>")
                     col1_sub_sub_row4.append(label);
                     var col2_sub_sub_row4=$("<div class='col-md-6'></div>");
-                        var input=$("<input class='form-control-custom' id='pieces_stored' ></input>")
+                        var input=$("<input class='form-control-custom' type='number' min='1' id='pieces_stored' ></input>")
                     col2_sub_sub_row4.append(input);
                 sub_sub_row4.append(col1_sub_sub_row4);
                 sub_sub_row4.append(col2_sub_sub_row4);
@@ -450,7 +450,7 @@ function addMedicineToMedRemoveDT(){
 function createRemoveRow(){
     var row_div_three=$("<div class='row' style='padding-bottom:18px'></div>");
     var col_one__row_div_three=$("<div class='col-md-12'></div>");
-            var rem_button=$('<button id="rem_desp_btn" onclick="removeMedFromDesp()">Remove</button>')
+            var rem_button=$('<button class="btn btn-danger" id="rem_desp_btn" onclick="removeMedFromDesp()">Remove</button>')
     col_one__row_div_three.append(rem_button);
 row_div_three.append(col_one__row_div_three);
 var main_col_div=$("#main_col_div")

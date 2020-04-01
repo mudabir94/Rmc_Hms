@@ -83,7 +83,7 @@ background:grey;
   display: block;
   width: 100%;
   padding: .375rem .75rem;
-  font-size: 0.7rem;
+  font-size: 0.9rem;
   line-height: 1.5;
   color: #495057;
   background-color: #fff;
@@ -93,8 +93,8 @@ background:grey;
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 .custom_label_css{
-  font-size: 0.7rem;
-  font-weight: 500;
+  font-size: 0.9rem;
+  font-weight: bold   ;
 }
 #edit-emplyee-info-form{
   padding: 20px 50px 30px 100px;

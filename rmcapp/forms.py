@@ -2,7 +2,7 @@ from django.forms import ModelForm
 from django import forms
 from rmcapp.models import Employee
 from rmcapp.models import User as WebUser 
-from .models import Photo
+from .models import Photo,presUploadedFiles
 
 # class EmployeeForm(ModelForm):
 #     class Meta:
@@ -30,4 +30,9 @@ class WebUserCreationForm(forms.ModelForm):
 class PhotoForm(forms.ModelForm):
     class Meta:
         model = Photo
-        fields = ('file', )
+        fields = ('file', "title")
+        # fields='__all__'
+class PresUploadedFilesForm(forms.ModelForm):
+    class Meta:
+        model = presUploadedFiles
+        fields=("file",)

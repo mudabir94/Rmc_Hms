@@ -20,7 +20,7 @@ from rmcapp.models import (
     despBillRecord,procedureBillRecord,procedureRecords,procedureTable,
     patientVisitSummary,surgeryTable,presBillSummary,revisitHistory,
     surgeryRecords,surgeryBillRecord,procedureBillSummary,surgeryBillSummary,
-    tempDespensoryStock,Role,Rooms,Ward,tokenRecords,tokenGenerator
+    tempDespensoryStock,Role,Rooms,Ward,tokenRecords,tokenGenerator,presUploadedFiles,
 )
 from django.http import HttpResponse, JsonResponse
 from .Controllers.MedControllers.MedController import MedicineController  
@@ -33,10 +33,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from rmcapp.forms import WebUserCreationForm
 
 from django.views import View
-from .forms import PhotoForm
+from .forms import PhotoForm,PresUploadedFilesForm
 from .models import Photo
-
-
+                        
 
 # Create your views here.
 class mainHome(TemplateView):
@@ -1814,8 +1813,6 @@ def retirevePatientMedHistory(request):
                     presid=int(presid)
                     print(presid)
                     presObj=patPrescriptionRecords.objects.get(id=presid)
-                    print("RRR")
-
                     date=patVSumObj.date_visited.date()
                     date=str(date)
                     if date in date_visited_dict:
@@ -1824,6 +1821,23 @@ def retirevePatientMedHistory(request):
 
                     date_visited_dict[date]=presid
                     pres_records_dict[presid]=[]
+                    try:
+                        filesObjs=presUploadedFiles.objects.filter(pres=presObj)
+                        filelist=[]
+                        for filesObj in filesObjs:
+                            tempdict={}
+                            tempdict['title']=filesObj.title
+                            tempdict['name']=filesObj.file.name
+                            tempdict['url']=filesObj.file.url
+                            size=filesObj.size
+                            if size==None:
+                                size=0
+                            tempdict['size']=size
+                            filelist.append(tempdict)
+
+                    except:
+
+                        filelist=[]
 
                     temp_med_hist_dict={}
                     temp_med_hist_dict['patienttype']=presObj.patient_type.patient_type
@@ -1836,6 +1850,8 @@ def retirevePatientMedHistory(request):
                     temp_med_hist_dict['rx']=presObj.rx
                     temp_med_hist_dict['admit_reason']=presObj.admit_reason   
                     temp_med_hist_dict['diagnosis']=presObj.diagnosis
+                    temp_med_hist_dict['filelist']=filelist
+
                     print("temp_med_hist_dict",temp_med_hist_dict)
                     temp_pres_records_list=[]
 
@@ -2270,8 +2286,22 @@ def retrieveProcedureDetails(request):
 def retrieveEmployeeInfo(request):
     if request.method=="GET":
         emp_name=request.GET.get('emp_name')
-        emp_objs=Employee.objects.filter(Q(name__contains=emp_name))
-        
+        # emp_objs=Employee.objects.filter(Q(name__contains=emp_name))
+        contact_no=request.GET.get("contact_no")
+        print("contact_no",contact_no)
+        # cnic=request.GET.get("cnic")
+        # contact_no=""
+        # cnic=""
+        #phone_no=contact_no,cnic=cnic_no
+
+        # pat_objs=Patient.objects.filter(Q(pat_name=pat_name) | Q(phone_no=contact_no) | Q(cnic=cnic)| Q(id=id))
+        # pat_objs=Patient.objects.filter(Q(pat_name__contains=pat_name) | Q(phone_no__contains=contact_no))
+        if emp_name!="" and contact_no!="":
+            emp_objs=Employee.objects.filter(Q(name__contains=emp_name) and Q(phone_no__contains=contact_no) )
+        elif contact_no=="":
+            emp_objs=Employee.objects.filter(Q(name__contains=emp_name) )
+        else:
+            emp_objs=Employee.objects.filter(Q(phone_no__contains=contact_no))
 
         print("emp_objs",emp_objs)
         employee_dict={}
@@ -3481,10 +3511,29 @@ def updatePrescriptionRecord(request):
             temp_med_hist_dict['med_info_rec']=med_info_rec_list
         except:
             print("Something went wrong")
+        try:
+            filesObjs=presUploadedFiles.objects.filter(pres=presObj)
+            print("filesObj",filesObjs)
+            filelist=[]
+            for filesObj in filesObjs:
+                tempdict={}
+                tempdict['title']=filesObj.title
+                tempdict['name']=filesObj.file.name
+                tempdict['url']=filesObj.file.url
+                size=filesObj.size
+                if size==None:
+                    size=0
+                tempdict['size']=size
+                filelist.append(tempdict)
+
+        except:
+
+            filelist=[]
+        print("filelist",filelist)
 
 
 
-        print("pres_records_list",pres_records_list)
+
         data={
             "med_info_list":med_info_list,
             "pres_data_dict":json.dumps(pres_data_dict),
@@ -3492,6 +3541,7 @@ def updatePrescriptionRecord(request):
             "pres_records_list":pres_records_list,
             # "med_hist_dict":json.dumps(temp_med_hist_dict),
             "med_info_rec_list":med_info_rec_list,
+            'filelist':filelist,
         }
         return JsonResponse(data)      
     elif request.method=="POST":
@@ -3502,10 +3552,6 @@ def updatePrescriptionRecord(request):
 
         pres_records_dict_for_update=request.POST.get("pres_records_dict_for_update")
         pres_records_dict_for_update=json.loads(pres_records_dict_for_update)
-
-        
-
-
         presObj=patPrescriptionRecords.objects.get(id=presid)
         for date in pres_records_dict_for_update:
             if pres_records_dict_for_update[date]['visiting']=='first':
@@ -3528,15 +3574,40 @@ def updatePrescriptionRecord(request):
                 revObj.vitals=pres_records_dict_for_update[date]["vitals"]
                 revObj.rx=pres_records_dict_for_update[date]["rx"]
                 revObj.save()
+       
+        data={}
+        return JsonResponse(data)
+def presUploadFiles(request):
+    if request.method=="POST":
+        presid=request.POST.get("presid")
+        print("presid",presid)
+        form = PresUploadedFilesForm(request.POST, request.FILES)
+        if form.is_valid():
+            presObj=patPrescriptionRecords.objects.get(id=presid)
+
+            prescriptionUpload = form.save()
+            print("prescriptionUpload",prescriptionUpload.file.size)
+            # print("photo.file.url",photo.file.url)
+            prescriptionUpload.pres=presObj
+            prescriptionUpload.title=prescriptionUpload.file.name
+            prescriptionUpload.size=(prescriptionUpload.file.size)/1000
+            prescriptionUpload.save()
+            data = {'is_valid': True, 'name': prescriptionUpload.file.name, 'url': prescriptionUpload.file.url}
+        else:
+            data = {'is_valid': False}
+        return JsonResponse(data)
+def presRecDeleteFiles(request):
+    if request.method=="POST":
+        presid=request.POST.get("presid")
+        filename=request.POST.get('filename')
+        presObj=patPrescriptionRecords.objects.get(id=presid)
+        presUploadedFiles.objects.get(pres=presObj,title=filename).delete()
+        data={}
+        return JsonResponse(data)
+
 
 
         
-
-
-
-
-        data={}
-        return JsonResponse(data)
 
 
 def procSurgForm(request):
@@ -5224,14 +5295,29 @@ def viewConsultationSlipRecords(request):
 class BasicUploadView(View):
     def get(self, request):
         photos_list = Photo.objects.all()
-        return render(self.request, 'rmcapp/fileuploadtest/base.html', {'photos': photos_list})
+        return render(self.request, 'rmcapp/fileupload/base.html', {'photos': photos_list})
 
     def post(self, request):
         form = PhotoForm(self.request.POST, self.request.FILES)
         print("PHOTO FORM",PhotoForm)
         if form.is_valid():
             photo = form.save()
+            print("photo",photo.file.size)
+            # print("photo.file.url",photo.file.url)
+            photo.title=photo.file.name
+            photo.size=(photo.file.size)/1000
+            photo.save()
             data = {'is_valid': True, 'name': photo.file.name, 'url': photo.file.url}
         else:
             data = {'is_valid': False}
         return JsonResponse(data)
+def deleteFile(request):
+    if request.method=="POST":
+        filename=request.POST.get('filename')
+        Photo.objects.get(title=filename).delete()
+
+        print("filename",filename)
+
+        data={}
+        return JsonResponse(data)
+

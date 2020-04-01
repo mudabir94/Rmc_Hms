@@ -1707,6 +1707,55 @@ function createPatientHistoryForm(){ ///details in right col
             col__row_fourteen__sub_col_two.append(row_one__col__row_fourteen__sub_col_two);
         row_fourteen__sub_col_two.append(col__row_fourteen__sub_col_two);
 
+        var row_sixteen__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
+            var col__row_sixteen__sub_col_two=$("<div class='col-md-12'></div>");
+                var row_one__col__row_sixteen__sub_col_two=$("<div class='row'></div>");
+                    var colmd1=$("<div class='col-md-12'>")
+                    var view_pres_rec_files_table=$('<table id="view_pres_rec_files_table" class="datatable_uploadfile" width="100%"></table>')
+                        var thead=$(' <thead>\
+                            <tr>\
+                            <th>Cover</th>\
+                            <th>File Name</th>\
+                            <th>Description</th>\
+                            <th>Size</th>\
+                            </tr>\
+                        </thead>')
+                    view_pres_rec_files_table.append(thead)
+                    var tbody=$("<tbody>");
+                    var filelist=pat_med_history_dict[pres_selected]['filelist']
+                        for (key in filelist){
+                            console.log(filelist[key])
+                            var tr=$("<tr>")
+                                var td1=$("<td>");
+                                var  a1=$("<a href="+filelist[key]['url']+" target='_blank'></a>")
+                                var img=$('<img  src='+filelist[key]["url"]+' height="42" width="42">')
+                                    a1.append(img)
+                                td1.append(a1)
+                                var td2=$("<td>");
+                                    var  a=$("<a href="+filelist[key]['url']+" target='_blank'>"+filelist[key]['title']+"</a>")
+                                td2.append(a)
+
+                               
+                                var td4=$("<td>");
+                                td4.append("Size: "+filelist[key]['size']+" KB ")
+                               
+                            tr.append(td1)
+                            tr.append(td2)
+                          
+                            tr.append(td4)
+                            
+                            tbody.append(tr);
+                        }
+                    view_pres_rec_files_table.append(tbody)
+                    $(view_pres_rec_files_table).append('<caption class="custom_label_css"  style="font-weight: bold; ;caption-side: top;">Files</caption>');
+
+                    
+                    
+                    colmd1.append(view_pres_rec_files_table);
+                row_one__col__row_sixteen__sub_col_two.append(colmd1)
+            col__row_sixteen__sub_col_two.append(row_one__col__row_sixteen__sub_col_two);
+        row_sixteen__sub_col_two.append(col__row_sixteen__sub_col_two);
+
 
         var row_thirteen__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
             var col__row_thirteen__sub_col_two=$("<div class='col-md-12'></div>");
@@ -1733,17 +1782,24 @@ function createPatientHistoryForm(){ ///details in right col
     sub_col_two.append(row_ten__sub_col_two);
     // sub_col_two.append(row_eleven__sub_col_two);  
     sub_col_two.append(row_twelve__sub_col_two);
+    sub_col_two.append(row_sixteen__sub_col_two);
+
     sub_col_two.append(row_thirteen__sub_col_two);
 
 row_div_one.append(sub_col_two);
 createPresRecHistDatatable()
-
-if (pat_med_history_dict[pres_selected]['med_info_rec'].length!==0 ){
-    createMedInfoRecDatatable()
+if (pat_med_history_dict[pres_selected]['med_info_rec']!==undefined  ){
+    medinforec_len=pat_med_history_dict[pres_selected]['med_info_rec']
+    if (medinforec_len!==0){
+        createMedInfoRecDatatable()
+    }
 
 }
-if (pat_med_history_dict[pres_selected]['procedure_names'].length!==0 ){
-    createProcRecsDatatable()
+if (pat_med_history_dict[pres_selected]['procedure_names']!==undefined){
+    proc_name_len=pat_med_history_dict[pres_selected]['procedure_names'].length
+    if (proc_name_len!==0){
+        createProcRecsDatatable()
+    }
 
 }
 }
@@ -5979,7 +6035,7 @@ function createRowDivFiveBill(){ ///Last Discount and total Bill row with Button
     var main_col_div=$("#main_col_div");
     var row_div_five=$("<div class='row' id='calculate_despbill_div' style='padding-top:15px;padding-bottom:15px'></div>");
         var col_one__row_div_five=$("<div class='col-md-12'></div>");
-            var button=$("<button class='btn btn-block fa fa-calculator' onclick='calculateDespProcBill()'> Calculate Total Bill</button>")
+            var button=$("<button class='btn btn-primary fa fa-calculator' onclick='calculateDespProcBill()'> Calculate Total Bill</button>")
         col_one__row_div_five.append(button);
                         
         col_one__row_div_five.append(row__col_one__row_div_five);
@@ -6425,6 +6481,7 @@ function searchPatPresc(){
     $("#row_div_two").remove();
     $("#row_div_three").remove();
     $("#row_div_four").remove();
+    $("#row_div_upload_presfiles").remove();
     $("#row_div_two_pres_detail_update").remove();
     if(pres_record_datatable_update!==undefined){
         pres_record_datatable_update.destroy();
@@ -6449,6 +6506,7 @@ function searchPatPresc(){
     med_info_list=data['med_info_list'];
     pres_records_list_for_update=data['pres_records_list'];
     med_info_rec_list=data['med_info_rec_list']
+    filelist=data['filelist']
 
 
     var row_div_two=$("<div class='row' id='row_div_two_pres_detail_update' style='padding-bottom:10px;'></div>");
@@ -6467,6 +6525,53 @@ function searchPatPresc(){
             subrow_one.append(col_one__subrow_one)
         main_col.append(subrow_one);
         row_div_five.append(main_col)
+    var row_div_six=$("<div class='row' id='row_div_upload_presfiles' style='padding-top:10px;'></div>");
+    var main_col=$("<div class='col-md-12'></div>");
+
+            var pres_upload_button=$('<button type="button" class="btn btn-success js-upload-photos" onclick="uploadFileFunc()"> Upload Files</button>')
+                var span=$('<span class="glyphicon glyphicon-cloud-upload"></span>');
+            pres_upload_button.append(span)
+            var input=$('<input id="fileupload" type="file" name="file" multiple style="display: none;">')
+                input.append('data-form-data="{"csrfmiddlewaretoken": "{{ csrf_token }}"} ')
+                
+            var pres_record_table_update=$("<table id='pres_upload_table' class='datatable_uploadfile' width='100%' ></table>");
+                var thead=$(' <thead>\
+                    <tr>\
+                    <th>File Name</th>\
+                    <th>Size</th>\
+                    <th>Action</th>\
+                    </tr>\
+                </thead>')
+            pres_record_table_update.append(thead)
+                var tbody=$("<tbody>");
+                    for (key in filelist){
+                        console.log(key)
+                        console.log(filelist[key])
+                        var tr=$("<tr>")
+                            var td1=$("<td>");
+                                var  a=$("<a href="+filelist[key]['url']+" target='_blank'>"+filelist[key]['title']+"</a>")
+                            td1.append(a)
+                            var td2=$("<td>");
+                            td2.append("Size: "+filelist[key]['size']+" KB ")
+                            var td3=$("<td>")
+                                var button=$("<button id='"+filelist[key]['title']+":"+presid+"' class='btn btn-danger delete'\
+                                 onclick='deletePresUploadFile($(this))'>Delete </button>");
+                            td3.append(button);
+                        tr.append(td1)
+                        tr.append(td2)
+                        tr.append(td3)
+                        tbody.append(tr);
+                    }
+            pres_record_table_update.append(tbody)
+
+            
+                
+            
+    main_col.append(pres_upload_button)   
+    main_col.append(input)
+    main_col.append(pres_record_table_update)         
+    row_div_six.append(main_col)
+
 
     var row_div_four=$("<div class='row' id='row_div_four' style='padding-top:10px;'></div>");
         var main_col=$("<div class='col-md-12'></div>");
@@ -6489,12 +6594,106 @@ function searchPatPresc(){
     createPresMedDataTableRow();
     createPresMedDataTable(med_info_rec_list);
     createPresRecDatatableForUpdate(pres_records_list_for_update);
+    main_col_div.append(row_div_six);
     main_col_div.append(row_div_four);
+
+    /* 2. INITIALIZE THE FILE UPLOAD COMPONENT */
+    $("#fileupload").fileupload({
+        dataType: 'json',
+        autoUpload: false,
+        formData:{presid:presid},
+        url:"/pres_upload_files",
+        add: function (e, data) {            
+        console.log("data",data)
+        $("#pres_upload_table tbody").prepend(
+            "<tr>\
+            <td><a href='/uploadedfiles/prescription_records/"+data.files[0]['name']+"' target='_blank'>" + data.files[0]['name'] + "</a></td>\
+            <td><p>Size : "+data.files[0]['size']/1000+" KB</p>\
+            <div class='progress'>\
+                <div id='progress-bar:"+data.files[0]['name']+"' role='progressbar' style='width: 0%;'>0%</div>\
+            </div>\
+            </td>\
+            <td><button id='pres_upload_btn' class='btn btn-primary'>Upload</button></td>\
+            </tr>"
+        )
+        $("#pres_upload_btn").on('click', function () {
+            
+            console.log("DATA--",data)
+            data.submit();
+            console.log("DATA>>",data)
+
+            presUploadBtnPressed=$(this)
+            
+            });
+        },
+        progress:function (e, data) { 
+            console.log("progress",data)
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            var strProgress = progress + "%";
+            $("#progress-bar"+data.originalFiles.name).css({"width": strProgress});
+            $("#progress-bar"+data.originalFiles.name).text(strProgress);
+         },
+
+        done: function (e, data) {  /* 3. PROCESS THE RESPONSE FROM THE SERVER */
+        console.log("dattaa",data)
+        filename=data.result.name
+        size=data.originalFiles.size
+        parent=$(presUploadBtnPressed).parent();
+        $(parent).append("<button id='"+filename+":"+presid+"' class='btn btn-danger delete'  onclick='deletePresUploadFile($(this))'>Delete</button>")
+        $(presUploadBtnPressed).remove();     
+        
+        // if (data.result.is_valid) {
+        //     $("#gallery tbody").prepend(
+        //       "<tr><td><a href='" + data.result.url + "'>" + data.result.name + "</a><button >Delete</button> <input type='checkbox'></td></tr>"
+        //     )
+        //   }
+        },
+        
+        });
     }
 });
     
 
 }
+
+
+
+var presUploadBtnPressed;
+    function uploadFileFunc(){
+        
+
+        $("#fileupload").click();
+       
+    }
+    
+      
+    function deletePresUploadFile(ele) {
+        id=$(ele).attr('id');
+        arr=id.split(":");
+        name=arr[0];
+        presid=arr[1]
+        
+        console.log("DeLeTEING",name)
+        console.log("presid",presid)
+        $.ajax({
+            type: 'POST',
+            dataType: "json",
+            'data': {
+                'filename':name,
+                'presid':presid,
+            },
+            url: '/pres_rec_deletefiles',
+            success: function(data){
+                $(ele).parent().parent().remove();
+    
+            }
+        });
+    }
+
+
+
+
+
 function createPresMedDataTableRow(){
     var row_div_three=$("<div class='row' id='row_div_three'></div>");
         var col_one__row_div_three=$("<div class='col-md-12'></div>");

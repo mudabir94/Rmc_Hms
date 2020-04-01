@@ -86,6 +86,7 @@ border: none;
     color:cornflowerblue;
   }
   .datatablecss_med{
+    font-size:0.8rem;
   }
   .datatablecss_med td, .datatablecss_med th {
     border: 1px solid #ddd;
@@ -171,4 +172,7 @@ border: none;
   .datatable_heading_label{
     font-size: 0.8rem;
     font-weight: 700;
+  }
+  #dates_row_div{
+    margin-left: 0px;
   }

@@ -368,7 +368,7 @@ function editMedicinePriceInStock(){
     med_dialog_editdiv.append(sellprice_tag)
     med_dialog_editdiv.append(sellprice_input)
     var submitupdateddatadiv=$("<div id='updateMedStckPriceDataDiv'></div>");
-        button=$("<button id='updateMedStckPriceDataBtn' onclick='updateMedStckPriceData()'>Update Changes</button>")
+        button=$("<button class='btn btn-success' id='updateMedStckPriceDataBtn' onclick='updateMedStckPriceData()'>Update Changes</button>")
     submitupdateddatadiv.append(button)
     main_col_div.append(med_dialog_editdiv) 
     main_col_div.append(med_stock_edit_div)
@@ -518,7 +518,7 @@ function updateMedStckPriceData(){
         },
         url: '/update_all_med_stock_info_from_edit',
         success: function(data){
-           
+           alert("Changes Updated")
         },
     });
 }

@@ -751,5 +751,12 @@ class consulatationRecords(models.Model):
 
 class Photo(models.Model):
     title = models.CharField(max_length=255, blank=True)
-    file = models.FileField(upload_to='photos/')
+    file = models.FileField()
+    size =models.FloatField( null=True, blank=True)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+class presUploadedFiles(models.Model):
+    pres=models.ForeignKey(patPrescriptionRecords, on_delete=models.CASCADE,default=None,null=True,blank=True)
+    title = models.CharField(max_length=255, blank=True)
+    file = models.FileField(upload_to='prescription_records/')
+    size =models.FloatField( null=True, blank=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)

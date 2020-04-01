@@ -56,6 +56,9 @@ urlpatterns = [
   path('print_patient_prescription',views.printPatientPrescription,name="print_patient_prescription"),
   
   path('update_prescription_record',views.updatePrescriptionRecord,name="update_prescription_record"),
+  path("pres_upload_files",views.presUploadFiles, name="pres_upload_files"),
+  path("pres_rec_deletefiles",views.presRecDeleteFiles, name="pres_rec_deletefiles"),
+
 
   path('generate_prescription',views.generatePrescription,name="generate_prescription"),
 
@@ -131,5 +134,8 @@ urlpatterns = [
   path("view_consultation_slip_records",views.viewConsultationSlipRecords,name="view_consultation_slip_records"),
 
   url(r'^basic_upload/$', views.BasicUploadView.as_view(), name='basic_upload'),
+  path("delete_file",views.deleteFile,name="delete_file"),
+
+
 
 ]

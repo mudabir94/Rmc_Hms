@@ -169,7 +169,7 @@ function addEmployee(){
 
                     contact_type_label=$("<label class='custom_label_css'>Contact Number</label>");
                     colmd1.append(contact_type_label);
-                    contact_type_input=$("<input class='form-control-custom' autocomplete='off' id='contact_numb_input' maxlength='12' oninput='contactNumPatInfoOnInput($(this))' class='custom_input_css' placeholder='0312-3456789'></input>")
+                    contact_type_input=$("<input class='form-control-custom' autocomplete='off' id='contact_numb_input' maxlength='12' oninput='contactNumPatInfoOnInput($(this))' class='custom_input_css' placeholder='xxxx-xxxxxxx'></input>")
                     colmd2.append(contact_type_input);
 
                 row__col_two__row_div_one.append(colmd1)
@@ -329,12 +329,24 @@ $(main_col_div).append(row_div_five);
 
 
 
-        $( "#dob_input" ).datepicker({
-            changeMonth: true,
-            changeYear: true,
-            dateFormat: "yy-mm-dd",
+        // $( "#dob_input" ).datepicker({
+        //     changeMonth: true,
+        //     changeYear: true,
+        //     dateFormat: "yy-mm-dd",
 
-            });
+        //     });
+        $('#dob_input').datepicker({
+            uiLibrary: 'bootstrap4',
+            // dateFormat: "yy-mm-dd",
+            format: 'yyyy-mm-dd',
+            modal: true,
+            close: function (e) {
+                console.log("e",e["target"]['value'])
+                value=e["target"]['value']
+                console.log("Value")
+            }
+
+        });
         
             available_tags = [
                 "Male",
@@ -396,7 +408,7 @@ function editEmployee(){
                         colmd2=$("<div class='col-md-6'></div>")
                             contact_type_label=$("<label class='custom_label_css'>Contact Number</label>");
                         colmd1.append(contact_type_label);
-                            contact_type_input=$("<input class='form-control-custom custom_input_css' id='search_contact_numb_input'   maxlength='12'  oninput='searchContactNumPatInfoOnEdit($(this))' placeholder='0312-3456789'></input>")
+                            contact_type_input=$("<input class='form-control-custom custom_input_css' id='search_contact_numb_input'   maxlength='12'  oninput='searchContactNumPatInfoOnEdit($(this))' placeholder='xxxx-xxxxxxx'></input>")
                         colmd2.append(contact_type_input);
                     row__col_two__row_div_one.append(colmd1)
                     row__col_two__row_div_one.append(colmd2)
@@ -468,7 +480,7 @@ function retrieveEmployeeInfo(emp_name,contact_no){
         dataType: "json",
         'data': {
           "emp_name":emp_name,
-        //   "contact_no":contact_no,
+          "contact_no":contact_no,
 
         },
         url: '/retrieve_employee_info',
@@ -744,6 +756,7 @@ function createEmployeetDataTable(){
 }
 function saveEmployeeData(){
     var employee_name=$("#emp_name_input").val();
+    employee_name=employee_name.toLowerCase();
     var inputs = $("#main_col_div").find($("input") );
     totalinputs=inputs.length;
     console.log(inputs.length);
@@ -780,7 +793,6 @@ function saveEmployeeData(){
     //     alert("employee name empty")
     //     return;
     // }
-        console.log("employee_name", employee_name);
         var contact_number=$("#contact_numb_input").val();
         var gender=$("#gender_input").val();
         console.log("gender", gender);

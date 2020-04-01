@@ -30,7 +30,7 @@ procedureTable,
 procedureRecords,procedureBillRecord,patPrescriptionBillRecordHistory,presBillSummary,
 despBillRecord,
 patientVisitSummary,invoiceRecords,revisitHistory,
-surgeryBillSummary,tokenRecords,tokenGenerator,consulatationRecords,Photo
+surgeryBillSummary,tokenRecords,tokenGenerator,consulatationRecords,Photo,presUploadedFiles
 )
 
 class PhotoAdmin(admin.ModelAdmin):
@@ -201,6 +201,8 @@ class tokenGeneratorAdmin(admin.ModelAdmin):
     list_display=("id","token_no")
 class consulatationRecordsAdmin(admin.ModelAdmin):
     list_display=("id","pres","doc","medicine_details","date_visited")
+class presUploadedFilesAdmin(admin.ModelAdmin):
+    list_display=("id","pres","title","file","size",'uploaded_at')
 
 
 admin.site.register(medicineType, medicineTypeAdmin)
@@ -273,7 +275,7 @@ admin.site.register(tokenRecords, tokenRecordsAdmin)
 
 admin.site.register(consulatationRecords, consulatationRecordsAdmin)
 admin.site.register(Photo, PhotoAdmin)
-
+admin.site.register(presUploadedFiles,presUploadedFilesAdmin)
 
 
 
