@@ -760,3 +760,27 @@ class presUploadedFiles(models.Model):
     file = models.FileField(upload_to='prescription_records/')
     size =models.FloatField( null=True, blank=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)
+
+class rawFilesTable(models.Model):
+    file_name=models.CharField(max_length=255, blank=True)
+    file = models.FileField(upload_to='attendancesheets/rawfiles/')
+    size=models.FloatField( null=True, blank=True)
+    month=models.CharField(max_length=255, blank=True)
+    year=models.CharField(max_length=255, blank=True)
+    uploaded_by=models.ForeignKey(Employee, on_delete=models.CASCADE,default=None,null=True,blank=True)
+
+class attendanceRecords(models.Model):
+    emp_name=models.CharField(max_length=255, blank=True,null=True,default=None)
+    emp_user=models.ForeignKey(Employee, on_delete=models.CASCADE,default=None,null=True,blank=True)
+    date=models.DateTimeField(default=None,null=True, blank=True)
+    checkin=models.DateTimeField(default=None,null=True, blank=True)
+    checkout=models.DateTimeField(default=None,null=True, blank=True)
+    status=models.CharField(max_length=255, blank=True,null=True,default=None)
+    month=models.IntegerField(blank=True,null=True,default=None)
+    year=models.IntegerField(blank=True,null=True,default=None)
+    hours_worked=models.FloatField(blank=True,null=True,default=None)
+    minutes_worked=models.FloatField(blank=True,null=True,default=None)
+    monthyear=models.CharField(max_length=50, blank=True,null=True,default=None)
+
+
+

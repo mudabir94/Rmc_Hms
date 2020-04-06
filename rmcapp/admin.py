@@ -30,8 +30,11 @@ procedureTable,
 procedureRecords,procedureBillRecord,patPrescriptionBillRecordHistory,presBillSummary,
 despBillRecord,
 patientVisitSummary,invoiceRecords,revisitHistory,
-surgeryBillSummary,tokenRecords,tokenGenerator,consulatationRecords,Photo,presUploadedFiles
+surgeryBillSummary,tokenRecords,tokenGenerator,consulatationRecords,Photo,presUploadedFiles,
+rawFilesTable,attendanceRecords
 )
+
+
 
 class PhotoAdmin(admin.ModelAdmin):
     list_display=("id","title","file","uploaded_at")
@@ -39,7 +42,7 @@ class PhotoAdmin(admin.ModelAdmin):
 class RoleAdmin (admin.ModelAdmin):
     pass
 class UserAdmin (admin.ModelAdmin):
-    pass
+    list_display=("id","username","first_name")
 class MedicineResource(resources.ModelResource):
     class meta:
         model=Medicine
@@ -203,6 +206,11 @@ class consulatationRecordsAdmin(admin.ModelAdmin):
     list_display=("id","pres","doc","medicine_details","date_visited")
 class presUploadedFilesAdmin(admin.ModelAdmin):
     list_display=("id","pres","title","file","size",'uploaded_at')
+class rawFilesTableAdmin(admin.ModelAdmin):
+    list_display=("id","file_name","file","size","month","year","uploaded_by")
+class attendanceRecordsAdmin(admin.ModelAdmin):
+    list_display=("id","emp_name","emp_user","date","checkin","checkout","status","month","year","hours_worked","minutes_worked","monthyear")
+
 
 
 admin.site.register(medicineType, medicineTypeAdmin)
@@ -277,6 +285,5 @@ admin.site.register(consulatationRecords, consulatationRecordsAdmin)
 admin.site.register(Photo, PhotoAdmin)
 admin.site.register(presUploadedFiles,presUploadedFilesAdmin)
 
-
-
-
+admin.site.register(rawFilesTable, rawFilesTableAdmin)
+admin.site.register(attendanceRecords, attendanceRecordsAdmin)

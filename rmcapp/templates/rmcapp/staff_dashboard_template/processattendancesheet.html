@@ -1,0 +1,20 @@
+{% extends "rmcapp/staff_dashboard_template/attendance_base.html" %}
+{% block content %}
+{%load static from staticfiles%}
+<main class="page-content" id="main_page_content">
+    <div id="raw_file_view_maindiv">
+        <div class='row'  style='padding-top:10px;'>
+            <div class='col-md-12'>
+                <table id='raw_attfiles_view_table' class='datatable_upload_raw_att_file' width='100%' >
+            </div>
+        </div>
+        
+    </div>
+    
+</main>
+
+{%endblock%}
+{% block javascript %}
+    
+    <script src="{% static 'rmcapp/mainhomepage_static/js/StaffmanagementJS/processRawUploadFiles.js' %}"></script>
+{% endblock %}

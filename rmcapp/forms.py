@@ -2,7 +2,7 @@ from django.forms import ModelForm
 from django import forms
 from rmcapp.models import Employee
 from rmcapp.models import User as WebUser 
-from .models import Photo,presUploadedFiles
+from .models import Photo,presUploadedFiles,rawFilesTable
 
 # class EmployeeForm(ModelForm):
 #     class Meta:
@@ -35,4 +35,8 @@ class PhotoForm(forms.ModelForm):
 class PresUploadedFilesForm(forms.ModelForm):
     class Meta:
         model = presUploadedFiles
+        fields=("file",)
+class RawAttUploadFilesForm(forms.ModelForm):
+    class Meta:
+        model = rawFilesTable
         fields=("file",)

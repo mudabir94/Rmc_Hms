@@ -136,6 +136,16 @@ urlpatterns = [
   url(r'^basic_upload/$', views.BasicUploadView.as_view(), name='basic_upload'),
   path("delete_file",views.deleteFile,name="delete_file"),
 
+  path("load_attendance_sheet",views.loadAttendanceSheet.as_view(),name="load_attendance_sheet"),
+  path("delete_raw_attendance_sheet",views.loadAttendanceSheet.deleteUploadFile,name="delete_raw_attendance_sheet"),
+  path("process_attendance_sheet",views.processAttendanceSheet.as_view(),name="process_attendance_sheet"),
+  path("ajax_get_process_attendance_sheet",views.processAttendanceSheet.ajaxGetProcessAttendanceSheet,name="ajax_get_process_attendance_sheet"),
+  path("view_attendance_by_month",views.viewAttendanceByMonth.as_view(),name="view_attendance_by_month"),
+  path("ajax_get_all_attendance_data",views.viewAttendanceByMonth.ajaxGetAllAttendanceData,name="ajax_get_all_attendance_data"),
+  path("ajax_specific_attendance_bymonth_data",views.viewAttendanceByMonth.ajaxGetAllAttendanceByMonthData,name="ajax_specific_attendance_bymonth_data"),
+
+
+  path("run_script",views.runScript,name="run_script")
 
 
 ]

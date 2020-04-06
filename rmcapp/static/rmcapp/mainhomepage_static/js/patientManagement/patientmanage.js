@@ -6564,9 +6564,6 @@ function searchPatPresc(){
                     }
             pres_record_table_update.append(tbody)
 
-            
-                
-            
     main_col.append(pres_upload_button)   
     main_col.append(input)
     main_col.append(pres_record_table_update)         
@@ -6609,9 +6606,6 @@ function searchPatPresc(){
             "<tr>\
             <td><a href='/uploadedfiles/prescription_records/"+data.files[0]['name']+"' target='_blank'>" + data.files[0]['name'] + "</a></td>\
             <td><p>Size : "+data.files[0]['size']/1000+" KB</p>\
-            <div class='progress'>\
-                <div id='progress-bar:"+data.files[0]['name']+"' role='progressbar' style='width: 0%;'>0%</div>\
-            </div>\
             </td>\
             <td><button id='pres_upload_btn' class='btn btn-primary'>Upload</button></td>\
             </tr>"
@@ -6626,13 +6620,13 @@ function searchPatPresc(){
             
             });
         },
-        progress:function (e, data) { 
-            console.log("progress",data)
-            var progress = parseInt(data.loaded / data.total * 100, 10);
-            var strProgress = progress + "%";
-            $("#progress-bar"+data.originalFiles.name).css({"width": strProgress});
-            $("#progress-bar"+data.originalFiles.name).text(strProgress);
-         },
+        // progress:function (e, data) { 
+        //     console.log("progress",data)
+        //     var progress = parseInt(data.loaded / data.total * 100, 10);
+        //     var strProgress = progress + "%";
+        //     $("#progress-bar"+data.originalFiles.name).css({"width": strProgress});
+        //     $("#progress-bar"+data.originalFiles.name).text(strProgress);
+        //  },
 
         done: function (e, data) {  /* 3. PROCESS THE RESPONSE FROM THE SERVER */
         console.log("dattaa",data)
@@ -7997,6 +7991,7 @@ function ViewConsultationSlips(){
            
         },
         url: '/view_consultation_slip_records',
+        
         success: function(data){
             consultation_list=data['consultation_list'];
             createDataTableViewConsultatoinList(consultation_list);

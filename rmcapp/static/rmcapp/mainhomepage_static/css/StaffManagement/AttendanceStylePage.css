@@ -1,0 +1,49 @@
+/* DATATABLE FILEUPLOAD */
+.datatable_upload_raw_att_file{
+    font-size:1rem;
+  }
+  
+.datatable_upload_raw_att_file td, .datatable_upload_raw_att_file th {
+    border: 2px solid #ddd;
+    padding: 8px;
+}
+.datatable_upload_raw_att_file tr:nth-child(even){background-color: #f2f2f2;}
+
+.datatable_upload_raw_att_file  tr:hover {background-color: rgba(119, 5, 5, 0.342);}
+.datatable_upload_raw_att_file  tr{
+    padding:0px;
+    line-height: 6px;
+}
+.datatable_upload_raw_att_file th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: rgb(119, 5, 5);
+    color: white;
+}
+
+.modal-loading {
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 ) 
+                url('http://i.stack.imgur.com/FhHRx.gif') 
+                50% 50% 
+                no-repeat;
+}
+
+/* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+body.loading .modal-loading {
+    overflow: hidden;   
+}
+
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+body.loading .modal-loading {
+    display: block;
+}

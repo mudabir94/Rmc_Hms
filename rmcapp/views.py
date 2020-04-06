@@ -21,6 +21,7 @@ from rmcapp.models import (
     patientVisitSummary,surgeryTable,presBillSummary,revisitHistory,
     surgeryRecords,surgeryBillRecord,procedureBillSummary,surgeryBillSummary,
     tempDespensoryStock,Role,Rooms,Ward,tokenRecords,tokenGenerator,presUploadedFiles,
+    attendanceRecords,rawFilesTable,
 )
 from django.http import HttpResponse, JsonResponse
 from .Controllers.MedControllers.MedController import MedicineController  
@@ -33,7 +34,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from rmcapp.forms import WebUserCreationForm
 
 from django.views import View
-from .forms import PhotoForm,PresUploadedFilesForm
+from .forms import PhotoForm,PresUploadedFilesForm,RawAttUploadFilesForm
 from .models import Photo
                         
 
@@ -5320,4 +5321,166 @@ def deleteFile(request):
 
         data={}
         return JsonResponse(data)
+
+class loadAttendanceSheet(TemplateView):
+    template_path_name="rmcapp/staff_dashboard_template/loadattendancesheet.html"
+
+    def get(self, request):
+        print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+        raw_file_list=list(rawFilesTable.objects.all())
+       
+        return render(self.request, self.template_path_name, {"raw_file_list":raw_file_list})
+
+    def post(self, request):
+        form = RawAttUploadFilesForm(self.request.POST, self.request.FILES)
+        if form.is_valid():
+            rawuploadAtt = form.save()
+            fileurl=str(rawuploadAtt.file.name)
+            fileurl=fileurl.split("/")
+            filename=fileurl[2]
+            rawuploadAtt.file_name=filename
+            rawuploadAtt.file=rawuploadAtt.file.name
+            rawuploadAtt.size=(rawuploadAtt.file.size)/1000
+            rawuploadAtt.save()
+            data = {'is_valid': True, 'name': filename, 'url': rawuploadAtt.file.url}
+        else:
+            data = {'is_valid': False}
+        return JsonResponse(data)
+    def deleteUploadFile(request):
+        if request.method=="POST":
+            filename=request.POST.get("filename")
+            print("filename",filename)
+            rawFilesTable.objects.get(file_name=filename).delete()
+        data={}
+        return JsonResponse(data)
+
+from rmcapp.AttendanceScripts import finop4 
+
+class processAttendanceSheet(TemplateView):
+    template_path_name="rmcapp/staff_dashboard_template/processattendancesheet.html"
+
+    def get(self,request):
+       
+        raw_file_list=list(rawFilesTable.objects.all()) 
+
+        
+
+        return render(self.request, self.template_path_name, {"raw_file_list":raw_file_list})
+    def post(self,request):
+        file_name=request.POST.get("file_name")
+        file_url=request.POST.get("file_url")
+        finop4.main(file_url)
+        data={}
+        return JsonResponse(data)
+    def ajaxGetProcessAttendanceSheet(request):
+        if request.method=="GET":
+            rawFileObjs=rawFilesTable.objects.all()
+            raw_list=[]  
+            raw_file_dict={}
+            for obj in rawFileObjs:
+                templist=[]
+                tempdict={}
+                templist.append(obj.id)
+                templist.append(obj.file_name)
+                templist.append(obj.size)
+                tempdict["file_name"]=obj.file_name
+                tempdict["file_url"]=obj.file.url
+                tempdict["size"]=obj.size
+
+                raw_file_dict[obj.id]=tempdict
+                raw_list.append(templist)
+
+            data={
+                "raw_list":raw_list,
+                'raw_file_dict':json.dumps(raw_file_dict),
+            }
+            return JsonResponse(data)
+class viewAttendanceByMonth(TemplateView):
+    template_path_name="rmcapp/staff_dashboard_template/viewattendancebymonth.html"
+
+    
+    def get(self,request):
+        return render(self.request, self.template_path_name, {})
+    def post(self,request):
+        pass
+    def ajaxGetAllAttendanceData(request):
+        if request.method=="GET":
+            emplObjs=Employee.objects.all()
+            employeelist=["All","DrUsman","Seher","Shafique","Ms Fehmeeda","Wazeeran Bibi","Mehwish Rafique"]
+            # employeelist.append("All")
+            # for emplObj in emplObjs:
+            #     empname=emplObj.user.first_name
+            #     employeelist.append(empname)
+            data={
+                "employeelist":employeelist,
+            }
+            return JsonResponse(data)
+    def ajaxGetAllAttendanceByMonthData(request):
+        if request.method=="GET":
+            month=request.GET.get("month")
+            year=request.GET.get("year")
+            emp=request.GET.get("emp")
+            if emp=="All":
+                try:
+                    attObjs=attendanceRecords.objects.filter(month=int(7),year=int(year))
+                    attendance_list=[]
+                    for attObj in attObjs:
+                        templist=[]
+                        templist.append(attObj.id)
+                        templist.append(attObj.emp_name)
+                        templist.append(attObj.date.strftime("%d %b, %Y-%I:%M %p"))
+                        checkin=attObj.checkin
+                        if attObj.checkin!=None:
+                            checkin=attObj.checkin.strftime("%d %b, %Y - %I:%M %p")
+                        templist.append(checkin)
+                        checkout=attObj.checkout
+                        if attObj.checkout!=None:
+                            checkout=attObj.checkout.strftime("%d %b, %Y - %I:%M %p")    
+                        templist.append(checkout)
+                        templist.append(attObj.hours_worked)
+                        templist.append(attObj.minutes_worked)
+                        templist.append(attObj.status)
+                        attendance_list.append(templist)
+                except:
+                    attendance_list=[]
+            else:
+                try:
+                    attObjs=attendanceRecords.objects.filter(emp_name=emp,month=int(7),year=int(year))
+                    attendance_list=[]
+                    for attObj in attObjs:
+                        templist=[]
+                        templist.append(attObj.id)
+                        templist.append(attObj.emp_name)
+                        templist.append(attObj.date.strftime("%d %b, %Y - %I:%M %p"))
+                        checkin=attObj.checkin
+                        if attObj.checkin!=None:
+                            checkin=attObj.checkin.strftime("%d %b, %Y - %I:%M %p")
+                        templist.append(checkin)
+                        checkout=attObj.checkout
+                        if attObj.checkout!=None:
+                            checkout=attObj.checkout.strftime("%d %b, %Y - %I:%M %p")                        
+                        templist.append(checkout)
+                        templist.append(attObj.hours_worked)
+                        templist.append(attObj.minutes_worked)
+                        templist.append(attObj.status)
+                        attendance_list.append(templist)
+                except:
+                    attendance_list=[]
+
+            data={
+                'attendance_list':attendance_list
+            }
+            return JsonResponse(data)
+
+
+
+            
+
+
+
+
+def runScript(request):
+        print("File RUnning")
+        finop4.main()
+        return HttpResponse({})
 
