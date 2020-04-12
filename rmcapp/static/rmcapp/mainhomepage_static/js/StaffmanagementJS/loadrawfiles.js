@@ -3,6 +3,7 @@ $(function () {
     $(".js-upload-photos").click(function () {
         $("#fileupload_rawatt").click();
       });
+
     $("#fileupload_rawatt").fileupload({
         dataType: 'json',
         autoUpload: false,
@@ -24,6 +25,8 @@ $(function () {
         $("#rawatt_upload_btn").on('click', function () {
             
             // console.log("DATA--",data)
+            $('.modal-loading').show();
+
             data.submit();
             // console.log("DATA>>",data)
 
@@ -52,14 +55,18 @@ $(function () {
         td=$(tr_parent).children('td:first')
         $(td).empty();
         $(td).append("<a href='/uploadedfiles/attendancesheets/rawfiles/"+filename+"' target='_blank'>" + filename+ "</a>")
-        },
-        
+        $('.modal-loading').hide();
+    },
+       
+
         });
     });
 
 
 function deleteRawAttFiles(ele){
     name=$(ele).attr('id')
+    $('.modal-loading').show();
+
     $.ajax({
         type: 'POST',
         dataType: "json",
@@ -68,7 +75,10 @@ function deleteRawAttFiles(ele){
         },
         url: '/delete_raw_attendance_sheet',
         success: function(data){
+            $('.modal-loading').hide();
+
             $(ele).parent().parent().remove();
+
 
         }
     });

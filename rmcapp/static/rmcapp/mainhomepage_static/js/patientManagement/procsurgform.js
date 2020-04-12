@@ -14,6 +14,8 @@ $( document ).ready(function() {
 });
 
 function addProcSurgForm(){
+    $('.modal-loading').show();
+
     $.ajax({
         type: 'GET',
         dataType: "json",
@@ -41,7 +43,7 @@ function addProcSurgForm(){
         
                             procedure_label=$("<label for='procedure_tag' class='custom_label_css'>Procedure/Surgery</label>");
                             colmd1.append(procedure_label)
-                            var select=$("<select id='ps_type_select' class='form-control' onchange='proc_surgery_OnSelect($(this))'></select>");
+                            var select=$("<select id='ps_type_select' class='form-control-custom' onchange='proc_surgery_OnSelect($(this))'></select>");
                                 var option=$("<option selected='selected' value='--'>--</option>");
                                 var option1=$("<option id="+ps_type_list[0]+"-opt value="+ps_type_list[0]+">"+ps_type_list[0]+"</option>");
         
@@ -63,10 +65,10 @@ function addProcSurgForm(){
             $(main_col_div).append(row_div_one);
             var main_col_div2=$("<div class='col-md-6' id='main_col_div2'></div>");
                 
-                var surg_table_div=$('<div id="surg_table_info_div">');
+                var surg_table_div=$('<div class="genformdiv2_procsurg_addtable" id="surg_table_info_div">');
                     var surg_table=$("<table id='surg_table_info'  class='datatable_procsurg' width='100%'></table>")
                 surg_table_div.append(surg_table);
-                var proc_table_div=$('<div id="proc_table_info_div">');
+                var proc_table_div=$('<div class="genformdiv2_procsurg_addtable" id="proc_table_info_div">');
                     var proc_table=$("<table id='proc_table_info'  class='datatable_procsurg' width='100%'></table>")
                 proc_table_div.append(proc_table);
             main_col_div2.append(surg_table_div);
@@ -75,7 +77,9 @@ function addProcSurgForm(){
             surgery_list=data['surgery_list']        
             proc_list=data['proc_list']  
             createSurgTableInfo(surgery_list);
-            createProcTableInfo(proc_list);    
+            createProcTableInfo(proc_list);  
+            $('.modal-loading').hide();
+  
         },
     });
    
@@ -90,7 +94,7 @@ function proc_surgery_OnSelect(element){
     if(optionSelected === 'Minor'){
         $('#row_div_two').remove();
         var main_col_div=$('#main_col_div')
-            var row_div_two=$("<div class='row' id='row_div_two' style='padding-bottom:10px'></div>");
+            var row_div_two=$("<div class='row removerowmargins_div genformdiv1' id='row_div_two' style='padding-bottom:10px'></div>");
 
                 var main_col__row_two=$("<div class='col-md-12'></div>");
 
@@ -103,7 +107,7 @@ function proc_surgery_OnSelect(element){
             
                                     procedure_label=$("<label for='procedure_tag' class='custom_label_css'>Procedure Name</label>");
                                     colmd1.append(procedure_label)
-                                    procedure_input=$("<input id='procedure_input' class='custom_input_css form-control'>")
+                                    procedure_input=$("<input id='procedure_input' class='custom_input_css form-control-custom'>")
                                     colmd2.append(procedure_input)
             
                                 row__col_one__row_one.append(colmd1);
@@ -122,7 +126,7 @@ function proc_surgery_OnSelect(element){
         
                                 price_label=$("<label for='price_label' class='custom_label_css'>Treatment Cost</label>");
                                 colmd1.append(price_label)
-                                price_input=$("<input id='price_input' class='custom_input_css form-control'>")
+                                price_input=$("<input id='price_input' class='custom_input_css form-control-custom'>")
                                 colmd2.append(price_input)
         
                             row__col_one__row_two.append(colmd1);
@@ -134,15 +138,12 @@ function proc_surgery_OnSelect(element){
                 
             var row_three=$("<div class='row'></div>")
 
-                var col_one__row_three=$("<div class='col-md-6'></div>");
-                        row__col_one__row_three=$("<div class='row'></div>");
-                        colmd1=$("<div class='col-md-4 offset-md-5'></div>")
+                var col_one__row_three=$("<div class='col-md-12'></div>");
+                     
+                        addprocedure_button=$('<button class="save_btn fa fa-plus-circle" onclick="addProcedure()">  Add Procedure</button>')
+                      
 
-                        addprocedure_button=$('<button class="btn btn-success fa fa-plus-circle" onclick="addProcedure()">  Add Procedure</button>')
-                        colmd1.append(addprocedure_button)
-
-                        row__col_one__row_three.append(colmd1);
-                    col_one__row_three.append(row__col_one__row_three);
+                    col_one__row_three.append(addprocedure_button);
 
             row_three.append(col_one__row_three)
 
@@ -157,7 +158,7 @@ function proc_surgery_OnSelect(element){
     else if(optionSelected === 'Surgeries'){
         $('#row_div_two').remove();
         var main_col_div=$('#main_col_div')
-            var row_div_two=$("<div class='row' id='row_div_two' style='padding-bottom:10px'></div>");
+            var row_div_two=$("<div class='row removerowmargins_div genformdiv1' id='row_div_two' style='padding-bottom:10px'></div>");
 
                 var main_col__row_two=$("<div class='col-md-12'></div>");
 
@@ -170,7 +171,7 @@ function proc_surgery_OnSelect(element){
             
                                     surgery_label=$("<label for='surgery_tag' class='custom_label_css'>Surgery Name</label>");
                                     colmd1.append(surgery_label)
-                                    surgery_input=$("<input id='surgery_input' class='custom_input_css form-control'>")
+                                    surgery_input=$("<input id='surgery_input' class='custom_input_css form-control-custom'>")
                                     colmd2.append(surgery_input)
             
                                 row__col_one__row_one.append(colmd1);
@@ -190,7 +191,7 @@ function proc_surgery_OnSelect(element){
         
                                 price_label=$("<label for='price_tag' class='custom_label_css'>Treatment Cost</label>");
                                 colmd1.append(price_label)
-                                price_input=$("<input id='price_input' value='0' class='custom_input_css form-control'>")
+                                price_input=$("<input id='price_input' value='0' class='custom_input_css form-control-custom'>")
                                 colmd2.append(price_input)
         
                             row__col_one__row_two.append(colmd1);
@@ -205,7 +206,7 @@ function proc_surgery_OnSelect(element){
         
                                 surgeon_fee_label=$("<label class='custom_label_css'>Surgeon Fee</label>");
                                 colmd1.append(surgeon_fee_label)
-                                surgeon_fee_input=$("<input id='surgeon_fee'  value='0' class='custom_input_css form-control'>")
+                                surgeon_fee_input=$("<input id='surgeon_fee'  value='0' class='custom_input_css form-control-custom'>")
                                 colmd2.append(surgeon_fee_input)
         
                             row__col_one__row_three.append(colmd1);
@@ -220,7 +221,7 @@ function proc_surgery_OnSelect(element){
         
                                 opth_fee_label=$("<label  class='custom_label_css'>Operation Theatre Fee</label>");
                                 colmd1.append(opth_fee_label)
-                                optheatre_fee_input=$("<input id='optheatre_fee'  value='0' class='custom_input_css form-control'>")
+                                optheatre_fee_input=$("<input id='optheatre_fee'  value='0' class='custom_input_css form-control-custom'>")
                                 colmd2.append(optheatre_fee_input)
         
                             row__col_one__row_four.append(colmd1);
@@ -235,7 +236,7 @@ function proc_surgery_OnSelect(element){
         
                                 anesth_fee_label=$("<label for='price_tag' class='custom_label_css'>Anestheologist Fee</label>");
                                 colmd1.append(anesth_fee_label)
-                                anesth_fee_input=$("<input id='anesth_fee'  value='0' class='custom_input_css form-control'>")
+                                anesth_fee_input=$("<input id='anesth_fee'  value='0' class='custom_input_css form-control-custom'>")
                                 colmd2.append(anesth_fee_input)
         
                             row__col_one__row_five.append(colmd1);
@@ -250,7 +251,7 @@ function proc_surgery_OnSelect(element){
         
                                 surplus_charge_label=$("<label for='price_tag' class='custom_label_css'>Surplus Charges</label>");
                                 colmd1.append(surplus_charge_label)
-                                surplus_charge_input=$("<input id='surplus_charge'  value='0' class='custom_input_css form-control'>")
+                                surplus_charge_input=$("<input id='surplus_charge'  value='0' class='custom_input_css form-control-custom'>")
                                 colmd2.append(surplus_charge_input)
         
                             row__col_one__row_six.append(colmd1);
@@ -268,15 +269,9 @@ function proc_surgery_OnSelect(element){
                 
                 var row_three=$("<div class='row'></div>")
 
-                    var col_one__row_three=$("<div class='col-md-6'></div>");
-                            row__col_one__row_three=$("<div class='row'></div>");
-                            colmd1=$("<div class='col-md-4 offset-md-5'></div>")
-
-                            addSurgery_button=$('<button class="btn btn-success fa fa-plus-circle" onclick="addSurgery()">  Add Surgery</button>')
-                            colmd1.append(addSurgery_button)
-
-                            row__col_one__row_three.append(colmd1);
-                        col_one__row_three.append(row__col_one__row_three);
+                    var col_one__row_three=$("<div class='col-md-12'></div>");
+                        addSurgery_button=$('<button class="save_btn fa fa-plus-circle" onclick="addSurgery()">  Add Surgery</button>')
+                    col_one__row_three.append(addSurgery_button);
 
                 row_three.append(col_one__row_three)
 
@@ -301,6 +296,11 @@ function addProcedure(){
     var procedure_price=$("#price_input").val();
     console.log("procedure_price", procedure_price);
     $("#price_input").val("");
+    if (procedure_name=="" || procedure_price==""){
+        alert("Please Add Info")
+        return
+    }
+    $('.modal-loading').show();
 
     $.ajax({
         type: 'POST',
@@ -311,11 +311,18 @@ function addProcedure(){
         },
         url: '/add_procedure',
         success: function(data){
+            $('.modal-loading').hide();
+
             procedurList=data["procedurList"]
             proc_data_info_datatable.clear().draw()
             for (var i in procedurList){
                 proc_data_info_datatable.row.add( procedurList[i] ).draw();
             } 
+
+            $('html,body').animate({
+                scrollTop: $("#proc_table_info_div").offset().top},
+            'slow');
+
         },
     });
 }
@@ -334,6 +341,7 @@ function addSurgery(){
     var surplus_charge=$("#surplus_charge").val();
     $("#surplus_charge").val("");
 
+    $('.modal-loading').show();
 
     $.ajax({
         type: 'POST',
@@ -354,6 +362,8 @@ function addSurgery(){
             for (var i in surgList){
                 surg_data_info_datatable.row.add( surgList[i] ).draw();
             } 
+            $('.modal-loading').hide();
+
         },
     });
 }
@@ -379,7 +389,7 @@ function updateProcSurgForm(){
 
                     procedure_label=$("<label for='procedure_tag' class='custom_label_css'>Procedure/Surgery</label>");
                     colmd1.append(procedure_label)
-                    var select=$("<select id='ps_type_select' class='form-control' onchange='ps_OnSelect($(this))'></select>");
+                    var select=$("<select id='ps_type_select' class='form-control-custom' onchange='ps_OnSelect($(this))'></select>");
                         var option=$("<option selected='selected' value='--'>--</option>");
                         var option1=$("<option id="+ps_type_list[0]+"-opt value="+ps_type_list[0]+">"+ps_type_list[0]+"</option>");
 
@@ -476,7 +486,7 @@ function ps_OnSelect(element){
 
 function availableSurgeryRowDivTwo(){
     var main_col_div=$("#main_col_div");
-        var row_div_two=$("<div class='row' id='row_div_two'></div>");
+        var row_div_two=$("<div class='row removerowmargins_div genformdiv1' id='row_div_two'></div>");
         // Datatable Name
             var col_one__row_div_two=$("<div class='col-md-12'></div>");
                 var row__col_one__row_div_two=$("<div class='row'></div>");
@@ -492,7 +502,7 @@ function availableSurgeryRowDivTwo(){
 }
 function availableProcedureRowDivTwo(){
     var main_col_div=$("#main_col_div");
-        var row_div_two=$("<div class='row' id='row_div_two'></div>");
+        var row_div_two=$("<div class='row removerowmargins_div genformdiv1' id='row_div_two'></div>");
         // Datatable Name
             var col_one__row_div_two=$("<div class='col-md-12'></div>");
                 var row__col_one__row_div_two=$("<div class='row'></div>");
@@ -507,6 +517,7 @@ function availableProcedureRowDivTwo(){
     main_col_div.append(row_div_two)
 }
 function retrieveAllSurgInfo(){
+    $('.modal-loading').show();
 
     $.ajax({
         type: 'GET',
@@ -536,12 +547,15 @@ function retrieveAllSurgInfo(){
             console.log(surg_list)
             $('#available_surg_table').show()
 
-            createSurgDataTable()
+            createSurgDataTable();
+            $('.modal-loading').hide();
+
         },
     }); 
 }
 
 function retrieveAllProcInfo(){
+    $('.modal-loading').show();
 
     $.ajax({
         type: 'GET',
@@ -567,6 +581,8 @@ function retrieveAllProcInfo(){
             console.log(proc_list)
 
             createProcDataTable()
+            $('.modal-loading').hide();
+
         },
     }); 
 }
@@ -589,39 +605,33 @@ function createProcDataTable(){
                 buttons: [
                     {
                         extend: 'print',
-                        text: 'Print',
+                        text:  ' PRINT',
                         title: 'Procedures',
-                        className: 'btn btn-default fa fa-print',
+                        className: 'datatable_button printbtn fa fa-print',
 
                     },
                      {
                         extend: 'excel',
-                        text: 'Export Data in Excel',
+                        text: ' EXCEL',
                         title: 'Procedures',
-                        className: 'btn btn-default  fas fa-file-excel',
+                        className: 'datatable_button excelbtn  fas fa-file-excel',
 
                     },
                      {
                         extend: 'csv',
-                        text: 'Export Data in CSV',
+                        text: ' CSV',
                         title: 'Procedures',
-                        className: 'btn btn-default fa fa-file',
+                        className: 'datatable_button csvbtn fa fa-file',
 
                     },
                     {
                         extend: 'pdf',
-                        text: 'Export Data in PDF',
+                        text: ' PDF',
                         title: 'Procedures',
-                        className: 'btn btn-default fas fa-file-pdf',
+                        className: 'datatable_button pdfbtn fas fa-file-pdf',
 
                     },
-                    {
-                        extend: 'copy',
-                        text: 'Copy to Clipboard',
-                        title: 'Procedures',
-                        className: 'btn btn-default fas fa-copy',
-
-                    },
+                  
                 ],
             });
             $('#available_proc_table tbody').on( 'click', 'tr', function () {
@@ -636,7 +646,7 @@ function createProcDataTable(){
                     console.log("proc dict on click",proc_dict);
                     $("#row_div_three").remove();
 
-                    var row_div_three=$("<div class='row' id='row_div_three' style='padding-top:10px'></div>");
+                    var row_div_three=$("<div class='row removerowmargins_div genformdiv2' id='row_div_three' style='padding-top:10px'></div>");
                         var main_subcol=$("<div class='col-md-12'></div>");
 
                             var subrow_one=$("<div class='row' style='padding-bottom:10px'></div>")
@@ -646,7 +656,7 @@ function createProcDataTable(){
                                                 var colmd1=$("<div class='col-md-2'></div>")
                                                 var colmd2=$("<div class='col-md-5'></div>")
                                                     var proc_label=$("<label for='proc_label' class='custom_label_css'>Procedure Name</label>");
-                                                    var proc_input=$("<input  id='proc_input' class='form-control' value='"+proc_dict[proc_id_selected]['procedure_name']+"'>")
+                                                    var proc_input=$("<input  id='proc_input' class='form-control-custom' value='"+proc_dict[proc_id_selected]['procedure_name']+"'>")
                                                 colmd1.append(proc_label)
                                                 colmd2.append(proc_input)
                                             row__col_one__subrow_one.append(colmd1);
@@ -662,7 +672,7 @@ function createProcDataTable(){
                                         colmd2=$("<div class='col-md-2'></div>")
 
                                             var procCharges_label=$("<label class='custom_label_css'>Charges</label>");
-                                            var procCharges_input=$("<input  id='procCharges_input' class='form-control' value='"+proc_dict[proc_id_selected]['charges']+"'>")
+                                            var procCharges_input=$("<input  id='procCharges_input' class='form-control-custom' value='"+proc_dict[proc_id_selected]['charges']+"'>")
 
                                         colmd1.append(procCharges_label)
                                         colmd2.append(procCharges_input)
@@ -677,13 +687,16 @@ function createProcDataTable(){
                             var subrow_three=$("<div class='row'></div>")
                                 var col_one__subrow_three=$("<div class='col-md-12'></div>");
                                     var row__col_one__subrow_three=$("<div class='row'></div>");
-                                        var colmd1=$("<div class='col-md-3 offset-md-3' offset-md-1></div>")
-                        
-                                        
-                                            var update_button=$('<button class="btn btn-success btn-block fa fa-save" onclick="updateProcData()">  Update Procedure</button>')
-                                            colmd1.append(update_button);
+                                        var colmd1=$("<div class='col-md-3'></div>")
+                                            var del_button=$('<button class="deletebtn" id="deletebtn-'+proc_id_selected+'" onclick="deleteProcData($(this))">  Delete Procedure Record </button>')
+                                        colmd1.append(del_button);
+                                        var colmd2=$("<div class='col-md-3'></div>")
+                                            var update_button=$('<button class="save_btn fa fa-save" onclick="updateProcData()">  Update Procedure</button>')
+                                        colmd2.append(update_button);
                                 
                                         row__col_one__subrow_three.append(colmd1);
+                                        row__col_one__subrow_three.append(colmd2);
+
 
                                 col_one__subrow_three.append(row__col_one__subrow_three);
 
@@ -696,6 +709,9 @@ function createProcDataTable(){
                     row_div_three.append(main_subcol)
                 var main_col_div=$("#main_col_div");
             main_col_div.append(row_div_three)
+            $('html,body').animate({
+                scrollTop: $("#row_div_three").offset().top},
+                'slow');
             }
         });
     });
@@ -725,30 +741,30 @@ function createSurgDataTable(){
                 buttons: [
                     {
                         extend: 'print',
-                        text: 'Print',
+                        text: ' PRINT',
                         title: 'Surgeries',
-                        className: 'btn btn-default fa fa-print',
+                        className: 'datatable_button printbtn fas fa-print',
 
                     },
                      {
                         extend: 'excel',
-                        text: 'Export Data in Excel',
+                        text: ' EXCEL',
                         title: 'Surgeries',
-                        className: 'btn btn-default  fas fa-file-excel',
+                        className: 'datatable_button excelbtn fas fa-file-excel',
 
                     },
                      {
                         extend: 'csv',
-                        text: 'Export Data in CSV',
+                        text: ' CSV',
                         title: 'Surgeries',
-                        className: 'btn btn-default fa fa-file',
+                        className: 'datatable_button csvbtn fas fa-file',
 
                     },
                     {
                         extend: 'pdf',
-                        text: 'Export Data in PDF',
+                        text: ' PDF',
                         title: 'Surgeries',
-                        className: 'btn btn-default fas fa-file-pdf',
+                        className: 'datatable_button pdfbtn fas fa-file-pdf',
 
                     },
                
@@ -766,7 +782,7 @@ function createSurgDataTable(){
                     console.log("proc dict on click",surg_dict);
                     $("#row_div_three").remove();
 
-                    var row_div_three=$("<div class='row' id='row_div_three' style='padding-top:10px'></div>");
+                    var row_div_three=$("<div class='row removerowmargins_div genformdiv2' id='row_div_three' style='padding-top:10px'></div>");
                         var main_subcol=$("<div class='col-md-12'></div>");
 
                             var subrow_one=$("<div class='row' style='padding-bottom:10px'></div>")
@@ -776,7 +792,7 @@ function createSurgDataTable(){
                                                 var colmd1=$("<div class='col-md-2'></div>")
                                                 var colmd2=$("<div class='col-md-5'></div>")
                                                     var surg_label=$("<label for='surg_label' class='custom_label_css'>Surgery Name</label>");
-                                                    var surg_input=$("<input  id='surg_input' class='form-control' value='"+surg_dict[surg_id_selected]['surgery_name']+"'>")
+                                                    var surg_input=$("<input  id='surg_input' class='form-control-custom' value='"+surg_dict[surg_id_selected]['surgery_name']+"'>")
                                                 colmd1.append(surg_label)
                                                 colmd2.append(surg_input)
                                             row__col_one__subrow_one.append(colmd1);
@@ -792,7 +808,7 @@ function createSurgDataTable(){
                                         colmd2=$("<div class='col-md-2'></div>")
 
                                             var surgCharges_label=$("<label class='custom_label_css'>Charges</label>");
-                                            var surgCharges_input=$("<input  id='surgCharges_input' class='form-control' value='"+surg_dict[surg_id_selected]['charges']+"'>")
+                                            var surgCharges_input=$("<input  id='surgCharges_input' class='form-control-custom' value='"+surg_dict[surg_id_selected]['charges']+"'>")
 
                                         colmd1.append(surgCharges_label)
                                         colmd2.append(surgCharges_input)
@@ -807,7 +823,7 @@ function createSurgDataTable(){
                                             colmd2=$("<div class='col-md-2'></div>")
 
                                                 var surgCharges_label=$("<label class='custom_label_css'>Surgeon Fee</label>");
-                                                var surgCharges_input=$("<input  id='surgeon_fee_input' class='form-control' value='"+surg_dict[surg_id_selected]['surgeon_fee']+"'>")
+                                                var surgCharges_input=$("<input  id='surgeon_fee_input' class='form-control-custom' value='"+surg_dict[surg_id_selected]['surgeon_fee']+"'>")
 
                                             colmd1.append(surgCharges_label)
                                             colmd2.append(surgCharges_input)
@@ -822,7 +838,7 @@ function createSurgDataTable(){
                                         colmd2=$("<div class='col-md-2'></div>")
 
                                             var operation_theater_fee_label=$("<label class='custom_label_css'>Operation Theatre Fee</label>");
-                                            var operation_theater_fee_input=$("<input  id='operation_theater_fee_input' class='form-control' value='"+surg_dict[surg_id_selected]['operation_theater_fee']+"'>")
+                                            var operation_theater_fee_input=$("<input  id='operation_theater_fee_input' class='form-control-custom' value='"+surg_dict[surg_id_selected]['operation_theater_fee']+"'>")
 
                                         colmd1.append(operation_theater_fee_label)
                                         colmd2.append(operation_theater_fee_input)
@@ -838,7 +854,7 @@ function createSurgDataTable(){
                                         colmd2=$("<div class='col-md-2'></div>")
 
                                             var anesthesiologist_fee_label=$("<label class='custom_label_css'>Anestheologist Fee</label>");
-                                            var anesthesiologist_fee_input=$("<input  id='anesthesiologist_fee_input' class='form-control' value='"+surg_dict[surg_id_selected]['anesthesiologist_fee']+"'>")
+                                            var anesthesiologist_fee_input=$("<input  id='anesthesiologist_fee_input' class='form-control-custom' value='"+surg_dict[surg_id_selected]['anesthesiologist_fee']+"'>")
 
                                         colmd1.append(anesthesiologist_fee_label)
                                         colmd2.append(anesthesiologist_fee_input)
@@ -854,7 +870,7 @@ function createSurgDataTable(){
                                         colmd2=$("<div class='col-md-2'></div>")
 
                                             var surplus_fee_label=$("<label class='custom_label_css'>Surplus Charges</label>");
-                                            var surplus_fee_input=$("<input  id='surplus_fee_input' class='form-control' value='"+surg_dict[surg_id_selected]['surplus_fee']+"'>")
+                                            var surplus_fee_input=$("<input  id='surplus_fee_input' class='form-control-custom' value='"+surg_dict[surg_id_selected]['surplus_fee']+"'>")
 
                                         colmd1.append(surplus_fee_label)
                                         colmd2.append(surplus_fee_input)
@@ -873,13 +889,17 @@ function createSurgDataTable(){
                             var subrow_three=$("<div class='row'></div>")
                                 var col_one__subrow_three=$("<div class='col-md-12'></div>");
                                     var row__col_one__subrow_three=$("<div class='row'></div>");
-                                        var colmd1=$("<div class='col-md-3 offset-md-3'></div>")
+                                        var colmd1=$("<div class='col-md-3'></div>")   
+                                            var delete_btn=$('<button class="deletebtn" id="deletebtn-'+surg_id_selected+'" onclick="deleteSurgData($(this))">Delete  Surgery Record</button>')
+                                        colmd1.append(delete_btn);
+                                        var colmd2=$("<div class='col-md-3'></div>")
                         
                                         
-                                            var update_button=$('<button class="btn btn-success btn-block fa fa-save" onclick="updateSurgData()">  Update Surgery</button>')
-                                            colmd1.append(update_button);
-                                
-                                        row__col_one__subrow_three.append(colmd1);
+                                            var update_button=$('<button class="save_btn fa fa-save" onclick="updateSurgData()">  Update Surgery</button>')
+                                        colmd2.append(update_button);
+
+                                    row__col_one__subrow_three.append(colmd1);
+                                    row__col_one__subrow_three.append(colmd2);
 
                                 col_one__subrow_three.append(row__col_one__subrow_three);
 
@@ -891,7 +911,10 @@ function createSurgDataTable(){
 
                     row_div_three.append(main_subcol)
                 var main_col_div=$("#main_col_div");
-            main_col_div.append(row_div_three)
+            main_col_div.append(row_div_three);
+            $('html,body').animate({
+                scrollTop: $("#row_div_three").offset().top},
+                'slow');
             }
         });
     });
@@ -902,7 +925,8 @@ function updateProcData(){
     var charges=$("#procCharges_input").val();
     var id=proc_id_selected;
 
-    
+    $('.modal-loading').show();
+
     $.ajax({
         type: 'POST',
         dataType: "json",
@@ -927,11 +951,44 @@ function updateProcData(){
                 proc_datatable.row.add(temp_list).draw();
             }
             console.log("After Update",proc_dict);
-            console.log(data['Success']);
+            alert("Updated")   
+            $('.modal-loading').hide();
+
         },
     });
 }
+function deleteProcData(ele){
+    id=$(ele).attr('id');
+    idarr=id.split('-')
+    procid=idarr[1]
+    $('.modal-loading').show();
 
+    $.ajax({
+        type: 'POST',
+        dataType: "json",
+        'data': {
+            "id":procid,
+        },
+        url: '/delete_proc_data',
+        success: function(data){
+            $("#row_div_three").remove();
+            proc_dict=JSON.parse(data["proc_dict"])
+            proc_datatable.clear();
+            for (key in proc_dict){
+                temp_list=[];
+                temp_list.push(key)
+                temp_list.push(proc_dict[key]['procedure_name'])
+                temp_list.push(proc_dict[key]['charges'])
+                temp_list.push(proc_dict[key]['id'])
+                proc_datatable.row.add(temp_list).draw();
+            }
+           alert("Procedure Record Deleted");
+           $('.modal-loading').hide();
+
+        },
+    });
+
+}
 function updateSurgData(){
     var surgery_name=$("#surg_input").val();;
     var charges=$("#surgCharges_input").val();
@@ -941,7 +998,8 @@ function updateSurgData(){
     var surplus_fee_input=$("#surplus_fee_input").val()
     var id=surg_id_selected
 
-    
+    $('.modal-loading').show();
+
     $.ajax({
         type: 'POST',
         dataType: "json",
@@ -975,7 +1033,45 @@ function updateSurgData(){
                 surg_datatable.row.add(temp_list).draw();
             }
             console.log("After Update",surg_dict);
-            console.log(data['Success']);
+            alert("Updated")
+            $('.modal-loading').show();
+        },
+    });
+}
+function deleteSurgData(ele){
+    id=$(ele).attr('id');
+    idarr=id.split('-')
+    surgid=idarr[1]
+    $('.modal-loading').show();
+
+    $.ajax({
+        type: 'POST',
+        dataType: "json",
+        'data': {
+            "id":surgid,
+
+        },
+        url: '/delete_surg_data',
+        success: function(data){
+            $("#row_div_three").remove();
+            surg_dict=JSON.parse(data["surg_dict"])
+            surg_datatable.clear();
+            for (key in surg_dict){
+                temp_list=[];
+                temp_list.push(key)
+                temp_list.push(surg_dict[key]['surgery_name'])
+                temp_list.push(surg_dict[key]['charges'])
+                temp_list.push(surg_dict[key]['surgeon_fee'])
+                temp_list.push(surg_dict[key]['operation_theater_fee'])
+                temp_list.push(surg_dict[key]['anesthesiologist_fee'])
+                temp_list.push(surg_dict[key]['surplus_fee'])
+                temp_list.push(surg_dict[key]['id'])
+                surg_datatable.row.add(temp_list).draw();
+            }
+            console.log("After Update",surg_dict);
+            alert("Deleted Successfully");
+            $('.modal-loading').hide();
+
         },
     });
 }
@@ -998,44 +1094,38 @@ function createSurgTableInfo(surgery_list){
                 scrollX: true,
                 ordering: true,
                 info:false,
-                searching:true,
+                searching:false,
                 dom: 'Bfrtip',
                 buttons: [
                     {
                         extend: 'print',
-                        text: 'Print',
+                        text: 'PRINT',
                         title: 'Surgies List',
-                        className: 'datatable_button fa fa-print',
+                        className: 'datatable_button printbtn fas fa-print',
 
                     },
                      {
                         extend: 'excel',
-                        text: 'Export Data in Excel',
+                        text: ' EXCEL',
                         title: 'Surgies List',
-                        className: 'datatable_button  fas fa-file-excel',
+                        className: 'datatable_button excelbtn fas fa-file-excel',
 
                     },
                      {
                         extend: 'csv',
-                        text: 'Export Data in CSV',
+                        text: ' CSV',
                         title:'Surgies List',
-                        className: 'datatable_button fa fa-file',
+                        className: 'datatable_button csvbtn fa fa-file',
 
                     },
                     {
                         extend: 'pdf',
-                        text: 'Export Data in PDF',
+                        text: ' PDF',
                         title: 'Surgies List',
-                        className: 'datatable_button fas fa-file-pdf',
+                        className: 'datatable_button pdfbtn fas fa-file-pdf',
 
                     },
-                    {
-                        extend: 'copy',
-                        text: 'Copy to Clipboard',
-                        title: 'Surgies List',
-                        className: 'datatable_button fas fa-copy',
-
-                    },
+                 
                 ],
 
             });
@@ -1063,44 +1153,38 @@ function createProcTableInfo(proc_list){
                 scrollX: true,
                 ordering: true,
                 info:false,
-                searching:true,
+                searching:false,
                 dom: 'Bfrtip',
                 buttons: [
                     {
                         extend: 'print',
-                        text: 'Print',
+                        text: ' PRINT',
                         title: 'Procedure List',
-                        className: 'datatable_button fa fa-print',
+                        className: 'datatable_button printbtn fa fa-print',
 
                     },
                      {
                         extend: 'excel',
-                        text: 'Export Data in Excel',
+                        text: ' Excel',
                         title: 'Procedure List',
-                        className: 'datatable_button  fas fa-file-excel',
+                        className: 'datatable_button excelbtn fas fa-file-excel',
 
                     },
                      {
                         extend: 'csv',
-                        text: 'Export Data in CSV',
+                        text: ' CSV',
                         title: 'Procedure List',
-                        className: 'datatable_button fa fa-file',
+                        className: 'datatable_button csvbtn fa fa-file',
 
                     },
                     {
                         extend: 'pdf',
-                        text: 'Export Data in PDF',
+                        text: ' PDF',
                         title: 'Procedure List',
-                        className: 'datatable_button fas fa-file-pdf',
+                        className: 'datatable_button pdfbtn fas fa-file-pdf',
 
                     },
-                    {
-                        extend: 'copy',
-                        text: 'Copy to Clipboard',
-                        title: 'Procedure List',
-                        className: 'datatable_button fas fa-copy',
-
-                    },
+                  
                 ],
 
             });
@@ -1115,6 +1199,8 @@ function createProcTableInfo(proc_list){
 }
 
 function ViewSurgList(){
+    $('.modal-loading').show();
+
     $.ajax({
         type: 'GET',
         dataType: "json",
@@ -1139,10 +1225,14 @@ function ViewSurgList(){
              
             surgery_list=data['surgery_list']
             createSurgTableInfo(surgery_list);
+            $('.modal-loading').hide();
+
         }
     });
 }
 function ViewProcList(){
+    $('.modal-loading').show();
+
     $.ajax({
         type: 'GET',
         dataType: "json",
@@ -1167,6 +1257,8 @@ function ViewProcList(){
              
             proc_list=data['proc_list']
             createProcTableInfo(proc_list);    
+            $('.modal-loading').hide();
+
         }
     });
 }

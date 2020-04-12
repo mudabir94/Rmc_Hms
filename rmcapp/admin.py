@@ -209,7 +209,7 @@ class presUploadedFilesAdmin(admin.ModelAdmin):
 class rawFilesTableAdmin(admin.ModelAdmin):
     list_display=("id","file_name","file","size","month","year","uploaded_by")
 class attendanceRecordsAdmin(admin.ModelAdmin):
-    list_display=("id","emp_name","emp_user","date","checkin","checkout","status","month","year","hours_worked","minutes_worked","monthyear")
+    list_display=("id","emp_name","emp_user","date","checkin","checkout","status","day","month","year","hours_worked","minutes_worked","monthyear")
 
 
 

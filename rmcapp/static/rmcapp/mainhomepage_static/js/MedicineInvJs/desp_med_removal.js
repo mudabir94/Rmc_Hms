@@ -28,6 +28,8 @@ function removeMedForInternalUse(){
 
 function retrieveDespensoryMedicine(){
     datatable_med_desp_list=[];
+    $('.modal-loading').show();
+
     $.ajax({
         type: 'GET',
         dataType: "json",
@@ -53,6 +55,8 @@ function retrieveDespensoryMedicine(){
             createRowDivTwoBill();
             createRemoveRow();
             console.log("datatable_med_desp_list",datatable_med_desp_list);
+            $('.modal-loading').hide();
+
         }
     });
 }
@@ -73,7 +77,8 @@ function createDespensoryDataTable(){
             
 
                 ],
-                paging: false,
+                paging: true,
+                pageLength:50,
                 scrollY: 200,
                 scrollX: true,
                 ordering: true,
@@ -89,7 +94,10 @@ function createDespensoryDataTable(){
                     $(this).addClass('selected');
                     console.log("DespStck=-",dspstck_dict)
                     createMedicineQtyColumn(despid);
-                    
+                                        // Scroll to bill div
+                    $('html,body').animate({
+                        scrollTop: $("#desp_medicine_qty_form_div").offset().top},
+                        'slow');
                     
                 }
             });
@@ -100,7 +108,7 @@ function createDespensoryDataTable(){
     });
 }
 function createDespMedicineTable(){
-    var row_div_three=$("<div class='row' style='padding-bottom:18px'></div>");
+    var row_div_three=$("<div class='row genformdiv3' style='padding-bottom:18px'></div>");
         var col_one__row_div_three=$("<div class='col-md-12'></div>");
             row__col_one__row_div_three=$("<div class='row'></div>");
                 colmd1=$("<div class='col-md-12'></div>")
@@ -119,8 +127,8 @@ function createRowDivTwoBill(){
             row__col_one__row_div_four=$("<div class='row'></div>");
                 colmd1=$("<div class='col-md-12'></div>");
                     var row=$("<div class='row'></div>");
-                        var col1=$("<div class='col-md-4' id='desp_medicine_qty_form'>");
-                        var col2=$("<div class='col-md-8' id='medicine_added_to_form'>");
+                        var col1=$("<div class='col-md-4' id='desp_medicine_qty_form_div'>");
+                        var col2=$("<div class='col-md-8 genformdiv2' id='medicine_added_to_form'>");
                             table=$('<table id="bill_table" class="datatablecss_med"  width="100%"></table>');
                         col2.append(table)
                     row.append(col1);
@@ -227,13 +235,13 @@ function billDTable(){
 
 
 function createMedicineQtyColumn(despid){
-    $("#desp_medicine_qty_form").empty();
-    var col1=$("#desp_medicine_qty_form")
-        var sub_row=$("<div class='row'></div>");
-            var sub_col=$("<div class='col-md-12'></div>")
-                var sub_sub_row1=$("<div class='row' style='padding-top:60px; padding-bottom:10px'></div>");
+    $("#desp_medicine_qty_form_div").empty();
+    var col1=$("#desp_medicine_qty_form_div")
+        var sub_row=$("<div class=''></div>");
+            var sub_col=$("<div class='col-md-12 genformdiv3' ></div>")
+                var sub_sub_row1=$("<div class='row' style='padding-bottom:10px'></div>");
                     var col1_sub_sub_row1=$("<div class='col-md-4'></div>");
-                        var label=$("<label class='form-control-custom-static'>Medicine Name</label>")
+                        var label=$("<label class='custom_label_css'>Medicine Name</label>")
                     col1_sub_sub_row1.append(label);
                     var col2_sub_sub_row1=$("<div class='col-md-6'></div>");
                         var input=$("<input id='desp-med-name' class='form-control-custom' value='"+dspstck_dict[despid]['name']+"'></input>")
@@ -243,7 +251,7 @@ function createMedicineQtyColumn(despid){
     
                 var sub_sub_row2=$("<div class='row' style='padding-bottom:10px'></div>");
                     var col1_sub_sub_row2=$("<div class='col-md-4'></div>");
-                        var label=$("<label class='form-control-custom-static'>Boxes</label>")
+                        var label=$("<label class='custom_label_css'>Boxes</label>")
                     col1_sub_sub_row2.append(label);
                     var col2_sub_sub_row2=$("<div class='col-md-6'></div>");
                         var input=$("<input class='form-control-custom' type='number' min='1' id='boxes_stored'></input>")
@@ -258,7 +266,7 @@ function createMedicineQtyColumn(despid){
                 if (strip_stored!=="N/A"){
                 var sub_sub_row3=$("<div class='row' style='padding-bottom:10px'></div>");
                     var col1_sub_sub_row3=$("<div class='col-md-4'></div>");
-                        var label=$("<label class='form-control-custom-static'>Total Strips</label>")
+                        var label=$("<label class='custom_label_css'>Total Strips</label>")
                     col1_sub_sub_row3.append(label);
                     var col2_sub_sub_row3=$("<div class='col-md-6'></div>");
                         var input=$("<input class='form-control-custom' type='number' min='1' id='strips_stored'></input>")
@@ -268,7 +276,7 @@ function createMedicineQtyColumn(despid){
                 }
                 var sub_sub_row4=$("<div class='row' style='padding-bottom:10px'></div>");
                     var col1_sub_sub_row4=$("<div class='col-md-4'></div>");
-                        var label=$("<label class='form-control-custom-static'>Total Pieces</label>")
+                        var label=$("<label class='sub_custom_label_css'>Total Pieces</label>")
                     col1_sub_sub_row4.append(label);
                     var col2_sub_sub_row4=$("<div class='col-md-6'></div>");
                         var input=$("<input class='form-control-custom' type='number' min='1' id='pieces_stored' ></input>")
@@ -278,7 +286,7 @@ function createMedicineQtyColumn(despid){
                 var sub_sub_row5=$("<div class='row'></div>");
                     var col1_sub_sub_row5=$("<div class='col-md-4'></div>");
                     var col2_sub_sub_row5=$("<div class='col-md-6'></div>");
-                        var button=$("<button class='btn btn-blocl fa fa-plus-circle' id='add_med_desp' onclick='addMedicineToMedRemoveDT()' style='width:inherit'>Add</button>")
+                        var button=$("<button class='add_btn fa fa-plus-circle' id='add_med_desp' onclick='addMedicineToMedRemoveDT()' style='width:inherit'>Add</button>")
                     col2_sub_sub_row5.append(button);
     
                 sub_sub_row5.append(col1_sub_sub_row5);
@@ -373,8 +381,8 @@ function addMedicineToMedRemoveDT(){
             strips_wanted="0";
     
         }
-        console.log("okokok",strips_wanted)
-        console.log("asdasdmkamdkasmd",strips_wanted)
+        $('.modal-loading').show();
+
         $.ajax({
             type: 'GET',
             dataType: "json",
@@ -443,16 +451,24 @@ function addMedicineToMedRemoveDT(){
                 else{
                     alert("Sorry This entry is not possible")
                 }
+                $('.modal-loading').hide();
+
             }
         });    
     
     }
 function createRemoveRow(){
-    var row_div_three=$("<div class='row' style='padding-bottom:18px'></div>");
-    var col_one__row_div_three=$("<div class='col-md-12'></div>");
-            var rem_button=$('<button class="btn btn-danger" id="rem_desp_btn" onclick="removeMedFromDesp()">Remove</button>')
-    col_one__row_div_three.append(rem_button);
+    var row_div_three=$("<div class='row genformdiv3' style='padding-bottom:18px'></div>");
+    var col_one__row_div_three=$("<div class='col-md-4'></div>");
+    var col_two__row_div_three=$("<div class='col-md-4'></div>");
+    var col_three__row_div_three=$("<div class='col-md-4'></div>");
+
+            var rem_button=$('<button class="deletebtn" id="rem_desp_btn" onclick="removeMedFromDesp()">Remove</button>')
+    col_two__row_div_three.append(rem_button);
 row_div_three.append(col_one__row_div_three);
+row_div_three.append(col_two__row_div_three);
+row_div_three.append(col_three__row_div_three);
+
 var main_col_div=$("#main_col_div")
 $(main_col_div).append(row_div_three);
 }
@@ -504,6 +520,8 @@ function removeMedFromDesp(){
         // removal_med_dict[data[3]]=tempdict
         removal_med_dict[data[1]]=tempdict
     } );
+    $('.modal-loading').show();
+
     $.ajax({
         type: 'POST',
         dataType: "json",
@@ -518,6 +536,8 @@ function removeMedFromDesp(){
             $("#desp-med-name").val("");
             bill_datatable.clear();
             bill_datatable.draw();
+            $('.modal-loading').hide();
+
 
         }
     });

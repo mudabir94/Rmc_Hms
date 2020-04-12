@@ -35,9 +35,9 @@ function updatePatientBill(){
             var row_div_one=$("<div class='row'></div>");
                 var col_one__row_div_one=$("<div class='col-md-12'></div>");
                 row__col_one__row_div_one=$("<div class='row'></div>");
-                    colmd1=$("<div class='col-md-1'></div>")
+                    colmd1=$("<div class='col-md-2'></div>")
                     colmd2=$("<div class='col-md-2'></div>")
-                    colmd3=$("<div class='col-md-2'></div>")
+                    colmd3=$("<div class='col-md-3'></div>")
 
                     pres_id_label=$("<label class='custom_label_css'>Prescription id</label>");
                     colmd1.append(pres_id_label)
@@ -45,7 +45,7 @@ function updatePatientBill(){
                     pres_id_input=$("<input class='form-control custom_input_css' id='pres_id_input' >")
                     colmd2.append(pres_id_input);
 
-                    var search_button=$('<button class="btn btn-block fa fa-search" onclick="retrieveInvoiceBillRecord()">Search Bill</button>');
+                    var search_button=$('<button class="search_patientpres_btn fa fa-search" onclick="retrieveInvoiceBillRecord()">Search Bill</button>');
                     colmd3.append(search_button);
 
                 row__col_one__row_div_one.append(colmd1);
@@ -59,6 +59,18 @@ function updatePatientBill(){
 }
 
 function retrieveInvoiceBillRecord(){
+    // updatePatientBill();
+    if ((".genformdiv2").length>1){
+        $("#pat_details_div").remove();
+        $("#row_pres_bill").remove();
+        $("#row_disp_bill").remove();
+        $("#row_surgery_bill").remove();
+        $("#row_procedure_bill").remove();
+        $("#row_room_bill").remove();
+        $("#row_ward_bill").remove();
+        $("#total_amount_div").remove();
+        $("#btn_div").remove();
+    }
     $("#pat_details_div").remove();
     $("#row_pres_bill").remove();
     $("#row_disp_bill").remove();
@@ -68,6 +80,7 @@ function retrieveInvoiceBillRecord(){
     $("#row_ward_bill").remove();
     $("#total_amount_div").remove();
     $("#btn_div").remove();
+    
 
     
 
@@ -77,6 +90,8 @@ function retrieveInvoiceBillRecord(){
         return
     }
     prescription_id=pres_id
+    $('.modal-loading').show();
+
     $.ajax({
         type: 'GET',
         dataType: "json",
@@ -87,10 +102,14 @@ function retrieveInvoiceBillRecord(){
         success: function(data){
             if (data['pres_id']===""){
                 alert("Please Insert Valid Pres No")
+                $('.modal-loading').hide();
+
                 return
             }
             if (data['status']==="Not Found"){
                 alert("Record Not Found")
+                $('.modal-loading').hide();
+
                 return
             }
             patRoomBill_dict={};
@@ -110,7 +129,7 @@ function retrieveInvoiceBillRecord(){
             var newdate=dt.toISOString().split('T')[0];
 
 
-            var row_div_mid=$("<div class='row' id='pat_details_div'></div>");
+            var row_div_mid=$("<div class='row genformdiv2' id='pat_details_div'></div>");
                 var main_subcol=$("<div class='col-md-12'></div>");
 
                 var subrow=$("<div class='row' style='padding-top: 5px;padding-bottom: 5px;'></div>")
@@ -120,7 +139,7 @@ function retrieveInvoiceBillRecord(){
                             var colmd1=$("<div class='col-md-6'></div>")
                             var colmd2=$("<div class='col-md-6'></div>")
                                 var pat_name_label=$("<label for='pat_name_tag' class='custom_label_css float-right' style='text-decoration:underline;'>Patient Name:</label>");
-                                var pat_name_input=$("<label id='pat_name_input' class='form-control-static'>"+patPresRecord_dict['pat_name']+"</label>")
+                                var pat_name_input=$("<label id='pat_name_input' class='forminputlabels'>"+patPresRecord_dict['pat_name'].toUpperCase()+"</label>")
                             colmd1.append(pat_name_label)
                             colmd2.append(pat_name_input)
                         row__col_one__subrow.append(colmd1);
@@ -132,7 +151,7 @@ function retrieveInvoiceBillRecord(){
                             var colmd1=$("<div class='col-md-6'></div>")
                             var colmd2=$("<div class='col-md-6'></div>")
                                 var date_visited_label=$("<label class='custom_label_css float-right' style='text-decoration:underline;'>Date visited:</label>");
-                                var date_input=$("<label id='date_input' class='form-control-static'>"+newdate+"</label>")
+                                var date_input=$("<label id='date_input' class='forminputlabels'>"+newdate+"</label>")
                             colmd1.append(date_visited_label);
                             colmd2.append(date_input);
 
@@ -145,7 +164,7 @@ function retrieveInvoiceBillRecord(){
                             var colmd1=$("<div class='col-md-7'></div>")
                             var colmd2=$("<div class='col-md-5'></div>")
                                 var invoice_label=$("<label class='custom_label_css float-right' style='text-decoration:underline;'>Invoice Number:</label>");
-                                var invoice_input=$("<label id='invoice_label' class='form-control-static'>"+patPresRecord_dict['invoice_no']+"</label>")
+                                var invoice_input=$("<label id='invoice_label' class='forminputlabels'>"+patPresRecord_dict['invoice_no']+"</label>")
                             colmd1.append(invoice_label);
                             colmd2.append(invoice_input);
                         row__col_three__subrow.append(colmd1)
@@ -188,6 +207,8 @@ function retrieveInvoiceBillRecord(){
             }
             netTotalAmountRow();
             updateButtonRow();
+            $('.modal-loading').hide();
+
         }
     }); 
         
@@ -233,7 +254,7 @@ function createPrescriptionBillRow(){
                         var colmd1=$("<div class='col-md-3'></div>")
                         var colmd2=$("<div class='col-md-3'></div>")
                             var status_label=$("<label class='custom_label_css'>Status</label>");
-                            var select=$("<select id='pres_status' class='form-control' style='font-size: inherit;'></select>");
+                            var select=$("<select id='pres_status' class='form-control' ></select>");
                                     
                                 if (patPresRecord_dict['status']==='Paid'){
                                 
@@ -288,7 +309,7 @@ function createDispensoryBillRow(){
                     var colmd1=$("<div class='col-md-3'></div>")
                     var colmd2=$("<div class='col-md-3'></div>")
                             var desp_med_label=$("<label for='desp_med_label_tag' class='custom_label_css'>Despensory Medicines Bill</label>");
-                            var desp_med_bill_label=$("<label id='desp_med_bill_label' class='form-control-static'>"+DespBill_dict['desp_bill']+"</label>")
+                            var desp_med_bill_label=$("<label id='desp_med_bill_label' class='forminputlabels'>"+DespBill_dict['desp_bill']+"</label>")
                         colmd1.append(desp_med_label)
                         colmd2.append(desp_med_bill_label)
                     row__col_one__subrow_one.append(colmd1);
@@ -304,7 +325,7 @@ function createDispensoryBillRow(){
                         var colmd1=$("<div class='col-md-3'></div>")
                         var colmd2=$("<div class='col-md-3'></div>")
                             var addit_med_label=$("<label for='addit_med_label_tag' class='custom_label_css'>Additional Medicines Bill</label>");
-                            var addit_med_bill_label=$("<label id='addit_med_bill_label' class='form-control-static'>"+DespBill_dict['add_med_bill']+"</label>")
+                            var addit_med_bill_label=$("<label id='addit_med_bill_label' class='forminputlabels'>"+DespBill_dict['add_med_bill']+"</label>")
                         colmd1.append(addit_med_label)
                         colmd2.append(addit_med_bill_label)
                     row__col_one__subrow_two.append(colmd1);
@@ -336,7 +357,7 @@ function createDispensoryBillRow(){
                         var colmd1=$("<div class='col-md-3'></div>")
                         var colmd2=$("<div class='col-md-3'></div>")
                             var status_label=$("<label for='status_label_tag' class='custom_label_css'>Status</label>");
-                            var select=$("<select id='desp_status' class='form-control' style='font-size: inherit;'></select>");
+                            var select=$("<select id='desp_status' class='form-control'></select>");
                                     
                                 if (DespBill_dict['status']==='Paid'){
                                     var option=$("<option id="+status_list[0]+"-opt value='"+status_list[0]+"'>"+status_list[0]+"</option>");
@@ -394,7 +415,7 @@ function createSurgeryBillRow(){
                         var colmd1=$("<div class='col-md-3'></div>")
                         var colmd2=$("<div class='col-md-3'></div>")
                             var Surg_label=$("<label for='Surg_tag' class='custom_label_css'>Surgery Name</label>");
-                            var surg_name_label=$("<label id='surg_name_label-"+key+"' class='form-control-static'>"+surgBillRecord_dict[key]['surgery_name']+"</label>")
+                            var surg_name_label=$("<label id='surg_name_label-"+key+"' class='forminputlabels'>"+surgBillRecord_dict[key]['surgery_name']+"</label>")
                         colmd1.append(Surg_label)
                         colmd2.append(surg_name_label)
                     row__col_one__subrow_one.append(colmd1);
@@ -487,7 +508,7 @@ function createSurgeryBillRow(){
                         var colmd1=$("<div class='col-md-3'></div>")
                         var colmd2=$("<div class='col-md-3'></div>")
                             var status_label=$("<label class='custom_label_css'>Status</label>");
-                            var select=$("<select id='surg_status-"+key+"' class='form-control' style='font-size: inherit;'></select>");
+                            var select=$("<select id='surg_status-"+key+"' class='form-control'></select>");
                                     
                             if (surgBillRecord_dict[key]['status']==='Paid'){
                                 var option=$("<option id="+status_list[0]+"-opt value='"+status_list[0]+"'>"+status_list[0]+"</option>");
@@ -738,7 +759,7 @@ function createProcedureBillRow(){
                             var colmd1=$("<div class='col-md-3'></div>")
                             var colmd2=$("<div class='col-md-3'></div>")
                                 var Surg_label=$("<label for='Surg_tag' class='custom_label_css'>Procedure Name</label>");
-                                var surg_name_label=$("<label id='proc_name_label-"+key+"' class='form-control-static'>"+procBillRecord_dict[key]['procedure_name']+"</label>")
+                                var surg_name_label=$("<label id='proc_name_label-"+key+"' class='forminputlabels'>"+procBillRecord_dict[key]['procedure_name']+"</label>")
                             colmd1.append(Surg_label)
                             colmd2.append(surg_name_label)
                         row__col_one__subrow_one.append(colmd1);
@@ -770,7 +791,7 @@ function createProcedureBillRow(){
                             var colmd1=$("<div class='col-md-3'></div>")
                             var colmd2=$("<div class='col-md-3'></div>")
                                 var status_label=$("<label class='custom_label_css'>Status</label>");
-                                var select=$("<select id='proc_status-"+key+"' class='form-control' style='font-size: inherit;'></select>");
+                                var select=$("<select id='proc_status-"+key+"' class='form-control' ></select>");
                                         
                                     if (procBillRecord_dict[key]['status']==='Paid'){
                                         var option=$("<option id="+status_list[0]+"-opt value='"+status_list[0]+"'>"+status_list[0]+"</option>");
@@ -808,7 +829,7 @@ function createProcedureBillRow(){
                     var colmd1=$("<div class='col-md-3'></div>")
                     var colmd2=$("<div class='col-md-3'></div>")
                         var procTotal_label=$("<label class='custom_label_css'>Procedure Sub Total</label>");
-                        var procTotal_Input=$("<label class='form-control-static' id='proc_total'>"+procBillRecord_dict[key]['all_proc_amount']+"</label>")
+                        var procTotal_Input=$("<label class='forminputlabels' id='proc_total'>"+procBillRecord_dict[key]['all_proc_amount']+"</label>")
                     colmd1.append(procTotal_label);
                     colmd2.append(procTotal_Input);
                 row__col_one__subrow_four.append(colmd1);
@@ -893,7 +914,7 @@ function createRoomBillRow(){
                         var colmd1=$("<div class='col-md-3'></div>")
                         var colmd2=$("<div class='col-md-3'></div>")
                             var floor_label=$("<label for='floor_tag' class='custom_label_css'>Floor Number</label>");
-                            var floor_no_label=$("<label id='floor_no_label' class='form-control-static'>"+patRoomBill_dict['floor']+"</label>")
+                            var floor_no_label=$("<label id='floor_no_label' class='forminputlabels'>"+patRoomBill_dict['floor']+"</label>")
                         colmd1.append(floor_label)
                         colmd2.append(floor_no_label)
                     row__col_one__subrow_one.append(colmd1);
@@ -909,7 +930,7 @@ function createRoomBillRow(){
                     var colmd1=$("<div class='col-md-3'></div>")
                     var colmd2=$("<div class='col-md-3'></div>")
                         var room_label=$("<label class='custom_label_css'>Room Number</label>");
-                        var room_no_input=$("<label id='room_no_input' class='form-control-static'>"+patRoomBill_dict['room_no']+"</label>")
+                        var room_no_input=$("<label id='room_no_input' class='forminputlabels'>"+patRoomBill_dict['room_no']+"</label>")
                     colmd1.append(room_label);
                     colmd2.append(room_no_input);
 
@@ -926,7 +947,7 @@ function createRoomBillRow(){
                         var colmd1=$("<div class='col-md-3'></div>")
                         var colmd2=$("<div class='col-md-3'></div>")
                             var charges_label=$("<label for='charges_tag' class='custom_label_css'>Room Charges/Day</label>");
-                            var charges_per_day_label=$("<label id='charges_per_day_label' class='form-control-static'>"+patRoomBill_dict['charge_per_day']+"</label>")
+                            var charges_per_day_label=$("<label id='charges_per_day_label' class='forminputlabels'>"+patRoomBill_dict['charge_per_day']+"</label>")
                         colmd1.append(charges_label)
                         colmd2.append(charges_per_day_label)
                     row__col_one__subrow_three.append(colmd1);
@@ -942,7 +963,7 @@ function createRoomBillRow(){
                         var colmd1=$("<div class='col-md-3'></div>")
                         var colmd2=$("<div class='col-md-3'></div>")
                             var acCharge_label=$("<label class='custom_label_css'>AC Charges/Day</label>");
-                            var acCharge_Per_day_label=$("<label id='acCharge_Per_day_label' class='form-control-static'>"+patRoomBill_dict['ac_charge_per_day']+" </label>")
+                            var acCharge_Per_day_label=$("<label id='acCharge_Per_day_label' class='forminputlabels'>"+patRoomBill_dict['ac_charge_per_day']+" </label>")
                         colmd1.append(acCharge_label);
                         colmd2.append(acCharge_Per_day_label);
                     row__col_one__subrow_four.append(colmd1);
@@ -958,7 +979,7 @@ function createRoomBillRow(){
                         var colmd1=$("<div class='col-md-3'></div>")
                         var colmd2=$("<div class='col-md-3'></div>")
                             var totalDays_label=$("<label class='custom_label_css'>Days Stayed</label>");
-                            var total_days_label=$("<label id='total_days_label' class='form-control-static'>"+patRoomBill_dict['total_days']+" </label>")
+                            var total_days_label=$("<label id='total_days_label' class='forminputlabels'>"+patRoomBill_dict['total_days']+" </label>")
                         colmd1.append(totalDays_label);
                         colmd2.append(total_days_label);
                     row__col_one__subrow_five.append(colmd1);
@@ -990,7 +1011,7 @@ function createRoomBillRow(){
                         var colmd1=$("<div class='col-md-3'></div>")
                         var colmd2=$("<div class='col-md-3'></div>")
                             var status_label=$("<label class='custom_label_css'>Status</label>");
-                            var select=$("<select id='room_status' class='form-control' style='font-size: inherit;'></select>");
+                            var select=$("<select id='room_status' class='form-control'></select>");
                                     
                             if (patRoomBill_dict['status']==='Paid'){
                                 var option=$("<option id="+status_list[0]+"-opt value='"+status_list[0]+"'>"+status_list[0]+"</option>");
@@ -1048,7 +1069,7 @@ function createWardBillRow(){
                         var colmd1=$("<div class='col-md-3'></div>")
                         var colmd2=$("<div class='col-md-3'></div>")
                             var Ward_label=$("<label for='Ward_tag' class='custom_label_css'>Ward Number</label>");
-                            var ward_no_label=$("<label id='ward_no_label' class='form-control-static'>"+patWardBill_dict['ward_no']+"</label>")
+                            var ward_no_label=$("<label id='ward_no_label' class='forminputlabels'>"+patWardBill_dict['ward_no']+"</label>")
                         colmd1.append(Ward_label)
                         colmd2.append(ward_no_label)
                     row__col_one__subrow_one.append(colmd1);
@@ -1064,7 +1085,7 @@ function createWardBillRow(){
                         var colmd1=$("<div class='col-md-3'></div>")
                         var colmd2=$("<div class='col-md-3'></div>")
                             var bed_label=$("<label class='custom_label_css'>Bed Number</label>");
-                            var bed_no_label=$("<label id='bed_no_label' class='form-control-static'>"+patWardBill_dict['bed_no']+"</label>")
+                            var bed_no_label=$("<label id='bed_no_label' class='forminputlabels'>"+patWardBill_dict['bed_no']+"</label>")
                         colmd1.append(bed_label);
                         colmd2.append(bed_no_label);
                     row__col_one__subrow_two.append(colmd1);
@@ -1080,7 +1101,7 @@ function createWardBillRow(){
                         var colmd1=$("<div class='col-md-3'></div>")
                         var colmd2=$("<div class='col-md-3'></div>")
                             var charges_label=$("<label for='charges_tag' class='custom_label_css'>Room Charges/Day</label>");
-                            var charge_label=$("<label id='charge_label' class='form-control-static'>"+patWardBill_dict['charge_per_day']+"</label>")
+                            var charge_label=$("<label id='charge_label' class='forminputlabels'>"+patWardBill_dict['charge_per_day']+"</label>")
                         colmd1.append(charges_label)
                         colmd2.append(charge_label)
                     row__col_one__subrow_three.append(colmd1);
@@ -1096,7 +1117,7 @@ function createWardBillRow(){
                         var colmd1=$("<div class='col-md-3'></div>")
                         var colmd2=$("<div class='col-md-3'></div>")
                             var totalDays_label=$("<label class='custom_label_css'>Days Stayed</label>");
-                            var total_days_label=$("<label id='total_days_label' class='form-control-static'>"+patWardBill_dict['total_days']+" </label>")
+                            var total_days_label=$("<label id='total_days_label' class='forminputlabels'>"+patWardBill_dict['total_days']+" </label>")
                         colmd1.append(totalDays_label);
                         colmd2.append(total_days_label);
                     row__col_one__subrow_four.append(colmd1);
@@ -1128,7 +1149,7 @@ function createWardBillRow(){
                         var colmd1=$("<div class='col-md-3'></div>")
                         var colmd2=$("<div class='col-md-3'></div>")
                             var status_label=$("<label class='custom_label_css'>Status</label>");
-                            var select=$("<select id='ward_status' class='form-control' style='font-size: inherit;'></select>");
+                            var select=$("<select id='ward_status' class='form-control'></select>");
                                     
                             if (patWardBill_dict['status']==='Paid'){
                                 var option=$("<option id="+status_list[0]+"-opt value='"+status_list[0]+"'>"+status_list[0]+"</option>");
@@ -1286,8 +1307,8 @@ function netTotalAmountRow(){
                     row__col_one__subrow_one=$("<div class='row'></div>");
                         var colmd1=$("<div class='col-md-4'></div>")
                         var colmd2=$("<div class='col-md-3'></div>")
-                            var total_label=$("<label for='nettotal_label' class='custom_label_css'>Sub Total</label>");
-                            var totalAmount_label=$("<label id='nettotal_label' class='form-control-static'>"+patPresRecord_dict['total_bill']+"</label>")
+                            var total_label=$("<label for='nettotal_label' class='custom_label_css'>Total</label>");
+                            var totalAmount_label=$("<label id='nettotal_label' class='forminputlabels'>"+patPresRecord_dict['total_bill']+"</label>")
                         colmd1.append(total_label)
                         colmd2.append(totalAmount_label)
                     row__col_one__subrow_one.append(colmd1);
@@ -1301,7 +1322,7 @@ function netTotalAmountRow(){
                 var col_one__subrow_two=$("<div class='col-md-5'></div>");
                     row__col_one__subrow_two=$("<div class='row'></div>");
                         var colmd1=$("<div class='col-md-4'></div>")
-                        var colmd2=$("<div class='col-md-3'></div>")
+                        var colmd2=$("<div class='col-md-8'></div>")
                             var status_label=$("<label for='status_label' class='custom_label_css'>Status</label>");
                             var select=$("<select id='invoice_status' class='form-control' onfocusout='valueFocusOutInvoiceStatus($(this))' ></select>");
                                     
@@ -1354,7 +1375,7 @@ function valueFocusOutInvoiceStatus(element){
 }
 function updateButtonRow(){
 
-    var row_div_btn=$("<div class='row' id='btn_div'></div>");
+    var row_div_btn=$("<div class='row genformdiv2' id='btn_div'></div>");
         var main_subcol=$("<div class='col-md-12'></div>");
 
             var subrow_zero=$("<div class='row' style='padding-top: 5px;padding-bottom: 5px; '></div>")
@@ -1362,7 +1383,7 @@ function updateButtonRow(){
                 var col_one__subrow_zero=$("<div class='col-md-12'></div>");
                     row__col_one__subrow_zero=$("<div class='row'></div>");
                         var colmd1=$("<div class='col-md-6 offset-md-3'></div>")
-                            var updateBtn_label=$('<button class="btn btn-success btn-block fa fa-save" id="update_bttn" onclick="updateInvoice()">  Update Bill</button>');
+                            var updateBtn_label=$('<button class="save_btn fa fa-save" id="update_bttn" onclick="updateInvoice()">  Update Bill</button>');
                         colmd1.append(updateBtn_label)
                     row__col_one__subrow_zero.append(colmd1);
                 col_one__subrow_zero.append(row__col_one__subrow_zero);
@@ -1446,6 +1467,7 @@ function updateInvoice(){
         surg_dict[key]=temp_dict
     }
     console.log("surg_dict4444444444444", surg_dict)
+    $('.modal-loading').show();
 
     $.ajax({
         type: 'GET',
@@ -1471,6 +1493,9 @@ function updateInvoice(){
             $("#row_ward_bill").remove();
             $("#total_amount_div").remove();
             $("#update_bttn").remove();
+            $('.modal-loading').hide();
+            alert("Updated")
+
         },
     });
 }

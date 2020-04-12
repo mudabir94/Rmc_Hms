@@ -493,4 +493,10 @@
   .chiller-theme .sidebar-footer>a:last-child {
       border-right: none;
   }
-  
+  .user-name{
+    text-transform: uppercase;
+  }
+  .user-role{
+    text-transform: uppercase;
+
+  }

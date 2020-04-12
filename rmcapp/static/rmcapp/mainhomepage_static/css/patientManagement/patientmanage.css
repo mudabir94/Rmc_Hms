@@ -5,6 +5,11 @@ border-right-style: solid;
 border-width: thin;
 
 }
+input[type=radio] {
+  border: 0px;
+  width: 20%;
+  height: 2em;
+}
 
 
 .vl {
@@ -22,10 +27,10 @@ border-width: thin;
   .center_h_tag_forms{
     text-align:center;
     font-family:Arial;
+    font-weight: 900;
     font-size: 38px !important;
-    text-shadow: 2px 2px 0px #e62929;
-    color:cornflowerblue;
-
+    text-shadow: 2px 2px 0px #9a0000;
+    color:#f7bbbb;
   }
   .custom_hr{
       color: red;
@@ -62,9 +67,10 @@ border-width: thin;
   border: 1px solid #ddd;
   /* padding: 8px; */
 }
-.datatable_uploadfile tr:nth-child(even){background-color: #f2f2f2;}
+.datatable_uploadfile tr:nth-child(even){background-color: white;}
+.datatable_uploadfile tr:nth-child(odd){background-color: rgb(172, 176, 189);}
 
-.datatable_uploadfile  tr:hover {background-color: rgba(119, 5, 5, 0.342);}
+.datatable_uploadfile  tr:hover {background-color: rgba(119, 5, 5, 0.753);}
 .datatable_uploadfile  tr{
   padding:0px;
   /* line-height: 6px; */
@@ -76,6 +82,34 @@ border-width: thin;
   background-color: rgb(119, 5, 5);
   color: white;
 }
+/* DATA TABLE CUSTOM PROC AND SURG BILL */
+.datatable_proc_surg_custom{
+
+}
+.datatable_proc_surg_custom{
+  font-size: 1.1rem;
+}
+
+.datatable_proc_surg_custom td, .datatable_proc_surg_custom th {
+  /* border: 1px solid #ddd; */
+  /* padding: 8px; */
+}
+.datatable_proc_surg_custom tr:nth-child(even){background-color: white;}
+.datatable_proc_surg_custom tr:nth-child(odd){background-color: rgb(172, 176, 189);}
+
+.datatable_proc_surg_custom  tr:hover {background-color: rgba(119, 5, 5, 0.753);}
+.datatable_proc_surg_custom  tr{
+  padding:0px;
+  /* line-height: 6px; */
+}
+.datatable_proc_surg_custom th {
+  /* padding-top: 12px; */
+  /* padding-bottom: 12px; */
+  text-align: left;
+  background-color: rgb(119, 5, 5);
+  color: white;
+}
+/*  */
 .datatable_button{
   background: grey;
   display: inline-block;
@@ -91,28 +125,29 @@ border-width: thin;
   padding: .375rem .75rem;
   font-size: 0.7rem;
   line-height: 1.5;
-  border-radius: .25rem;
+  /* border-radius: .25rem; */
+  border-radius: 10px 10px 40px;
+
   cursor:pointer;
   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
 
 .dashboard-icons{
-  width:100%;
-  border-radius: 2px;
-  height:150px;
-  background:#b0b0b0;
-  box-shadow: 0 0 5px 3px rgb(133, 31, 31);
+    width:100%;
+    border-radius: 3px 20px 20px 20px;
+    height:150px;
+    background:#b0b0b0;
+    /* box-shadow: 0 0 5px 3px #555; */
+    box-shadow: 0 0 5px 5px rgb(133, 31, 31);
+    cursor:pointer;
+
 }
 .dashboard-icon-rows{
-/* padding:10px;
-padding-top:  50px; */
-padding:10px;
-
+  padding:10px;
 }
 .dashboard-icons:hover{
-background:#4c7c9a;
-
+  background:rgb(150, 69, 69);
 }
 
 .card-counter{
@@ -240,21 +275,22 @@ background:#4c7c9a;
 }
 
 .form-control-custom{
-  display: block;
-  width: 100%;
-  padding: .375rem .75rem;
-  font-size: 0.7rem;
-  line-height: 1.5;
-  color: #495057;
-  background-color: #fff;
-  background-clip: padding-box;
-  border: 1px solid #ced4da;
-  border-radius: .25rem;
-  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 0.9rem;
+    line-height: 1.8;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    box-shadow: -5px 5px 5px ;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 .custom_label_css{
-  font-size: 0.7rem;
-  font-weight: 500;
+  font-size: 0.8rem;
+  font-weight: bold;
   text-transform: uppercase;
 }
 #edit-patient-info-form{
@@ -271,14 +307,426 @@ background:#4c7c9a;
   overflow:scroll;
 }
 #pat-date-visited-ul li{
-  font-size:10px;
+  font-size:15px;
+  color:white;
 }
 
 #pat-date-visited-ul li:hover {
-  font-size: 15px;
+  font-size: 18px;
   color:white;
-  font: bold;
+  font: 900;
   background: rgb(119, 5, 5);
   cursor: pointer;
 
+}
+#add_patient_form_div{
+  background: #a9c7f5;
+  box-shadow: -4px 4px 4px;
+  border-radius: 10px 10px 10px 10px;
+}
+.save_btn{
+  width: 100%;
+  height: 30px;
+  border: none;
+  background-color: #28a745;
+  color: white;
+  font-size: 1rem !important;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: -5px 5px 5px rgb(8, 8, 8);
+  margin-bottom: 10px;
+  border-radius: 50px 50px 0px 0px;
+}
+#select_pres_type_div{
+  margin-top:10px;
+  margin-bottom:10px;
+  background: #a9c7f5;
+  border-radius: 10px 10px 10px 10px;
+  box-shadow: -5px 5px 5px;
+}
+#gen_pres_form_div{
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  background: #a9c7f5;
+  border-radius: 10px 10px 10px 10px;
+  box-shadow: -5px 5px 5px;
+}
+.available_room_table_div{
+  padding-top:20px;
+  padding-bottom:20px;
+  border-radius: 10px 10px 10px 10px;
+}
+.available_ward_table_div{
+  padding-top:20px;
+  padding-bottom:20px;
+  border-radius: 10px 10px 10px 10px;
+}
+.room_ward_calculation_genpres_form{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 10px 10px 10px 10px;
+  background: #a9c7f5;
+  box-shadow: -5px 5px 5px;
+  margin-top: 10px;
+
+}
+.show_patients_table_genpres_form{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 30px;
+  border-radius: 10px 10px 10px 10px;
+  background: #a9c7f5;
+  box-shadow: -5px 1px 5px 5px;
+  margin-top: 10px;
+}
+.update_pres_form_div{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 10px 10px 10px 10px;
+  background: #877a92;
+  box-shadow: -5px 5px 5px;
+  margin-top: 20px;
+}
+.update_pres_tables{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 30px;
+  border-radius: 10px 10px 10px 10px;
+  background: #a9c7f5;
+  box-shadow: -5px 1px 5px 5px;
+  margin-top: 10px;
+}
+#genpres_room_datatablediv,#genpres_ward_datatablediv{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 30px;
+
+  background: #a9c7f5;
+  box-shadow: -5px 5px 5px;
+  margin-top: 10px;
+  border-radius: 10px 10px 10px 10px;
+}
+.printbtn{
+  background:rgb(34, 23, 134);
+  color:white;
+
+}
+.excelbtn{
+  background:rgb(12, 173, 76);
+  color:white;
+
+}
+.copybtn{
+  background:rgb(173, 230, 220);
+  color:#d25a5a;;
+
+
+}
+.pdfbtn{
+  background:rgb(160, 26, 26);
+  color:#c2eae8;
+
+}
+.csvbtn{
+  background:rgb(241, 226, 6);
+  color:#000000;;
+}
+.modal-loading {
+  display:    none;
+  position:   fixed;
+  z-index:    1000;
+  top:        0;
+  left:       0;
+  height:     100%;
+  width:      100%;
+  background: rgba( 255, 255, 255, .8 ) 
+              url('http://i.stack.imgur.com/FhHRx.gif') 
+              50% 50% 
+              no-repeat;
+}
+.search_patient_btn{
+  width: 100%;
+    /* margin-top: 8%; */
+    font-size: initial;
+    color: #2a64de;
+    font-weight: 800 !important;
+    height: 32px;
+    background-color: whitesmoke;
+    border: none;
+    border-color: #000000;
+    cursor: pointer;
+    box-shadow: 2px 2px 2px 3px green;
+        border-radius: 4px 40px 4px 40px;
+}
+.search_patient_btn:hover{
+  background-color: green;
+  color:white;
+  font-size: medium !important;
+}
+.search_patientpres_btn{
+  width: 50%;
+  font-size: initial;
+  color: #2a64de;
+  font-weight: 800;
+  height: 32px;
+  background-color: whitesmoke;
+  border: none;
+  border-color: #000000;
+  cursor: pointer;
+  box-shadow: 2px 2px 2px 3px green;
+      border-radius: 4px 40px 4px 40px;
+}
+.search_patientpres_btn:hover{
+  background-color: green;
+  color:white;
+  font-size: medium !important;
+}
+.edit_patient_form_div{
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  background: #a9c7f5;
+  border-radius: 10px 10px 10px 10px;
+  box-shadow: -5px 5px 5px;
+  margin-top: 10px;
+
+}
+.update_patient_info_btn{
+  width: 100%;
+  height: 30px;
+  border: none;
+  background-color: #28a745;
+  color: white;
+  font-size: 1rem !important;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: -5px 5px 5px rgb(8, 8, 8);
+  margin-bottom: 10px;
+  border-radius: 50px 50px 0px 0px;
+}
+.print_patient_info_btn{
+  width: 100%;
+  height: 30px;
+  border: none;
+  background-color: #28a745;
+  color: white;
+  font-size: 1rem !important;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: -5px 5px 5px rgb(8, 8, 8);
+  margin-bottom: 10px;
+  border-radius: 50px 50px 0px 0px;
+}
+.gen_printbtn{
+  width: 100%;
+  height: 30px;
+  border: none;
+  background-color: #28a745;
+  color: white;
+  font-size: 1rem !important;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: -5px 5px 5px rgb(8, 8, 8);
+  margin-bottom: 10px;
+  border-radius: 50px 50px 0px 0px;
+}
+
+.genformdiv1{
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  background: #a9c7f5;
+  border-radius: 10px 10px 10px 10px;
+  box-shadow: -5px 5px 5px;
+  margin-top: 10px;
+
+}
+.genformdiv2{
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  background: #877a92;
+  border-radius: 10px 10px 10px 10px;
+  box-shadow: -5px 5px 5px;
+  margin-top: 10px;
+
+}
+.desp-med-qty-form_class{
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  background: #877a92;
+  border-radius: 10px 10px 10px 10px;
+  box-shadow: -5px 5px 5px;
+  margin-top: 10px;
+}
+.add_btn{
+  padding-top: 5px;
+  padding-bottom: 5px;
+  height: 28px;
+  text-align: center;
+  font-size: 0.7rem;
+  width: inherit;
+  margin-top: 10px;
+  border-radius: 5px 5px 5px 5px;
+  border: none;
+  box-shadow: -4px 5px 10px;
+}
+.add_btn:hover{
+  color:white;
+  font-size:0.8rem;
+  background:green;
+}
+.cancel_btn{
+  padding-top: 5px;
+  padding-bottom: 5px;
+  height: 28px;
+  text-align: center;
+  font-size: 0.7rem;
+  width: inherit;
+  margin-top: 10px;
+  border-radius: 5px 5px 5px 5px;
+  border: none;
+  box-shadow: -4px 5px 10px;
+}
+.cancel_btn:hover{
+  color:white;
+  font-size:0.8rem;
+  background:rgb(192, 17, 40);
+}
+#procedure_col1{
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  background: #877a92;
+  border-radius: 10px 10px 10px 10px;
+  box-shadow: -5px 5px 5px;
+  margin-top: 10px;
+}
+#procedure_col2{
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  background: #a9c7f5;
+  border-radius: 10px 10px 10px 10px;
+  box-shadow: -5px 5px 5px;
+  margin-top: 10px;
+}
+#calculate_despbill_div{
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  background: #a9c7f5;
+  border-radius: 10px 10px 10px 10px;
+  box-shadow: -5px 5px 5px;
+  margin-top: 10px;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+#totaldespbilldiv{
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  background: #a9c7f5;
+  border-radius: 10px 10px 10px 10px;
+  box-shadow: -5px 5px 5px;
+  margin-top: 10px;
+}
+.calbtn{ 
+  width: 100%;
+  height: 30px;
+  border: none;
+  background-color: #e28bff;   
+  color: #282c78;
+  font-size: 0.8rem!important;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: -5px 5px 5px #000000;
+  border-radius: 6px 6px 6px 6px;
+}
+#createOutDoorPresFormDiv{
+  margin-top:10px;
+  margin-left:0px;
+  margin-right:0px;
+  background-color: #a9c7f5;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 10px 10px 10px 10px;
+  box-shadow: -5px 5px 5px;
+}
+.revisitexsistpres_div{
+  margin-top:10px;
+  margin-left:0px;
+  margin-right:0px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  background: #877a92;
+  border-radius: 10px 10px 10px 10px;
+  box-shadow: -5px 5px 5px;
+
+}
+.surgery_procedure_billform{
+  margin-top:10px;
+  margin-left:0px;
+  margin-right:0px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background: #a9c7f5;
+  border-radius: 10px 10px 10px 10px;
+  box-shadow: -5px 5px 5px;
+}
+.surgery_procedure_billform2{
+  margin-top:10px;
+  margin-left:0px;
+  margin-right:0px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background: #877a92;
+  border-radius: 10px 10px 10px 10px;
+  box-shadow: -5px 5px 5px;
+}
+.removerowmargins_div{
+  margin-right:0px;
+  margin-left:0px;
+}
+.delBtn{
+  padding-top: 10px;
+  color:red !important; 
+  background-color:#a9c7f5 ;
+  border:none; 
+  cursor:pointer;
+}
+.roomwardforminputlabels{
+  font-size:0.7rem;
+  font-weight: 900;
+}
+.deletebtn{
+  width: 100%;
+  height: 30px;
+  border: none;
+  background-color: #860d0d;   
+  color: white;
+  font-size: 0.8rem!important;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: -5px 5px 5px #000000;
+  border-radius: 6px 6px 6px 6px;
+}
+.deletebtn:hover{
+  font-size: 0.9rem!important;
+
+}
+#search_pat_datatable_row{
+  margin-left:0px;
+  margin-right:0px; 
+}
+.surg_proc_bill_label_class{
+  font-size: 30px;
+  font-weight: bold;
+
+}
+#reset-token-dialog{
+  box-shadow: 0px 0px 28px 25px;
 }

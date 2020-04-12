@@ -12,11 +12,19 @@
 
 
 #row_surgery_bill, #row_procedure_bill, #row_pres_bill, #row_disp_bill, #row_room_bill, #row_ward_bill, #total_amount_div{
-    background-color: #a79c9c1a;
-    /* border: 1px solid; */
+    /* background-color: #a79c9c1a;
     margin-top: 10px;
     margin-bottom: 10px;
-    font-size: large;
+    font-size: large; */
+    padding-top: 10px;
+    padding-bottom: 10px;
+  
+    background: #a9c7f5;
+    border-radius: 10px 10px 10px 10px;
+    box-shadow: -5px 5px 5px;
+    margin-top: 10px;
+    margin-left:0px;
+    margin-right:0px;
 }
 #pat_details_div{
     font-size: large;
@@ -24,5 +32,19 @@
     margin-bottom: 20px;
 }
 .custom_input_css{
-    font-size: inherit !important;
+    font-size: 1rem !important;
+}
+.genformdiv2_procsurg_addtable{
+    padding: 10px;
+    background: #877a92;
+    border-radius: 10px 10px 10px 10px;
+    box-shadow: -5px 5px 5px;
+    margin-top: 10px;
+    margin-left:0px;
+    margin-right:0px;
+  
+  } 
+
+.form-control{
+    font-size:0.8rem;
 }

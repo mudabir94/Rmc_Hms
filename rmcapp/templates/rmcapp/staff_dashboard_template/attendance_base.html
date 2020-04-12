@@ -32,7 +32,7 @@
     <script type="text/javascript" src="{% static 'rmcapp/maindashboard_static/generaljsfiles/buttons.flash.min.js' %}"></script>
     <script type="text/javascript" charset="utf8" src="{% static 'rmcapp/maindashboard_static/generaljsfiles/jszip.min.js' %}"></script>
     <script type="text/javascript" charset="utf8" src="{% static 'rmcapp/maindashboard_static/generaljsfiles/pdfmake.min.js' %}"></script>
-        <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.62/vfs_fonts.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.62/vfs_fonts.js"></script>
     <!-- <script type="text/javascript" charset="utf8" src="{% static 'rmcapp/maindashboard_static/generaljsfiles/vfs_fonts.min.js' %}"></script> -->
     <script type="text/javascript"  src="{% static 'rmcapp/maindashboard_static/generaljsfiles/buttons.html5.min.js' %}"></script>
     <script type="text/javascript"  src="{% static 'rmcapp/mainhomepage_static/js/StaffManagementJS/attendance-manage.js' %}"></script>
@@ -142,6 +142,9 @@
                   </li>  
                   <li>
                     <a href="{%url 'view_attendance_by_month'%}">View Attendance By Month</a>
+                  </li>  
+                  <li>
+                    <a href="{%url 'view_attendance_by_day'%}">View Attendance By Day</a>
                   </li>  
                 </ul>
               </div>

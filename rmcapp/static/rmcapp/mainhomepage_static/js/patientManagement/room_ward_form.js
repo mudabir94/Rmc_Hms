@@ -18,6 +18,8 @@ $( document ).ready(function() {
   
 });
 function addRoomWardForm(){
+    $('.modal-loading').show();
+
     $.ajax({
         type: 'GET',
         dataType: "json",
@@ -72,10 +74,10 @@ function addRoomWardForm(){
         
             var main_col_div2=$("<div class='col-md-6' id='main_col_div2'></div>");
         
-                var room_table_div=$('<div id="room_table_info_div">');
+                var room_table_div=$('<div class="genformdiv2_roomward_table" id="room_table_info_div">');
                     var room_table=$("<table id='room_table_info'  class='datatable_roomward' width='100%'></table>")
                 room_table_div.append(room_table);
-                var ward_table_div=$('<div id="ward_table_info_div">');
+                var ward_table_div=$('<div class="genformdiv2_roomward_table" id="ward_table_info_div">');
                     var ward_table=$("<table id='ward_table_info'  class='datatable_roomward' width='100%'></table>")
                 ward_table_div.append(ward_table);
             main_col_div2.append(room_table_div);
@@ -113,7 +115,8 @@ function addRoomWardForm(){
             }
             createRoomTableInfo(room_info_list);
             createWardTableInfo(ward_info_list);
-           
+            $('.modal-loading').hide();
+
         },
     });
    
@@ -126,7 +129,7 @@ function rw_OnSelect(element){
     if(optionSelected === 'Room'){
         $('#row_div_two').remove();
         var main_col_div=$('#main_col_div')
-            var row_div_two=$("<div class='row' id='row_div_two' style='padding-bottom:10px'></div>");
+            var row_div_two=$("<div class='row genformdiv1' id='row_div_two' style='padding-bottom:10px'></div>");
 
                 var main_col__row_two=$("<div class='col-md-12'></div>");
 
@@ -238,14 +241,10 @@ function rw_OnSelect(element){
                     var row_six=$("<div class='row' style='padding-bottom:10px'></div>")
 
                         var col_one__row_six=$("<div class='col-md-12'></div>");
-                            row__col_one__row_six=$("<div class='row'></div>");
-                            colmd1=$("<div class='col-md-2 offset-md-2'></div>")
+                            
+                            saveRoomDataForm_button=$('<button class="save_btn fa fa-save" onclick="saveRoomWard()">  Save</button>')
 
-                            saveRoomDataForm_button=$('<button class="btn btn-success btn-block fa fa-save" onclick="saveRoomWard()">  Save</button>')
-                            colmd1.append(saveRoomDataForm_button)
-
-                            row__col_one__row_six.append(colmd1);
-                        col_one__row_six.append(row__col_one__row_six);
+                        col_one__row_six.append(saveRoomDataForm_button);
                     row_six.append(col_one__row_six)
 
                 main_col__row_two.append(row_one)
@@ -262,7 +261,7 @@ function rw_OnSelect(element){
     else if(optionSelected === 'Ward'){
         $('#row_div_two').remove();
         var main_col_div=$('#main_col_div')
-            var row_div_two=$("<div class='row' id='row_div_two' style='padding-bottom:10px'></div>");
+            var row_div_two=$("<div class='row genformdiv1' id='row_div_two' style='padding-bottom:10px'></div>");
 
             var main_col__row_two=$("<div class='col-md-12'></div>");
 
@@ -355,14 +354,11 @@ function rw_OnSelect(element){
                 var row_five=$("<div class='row' style='padding-bottom:10px'></div>")
 
                     var col_one__row_five=$("<div class='col-md-12'></div>");
-                        row__col_one__row_five=$("<div class='row'></div>");
-                        colmd1=$("<div class='col-md-2 offset-md-2'></div>")
+                       
 
-                        saveRoomDataForm_button=$('<button class="btn btn-success btn-block fa fa-save" onclick="saveRoomWard()">  Save</button>')
-                        colmd1.append(saveRoomDataForm_button)
-
-                        row__col_one__row_five.append(colmd1);
-                    col_one__row_five.append(row__col_one__row_five);
+                        saveRoomDataForm_button=$('<button class="save_btn fa fa-save" onclick="saveRoomWard()">  Save</button>')
+                      
+                    col_one__row_five.append(saveRoomDataForm_button);
                 row_five.append(col_one__row_five)
 
             main_col__row_two.append(row_one)
@@ -465,6 +461,8 @@ function saveRoomWard(){
         if (required_fields_left===true){
             return;
         }
+        $('.modal-loading').show();
+
         $.ajax({
             type: 'POST',
             dataType: "json",
@@ -506,6 +504,11 @@ function saveRoomWard(){
     
     
                 }
+                $('.modal-loading').hide();
+
+                $('html,body').animate({
+                    scrollTop: $("#room_table_info_div").offset().top},
+                'slow');
             },
         });
     }
@@ -574,6 +577,7 @@ function saveRoomWard(){
         if (required_fields_left===true){
             return;
         }
+        $('.modal-loading').show();
 
         $.ajax({
             type: 'POST',
@@ -612,6 +616,11 @@ function saveRoomWard(){
                 
                     
                 }
+                $('.modal-loading').hide();
+
+                $('html,body').animate({
+                    scrollTop: $("#ward_table_info_div").offset().top},
+                'slow');
             },
 
         });
@@ -1214,7 +1223,8 @@ function updateRoomData(){
     if (required_fields_left===true){
         return;
     }
-    
+    $('.modal-loading').show();
+
     $.ajax({
         type: 'POST',
         dataType: "json",
@@ -1246,6 +1256,8 @@ function updateRoomData(){
             console.log("After Update",room_dict);
             console.log(data['Success']);
             alert("Updated")
+            $('.modal-loading').hide();
+
         },
     });
 }
@@ -1271,6 +1283,8 @@ function updateWardData(){
     if (required_fields_left===true){
         return;
     }
+    $('.modal-loading').show();
+
     $.ajax({
         type: 'POST',
         dataType: "json",
@@ -1298,10 +1312,14 @@ function updateWardData(){
             }
             console.log("After Update",ward_dict);
             console.log(data['Success']);
+            alert("Update")
+            $('.modal-loading').hide();
+
         },
     });
 }
 function retrieveAllWardInfoInRoomWard(){
+    $('.modal-loading').show();
 
     $.ajax({
         type: 'GET',
@@ -1331,6 +1349,7 @@ function retrieveAllWardInfoInRoomWard(){
             $('#available_ward_table').show()
 
             createWardDTable()
+            $('.modal-loading').hide();
 
 
         },
@@ -1338,6 +1357,7 @@ function retrieveAllWardInfoInRoomWard(){
 
 }
 function retrieveAllRoomInfoInRoomWard(){
+    $('.modal-loading').show();
 
     $.ajax({
         type: 'GET',
@@ -1367,6 +1387,7 @@ function retrieveAllRoomInfoInRoomWard(){
             console.log(room_list)
 
             createRoomDTable()
+            $('.modal-loading').show();
 
         },
     }); 
@@ -1394,19 +1415,24 @@ function createRoomTableInfo(room_info_list){
                 buttons: [
                     {
                     extend: 'print',
-                    text: ' Print',
+                    text: ' PRINT ',
                     title: 'Rooms List',
-                    className: 'btn btn-default fa fa-print',
+                    className: 'datatable_button printbtn fas fa-print',
                     },
                     {
                         extend: 'excel',
-                        text: 'Export to Excel',
+                        text: ' EXCEL',
                         title: 'Rooms List',
-                        className: 'btn btn-default fa fa-print',
+                        className: 'datatable_button excelbtn fas fa-file-excel',
                     },
                 ],
 
             });
+            $('.dataTables_filter  input[type="search"]').
+            attr('placeholder','Search Room...').
+            css({'width':'200px','display':'inline-block'});
+            $('.dataTables_filter input').addClass('form-control-custom');
+
             $('#available_room_ward_table tbody').on( 'click', 'tr', function () {
                 if ( $(this).hasClass('selected') ) {
                     alert("clicked same entry")
@@ -1437,19 +1463,23 @@ function createWardTableInfo(ward_info_list){
                 buttons: [
                     {
                     extend: 'print',
-                    text: ' Print',
+                    text: ' PRINT',
                     title: 'Wards List',
-                    className: 'btn btn-default fa fa-print',
+                    className: 'datatable_button printbtn fas fa-print',
                     },
                     {
                         extend: 'excel',
-                        text: ' Export to Excel',
+                        text: ' EXCEL',
                         title: 'Wards List',
-                        className: 'btn btn-default fa fa-print',
+                        className: 'datatable_button excelbtn fas fa-file-excel',
                         }
                 ],
     
             });
+            $('.dataTables_filter  input[type="search"]').
+            attr('placeholder','Search ward ....').
+            css({'width':'200px','display':'inline-block'});
+            $('.dataTables_filter input').addClass('form-control-custom');
             $('#available_room_ward_table tbody').on( 'click', 'tr', function () {
                 if ( $(this).hasClass('selected') ) {
                     alert("clicked same entry")
@@ -1461,6 +1491,8 @@ function createWardTableInfo(ward_info_list){
     });
 }
 function ViewRoomList(){
+    $('.modal-loading').show();
+
     $.ajax({
         type: 'GET',
         dataType: "json",
@@ -1498,10 +1530,14 @@ function ViewRoomList(){
 
             }
             createRoomTableInfo(room_info_list);
+            $('.modal-loading').hide();
+
         }
     });
 }
 function ViewWardList(){
+    $('.modal-loading').show();
+
     $.ajax({
         type: 'GET',
         dataType: "json",
@@ -1539,6 +1575,7 @@ function ViewWardList(){
                 
             }
             createWardTableInfo(ward_info_list);
+            $('.modal-loading').hide();
 
         }
     });

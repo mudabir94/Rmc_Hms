@@ -83,7 +83,8 @@
   <script src="{% static 'rmcapp/mainhomepage_static/js/patientManagement/vitalsRecord.js' %}"></script>
 
   
- 
+  <link  type="text/css"  href="https://cdnjs.cloudflare.com/ajax/libs/gijgo/1.9.13/modular/js/dialog.min.js" rel="stylesheet">
+
   <script type="text/javascript" src="{% static 'rmcapp/mainhomepage_static/js/patientManagement/gijgo.js' %}"></script>
   <link  type="text/css"  href="{% static 'rmcapp/mainhomepage_static/css/patientManagement/gijgo.css' %}" rel="stylesheet">
 
@@ -106,11 +107,16 @@
     <div id='recipet_div'></div>       
     <div id='surg_proc_bill_div'></div> 
     <div id="invoice-POS"></div>
-    <div id="dialog-confirm" title="Empty the recycle bin?">
+    <div id="reset-token-dialog" title="Token Resetting" >
 
-      <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>Do you want to Save?</p>
+      <div data-role="body">
+        <label class='custom_label_css'>Do you want to reset tokens?</label>
+      </div>
+    <div data-role="footer">
+        <button class="cancel_btn" data-role="close">Cancel</button>
+        <button id="reset_token_dialog_btn" class="add_btn" >YES</button>
     </div>
-
+    </div>
 <div class="page-wrapper chiller-theme toggled" id='patient_dash_first_div' >
   <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
     <i class="fas fa-bars"></i>
@@ -133,7 +139,7 @@
                   <div class="user-info">
           
                       {% if user.is_authenticated %}
-                      <span class="user-name">{{ user.get_username }}
+                      <span class="user-name" >{{ user.get_username }}
                         <strong></strong>
                       </span>
                       {% endif %} 
@@ -681,6 +687,7 @@
 
 
         <!-- <div>Icons made by <a href="https://www.flaticon.com/authors/dinosoftlabs" title="DinosoftLabs">DinosoftLabs</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> -->
+    <div class="modal-loading"><!-- Place at bottom of page --></div>
 
 </body>
 

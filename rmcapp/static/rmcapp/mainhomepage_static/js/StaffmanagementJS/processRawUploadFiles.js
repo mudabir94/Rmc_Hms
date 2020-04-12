@@ -32,7 +32,7 @@ function createDataTableViewRawAttFiles(raw_files_list){
             ],
             paging: true,
             pageLength:10,
-            scrollY: 100,
+            scrollY: 300,
             scrollX: true,
             ordering: true,
             info:false,
@@ -41,30 +41,30 @@ function createDataTableViewRawAttFiles(raw_files_list){
             buttons: [
                 {
                     extend: 'print',
-                    text: 'Print',
-                    title: 'Prescription List',
-                    className: 'datatable_button fa fa-print',
+                    text: ' PRINT',
+                    title: 'ATTENDANCE RAW FILES',
+                    className: 'datatable_button  printbtn fas fa-print',
 
                 },
                  {
                     extend: 'excel',
-                    text: 'Export Data in Excel',
-                    title: 'Prescription List',
-                    className: 'datatable_button fas fa-file-excel',
+                    text: ' EXCEL',
+                    title: 'ATTENDANCE RAW FILES',
+                    className: 'datatable_button excelbtn fas fa-file-excel',
 
                 },
                  {
                     extend: 'csv',
-                    text: 'Export Data in CSV',
-                    title: 'Prescription List',
-                    className: 'datatable_button fa fa-file',
+                    text: ' CSV',
+                    title: 'ATTENDANCE RAW FILES',
+                    className: 'datatable_button csvbtn  fas fa-file',
 
                 },
                 {
                     extend: 'pdf',
-                    text: 'Export Data in PDF',
-                    title: 'Prescription List',
-                    className: 'datatable_button fas fa-file-pdf',
+                    text: ' PDF',
+                    title: 'ATTENDANCE RAW FILES',
+                    className: 'datatable_button pdfbtn fas fa-file-pdf',
 
                 },
                
@@ -81,12 +81,18 @@ function createDataTableViewRawAttFiles(raw_files_list){
                 id=$(this).find('td').eq(0).text()
                 $("#processfile_div").remove();
                 var row=$("<div class='row' id='processfile_div'style='padding-top:10px;'>")
-                    var col=$("<div class='col-md-12'>");
+                    var col=$("<div class='col-md-2'>");
+                    var col2=$("<div class='col-md-8'>");
+                    var col3=$("<div class='col-md-2'>");
+
                         var div=$("<div id='raw_file_process_div'></div>");
-                            button=$("<button id='file-"+id+"' onclick='ProcessFile($(this))'> Process File</button>")
+                            button=$("<button id='file-"+id+"' class='process_att_btn' onclick='ProcessFile($(this))'> Process File</button>")
                         div.append(button)
-                    col.append(div)
+                    col2.append(div)
                 row.append(col)
+                row.append(col2)
+                row.append(col3)
+
                 $("#raw_file_view_maindiv").append(row);
                     
               

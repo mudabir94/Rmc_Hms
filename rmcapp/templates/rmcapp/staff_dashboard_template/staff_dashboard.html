@@ -207,6 +207,12 @@
                   <li>
                     <a href="{%url 'process_attendance_sheet'%}">Process Attendance Sheet</a>
                   </li>  
+                  <li>
+                    <a href="{%url 'view_attendance_by_month'%}">View Attendance By Month</a>
+                  </li>  
+                  <li>
+                    <a href="{%url 'view_attendance_by_day'%}">View Attendance By Day</a>
+                  </li>  
                 </ul>
               </div>
             </li>
@@ -250,7 +256,7 @@
             <div class="col-md-12 ">
           
               <div class="row dashboard-icon-rows">
-                <div class="col-md-4" >
+                <div class="col-md-3" >
                   
                     <div class="dashboard-icons" role="button" onclick="addEmployee()">
                       <div class="col-md-12 subdashboard-icon" >
@@ -273,7 +279,7 @@
                       </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class='dashboard-icons' role="button" onclick="editEmployee()">
                       <div class="col-md-12 subdashboard-icon" >
                           <div class="row">
@@ -295,7 +301,7 @@
                       </div>
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class='dashboard-icons' role="button" onclick="viewAllEmployee()">
                       <div class="col-md-12 subdashboard-icon" >
                           <div class="row">
@@ -317,9 +323,115 @@
                       </div>
                   </div>
                 </div>
+                
+              </div>
+            </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 ">
+        
+            <div class="row dashboard-icon-rows">
+              <div class="col-md-3" >
+
+                <a href="{%url 'load_attendance_sheet'%}">
+                  <div class="dashboard-icons" role="button" >
+                    <div class="col-md-12 subdashboard-icon" >
+                      <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8 text-center ">
+                          <i class="fa fa-plus-square fa-3x icon_padding"></i></br>
+                        </div>
+                        <div class="col-md-2"></div>
+
+                      </div>  
+                      <div class="row">
+                          <div class="col-md-3"></div>
+                          <div class="col-md-6 text-center">
+                            <span class="add_emp">Load Attendance Sheets</span>
+                          </div>
+                          <div class="col-md-3"></div>
+
+                      </div> 
+                    </div>
+                  </div>
+                </a>
+              </div>
+              <div class="col-md-3">
+
+              <a href="{%url 'process_attendance_sheet'%}">
+                <div class='dashboard-icons' role="button">
+                    <div class="col-md-12 subdashboard-icon" >
+                        <div class="row">
+                          <div class="col-md-2"></div>
+                          <div class="col-md-8 text-center ">
+                              <i class="fa fa-pencil-square-o fa-3x icon_padding"></i></br>
+                            </div>
+                          <div class="col-md-2"></div>
+
+                        </div>  
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6 text-center">
+                                <span class="edit_info">Process Attendance Sheet</span>
+                            </div>
+                            <div class="col-md-3"></div>
+
+                        </div> 
+                    </div>
+                </div>
+              </a>
+              </div>
+              <div class="col-md-3">
+                <a href="{%url 'view_attendance_by_month'%}">
+
+                <div class='dashboard-icons' role="button" onclick="viewAllEmployee()">
+                    <div class="col-md-12 subdashboard-icon" >
+                        <div class="row">
+                          <div class="col-md-2"></div>
+                          <div class="col-md-8 text-center ">
+                              <i class="fa fa-list-alt fa-3x icon_padding"></i></br>
+                            </div>
+                          <div class="col-md-2"></div>
+
+                        </div>  
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6 text-center">
+                                <span class="view_all" >View Attendance By Month</span>
+                            </div>
+                            <div class="col-md-3"></div>
+
+                        </div> 
+                    </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <a href="{%url 'view_attendance_by_day'%}">
+                  <div class='dashboard-icons' role="button">
+                      <div class="col-md-12 subdashboard-icon" >
+                          <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8 text-center ">
+                                <i class="fa fa-list-alt fa-3x icon_padding"></i></br>
+                              </div>
+                            <div class="col-md-2"></div>
+  
+                          </div>  
+                          <div class="row">
+                              <div class="col-md-3"></div>
+                              <div class="col-md-6 text-center">
+                                  <span class="view_all" >View Attendance By Day</span>
+                              </div>
+                              <div class="col-md-3"></div>
+  
+                          </div> 
+                      </div>
+                  </div>
+                </a>
               </div>
             </div>
           </div>
+      </div>
      
       </div>
     
@@ -335,6 +447,7 @@
         crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+    <div class="modal-loading"><!-- Place at bottom of page --></div>
 
 </body>
 

@@ -14,7 +14,7 @@
      font-style: normal;
      font-variant: normal;
      text-rendering: auto;
-     line-height: 1
+     line-height: 1;
  }
  
  .fa-lg {
@@ -3086,7 +3086,9 @@
  }
  
  .fa-times-circle:before {
-     content: "\f057"
+     content: "\f057";
+     
+
  }
  
  .fa-tint:before {

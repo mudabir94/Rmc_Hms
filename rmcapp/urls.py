@@ -85,7 +85,11 @@ urlpatterns = [
   path('retrieve_all_surg_info',views.retrieveAllSurgInfo,name='retrieve_all_surg_info'),
   path('retrieve_all_proc_info',views.retrieveAllProcInfo,name='retrieve_all_proc_info'),
   path('update_surg_data',views.updateSurgData,name="update_surg_data"),
+  path('delete_surg_data',views.deleteSurgData,name="delete_surg_data"),
   path('update_proc_data',views.updateProcData,name="update_proc_data"),
+  path('delete_proc_data',views.deleteProcData,name="delete_proc_data"),
+
+  
   path('add_procedure',views.addProcedure,name="add_procedure"),
   path('add_surgery',views.addSurgery,name="add_surgery"),
   
@@ -143,6 +147,9 @@ urlpatterns = [
   path("view_attendance_by_month",views.viewAttendanceByMonth.as_view(),name="view_attendance_by_month"),
   path("ajax_get_all_attendance_data",views.viewAttendanceByMonth.ajaxGetAllAttendanceData,name="ajax_get_all_attendance_data"),
   path("ajax_specific_attendance_bymonth_data",views.viewAttendanceByMonth.ajaxGetAllAttendanceByMonthData,name="ajax_specific_attendance_bymonth_data"),
+  path("view_attendance_by_day",views.viewAttendanceByDay.as_view(),name="view_attendance_by_day"),
+  path("ajax_specific_attendance_byday_data",views.viewAttendanceByDay.ajaxGetAllAttendanceByDayData,name="ajax_specific_attendance_byday_data"),
+
 
 
   path("run_script",views.runScript,name="run_script")

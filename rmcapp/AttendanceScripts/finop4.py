@@ -33,27 +33,34 @@ def finalGenReports(FileOutPut3Dict):
         count=0
         while (count<df_len):
             if (count+1!=df_len):
-                print("Current",df['DateTime'][count])
-                print("Next",df['DateTime'][count+1])
+              
                 if isinstance(df['DateTime'][count], datetime.date):
                     currentdate=df['DateTime'][count]
+                    print("currentdate-1",currentdate)
                 else:
                     currentdate=df['DateTime'][count].date()
+                    print("currentdate-2",currentdate)
                 if isinstance(df['DateTime'][count+1], datetime.date):
                     nextdate=df['DateTime'][count+1]
+                    print("nextdate-1",nextdate)
                 else:
                     nextdate=df['DateTime'][count+1].date()
-
-                if currentdate==nextdate:
+                    print("nextdate-2",nextdate)
+                print(currentdate,":",nextdate)
+                if currentdate.date()==nextdate.date():
+                    print("MATCH FOUND")
                     currentdate_status=df['Status'][count]
+                    print("currentdate_status",currentdate_status)
                     if currentdate_status=="ABSENT":
                         rowindexes_todelete.append(count)
-                        
+                                      
 
             count+=1
 
-        
         df=df.drop(df.index[rowindexes_todelete]).reset_index(drop=True)
+       
+            
+        
         for attrec in df.itertuples():
             try:
                 attendanceRecords.objects.filter(monthyear=attrec.MonthYear,emp_name=attrec.Name).delete()
@@ -84,6 +91,7 @@ def finalGenReports(FileOutPut3Dict):
                     date=attrec.DateTime,
                     checkin=attrec.CheckIn,
                     checkout=attrec.CheckOut,
+                    day=attrec.DateTime.date().day,
                     month=attrec.DateTime.date().month,
                     year=attrec.DateTime.date().year,
                     status=attrec.Status,
@@ -96,6 +104,7 @@ def finalGenReports(FileOutPut3Dict):
                     date=attrec.DateTime,
                     checkin=attrec.CheckIn,
                     checkout=attrec.CheckOut,
+                    day=attrec.DateTime.date().day,
                     month=attrec.DateTime.date().month,
                     year=attrec.DateTime.date().year,
                     status=attrec.Status,
@@ -126,6 +135,7 @@ def finalGenReports(FileOutPut3Dict):
                     emp_user=EmpObj,
                     emp_name=attrec.Name,
                     date=attrec.DateTime,
+                    day=attrec.DateTime.date().day,
                     month=attrec.DateTime.date().month,
                     year=attrec.DateTime.date().year,
                     status=attrec.Status,
@@ -138,6 +148,7 @@ def finalGenReports(FileOutPut3Dict):
                     attendanceRecords.objects.create(
                     emp_name=attrec.Name,
                     date=attrec.DateTime,
+                    day=attrec.DateTime.date().day,
                     month=attrec.DateTime.date().month,
                     year=attrec.DateTime.date().year,
                     status=attrec.Status,

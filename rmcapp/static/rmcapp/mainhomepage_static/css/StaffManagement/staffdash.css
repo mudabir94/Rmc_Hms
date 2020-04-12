@@ -18,6 +18,8 @@
 }
 .datatable_button{
     background: grey;
+    font-size: 15px;
+    font-size:bold;
     display: inline-block;
     font-weight: 400;
     text-align: center;
@@ -28,30 +30,58 @@
     -ms-user-select: none;
     user-select: none;
     border: 1px solid transparent;
-    padding: .375rem .75rem;
+    margin-bottom: 5px;
+
+    padding: .375rem .80rem;
     font-size: 0.7rem;
     line-height: 1.5;
     border-radius: .25rem;
     cursor:pointer;
+    border-radius: 10px 10px 40px;
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
+.printbtn{
+  background:rgb(34, 23, 134);
+  color:white;
 
+}
+.excelbtn{
+  background:rgb(12, 173, 76);
+  color:white;
+
+}
+.csvbtn{
+  background:rgb(241, 226, 6);
+  color:#000000;;
+
+
+}
+.pdfbtn{
+  background:rgb(160, 26, 26);
+  color:#c2eae8;
+
+}
 .dashboard-icons{
   width:100%;
-  border-radius: 2px;
-  height:100px;
+  border-radius: 3px 20px 20px 20px;
+  height:150px;
   background:#b0b0b0;
-  box-shadow: 0 0 5px 3px #555;
+  /* box-shadow: 0 0 5px 3px #555; */
+  box-shadow: 0 0 5px 5px rgb(133, 31, 31);
+  cursor:pointer;
+
 }
 .dashboard-icon-rows{
    padding:10px;
 }
 .dashboard-icons:hover{
-background:grey;
+  background:rgb(150, 69, 69);
 
 }
 .subdashboard-icon{
   top:20px;
+  cursor:pointer;
+
 }
 .icon_padding{
   /* padding:32px 0px 0px 210px; */
@@ -90,11 +120,25 @@ background:grey;
   background-clip: padding-box;
   border: 1px solid #ced4da;
   border-radius: .25rem;
+  box-shadow: -5px 5px 5px;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.dob_form{
+  display: block;
+  width: 100%;
+  padding: .375rem .75rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 .custom_label_css{
   font-size: 0.9rem;
-  font-weight: bold   ;
+  font-weight: bold;
 }
 #edit-emplyee-info-form{
   padding: 20px 50px 30px 100px;
@@ -105,7 +149,102 @@ background:grey;
   font-family:Arial;
   font-size: 38px !important;
   text-shadow: 2px 2px 0px #e62929;
-  color:cornflowerblue;
+  color:#f7bbbb;
   font-weight: 900;
 
+}
+.save_btn{
+  width: 100%;
+  height: 30px;
+  border: none;
+  background-color: #28a745;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: -5px 5px 5px black;
+  border-radius: 50px 50px 0px 0px;
+}
+.heading-div{
+    text-align: center;
+    font-weight: bold;
+    color:#f7bbbb;
+    text-shadow: 2px 2px #9a0000;
+    padding-bottom:10px;
+}
+#select_emp_type{
+  cursor:pointer;
+}
+.custom_glyphicon{
+  font-size: large;
+}
+.modal-loading {
+  display:    none;
+  position:   fixed;
+  z-index:    1000;
+  top:        0;
+  left:       0;
+  height:     100%;
+  width:      100%;
+  background: rgba( 255, 255, 255, .8 ) 
+              url('http://i.stack.imgur.com/FhHRx.gif') 
+              50% 50% 
+              no-repeat;
+}
+.search_employee_btn{
+  width: 100%;
+    /* margin-top: 8%; */
+    font-size: initial;
+    color: #2a64de;
+    font-weight: 800;
+    height: 32px;
+    background-color: whitesmoke;
+    border: none;
+    border-color: #000000;
+    cursor: pointer;
+    box-shadow: 2px 2px 2px 3px green;
+        border-radius: 4px 40px 4px 40px;
+}
+.search_employee_btn{
+    width: 100%;
+    /* margin-top: 8%; */
+    font-size: initial;
+    color: #2a64de;
+    font-weight: 800 !important;
+    height: 32px;
+    background-color: whitesmoke;
+    border: none;
+    border-color: #000000;
+    cursor: pointer;
+    box-shadow: 2px 2px 2px 3px green;
+    border-radius: 4px 40px 4px 40px;
+}
+.search_employee_btn:hover{
+  background-color: green;
+  color:white;
+  font-size: medium !important;
+}
+.genformdiv1{
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  background: #a9c7f5;
+  border-radius: 10px 10px 10px 10px;
+  box-shadow: -5px 5px 5px;
+  margin-top: 10px;
+
+}
+.genformdiv2{
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  background: #877a92;
+  border-radius: 10px 10px 10px 10px;
+  box-shadow: -5px 5px 5px;
+  margin-top: 10px;
+
+}
+.removerowmargins_div{
+  margin-right:0px;
+  margin-left:0px;
 }

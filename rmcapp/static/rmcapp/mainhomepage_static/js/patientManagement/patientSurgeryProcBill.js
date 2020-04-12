@@ -24,11 +24,11 @@ function surgeryProcFrom(){
                 row__col_one__row_div_one=$("<div class='row' style='padding-bottom:10px'></div>");
                     colmd1=$("<div class='col-md-2'></div>")
                     colmd2=$("<div class='col-md-2'></div>")
-                    colmd3=$("<div class='col-md-2'></div>")
+                    colmd3=$("<div class='col-md-3'></div>")
 
-                        var pat_id_label=$("<label class='custom_label_css'>Prescription id</label>");
+                        var pat_id_label=$("<label class='custom_label_css'>Prescription Id</label>");
                         var pat_id_input=$("<input class='form-control' id='search_prescription_id' class='custom_input_css'>")
-                        var search_button=$('<button class="btn btn-block fa fa-search" onclick="searchPrescription()">  Search</button>');
+                        var search_button=$('<button class="search_patientpres_btn fa fa-search" onclick="searchPrescription()">  Search</button>');
                     
                     colmd1.append(pat_id_label)
                     colmd2.append(pat_id_input);
@@ -50,10 +50,17 @@ function searchPrescription(){
         alert("Please Insert Valid Pres id")
         return
     }
+    $("#row_div_two").remove();
+        
+    $("#row_div_three").remove();
+    $("#row_div_four").remove();
+
     retrievePresInfoSurgProcBill(pres_id)    
 }
 function retrievePresInfoSurgProcBill(id){
     prescription_id=id;
+    $('.modal-loading').show();
+
     $.ajax({
         type: 'GET',
         dataType: "json",
@@ -64,6 +71,8 @@ function retrievePresInfoSurgProcBill(id){
         success: function(data){
             if (data['pres_id']===""){
                 alert("Please Insert Valid Pres Id")
+                $('.modal-loading').hide();
+
                 return
             }
             surgery_dict=JSON.parse(data["surgery_dict"])
@@ -84,6 +93,8 @@ function retrievePresInfoSurgProcBill(id){
             console.log("surgery_data_list",surgery_data_list)
 
             createFrom();
+            $('.modal-loading').hide();
+
         },
     }); 
 }
@@ -136,20 +147,20 @@ subFormCreation();
 
 var surg_proc_list=['Surgery','Procedure']
 function subFormCreation(){
-    var row_div_three=$("<div class='row' id='row_div_three'></div>");
-        var main_sidecol1=$("<div class='col-md-6' ></div>");
-            var row2=$("<div class='surg_proc_bill' id='bill_div'></div>");
+    var row_div_three=$("<div class='row' id='row_div_three' style='margin-left:0px;margin-right:0px;'></div>");
+        var main_sidecol1=$("<div class='col-md-6 surgery_procedure_billform2 ' ></div>");
+            var row2=$("<div class='surg_proc_bill ' id='bill_div'></div>");
         main_sidecol1.append(row2);
 
 
-        var main_subcol=$("<div class='col-md-6' id='main-column'></div>");
-            var subrow_one=$("<div class='row' id='surg_proc_row-1'></div>")
+        var main_subcol=$("<div class='col-md-6 ' id='main-column'></div>");
+            var subrow_one=$("<div class='row surgery_procedure_billform' id='surg_proc_row-1'></div>")
                 var col_one__subrow_one=$("<div class='col-md-12'  id='main_surg_proc-1'></div>");
-                    var row__col_one__subrow_one=$("<div class='row' id='select_surg_proc-1'></div>");
+                    var row__col_one__subrow_one=$("<div class='row removerowmargins_div' id='select_surg_proc-1'></div>");
                         var colmd1=$("<div class='col-md-4'></div>");
                             var surg_proc_label=$("<label class='form-control-static'>Surgery/Procedure</label>")
                         colmd1.append(surg_proc_label)  
-                        var colmd2=$("<div class='col-md-3'></div>");
+                        var colmd2=$("<div class='col-md-7'></div>");
                             var surg_proc_select=$('<select class="form-control" id="surg_proc_sel-1" onchange="selectSurgOrProc($(this))"></select>');
                                 var option=$("<option  value='--'>--</option>");
                                 $(surg_proc_select).append(option);
@@ -224,11 +235,11 @@ function deleteMainRow(button){
 function createProcForm(grandparent_id,num,addbutton_flag){
     grandparent=$("#"+grandparent_id);
         var sub_proc_col_1=$("<div  id='sub_proc-"+num+"'></div>");
-            var row__sel_proc=$("<div class='row' id='select_proc-"+num+"' style='padding-top:10px; padding-bottom:10px'></div>");
+            var row__sel_proc=$("<div class='row removerowmargins_div' id='select_proc-"+num+"' style='padding-top:10px; padding-bottom:10px'></div>");
                 var colmd1=$("<div class='col-md-4'></div>");
                     var proc_label=$("<label class='form-control-static'>Procedure</label>")
                 colmd1.append(proc_label)  
-                var colmd2=$("<div class='col-md-4'></div>");
+                var colmd2=$("<div class='col-md-7'></div>");
                     var proc_select=$('<select class="form-control" id="select_proc_ele-'+num+'" onchange="selectProc($(this))"></select>');
                         var option=$("<option  value='--'>--</option>");
                     $(proc_select).append(option);
@@ -243,21 +254,21 @@ function createProcForm(grandparent_id,num,addbutton_flag){
             row__sel_proc.append(colmd1);
             row__sel_proc.append(colmd2);
 
-            var row2__sel_proc=$("<div class='row' id='charges_proc-"+num+"' style='padding-bottom:10px'></div>");
+            var row2__sel_proc=$("<div class='row removerowmargins_div' id='charges_proc-"+num+"' style='padding-bottom:10px'></div>");
                 var colmd1=$("<div class='col-md-4'></div>");
                     var proc_label=$("<label class='form-control-static'>Charges</label>")
                 colmd1.append(proc_label)  
-                var colmd2=$("<div class='col-md-3'></div>");
+                var colmd2=$("<div class='col-md-7'></div>");
                     var proc_input=$("<input class='form-control' id='charges_proc_input-"+num+"'></input>")
                 colmd2.append(proc_input);
             row2__sel_proc.append(colmd1);
             row2__sel_proc.append(colmd2);
 
-            var row3__sel_proc=$("<div class='row' style='padding-bottom:10px'></div>");
+            var row3__sel_proc=$("<div class='row removerowmargins_div' style='padding-bottom:10px'></div>");
             
                 var colmd1=$("<div class='col-md-4'></div>");
                 if (addbutton_flag=="On"){
-                    var add_more=$("<button class='btn btn-block fa fa-plus-circle'  id='btn_addmore-"+num+"' onclick='addNewFormRow()' >  Add More</label>")
+                    var add_more=$("<button class='add_btn fa fa-plus-circle'  id='btn_addmore-"+num+"' onclick='addNewFormRow()' >  Add More</label>")
                 colmd1.append(add_more)  
                 }
             row3__sel_proc.append(colmd1);
@@ -271,11 +282,11 @@ function createProcForm(grandparent_id,num,addbutton_flag){
 function createSurgForm(grandparent_id,num,addbutton_flag){
     grandparent=$("#"+grandparent_id);
             var sub_surg_col_1=$("<div  id='sub_surg-"+num+"'></div>");
-                    var row__sel_surg=$("<div class='row' id='select_surg-"+num+"' style='padding-top:10px; padding-bottom:10px'></div>");
+                    var row__sel_surg=$("<div class='row removerowmargins_div' id='select_surg-"+num+"' style='padding-top:10px; padding-bottom:10px'></div>");
                         var colmd1=$("<div class='col-md-4'></div>");
                             var surg_label=$("<label class='form-control-static'>Surgeries</label>")
                         colmd1.append(surg_label)  
-                        var colmd2=$("<div class='col-md-4'></div>");
+                        var colmd2=$("<div class='col-md-7'></div>");
                             var surg_select=$('<select class="form-control" id="select_surg_ele-'+num+'" onchange="selectSurg($(this))"></select>');
                                 var option=$("<option  value='--'>--</option>");
                             $(surg_select).append(option);
@@ -292,41 +303,41 @@ function createSurgForm(grandparent_id,num,addbutton_flag){
                     row__sel_surg.append(colmd1);
                     row__sel_surg.append(colmd2);
 
-                    var row2__surgeon_charges=$("<div class='row' id='surgeon_charges-"+num+"' style='padding-bottom:10px'></div>");
+                    var row2__surgeon_charges=$("<div class='row removerowmargins_div' id='surgeon_charges-"+num+"' style='padding-bottom:10px'></div>");
                         var colmd1=$("<div class='col-md-4'></div>");
                             var surgeoncharge_label=$("<label class='form-control-static'>Surgeon Charges</label>")
                         colmd1.append(surgeoncharge_label)  
-                        var colmd2=$("<div class='col-md-3'></div>");
+                        var colmd2=$("<div class='col-md-7'></div>");
                             var surgeoncharge_input=$("<input class='form-control' id='surgeon_charges_input-"+num+"' style='padding-bottom:10px'></input>")
                         colmd2.append(surgeoncharge_input);
                     row2__surgeon_charges.append(colmd1);
                     row2__surgeon_charges.append(colmd2);
 
-                    var row3__theatre_charges=$("<div class='row' id='theatre_charges-"+num+"' style='padding-bottom:10px'></div>");
+                    var row3__theatre_charges=$("<div class='row removerowmargins_div' id='theatre_charges-"+num+"' style='padding-bottom:10px'></div>");
                         var colmd1=$("<div class='col-md-4'></div>");
                             var theatre_charges_label=$("<label class='form-control-static'>Theatre Charges</label>")
                         colmd1.append(theatre_charges_label)  
-                        var colmd2=$("<div class='col-md-3'></div>");
+                        var colmd2=$("<div class='col-md-7'></div>");
                             var theatre_charges_input=$("<input class='form-control' id='theatre_charges_input-"+num+"' style='padding-bottom:10px'></input>")
                         colmd2.append(theatre_charges_input);
                     row3__theatre_charges.append(colmd1);
                     row3__theatre_charges.append(colmd2);
 
-                    var row4__anesthetic_charges=$("<div class='row' id='anesthetic_charges-"+num+"' style='padding-bottom:10px'></div>");
+                    var row4__anesthetic_charges=$("<div class='row removerowmargins_div' id='anesthetic_charges-"+num+"' style='padding-bottom:10px'></div>");
                         var colmd1=$("<div class='col-md-4'></div>");
                             var anesthetic_charges_label=$("<label class='form-control-static'>Anesthetic Charges</label>")
                         colmd1.append(anesthetic_charges_label)  
-                        var colmd2=$("<div class='col-md-3'></div>");
+                        var colmd2=$("<div class='col-md-7'></div>");
                             var anesthetic_charges_input=$("<input class='form-control' id='anesthetic_charges_input-"+num+"' style='padding-bottom:10px'></input>")
                         colmd2.append(anesthetic_charges_input);
                     row4__anesthetic_charges.append(colmd1);
                     row4__anesthetic_charges.append(colmd2);
 
-                    var row6__surplus_charges=$("<div class='row' id='surplus_charges-"+num+"' style='padding-bottom:10px'></div>");
+                    var row6__surplus_charges=$("<div class='row removerowmargins_div' id='surplus_charges-"+num+"' style='padding-bottom:10px'></div>");
                     var colmd1=$("<div class='col-md-4'></div>");
                         var surplus_charges_label=$("<label class='form-control-static'>Surplus Charges</label>")
                     colmd1.append(surplus_charges_label)  
-                    var colmd2=$("<div class='col-md-3'></div>");
+                    var colmd2=$("<div class='col-md-7'></div>");
                         var surplus_charges_input=$("<input class='form-control' id='surplus_charges_input-"+num+"' style='padding-bottom:10px'></input>")
                     colmd2.append(surplus_charges_input);
                     row6__surplus_charges.append(colmd1);
@@ -370,13 +381,13 @@ function addNewFormRow(){
 }
 function createNewSurgProcForm(num){
     var main_column=$("#main-column")
-        var subrow=$("<div class='row' id='surg_proc_row-"+num+"'></div>")
+        var subrow=$("<div class='row surgery_procedure_billform' id='surg_proc_row-"+num+"'></div>")
             var col_one__subrow=$("<div class='col-md-12' id='main_surg_proc-"+num+"'></div>");
-                var row__col_one__subrow=$("<div class='row' id='select_surg_proc-"+num+"'></div>");
+                var row__col_one__subrow=$("<div class='row removerowmargins_div' id='select_surg_proc-"+num+"'></div>");
                     var colmd1=$("<div class='col-md-4'></div>");
                         var surg_proc_label=$("<label class='form-control-static'>Surgery/Procedure</label>")
                     colmd1.append(surg_proc_label)  
-                    var colmd2=$("<div class='col-md-3'></div>");
+                    var colmd2=$("<div class='col-md-7'></div>");
                         var surg_proc_select=$('<select class="form-control" id="surg_proc_sel-'+num+'" onchange="selectSurgOrProc($(this))"></select>');
                             var option=$("<option  value='--'>--</option>");
                         $(surg_proc_select).append(option);
@@ -390,7 +401,7 @@ function createNewSurgProcForm(num){
                             }
                     colmd2.append(surg_proc_select);
                     var colmd3=$("<div class='col-md-1'></div>");
-                        var delete_button=$("<button class='btn btn-block fa fa-remove' style='color:red; background:white' onclick='deleteMainRow($(this))'></button>")
+                        var delete_button=$("<button class='delBtn fa fa-2x fa-remove' onclick='deleteMainRow($(this))'></button>")
                     colmd3.append(delete_button);
                 row__col_one__subrow.append(colmd1);
                 row__col_one__subrow.append(colmd2);
@@ -398,6 +409,11 @@ function createNewSurgProcForm(num){
             col_one__subrow.append(row__col_one__subrow);
         subrow.append(col_one__subrow)
     main_column.append(subrow)
+    // Scroll to bill div
+    $('html,body').animate({
+        scrollTop: $("#surg_proc_row-"+num+"").offset().top},
+        'slow');
+   
 }
 function selectSurg(ele){
     parent_id=$(ele).parent().parent().attr('id');
@@ -424,12 +440,12 @@ function selectProc(ele){
     console.log("proc_charge_details",proc_charge_details)
 }
 function rowDivFourCreation(){
-    var row_div_four=$("<div class='row' id='row_div_four'></div>");
-        var main_sidecol1=$("<div class='col-md-6' ></div>");
+    var row_div_four=$("<div class='row removerowmargins_div' id='row_div_four'></div>");
+        var main_sidecol1=$("<div class='col-md-12' ></div>");
             var row1=$("<div></div>");
-                var subrow1=$("<div class='row' style='padding-top:10px'>")
-                    var subcol1=$("<div class='col-md-10'>")
-                        var calulate_button=$("<button class='btn btn-block fa fa-calculator' onclick='calculateBill()'>  Calculate Bill</button>")
+                var subrow1=$("<div class='row  genformdiv1'>")
+                    var subcol1=$("<div class='col-md-12'>")
+                        var calulate_button=$("<button class='calbtn fa fa-calculator' onclick='calculateBill()'>  Calculate Bill</button>")
                     subcol1.append(calulate_button)
                 subrow1.append(subcol1);
             row1.append(subrow1)
@@ -487,10 +503,10 @@ function calculateBill(){
     });
     console.log("surgerybill_dict",surgerybill_dict);
     console.log("procedurebill_dict",procedurebill_dict);
-    var surg_bill_final_div=$("<div id='surg_bill_final_div' style='padding-top:40px; padding-bottom:40px'>")
-        var row1=$("<div><h3><center><u>Surgeries</u></center></h3></div>");
-        var row2=$("<div id='surgery_table_row'></div>")
-            var surg_table=$("<table></table>");
+    var surg_bill_final_div=$("<div id='surg_bill_final_div'   style='padding-top:40px; padding-bottom:40px'>")
+        var row1=$("<div><h1><center><u>Surgeries</u></center></h1></div>");
+        var row2=$("<div id='surgery_table_row' ></div>")
+            var surg_table=$("<table class='datatable_proc_surg_custom' ></table>");
             var thead=$("<thead></thead>");
                 var tr=$("<tr style='border-bottom:1px solid black'  >");
                     var th1=$("<th>")
@@ -580,9 +596,9 @@ surg_bill_final_div.append(row1);
 surg_bill_final_div.append(row2);
 
 var proc_bill_final_div=$("<div id='proc_bill_final_div'>")
-    var row1=$("<div><h3><center><u>Procedures</u></center></h3></div>");
+    var row1=$("<div><h1><center><u>Procedures</u></center></h1></div>");
     var row2=$("<div id='procedure_table_row'></div>")
-        var proc_table=$("<table></table>");
+        var proc_table=$("<table class='datatable_proc_surg_custom'></table>");
         var thead=$("<thead></thead>");
             // var tr=$("<tr>");
             //     var th1=$("<th>")
@@ -682,10 +698,10 @@ $(proc_bill_final_div).append(row2);
         var surg_proc_bill_final_div=$("<div id='surg_proc_bill_final_div'>")
             var col_surg_proc_bill_final_div=$("<div class='col-md-12'></div>");
                 row__col_surg_proc_bill_final_div=$("<div class='row' style='padding-top:20px;'></div>");
-                    colmd1=$("<div class='col-md-3'></div>")
-                    colmd2=$("<div class='col-md-2 offset-md-7'></div>")
-                        var label=$("<label class='form-control-static'><h3>Total Bill</h3>")
-                        var totalAmount=$("<label id='surg_proc_bill_final_value'>"+nettotal+"</label>")
+                    colmd1=$("<div class='col-md-6'></div>")
+                    colmd2=$("<div class='col-md-2'></div>")
+                        var label=$("<label class='surg_proc_bill_label_class'>Total Bill</label>")
+                        var totalAmount=$("<label  class='surg_proc_bill_label_class' id='surg_proc_bill_final_value'>"+nettotal+"</label>")
                     colmd1.append(label);
                     colmd2.append(totalAmount);
                 row__col_surg_proc_bill_final_div.append(colmd1);
@@ -722,10 +738,10 @@ function printSaveRow(){
             var row1=$("<div></div>");
                 var subrow1=$("<div class='row' style='padding-top:10px'>")
                     var subcol1=$("<div class='col-md-6'>")
-                        var save=$("<button class='btn btn-block fa fa-save' onclick='saveSurgProcBill()'>  Save</button>")
+                        var save=$("<button class='save_btn fa fa-save' onclick='saveSurgProcBill()'>  Save</button>")
                     subcol1.append(save)
                     var subcol2=$("<div class='col-md-6'>")
-                        var print_btn=$("<button class='btn btn-block fa fa-print' onclick='printSurgProcBill()'>  Print Bill</button>")
+                        var print_btn=$("<button class='save_btn fa fa-print' onclick='printSurgProcBill()'>  Print Bill</button>")
                     subcol2.append(print_btn);
                 subrow1.append(subcol1);
                 subrow1.append(subcol2);
@@ -739,6 +755,10 @@ function printSaveRow(){
 
 var bill_div=$("#bill_div");
 bill_div.append(row_div_five);
+// Scroll to bill div
+$('html,body').animate({
+    scrollTop: $("#bill_div").offset().top},
+    'slow');
 
 }
 function printSurgProcBill(){

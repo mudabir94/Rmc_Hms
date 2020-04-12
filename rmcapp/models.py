@@ -776,6 +776,7 @@ class attendanceRecords(models.Model):
     checkin=models.DateTimeField(default=None,null=True, blank=True)
     checkout=models.DateTimeField(default=None,null=True, blank=True)
     status=models.CharField(max_length=255, blank=True,null=True,default=None)
+    day=models.IntegerField(blank=True,null=True,default=None)
     month=models.IntegerField(blank=True,null=True,default=None)
     year=models.IntegerField(blank=True,null=True,default=None)
     hours_worked=models.FloatField(blank=True,null=True,default=None)

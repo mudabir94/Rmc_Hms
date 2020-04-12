@@ -14,8 +14,11 @@ border: none;
 .custom_input_css{
     width: inherit;
 }
-.custom_label_css{
-    font-size: small;
+
+.sub_custom_label_css{
+  font-size: 0.6rem;
+  font-weight: bold;
+    /* font-size: small; */
 }
 .datatablePadding{
     padding-bottom: 30px;
@@ -30,7 +33,7 @@ border: none;
 #delBtn{
 
     color:red !important; 
-    background-color:lightcyan;
+    background-color:#a9c7f5;
     border:none; 
     cursor:pointer;
     border:none;
@@ -39,6 +42,8 @@ border: none;
 
     /* border: 1px solid; */
     padding:25px;
+    border-radius: 10px 10px 10px 10px;
+    box-shadow: -2px 2px 5px;
 
 }
 /* calc_res_info_form  */
@@ -57,12 +62,15 @@ border: none;
     user-select: none;
     border: 1px solid transparent;
     padding: .375rem .75rem;
+    width:100%;
     font-size: 1rem;
     line-height: 1.5;
-    border-radius: .25rem;
-    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    /* border-radius: .25rem; */
+    /* transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out; */
     background: whitesmoke;
     border-color: lightsalmon;
+    box-shadow: -5px 5px 5px #000000;
+    border-radius: 50px 50px 0px 0px;
 }
 .add_all_stk:hover{
     background: white;
@@ -82,9 +90,16 @@ border: none;
     font-family:Arial;
     font-weight: 900;
     font-size: 38px !important;
-    text-shadow: 2px 2px 0px #e62929;
-    color:cornflowerblue;
+    text-shadow: 2px 2px 0px #9a0000;
+    color:#f7bbbb;
   }
+  .heading-div{
+    text-align: center;
+    font-weight: bold;
+    color: #ffe4e4;
+    text-shadow: 2px 2px #9a0000;
+    padding-bottom:10px;
+}
   .datatablecss_med{
     font-size:0.8rem;
   }
@@ -94,7 +109,7 @@ border: none;
   }
   .datatablecss_med tr:nth-child(even){background-color: #f2f2f2;}
 
-  .datatablecss_med  tr:hover {background-color: rgba(76, 175, 79, 0.349);}
+  .datatablecss_med  tr:hover {background-color: rgba(63, 114, 65, 0.877);}
   .datatablecss_med th {
     padding-top: 12px;
     padding-bottom: 12px;
@@ -119,25 +134,30 @@ border: none;
     line-height: 1.5;
     border-radius: .25rem;
     cursor:pointer;
-    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    border-radius: 10px 10px 40px;
   }
  
 .dashboard-icons{
     width:100%;
-    border-radius: 2px;
+    border-radius: 3px 20px 20px 20px;
     height:150px;
     background:#b0b0b0;
-    box-shadow: 0 0 5px 3px #555;
+    /* box-shadow: 0 0 5px 3px #555; */
+    box-shadow: 0 0 5px 5px rgb(133, 31, 31);
+    cursor:pointer;
+
   }
   .dashboard-icon-rows{
      padding:10px;
   }
   .dashboard-icons:hover{
-  background:grey;
+  background:rgb(150, 69, 69);
   
   }
   .subdashboard-icon{
     top:20px;
+    cursor:pointer;
+
   }
   .icon_padding{
     /* padding:32px 0px 0px 210px; */
@@ -163,16 +183,201 @@ border: none;
     background-clip: padding-box;
     border: 1px solid #ced4da;
     border-radius: .25rem;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    box-shadow: -5px 5px 5px;
   }
   .custom_label_css{
     font-size: 0.7rem;
     font-weight: 500;
   }
   .datatable_heading_label{
-    font-size: 0.8rem;
-    font-weight: 700;
+    font-size: 1rem !important;
+    font-weight: 800;
+    color:aliceblue;
   }
+  .datatable_heading_label1{
+    font-size: 1rem !important;
+    font-weight: 800;
+    color:#337bba;
+    
+  }
+
   #dates_row_div{
     margin-left: 0px;
+  }
+  .add_med_form_div{
+    background: #a9c7f5;
+    box-shadow: -5px 5px 5px;
+    border-radius: 10px 10px 10px 10px;
+  }
+  .add_med_stock_form_div{
+    background: #a9c7f5;
+    box-shadow: -5px 5px 5px;
+    border-radius: 10px 10px 10px 10px;
+  }
+  .add_med_desp_form_div{
+    background: #a9c7f5;
+    box-shadow: -5px 5px 5px;
+    border-radius: 10px 10px 10px 10px;
+  }
+  .save_btn{
+    width: 100%;
+    height: 30px;
+    border: none;
+    background-color: #28a745;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: -5px 5px 5px #000000;
+    border-radius: 50px 50px 0px 0px;
+  }
+  .save_btn_normal{
+    width: 100%;
+    height: 30px;
+    border: none;
+    background-color: #28a745;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: -5px 5px 5px #000000;
+    border-radius: 6px 6px 6px 6px;
+  }
+  .calcbtn{
+    width: 100%;
+    height: 30px;
+    border: none;
+    background-color: #e28bff;   
+     color: #282c78;
+    font-size: x-large;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: -5px 5px 5px #000000;
+    border-radius: 6px 6px 6px 6px;
+  }
+  .custom_label_css{
+    font-size: 0.7rem;
+    font-weight: bold;
+  }
+  .modal-loading {
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 ) 
+                url('http://i.stack.imgur.com/FhHRx.gif') 
+                50% 50% 
+                no-repeat;
+  }
+  .printbtn{
+    background:rgb(34, 23, 134);
+    color:white;
+  
+  }
+  .excelbtn{
+    background:rgb(12, 173, 76);
+    color:white;
+  
+  }
+  .csvbtn{
+    background:rgb(241, 226, 6);
+    color:#000000;;
+  }
+  .pdfbtn{
+    background:rgb(160, 26, 26);
+    color:#c2eae8;
+  }
+  .copybtn{
+    background:rgb(173, 230, 220);
+    color:#d25a5a;;
+  }
+  
+  #desp_medicine_qty_form{
+    /* box-shadow:-2px 2px 2px 2px; */
+  }
+  #updateMedStckPriceDataDiv{
+    padding-top:15px;
+  }
+  #updateMedStckPriceDataBtn{
+    width: 100%;
+    height: 25px;
+    border: none;
+    background-color: #28a745;
+    color: white;
+    font-size: small;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: -5px 5px 5px #000000;
+    border-radius: 50px 50px 0px 0px;
+    padding-bottom: 25px;
+  }
+  .genformdiv1{
+    padding-top: 10px;
+    padding-bottom: 10px;
+  
+    background: #a9c7f5;
+    border-radius: 10px 10px 10px 10px;
+    box-shadow: -5px 5px 5px;
+    margin-top: 10px;
+    margin-left:-15px;
+    margin-right:15px;
+  }
+  .genformdiv2{
+    padding: 10px;
+  
+    background: #877a92;
+    border-radius: 10px 10px 10px 10px;
+    box-shadow: -5px 5px 5px;
+    margin-top: 10px;
+  
+  }
+  .genformdiv3{
+    padding-top: 10px;
+    padding-bottom: 10px;
+  
+    background: #a9c7f5;
+    border-radius: 10px 10px 10px 10px;
+    box-shadow: -5px 5px 5px;
+    margin-top: 10px;
+   
+  }
+  .removerowmargins_div{
+    margin-left:0px;
+    margin-right:0px;
+  }
+  .add_btn{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    height: 28px;
+    text-align: center;
+    font-size: 0.7rem;
+    width: inherit;
+    margin-top: 10px;
+    border-radius: 5px 5px 5px 5px;
+    border: none;
+    box-shadow: -4px 5px 10px;
+  }
+  .add_btn:hover{
+    color:white;
+    font-size:0.8rem;
+    background:green;
+  }
+  .deletebtn{
+    width: 100%;
+    height: 30px;
+    border: none;
+    background-color: #860d0d;   
+    color: white;
+    font-size: 0.8rem!important;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: -5px 5px 5px #000000;
+    border-radius: 6px 6px 6px 6px;
+  }
+  .deletebtn:hover{
+    font-size: 0.9rem!important;
+  
   }

@@ -133,17 +133,17 @@ function searchContactNumPatInfoOnEdit(ele){
 function addEmployee(){
     $('#main_page_content').empty()
     var container_empl_dashboard= $('#main_page_content').append('<div class="container-fluid" id="container-empl-dashboard"></div>');
-    $("#container-empl-dashboard").append("<h2 class ='text-center'>Employee Information</h2>");
-    $("#container-empl-dashboard").append("<h5>Please fill in the form below</h5>");
-    var main_row_div= $("<div class='row is-flex'></div>");
+    $("#container-empl-dashboard").append("<h1 class ='heading-div'> Add Employee Information</h2>");
+    // $("#container-empl-dashboard").append("<h5>Please fill in the form below</h5>");
+    var main_row_div= $("<div class='row removerowmargins_div '></div>");
 
     $(container_empl_dashboard).append(main_row_div);
-    var main_col_div=$("<div class='col-md-12' id='main_col_div'></div>");
+    var main_col_div=$("<div class='col-md-12 genformdiv1' id='main_col_div'></div>");
     //var main_col_div1=$("<div class='col-md-6'></div>");
        
     $(main_row_div).append(main_col_div);
     //$(main_row_div).append(main_col_div1);
-    var row_div_one=$("<div class='row'></div>");
+    var row_div_one=$("<div class='row' style='padding-top:10px;'></div>");
             // Employee Name
             var col_one__row_div_one=$("<div class='col-md-6'></div>");
                 row__col_one__row_div_one=$("<div class='row'></div>");
@@ -313,7 +313,7 @@ function addEmployee(){
                             var row__col_two__row_div_five=$("<div class='row'></div>");
                                 colmd1=$("<div class='col-md-8 offset-2'></div>")
 
-                                    saveEmployeedataForm_button=$('<button class="btn btn-success btn-block fa fa-save" onclick="saveEmployeeData()">  Save</button>')
+                                    saveEmployeedataForm_button=$('<button class="save_btn fas fa-save" onclick="saveEmployeeData()">  Save</button>')
                                 colmd1.append(saveEmployeedataForm_button)
 
                             row__col_two__row_div_five.append(colmd1)
@@ -360,6 +360,8 @@ $(main_col_div).append(row_div_five);
 }
 function   retrieveEmployeeType(){
     console.log("m",employee_type_list)
+    $('.modal-loading').show();
+
     $.ajax({
         type: 'GET',
         dataType: "json",
@@ -370,6 +372,8 @@ function   retrieveEmployeeType(){
             console.log(data['employee_type_list'])
            
             employee_type_list=data["employee_type_list"];
+            $('.modal-loading').hide();
+
             console.log("employee_type_list",employee_type_list);
         },
       
@@ -379,7 +383,7 @@ function   retrieveEmployeeType(){
 function editEmployee(){
     $('#main_page_content').empty()
     var container_empl_dashboard= $('#main_page_content').append('<div class="container-fluid" id="container-empl-dashboard"></div>');
-    $("#container-empl-dashboard").append("<h2 class ='text-center'>Edit Employee Information</h2>");
+    $("#container-empl-dashboard").append("<h1 class ='heading-div'>Edit Employee Information</h1>");
     $("#container-empl-dashboard").append("<hr class='custom_hr'>");
     var main_row_div= $("<div class='row is-flex'></div>");
 
@@ -416,8 +420,8 @@ function editEmployee(){
 
                 var col_three__row_div_one=$("<div class='col-md-4'></div>");
                     var row__col_three__row_div_one=$("<div class='row'></div>");
-                        var colmd1=$("<div class='col-md-5'></div>")
-                            var search_button=$('<button class="btn btn-block fa fa-search" onclick="searchEmployee()">Search Employee</button>')
+                        var colmd1=$("<div class='col-md-6'></div>")
+                            var search_button=$('<button class="search_employee_btn fas fa-search" onclick="searchEmployee()">Search Employee</button>')
                         colmd1.append(search_button)
                     row__col_three__row_div_one.append(colmd1)
                 col_three__row_div_one.append(row__col_three__row_div_one)
@@ -459,9 +463,9 @@ function searchEmployee(){
 }
 function editEmployeeRowDivFiveCreation(){
     var main_col_div=$("#main_col_div");
-    var row_div_five=$("<div class='row' id='row_div_five'></div>");
+    var row_div_five=$("<div class='row removerowmargins_div' id='row_div_five'></div>");
     // Datatable Name
-        var col_one__row_div_five=$("<div class='col-md-12'></div>");
+        var col_one__row_div_five=$("<div class='col-md-12 genformdiv1'></div>");
             var row__col_one__row_div_five=$("<div class='row'></div>");
                 var colmd1=$("<div class='col-md-12'></div>")
                     var table=$('<table id="employee_table" class="datatable_staff" width="100%"></table>')
@@ -474,6 +478,7 @@ function editEmployeeRowDivFiveCreation(){
 
 function retrieveEmployeeInfo(emp_name,contact_no){
     emp_datatable_list=[];
+    $('.modal-loading').show();
 
     $.ajax({
         type: 'GET',
@@ -505,6 +510,7 @@ function retrieveEmployeeInfo(emp_name,contact_no){
                 emp_datatable_list.push(templist)
             }
             createEmployeetDataTable();
+            $('.modal-loading').hide();
 
             console.log("employee_dict",employee_dict);
             console.log(emp_datatable_list)
@@ -519,19 +525,20 @@ function createEmployeetDataTable(){
             data:emp_datatable_list,
             columns: [
                 { title: "Id" },
-                { title: "Employee_Name" },
-                { title: "Phone_no" },
-                { title: 'gender' },
-                { title: "dob" },
-                { title: "cnic" },
-                { title: "qualification" },
+                { title: "Employee Name" },
+                { title: "Phone No" },
+                { title: 'Gender' },
+                { title: "DOB" },
+                { title: "CNIC" },
+                { title: "Qualification" },
                 { title: "Address" },
-                { title: "employee_type" },
-                { title: "email" },
+                { title: "Employee Type" },
+                { title: "Email" },
 
                 ],
-                paging: false,
-                scrollY: 200,
+                paging: true,
+                pageLenght:10,
+                scrollY: 300,
                 scrollX: true,
                 ordering: true,
                 info:false,
@@ -540,21 +547,21 @@ function createEmployeetDataTable(){
                 buttons: [
                     {
                     extend: 'print',
-                    text: ' Print Employee Details',
+                    text: ' PRINT',
                     title: 'Print Employee Details',
-                    className: 'datatable_button fa fa-print',
+                    className: 'datatable_button printbtn fas fa-print',
                     },
                     {
                         extend: 'excel',
-                        text: 'Export to Excel',
+                        text: ' EXCEL',
                         title: 'Print Employee Details',
-                        className: 'datatable_button fas fa-file-excel',
+                        className: 'datatable_button excelbtn fas fa-file-excel',
                     },
                     {
                         extend: 'pdf',
-                        text: 'Save As PDF',
+                        text: ' PDF',
                         title: 'Print Employee Details',
-                        className: 'datatable_button fas fa-file-pdf',
+                        className: 'datatable_button pdfbtn fas fa-file-pdf',
                     }
                 ],
     
@@ -569,7 +576,7 @@ function createEmployeetDataTable(){
                     emp_datatable.$('tr.selected').removeClass('selected');
                     $(this).addClass('selected');
                     var form_row=$("<div class='row' id='edit-emplyee-info-form'><h5> Employee Details</h5></div>")
-                    var form_col=$("<div class='col-md-12'></div>");
+                    var form_col=$("<div class='col-md-12 genformdiv2'></div>");
                     form_row.append(form_col)
                     var row_div_one=$("<div class='row' id='row_div_three_editpat'></div>");
                             // Employee Name
@@ -609,19 +616,19 @@ function createEmployeetDataTable(){
                                 // Gender
                                 var col_one__row_div_two=$("<div class='col-md-6'></div>");
                                     var row__col_one__row_div_two=$("<div class='row'></div>");
-                                        colmd1=$("<div class='col-md-4'></div>")
-                                        colmd2=$("<div class='col-md-2' id='gender_input_div'></div>")
-                                        colmd3=$("<div class='col-md-1'></div>")
-                                        colmd4=$("<div class='col-md-3' id='dob_input_div'></div>")
+                                        colmd1=$("<div class='col-md-2'></div>")
+                                        colmd2=$("<div class='col-md-4' id='gender_input_div'></div>")
+                                        colmd3=$("<div class='col-md-2'></div>")
+                                        colmd4=$("<div class='col-md-4' id='dob_input_div'></div>")
             
                                         emp_name_label=$("<label class='custom_label_css'>Gender</label>");
                                         colmd1.append(emp_name_label)
-                                        emp_name_input=$("<input class='form-control-custom' id='gender_input'  class='custom_input_css' value='"+employee_dict[emp_id_selected]['gender']+"' disabled>")
+                                        emp_name_input=$("<input class='form-control-custom' id='gender_input'  class='custom_input_css' value='"+employee_dict[emp_id_selected]['gender']+"'>")
                                         colmd2.append(emp_name_input)
                             // DOB
                                         contact_type_label=$("<label class='custom_label_css'>DOB</label>");
                                         colmd3.append(contact_type_label);
-                                        contact_type_input=$("<input class='form-control-custom' id='dob_input' class='custom_input_css' value='"+employee_dict[emp_id_selected]['dob']+"' disabled></input>")
+                                        contact_type_input=$("<input class='form-control-custom' id='dob_input' class='custom_input_css' value='"+employee_dict[emp_id_selected]['dob']+"'></input>")
                                         colmd4.append(contact_type_input);
             
                                     row__col_one__row_div_two.append(colmd1);
@@ -718,7 +725,7 @@ function createEmployeetDataTable(){
                             var col_two__row_div_five=$("<div class='col-md-12'></div>");
                                 var row__col_two__row_div_five=$("<div class='row'></div>");
                                     colmd1=$("<div class='col-md-8 offset-md-2'></div>")  
-                                        saveEmployeedataForm_button=$('<button class="btn btn-success btn-block fa fa-save" onclick="updateEmployeeData()">  Update</button>')
+                                        saveEmployeedataForm_button=$('<button class="btn save_btn fas fa-save" onclick="updateEmployeeData()">  Update</button>')
                                     colmd1.append(saveEmployeedataForm_button)
                                     row__col_two__row_div_five.append(colmd1)
                             col_two__row_div_five.append(row__col_two__row_div_five)
@@ -733,12 +740,24 @@ function createEmployeetDataTable(){
                 main_col_div.append(form_row)
                 
                 
-                $( "#dob_input" ).datepicker({
-                    changeMonth: true,
-                    changeYear: true,
-                    dateFormat: "yy-mm-dd",
+                // $( "#dob_input" ).datepicker({
+                //     changeMonth: true,
+                //     changeYear: true,
+                //     dateFormat: "yy-mm-dd",
                 
-                    });
+                //     });
+                $('#dob_input').datepicker({
+                    uiLibrary: 'bootstrap4',
+                    // dateFormat: "yy-mm-dd",
+                    format: 'yyyy-mm-dd',
+                    modal: true,
+                    close: function (e) {
+                        console.log("e",e["target"]['value'])
+                        value=e["target"]['value']
+                        console.log("Value")
+                    }
+        
+                });
                 
                     available_tags = [
                         "Male",
@@ -748,10 +767,19 @@ function createEmployeetDataTable(){
                       $( "#gender_input" ).autocomplete({
                         source: available_tags
                     });
-                  
+                    // Scroll to bill div
+                    $('html,body').animate({
+                        scrollTop: $("#row_div_three_editpat").offset().top},
+                        'slow');
+                     
                 }
+
     
             });
+            $('.dataTables_filter  input[type="search"]').
+            attr('placeholder','Search employee ....').
+            css({'width':'200px','display':'inline-block'});
+            $('.dataTables_filter input').addClass('form-control-custom');
         });
 }
 function saveEmployeeData(){
@@ -761,16 +789,33 @@ function saveEmployeeData(){
     totalinputs=inputs.length;
     console.log(inputs.length);
     var count=0
+    isValid=true
     $("#main_col_div input").each(function() {
         var element = $(this);
         if (element.val() == "") {
+            addValidation=true
             var parent_id=$(element).parent().attr("id");
-            $("#empty_name_check_div_"+$(this).attr('id')).remove();
-            var div=$("<div class='empty_name_check_div' id='empty_name_check_div_"+ $(this).attr('id')+"'><span  class='glyphicon' style='color:red'>&#x2a;Required</span></div>")
-            $("#"+parent_id).append(div)
+            if (parent_id ==="emp_address_input_div" ){
+                totalinputs=totalinputs-1
+            }
+            else if (parent_id ==="email_id_input_div" ){
+                totalinputs=totalinputs-1
 
-            // alert("element--")
-            isValid = false;
+            }else if (parent_id ==="emp_qualif_input_div" ){
+                totalinputs=totalinputs-1
+
+            }
+            else{
+                if (parent_id!==undefined){
+                console.log("parent----",parent_id)
+                $("#empty_name_check_div_"+$(this).attr('id')).remove();
+                var div=$("<div class='empty_name_check_div' id='empty_name_check_div_"+ $(this).attr('id')+"'><span  class='glyphicon custom_glyphicon' style='color:red;'>&#x2a;Required</span></div>")
+                $("#"+parent_id).append(div)
+                isValid = false;
+                }
+
+            }
+            
         }
         else if (element.val() !== "") {
             count=count+1;
@@ -782,11 +827,18 @@ function saveEmployeeData(){
         }
        
      });
-     if (count!=totalinputs){
-        alert("Please fill the required Fields")
-        return;
+     if (isValid===false){
+         return
+     }
+     if($("#select_emp_type").val()===""){
+         alert("Enter Emp Type")
+         return
+     }
+    //  if (count!=totalinputs){
+    //     alert("Please fill the required Fields")
+    //     return;
 
-    }
+    // }
     // if (employee_name===""){
     //     var div=$("<div id='empty_name_check_div'><span  class='glyphicon' style='color:red'>&#x2a;Required</span></div>")
     //     $("#emp_name_input_div").append(div)
@@ -809,6 +861,8 @@ function saveEmployeeData(){
 
         var address=$("#emp_address_input").val();
         console.log("emial_id",emial_id);
+        $('.modal-loading').show();
+
         $.ajax({
             type: 'POST',
             dataType: "json",
@@ -835,14 +889,21 @@ function saveEmployeeData(){
                     $("#gender_input").val("");
                     $("#dob_input").val("");
                     $("#cnic_input").val("");
-                    $("#emp_address_input").val("");
+                    // $("#emp_address_input").val("");
                     $("#select_emp_type").val("");
                     $("#emp_qualif_input").val("");
                     $("#email_id_input").val("");
+                    $('.modal-loading').hide();
+
                 }
                 else{
                     alert("This Employee already exsists")
+
+                    $('.modal-loading').hide();
+
+
                 }
+
                 
             },
         
@@ -860,6 +921,8 @@ function updateEmployeeData(){
     var address=$("#emp_address_input").val();
     var qualification=$("#emp_qualif_input").val();
     var emial_id=$("#email_id_input").val();
+    $('.modal-loading').show();
+
     $.ajax({
         type: 'POST',
         dataType: "json",
@@ -882,6 +945,8 @@ function updateEmployeeData(){
             employee_dict={}
             emp_datatable_list=[]
             alert("Updated")
+            $('.modal-loading').hide();
+
         },
     });
 
@@ -907,9 +972,9 @@ function onfocusOutGenderInput(element){
 function viewAllEmployee(){
     $('#main_page_content').empty()
     var container_view_all_employee_dashboard= $('#main_page_content').append('<div class="container-fluid" id="container-view-all-employee-dashboard"></div>');
-    $("#container-view-all-employee-dashboard").append("<h2 class ='text-center'>Employee List</h2>");
+    $("#container-view-all-employee-dashboard").append("<h2 class ='heading-div'>Employee List</h2>");
     $("#container-view-all-employee-dashboard").append("<hr class='custom_hr'>");
-    var main_row_div= $("<div class='row is-flex'></div>");
+    var main_row_div= $("<div class='row '></div>");
 
         $(container_view_all_employee_dashboard).append(main_row_div);
         var main_col_div=$("<div class='col-md-12' id='main_col_div'></div>");
@@ -929,6 +994,7 @@ function viewAllEmployee(){
 }
 
 function retrieve_all_employee_info(){
+    $('.modal-loading').show();
 
     $.ajax({
         type: 'GET',
@@ -958,6 +1024,7 @@ function retrieve_all_employee_info(){
                 emp_datatable_list.push(templist)
             }
             createAllEmployeeDataTable();
+            $('.modal-loading').hide();
 
             console.log("all_employee_dict",all_employee_dict);
             console.log("emp_datatable_list",emp_datatable_list)
@@ -973,15 +1040,15 @@ function createAllEmployeeDataTable(){
             data:emp_datatable_list,
             columns: [
                 { title: "Id" },
-                { title: "Employee_Name" },
-                { title: "Phone_no" },
-                { title: 'gender' },
-                { title: "dob" },
-                { title: "cnic" },
-                { title: "qualification" },
+                { title: "Employee Name" },
+                { title: "Phone No" },
+                { title: 'Gender' },
+                { title: "DOB" },
+                { title: "CNIC" },
+                { title: "Qualification" },
                 { title: "Address" },
-                { title: "employee_type" },
-                { title: "email" },
+                { title: "Employee Type" },
+                { title: "Email" },
                 ],
 
                 paging: true,
@@ -994,21 +1061,21 @@ function createAllEmployeeDataTable(){
                 buttons: [
                     {
                     extend: 'print',
-                    text: ' Print Employee Details',
+                    text: ' Print',
                     title: 'Print Employee Details',
-                    className: 'datatable_button fa fa-print',
+                    className: 'datatable_button printbtn fas fa-print',
                     },
                     {
                         extend: 'excel',
-                        text: 'Export to Excel',
+                        text: ' EXCEL',
                         title: 'Print Employee Details',
-                        className: 'datatable_button fas fa-file-excel',
+                        className: 'datatable_button excelbtn fas fa-file-excel',
                     },
                     {
                         extend: 'pdf',
-                        text: 'Save As PDF',
+                        text: ' PDF',
                         title: 'Print Employee Details',
-                        className: 'datatable_button fa fa-file-pdf',
+                        className: 'datatable_button pdfbtn fas fa-file-pdf',
                     }
                 ],
             });
@@ -1025,8 +1092,8 @@ function createAllEmployeeDataTable(){
                     allEmp_datatable.$('tr.selected').removeClass('selected');
                     $(this).addClass('selected');
                     console.log("Patient dict on click",employee_dict);
-                    var row_div_two=$("<div class='row' id='row_div_two' style='transform: rotate(270deg) ;transform-origin:50% 100%;transform:scaleX(1);'></div>");
-                        var main_subcol=$("<div class='col-md-12'></div>");
+                    var row_div_two=$("<div class='row removerowmargins_div' id='row_div_two' style='transform: rotate(270deg) ;transform-origin:50% 100%;transform:scaleX(1);'></div>");
+                        var main_subcol=$("<div class='col-md-12 genformdiv2' id='print_employee_info'></div>");
 
                             var subrow_eight=$("<div class='row' id='rmc_logo_div' style='padding-bottom:10px; padding-top:20px; display:none;'></div>")
                                 var col_one__subrow_eight=$("<div class='col-md-12'></div>");
@@ -1238,7 +1305,10 @@ function createAllEmployeeDataTable(){
                 row_div_two.append(main_subcol)
             var main_col_div=$("#main_col_div");
             main_col_div.append(row_div_two)
-                  
+                  // Scroll to bill div
+            $('html,body').animate({
+                scrollTop: $("#print_employee_info").offset().top},
+                'slow');
             }
 
         });

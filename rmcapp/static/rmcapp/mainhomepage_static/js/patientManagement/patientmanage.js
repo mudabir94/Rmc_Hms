@@ -40,8 +40,9 @@ var ward_datatable;
 var view_pres_datatable;
 
 $(document).ready(function() {
-    $("#dialog-confirm").hide();
+    $("#reset-token-dialog").hide();
     retrieveProcedureDetails();
+    
 });
 function contactNumPatInfoOnInput(ele){
    
@@ -171,20 +172,20 @@ function retrieveProcedureDetails(){
    
 }
 function addPatient(){
-    $("#dialog-confirm").hide()
+    $("#reset-token-dialog").hide()
     $('#main_page_content').empty()
     var container_patient_dashboard= $('#main_page_content').append('<div class="container-fluid" id="container-patient-dashboard"></div>');
     $("#container-patient-dashboard").append("<h2 class ='center_h_tag_forms'>Patient Information</h2>");
     $("#container-patient-dashboard").append("<hr class='custom_hr'>");
-    $("#container-patient-dashboard").append("<h5>Please fill in the form below</h5>");
+    // $("#container-patient-dashboard").append("<h5>Please fill in the form below</h5>");
     var main_row_div= $("<div class='row is-flex'></div>");
 
     $(container_patient_dashboard).append(main_row_div);
-    var main_col_div=$("<div class='col-md-12' id=''></div>");
+    var main_col_div=$("<div class='col-md-10' id='add_patient_form_div'></div>");
        
     $(main_row_div).append(main_col_div);
 
-    var row_div_one=$("<div class='row'></div>");
+    var row_div_one=$("<div class='row' style='padding-top:10px;'></div>");
             // Patient Name
             var col_one__row_div_one=$("<div class='col-md-6'></div>");
                 row__col_one__row_div_one=$("<div class='row'></div>");
@@ -369,7 +370,7 @@ function addPatient(){
                     colmd2=$("<div class='col-md-4 offset-md-2'></div>")
                     colmd3=$("<div class='col-md-2'></div>")
 
-                        savePatientdataForm_button=$('<button class="btn btn-success btn-block" onclick="savePatientData()"><span class="fa">&#xf019;</span> Save</button>')
+                        savePatientdataForm_button=$('<button class="save_btn fa fa-save  " onclick="savePatientData()"> Save</button>')
                     colmd2.append(savePatientdataForm_button)
                     
                     row__col_two__row_div_five.append(colmd1)
@@ -490,7 +491,7 @@ function EditPatient(){
             var col_three__row_div_one=$("<div class='col-md-4'></div>");
                 var row__col_three__row_div_one=$("<div class='row'></div>");
                     var colmd1=$("<div class='col-md-7'></div>")
-                        var search_button=$('<button class="btn btn-block fa fa-search" onclick="searchPatient()">Search Patient</button>')
+                        var search_button=$('<button class="search_patient_btn fa fa-search" onclick="searchPatient()">Search Patient</button>')
                     colmd1.append(search_button)
 
                 row__col_three__row_div_one.append(colmd1)
@@ -507,7 +508,7 @@ function EditPatient(){
 
 function editPatientRowDivThreeCreation(){
     var main_col_div=$("#main_col_div");
-    var row_div_three=$("<div class='row' id='row_div_three'></div>");
+    var row_div_three=$("<div class=' show_patients_table_genpres_form' id='row_div_three'></div>");
     // Datatable Name
         var col_one__row_div_three=$("<div class='col-md-12'></div>");
             var row__col_one__row_div_three=$("<div class='row'></div>");
@@ -583,30 +584,29 @@ function createPatientDataTable(){
                 buttons: [
                     {
                         extend: 'print',
-                        text: 'Print',
+                        text: ' PRINT',
                         title: 'Patient Data',
-                        className: 'datatable_button fa fa-print',
-
+                        className: 'datatable_button printbtn fas fa-print',
                     },
                      {
                         extend: 'excel',
-                        text: 'Export Data in Excel',
+                        text: ' EXCEL',
                         title: 'Patient Data',
-                        className: 'datatable_button  fas fa-file-excel',
+                        className: 'datatable_button excelbtn  fas fa-file-excel',
 
                     },
                      {
                         extend: 'csv',
-                        text: 'Export Data in CSV',
+                        text: ' CSV',
                         title: 'Patient Data',
-                        className: 'datatable_button fa fa-file',
+                        className: 'datatable_button csvbtn fas fa-file',
 
                     },
                     {
                         extend: 'pdf',
-                        text: 'Export Data in PDF',
+                        text: ' PDF',
                         title: 'Patient Data',
-                        className: 'datatable_button fas fa-file-pdf',
+                        className: 'datatable_button pdfbtn fas fa-file-pdf',
 
                     },
                  
@@ -625,7 +625,7 @@ function createPatientDataTable(){
                     pat_datatable.$('tr.selected').removeClass('selected');
                     $(this).addClass('selected');
                     console.log("Patient dict on click",patient_dict);
-                    var row_div_four=$("<div class='row' id='row_div_four' style='transform: rotate(270deg) ;transform-origin:50% 100%;transform:scaleX(1);'></div>");
+                    var row_div_four=$("<div class='edit_patient_form_div' id='row_div_four' style='transform: rotate(270deg) ;transform-origin:50% 100%;transform:scaleX(1);'></div>");
                         var main_subcol=$("<div class='col-md-12'></div>");
 
                             var subrow_one=$("<div class='row' style='padding-top: 10px; padding-bottom: 10px;'></div>")
@@ -783,7 +783,7 @@ function createPatientDataTable(){
                                 var row__col_one__subrow_five=$("<div class='row'></div>");
                                     var colmd1=$("<div class='col-md-2'></div>")
                                     var colmd2=$("<div class='col-md-4 offset-md-2'></div>")
-                                        var updatePatientdataForm_button=$('<button class="btn btn-success btn-sm btn-block" onclick="updatePatientData()"><span class="fa">&#xf019;</span> Update</button>')
+                                        var updatePatientdataForm_button=$('<button class="update_patient_info_btn" onclick="updatePatientData()">Update</button>')
                                     colmd2.append(updatePatientdataForm_button)
                                 row__col_one__subrow_five.append(colmd1)
                                 row__col_one__subrow_five.append(colmd2)
@@ -820,7 +820,11 @@ function createPatientDataTable(){
             });
     
             }
-
+            // Scroll to bill div
+            $('html,body').animate({
+                scrollTop: $(".edit_patient_form_div").offset().top},
+                'slow');
+            
         });
     });
 }
@@ -888,7 +892,8 @@ function savePatientData(){
     age=$("#age_input").val();
     console.log("emial_id",emial_id);
 
-    
+    $('.modal-loading').show();
+
     $.ajax({
         type: 'POST',
         dataType: "json",
@@ -917,6 +922,7 @@ function savePatientData(){
             $("#cnic_input").val("");
             $("#gender_select").val("");
             $("#dob_input").val("");
+            $('.modal-loading').hide();
 
 
 
@@ -952,6 +958,8 @@ function viewAllPatients(){
 }
 function retrieveAllPatientInfo(){
     allPatient_list=[];
+    $('.modal-loading').show();
+
     $.ajax({
         type: 'GET',
         dataType: "json",
@@ -980,6 +988,8 @@ function retrieveAllPatientInfo(){
             createAllPatientDataTable()
             console.log("patient_dict",patient_dict);
             console.log(allPatient_list)
+            $('.modal-loading').hide();
+
         },
     }); 
 }
@@ -993,13 +1003,13 @@ function createAllPatientDataTable(){
                 { title: "Id" },
                 { title: "Patient Name" },
                 { title: "Contact" },
-                { title: 'gender' },
-                { title: "dob" },
-                { title: "cnic" },
-                { title: "guardian" },
+                { title: 'Gender' },
+                { title: "DOB" },
+                { title: "CNIC" },
+                { title: "Guardian" },
                 { title: "Address" },
-                { title: "bloodgroup" },
-                { title: "email" },
+                { title: "Blood Group" },
+                { title: "Email" },
                 ],
                 paging: true,
                 // lengthMenu: [ 10, 25, 50, 'Show all'],
@@ -1012,30 +1022,30 @@ function createAllPatientDataTable(){
                 buttons: [
                     {
                         extend: 'print',
-                        text: 'Print',
+                        text: ' Print',
                         title: 'Patient Data',
-                        className: 'datatable_button fa fa-print',
+                        className: 'datatable_button printbtn fas fa-print',
 
                     },
                      {
                         extend: 'excel',
-                        text: 'Export Data in Excel',
+                        text: ' EXCEL',
                         title: 'Patient Data',
-                        className: 'datatable_button  fas fa-file-excel',
+                        className: 'datatable_button excelbtn fas fa-file-excel',
 
                     },
                      {
                         extend: 'csv',
-                        text: 'Export Data in CSV',
+                        text: ' CSV',
                         title: 'Patient Data',
-                        className: 'datatable_button fa fa-file',
+                        className: 'datatable_button csvbtn fas fa-file',
 
                     },
                     {
                         extend: 'pdf',
-                        text: 'Export Data in PDF',
+                        text: ' PDF',
                         title: 'Patient Data',
-                        className: 'datatable_button fas fa-file-pdf',
+                        className: 'datatable_button pdfbtn fas fa-file-pdf',
 
                     },
                   
@@ -1054,7 +1064,7 @@ function createAllPatientDataTable(){
                     allPat_datatable.$('tr.selected').removeClass('selected');
                     $(this).addClass('selected');
                     console.log("Patient dict on click",patient_dict);
-                    var row_div_two=$("<div class='row' id='row_div_two'></div>");
+                    var row_div_two=$("<div class='edit_patient_form_div' id='row_div_two'></div>");
                         var main_subcol=$("<div class='col-md-12'></div>");
 
                             var subrow_six=$("<div class='row' id='rmc_logo_div' style='padding-bottom:10px; padding-top:20px; display:none;'></div>")
@@ -1221,7 +1231,7 @@ function createAllPatientDataTable(){
                                 var col_one__subrow_five=$("<div class='col-md-12'></div>");
                                     var row__col_one__subrow_five=$("<div class='row'></div>");
                                         var colmd1=$("<div class='col-md-6 offset-md-2'></div>")
-                                            var print_button=$('<button class="btn btn-success btn-block" id="printPatientDetail" onclick="printAllPatientData()"><span class="fa">&#xf02f;</span> Print Patient Details</button>')
+                                            var print_button=$('<button class="print_patient_info_btn" id="printPatientDetail" onclick="printAllPatientData()"><span class="fa">&#xf02f;</span> Print Patient Details</button>')
                                         colmd1.append(print_button)
                                     row__col_one__subrow_five.append(colmd1)
                                 col_one__subrow_five.append(row__col_one__subrow_five)
@@ -1244,7 +1254,12 @@ function createAllPatientDataTable(){
 
                     row_div_two.append(main_subcol)
                 var main_col_div=$("#main_col_div");
-                main_col_div.append(row_div_two)
+                main_col_div.append(row_div_two);
+                // Scroll to bill div
+                $('html,body').animate({
+                    scrollTop: $(".edit_patient_form_div").offset().top},
+                    'slow');
+                edit_patient_form_div
                   
             }
 
@@ -1261,7 +1276,7 @@ function printAllPatientData(){
     $('#container-view-all-patient-dashboard').hide();
     $('#printPatientDetail').hide();
     $('#sidebar').hide();
-    $('#dialog-confirm').hide();
+    $('#reset-token-dialog').hide();
     $('#rmc_logo_div').show();
     $('#rmc_contact_div').show();
 
@@ -1300,6 +1315,8 @@ function updatePatientData(){
     blood_group=blood_group.toLowerCase();
 
     var emial_id=$("#email_id_edit").val();
+    $('.modal-loading').show();
+
     $.ajax({
         type: 'POST',
         dataType: "json",
@@ -1323,6 +1340,8 @@ function updatePatientData(){
             patient_dict={}
             datatable_list=[]
             alert("Info Updated")
+            $('.modal-loading').hide();
+
         },
     });
 }
@@ -1330,6 +1349,7 @@ function updatePatientData(){
 function retrievePatientInfo(pat_name,contact_no,id){
     datatable_lst=[];
     pat_name=pat_name.toLowerCase();
+    $('.modal-loading').show();
 
     $.ajax({
         type: 'GET',
@@ -1364,6 +1384,8 @@ function retrievePatientInfo(pat_name,contact_no,id){
             createPatientDataTable()
             console.log("patient_dict",patient_dict);
             console.log(datatable_list)
+            $('.modal-loading').hide();
+
         },
     }); 
 }
@@ -1378,21 +1400,21 @@ function viewPatientHistory(){
     var main_col_div=$("<div class='col-md-12' id=''></div>");
        
         $(main_row_div).append(main_col_div);
-            var row_div=$("<div class='row' id='row_div'></div>");
+            var row_div=$("<div class='row removerowmargins_div' id='row_div'></div>");
                 var col=$("<div class='col-md-12'></div>");
                     var sub_row_div=$("<div class='row' id='sub_row_div_spat'></div>");
                         var subcol1=$("<div class='col-md-12'></div>");
                             var rw=$("<div class='row'></div>");
                                 var c1=$("<div class='col-md-1'></div>");
-                                    var label=$("<label>Patient id</label>")
+                                    var label=$("<label class='custom_label_css'>Patient ID</label>")
                                 var c2=$("<div class='col-md-2'></div>");
                                     var pat_id=$("<input class='form-control-custom' id='searchpat_id_input'></input>");
                                 var c3=$("<div class='col-md-1'></div>");
-                                    var pat_name_label=$("<label>Patient Name</label>")
+                                    var pat_name_label=$("<label class='custom_label_css'>Patient Name</label>")
                                 var c4=$("<div class='col-md-2'></div>");
                                     var pat_name=$("<input class='form-control-custom' id='searchpat_name_input'></input>");
                                 var c5=$("<div class='col-md-2'></div>");
-                                    var search_button=$("<button class='btn btn-block fa fa-search' onclick='searchPatientMedHistory()'>Search Patient</button>")
+                                    var search_button=$("<button class='search_patient_btn fa fa-search' onclick='searchPatientMedHistory()'>Search Patient</button>")
                                 c1.append(label);
                                 c2.append(pat_id);
                                 c3.append(pat_name_label);
@@ -1406,14 +1428,15 @@ function viewPatientHistory(){
                         subcol1.append(rw);
                     sub_row_div.append(subcol1);
                     var search_pat_datatable_row=$("<div class='row' id='search_pat_datatable_row'></div>");
-                        var colmd1=$("<div class='col-md-6'>")
+                        var colmd1=$("<div class='col-md-6 genformdiv1'>")
                             var search_pat_datatable_div=$("<div id='search_pat_datatable_div'></div>");
                                     var search_datatable_table=$("<table id='search_pat_datatable_table' class='datatable_pat'></table>");
                                 search_pat_datatable_div.append(search_datatable_table);
                     
                         colmd1.append(search_pat_datatable_div)
+                        var colmd3=$("<div class='col-md-1' >")
 
-                        var colmd2=$("<div class='col-md-6' id='view_patient_datevisited_div'>")
+                        var colmd2=$("<div class='col-md-5 genformdiv2'>")
 
                             var row_one__sub_col_one=$("<div class='row' id=''></div>");
                                 var col__row_one__sub_col_one=$("<div class='col-md-12'></div>");
@@ -1437,6 +1460,8 @@ function viewPatientHistory(){
                         colmd2.append(row_two__sub_col_one);
 
                     search_pat_datatable_row.append(colmd1);
+                    search_pat_datatable_row.append(colmd3);
+
                     search_pat_datatable_row.append(colmd2);
 
 
@@ -1445,7 +1470,7 @@ function viewPatientHistory(){
 
             row_div.append(col);
 
-        var row_div_one=$("<div class='row' id='row_div_one'></div>");   
+        var row_div_one=$("<div class='row removerowmargins_div' id='row_div_one'></div>");   
 
     $(main_col_div).append(row_div);
     $(main_col_div).append(row_div_one);
@@ -1494,11 +1519,11 @@ function createPatientHistoryForm(){ ///details in right col
     $("#view_pat_med_hist_div").remove();
     var row_div_one=$("#row_div_one");
     var sub_col_two=$("#sub_col_two");
-    var sub_col_two=$("<div class='col-md-11' class='sub_col_two' id='view_pat_med_hist_div' ></div>");
+    var sub_col_two=$("<div class='col-md-12' class='sub_col_two' id='view_pat_med_hist_div' ></div>");
 
-        var row_one__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
+        var row_one__sub_col_two=$("<div class='row'></div>");
             var col__row_one__sub_col_two=$("<div class='col-md-12'></div>");
-                var row_one__col__row_one__sub_col_two=$("<div class='row'></div>");
+                var row_one__col__row_one__sub_col_two=$("<div class='row genformdiv1'></div>");
                     var colmd1=$("<div class='col-md-1'>")
                     var colmd2=$("<div class='col-md-4'>")
                         var label=$("<label class='custom_label_css'>Patient Type</label>");
@@ -1510,106 +1535,9 @@ function createPatientHistoryForm(){ ///details in right col
             col__row_one__sub_col_two.append(row_one__col__row_one__sub_col_two);
         row_one__sub_col_two.append(col__row_one__sub_col_two);
 
-        // var row_two__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
-        //     var col__row_two__sub_col_two=$("<div class='col-md-12'></div>");
-        //         var row_one__col__row_two__sub_col_two=$("<div class='row'></div>");
-        //             var colmd1=$("<div class='col-md-3'>")
-        //             var colmd2=$("<div class='col-md-3'>")
-        //                 var label=$("<label>Doctor Visited</label>");
-        //                 var input=$("<input id='pat_hist_docOnduty_inp_"+pres_selected+"' class='form-control-custom' value='"+pat_med_history_dict[pres_selected]['doc_on_duty']+"' style='background:white' disabled></input>");
-        //             colmd1.append(label);
-        //             colmd2.append(input);
-        //         row_one__col__row_two__sub_col_two.append(colmd1)
-        //         row_one__col__row_two__sub_col_two.append(colmd2)
-        //     col__row_two__sub_col_two.append(row_one__col__row_two__sub_col_two);
-        // row_two__sub_col_two.append(col__row_two__sub_col_two);
-        
-        // var row_three__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
-        //     var col__row_three__sub_col_two=$("<div class='col-md-12'></div>");
-        //         var row_one__col__row_three__sub_col_two=$("<div class='row'></div>");
-        //             var colmd1=$("<div class='col-md-3'>")
-        //             var colmd2=$("<div class='col-md-3'>")
-        //                 var label=$("<label>Vitals</label>");
-        //                 var input=$("<textarea id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control-custom' value='"+pat_med_history_dict[pres_selected]['vitals']+"' style='background:white' disabled></textarea>");
-        //             colmd1.append(label);
-        //             colmd2.append(input);
-        //         row_one__col__row_three__sub_col_two.append(colmd1)
-        //         row_one__col__row_three__sub_col_two.append(colmd2)
-        //     col__row_three__sub_col_two.append(row_one__col__row_three__sub_col_two);
-        // row_three__sub_col_two.append(col__row_three__sub_col_two);
-
-        // var row_four__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
-        //     var col__row_four__sub_col_two=$("<div class='col-md-12'></div>");
-        //         var row_one__col__row_four__sub_col_two=$("<div class='row'></div>");
-        //             var colmd1=$("<div class='col-md-3'>")
-        //             var colmd2=$("<div class='col-md-3'>")
-        //                 var label=$("<label>Sign Symptoms</label>");
-        //                 var input=$("<input id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control-custom' value='"+pat_med_history_dict[pres_selected]['sign_symptom']+"' style='background:white' disabled></input>");
-        //             colmd1.append(label);
-        //             colmd2.append(input);
-        //         row_one__col__row_four__sub_col_two.append(colmd1)
-        //         row_one__col__row_four__sub_col_two.append(colmd2)
-        //     col__row_four__sub_col_two.append(row_one__col__row_four__sub_col_two);
-        // row_four__sub_col_two.append(col__row_four__sub_col_two);
-
-        // var row_five__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
-        //     var col__row_five__sub_col_two=$("<div class='col-md-12'></div>");
-        //         var row_one__col__row_five__sub_col_two=$("<div class='row'></div>");
-        //             var colmd1=$("<div class='col-md-3'>")
-        //             var colmd2=$("<div class='col-md-3'>")
-        //                 var label=$("<label>Provisional Diagnosis</label>");
-        //                 var input=$("<input id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control-custom' value='"+pat_med_history_dict[pres_selected]['provisional_diagnosis']+"' style='background:white' disabled></input>");
-        //             colmd1.append(label);
-        //             colmd2.append(input);
-        //         row_one__col__row_five__sub_col_two.append(colmd1)
-        //         row_one__col__row_five__sub_col_two.append(colmd2)
-        //     col__row_five__sub_col_two.append(row_one__col__row_five__sub_col_two);
-        // row_five__sub_col_two.append(col__row_five__sub_col_two);
-
-        // var row_six__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
-        //     var col__row_six__sub_col_two=$("<div class='col-md-12'></div>");
-        //         var row_one__col__row_six__sub_col_two=$("<div class='row'></div>");
-        //             var colmd1=$("<div class='col-md-3'>")
-        //             var colmd2=$("<div class='col-md-3'>")
-        //                 var label=$("<label>Investigation</label>");
-        //                 var input=$("<input id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control-custom' value='"+pat_med_history_dict[pres_selected]['investigation']+"' style='background:white' disabled></input>");
-        //             colmd1.append(label);
-        //             colmd2.append(input);
-        //         row_one__col__row_six__sub_col_two.append(colmd1)
-        //         row_one__col__row_six__sub_col_two.append(colmd2)
-        //     col__row_six__sub_col_two.append(row_one__col__row_six__sub_col_two);
-        // row_six__sub_col_two.append(col__row_six__sub_col_two);
-
-        // var row_seven__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
-        //     var col__row_seven__sub_col_two=$("<div class='col-md-12'></div>");
-        //         var row_one__col__row_seven__sub_col_two=$("<div class='row'></div>");
-        //             var colmd1=$("<div class='col-md-3'>")
-        //             var colmd2=$("<div class='col-md-3'>")
-        //                 var label=$("<label>Diagnosis</label>");
-        //                 var input=$("<input id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control-custom' value='"+pat_med_history_dict[pres_selected]['diagnosis']+"' style='background:white' disabled></input>");
-        //             colmd1.append(label);
-        //             colmd2.append(input);
-        //         row_one__col__row_seven__sub_col_two.append(colmd1)
-        //         row_one__col__row_seven__sub_col_two.append(colmd2)
-        //     col__row_seven__sub_col_two.append(row_one__col__row_seven__sub_col_two);
-        // row_seven__sub_col_two.append(col__row_seven__sub_col_two);
-
-        // var row_eight__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
-        //     var col__row_eight__sub_col_two=$("<div class='col-md-12'></div>");
-        //         var row_one__col__row_eight__sub_col_two=$("<div class='row'></div>");
-        //             var colmd1=$("<div class='col-md-3'>")
-        //             var colmd2=$("<div class='col-md-3'>")
-        //                 var label=$("<label>RX</label>");
-        //                 var input=$("<input id='pat_hist_vitals_inp_"+pres_selected+"' class='form-control-custom' value='"+pat_med_history_dict[pres_selected]['rx']+"' style='background:white' disabled></input>");
-        //             colmd1.append(label);
-        //             colmd2.append(input);
-        //         row_one__col__row_eight__sub_col_two.append(colmd1)
-        //         row_one__col__row_eight__sub_col_two.append(colmd2)
-        //     col__row_eight__sub_col_two.append(row_one__col__row_eight__sub_col_two);
-        // row_eight__sub_col_two.append(col__row_eight__sub_col_two);
-
+     
         if (pat_med_history_dict[pres_selected]['patienttype']==="Indoor"){
-            var row_nine__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
+            var row_nine__sub_col_two=$("<div class='row genformdiv1' ></div>");
                 var col__row_nine__sub_col_two=$("<div class='col-md-12'></div>");
                     var row_one__col__row_nine__sub_col_two=$("<div class='row'></div>");
                         var colmd1=$("<div class='col-md-2'>")
@@ -1625,7 +1553,7 @@ function createPatientHistoryForm(){ ///details in right col
 
             if (pat_med_history_dict[pres_selected]['surgery_names'].lenght!==0){
 
-                var row_ten__sub_col_two=$("<div class='row'></div>");
+                var row_ten__sub_col_two=$("<div class='row genformdiv1'></div>");
                     var surg_list=pat_med_history_dict[pres_selected]['surgery_names']
                     var col__row_ten__sub_col_two=$("<div class='col-md-12'></div>");
                         var div=$("<div>")
@@ -1669,7 +1597,7 @@ function createPatientHistoryForm(){ ///details in right col
             // if (pat_med_history_dict[pres_selected]['med_list'].length!==0 ){
             if (pat_med_history_dict[pres_selected]['med_info_rec']!==undefined){
                 if (pat_med_history_dict[pres_selected]['med_info_rec'].length!==0 ){
-                var row_fifteen__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
+                var row_fifteen__sub_col_two=$("<div class='row genformdiv1' ></div>");
                     var col__row_fifteen__sub_col_two=$("<div class='col-md-12'></div>");
                         var row_one__col__row_fifteen__sub_col_two=$("<div class='row'></div>");
                             var colmd1=$("<div class='col-md-12'>")
@@ -1684,7 +1612,7 @@ function createPatientHistoryForm(){ ///details in right col
 
         if (pat_med_history_dict[pres_selected]['procedure_names']!==undefined){
             if (pat_med_history_dict[pres_selected]['procedure_names'].length!==0){
-                var row_twelve__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
+                var row_twelve__sub_col_two=$("<div class='row  genformdiv1'></div>");
                     var col__row_twelve__sub_col_two=$("<div class='col-md-12'></div>");
                         var row_one__col__row_twelve__sub_col_two=$("<div class='row'></div>");
                             var colmd1=$("<div class='col-md-12'>")
@@ -1697,7 +1625,7 @@ function createPatientHistoryForm(){ ///details in right col
             }
         }
 
-        var row_fourteen__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
+        var row_fourteen__sub_col_two=$("<div class='row genformdiv1' ></div>");
             var col__row_fourteen__sub_col_two=$("<div class='col-md-12'></div>");
                 var row_one__col__row_fourteen__sub_col_two=$("<div class='row'></div>");
                     var colmd1=$("<div class='col-md-12'>")
@@ -1707,7 +1635,7 @@ function createPatientHistoryForm(){ ///details in right col
             col__row_fourteen__sub_col_two.append(row_one__col__row_fourteen__sub_col_two);
         row_fourteen__sub_col_two.append(col__row_fourteen__sub_col_two);
 
-        var row_sixteen__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
+        var row_sixteen__sub_col_two=$("<div class='row genformdiv1'></div>");
             var col__row_sixteen__sub_col_two=$("<div class='col-md-12'></div>");
                 var row_one__col__row_sixteen__sub_col_two=$("<div class='row'></div>");
                     var colmd1=$("<div class='col-md-12'>")
@@ -1716,7 +1644,6 @@ function createPatientHistoryForm(){ ///details in right col
                             <tr>\
                             <th>Cover</th>\
                             <th>File Name</th>\
-                            <th>Description</th>\
                             <th>Size</th>\
                             </tr>\
                         </thead>')
@@ -1757,12 +1684,12 @@ function createPatientHistoryForm(){ ///details in right col
         row_sixteen__sub_col_two.append(col__row_sixteen__sub_col_two);
 
 
-        var row_thirteen__sub_col_two=$("<div class='row' style='padding-top:10px'></div>");
+        var row_thirteen__sub_col_two=$("<div class='row genformdiv1'></div>");
             var col__row_thirteen__sub_col_two=$("<div class='col-md-12'></div>");
                 var row_one__col__row_thirteen__sub_col_two=$("<div class='row'></div>");
                     var colmd1=$("<div class='col-md-6 offset-md-3'></div>")
-                        var printBtn_label=$('<button class="btn btn-block fa fa-print" id="print_bttn" onclick="PrintPatVisitInfo()">Print Patient Visit Information</button>');
-                    colmd1.append(printBtn_label)
+                        // var printBtn_label=$('<button class="save_btn fa fa-print" id="print_bttn" onclick="PrintPatVisitInfo()">Print Patient Visit Information</button>');
+                    // colmd1.append(printBtn_label)
                 row_one__col__row_thirteen__sub_col_two.append(colmd1)
             col__row_thirteen__sub_col_two.append(row_one__col__row_thirteen__sub_col_two);
         row_thirteen__sub_col_two.append(col__row_thirteen__sub_col_two);
@@ -1802,6 +1729,12 @@ if (pat_med_history_dict[pres_selected]['procedure_names']!==undefined){
     }
 
 }
+// Scroll to bill div
+$('html,body').animate({
+    scrollTop: $("#view_pat_med_hist_div").offset().top},
+    'slow');
+
+
 }
 function createPresRecHistDatatable(){
     pres_hist_datatable=undefined
@@ -1827,15 +1760,15 @@ function createPresRecHistDatatable(){
             buttons: [
                 {
                 extend: 'print',
-                text: ' Print',
+                text: ' PRINT',
                 title: 'Patient Visit History',
-                className: 'datatable_button fa fa-print',
+                className: 'datatable_button printbtn fa fa-print',
                 },
                 {
                     extend: 'excel',
-                    text: ' Export to Excel',
+                    text: ' Excel',
                     title: 'Patient Visit History',
-                    className: 'datatable_button fa fa-print',
+                    className: 'datatable_button excelbtn fa fa-file-excel',
                     }
             ],
             paging: false,
@@ -1876,15 +1809,15 @@ function createMedInfoRecDatatable(){
             buttons: [
                 {
                 extend: 'print',
-                text: ' Print',
+                text: ' PRINT',
                 title: 'Medicine Record',
-                className: 'datatable_button fa fa-print',
+                className: 'datatable_button  printbtn fa fa-print',
                 },
                 {
                     extend: 'excel',
-                    text: ' Export to Excel',
+                    text: ' EXCEL',
                     title: 'Medicine Record',
-                    className: 'datatable_button fa fa-print',
+                    className: 'datatable_button excelbtn fa fa-file-excel',
                     }
             ],
             paging: false,
@@ -1923,15 +1856,15 @@ function createProcRecsDatatable(){
             buttons: [
                 {
                 extend: 'print',
-                text: ' Print',
+                text: ' PRINT',
                 title: 'Medicine Record',
-                className: 'datatable_button fa fa-print',
+                className: 'datatable_button printbtn fa fa-print',
                 },
                 {
                     extend: 'excel',
-                    text: ' Export to Excel',
+                    text: ' EXCEL',
                     title: 'Medicine Record',
-                    className: 'datatable_button fa fa-print',
+                    className: 'datatable_button excelbtn fa fa-file-excel',
                     }
             ],
             paging: false,
@@ -1958,7 +1891,8 @@ function searchPatientMedHistory(){
     var pat_name=$("#searchpat_name_input").val();
     pat_datatable_view_mh=[];
     console.log("patient_id---",patient_id)
-    
+    $('.modal-loading').show();
+
     $.ajax({
         type: 'GET',
         dataType: "json",
@@ -1991,6 +1925,7 @@ function searchPatientMedHistory(){
                 pat_dt_mh.destroy();
             }
             createPatientDataTableViewMedHist();
+            $('.modal-loading').hide();
 
            
         }
@@ -2027,15 +1962,15 @@ function createPatientDataTableViewMedHist(){
             buttons: [
                 {
                 extend: 'print',
-                text: ' Print',
+                text: ' PRINT',
                 title: 'Patient List',
-                className: 'datatable_button fa fa-print',
+                className: 'datatable_button printbtn fa fa-print',
                 },
                 {
                     extend: 'excel',
-                    text: ' Export to Excel',
+                    text: '  EXCEL',
                     title: 'Patient List',
-                    className: 'datatable_button fa fa-print',
+                    className: 'datatable_button excelbtn fa fa-file-excel',
                     }
             ],
     
@@ -2046,7 +1981,12 @@ function createPatientDataTableViewMedHist(){
                 }
                 else{
                     patid=$(this).find('td').eq(0).text()
+
                     $("#row_div_one").empty();
+                    pat_dt_mh.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                    $('.modal-loading').show();
+
                     $.ajax({
                         type: 'POST',
                         dataType: "json",
@@ -2061,6 +2001,8 @@ function createPatientDataTableViewMedHist(){
                             date_visited_dict=JSON.parse(data['date_visited_dict']);
                             pres_records_dict=JSON.parse(data['pres_records_dict'])
                             createPatientHistory_DateList();
+                            $('.modal-loading').hide();
+
                         }
                     });
                 }
@@ -2081,7 +2023,7 @@ function PrintPatVisitInfo(){
     // $('#row_div').hide();
     // $('#sidebar').hide();
     // $('#print_bttn').hide();
-    // $('#dialog-confirm').hide();
+    // $('#reset-token-dialog').hide();
     // $('#col1').hide();
     // // $('#rmcHeading').show();
     // // $('#heading2').show();
@@ -2630,10 +2572,10 @@ function createPatientDataTableInGenPres(){
                 { title: "Id" },
                 { title: "Patient Name" },
                 { title: "Contact" },
-                { title: 'gender' },
-                { title: "dob" },
-                { title: "cnic" },
-                { title: "guardian" },
+                { title: 'Gender' },
+                { title: "DOB" },
+                { title: "CNIC" },
+                { title: "Guardian" },
                 { title: "Address" },
             ],
             paging: false,
@@ -2650,18 +2592,23 @@ function createPatientDataTableInGenPres(){
                     alert("clicked same entry")
                 }
                 else{
-                    patient_id_selected=$(this).find('td').eq(0).text()
+                    patient_id_selected=$(this).find('td').eq(0).text();
 
-                    $("#row_div_four").remove();
-                    $('#row_div_five').remove();
+                    $('#select_pres_type_div').remove();
+                    $("#gen_pres_form_div").remove();
+
                     $('#row_div_six').remove();
                     $('#row_div_seven').remove();
+                    $("#genpres_room_datatablediv").remove();
+                    $("#genpres_ward_datatablediv").remove();
+
+
 
 
                     pat_datatable.$('tr.selected').removeClass('selected');
                     $(this).addClass('selected');
                     console.log("Patient dict on click",patient_dict);
-                    var row_div_four=$("<div class='row' id='row_div_four'></div>");
+                    var row_div_four=$("<div class='' id='select_pres_type_div'></div>");
                         var main_subcol=$("<div class='col-md-12'></div>");
 
                             var subrow_one=$("<div class='row'></div>")
@@ -2701,12 +2648,18 @@ function createPatientDataTableInGenPres(){
 
                     row_div_four.append(main_subcol)
                 var main_col_div=$("#main_col_div");
-                main_col_div.append(row_div_four)
+                main_col_div.append(row_div_four);
+                // Scroll to bill div
+                $('html,body').animate({
+                    scrollTop: $("#select_pres_type_div").offset().top},
+                    'slow');                
+                
                 }
             });
         });
 }
 function retrieveRoomInfoInRoomWard(){
+    $('.modal-loading').show();
 
     $.ajax({
         type: 'GET',
@@ -2734,11 +2687,13 @@ function retrieveRoomInfoInRoomWard(){
             console.log(room_list)
 
             createRoomDataTable()
+            $('.modal-loading').hide();
 
         },
     }); 
 }
 function retrieveWardInfoInRoomWard(){
+    $('.modal-loading').show();
 
     $.ajax({
         type: 'GET',
@@ -2766,6 +2721,7 @@ function retrieveWardInfoInRoomWard(){
             $('#available_ward_table').show()
 
             createWardDataTable()
+            $('.modal-loading').hide();
 
         },
     }); 
@@ -2794,7 +2750,7 @@ function EmergencyTotalAmountFocousOutGenPres(ele){
 }
 function createOutDoorPresFormDiv(){
     var main_col_div=$('#main_col_div')
-    var row_div_five=$("<div class='row' id='row_div_five'></div>");
+    var row_div_five=$("<div class='' id='gen_pres_form_div'></div>");
 
         var main_col__row_five=$("<div class='col-md-12'></div>");
 
@@ -2964,7 +2920,7 @@ function createOutDoorPresFormDiv(){
                             colmd2=$("<div class='col-md-6'></div>")
                             colmd3=$("<div class='col-md-3'></div>")
 
-                            GenPres_button=$('<button class="btn btn-success btn-block fa fa-print" onclick="printPrescriptionForm()"> Print Prescription</button>')
+                            GenPres_button=$('<button class="save_btn fa fa-print" onclick="printPrescriptionForm()"> Print Prescription</button>')
                             colmd2.append(GenPres_button)
                             
                         row__col_one__row_five.append(colmd1);
@@ -2988,7 +2944,7 @@ main_col_div.append(row_div_five)
 }
 function createEmergencyPresFormDiv(){
     var main_col_div=$('#main_col_div')
-        var row_div_five=$("<div class='row' id='row_div_five'></div>");
+        var row_div_five=$("<div class='' id='gen_pres_form_div'></div>");
 
             var main_col__row_five=$("<div class='col-md-12'></div>");
 
@@ -3158,7 +3114,7 @@ function createEmergencyPresFormDiv(){
                                 colmd2=$("<div class='col-md-6'></div>")
                                 colmd3=$("<div class='col-md-3'></div>")
 
-                                GenPres_button=$('<button class="btn btn-success btn-block fa fa-print" onclick="printPrescriptionForm()"> Print Prescription</button>')
+                                GenPres_button=$('<button class="save_btn fa fa-print" onclick="printPrescriptionForm()"> Print Prescription</button>')
                                 colmd2.append(GenPres_button)
                                 
                             row__col_one__row_five.append(colmd1);
@@ -3209,7 +3165,7 @@ function pat_type_OnSelect(element){
     console.log("optionSelected",optionSelected)
 
     if (optionSelected==='Outdoor'){
-        $('#row_div_five').remove();
+        $('#gen_pres_form_div').remove();
        
         if (room_datatable!==undefined){
             room_datatable.destroy();
@@ -3234,7 +3190,7 @@ function pat_type_OnSelect(element){
 
 }
     else if (optionSelected==='Emergency'){
-        $('#row_div_five').remove();
+        $('#gen_pres_form_div').remove();
        
         if (room_datatable!==undefined){
             room_datatable.destroy();
@@ -3263,11 +3219,11 @@ function pat_type_OnSelect(element){
     
     }
     else if (optionSelected==='Indoor'){
-        $('#row_div_five').remove();
+        $('#gen_pres_form_div').remove();
 
 
         var main_col_div=$('#main_col_div')
-        var row_div_five=$("<div class='row' id='row_div_five'></div>");
+        var row_div_five=$("<div class='' id='gen_pres_form_div'></div>");
 
             var main_col__row_five=$("<div class='col-md-12'></div>");
                 var row_one=$("<div class='row'></div>")
@@ -3570,6 +3526,8 @@ function printPrescriptionForm(){
 
     presData['status']=bill_status;
     console.log("presData--",presData)
+    $('.modal-loading').show();
+
     $.ajax({
         type: 'GET',
         dataType: "json",
@@ -3579,7 +3537,10 @@ function printPrescriptionForm(){
         url: '/generate_prescription',
         success: function(data){
             console.log(data['Success']);
+            $('.modal-loading').hide();
             window.location.replace("/print_patient_prescription")
+            
+
 
         },
     });
@@ -3606,30 +3567,30 @@ function createWardDataTable(){
                 buttons: [
                     {
                         extend: 'print',
-                        text: 'Print',
+                        text: 'PRINT',
                         title: 'Ward Info',
-                        className: 'datatable_button fa fa-print',
+                        className: 'datatable_button printbtn fas fa-print',
 
                     },
                      {
                         extend: 'excel',
-                        text: 'Export Data in Excel',
+                        text: ' EXCEL',
                         title:'Ward Info',
-                        className: 'datatable_button  fas fa-file-excel',
+                        className: 'datatable_button  excelbtn fas fa-file-excel',
 
                     },
                      {
                         extend: 'csv',
-                        text: 'Export Data in CSV',
+                        text: ' CSV',
                         title: 'Ward Info',
-                        className: 'datatable_button fa fa-file',
+                        className: 'datatable_button csvbtn fas fa-file',
 
                     },
                     {
                         extend: 'pdf',
-                        text: 'Export Data in PDF',
+                        text: ' PDF',
                         title: 'Ward Info',
-                        className: 'datatable_button fas fa-file-pdf',
+                        className: 'datatable_button pdfbtn fas fa-file-pdf',
 
                     },
                     
@@ -3647,7 +3608,7 @@ function createWardDataTable(){
                     $(this).addClass('selected');
                     console.log("ward dict on click",ward_dict);
                     $("#row_div_seven").remove();
-                    var row_div_seven=$("<div class='row' id='row_div_seven'></div>");
+                    var row_div_seven=$("<div class=' room_ward_calculation_genpres_form' id='row_div_seven'></div>");
                         var main_subcol=$("<div class='col-md-12'></div>");
 
                             var subrow_one=$("<div class='row' style='padding-top:30px;'></div>")
@@ -3685,8 +3646,8 @@ function createWardDataTable(){
                                         colmd1=$("<div class='col-md-3'></div>")
                                         colmd2=$("<div class='col-md-9'></div>")
 
-                                            var admit_reason_label=$("<label class=' form-control-custom custom_label_css' >Admit reason</label>");
-                                            var admit_reason_input=$("<textarea type='text' id='admit_reason_input' class='custom_input_css' style='width:inherit;'></textarea>")
+                                            var admit_reason_label=$("<label class='custom_label_css' >Admit reason</label>");
+                                            var admit_reason_input=$("<textarea class='form-control-custom' type='text' id='admit_reason_input'  style='width:inherit;'></textarea>")
 
                                         colmd1.append(admit_reason_label)
                                         colmd2.append(admit_reason_input)
@@ -3881,7 +3842,7 @@ function createWardDataTable(){
                                             colmd2=$("<div class='col-md-6'></div>")
                                             colmd3=$("<div class='col-md-3'></div>")
 
-                                            GenPres_button=$('<button class="btn btn-success btn-block fa fa-print" onclick="printPrescriptionForm()">Print Prescription</button>')
+                                            GenPres_button=$('<button class="save_btn fa fa-print" onclick="printPrescriptionForm()">Print Prescription</button>')
                                             colmd2.append(GenPres_button)
                                             
                                             row__col_one__subrow_eight.append(colmd1);
@@ -3905,17 +3866,22 @@ function createWardDataTable(){
                 row_div_seven.append(main_subcol)
             var main_col_div=$("#main_col_div");
             main_col_div.append(row_div_seven)
+            // Scroll to bill div
+            $('html,body').animate({
+                scrollTop: $(".room_ward_calculation_genpres_form").offset().top},
+                'slow');
             $("#admit_reason_input").focus();
+            
                 }
             });
         });
 }
 function availableRoomRowDivSixCreation(){
     var main_col_div=$("#main_col_div");
-    var row_div_six=$("<div class='row' id='genpres_room_datatablediv'></div>");
+    var row_div_six=$("<div class='' id='genpres_room_datatablediv'></div>");
         var col_one__row_div_six=$("<div class='col-md-12'></div>");
             var row__col_one__row_div_six=$("<div class='row'></div>");
-                var colmd1=$("<div class='col-md-12'></div>")
+                var colmd1=$("<div class='col-md-12 available_room_table_div'></div>")
                     var available_room_table=$('<table id="available_room_table" class="datatable_pat" width="100%"></table>')
                 colmd1.append(available_room_table)
 
@@ -3926,10 +3892,10 @@ function availableRoomRowDivSixCreation(){
 }
 function availableWardRowDivSixCreation(){
     var main_col_div=$("#main_col_div");
-    var row_div_six=$("<div class='row' id='genpres_ward_datatablediv'></div>");
+    var row_div_six=$("<div class='' id='genpres_ward_datatablediv'></div>");
         var col_one__row_div_six=$("<div class='col-md-12'></div>");
             var row__col_one__row_div_six=$("<div class='row'></div>");
-                var colmd1=$("<div class='col-md-12'></div>")
+                var colmd1=$("<div class='col-md-12 available_ward_table_div'></div>")
                     var available_room_table=$('<table id="available_ward_table" class="datatable_pat" width="100%"></table>')
                 colmd1.append(available_room_table)
 
@@ -4052,6 +4018,7 @@ function onSelectWardRoom(element){
 var empdict={}
 function retrievePatientInfoInGenPres(pat_name,contact_no){
     datatable_lst=[];
+    $('.modal-loading').show();
 
     $.ajax({
         type: 'GET',
@@ -4083,13 +4050,15 @@ function retrievePatientInfoInGenPres(pat_name,contact_no){
             createPatientDataTableInGenPres()
             console.log("patient_dict",patient_dict);
             console.log(datatable_list)
+            $('.modal-loading').hide();
+
         },
     }); 
 
 }
 function rowDivThreeInGenPres(){
     var main_col_div=$("#main_col_div");
-    var row_div_three=$("<div class='row' id='row_div_three' style='padding-right:30px;'></div>");
+    var row_div_three=$("<div class=' show_patients_table_genpres_form' id='row_div_three' ></div>");
     // Datatable Name
         var col_one__row_div_three=$("<div class='col-md-12'></div>");
             var row__col_one__row_div_three=$("<div class='row'></div>");
@@ -4131,7 +4100,7 @@ function searchPatientInGenPres(){
 }
 
 function generatePrescription(){
-    $('#dialog-confirm').hide()
+    $('#reset-token-dialog').hide()
     $('#main_page_content').empty()
     var generate_prescription_div=$("#main_page_content").append('<div class="container-fluid" id="container-generate-prescription"></div>');
     $("#main_page_content").append("<h3 class ='center_h_tag_forms'>Generate Prescription</h3>");
@@ -4179,7 +4148,7 @@ function generatePrescription(){
             var col_three__row_div_one=$("<div class='col-md-4'></div>");
                 var row__col_three__row_div_one=$("<div class='row'></div>");
                     var colmd1=$("<div class='col-md-7'></div>")
-                        var search_button=$('<button class="btn btn-block fa fa-search" onclick="searchPatientInGenPres()">  Search Patient</button>')
+                        var search_button=$('<button class="search_patient_btn fa fa-search" onclick="searchPatientInGenPres()">  Search Patient</button>')
                     colmd1.append(search_button)
                 row__col_three__row_div_one.append(colmd1)
             col_three__row_div_one.append(row__col_three__row_div_one)
@@ -4207,35 +4176,35 @@ function createRoomDataTable(){
                 scrollY: 130,
                 scrollX: true,
                 ordering: true,
-                info:true,
+                info:false,
                 dom: 'Bfrtip',
                 buttons: [
                     {
                         extend: 'print',
-                        text: 'Print',
+                        text: 'PRINT',
                         title: 'Room Info',
-                        className: 'datatable_button fa fa-print',
+                        className: 'datatable_button printbtn fas fa-print',
 
                     },
                      {
                         extend: 'excel',
-                        text: 'Export Data in Excel',
+                        text: ' EXCEL',
                         title: 'Room Info',
-                        className: 'datatable_button fas fa-file-excel',
+                        className: 'datatable_button excelbtn fas fa-file-excel',
 
                     },
                      {
                         extend: 'csv',
-                        text: 'Export Data in CSV',
+                        text: ' CSV',
                         title:'Room Info',
-                        className: 'datatable_button fa fa-file',
+                        className: 'datatable_button csvbtn fas fa-file',
 
                     },
                     {
                         extend: 'pdf',
-                        text: 'Export Data in PDF',
+                        text: ' PDF',
                         title: 'Room Info',
-                        className: 'datatable_button fas fa-file-pdf',
+                        className: 'datatable_button pdfbtn fas fa-file-pdf',
 
                     },
                  
@@ -4254,7 +4223,7 @@ function createRoomDataTable(){
                     console.log("room dict on click",room_dict);
                     $("#row_div_seven").remove();
 
-                    var row_div_seven=$("<div class='row' id='row_div_seven' ></div>");
+                    var row_div_seven=$("<div class=' room_ward_calculation_genpres_form' id='row_div_seven' ></div>");
                         var main_subcol=$("<div class='col-md-12'></div>");
 
                             var subrow_one=$("<div class='row' style='padding-bottom:10px;'></div>")
@@ -4471,7 +4440,7 @@ function createRoomDataTable(){
                                     colmd2=$("<div class='col-md-6'></div>")
                                     colmd3=$("<div class='col-md-3'></div>")
 
-                                        GenPres_button=$('<button class="btn btn-success btn-block fa fa-print" onclick="printPrescriptionForm()">  Print Prescription</button>')
+                                        GenPres_button=$('<button class="save_btn fa fa-print" onclick="printPrescriptionForm()">  Print Prescription</button>')
                                     colmd2.append(GenPres_button)
                                     
                                 row__col_one__subrow_seven.append(colmd1);
@@ -4495,7 +4464,12 @@ function createRoomDataTable(){
                 row_div_seven.append(main_subcol)
             var main_col_div=$("#main_col_div");
         main_col_div.append(row_div_seven)
+        $('html,body').animate({
+            scrollTop: $(".room_ward_calculation_genpres_form").offset().top},
+            'slow');
+        
         $("#admit_reason_input").focus();
+
                 }
             });
         });
@@ -4526,7 +4500,7 @@ function createPatientBill(){
                 colmd1.append(pres_id_label)
                     pres_id_input=$("<input class='form-control-custom' id='search_patient_id' class='custom_input_css'>")
                 colmd2.append(pres_id_input);
-                    var search_button=$('<button class="btn btn-block fa fa-search" onclick="searchPatientInCreateBill(event)">Search</button>');
+                    var search_button=$('<button class="search_patient_btn fa fa-search" onclick="searchPatientInCreateBill(event)">Search</button>');
                 colmd3.append(search_button);
     
             row__col_one__row_div_one.append(colmd1);
@@ -4540,13 +4514,22 @@ function createPatientBill(){
 }
     
 function searchPatientInCreateBill(e){
-    e.preventDefault()
+    
     var pres_id=$("#search_patient_id").val()
     if (pres_id===""){
         alert("Please Insert Valid Pres id")
+
         return
-    }
-        retrievePatientInfoInCreateBill("","","",pres_id)    
+    }   
+    $("#row_div_two").remove();
+    $("#row_div_three").remove();
+    $("#row_div_four").remove();
+    $("#procdiv_despbill").remove();
+    $("#calculate_despbill_div").remove();
+    $("#totaldespbilldiv").remove();
+    
+
+    retrievePatientInfoInCreateBill("","","",pres_id)    
 }
 function searchPatientInAddChargeExisPres(e){
     e.preventDefault()
@@ -4564,6 +4547,8 @@ function retrievePatientInfoInCreateBill(pat_name,contact_no,cnic_no,id){
     datatable_lst=[];
     patientid=id;
     prescription_id=id
+    $('.modal-loading').show();
+
     $.ajax({
         type: 'GET',
         dataType: "json",
@@ -4574,6 +4559,8 @@ function retrievePatientInfoInCreateBill(pat_name,contact_no,cnic_no,id){
         success: function(data){
             if (data['pres_id']===""){
                 alert("Please Insert Valid Pres id")
+                $('.modal-loading').hide();
+
                 return
             }
             console.log("patient_dict",data["patient_dict"])
@@ -4597,13 +4584,17 @@ function retrievePatientInfoInCreateBill(pat_name,contact_no,cnic_no,id){
             }
             empdict=JSON.parse(data['empdict']);
             createPatientDetailsHtmlInCreateBill();
+            $('.modal-loading').hide();
+
         },
     }); 
 }
 function retrievePatientInfoInAddChargeExisPres(pat_name,contact_no,cnic_no,id){
     datatable_lst=[];
     patientid=id;
-    prescription_id=id
+    prescription_id=id;
+    $('.modal-loading').show();
+
     $.ajax({
         type: 'GET',
         dataType: "json",
@@ -4614,6 +4605,8 @@ function retrievePatientInfoInAddChargeExisPres(pat_name,contact_no,cnic_no,id){
         success: function(data){
             if (data['pres_id']===""){
                 alert("Please Insert Valid Pres id")
+                $('.modal-loading').hide();
+
                 return
             }
             console.log("patient_dict",data["patient_dict"])
@@ -4637,18 +4630,20 @@ function retrievePatientInfoInAddChargeExisPres(pat_name,contact_no,cnic_no,id){
             }
             empdict=JSON.parse(data['empdict']);
             createPatientDetailsHtmlInAddChargeExisPres();
+            $('.modal-loading').hide();
+
         },
     }); 
 }
 function createPatientDetailsHtmlInCreateBill(){
-    var row_div_two=$("<div class='row' id='row_div_two'></div>");
-        var main_subcol=$("<div class='col-md-12'></div>");
+    var row_div_two=$("<div class='' id='row_div_two'></div>");
+        var main_subcol=$("<div class='genformdiv2 col-md-12'></div>");
 
             var subrow_one=$("<div class='row' style='padding-top:20px'></div>")
 
                 var col_one__subrow_one=$("<div class='col-md-3'></div>");
                         row__col_one__subrow_one=$("<div class='row'></div>");
-                            var colmd1=$("<div class='col-md-5'></div>")
+                            var colmd1=$("<div class='col-md-6'></div>")
                             var colmd2=$("<div class='col-md-6'></div>")
                                 var pat_name_label=$("<label for='emp_name_tag' class='custom_label_css'>Patient Name</label>");
                                 var pat_name_input=$("<label class='custom_label_css' id='pat_name_input'>"+patient_dict[patient_id_selected]['name']+"</label>")
@@ -4674,32 +4669,8 @@ function createPatientDetailsHtmlInCreateBill(){
             subrow_one.append(col_one__subrow_one)
             subrow_one.append(col_two__subrow_one)
 
-        // var subrow_two=$("<div class='row'></div>")
-        //     var col_one_subrow_two=$("<div class='col-md-6'></div>");
-        //         var row__col_one_subrow_two=$("<div class='row'></div>");
-        //             colmd1=$("<div class='col-md-2'></div>")
-        //             colmd2=$("<div class='col-md-3'></div>")
-        //             colmd3=$("<div class='col-md-2'></div>")
-        //             colmd4=$("<div class='col-md-3'></div>")
-        
-        //                 var pat_name_label=$("<label class='custom_label_css'>Gender</label>");
-        //                 var pat_name_input=$("<input class='form-control-custom' id='gender_select' class='custom_input_css' value='"+patient_dict[patient_id_selected]['gender']+"' disabled>")
-        //             // DOB
-        //                 var dob_label=$("<label class='custom_label_css'>DOB</label>");
-        //                 var dob_input=$("<input class='form-control-custom' id='dob_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['dob']+"' ></input>")
-        //             colmd1.append(pat_name_label)
-        //             colmd2.append(pat_name_input)
-        //             colmd3.append(dob_label);
-        //             colmd4.append(dob_input);
-        
-        //         row__col_one_subrow_two.append(colmd1);
-        //         row__col_one_subrow_two.append(colmd2);
-        //         row__col_one_subrow_two.append(colmd3);
-        //         row__col_one_subrow_two.append(colmd4);
-        
-        //     col_one_subrow_two.append(row__col_one_subrow_two);
-        
-        //                 // CNIC
+      
+        // CNIC
         //     var col_two_subrow_two=$("<div class='col-md-6'></div>");//
         //         var row__col_two_subrow_two=$("<div class='row'></div>");
         //             var colmd1=$("<div class='col-md-4'></div>")
@@ -4795,7 +4766,7 @@ function createPatientDetailsHtmlInCreateBill(){
 
 }
 function createPatientDetailsHtmlInAddChargeExisPres(){
-    var row_div_two=$("<div class='row' id='row_div_two'></div>");
+    var row_div_two=$("<div class='row revisitexsistpres_div' id='row_div_two'></div>");
         var main_subcol=$("<div class='col-md-12'></div>");
 
             var subrow_one=$("<div class='row' style='padding-top:20px'></div>")
@@ -4826,121 +4797,10 @@ function createPatientDetailsHtmlInAddChargeExisPres(){
                 col_two__subrow_one.append(row__col_two__subrow_one)
 
             subrow_one.append(col_one__subrow_one)
-            subrow_one.append(col_two__subrow_one)
-
-        // var subrow_two=$("<div class='row'></div>")
-        //     var col_one_subrow_two=$("<div class='col-md-6'></div>");
-        //         var row__col_one_subrow_two=$("<div class='row'></div>");
-        //             colmd1=$("<div class='col-md-2'></div>")
-        //             colmd2=$("<div class='col-md-3'></div>")
-        //             colmd3=$("<div class='col-md-2'></div>")
-        //             colmd4=$("<div class='col-md-3'></div>")
-        
-        //                 var pat_name_label=$("<label class='custom_label_css'>Gender</label>");
-        //                 var pat_name_input=$("<input class='form-control-custom' id='gender_select' class='custom_input_css' value='"+patient_dict[patient_id_selected]['gender']+"' disabled>")
-        //             // DOB
-        //                 var dob_label=$("<label class='custom_label_css'>DOB</label>");
-        //                 var dob_input=$("<input class='form-control-custom' id='dob_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['dob']+"' ></input>")
-        //             colmd1.append(pat_name_label)
-        //             colmd2.append(pat_name_input)
-        //             colmd3.append(dob_label);
-        //             colmd4.append(dob_input);
-        
-        //         row__col_one_subrow_two.append(colmd1);
-        //         row__col_one_subrow_two.append(colmd2);
-        //         row__col_one_subrow_two.append(colmd3);
-        //         row__col_one_subrow_two.append(colmd4);
-        
-        //     col_one_subrow_two.append(row__col_one_subrow_two);
-        
-        //                 // CNIC
-        //     var col_two_subrow_two=$("<div class='col-md-6'></div>");//
-        //         var row__col_two_subrow_two=$("<div class='row'></div>");
-        //             var colmd1=$("<div class='col-md-4'></div>")
-        //             var colmd2=$("<div class='col-md-6'></div>")
-        //                 var cnic_label=$("<label class='custom_label_css'>CNIC/Guardian CNIC</label>");
-        //                 var cnic_input=$("<input class='form-control-custom' id='cnic_input' class='custom_input_css' placeholder='xxxxx-xxxxxxx-x' value='"+patient_dict[patient_id_selected]['cnic']+"'></input>")
-        //             colmd1.append(cnic_label);
-        //             colmd2.append(cnic_input);
-
-        //         row__col_two_subrow_two.append(colmd1)
-        //         row__col_two_subrow_two.append(colmd2)
-        //     col_two_subrow_two.append(row__col_two_subrow_two)
-
-        // subrow_two.append(col_one_subrow_two)
-        // subrow_two.append(col_two_subrow_two)
-
-        // var subrow_three=$("<div class='row'></div>")
-        //     var col_one__subrow_three=$("<div class='col-md-6'></div>");
-        //         var row__col_one__subrow_three=$("<div class='row'></div>");
-        //             var colmd1=$("<div class='col-md-4'></div>")
-        //             var colmd2=$("<div class='col-md-6'></div>")
-        //             var guradian_name=patient_dict[patient_id_selected]['guardian']
-        //             console.log("selected guardian",guradian_name)
-
-        //                 var guardian_name_label=$("<label  class='custom_label_css'>Guardian Name</label>");
-        //                 var guardian_name_input=$("<input class='form-control-custom' id='guardian_input' class='custom_input_css' value='"+guradian_name+"' ></input>")
-        //             colmd1.append(guardian_name_label)
-        //             colmd2.append(guardian_name_input);
-            
-        //             row__col_one__subrow_three.append(colmd1);
-        //             row__col_one__subrow_three.append(colmd2);
-        //     col_one__subrow_three.append(row__col_one__subrow_three);
-
-        //     var col_two__subrow_three=$("<div class='col-md-6'></div>");
-        //         var row__col_two__subrow_three=$("<div class='row'></div>");
-        //             var colmd1=$("<div class='col-md-4'></div>")
-        //             var colmd2=$("<div class='col-md-6'></div>")
-        //                 var address_label=$("<label for='pat_address_tag' class='custom_label_css'>Address</label>");
-        //                 var pat_address_input=$("<input class='form-control-custom' id='pat_address_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['address']+"'>")
-        //             colmd1.append(address_label)
-        //             colmd2.append(pat_address_input)
-
-        //         row__col_two__subrow_three.append(colmd1);
-        //         row__col_two__subrow_three.append(colmd2);
-        //     col_two__subrow_three.append(row__col_two__subrow_three);
-
-        // subrow_three.append(col_one__subrow_three)
-        // subrow_three.append(col_two__subrow_three)
-
-        // var subrow_four=$("<div class='row'></div>")
-        // // Blood group
-        //     var col_one__subrow_four=$("<div class='col-md-6'></div>");
-        //         var row__col_one__subrow_four=$("<div class='row'></div>");
-        //             var colmd1=$("<div class='col-md-4'></div>")
-        //             var colmd2=$("<div class='col-md-6'></div>")
-
-        //                 blood_group_label=$("<label for='blood_group_tag' class='custom_label_css'>Blood group</label>");
-        //                 bloodgroup_input=$("<input class='form-control-custom' id='blood_group_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['bloodgroup']+"'>")
-        //             colmd1.append(blood_group_label)
-        //             colmd2.append(bloodgroup_input) 
-
-        //         row__col_one__subrow_four.append(colmd1);
-        //         row__col_one__subrow_four.append(colmd2);
-        //     col_one__subrow_four.append(row__col_one__subrow_four);
-        //     var col_two__subrow_four=$("<div class='col-md-6'></div>");
-        //         var row__col_two__subrow_four=$("<div class='row'></div>");
-        //             var colmd1=$("<div class='col-md-4'></div>")
-        //             var colmd2=$("<div class='col-md-6'></div>")
-
-        //                 var email_id_label=$("<label class='custom_label_css'>Email Address</label>");
-        //                 var email_id_input=$("<input class='form-control-custom' id='email_id_input' class='custom_input_css' value='"+patient_dict[patient_id_selected]['email']+"'></input>")
-        //             colmd1.append(email_id_label);
-        //             colmd2.append(email_id_input);
-
-        //         row__col_two__subrow_four.append(colmd1)
-        //         row__col_two__subrow_four.append(colmd2)
-        //     col_two__subrow_four.append(row__col_two__subrow_four)
-
-        // subrow_four.append(col_one__subrow_four);
-        // subrow_four.append(col_two__subrow_four);
-
+            subrow_one.append(col_two__subrow_one);
         
         main_subcol.append(subrow_one)
-        // main_subcol.append(subrow_two)
-        // main_subcol.append(subrow_three)
-        // main_subcol.append(subrow_four)
-
+   
 
     row_div_two.append(main_subcol)
     var main_col_div=$("#main_col_div");
@@ -4961,7 +4821,7 @@ function createAddChargeExistPresForm(){
                 var col_one__row_one=$("<div class='col-md-12'></div>");
                         row__col_one__row_one=$("<div class='row'></div>");
                             var colmd1=$("<div class='col-md-2'></div>")
-                            var colmd2=$("<div class='col-md-2'></div>")
+                            var colmd2=$("<div class='col-md-8'></div>")
                             
                                 var doctor=$("<label for='doctor_label' class='custom_label_css'>Doctor</label>");
                                 colmd1.append(doctor)
@@ -4988,7 +4848,7 @@ function createAddChargeExistPresForm(){
                 var col_one__row_two=$("<div class='col-md-12'></div>");
                         row__col_one__row_two=$("<div class='row'></div>");
                             var colmd1=$("<div class='col-md-2'></div>")
-                            var colmd2=$("<div class='col-md-2'></div>")
+                            var colmd2=$("<div class='col-md-8'></div>")
                             
                                 var ss_label=$("<label  class='custom_label_css'>Sign/Symptoms</label>");
                                 colmd1.append(ss_label)
@@ -5008,7 +4868,7 @@ function createAddChargeExistPresForm(){
                 var col_one__row_three=$("<div class='col-md-12'></div>");
                     row__col_one__row_three=$("<div class='row'></div>");
                         var colmd1=$("<div class='col-md-2'></div>")
-                        var colmd2=$("<div class='col-md-2'></div>")
+                        var colmd2=$("<div class='col-md-8'></div>")
                         
                             var pd_label=$("<label  class='custom_label_css'>Provisional Diagnosis</label>");
                             colmd1.append(pd_label)
@@ -5029,7 +4889,7 @@ function createAddChargeExistPresForm(){
                 var col_one__row_four=$("<div class='col-md-12'></div>");
                         row__col_one__row_four=$("<div class='row'></div>");
                             var colmd1=$("<div class='col-md-2'></div>")
-                            var colmd2=$("<div class='col-md-2'></div>")
+                            var colmd2=$("<div class='col-md-8'></div>")
                             
                                 var inv_label=$("<label  class='custom_label_css'>Investigation</label>");
                                 colmd1.append(inv_label)
@@ -5050,7 +4910,7 @@ function createAddChargeExistPresForm(){
                 var col_one__row_five=$("<div class='col-md-12'></div>");
                         row__col_one__row_five=$("<div class='row'></div>");
                             var colmd1=$("<div class='col-md-2'></div>")
-                            var colmd2=$("<div class='col-md-2'></div>")
+                            var colmd2=$("<div class='col-md-8'></div>")
                             
                                 var diagnosis_label=$("<label  class='custom_label_css'>Diagnosis</label>");
                                 colmd1.append(diagnosis_label)
@@ -5071,7 +4931,7 @@ function createAddChargeExistPresForm(){
                 var col_one__row_six=$("<div class='col-md-12'></div>");
                         row__col_one__row_six=$("<div class='row'></div>");
                             var colmd1=$("<div class='col-md-2'></div>")
-                            var colmd2=$("<div class='col-md-2'></div>")
+                            var colmd2=$("<div class='col-md-8'></div>")
                             
                                 var vital_label=$("<label  class='custom_label_css'>Vitals</label>");
                                 colmd1.append(vital_label)
@@ -5091,7 +4951,7 @@ function createAddChargeExistPresForm(){
                 var col_one__row_seven=$("<div class='col-md-12'></div>");
                         row__col_one__row_seven=$("<div class='row'></div>");
                             var colmd1=$("<div class='col-md-2'></div>")
-                            var colmd2=$("<div class='col-md-2'></div>")
+                            var colmd2=$("<div class='col-md-8'></div>")
                             
                                 var rx_label=$("<label  class='custom_label_css'>RX</label>");
                                 colmd1.append(rx_label)
@@ -5112,7 +4972,7 @@ function createAddChargeExistPresForm(){
                 var col_one__row_eight=$("<div class='col-md-12'></div>");
                         row__col_one__row_eight=$("<div class='row'></div>");
                             var colmd1=$("<div class='col-md-2'></div>")
-                            var colmd2=$("<div class='col-md-2'></div>")
+                            var colmd2=$("<div class='col-md-8'></div>")
                             
                                 var outdooramount_label=$("<label for='outdoorAmount_tag' class='custom_label_css'>Fee</label>");
                                 colmd1.append(outdooramount_label)
@@ -5137,7 +4997,7 @@ function createAddChargeExistPresForm(){
                             colmd2=$("<div class='col-md-6'></div>")
                             colmd3=$("<div class='col-md-3'></div>")
 
-                            GenPres_button=$('<button class="btn btn-success btn-block fa fa-print" onclick="saveAddChargeExisPres()">Save</button>')
+                            GenPres_button=$('<button class="save_btn fa fa-save" onclick="saveAddChargeExisPres()">Save</button>')
                             colmd2.append(GenPres_button)
                             
                         row__col_one__row_nine.append(colmd1);
@@ -5172,7 +5032,8 @@ function saveAddChargeExisPres(){
     rx_textarea=$("#rx_textarea").val();
 
     addcharge_exsist_pres=$("#addcharge_exsist_pres").val();
-    alert(presid)
+    $('.modal-loading').show();
+    
     $.ajax({
         type: 'POST',
         dataType: "json",
@@ -5189,6 +5050,8 @@ function saveAddChargeExisPres(){
         },
         url: '/save_add_charge_exist_pres',
         success: function(data){
+            $('.modal-loading').hide();
+
           
         }
     });
@@ -5247,30 +5110,30 @@ function createDespDataTable(){
                 buttons: [
                     {
                         extend: 'print',
-                        text: 'Print',
+                        text: 'PRINT',
                         title: 'Despensory Data',
-                        className: 'datatable_button fa fa-print',
+                        className: 'datatable_button printbtn fa fa-print',
 
                     },
                      {
                         extend: 'excel',
-                        text: 'Export Data in Excel',
+                        text: ' EXCEL',
                         title: 'Despensory Data',
-                        className: 'datatable_button fas fa-file-excel',
+                        className: 'datatable_button excelbtn fas fa-file-excel',
 
                     },
                      {
                         extend: 'csv',
-                        text: 'Export Data in CSV',
+                        text: ' CSV',
                         title: 'Despensory Data',
-                        className: 'datatable_button fa fa-file',
+                        className: 'datatable_button csvbtn fa fa-file',
 
                     },
                     {
                         extend: 'pdf',
-                        text: 'Export Data in PDF',
+                        text: ' PDF',
                         title: 'Despensory Data',
-                        className: 'datatable_button fas fa-file-pdf',
+                        className: 'datatable_button pdfbtn fas fa-file-pdf',
 
                     },
                 
@@ -5285,6 +5148,10 @@ function createDespDataTable(){
                     despmed_datatable.$('tr.selected').removeClass('selected');
                     $(this).addClass('selected');
                     createMedQtyForm(despid);
+                    // Scroll to bill div
+                    $('html,body').animate({
+                    scrollTop: $("#desp-med-qty-form").offset().top},
+                    'slow');
                     
                 }
             });
@@ -5320,30 +5187,30 @@ function billDataTable(){
                 buttons: [
                     {
                         extend: 'print',
-                        text: 'Print',
+                        text: 'PRINT',
                         title: 'Patient Bill',
-                        className: 'datatable_button fa fa-print',
+                        className: 'datatable_button printbtn fa fa-print',
 
                     },
                      {
                         extend: 'excel',
-                        text: 'Export Data in Excel',
+                        text: ' EXCEL',
                         title:'Patient Bill',
-                        className: 'datatable_button  fas fa-file-excel',
+                        className: 'datatable_button excelbtn  fas fa-file-excel',
 
                     },
                      {
                         extend: 'csv',
-                        text: 'Export Data in CSV',
+                        text: ' CSV',
                         title: 'Patient Bill',
-                        className: 'datatable_button fa fa-file',
+                        className: 'datatable_button csvbtn fa fa-file',
 
                     },
                     {
                         extend: 'pdf',
-                        text: 'Export Data in PDF',
+                        text: ' PDF',
                         title: 'Patient Bill',
-                        className: 'datatable_button fas fa-file-pdf',
+                        className: 'datatable_button pdfbtn fas fa-file-pdf',
 
                     },
                  
@@ -5419,8 +5286,8 @@ function billDataTable(){
     });
 }
 function createDespensoryMedTable(){
-    var row_div_three=$("<div class='row' id='row_div_three' style='padding-bottom:18px'></div>");
-        var col_one__row_div_three=$("<div class='col-md-12'></div>");
+    var row_div_three=$("<div class='' id='row_div_three' style='padding-bottom:18px'></div>");
+        var col_one__row_div_three=$("<div class='col-md-12 genformdiv1'></div>");
             row__col_one__row_div_three=$("<div class='row'></div>");
                 colmd1=$("<div class='col-md-12'></div>")
                 var table=$('<table id="desp-med-table" class="datatable_pat" width="100%"></table>')
@@ -5434,11 +5301,11 @@ function createRowDivFourBill(){
     var main_col_div=$("#main_col_div");
     var row_div_four=$("<div class='row' id='row_div_four'style='padding-bottom:18px'></div>");
         var col_one__row_div_four=$("<div class='col-md-12'></div>");
-            row__col_one__row_div_four=$("<div class='row'></div>");
+            row__col_one__row_div_four=$("<div class=''></div>");
                 colmd1=$("<div class='col-md-12'></div>");
                     var row=$("<div class='row'></div>");
                         var col1=$("<div class='col-md-4' id='desp-med-qty-form'>");
-                        var col2=$("<div class='col-md-8' id='medicine-addedto-form'>");
+                        var col2=$("<div class='col-md-8 genformdiv1' id='medicine-addedto-form'>");
                             table=$('<table id="bill_table" class="datatable_pat" width="100%"></table>');
                         col2.append(table)
                     row.append(col1);
@@ -5455,9 +5322,9 @@ billDataTable()
 function createMedQtyForm(despid){
 $("#desp-med-qty-form").empty();
 var col1=$("#desp-med-qty-form")
-    var sub_row=$("<div class='row'></div>");
-        var sub_col=$("<div class='col-md-12'></div>")
-            var sub_sub_row1=$("<div class='row' style='padding-top:60px; padding-bottom:10px'></div>");
+    var sub_row=$("<div class=''></div>");
+        var sub_col=$("<div class='col-md-12 desp-med-qty-form_class'></div>")
+            var sub_sub_row1=$("<div class='row' style='padding-top:10px; padding-bottom:10px'></div>");
                 var col1_sub_sub_row1=$("<div class='col-md-4'></div>");
                     var label=$("<label class='custom_label_css'>Medicine Name</label>")
                 col1_sub_sub_row1.append(label);
@@ -5509,7 +5376,7 @@ var col1=$("#desp-med-qty-form")
             sub_sub_row4.append(col1_sub_sub_row4);
             sub_sub_row4.append(col2_sub_sub_row4);
             var sub_sub_row6=$("<div class='row'></div>");
-                var col1_sub_sub_row6=$("<div class='col-md-4'>Medicine Timing</div>");
+                var col1_sub_sub_row6=$("<div class='col-md-4 custom_label_css'>Medicine Timing</div>");
                 var col2_sub_sub_row6=$("<div class='col-md-6'></div>");
                     var text=$("<textarea class='form-control-custom' id='med_timing_text'></textarea>")
                 col2_sub_sub_row6.append(text);
@@ -5519,7 +5386,7 @@ var col1=$("#desp-med-qty-form")
             var sub_sub_row5=$("<div class='row'></div>");
                 var col1_sub_sub_row5=$("<div class='col-md-4'></div>");
                 var col2_sub_sub_row5=$("<div class='col-md-6'></div>");
-                    var button=$("<button class='btn btn-blocl fa fa-plus-circle' id='add_med_desp' onclick='addMedicineToPatientBill()' style='width:inherit'>  Add Medicine to Bill</button>")
+                    var button=$("<button class='add_btn fa fa-plus-circle' id='add_med_desp' onclick='addMedicineToPatientBill()' style='width:inherit'>  Add Medicine to Bill</button>")
                 col2_sub_sub_row5.append(button);
 
             sub_sub_row5.append(col1_sub_sub_row5);
@@ -5624,6 +5491,8 @@ function addMedicineToPatientBill(){
     }
     console.log("okokok",strips_wanted)
     console.log("asdasdmkamdkasmd",strips_wanted)
+    $('.modal-loading').show();
+
     $.ajax({
         type: 'GET',
         dataType: "json",
@@ -5692,6 +5561,8 @@ function addMedicineToPatientBill(){
             else{
                 alert("Sorry This entry is not possible")
             }
+            $('.modal-loading').hide();
+
           
         }
     });
@@ -5992,7 +5863,9 @@ function SaveDespBill(){
 
     
     console.log("despmedbillamount--",despmedbillamount)
-    console.log("proceduredata_list---Deso",proceduredata_list)
+    console.log("proceduredata_list---Deso",proceduredata_list);
+    $('.modal-loading').show();
+
     $.ajax({
         type: 'POST',
         dataType: "json",
@@ -6024,6 +5897,8 @@ function SaveDespBill(){
           
           $("#search_patient_id").val("")
           alert("Saved")
+          $('.modal-loading').hide();
+
         }
     });
     }
@@ -6034,14 +5909,19 @@ function SaveDespBill(){
 function createRowDivFiveBill(){ ///Last Discount and total Bill row with Button
     var main_col_div=$("#main_col_div");
     var row_div_five=$("<div class='row' id='calculate_despbill_div' style='padding-top:15px;padding-bottom:15px'></div>");
-        var col_one__row_div_five=$("<div class='col-md-12'></div>");
-            var button=$("<button class='btn btn-primary fa fa-calculator' onclick='calculateDespProcBill()'> Calculate Total Bill</button>")
-        col_one__row_div_five.append(button);
-                        
-        col_one__row_div_five.append(row__col_one__row_div_five);
-    row_div_five.append(col_one__row_div_five);
+        var col_one__row_div_five=$("<div class='col-md-4'></div>");
+        var col_two__row_div_five=$("<div class='col-md-4'></div>");
+        var col_three__row_div_five=$("<div class='col-md-4'></div>");
 
-    var row_div_six=$("<div class='row' id='totaldespbilldiv'></div>");
+            var button=$("<button class='calbtn fas fa-lg fa-calculator' onclick='calculateDespProcBill()'> Calculate Total Bill</button>")
+        col_two__row_div_five.append(button);
+                    
+    row_div_five.append(col_one__row_div_five);
+    row_div_five.append(col_two__row_div_five);
+    row_div_five.append(col_three__row_div_five);
+
+
+    var row_div_six=$("<div class='' id='totaldespbilldiv'></div>");
     var col_one__row_div_five=$("<div class='col-md-12'></div>");
         var row__col_one__row_div_five=$("<div class='row'></div>");
             var  colmd1=$("<div class='col-md-12'></div>");
@@ -6121,15 +6001,21 @@ function createRowDivFiveBill(){ ///Last Discount and total Bill row with Button
                             subcol1.append(row1__subcol1);
                             var subcol2=$("<div class='col-md-4'></div>")
                                 var row1__subcol2=$("<div class='row'></div>");
-                                    var c1=$("<div class='col-md-6'></div>")
-                                    var c2=$("<div class='col-md-3'></div>")
-                                    var c3=$("<div class='col-md-3'></div>")
+                                    var c1=$("<div class='col-md-4'></div>")
+                                    var c2=$("<div class='col-md-4'></div>")
+                                    var c3=$("<div class='col-md-4'></div>")
                                         var bill_status_label=$("<label for='reason_label' class='custom_label_css float-right'>Add Bill Status</label>");
                                     c1.append(bill_status_label)
-                                        var option1_input=$("<input  type='radio' name='Paid_NotPaid' value='Paid' >Paid</input>");
+                                        var option1_input=$("<input  type='radio' name='Paid_NotPaid' value='Paid' >PAID</input>");
                                     c2.append(option1_input)
-                                        var option2_input=$("<input  type='radio' name='Paid_NotPaid' value='NotPaid' checked>Not Paid</input>");
-                                    c3.append(option2_input)
+                                        var label=$("<label class='custom_label_css> PAID </label>")
+                                    c2.append(label)
+                                        var option2_input=$("<input  type='radio' name='Paid_NotPaid' value='NotPaid' checked>NOT PAID</input>");
+                                    c3.append(option2_input);
+                                    var label=$("<label class='custom_label_css> NOT PAID </label>")
+
+                                    c3.append(label)
+
                                 row1__subcol2.append(c1);
                                 row1__subcol2.append(c2);
                                 row1__subcol2.append(c3);
@@ -6176,10 +6062,10 @@ function createRowDivFiveBill(){ ///Last Discount and total Bill row with Button
                             var subcol1=$("<div class='col-md-12'></div>")
                                 var row1__subcol1=$("<div class='row'></div>");
                                 var c2=$("<div class='col-md-6'></div>")
-                                        var save_button=$("<button class='btn btn-block fa fa-print' id='save_desp_bill' onclick='SaveDespBill()'>Save </button>")
+                                        var save_button=$("<button class='save_btn' fas fa fa-save' id='save_desp_bill' onclick='SaveDespBill()'>Save </button>")
                                     c2.append(save_button)
                                     var c1=$("<div class='col-md-6'></div>")
-                                        var print_button=$("<button class='btn btn-block fa fa-print' id='save_print_bill' onclick='SaveAndPrintBill()'>Print</button>")
+                                        var print_button=$("<button class='gen_printbtn fas  fa fa-print' id='save_print_bill' onclick='SaveAndPrintBill()'>Print</button>")
                                     c1.append(print_button)
                                 row1__subcol1.append(c1);
                                 row1__subcol1.append(c2);
@@ -6206,12 +6092,14 @@ main_col_div.append(row_div_six);
 }
 function createRowDivSixDespBill(){
     var main_col_div=$("#main_col_div");
-        var row_div_six=$("<div class='row' id='procdiv_despbill' style='padding-top:18px'></div>");
-            var col_one__row_div_six=$("<div class='col-md-12'></div>");
-                var row__col_one__row_div_six=$("<div class='row'></div>");
+        var row_div_six=$("<div class='' id='procdiv_despbill' style='padding-top:18px'></div>");
+            var col_one__row_div_six=$("<div class=''></div>");
+                var row__col_one__row_div_six=$("<div class=''></div>");
                     var  colmd1=$("<div class='col-md-12'></div>");
                         var row=$("<div class='row' ></div>");
-                            var procedure_col1=$("<div class='col-md-4' id='procedure_col1'></div>");
+                            var procedure_col1=$("<div class='col-md-4' id=''></div>");
+                                var cl=$("<div class='col-md-12' id='procedure_col1'></div>");
+
                                 var sub_row1=$("<div class='row' style='padding-bottom:10px'></div>");
                                     var subcol1_subrow1=$("<div class='col-md-4'></div>");
                                         var label=$("<label class= 'custom_label_css'>Procedures</label>");
@@ -6249,12 +6137,15 @@ function createRowDivSixDespBill(){
                                         var button=$("<button class='btn btn-block fa fa-plus-circle' onclick='addProcedureToDespBill()'>  Add Procedure to Bill</button>");
                                     subcol1_subrow3.append(button)
                                 sub_row3.append(subcol1_subrow3);
+                            
+                            cl.append(sub_row1)
+                            cl.append(sub_row2)
+                            cl.append(sub_row3)
 
-                            procedure_col1.append(sub_row1);
-                            procedure_col1.append(sub_row2);
-                            procedure_col1.append(sub_row3);
+                            procedure_col1.append(cl);
+                            
 
-                            var procedure_col2=$("<div class='col-md-8'></div>");
+                            var procedure_col2=$("<div class='col-md-8' id='procedure_col2'></div>");
                                 var procedure_bill_table=$('<table id="procedure_bill_table" class="datatable_pat"></table>');
                                 procedure_col2.append(procedure_bill_table)
                         row.append(procedure_col1)
@@ -6357,6 +6248,11 @@ function calculateDespProcBill(){
     $("#discountpercent_input").val(0);
    
     $("#nettotal_input").val(totalamount);
+    // Scroll to bill div
+    $('html,body').animate({
+    scrollTop: $("#totaldespbilldiv ").offset().top},
+    'slow');
+    
 
 }
 function discountAmountFocousOut(element){
@@ -6461,7 +6357,7 @@ function updatePrescriptionRecord(){
                         presc_input=$("<input id='presc_input_id' class='form-control-custom'>")
                         colmd2.append(presc_input)
 
-                        var search_button=$("<button  class='btn btn-light btn-lg' onclick='searchPatPresc()'>Search</button>")
+                        var search_button=$("<button  class='search_patientpres_btn' onclick='searchPatPresc()'>Search</button>")
                         colmd3.append(search_button);
     
                     row__col_one__row_div_one.append(colmd1);
@@ -6493,6 +6389,8 @@ function searchPatPresc(){
         alert("Please insert Valid Pres id")
         return
     }
+    $('.modal-loading').show();
+
     $.ajax({
         type: 'GET',
         dataType: "json",
@@ -6509,24 +6407,24 @@ function searchPatPresc(){
     filelist=data['filelist']
 
 
-    var row_div_two=$("<div class='row' id='row_div_two_pres_detail_update' style='padding-bottom:10px;'></div>");
+    var row_div_two=$("<div class='' id='row_div_two_pres_detail_update' style='padding-bottom:10px;'></div>");
         
-    var row_div_five=$("<div class='row' id='row_div_pres_record_table_update' style='padding-top:10px;'></div>");
-        var main_col=$("<div class='col-md-12'></div>");
-            var subrow_one=$("<div class='row'></div>")
-                var col_one__subrow_one=$("<div class='col-md-12'></div>");
-                    row__col_one__subrow_one=$("<div class='row'></div>");
-                        var colmd1=$("<div class='col-md-12'></div>")
+    var row_div_five=$("<div class='' id='row_div_pres_record_table_update' style='padding-top:10px;'></div>");
+        var main_col=$("<div class='col-md-12 update_pres_tables'></div>");
+            // var subrow_one=$("<div class='row'></div>")
+                // var col_one__subrow_one=$("<div class='col-md-12'></div>");
+                    // row__col_one__subrow_one=$("<div class='row'></div>");
+                    //     var colmd1=$("<div class='col-md-12'></div>")
                         var pres_record_table_update=$("<table id='pres_record_table_update' class='datatable_pat' width='100%' ></table>");
 
-                        colmd1.append(pres_record_table_update)
-                    row__col_one__subrow_one.append(colmd1);
-                col_one__subrow_one.append(row__col_one__subrow_one);
-            subrow_one.append(col_one__subrow_one)
-        main_col.append(subrow_one);
+                        // colmd1.append(pres_record_table_update)
+                    // row__col_one__subrow_one.append(colmd1);
+                // col_one__subrow_one.append(row__col_one__subrow_one);
+            // subrow_one.append(col_one__subrow_one)
+        main_col.append(pres_record_table_update);
         row_div_five.append(main_col)
-    var row_div_six=$("<div class='row' id='row_div_upload_presfiles' style='padding-top:10px;'></div>");
-    var main_col=$("<div class='col-md-12'></div>");
+    var row_div_six=$("<div class='' id='row_div_upload_presfiles' style='padding-top:10px;'></div>");
+    var main_col=$("<div class='col-md-12 update_pres_tables'></div>");
 
             var pres_upload_button=$('<button type="button" class="btn btn-success js-upload-photos" onclick="uploadFileFunc()"> Upload Files</button>')
                 var span=$('<span class="glyphicon glyphicon-cloud-upload"></span>');
@@ -6570,13 +6468,13 @@ function searchPatPresc(){
     row_div_six.append(main_col)
 
 
-    var row_div_four=$("<div class='row' id='row_div_four' style='padding-top:10px;'></div>");
+    var row_div_four=$("<div class='row genformdiv2' id='row_div_four' style='padding-top:10px;'></div>");
         var main_col=$("<div class='col-md-12'></div>");
             var subrow_one=$("<div class='row'></div>")
                 var col_one__subrow_one=$("<div class='col-md-12'></div>");
                     row__col_one__subrow_one=$("<div class='row'></div>");
                         var colmd1=$("<div class='col-md-8 offset-md-2'></div>")
-                            var search_button=$("<button  class='btn btn-block fa fa-save' onclick='UpdatePrescription()'>  Update Prescription Record</button>")
+                            var search_button=$("<button  class='update_patient_info_btn fa fa-save' onclick='UpdatePrescription()'>  Update Prescription Record</button>")
                         colmd1.append(search_button)
                     row__col_one__subrow_one.append(colmd1);
                 col_one__subrow_one.append(row__col_one__subrow_one);
@@ -6644,6 +6542,8 @@ function searchPatPresc(){
         },
         
         });
+        $('.modal-loading').hide();
+
     }
 });
     
@@ -6689,7 +6589,7 @@ var presUploadBtnPressed;
 
 
 function createPresMedDataTableRow(){
-    var row_div_three=$("<div class='row' id='row_div_three'></div>");
+    var row_div_three=$("<div class=' update_pres_tables' id='row_div_three'></div>");
         var col_one__row_div_three=$("<div class='col-md-12'></div>");
             row__col_one__row_div_three=$("<div class='row'></div>");
                 colmd1=$("<div class='col-md-12'></div>")
@@ -6723,20 +6623,20 @@ function createPresMedDataTable(med_info_list){
             buttons: [
                 {
                 extend: 'print',
-                text: ' Print',
+                text: ' PRINT',
                 title: 'Medicine Records',
-                className: 'datatable_button fa fa-print',
+                className: 'datatable_button  printbtn fas fa-print',
                 },
                 {
                     extend: 'excel',
-                    text: ' Export to Excel',
+                    text: ' EXCEL',
                     title: 'Medicine Records',
-                    className: 'datatable_button fa fa-print',
+                    className: 'datatable_button excelbtn fas fa-print',
                     }
             ],
-            paging: false,
+            paging: true,
             scrollY: 200,
-            scrollX: true,
+            scrollX: 100,
             ordering: true,
             info:false,     
             searching:false,
@@ -6765,26 +6665,26 @@ function createPresRecDatatableForUpdate(pres_records_list_for_update){
                 { title: "Investigation" },
                 { title: 'Diagnosis' },
                 { title: 'Vitals' },
-                { title: 'Rx' },
+                { title: 'RX' },
             ],
             dom: 'Bfrtip',
             buttons: [
                 {
                 extend: 'print',
-                text: ' Print',
+                text: ' PRINT',
                 title: 'Prescription Records',
-                className: 'datatable_button fa fa-print',
+                className: 'datatable_button printbtn fas fa-print',
                 },
                 {
                     extend: 'excel',
-                    text: ' Export to Excel',
+                    text: ' EXCEL',
                     title: 'Prescription Records',
-                    className: 'datatable_button fa fa-print',
+                    className: 'datatable_button excelbtn fas fa-print',
                     }
             ],
-            paging: false,
+            paging: true,
             scrollY: 200,
-            scrollX: true,
+            scrollX: 200,
             ordering: true,
             info:false,     
             searching:false,
@@ -6810,7 +6710,7 @@ function createPresByDateForUpdateForm(pres_date_selected){
         var row_div_two_pres_detail_update=$("#row_div_two_pres_detail_update");
         row_div_two_pres_detail_update.empty();
 
-        var main_subcol=$("<div class='col-md-12'></div>");
+        var main_subcol=$("<div class='col-md-12 update_pres_form_div'></div>");
 
             
             var subrow_one=$("<div class='row'></div>")
@@ -6915,6 +6815,10 @@ function createPresByDateForUpdateForm(pres_date_selected){
         main_subcol.append(subrow_two)
         main_subcol.append(subrow_three)
     row_div_two_pres_detail_update.append(main_subcol)
+    // Scroll to bill div
+    $('html,body').animate({
+        scrollTop: $(row_div_two_pres_detail_update).offset().top},
+        'slow');
 }
 function UpdatePrescription(){
     presid=$("#presc_input_id").val()
@@ -6934,6 +6838,7 @@ function UpdatePrescription(){
     // pres_data_dict['vitals']=vitals_input;
     // pres_data_dict['rx']=rx_input;
 
+    $('.modal-loading').show();
 
     $.ajax({
         type: 'POST',
@@ -6946,7 +6851,10 @@ function UpdatePrescription(){
         },
         url: '/update_prescription_record',
         success: function(data){
+            $('.modal-loading').hide();
+
             alert("Updated")
+
             // $("#row_div_two").remove();
             // $("#row_div_three").remove();
             // $("#row_div_four").remove();
@@ -6992,6 +6900,8 @@ function ViewPrescriptionList(){
         preslist_div.append(preslist_table);
         row_div_one.append(preslist_div);
     $(main_col_div).append(row_div_one);
+    $('.modal-loading').show();
+
     $.ajax({
         type: 'GET',
         dataType: "json",
@@ -7003,6 +6913,8 @@ function ViewPrescriptionList(){
             prescription_list=data['pres_info_list'];
             console.log("prescription_list--",prescription_list)
             createDataTableViewPresList(prescription_list);
+            $('.modal-loading').hide();
+
         }
     });
            
@@ -7029,36 +6941,40 @@ function createDataTableViewPresList(prescription_list){
                 buttons: [
                     {
                         extend: 'print',
-                        text: 'Print',
+                        text: 'PRINT',
                         title: 'Prescription List',
-                        className: 'datatable_button fa fa-print',
+                        className: 'datatable_button printbtn fas fa-print',
 
                     },
                      {
                         extend: 'excel',
-                        text: 'Export Data in Excel',
+                        text: ' EXCEL',
                         title: 'Prescription List',
-                        className: 'datatable_button fas fa-file-excel',
+                        className: 'datatable_button excelbtn fas fa-file-excel',
 
                     },
                      {
                         extend: 'csv',
-                        text: 'Export Data in CSV',
+                        text: ' CSV',
                         title: 'Prescription List',
-                        className: 'datatable_button fa fa-file',
+                        className: 'datatable_button csvbtn fas fa-file',
 
                     },
                     {
                         extend: 'pdf',
-                        text: 'Export Data in PDF',
+                        text: ' PDF',
                         title: 'Prescription List',
-                        className: 'datatable_button fas fa-file-pdf',
+                        className: 'datatable_button pdfbtn fas fa-file-pdf',
 
                     },
                    
                 ],
     
             });
+            $('.dataTables_filter  input[type="search"]').
+            attr('placeholder','Search Prescriptions...').
+            css({'width':'200px','display':'inline-block'});
+            $('.dataTables_filter input').addClass('form-control-custom');
             $('#preslist_table tbody').on( 'click', 'tr', function () {
                 if ( $(this).hasClass('selected') ) {
                 }
@@ -7071,6 +6987,8 @@ function createDataTableViewPresList(prescription_list){
 }
 
 function viewTokenRecords(){
+    $('.modal-loading').show();
+
     $.ajax({
         type: 'GET',
         dataType: "json",
@@ -7119,16 +7037,16 @@ function viewTokenRecords(){
                         buttons: [
                             {
                                 extend: 'print',
-                                text: 'Print',
+                                text: ' PRINT',
                                 title: 'Token Record List',
-                                className: 'datatable_button fa fa-print',
+                                className: 'datatable_button printbtn fa fa-print',
         
                             },
                              {
                                 extend: 'excel',
-                                text: 'Export Data in Excel',
+                                text: ' Excel',
                                 title: 'Token Record List',
-                                className: 'datatable_button  fas fa-file-excel',
+                                className: 'datatable_button excelbtn fas fa-file-excel',
         
                             },
                         ]
@@ -7142,13 +7060,16 @@ function viewTokenRecords(){
                         }
                     });
                 });
-         
+                $('.modal-loading').hide();
+
         }
     });
 }
 
 
 function viewTokenGeneratorTable(){
+    $('.modal-loading').show();
+
     $.ajax({
         type: 'GET',
         dataType: "json",
@@ -7193,16 +7114,16 @@ function viewTokenGeneratorTable(){
                         buttons: [
                             {
                                 extend: 'print',
-                                text: 'Print',
+                                text: 'PRINT',
                                 title: 'Token Generator List',
-                                className: 'datatable_button fa fa-print',
+                                className: 'datatable_button printbtn fa fa-print',
         
                             },
                              {
                                 extend: 'excel',
-                                text: 'Export Data in Excel',
+                                text: ' Excel',
                                 title: 'Token Generator List',
-                                className: 'datatable_button  fas fa-file-excel',
+                                className: 'datatable_button excelbtn  fas fa-file-excel',
         
                             },
                         ]
@@ -7216,27 +7137,50 @@ function viewTokenGeneratorTable(){
                         }
                     });
                 });
-         
+        $('.modal-loading').hide();
+
         }
     });
 }
 
+function resetTokenRequest(){
+    $('.modal-loading').show();
+        $.ajax({
+            type: 'GET',
+            dataType: "json",
+            'data': {
+            
+            },
+            url: '/reset_tokens',
+            success: function(data){
+                status=data['status']
+                if (status==="Resetted"){
+                    reset_dialog.close();
+                    alert("Tokens Are Resset To Zero")
+                }
+                $('.modal-loading').hide();
 
-function resetTokens(){
-    $.ajax({
-        type: 'GET',
-        dataType: "json",
-        'data': {
-           
-        },
-        url: '/reset_tokens',
-        success: function(data){
-            status=data['status']
-            if (status==="Resetted"){
-                alert("Tokens are Reset to Zero")
             }
-        }
-    });
+            });
+    }
+var reset_dialog;
+function resetTokens(){
+    
+    $( function() {
+            $( "#reset-token-dialog" ).show()
+            reset_dialog=$( "#reset-token-dialog" ).dialog({
+            uiLibrary: 'bootstrap',
+
+            resizable: true,
+            height: "auto",
+            width: 500,
+            modal: true,                  
+              
+            });
+            $('#reset_token_dialog_btn').on('click', resetTokenRequest);
+
+        } );
+   
 }
 function  addChargeExsistingPres(){
     $('#main_page_content').empty()
@@ -7263,7 +7207,7 @@ function  addChargeExsistingPres(){
             colmd1.append(pres_id_label)
                 pres_id_input=$("<input class='form-control-custom' id='search_patient_id' class='custom_input_css'>")
             colmd2.append(pres_id_input);
-                var search_button=$('<button class="btn btn-block fa fa-search" onclick="searchPatientInAddChargeExisPres(event)">Search</button>');
+                var search_button=$('<button class="search_patient_btn fa fa-search" onclick="searchPatientInAddChargeExisPres(event)">Search</button>');
             colmd3.append(search_button);
 
         row__col_one__row_div_one.append(colmd1);
@@ -7299,7 +7243,7 @@ function consultationSlip(){
             colmd1.append(pres_id_label)
                 pres_id_input=$("<input class='form-control-custom' id='search_patient_id' class='custom_input_css'>")
             colmd2.append(pres_id_input);
-                var search_button=$('<button class="btn btn-block fa fa-search" onclick="searchPatientInConsultationSlip()">Search</button>');
+                var search_button=$('<button class="search_patient_btn fa fa-search" onclick="searchPatientInConsultationSlip()">Search</button>');
             colmd3.append(search_button);
 
         row__col_one__row_div_one.append(colmd1);
@@ -7330,7 +7274,9 @@ function searchPatientInConsultationSlip(){
 function retrievePatientInfoInConsultationSlip(pat_name,contact_no,cnic_no,id){
     datatable_lst=[];
     patientid=id;
-    prescription_id=id
+    prescription_id=id;
+    $('.modal-loading').show();
+
     $.ajax({
         type: 'GET',
         dataType: "json",
@@ -7342,10 +7288,14 @@ function retrievePatientInfoInConsultationSlip(pat_name,contact_no,cnic_no,id){
             pres_id=data['pres_id']
             if (data['pres_id']===""){
                 alert("Please Insert Valid Pres id")
+                $('.modal-loading').hide();
+
                 return
             }
             if (data['message']==="Exsists"){
                 alert("Already Exsists")
+                $('.modal-loading').hide();
+
                 return;
             }
            
@@ -7371,12 +7321,15 @@ function retrievePatientInfoInConsultationSlip(pat_name,contact_no,cnic_no,id){
             }
             empdict=JSON.parse(data['empdict']);
             createPatientDetailsHtmlInConsultationSlip(pres_id);
+            $('.modal-loading').hide();
+
+
         },
     }); 
 }
 function createPatientDetailsHtmlInConsultationSlip(pres_id){
-    var row_div_two=$("<div class='row' id='row_div_two'></div>");
-        var main_subcol=$("<div class='col-md-12'></div>");
+    var row_div_two=$("<div class='' id='row_div_two'></div>");
+        var main_subcol=$("<div class='col-md-12 genformdiv2'></div>");
 
             var subrow_one=$("<div class='row' style='padding-top:20px'></div>")
 
@@ -7435,9 +7388,9 @@ function createPatientDetailsHtmlInConsultationSlip(pres_id){
 }
 function createConsultationSlipForm(){
     var main_col_div=$('#main_col_div')
-    var row_div_five=$("<div class='row' id='createConsultaionFormDiv'></div>");
+    var row_div_five=$("<div class='' id='createConsultaionFormDiv'></div>");
 
-        var main_col__row_five=$("<div class='col-md-12'></div>");
+        var main_col__row_five=$("<div class='col-md-12 genformdiv1'></div>");
 
            
 
@@ -7496,12 +7449,12 @@ function createConsultationSlipForm(){
                 var col_one__row_nine=$("<div class='col-md-12'></div>");
                         row__col_one__row_nine=$("<div class='row'></div>");
                             colmd1=$("<div class='col-md-3'></div>")
-                                print_consult_button=$('<button class="btn btn-block fa fa-print" onclick="printConsultationSlip()">Print</button>')
+                                print_consult_button=$('<button class="save_btn fa fa-print" onclick="printConsultationSlip()">Print</button>')
                                 colmd1.append(print_consult_button)
                             colmd2=$("<div class='col-md-6'></div>")
                             colmd3=$("<div class='col-md-3'></div>")
 
-                            GenPres_button=$('<button class="btn btn-success btn-block fa fa-print" onclick="saveConsultationData()" >Save</button>')
+                            GenPres_button=$('<button class="save_btn fa fa-save" onclick="saveConsultationData()" >Save</button>')
                             colmd2.append(GenPres_button)
                             
                         row__col_one__row_nine.append(colmd1);
@@ -7641,7 +7594,9 @@ var consulatation_data={}
 function retrievePatientInfoInUpdateConsultationSlip(pat_name,contact_no,cnic_no,id){
     datatable_lst=[];
     patientid=id;
-    prescription_id=id
+    prescription_id=id;
+    $('.modal-loading').show();
+
     $.ajax({
         type: 'GET',
         dataType: "json",
@@ -7653,8 +7608,11 @@ function retrievePatientInfoInUpdateConsultationSlip(pat_name,contact_no,cnic_no
             pres_id=data['pres_id']
             if (data['pres_id']===""){
                 alert("Please Insert Valid Pres id")
+                $('.modal-loading').hide();
+
                 return
             }
+            
            
             
             console.log("patient_dict",data["patient_dict"])
@@ -7677,15 +7635,25 @@ function retrievePatientInfoInUpdateConsultationSlip(pat_name,contact_no,cnic_no
                 datatable_list.push(templist)
             }
             empdict=JSON.parse(data['empdict']);
+
             consulatation_data=JSON.parse(data['consulatation_data'])
+            console.log("consulatation_data",consulatation_data)
+            if (consulatation_data['message']==="false"){
+                alert("No Record Present")
+                $('.modal-loading').hide();
+
+                return
+            }
 
             updatePatientDetailsHtmlInConsultationSlip(pres_id);
+            $('.modal-loading').hide();
+
         },
     }); 
 }
 function updatePatientDetailsHtmlInConsultationSlip(pres_id){
-    var row_div_two=$("<div class='row' id='row_div_two'></div>");
-        var main_subcol=$("<div class='col-md-12'></div>");
+    var row_div_two=$("<div class='' id='row_div_two'></div>");
+        var main_subcol=$("<div class='col-md-12 genformdiv2'></div>");
 
             var subrow_one=$("<div class='row' style='padding-top:20px'></div>")
 
@@ -7758,9 +7726,9 @@ function updatePatientDetailsHtmlInConsultationSlip(pres_id){
 }
 function updateConsultationSlipForm(){
     var main_col_div=$('#main_col_div')
-    var row_div_five=$("<div class='row' id='createConsultaionFormDiv'></div>");
+    var row_div_five=$("<div class='' id='createConsultaionFormDiv'></div>");
 
-        var main_col__row_five=$("<div class='col-md-12'></div>");
+        var main_col__row_five=$("<div class='col-md-12 genformdiv1'></div>");
 
             var row_one=$("<div class='row' style=' padding-bottom:10px;'></div>")
 
@@ -7809,12 +7777,12 @@ function updateConsultationSlipForm(){
                 var col_one__row_nine=$("<div class='col-md-12'></div>");
                         row__col_one__row_nine=$("<div class='row'></div>");
                             colmd1=$("<div class='col-md-3'></div>")
-                                print_consult_button=$('<button class="btn btn-block fa fa-print" onclick="printUpdateConsultationSlip()">Print Slip</button>')
+                                print_consult_button=$('<button class="save_btn fa fa-print" onclick="printUpdateConsultationSlip()">Print Slip</button>')
                                 colmd1.append(print_consult_button)
                             colmd2=$("<div class='col-md-6'></div>")
                             colmd3=$("<div class='col-md-3'></div>")
 
-                            GenPres_button=$('<button class="btn btn-success btn-block fa fa-print" onclick="updateConsultationData()" >Update</button>')
+                            GenPres_button=$('<button class="save_btn fa fa-save" onclick="updateConsultationData()" >Update</button>')
                             colmd2.append(GenPres_button)
                             
                         row__col_one__row_nine.append(colmd1);
@@ -7933,7 +7901,7 @@ function  updateConsultationSlip(){
                 colmd1.append(pres_id_label)
                     pres_id_input=$("<input class='form-control-custom' id='search_patient_id' class='custom_input_css'>")
                 colmd2.append(pres_id_input);
-                    var search_button=$('<button class="btn btn-block fa fa-search" onclick="searchPatientInUpdateConsultationSlip()">Search</button>');
+                    var search_button=$('<button class="search_patient_btn fa fa-search" onclick="searchPatientInUpdateConsultationSlip()">Search</button>');
                 colmd3.append(search_button);
 
             row__col_one__row_div_one.append(colmd1);
@@ -7984,6 +7952,8 @@ function ViewConsultationSlips(){
         consultationlist_table_div.append(consultationlist_table);
         row_div_one.append(consultationlist_table_div);
     $(main_col_div).append(row_div_one);
+    $('.modal-loading').show();
+
     $.ajax({
         type: 'GET',
         dataType: "json",
@@ -7995,6 +7965,8 @@ function ViewConsultationSlips(){
         success: function(data){
             consultation_list=data['consultation_list'];
             createDataTableViewConsultatoinList(consultation_list);
+            $('.modal-loading').hide();
+
         }
     });
            
@@ -8025,36 +7997,40 @@ function createDataTableViewConsultatoinList(consultation_list){
                 buttons: [
                     {
                         extend: 'print',
-                        text: 'Print',
+                        text: 'PRINT',
                         title: 'Prescription List',
-                        className: 'datatable_button fa fa-print',
+                        className: 'datatable_button printbtn fas fa-print',
 
                     },
                      {
                         extend: 'excel',
-                        text: 'Export Data in Excel',
+                        text: ' EXCEL',
                         title: 'Prescription List',
-                        className: 'datatable_button fas fa-file-excel',
+                        className: 'datatable_button excelbtn fas fa-file-excel',
 
                     },
                      {
                         extend: 'csv',
-                        text: 'Export Data in CSV',
+                        text: ' CSV',
                         title: 'Prescription List',
-                        className: 'datatable_button fa fa-file',
+                        className: 'datatable_button csvbtn fas fa-file',
 
                     },
                     {
                         extend: 'pdf',
-                        text: 'Export Data in PDF',
+                        text: ' PDF',
                         title: 'Prescription List',
-                        className: 'datatable_button fas fa-file-pdf',
+                        className: 'datatable_button pdfbtn fas fa-file-pdf',
 
                     },
                    
                 ],
     
             });
+            $('.dataTables_filter  input[type="search"]').
+            attr('placeholder','Search Records...').
+            css({'width':'200px','display':'inline-block'});
+            $('.dataTables_filter input').addClass('form-control-custom');
             $('#consultationlist_table tbody').on( 'click', 'tr', function () {
                 if ( $(this).hasClass('selected') ) {
                 }
@@ -8065,6 +8041,8 @@ function createDataTableViewConsultatoinList(consultation_list){
             });
         });
 }
+
+
 
 function getCookie(name) {
     var cookieValue = null;
@@ -8092,3 +8070,4 @@ $.ajaxSetup({
         }
     }
 });
+

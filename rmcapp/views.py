@@ -968,7 +968,8 @@ def saveEmployeeData(request):
             emptype_obj=employeeType.objects.get(type_name=employee_type)
             emp_obj.employee_type=emptype_obj
             emp_obj.name=name
-            emp_obj.dob=dob
+            if dob:
+                emp_obj.dob=dob
             emp_obj.gender=gender
             emp_obj.phone_no=phone_number
             emp_obj.address=address
@@ -3772,6 +3773,29 @@ def updateSurgData(request):
             "surg_dict":json.dumps(surg_dict),
         }
         return JsonResponse(data)
+def deleteSurgData(request):
+    if request.method=="POST":
+        id=request.POST.get("id")
+        id=int(id)
+        surgeryTable.objects.get(id=id).delete()
+        surg_objs=surgeryTable.objects.all()
+        surg_dict={}
+        for surg_obj in surg_objs:
+            surg_info_dict={}
+            surg_info_dict['surgery_name']=surg_obj.surgery_name
+            surg_info_dict['charges']=surg_obj.charges
+            surg_info_dict['surgeon_fee']=surg_obj.surgeon_fee
+            surg_info_dict['operation_theater_fee']=surg_obj.operation_theater_fee
+            surg_info_dict['anesthesiologist_fee']=surg_obj.anesthesiologist_fee
+            surg_info_dict['surplus_fee']=surg_obj.surplus_fee
+            surg_dict[surg_obj.id]=[]
+            surg_dict[surg_obj.id]=surg_info_dict
+        print("surg_dict", surg_dict)
+        data={
+            "surg_dict":json.dumps(surg_dict),
+        }
+
+        return JsonResponse(data)
 
 def updateProcData(request):
     if request.method=="POST":
@@ -3791,6 +3815,29 @@ def updateProcData(request):
 
         proc_obj.save()
 
+        proc_objs=procedureTable.objects.all()
+        print("proc_objs//",proc_objs)
+
+        proc_dict={}
+        for proc_obj in proc_objs:
+            proc_info_dict={}
+            proc_info_dict['procedure_name']=proc_obj.procedure_name
+            proc_info_dict['charges']=proc_obj.charges
+            proc_dict[proc_obj.id]=[]
+            proc_dict[proc_obj.id]=proc_info_dict
+        print("proc_dict", proc_dict)
+
+        data={
+            "proc_dict":json.dumps(proc_dict),
+        }
+        return JsonResponse(data)
+def deleteProcData(request):
+    if request.method=="POST":
+
+        id=request.POST.get('id')
+        id=int(id)
+
+        proc_obj=procedureTable.objects.get(id=id).delete()
         proc_objs=procedureTable.objects.all()
         print("proc_objs//",proc_objs)
 
@@ -5228,7 +5275,7 @@ def retrievePatientInfoAndConsultationData(request):
             consultation_data['message']="data present"
         except:
             consultation_data={
-                'message':"no data",
+                'message':"false",
             }
 
 
@@ -5406,6 +5453,8 @@ class viewAttendanceByMonth(TemplateView):
     def ajaxGetAllAttendanceData(request):
         if request.method=="GET":
             emplObjs=Employee.objects.all()
+            # ALL the names in EMPLOYEE LIST SHOULD BE THE SAME NAMES AS IN THE RAW ATT FILES. 
+            # ONLY THEN IT"LL WORK
             employeelist=["All","DrUsman","Seher","Shafique","Ms Fehmeeda","Wazeeran Bibi","Mehwish Rafique"]
             # employeelist.append("All")
             # for emplObj in emplObjs:
@@ -5422,13 +5471,15 @@ class viewAttendanceByMonth(TemplateView):
             emp=request.GET.get("emp")
             if emp=="All":
                 try:
-                    attObjs=attendanceRecords.objects.filter(month=int(7),year=int(year))
+                    attObjs=attendanceRecords.objects.filter(month=int(month),year=int(year))
                     attendance_list=[]
+                    count=1
                     for attObj in attObjs:
                         templist=[]
-                        templist.append(attObj.id)
+                        templist.append(count)
                         templist.append(attObj.emp_name)
-                        templist.append(attObj.date.strftime("%d %b, %Y-%I:%M %p"))
+                        templist.append(attObj.date.strftime("%d %b, %Y"))
+                        templist.append(attObj.date.strftime("%A"))
                         checkin=attObj.checkin
                         if attObj.checkin!=None:
                             checkin=attObj.checkin.strftime("%d %b, %Y - %I:%M %p")
@@ -5441,17 +5492,20 @@ class viewAttendanceByMonth(TemplateView):
                         templist.append(attObj.minutes_worked)
                         templist.append(attObj.status)
                         attendance_list.append(templist)
+                        count+=1
                 except:
                     attendance_list=[]
             else:
                 try:
-                    attObjs=attendanceRecords.objects.filter(emp_name=emp,month=int(7),year=int(year))
+                    attObjs=attendanceRecords.objects.filter(emp_name=emp,month=int(month),year=int(year))
                     attendance_list=[]
+                    count=1
                     for attObj in attObjs:
                         templist=[]
-                        templist.append(attObj.id)
+                        templist.append(count)
                         templist.append(attObj.emp_name)
-                        templist.append(attObj.date.strftime("%d %b, %Y - %I:%M %p"))
+                        templist.append(attObj.date.strftime("%d %b, %Y"))
+                        templist.append(attObj.date.strftime("%A"))
                         checkin=attObj.checkin
                         if attObj.checkin!=None:
                             checkin=attObj.checkin.strftime("%d %b, %Y - %I:%M %p")
@@ -5464,6 +5518,78 @@ class viewAttendanceByMonth(TemplateView):
                         templist.append(attObj.minutes_worked)
                         templist.append(attObj.status)
                         attendance_list.append(templist)
+                        count+=1
+                except:
+                    attendance_list=[]
+
+            data={
+                'attendance_list':attendance_list
+            }
+            return JsonResponse(data)
+
+class viewAttendanceByDay(TemplateView):
+    template_path_name="rmcapp/staff_dashboard_template/viewattendancebyday.html"
+
+    def get(self,request):
+        return render(self.request, self.template_path_name, {})
+    def post(self,request):
+        pass
+    def ajaxGetAllAttendanceByDayData(request):
+        if request.method=='GET':
+            month=request.GET.get("month")
+            year=request.GET.get("year")
+            day=request.GET.get("day")
+            emp=request.GET.get("emp")
+            if emp=="All":
+                try:
+                    attObjs=attendanceRecords.objects.filter(month=int(month),year=int(year),day=int(day))
+                    attendance_list=[]
+                    count=1
+                    for attObj in attObjs:
+                        templist=[]
+                        templist.append(count)
+                        templist.append(attObj.emp_name)
+                        templist.append(attObj.date.strftime("%d %b, %Y"))
+                        templist.append(attObj.date.strftime("%A"))
+                        checkin=attObj.checkin
+                        if attObj.checkin!=None:
+                            checkin=attObj.checkin.strftime("%d %b, %Y - %I:%M %p")
+                        templist.append(checkin)
+                        checkout=attObj.checkout
+                        if attObj.checkout!=None:
+                            checkout=attObj.checkout.strftime("%d %b, %Y - %I:%M %p")    
+                        templist.append(checkout)
+                        templist.append(attObj.hours_worked)
+                        templist.append(attObj.minutes_worked)
+                        templist.append(attObj.status)
+                        attendance_list.append(templist)
+                        count+=1
+                except:
+                    attendance_list=[]
+            else:
+                try:
+                    attObjs=attendanceRecords.objects.filter(emp_name=emp,month=int(month),year=int(year),day=int(day))
+                    attendance_list=[]
+                    count=1
+                    for attObj in attObjs:
+                        templist=[]
+                        templist.append(count)
+                        templist.append(attObj.emp_name)
+                        templist.append(attObj.date.strftime("%d %b, %Y "))
+                        templist.append(attObj.date.strftime("%A"))
+                        checkin=attObj.checkin
+                        if attObj.checkin!=None:
+                            checkin=attObj.checkin.strftime("%d %b, %Y - %I:%M %p")
+                        templist.append(checkin)
+                        checkout=attObj.checkout
+                        if attObj.checkout!=None:
+                            checkout=attObj.checkout.strftime("%d %b, %Y - %I:%M %p")                        
+                        templist.append(checkout)
+                        templist.append(attObj.hours_worked)
+                        templist.append(attObj.minutes_worked)
+                        templist.append(attObj.status)
+                        attendance_list.append(templist)
+                        count+=1
                 except:
                     attendance_list=[]
 
