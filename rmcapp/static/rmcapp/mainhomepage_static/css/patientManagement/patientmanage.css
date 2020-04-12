@@ -170,12 +170,14 @@ input[type=radio] {
   color: #FFF;
   /* mychanges */
   width:100%;
+  box-shadow: -5px 5px 5px #007bff85;
 }
 
 .card-counter.danger{
   background-color: #ef5350;
   color: #FFF;
   width:100%;
+  box-shadow: -5px 5px 5px #ef5350a8;
   
 }  
 
@@ -183,12 +185,16 @@ input[type=radio] {
   background-color: #66bb6a;
   color: #FFF;
   width:100%;
+  box-shadow: -5px 5px 5px #66bb6aa8;
+
 }  
 
 .card-counter.info{
   background-color: #26c6da;
   color: #FFF;
   width:100%;
+  box-shadow: -5px 5px 5px #26c5daa2;
+
 }  
 
 .card-counter i{

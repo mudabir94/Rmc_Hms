@@ -112,6 +112,13 @@ function retrieveInvoiceBillRecord(){
 
                 return
             }
+            if (data['data']!=='Valid'){
+                alert("Input Not Valid")
+
+                $('.modal-loading').hide();
+
+                return;
+            }
             patRoomBill_dict={};
             patWardBill_dict={};
             surgBillRecord_dict={};

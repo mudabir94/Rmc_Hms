@@ -75,6 +75,13 @@ function retrievePresInfoSurgProcBill(id){
 
                 return
             }
+            if (data['data']!=='Valid'){
+                alert("Input Not Valid")
+
+                $('.modal-loading').hide();
+
+                return;
+            }
             surgery_dict=JSON.parse(data["surgery_dict"])
             procedure_dict=JSON.parse(data["procedure_dict"])
             already_discount=data["already_discount"]

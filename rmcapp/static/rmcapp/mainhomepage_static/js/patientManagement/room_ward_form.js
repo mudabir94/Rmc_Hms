@@ -789,8 +789,8 @@ function createRoomDTable(){
                 { title: "AC Charge Per Day" },
                 { title: "Status" },
                 ],
-                paging: false,
-                scrollY: 200,
+                paging: true,
+                scrollY: 400,
                 scrollX: true,
                 ordering: true,
                 info:false,
@@ -801,28 +801,28 @@ function createRoomDTable(){
                         extend: 'print',
                         text: 'Print',
                         title: 'Rooms Available',
-                        className: 'datatable_button fa fa-print',
+                        className: 'datatable_button printbtn fas fa-print',
 
                     },
                      {
                         extend: 'excel',
-                        text: 'Export Data in Excel',
+                        text: '  Excel',
                         title: 'Rooms Available',
-                        className: 'datatable_button  fas fa-file-excel',
+                        className: 'datatable_button excelbtn fas fa-file-excel',
 
                     },
                      {
                         extend: 'csv',
-                        text: 'Export Data in CSV',
+                        text: ' CSV',
                         title: 'Rooms Available',
-                        className: 'datatable_button fa fa-file',
+                        className: 'datatable_button csvbtn fas fa-file',
 
                     },
                     {
                         extend: 'pdf',
-                        text: 'Export Data in PDF',
+                        text: ' PDF',
                         title:'Rooms Available',
-                        className: 'datatable_button fas fa-file-pdf',
+                        className: 'datatable_button pdfbtn fas fa-file-pdf',
 
                     },
                     {
@@ -986,8 +986,8 @@ function createWardDTable(){
                 { title: 'Status' },
 
                 ],
-                paging: false,
-                scrollY: 200,
+                paging: true,
+                scrollY: 400,
                 scrollX: true,
                 ordering: true,
                 info:false,
@@ -995,39 +995,33 @@ function createWardDTable(){
                 buttons: [
                     {
                         extend: 'print',
-                        text: 'Print',
+                        text: ' Print',
                         title: 'Available Beds in Wards',
-                        className: 'btn btn-default fa fa-print',
+                        className: 'datatable_button printbtn fas fa-print',
 
                     },
                      {
                         extend: 'excel',
-                        text: 'Export Data in Excel',
+                        text: ' Excel',
                         title: 'Available Beds in Wards',
-                        className: 'btn btn-default  fas fa-file-excel',
+                        className: 'datatable_button excelbtn fas fa-file-excel',
 
                     },
                      {
                         extend: 'csv',
-                        text: 'Export Data in CSV',
+                        text: ' CSV',
                         title:'Available Beds in Wards',
-                        className: 'btn btn-default fa fa-file',
+                        className: 'datatable_button csvbtn fas fa-file',
 
                     },
                     {
                         extend: 'pdf',
-                        text: 'Export Data in PDF',
+                        text: ' PDF',
                         title: 'Available Beds in Wards',
-                        className: 'btn btn-default fas fa-file-pdf',
+                        className: 'datatable_button pdfbtn fas fa-file-pdf',
 
                     },
-                    {
-                        extend: 'copy',
-                        text: 'Copy to Clipboard',
-                        title: 'Available Beds in Wards',
-                        className: 'btn btn-default fas fa-copy',
-
-                    },
+                   
                 ],
     
             });
@@ -1387,7 +1381,7 @@ function retrieveAllRoomInfoInRoomWard(){
             console.log(room_list)
 
             createRoomDTable()
-            $('.modal-loading').show();
+            $('.modal-loading').hide();
 
         },
     }); 
@@ -1405,8 +1399,8 @@ function createRoomTableInfo(room_info_list){
                 { title: "AC Charge Per Day" },
                 { title: "Status" },
                 ],
-                paging: false,
-                scrollY: 200,
+                paging: true,
+                scrollY: 400,
                 scrollX: true,
                 ordering: true,
                 info:false,
@@ -1454,8 +1448,8 @@ function createWardTableInfo(ward_info_list){
                 { title: 'Status' },
 
                 ],
-                paging: false,
-                scrollY: 200,
+                paging: true,
+                scrollY: 400,
                 scrollX: true,
                 ordering: true,
                 info:false,
@@ -1477,7 +1471,7 @@ function createWardTableInfo(ward_info_list){
     
             });
             $('.dataTables_filter  input[type="search"]').
-            attr('placeholder','Search ward ....').
+            attr('placeholder','Search Ward ....').
             css({'width':'200px','display':'inline-block'});
             $('.dataTables_filter input').addClass('form-control-custom');
             $('#available_room_ward_table tbody').on( 'click', 'tr', function () {

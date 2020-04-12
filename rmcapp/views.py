@@ -36,6 +36,7 @@ from rmcapp.forms import WebUserCreationForm
 from django.views import View
 from .forms import PhotoForm,PresUploadedFilesForm,RawAttUploadFilesForm
 from .models import Photo
+import re
                         
 
 # Create your views here.
@@ -1601,7 +1602,13 @@ def retrievePatientInfoInPatientBill(request):
    if request.method=="GET":
       
         id=request.GET.get("id")
-        id=int(id)
+        type=charCheck(id)
+        if type=="InValid":
+            data={'data':"InValid"}
+            return JsonResponse(data)
+        else:
+            id=int(id)
+
         token_no=""
         try: 
             patPresRecObj=patPrescriptionRecords.objects.get(id=id)
@@ -1630,6 +1637,8 @@ def retrievePatientInfoInPatientBill(request):
             pres_id=""
             patient_dict={}
             patient_id=0
+            data={'data':"InValid"}
+            return JsonResponse(data)
 
         try:
             emptype_obj=employeeType.objects.get(type_name="doctor")
@@ -1648,6 +1657,8 @@ def retrievePatientInfoInPatientBill(request):
             'id':str(patient_id),
             "empdict":json.dumps(empdict),
             "pres_id":pres_id,
+            'data':"Valid",
+
 
         }
         return JsonResponse(data)
@@ -3397,7 +3408,15 @@ def updatePrescriptionRecord(request):
         temp_med_hist_dict={}
 
         presid=request.GET.get('presid')
-        presid=int(presid)
+        type=charCheck(presid)
+        if type=="InValid":
+            data={'data':"InValid"}
+            return JsonResponse(data)
+        else:
+            presid=int(presid)
+
+
+
         try:
             presObj=patPrescriptionRecords.objects.get(id=presid)
 
@@ -3470,6 +3489,8 @@ def updatePrescriptionRecord(request):
                 print("No Revisits")
         except:
             print("No prescription Record")
+            data={'data':"InValid"}
+            return JsonResponse(data)
 
         try:
     
@@ -3544,6 +3565,7 @@ def updatePrescriptionRecord(request):
             # "med_hist_dict":json.dumps(temp_med_hist_dict),
             "med_info_rec_list":med_info_rec_list,
             'filelist':filelist,
+            'data':"Valid"
         }
         return JsonResponse(data)      
     elif request.method=="POST":
@@ -3991,6 +4013,12 @@ def updateWardData(request):
 def retrievePresInfoSurgProcBill(request):
     if request.method=="GET":
         pres_id=request.GET.get('id')
+        type=charCheck(pres_id)
+        if type=="InValid":
+            data={'data':"InValid"}
+            return JsonResponse(data)
+        else:
+            pres_id=int(pres_id)
         # surgeryRecords.objects.get(pres=pres_id)
 
         surgery_dict={}
@@ -4018,6 +4046,9 @@ def retrievePresInfoSurgProcBill(request):
                 surgery_dict[surgery_name]=templist
         except:
             pres_id=""
+            data={'data':"InValid"}
+            return JsonResponse(data)
+
 
         try:
 
@@ -4041,6 +4072,7 @@ def retrievePresInfoSurgProcBill(request):
             "pres_id":pres_id,
             'consultant':'consultant',
             'surgeon':"surgeon",
+            'data':"Valid",
         }
         return JsonResponse(data)
 def createRoomWardBill(request):
@@ -4052,7 +4084,15 @@ def createRoomWardBill(request):
 def retrieveRoomWardBill(request):
     if request.method=="GET":
         pres_id=request.GET.get('id')
-        pres_id=int(pres_id)
+        
+        type=charCheck(pres_id)
+        if type=="InValid":
+            data={'data':"InValid"}
+            return JsonResponse(data)
+        else:
+            pres_id=int(pres_id)
+
+
         roomBill_dict={}
         wardBill_dict={}
         try:
@@ -4120,8 +4160,10 @@ def retrieveRoomWardBill(request):
                     return JsonResponse(data)
         except:
             pres_id=""
+            
             data={
-                "pres_id":pres_id
+                "pres_id":pres_id,
+                 'data':"Valid",
             }
             return JsonResponse(data)
 
@@ -4286,7 +4328,14 @@ def saveRoomBill(request):
 def retrieveInvoiceBillRecord(request):
      if request.method=="GET":
         pres_id=request.GET.get('id')
-        pres_id=int(pres_id)
+        type=charCheck(pres_id)
+        print("TYPE",type)
+        print("pres_id",pres_id)
+        if type=="InValid":
+            data={'data':"InValid"}
+            return JsonResponse(data)
+        else:
+            pres_id=int(pres_id)
         try:  
             patPresObj=patPrescriptionRecords.objects.get(id=pres_id)
             try:
@@ -4408,6 +4457,8 @@ def retrieveInvoiceBillRecord(request):
                     "patPresRecord_dict":json.dumps(patPresRecord_dict),
                     "surgBillRecord_dict":json.dumps(surgBillRecord_dict),
                     "procBillRecord_dict":json.dumps(procBillRecord_dict),
+                    'data':"Valid",
+
                 }
                 return JsonResponse(data)
             except:
@@ -4419,6 +4470,7 @@ def retrieveInvoiceBillRecord(request):
         except:
             pres_id=""
             data={
+                'data':"InValid",
                 'pres_id':pres_id,
             }
             return JsonResponse(data)
@@ -4628,7 +4680,13 @@ def updateInvoice(request):
 def retrieveInvoiceBillRecordForView(request):
      if request.method=="GET":
         pres_id=request.GET.get('id')
-        pres_id=int(pres_id)
+        type=charCheck(pres_id)
+        if type=="InValid":
+            data={'data':"InValid"}
+            return JsonResponse(data)
+        else:
+            pres_id=int(pres_id)
+
         try:
             patPresObj=patPrescriptionRecords.objects.get(id=pres_id)
             try:
@@ -4745,6 +4803,8 @@ def retrieveInvoiceBillRecordForView(request):
                     "patPresRecordView_dict":json.dumps(patPresRecordView_dict),
                     "surgBillRecordView_dict":json.dumps(surgBillRecordView_dict),
                     "procBillRecordView_dict":json.dumps(procBillRecordView_dict),
+                    'data':"Valid",
+
                 }
                 return JsonResponse(data)
             except:
@@ -4753,7 +4813,10 @@ def retrieveInvoiceBillRecordForView(request):
 
         except:
             pres_id=""
-            data={"pres_id":pres_id}
+            data={
+                "pres_id":pres_id,
+                'data':"InValid",
+                }
             return JsonResponse(data)
 
 
@@ -4851,12 +4914,31 @@ def retrievePatientInfoIdName(request):
     if request.method=="GET":
         pat_name=request.GET.get("pat_name")
         pat_id=request.GET.get("pat_id")
-     
+        if pat_id!="":
+            type=charCheck(pat_id)
+            if type=="InValid":
+                print("Id has char or sp char");
+
+                data={'data':"InValid"}
+                return JsonResponse(data)
+            else:
+                pat_id=int(pat_id)
+        if pat_name!="":
+            type=intCheck(pat_name)
+            if type=="InValid":
+                print("Name has digit or sp char");
+
+                data={'data':"InValid"}
+                return JsonResponse(data)
+            else:
+                print("Name does'nt have char or sp char");
+            
        
 
         if pat_name!="" and pat_id!="":
             print("pat_name--",pat_name)
             print("pat_id",pat_id)
+            
             pat_objs=Patient.objects.filter(Q(pat_name__contains=pat_name) and Q(id=pat_id) )
         elif pat_id=="":
             print("pat_name??",pat_name)
@@ -4884,6 +4966,7 @@ def retrievePatientInfoIdName(request):
         print("patient_dict",patient_dict)
         data={
             "patient_dict":json.dumps(patient_dict),
+            'data':"Valid",
         }
         return JsonResponse(data)
 
@@ -5160,7 +5243,14 @@ def retrievePatientInfoCreateConsultationData(request):
     
     if request.method=="GET":
         id=request.GET.get("id")
-        id=int(id)
+        type=charCheck(id)
+        if type=="InValid":
+            data={'data':"InValid"}
+            return JsonResponse(data)
+        else:
+            id=int(id)
+
+        
         try: 
             patPresRecObj=patPrescriptionRecords.objects.get(id=id)
             pat_obj=patPresRecObj.patient
@@ -5188,6 +5278,8 @@ def retrievePatientInfoCreateConsultationData(request):
             pres_id=""
             patient_dict={}
             patient_id=0
+            data={'data':"InValid"}
+            return JsonResponse(data)
 
         try:
             emptype_obj=employeeType.objects.get(type_name="doctor")
@@ -5207,18 +5299,13 @@ def retrievePatientInfoCreateConsultationData(request):
             message="Doesnt Exsist",
            
 
-
-
-
-
-        
-
         data={
             "patient_dict":json.dumps(patient_dict),
             'id':str(patient_id),
             "empdict":json.dumps(empdict),
             "pres_id":pres_id,
             'message':message,
+            'data':"Valid",
 
         }
         return JsonResponse(data)
@@ -5226,7 +5313,13 @@ def retrievePatientInfoCreateConsultationData(request):
 def retrievePatientInfoAndConsultationData(request):
     if request.method=="GET":
         id=request.GET.get("id")
-        id=int(id)
+        type=charCheck(id)
+        if type=="InValid":
+            data={'data':"InValid"}
+            return JsonResponse(data)
+        else:
+            id=int(id)
+
         try: 
             patPresRecObj=patPrescriptionRecords.objects.get(id=id)
             pat_obj=patPresRecObj.patient
@@ -5254,6 +5347,8 @@ def retrievePatientInfoAndConsultationData(request):
             pres_id=""
             patient_dict={}
             patient_id=0
+            data={'data':"InValid"}
+            return JsonResponse(data)
 
         try:
             emptype_obj=employeeType.objects.get(type_name="doctor")
@@ -5290,6 +5385,8 @@ def retrievePatientInfoAndConsultationData(request):
             'id':str(patient_id),
             "empdict":json.dumps(empdict),
             "pres_id":pres_id,
+            'data':"Valid",
+
 
         }
         return JsonResponse(data)
@@ -5610,3 +5707,61 @@ def runScript(request):
         finop4.main()
         return HttpResponse({})
 
+def charCheck(inputstring): 
+    typeBoolean=inputstring.isalpha()
+    print("typeBoolean",typeBoolean)
+    if typeBoolean==False:
+        print(" string contains 1 or more non-alphabets.")
+        string_check= re.compile('[@_!#$%^&*()<>?/\|}{~:]') 
+      
+        if string_check.search(inputstring) == None: 
+            print("String does not contain Special Characters.")
+            boolcheck=bool(re.search(r'\d', inputstring))
+            print("boolcheck",boolcheck)
+            
+            if boolcheck==False:
+                print("String contains no digits ")
+                type="InValid"
+            else:
+                boolcheck2=inputstring.isdecimal()
+                if boolcheck2==True:
+                    print("String of Only Digits")
+                    type="Valid"
+                else:
+                    print("String of No Digits")
+                    type="InValid"
+
+            
+        else: 
+            print("String contains Special Characters.")
+            type="InValid"
+    else:
+        print("characters in the string are alphabet.")
+        type="InValid"
+       
+
+    
+    return type
+def intCheck(inputstring):
+    typeBoolean=inputstring.isalpha()
+    if typeBoolean==True:
+        print("characters in the string are alphabet.")
+
+        string_check= re.compile('[@_!#$%^&*()<>?/\|}{~:]') 
+      
+        if string_check.search(inputstring) == None: 
+            print("String does not contain Special Characters.")
+            type="Valid"
+
+        else: 
+            print("String contains Special Characters.")
+            type="InValid"
+
+    else:
+        print(" string contains 1 or more non-alphabets.")
+
+        type="InValid"
+       
+
+    
+    return type

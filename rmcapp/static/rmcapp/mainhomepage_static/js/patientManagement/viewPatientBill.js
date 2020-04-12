@@ -84,6 +84,13 @@ function retrieveInvoiceBillRecordForView(){
                 alert("Record Not Found")
                 return
             }
+            if (data['data']!=='Valid'){
+                alert("Input Not Valid")
+
+                $('.modal-loading').hide();
+
+                return;
+            }
             patRoomBillView_dict={};
             patWardBillView_dict={};
             surgBillRecordView_dict={};

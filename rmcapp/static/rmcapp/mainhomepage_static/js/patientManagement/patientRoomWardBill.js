@@ -76,6 +76,13 @@ function retrieveRoomWardBill(pres_id){
 
                 return
             }
+            if (data['data']!=='Valid'){
+                alert("Input Not Valid")
+
+                $('.modal-loading').hide();
+
+                return;
+            }
             roomBill_dict={}
             wardBill_dict={}
             roomBill_dict=JSON.parse(data["roomBill_dict"])

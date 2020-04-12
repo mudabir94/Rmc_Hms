@@ -1902,6 +1902,11 @@ function searchPatientMedHistory(){
         },
         url:'/retrieve_patient_info_id_name',
         success: function(data){
+            if (data['data']=="InValid"){
+                alert("InValid Id or Name")
+                $('.modal-loading').hide();
+                return
+            }
             console.log("patient_dict",data["patient_dict"])
             patient_info_dict={};
             patient_info_dict=JSON.parse(data["patient_dict"])
@@ -4563,6 +4568,13 @@ function retrievePatientInfoInCreateBill(pat_name,contact_no,cnic_no,id){
 
                 return
             }
+            if (data['data']!=='Valid'){
+                alert("Input Not Valid")
+
+                $('.modal-loading').hide();
+
+                return;
+            }
             console.log("patient_dict",data["patient_dict"])
             patient_dict={};
             patient_dict=JSON.parse(data["patient_dict"])
@@ -4608,6 +4620,13 @@ function retrievePatientInfoInAddChargeExisPres(pat_name,contact_no,cnic_no,id){
                 $('.modal-loading').hide();
 
                 return
+            }
+            if (data['data']!=='Valid'){
+                alert("Input Not Valid")
+
+                $('.modal-loading').hide();
+
+                return;
             }
             console.log("patient_dict",data["patient_dict"])
             patient_dict={};
@@ -6378,6 +6397,8 @@ function searchPatPresc(){
     $("#row_div_three").remove();
     $("#row_div_four").remove();
     $("#row_div_upload_presfiles").remove();
+    $("#row_div_pres_record_table_update").remove()
+
     $("#row_div_two_pres_detail_update").remove();
     if(pres_record_datatable_update!==undefined){
         pres_record_datatable_update.destroy();
@@ -6389,6 +6410,9 @@ function searchPatPresc(){
         alert("Please insert Valid Pres id")
         return
     }
+    if (presid===""){
+
+    }
     $('.modal-loading').show();
 
     $.ajax({
@@ -6399,6 +6423,16 @@ function searchPatPresc(){
         },
         url: '/update_prescription_record',
         success: function(data){
+            if (data['data']!=='Valid'){
+                $("#row_div_pres_record_table_update").empty();
+
+               $("#row_div_pres_record_table_update").remove()
+                alert("Input Not Valid")
+
+                $('.modal-loading').hide();
+
+                return
+            }
     pres_data_dict=JSON.parse(data['pres_data_dict']);
     pres_records_dict_for_update=JSON.parse(data['pres_records_dict']);
     med_info_list=data['med_info_list'];
@@ -7298,6 +7332,13 @@ function retrievePatientInfoInConsultationSlip(pat_name,contact_no,cnic_no,id){
 
                 return;
             }
+            if (data['data']!=='Valid'){
+                alert("Input Not Valid")
+
+                $('.modal-loading').hide();
+
+                return;
+            }
            
             
             console.log("patient_dict",data["patient_dict"])
@@ -7612,7 +7653,14 @@ function retrievePatientInfoInUpdateConsultationSlip(pat_name,contact_no,cnic_no
 
                 return
             }
-            
+            if (data['data']!=='Valid'){
+                alert("Input Not Valid")
+
+                $('.modal-loading').hide();
+
+                return;
+            }
+           
            
             
             console.log("patient_dict",data["patient_dict"])
@@ -7878,13 +7926,13 @@ function printUpdateConsultationSlip(){
 }
 function  updateConsultationSlip(){
     $('#main_page_content').empty()
-    var container_addchargeexisting_pres= $('#main_page_content').append('<div class="container-fluid" id="container-update-consultation"></div>');
-    $("#container-addcharge-existing-pres").append("<h2 class ='center_h_tag_forms'>Update Consulation Slip</h2>");
-    $("#container-addcharge-existing-pres").append("<hr class='custom_hr'>");
+    var container_update_consultation= $('#main_page_content').append('<div class="container-fluid" id="container-update-consultation"></div>');
+    $("#container-update-consultation").append("<h2 class ='center_h_tag_forms'>Update Consulation Slip</h2>");
+    $("#container-update-consultation").append("<hr class='custom_hr'>");
 
     var main_row_div= $("<div class='row is-flex'></div>");
 
-    $(container_addchargeexisting_pres).append(main_row_div);
+    $(container_update_consultation).append(main_row_div);
     var main_col_div=$("<div class='col-md-12' id='main_col_div'></div>");
        
     $(main_row_div).append(main_col_div);
