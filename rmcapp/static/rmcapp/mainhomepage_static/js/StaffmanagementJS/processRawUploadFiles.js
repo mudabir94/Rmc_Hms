@@ -121,8 +121,15 @@ function ProcessFile(ele){
         url: '/process_attendance_sheet',
      
         success: function(data){
+            if (data['fileprocess']==="complete"){
                 alert("Process Complete")
                 $('.modal-loading').hide();
+            }
+            else{
+                alert("Error While Processing")
+                $('.modal-loading').hide();
+            }
+                
             },
         });
 

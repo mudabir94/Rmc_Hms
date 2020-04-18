@@ -12,10 +12,13 @@ urlpatterns = [
   path("medicinedashboard",views.medicineDashBoard.as_view(),name="medicine_dashboard"),
   path("addmedtostorage",views.addMedToStorage,name="addmedtostorage"),
   path("addmedtodispensory",views.addMedToDispensory,name="addmedtodispensory"),
+
   path('checkmedin_medicineBatches',views.checkMedicineInmedicineBatches,name="checkmedin_medicineBatches"),
   path("save_medicine_to_wh_stock",views.saveMedicineToWhStock,name="save_medicine_to_wh_stock"),
   path("save_medicine_to_wh_stock_bottle",views.saveMedicineToWhStockBottle,name="save_medicine_to_wh_stock_bottle"),
   path('save_med_to_db',views.sendAjaxReqToSaveMedicineToDb,name="save_med_to_db"),
+  path("update_med_to_db",views.updateMedToDb.as_view(),name="update_med_to_db"),
+
   path('save_to_desp_stock',views.saveToDespStock,name="save_to_desp_stock"),
   
   path('save_employee_data',views.saveEmployeeData,name="save_employee_data"),
@@ -152,7 +155,11 @@ urlpatterns = [
 
 
 
-  path("run_script",views.runScript,name="run_script")
+  path("run_script",views.runScript,name="run_script"),
+  path("change_staffuser_password",views.changeStaffuserPassword,name="change_staffuser_password"),
+  path("retrieve_all_med_temp_desp_stock",views.retrieveAllMedTempDespStock,name="retrieve_all_med_temp_desp_stock"),
+  path("retrieve_all_med_temp_main_stock",views.retrieveAllMedTempMainStock,name="retrieve_all_med_temp_main_stock"),
+
 
 
 ]

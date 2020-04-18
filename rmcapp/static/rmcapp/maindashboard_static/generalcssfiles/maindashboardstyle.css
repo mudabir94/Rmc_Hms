@@ -3,7 +3,7 @@
     border-radius: 2px;
     height:150px;
     background:#476589;
-    box-shadow: 0 0 5px 3px #555;
+    box-shadow: -5px 5px 5px 5px #555;
 }
 .dashboard-icon-rows{
   /* padding:10px; */
@@ -68,12 +68,15 @@ background-color: #007bff;
 color: #FFF;
 /* mychanges */
 width:100%;
+box-shadow: -5px 5px 5px #007bff85;
+
 }
 
 .card-counter.danger{
 background-color: #ef5350;
 color: #FFF;
 width:100%;
+box-shadow: -5px 5px 5px #ef5350a8;
 
 }  
 
@@ -81,6 +84,8 @@ width:100%;
 background-color: #66bb6a;
 color: #FFF;
 width:100%;
+box-shadow: -5px 5px 5px #66bb6aa8;
+
 
 }  
 
@@ -88,6 +93,7 @@ width:100%;
 background-color: #26c6da;
 color: #FFF;
 width:100%;
+box-shadow: -5px 5px 5px #26c5daa2;
 
 }  
 
@@ -125,4 +131,12 @@ right: 20px;
 
 
 
+}
+.center_h_tag_forms{
+  text-align:center;
+  font-family:Arial;
+  font-weight: 900;
+  font-size: 38px !important;
+  text-shadow: 2px 2px 0px #9a0000;
+  color:#f7bbbb;
 }

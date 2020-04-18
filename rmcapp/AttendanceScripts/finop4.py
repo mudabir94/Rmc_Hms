@@ -83,7 +83,7 @@ def finalGenReports(FileOutPut3Dict):
                 print("thw type",type(mw))
                 print("mw type",type(mw))
                 try:
-                    UserObj=User.objects.get(first_name=attrec.Name)
+                    UserObj=User.objects.get(username=attrec.Name)
                     EmpObj=Employee.objects.get(user=UserObj)
                     attendanceRecords.objects.create(
                     emp_name=attrec.Name,
@@ -129,7 +129,7 @@ def finalGenReports(FileOutPut3Dict):
                 print("mw type",type(mw))
                 
                 try:
-                    UserObj=User.objects.get(first_name=attrec.Name)
+                    UserObj=User.objects.get(username=attrec.Name)
                     EmpObj=Employee.objects.get(user=UserObj)
                     attendanceRecords.objects.create(
                     emp_user=EmpObj,
@@ -170,11 +170,16 @@ def finalGenReports(FileOutPut3Dict):
 
 
 def main(file_url=None):
-    FileOutPut1Dict=fop1.loadAndExtractRawFile(file_url)
-    FileOutPut2Dict=sop2.processOfRawAttData(FileOutPut1Dict)
-    FileOutPut3Dict=top3.calculatingAttendance(FileOutPut2Dict)
-    # print("FileOutPut3Dict",FileOutPut3Dict)
-    finalGenReports(FileOutPut3Dict)
+    try:
+        FileOutPut1Dict=fop1.loadAndExtractRawFile(file_url)
+        FileOutPut2Dict=sop2.processOfRawAttData(FileOutPut1Dict)
+        FileOutPut3Dict=top3.calculatingAttendance(FileOutPut2Dict)
+        # print("FileOutPut3Dict",FileOutPut3Dict)
+        finalGenReports(FileOutPut3Dict)
+        message='complete'
+    except:
+        message="error"
+    return message
     
 if __name__== "__main__":
     main()

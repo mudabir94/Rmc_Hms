@@ -442,10 +442,7 @@ function createMedStckDatatableEdit(allMedStockInfoList)
                     { title: "Boxes" },
                     { title: "Strips" },
                     { title: "Pieces" },
-                    {title:"Price Per Piece"},
-                    {title:"Selling Price"},
-    
-                
+                    {title:"Price Per Piece"},    
                     ],
                     paging: false,
                     scrollY: "300px",
@@ -523,9 +520,9 @@ function createMedStckDatatableEdit(allMedStockInfoList)
                                     "Save": function() {
                                         sellprice=$("#sellprice_input").val()
                                         
-                                        $(med_stock_edit_selectedrow).find('td').eq(7).text(sellprice)
+                                        $(med_stock_edit_selectedrow).find('td').eq(6).text(sellprice)
                                         
-                                        medStckDict[id]["sell_piece_price_unit"]=parseFloat(sellprice)
+                                        medStckDict[id]["piece_price_unit"]=parseFloat(sellprice)
                                         $( this ).dialog( "close" );
                                     },
                                     "Cancel": function() {
@@ -556,8 +553,241 @@ function updateMedStckPriceData(){
         },
     });
 }
+function viewMedicineInTemporaryDespensoryStock(){
+    $('#main_page_content').empty();
+    var main_page_content= $('#main_page_content').append('<div class="container-fluid" id="container-med-tempview-desp"></div>');
 
+    $("#container-med-tempview-desp").append("<h2 class='center_h_tag_forms'>Medicine In Despensory</h2>");
+    $("#container-med-tempview-desp").append("<hr>");
+    var main_row_div= $("<div class='row is-flex backgroundcss_medToInv'></div>");
+    $("#container-med-tempview-desp").append(main_row_div);
+    var main_col_div=$("<div class='col-md-12' '></div>");
+    var med_tempdesp_vw_div=$("<div id='med_desp_vw_div'>")
+            var med_tempdesp_vw_table=$('<table id="med_tempdesp_vw_table" width="100%" class="datatablecss_med" ></table>')
+    med_tempdesp_vw_div.append(med_tempdesp_vw_table);
+ 
+    main_col_div.append(med_tempdesp_vw_div)   
 
+    $(main_row_div).append(main_col_div);
+
+    retrieveMedicineFromDespTempStock();
+}
+function retrieveMedicineFromDespTempStock(){
+    $('.modal-loading').show();
+
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        'data': {
+        },
+        url: '/retrieve_all_med_temp_desp_stock',
+        success: function(data){
+            allMedTempDespInfoList=data["allMedTempDespInfoList"]
+            createTempMedDespDatatableView(allMedTempDespInfoList);
+            $('.modal-loading').hide();
+
+        },
+    });
+}
+var med_tempdesp_vw_datatable;
+function createTempMedDespDatatableView(allMedTempDespInfoList){
+    $(function(){
+       
+
+        $('#med_tempdesp_vw_table').empty();
+        $('#med_tempdesp_vw_table').append('<caption style="caption-side: top;text-align: center;" class="datatable_heading_label1">Despensory Temporary Medicine Stock </caption>');
+                med_tempdesp_vw_datatable=$("#med_tempdesp_vw_table").DataTable({
+                data:allMedTempDespInfoList ,
+                columns: [
+                    { title: "Medicine" },
+                    { title: "BatchNo" },
+                    { title: "Boxes" },
+                    { title: "Strips" },
+                    { title: "Pieces" },
+    
+                
+                    ],
+                    paging: false,
+                    scrollY: "300px",
+                    scrollX: true,
+                    ordering: true,
+                    info:false,
+                    searching:true,
+                    
+                    dom: 'Bfrtip',
+                    buttons: [
+                        // "copy","csv","excel","pdf","print",
+                        {
+                            extend: 'print',
+                            text: ' PRINT',
+                            title: ' Despenosry Temporary Stock Medicine List',
+                            className: 'datatable_button printbtn fa fa-print',
+
+                        },
+                         {
+                            extend: 'excel',
+                            text: ' EXCEL',
+                            title: 'Despenosry Temporary Stock Medicine List',
+                            className: 'datatable_button excelbtn fas fa-file-excel',
+
+                        },
+                         {
+                            extend: 'csv',
+                            text: ' CSV',
+                            title: 'Medicine Despenosry List',
+                            className: 'datatable_button csvbtn  fa fa-file',
+
+                        },
+                        {
+                            extend: 'pdf',
+                            text: ' PDF',
+                            title: 'Despenosry Temporary Stock Medicine List',
+                            className: 'datatable_button  pdfbtn fas fa-file-pdf',
+
+                        },
+                     
+                     
+                    ],
+                    // columnDefs: [
+                    //     { width: "100%", targets: "_all" }
+                    // ],
+                });
+                $('.dataTables_filter  input[type="search"]').
+                attr('placeholder','Search Medicine ....').
+                css({'width':'200px','display':'inline-block'});
+                $('.dataTables_filter input').addClass('form-control-custom');
+
+                $('#med_tempdesp_vw_table tbody').on( 'click', 'tr', function () {
+                    if ( $(this).hasClass('selected') ) {
+                        // alert("clicked same entry")
+                        $(this).removeClass('selected');
+                    }
+                    else {
+                        var medicine_name=$(this).find('td').eq(0).text()
+                        med_tempdesp_vw_datatable.$('tr.selected').removeClass('selected');
+                        $(this).addClass('selected');
+                    }
+                });
+        });
+}
+function viewMedicineInTemporaryMainStock(){
+    $('#main_page_content').empty();
+    var main_page_content= $('#main_page_content').append('<div class="container-fluid" id="container-med-tempview-mainstock"></div>');
+
+    $("#container-med-tempview-mainstock").append("<h2 class='center_h_tag_forms'>Medicine In Despensory</h2>");
+    $("#container-med-tempview-mainstock").append("<hr>");
+    var main_row_div= $("<div class='row is-flex backgroundcss_medToInv'></div>");
+    $("#container-med-tempview-mainstock").append(main_row_div);
+    var main_col_div=$("<div class='col-md-12' '></div>");
+    var med_tempmainstock_vw_div=$("<div id='med_desp_vw_div'>")
+            var med_tempmainstock_vw_table=$('<table id="med_tempmainstock_vw_table" width="100%" class="datatablecss_med" ></table>')
+    med_tempmainstock_vw_div.append(med_tempmainstock_vw_table);
+ 
+    main_col_div.append(med_tempmainstock_vw_div)   
+
+    $(main_row_div).append(main_col_div);
+
+    retrieveMedicineFromTempMainStock();
+}
+
+function retrieveMedicineFromTempMainStock(){
+    $('.modal-loading').show();
+
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        'data': {
+        },
+        url: '/retrieve_all_med_temp_main_stock',
+        success: function(data){
+            allMedTempStockInfoList=data["allMedTempStockInfoList"]
+            createTempMedMainStockDatatableView(allMedTempStockInfoList);
+            $('.modal-loading').hide();
+
+        },
+    });
+}
+var med_tempmainstock_vw_datatable;
+function createTempMedMainStockDatatableView(allMedTempStockInfoList){
+    $(function(){
+       
+
+        $('#med_tempmainstock_vw_table').empty();
+        $('#med_tempmainstock_vw_table').append('<caption style="caption-side: top;text-align: center;" class="datatable_heading_label1">Temporary Medicine In Main Stock </caption>');
+        med_tempmainstock_vw_datatable=$("#med_tempmainstock_vw_table").DataTable({
+                data:allMedTempStockInfoList ,
+                columns: [
+                    { title: "Medicine" },
+                    { title: "BatchNo" },
+                    { title: "Boxes" },
+                    { title: "Strips" },
+                    { title: "Pieces" },
+    
+                
+                    ],
+                    paging: false,
+                    scrollY: "300px",
+                    scrollX: true,
+                    ordering: true,
+                    info:false,
+                    searching:true,
+                    
+                    dom: 'Bfrtip',
+                    buttons: [
+                        // "copy","csv","excel","pdf","print",
+                        {
+                            extend: 'print',
+                            text: ' PRINT',
+                            title: '  Temporary Main Stock Medicine List',
+                            className: 'datatable_button printbtn fa fa-print',
+
+                        },
+                         {
+                            extend: 'excel',
+                            text: ' EXCEL',
+                            title: 'Temporary Main Stock Medicine List',
+                            className: 'datatable_button excelbtn fas fa-file-excel',
+
+                        },
+                         {
+                            extend: 'csv',
+                            text: ' CSV',
+                            title: 'Temporary Main Stock Medicine List',
+                            className: 'datatable_button csvbtn  fa fa-file',
+
+                        },
+                        {
+                            extend: 'pdf',
+                            text: ' PDF',
+                            title: 'Temporary Main Stock Medicine List',
+                            className: 'datatable_button  pdfbtn fas fa-file-pdf',
+
+                        },
+                     
+                     
+                    ],
+                    // columnDefs: [
+                    //     { width: "100%", targets: "_all" }
+                    // ],
+                });
+                $('.dataTables_filter  input[type="search"]').
+                attr('placeholder','Search Medicine ....').
+                css({'width':'200px','display':'inline-block'});
+                $('.dataTables_filter input').addClass('form-control-custom');
+
+                $('#med_tempmainstock_vw_table tbody').on( 'click', 'tr', function () {
+                    if ( $(this).hasClass('selected') ) {
+                        // alert("clicked same entry")
+                        $(this).removeClass('selected');
+                    }
+                    else {
+                        var medicine_name=$(this).find('td').eq(0).text()
+                        med_tempmainstock_vw_datatable.$('tr.selected').removeClass('selected');
+                        $(this).addClass('selected');
+                    }
+                });
+        });
+}
 // function getCookie(name) {
 //     var cookieValue = null;
 //     if (document.cookie && document.cookie !== "") {

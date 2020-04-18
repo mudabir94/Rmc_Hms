@@ -867,6 +867,7 @@ function savePatientData(){
         alert("Please Enter Contact Number")
         return;
     }
+
     
     var gender=$("#gender_select").val();
     gender=gender.toLowerCase();
@@ -911,6 +912,16 @@ function savePatientData(){
         },
         url: '/save_patient_data',
         success: function(data){
+            if (data['data']==="InValid"){
+                alert("Please Remove Special Characters")
+                $('.modal-loading').hide();
+                return
+            }
+            if (data['cnpn_data']==="InValid"){
+                alert("Please Remove Space Or Special Characters")
+                $('.modal-loading').hide();
+                return
+            }
             console.log(data['Success']);
             alert("Patient Successfully Added")
             $("#pat_name_input").val("");
@@ -5197,7 +5208,7 @@ function billDataTable(){
                 { title: "Amount" },
                 ],
                 paging: false,
-                scrollY: 100,
+                scrollY: 200,
                 scrollX: true,
                 ordering: true,
                 info:false,
@@ -5239,20 +5250,19 @@ function billDataTable(){
             $('#bill_table tbody').on( 'click', 'tr', function () {
                 if ( $(this).hasClass('selected') ) {
                     billdata=bill_datatable.rows(this).data()[0];
+
                     dspstck_dict={}
                     despmed_datatable.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
                         var data = this.data();
                         console.log("data",data);
                         var meddatadict={}
-                        console.log("Bill Data",billdata);
                         var medname=data[1];
                         var billmedname=billdata[3];
                         if (medname===billmedname){
-                            delete pbr_dict[medname]
-                      
+                            delete pbr_dict[billdata[1]]
+                            console.log("pbr_dict-- after delete",pbr_dict)
                             meddatadict['boxes_stored']=parseInt(data[2])+parseInt(billdata[4]);
                             strips_stored=data[3]
-                            alert(strips_stored)
                             if (data[3]!=="N/A"){
                             strips_stored=parseInt(data[3])+parseInt(billdata[5])
                             }
@@ -5260,6 +5270,7 @@ function billDataTable(){
                             meddatadict['piece_stored']=parseInt(data[4])+parseInt(billdata[6]);
                         }
                         else{
+                            console.log("pbr_dict--",pbr_dict)
                             meddatadict['boxes_stored']=data[2]
                            
                             strips_stored=data[3]
@@ -5292,6 +5303,10 @@ function billDataTable(){
                     } 
                     bill_datatable.rows(this).remove()
                     $(this).remove();
+                    // delete pbr_dict[billdata[1]];
+                    // console.log("pbr_dict>>",pbr_dict)
+
+
                    
 
                 }

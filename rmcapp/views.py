@@ -250,8 +250,7 @@ def WithStripCalculation(medicineWarehouseStock_obj,medicineobj,numofboxes,numof
                 despStrgHist_obj.piece_stored=despStrg_obj.piece_stored
                 
                 despStrgHist_obj.box_price_unit=medicineWarehouseStock_obj.box_price_unit
-                # despStrgHist_obj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
-                despStrgHist_obj.piece_price_unit=medicineWarehouseStock_obj.sell_piece_price_unit
+                despStrgHist_obj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
                 despStrgHist_obj.status="Updated"
                 despStrgHist_obj.save()
             else:
@@ -280,8 +279,7 @@ def WithStripCalculation(medicineWarehouseStock_obj,medicineobj,numofboxes,numof
 
                 tempDespStrgObj.box_price_unit=medicineWarehouseStock_obj.box_price_unit
                 tempDespStrgObj.strip_price_unit=medicineWarehouseStock_obj.strip_price_unit
-                # tempDespStrgObj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
-                tempDespStrgObj.piece_price_unit=medicineWarehouseStock_obj.sell_piece_price_unit
+                tempDespStrgObj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
 
                 print("printing line8")
 
@@ -327,8 +325,7 @@ def WithStripCalculation(medicineWarehouseStock_obj,medicineobj,numofboxes,numof
 
             despStrg_obj.box_price_unit=medicineWarehouseStock_obj.box_price_unit
             despStrg_obj.strip_price_unit=medicineWarehouseStock_obj.strip_price_unit
-            # despStrg_obj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
-            despStrg_obj.piece_price_unit=medicineWarehouseStock_obj.sell_piece_price_unit
+            despStrg_obj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
             despStrg_obj.status="In Use"
             despStrg_obj.save()
 
@@ -344,8 +341,7 @@ def WithStripCalculation(medicineWarehouseStock_obj,medicineobj,numofboxes,numof
             # despStrgHist_obj.piece_stored=medicineWarehouseStock_obj.piece_stored-pieces_in_storage_left
             despStrgHist_obj.piece_stored=despStrg_obj.piece_stored
             despStrgHist_obj.box_price_unit=medicineWarehouseStock_obj.box_price_unit
-            # despStrgHist_obj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
-            despStrgHist_obj.piece_price_unit=medicineWarehouseStock_obj.sell_piece_price_unit
+            despStrgHist_obj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
             despStrgHist_obj.status="Added"
             despStrgHist_obj.save()
             ttmds_obj=tt_Medicine_DespensoryStock()
@@ -467,9 +463,7 @@ def NoStripCalculation(medicineWarehouseStock_obj,medicineobj,noofboxes,noofpiec
                 despStrgHist_obj.piece_stored=despStrg_obj.piece_stored
                 
                 despStrgHist_obj.box_price_unit=medicineWarehouseStock_obj.box_price_unit
-                # despStrgHist_obj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
-                despStrgHist_obj.piece_price_unit=medicineWarehouseStock_obj.sell_piece_price_unit
-
+                despStrgHist_obj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
                 despStrgHist_obj.status="Updated"
                 despStrgHist_obj.save()
             else:
@@ -497,8 +491,7 @@ def NoStripCalculation(medicineWarehouseStock_obj,medicineobj,noofboxes,noofpiec
 
                 tempDespStrgObj.box_price_unit=medicineWarehouseStock_obj.box_price_unit
                 tempDespStrgObj.strip_price_unit=medicineWarehouseStock_obj.strip_price_unit
-                # tempDespStrgObj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
-                tempDespStrgObj.piece_price_unit=medicineWarehouseStock_obj.sell_piece_price_unit
+                tempDespStrgObj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
 
                 
                 print("printing line8")
@@ -519,8 +512,7 @@ def NoStripCalculation(medicineWarehouseStock_obj,medicineobj,noofboxes,noofpiec
             despStrg_obj.box_stored=boxes
             despStrg_obj.piece_stored=medicineWarehouseStock_obj.piece_stored-pieces_leftin_stock
             despStrg_obj.box_price_unit=medicineWarehouseStock_obj.box_price_unit
-            # despStrg_obj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
-            despStrg_obj.piece_price_unit=medicineWarehouseStock_obj.sell_piece_price_unit
+            despStrg_obj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
 
 
             despStrg_obj.status="In Use"
@@ -536,7 +528,7 @@ def NoStripCalculation(medicineWarehouseStock_obj,medicineobj,noofboxes,noofpiec
             despStrgHist_obj.box_stored=boxes
             despStrgHist_obj.piece_stored=medicineWarehouseStock_obj.piece_stored-pieces_leftin_stock
             despStrgHist_obj.box_price_unit=medicineWarehouseStock_obj.box_price_unit
-            despStrgHist_obj.piece_price_unit=medicineWarehouseStock_obj.sell_piece_price_unit
+            despStrgHist_obj.piece_price_unit=medicineWarehouseStock_obj.piece_price_unit
             despStrgHist_obj.status="Added"
             despStrgHist_obj.save()
             ttmds_obj=tt_Medicine_DespensoryStock()
@@ -794,7 +786,7 @@ def retrieveAllMedStockInfoForEdit(request):
                 strips_stored=mwhs_obj.strip_stored
                 pieces_stored=mwhs_obj.piece_stored
                 piece_price_unit=mwhs_obj.piece_price_unit
-                sell_piece_price_unit=mwhs_obj.sell_piece_price_unit
+                piece_price_unit=mwhs_obj.piece_price_unit
 
                 templist.append(id)
                 templist.append(medname)
@@ -803,11 +795,10 @@ def retrieveAllMedStockInfoForEdit(request):
                 templist.append(strips_stored)
                 templist.append(pieces_stored)
                 templist.append(piece_price_unit)
-                templist.append(sell_piece_price_unit)
                 
 
                 tempdict["medicinename"]=medname
-                tempdict["sell_piece_price_unit"]=sell_piece_price_unit
+                tempdict["piece_price_unit"]=piece_price_unit
 
 
 
@@ -827,7 +818,7 @@ def updateAllMedStockInfoForEdit(request):
             try:
                 print("key",key)
                 mwhs_obj=medicineWarehouseStock.objects.get(id=key)
-                mwhs_obj.sell_piece_price_unit=medStckDict[key]['sell_piece_price_unit']
+                mwhs_obj.piece_price_unit=medStckDict[key]['piece_price_unit']
                 mwhs_obj.save()
                 print("Updated")
             except:
@@ -886,6 +877,7 @@ def savePatientData(request):
 
         name = json.loads(name)
         print("dob",type(dob))
+       
 
         if dob !='':
             dob = json.loads(dob)
@@ -897,14 +889,24 @@ def savePatientData(request):
         cnic = json.loads(cnic)
         blood_group = json.loads(blood_group)
 
-        print("name",name)
-        print("dob",dob)
-        print("age",age)
-        print("name",name)
-        print("name",name)
+        
+        typeStr=SpecCharCheck(name)
+        print("typeStr",typeStr)
+        if typeStr=="InValid":
+            data={'data':"InValid"}
+            return JsonResponse(data)
+        typeStr=CharAndSpecCharCheck(phone_number)
+        if typeStr=="InValid":
 
-        print("gender",gender)
-        print("email_address",email_address)
+            data={'cnpn_data':"InValid"}
+            return JsonResponse(data)
+        if cnic!="":
+            typeStr=CharAndSpecCharCheck(cnic)
+            if typeStr=="InValid":
+
+                data={'cnpn_data':"InValid"}
+                return JsonResponse(data)
+
         
         pat_obj=Patient()
         pat_obj.guardian=guardian
@@ -923,7 +925,9 @@ def savePatientData(request):
         pat_obj.save()
 
         data={
-            'success':"success"
+            'success':"success",
+            'cnpn_data':"Valid",
+            'data':"Valid"
         }
         return JsonResponse(data)
 
@@ -942,6 +946,8 @@ def saveEmployeeData(request):
         qualification = request.POST.get('qualification')
         email_address = request.POST.get('email_address')
         cnic = request.POST.get('cnic')
+        username = request.POST.get('username')
+
 
 
         name = json.loads(name)
@@ -954,6 +960,30 @@ def saveEmployeeData(request):
 
         email_address = json.loads(email_address)
         cnic = json.loads(cnic)
+        username = json.loads(username)
+        
+        type=SpecCharAndSpaceCheck(username)
+
+        if type=="InValid":
+
+            data={'data':"InValid"}
+            return JsonResponse(data)
+        else:
+            pass
+            # print("Name does'nt have char or sp char");
+        type=CharAndSpecCharCheck(phone_number)
+        if type=="InValid":
+
+            data={'cnpn_data':"InValid"}
+            return JsonResponse(data)
+        if cnic!="":
+            type=CharAndSpecCharCheck(cnic)
+            if type=="InValid":
+
+                data={'cnpn_data':"InValid"}
+                return JsonResponse(data)
+      
+
 
 
 
@@ -978,9 +1008,10 @@ def saveEmployeeData(request):
             emp_obj.email_address=email_address
             emp_obj.cnic=cnic
             emp_obj.save()
+    
 
             webUser = WebUserCreationForm().save(commit=False, pwd="User123456!")
-            webUser.username = emp_obj.name
+            webUser.username = username
             roleObj=Role.objects.get(role_name=employee_type)
             webUser.role = roleObj
             webUser.save()
@@ -990,6 +1021,8 @@ def saveEmployeeData(request):
 
 
         data={
+            'data':"Valid",
+            'cnpn_data':"Valid",
             'status_info':status_info,
         }
         return JsonResponse(data)
@@ -1003,17 +1036,36 @@ def sendAjaxReqToSaveMedicineToDb(request):
         med_details = request.POST.get('med_details')
         add_charge_status=request.POST.get('add_charge_status')
         med_weight=request.POST.get('med_weight')
+        med_litre=request.POST.get('med_litre')
         medicine_name = json.loads(medicine_name)
         selected_type = json.loads(selected_type)
         med_details = json.loads(med_details)
         add_charge_status = json.loads(add_charge_status)
-        med_weight = json.loads(med_weight)
-        med_weight=int(med_weight)
+        if med_weight!=None:
+            med_weight = json.loads(med_weight)
+            if med_weight!="":
+                med_weight=int(med_weight)
+        else:
+            med_weight=""
+
+        if med_litre!=None:
+            med_litre = json.loads(med_litre)
+            if med_litre!="":
+                med_litre=int(med_litre)
+        else:
+            med_litre=""
 
 
         print(medicine_name)
-        print(selected_type)
-        print(med_details)
+        type=SpecCharCheck(medicine_name)
+        if type=="InValid":
+            medicine_name_type_list=list(Medicine.objects.all().values_list('medicine_name',"medicine_type_id__medicine_type_name"))
+            data={       
+                    "medicine_name_type_list":medicine_name_type_list,
+                    'data':"InValid"
+                }
+            return JsonResponse(data)
+      
         
         med_obj=Medicine()
         med_obj.medicine_type_id=medicineType.objects.get(medicine_type_name=selected_type)
@@ -1022,11 +1074,14 @@ def sendAjaxReqToSaveMedicineToDb(request):
         med_obj.add_charge=add_charge_status
         if med_weight > -1:
             med_obj.weight=med_weight
+        if med_litre > -1:
+            med_obj.litre=med_litre
         med_obj.save()
         medicine_name_type_list=list(Medicine.objects.all().values_list('medicine_name',"medicine_type_id__medicine_type_name"))
 
         data={
         "medicine_name_type_list":medicine_name_type_list,
+        "data":"Valid",
         }
         return JsonResponse(data)
 def checkMedicineInmedicineBatches(request):
@@ -1103,7 +1158,8 @@ def saveMedicineToWhStock(request):
                 tempMedWhStkObj.strip_price_unit=packages_priceandquant_dict["Strip"][1]
             except:
                 tempMedWhStkObj.strip_price_unit=0 
-            tempMedWhStkObj.piece_price_unit=packages_priceandquant_dict["Piece"][1]
+            # tempMedWhStkObj.piece_price_unit=packages_priceandquant_dict["Piece"][1]
+            tempMedWhStkObj.piece_price_unit=int(float(packages_priceandquant_dict["Piece"][1]))
             # tempMedWhStkObj = datetime.strptime(manufactor_date, "%m-%d-%Y")
             # # temp_date = parse_date(manufactor_date)
 
@@ -1139,7 +1195,9 @@ def saveMedicineToWhStock(request):
                 mwh_stock_obj.strip_price_unit=packages_priceandquant_dict["Strip"][1]
             except:
                 mwh_stock_obj.strip_price_unit=0 
-            mwh_stock_obj.piece_price_unit=packages_priceandquant_dict["Piece"][1]
+            # mwh_stock_obj.piece_price_unit=packages_priceandquant_dict["Piece"][1]
+            mwh_stock_obj.piece_price_unit=int(float(packages_priceandquant_dict["Piece"][1]))
+
             
             manufactor_date = datetime.strptime(manufactor_date, "%m-%d-%Y")
             # temp_date = parse_date(manufactor_date)
@@ -1176,8 +1234,8 @@ def saveMedicineToWhStock(request):
             except:
                 mwh_stock_history_obj.strip_price_unit=0
 
-            mwh_stock_history_obj.piece_price_unit=packages_priceandquant_dict["Piece"][1]
-            
+            # mwh_stock_history_obj.piece_price_unit=packages_priceandquant_dict["Piece"][1]
+            mwh_stock_history_obj.piece_price_unit=int(float(packages_priceandquant_dict["Piece"][1]))
             mwh_stock_history_obj.manufac_date=manufactor_date
             mwh_stock_history_obj.exp_date=exp_date
             mwh_stock_history_obj.status="Added"
@@ -1233,19 +1291,7 @@ def saveMedicineToWhStockBottle(request):
         dispensorybottle_unit_quant=request.POST.get("dispensorybottle_unit_quant")
         dispensorybottle_total_quant=request.POST.get("dispensorybottle_total_quant")
         dispensorybottle_unit_price=request.POST.get("dispensorybottle_unit_price")
-        
-        print("medicine_name",medicine_name)
-        print("batchno",batchno)
-        print("purchase_rate",purchase_rate)
-        print("manufactor_date",manufactor_date)
-        print("exp_date",exp_date)
-        print("main_package_type",main_package_type)
-
-        print("mainbottle_total_quant",mainbottle_total_quant)
-        print("mainbottle_unit_price",mainbottle_unit_price)
-        print("dispensorybottle_unit_quant",dispensorybottle_unit_quant)
-        print("dispensorybottle_total_quant",dispensorybottle_total_quant)
-        print("dispensorybottle_unit_price",dispensorybottle_unit_price)
+        dispensorybottle_unit_price=int(float(dispensorybottle_unit_price))
         medObj=Medicine.objects.get(medicine_name=medicine_name)
         
         try:
@@ -1732,7 +1778,6 @@ def updatePatientData(request):
        
         dob=request.POST.get('dob')
         dob=json.loads(dob)
-        print("DOB",dob)
         age=request.POST.get('age')
         age=json.loads(age)
 
@@ -1742,8 +1787,21 @@ def updatePatientData(request):
         pat_obj.phone_no=phone_number
         pat_obj.gender=gender
         pat_obj.guardian=guardian
-        if dob!=None:
+        print("DOB",type(dob))
+        if isinstance(dob, str):
+            print("dob",dob)
+            if dob!="None":
+                print(type(dob))
+                pat_obj.dob=dob
+
+        elif dob!=None:
+        
+            print("22",dob)
+            print("22",type(dob))
             pat_obj.dob=dob
+        else:
+            print("ignore")
+        
         if age!="":
             pat_obj.age=int(age)
         pat_obj.address=address
@@ -2301,7 +2359,16 @@ def retrieveEmployeeInfo(request):
         emp_name=request.GET.get('emp_name')
         # emp_objs=Employee.objects.filter(Q(name__contains=emp_name))
         contact_no=request.GET.get("contact_no")
+
         print("contact_no",contact_no)
+
+        if request.user.is_superuser:
+                print("Super Admin")
+                user_role="SuperAdmin"
+        else:
+            print("Staff")
+
+            user_role="Staff"
         # cnic=request.GET.get("cnic")
         # contact_no=""
         # cnic=""
@@ -2330,12 +2397,16 @@ def retrieveEmployeeInfo(request):
             employee_info_dict['employee_type']=emp_obj.employee_type.type_name
             employee_info_dict['cnic']=emp_obj.cnic
             employee_dict[emp_obj.id]=[]
+            
+
             employee_dict[emp_obj.id]=employee_info_dict
 
         print(employee_dict)
 
+
         data={
             "employee_dict":json.dumps(employee_dict),
+            "user_role":user_role,
         }
         return JsonResponse(data)
 
@@ -2406,6 +2477,7 @@ def updateEmployeeData(request):
        
         dob=request.POST.get('dob')
         dob=json.loads(dob)
+        
 
 
         emp_obj=Employee.objects.get(id=employee_id)
@@ -2414,7 +2486,8 @@ def updateEmployeeData(request):
         emp_obj.gender=gender
         emptype_obj=employeeType.objects.get(type_name=employee_type)
         emp_obj.employee_type=emptype_obj
-        emp_obj.dob=dob
+        if dob!="None":
+            emp_obj.dob=dob
         emp_obj.address=address
         emp_obj.email_address=email_address
         emp_obj.qualification=qualification
@@ -5513,8 +5586,10 @@ class processAttendanceSheet(TemplateView):
     def post(self,request):
         file_name=request.POST.get("file_name")
         file_url=request.POST.get("file_url")
-        finop4.main(file_url)
-        data={}
+        
+        message=finop4.main(file_url)
+        print("message",message)
+        data={'fileprocess':message}
         return JsonResponse(data)
     def ajaxGetProcessAttendanceSheet(request):
         if request.method=="GET":
@@ -5552,7 +5627,12 @@ class viewAttendanceByMonth(TemplateView):
             emplObjs=Employee.objects.all()
             # ALL the names in EMPLOYEE LIST SHOULD BE THE SAME NAMES AS IN THE RAW ATT FILES. 
             # ONLY THEN IT"LL WORK
-            employeelist=["All","DrUsman","Seher","Shafique","Ms Fehmeeda","Wazeeran Bibi","Mehwish Rafique"]
+            employeelist=[]
+            employeelist.append("All")
+            for empobj in emplObjs:
+                employeelist.append(empobj.user.username)
+            print("employeelist",employeelist)
+            # employeelist=["All","DrUsman","Seher","Shafique","Ms Fehmeeda","Wazeeran Bibi","Mehwish Rafique"]
             # employeelist.append("All")
             # for emplObj in emplObjs:
             #     empname=emplObj.user.first_name
@@ -5696,9 +5776,17 @@ class viewAttendanceByDay(TemplateView):
             return JsonResponse(data)
 
 
-
-            
-
+def changeStaffuserPassword(request):
+    if request.method=='POST':
+        if request.user.is_superuser:
+            empid=request.POST.get('empid')
+            passwordstr=request.POST.get("passwordstr")
+            empid=int(empid)
+            empObj=Employee.objects.get(id=empid)
+            empObj.user.set_password(passwordstr)
+            empObj.user.save()
+            data={"success":"success"}
+            return JsonResponse(data)
 
 
 
@@ -5742,6 +5830,7 @@ def charCheck(inputstring):
 
     
     return type
+    
 def intCheck(inputstring):
     typeBoolean=inputstring.isalpha()
     if typeBoolean==True:
@@ -5765,3 +5854,241 @@ def intCheck(inputstring):
 
     
     return type
+
+def SpecCharAndSpaceCheck(inputstring): 
+    # @/./+/-/_
+    string_check= re.compile('[!#$%^&*()<>?/\|}{~:]') 
+    
+    if string_check.search(inputstring) == None: 
+        print("String does not contain Special Characters.")
+        type="Valid"
+        inputstringarr=inputstring.split(" ")
+        print("inputstringarr",inputstringarr)
+        if len(inputstringarr)>1:
+            type="InValid"
+            print("Space found in str")
+
+        
+
+        
+
+        
+    else: 
+        print("String contains Special Characters.")
+        type="InValid"
+  
+       
+
+    
+    return type
+def SpecCharCheck(inputstring): 
+    # @/./+/-/_
+    string_check= re.compile('[@_!#$%^&*()<>?/\|}{~:]') 
+    
+    if string_check.search(inputstring) == None: 
+        print("String does not contain Special Characters.")
+        type="Valid"
+        inputstringarr=inputstring.split(" ")
+        print("inputstringarr",inputstringarr)
+       
+        
+    else: 
+        print("String contains Special Characters.")
+        type="InValid"
+  
+       
+
+    
+    return type
+
+def CharAndSpecCharCheck(inputstring):
+    tempstring=inputstring.replace("-","")
+    typeBoolean=tempstring.isdecimal()
+    print("tempstring",tempstring)
+    if typeBoolean==True:
+        print("tempstring.True()",tempstring.isdecimal())
+        print("String contains only decimals.")
+            
+
+        string_check= re.compile('[@_!#$%^&*()<>?/\|}{~:]')
+        if string_check.search(inputstring) == None: 
+            print("String does not contain Special Characters.")
+            
+            type="Valid"
+            inputstringarr=inputstring.split(" ")
+            if len(inputstringarr)>1:
+                type="InValid"
+                print("Space found in str") 
+        else:
+            type="InValid"
+
+
+    else:
+        print("tempstring.False",tempstring.isdecimal())
+        print("String contains alphas as well")
+        type="InValid"
+
+
+    return type
+def retrieveAllMedTempDespStock(request):
+    allMedTempDespInfoList=[]
+    if request.method=="GET":
+        
+        tempDespMedObjs=tempDespensoryStock.objects.all()
+        
+        for tempDespMedObj in tempDespMedObjs:
+        
+            
+            medbatch_obj=medicineBatches.objects.get(medicine_strg=tempDespMedObj.medicinewh_stock)
+            # if medbatch_obj.status=="Active":
+            templist=[]
+            medbatchno=medbatch_obj.batch_no
+            medname=tempDespMedObj.medicine.medicine_name
+            boxes_stored=tempDespMedObj.box_stored
+            strips_stored=tempDespMedObj.strip_stored
+            pieces_stored=tempDespMedObj.piece_stored
+
+            templist.append(medname)
+            templist.append(medbatchno)
+            templist.append(boxes_stored)
+            templist.append(strips_stored)
+            templist.append(pieces_stored)
+            allMedTempDespInfoList.append(templist)
+                
+        data={
+           "allMedTempDespInfoList":allMedTempDespInfoList,
+        }
+        return JsonResponse(data)
+def retrieveAllMedTempMainStock(request):
+    allMedTempStockInfoList=[]
+    if request.method=="GET":
+       
+        tempMedWhStckObjs=tt_tempMedWhStk_Med.objects.all()
+        for tempMedWhStckObj in tempMedWhStckObjs:
+            # if medbatch_obj.status=="Active":
+            templist=[]
+            medbatchno=tempMedWhStckObj.batch_no
+            medname=tempMedWhStckObj.medicine.medicine_name
+            boxes_stored=tempMedWhStckObj.box_stored
+            strips_stored=tempMedWhStckObj.strip_stored
+            pieces_stored=tempMedWhStckObj.piece_stored
+            piece_price_unit=tempMedWhStckObj.piece_price_unit
+
+            templist.append(medname)
+            templist.append(medbatchno)
+            templist.append(boxes_stored)
+            templist.append(strips_stored)
+            templist.append(pieces_stored)
+            templist.append(piece_price_unit)
+            allMedTempStockInfoList.append(templist)
+                
+        data={
+           "allMedTempStockInfoList":allMedTempStockInfoList,
+        }
+        return JsonResponse(data)
+class updateMedToDb(TemplateView):
+    def get(self,request):
+        medObjs=Medicine.objects.all()
+        medicine_name_dict_update={}
+        medicine_name_type_list=list(Medicine.objects.all().values_list("id",'medicine_name',"medicine_type_id__medicine_type_name","weight","litre","medicine_details","add_charge"))
+        for medObj in medObjs:
+            tempdict={}
+            medid=medObj.id
+            medname=medObj.medicine_name
+            type=medObj.medicine_type_id.medicine_type_name
+            print("type",type)
+            if type=="Tablet":
+                weight=medObj.weight
+                tempdict['weight']=weight
+
+            else:
+                litre=medObj.litre
+                tempdict['litre']=litre
+            med_det=medObj.medicine_details
+            med_charge=medObj.add_charge
+
+            tempdict['name']=medname
+            tempdict['type']=type
+            tempdict['med_det']=med_det
+            tempdict['med_charge']=med_charge
+            medicine_name_dict_update[medid]=tempdict
+
+                        
+        data={   
+                "medicine_name_type_list":medicine_name_type_list,
+                "medicine_name_dict_update":json.dumps(medicine_name_dict_update),
+            }
+        return JsonResponse(data)
+    def post(self,request):
+        medid = request.POST.get('medid')
+        medicine_name = request.POST.get('medicine_name')
+        selected_type = request.POST.get('selected_type')
+        med_details = request.POST.get('med_details')
+        add_charge_status=request.POST.get('add_charge_status')
+        med_weight=request.POST.get('med_weight')
+        med_litre=request.POST.get('med_litre')
+        medid = json.loads(medid)
+        medicine_name = json.loads(medicine_name)
+        selected_type = json.loads(selected_type)
+        med_details = json.loads(med_details)
+        add_charge_status = json.loads(add_charge_status)
+        if med_weight!=None:
+            med_weight = json.loads(med_weight)
+            if med_weight!="":
+                med_weight=int(med_weight)
+        else:
+            med_weight=""
+
+        if med_litre!=None:
+            med_litre = json.loads(med_litre)
+            if med_litre!="":
+                med_litre=int(med_litre)
+        else:
+            med_litre=""
+
+        if medid!="":
+            type=charCheck(medid)
+            if type=="InValid":
+                print("Id has char or sp char");
+
+                data={'iddata':"InValid"}
+                return JsonResponse(data)
+            else:
+                medid=int(medid)
+        type=SpecCharCheck(medicine_name)
+        if type=="InValid":
+            data={       
+                    'namedata':"InValid",
+                    'iddata':"Valid"
+                }
+            return JsonResponse(data)
+        try:
+            medObj=Medicine.objects.get(id=int(medid))
+            medObj.medicine_name=medicine_name
+            if med_weight!=-1:
+                medObj.weight=med_weight
+            if med_litre!=-1:
+                medObj.litre=med_litre
+            medObj.medicine_details=med_details
+            medObj.add_charge=add_charge_status
+            medObj.save()
+            message="Valid"
+            medicine_list=list(Medicine.objects.all().values_list("id",'medicine_name',"medicine_type_id__medicine_type_name","weight","litre","medicine_details","add_charge"))
+
+        except:
+            message='InValid'
+            medicine_list=[]
+        
+            
+
+
+        
+        data={
+            'message':message,
+            'iddata':'Valid',
+            'namedata':'Valid',
+            "medicine_list":medicine_list,
+
+
+        }
+        return JsonResponse(data)

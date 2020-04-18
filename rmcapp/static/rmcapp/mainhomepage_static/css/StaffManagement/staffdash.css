@@ -248,3 +248,39 @@
   margin-right:0px;
   margin-left:0px;
 }
+#change_password_btn{
+    margin: 10px;
+    background: orange;
+    border: none;
+    color: white;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: -5px 5px 5px 0px black;
+    font-size: 20px;
+}
+#change_password_btn:hover{
+  box-shadow: -5px 5px 5px 0px;
+
+}
+#save_change_password_btn{
+  background: #1d9af9;
+  border: none;
+  color: white;
+  border-radius: 5px 5px 5px 5px;
+  box-shadow: -5px 5px 5px 0px black;
+  font-size: 20px;
+}
+#save_change_password_btn:hover{
+box-shadow: -5px 5px 5px 0px;
+
+}
+#change_password_fields_div{
+  padding-top:15px;
+}
+.text-capitalize{
+  text-transform: capitalize;
+}
+input[type=radio] {
+  border: 0px;
+  width: 20%;
+  height: 2em;
+}

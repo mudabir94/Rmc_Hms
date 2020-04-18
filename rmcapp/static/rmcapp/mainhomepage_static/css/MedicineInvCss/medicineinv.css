@@ -167,7 +167,7 @@ border: none;
     /* padding: 5px 0px 0px 125px; */
   
   }
-  .med_desp, .med_stck, .add_med, .remove_med{
+  .med_desp, .med_stck, .add_med, .remove_med,.med_Dashboard{
     font-size: 0.9rem;
     opacity: 0.5;
     color:white;
@@ -380,4 +380,9 @@ border: none;
   .deletebtn:hover{
     font-size: 0.9rem!important;
   
+  }
+  input[type=radio] {
+    border: 0px;
+    width: 20%;
+    height: 2em;
   }

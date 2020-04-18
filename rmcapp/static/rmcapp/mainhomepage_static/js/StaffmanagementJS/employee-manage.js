@@ -17,6 +17,7 @@ var all_employee_info_dict={};
 $( document ).ready(function() {
     retrieveEmployeeType();
     $("#dialog-confirm").hide()
+   
     // retrieveEmployeeInfo();
 
 });
@@ -152,7 +153,7 @@ function addEmployee(){
 
                     emp_name_label=$("<label for='emp_name_tag' class='custom_label_css'>Employee Name</label>");
                     colmd1.append(emp_name_label)
-                    emp_name_input=$("<input class='form-control-custom' id='emp_name_input' class='custom_input_css'>")
+                    emp_name_input=$("<input class='form-control-custom' id='emp_name_input'>")
                     colmd2.append(emp_name_input)
 
                 row__col_one__row_div_one.append(colmd1);
@@ -180,14 +181,31 @@ function addEmployee(){
             $(row_div_one).append(col_one__row_div_one);
             $(row_div_one).append(col_two__row_div_one);
 
+        var row_div_six=$("<div class='row' style='padding-top: 15px; padding-bottom: 15px;'></div>");
+        // UserName
+            var col_one__row_div_one=$("<div class='col-md-6'></div>");
+                row__col_one__row_div_one=$("<div class='row'></div>");
+                    colmd1=$("<div class='col-md-4'></div>")
+                    colmd2=$("<div class='col-md-6' id='emp_user_name_input_div'></div>")
+
+                    emp_user_name_label=$("<label  class='custom_label_css'>User Name</label>");
+                    colmd1.append(emp_user_name_label)
+                    emp_user_name_input=$("<input class='form-control-custom' id='emp_user_name_input' class='custom_input_css'>")
+                    colmd2.append(emp_user_name_input)
+
+                row__col_one__row_div_one.append(colmd1);
+                row__col_one__row_div_one.append(colmd2);
+            col_one__row_div_one.append(row__col_one__row_div_one);
+        row_div_six.append(col_one__row_div_one)
+
         var row_div_two=$("<div class='row' style='padding-top: 15px; padding-bottom: 15px;'></div>");
                 // Gender
                     var col_one__row_div_two=$("<div class='col-md-6'></div>");
                         var row__col_one__row_div_two=$("<div class='row'></div>");
-                            colmd1=$("<div class='col-md-4'></div>")
-                            colmd2=$("<div class='col-md-2' id='gender_input_div'></div>")
-                            colmd3=$("<div class='col-md-1'></div>")
-                            colmd4=$("<div class='col-md-3' id='dob_input_div'></div>")
+                            colmd1=$("<div class='col-md-2'></div>")
+                            colmd2=$("<div class='col-md-4' id='gender_input_div'></div>")
+                            colmd3=$("<div class='col-md-2'></div>")
+                            colmd4=$("<div class='col-md-4' id='dob_input_div'></div>")
 
                             emp_name_label=$("<label class='custom_label_css'>Gender</label>");
                             colmd1.append(emp_name_label)
@@ -322,6 +340,8 @@ function addEmployee(){
                 
                 
 $(main_col_div).append(row_div_one);
+$(main_col_div).append(row_div_six);
+
 $(main_col_div).append(row_div_two);
 $(main_col_div).append(row_div_three);
 $(main_col_div).append(row_div_four);
@@ -475,7 +495,7 @@ function editEmployeeRowDivFiveCreation(){
     $(row_div_five).append(col_one__row_div_five);
     main_col_div.append(row_div_five)
 }
-
+var user_role;
 function retrieveEmployeeInfo(emp_name,contact_no){
     emp_datatable_list=[];
     $('.modal-loading').show();
@@ -491,6 +511,8 @@ function retrieveEmployeeInfo(emp_name,contact_no){
         url: '/retrieve_employee_info',
         success: function(data){
             console.log("employee_dict",data["employee_dict"])
+            user_role=data['user_role'];
+
             employee_dict={}
             employee_dict=JSON.parse(data["employee_dict"])
             emp_datatable_list=[]
@@ -576,6 +598,8 @@ function createEmployeetDataTable(){
                     emp_datatable.$('tr.selected').removeClass('selected');
                     $(this).addClass('selected');
                     var form_row=$("<div class='row' id='edit-emplyee-info-form'><h5> Employee Details</h5></div>")
+                   
+                   
                     var form_col=$("<div class='col-md-12 genformdiv2'></div>");
                     form_row.append(form_col)
                     var row_div_one=$("<div class='row' id='row_div_three_editpat'></div>");
@@ -587,7 +611,7 @@ function createEmployeetDataTable(){
             
                                 emp_name_label=$("<label for='emp_name_tag' class='custom_label_css'>Employee Name</label>");
                                 colmd1.append(emp_name_label)
-                                emp_name_input=$("<input class='form-control-custom' id='emp_name_input' class='custom_input_css' value="+employee_dict[emp_id_selected]['name']+" disabled></input>")
+                                emp_name_input=$("<input class='form-control-custom text-capitalize' id='emp_name_input' value='"+employee_dict[emp_id_selected]['name']+"' disabled></input>")
                                 colmd2.append(emp_name_input)
             
                             row__col_one__row_div_one.append(colmd1);
@@ -601,7 +625,7 @@ function createEmployeetDataTable(){
             
                                 contact_type_label=$("<label class='custom_label_css'>Contact Number</label>");
                                 colmd1.append(contact_type_label);
-                                contact_type_input=$("<input class='form-control-custom' id='contact_numb_edit'  maxlength='12'  oninput='contactNumPatInfoOnEdit($(this))' class='custom_input_css' value="+employee_dict[emp_id_selected]['phone']+"></input>")
+                                contact_type_input=$("<input class='form-control-custom ' id='contact_numb_edit'  maxlength='12'  oninput='contactNumPatInfoOnEdit($(this))'  value='"+employee_dict[emp_id_selected]['phone']+"'></input>")
                                 colmd2.append(contact_type_input);
             
                             row__col_two__row_div_one.append(colmd1)
@@ -623,12 +647,12 @@ function createEmployeetDataTable(){
             
                                         emp_name_label=$("<label class='custom_label_css'>Gender</label>");
                                         colmd1.append(emp_name_label)
-                                        emp_name_input=$("<input class='form-control-custom' id='gender_input'  class='custom_input_css' value='"+employee_dict[emp_id_selected]['gender']+"'>")
+                                        emp_name_input=$("<input class='form-control-custom text-capitalize' id='gender_input' value='"+employee_dict[emp_id_selected]['gender']+"'>")
                                         colmd2.append(emp_name_input)
                             // DOB
                                         contact_type_label=$("<label class='custom_label_css'>DOB</label>");
                                         colmd3.append(contact_type_label);
-                                        contact_type_input=$("<input class='form-control-custom' id='dob_input' class='custom_input_css' value='"+employee_dict[emp_id_selected]['dob']+"'></input>")
+                                        contact_type_input=$("<input class='form-control-custom' id='dob_input'  value='"+employee_dict[emp_id_selected]['dob']+"'></input>")
                                         colmd4.append(contact_type_input);
             
                                     row__col_one__row_div_two.append(colmd1);
@@ -646,7 +670,7 @@ function createEmployeetDataTable(){
             
                                     contact_type_label=$("<label class='custom_label_css'>CNIC</label>");
                                     colmd1.append(contact_type_label);
-                                    contact_type_input=$("<input class='form-control-custom' id='cnic_edit'  oninput='cnicNumPatInfoOnEdit($(this))' maxlength='15' maxlength='15' class='custom_input_css' value='"+employee_dict[emp_id_selected]['cnic']+"' ></input>")
+                                    contact_type_input=$("<input class='form-control-custom text-capitalize' id='cnic_edit'  oninput='cnicNumPatInfoOnEdit($(this))' maxlength='15' maxlength='15' value='"+employee_dict[emp_id_selected]['cnic']+"' ></input>")
                                     colmd2.append(contact_type_input);
             
                                 row__col_three__row_div_two.append(colmd1)
@@ -670,7 +694,7 @@ function createEmployeetDataTable(){
             
             
                                     var select=$("<select id='select_emp_type' class='form-control-custom'></select>");
-                                    Employee_type_input=$("<input class='form-control-custom' id='employee_type_input' value='"+employee_dict[emp_id_selected]['employee_type']+"' disabled>")
+                                    Employee_type_input=$("<input class='form-control-custom text-capitalize' id='employee_type_input' value='"+employee_dict[emp_id_selected]['employee_type']+"' disabled>")
                                             
                                     colmd2.append(Employee_type_input) 
                                 row__col_one__row_div_three.append(colmd1);
@@ -684,7 +708,7 @@ function createEmployeetDataTable(){
                                     colmd2=$("<div class='col-md-6' id='emp_address_input_div'></div>")
                                         address_label=$("<label for='emp_address_tag' class='custom_label_css'>Address</label>");
                                     colmd1.append(address_label)
-                                        emp_address_input=$("<input class='form-control-custom' id='emp_address_input' value='"+employee_dict[emp_id_selected]['address']+"' class='custom_input_css'>")
+                                        emp_address_input=$("<input class='form-control-custom text-capitalize' id='emp_address_input' value='"+employee_dict[emp_id_selected]['address']+"' >")
                                     colmd2.append(emp_address_input)
                                 row__col_two__row_div_three.append(colmd1);
                                 row__col_two__row_div_three.append(colmd2);
@@ -700,7 +724,7 @@ function createEmployeetDataTable(){
                                     colmd2=$("<div class='col-md-6' id='emp_qualif_input_div'></div>")
                                         emp_qualif_label=$("<label for='emp_qualif_tag' class='custom_label_css'>Qualification</label>");
                                     colmd1.append(emp_qualif_label)
-                                        emp_qualif_input=$("<input class='form-control-custom custom_input_css' id='emp_qualif_input' value='"+employee_dict[emp_id_selected]['qualification']+"' type='text'>")
+                                        emp_qualif_input=$("<input class='form-control-custom text-capitalize' id='emp_qualif_input' value='"+employee_dict[emp_id_selected]['qualification']+"' type='text'>")
                                     colmd2.append(emp_qualif_input)
                                 row__col_one__row_div_four.append(colmd1);
                                 row__col_one__row_div_four.append(colmd2);
@@ -720,6 +744,8 @@ function createEmployeetDataTable(){
         
                         $(row_div_four).append(col_one__row_div_four);
                         $(row_div_four).append(col_two__row_div_four);
+
+                       
                         var row_div_five=$("<div class='row' id='row_div_seven_editpat'style='padding-top: 15px;'></div>");
                             //update button
                             var col_two__row_div_five=$("<div class='col-md-12'></div>");
@@ -736,7 +762,33 @@ function createEmployeetDataTable(){
                 form_col.append(row_div_two);
                 form_col.append(row_div_three);
                 form_col.append(row_div_four);
+                if (user_role==="SuperAdmin"){
+                    var changepassword_rowdiv=$("<div class='row' id='changepassword_rowdiv'style='padding-top: 15px;'></div>");
+                        var col=$("<div class='col-md-12'></div>");
+                                colmd1=$("<div class='col-md-4'></div>")  
+                                    changepasswordbutton=$("<button class='change_password_togglebtn' id='change_password_btn' onclick='togglePasswordDiv()'>Change Password</button>");
+                                colmd1.append(changepasswordbutton)
+                                colmd2=$("<div class='col-md-12'></div>")  
+                                    chagepassworddiv=$("<div class='row removerowmargins_div ' id='change_password_fields_div' style='display:none;'></div>")
+                                        col1=$("<div class='col-md-4'>")
+                                        col2=$("<div class='col-md-8'>")
+                                            changepasswordinput=$("<input class='form-control-custom' id='change_password_input' ></input>")
+                                            savechagepasswordbtn=$("<button class='change_password_btn' id='save_change_password_btn' onclick=changePassword("+emp_id_selected+")>Save Password</button>")
+                                        col1.append(changepasswordinput)
+                                        col2.append(savechagepasswordbtn)
+                                    chagepassworddiv.append(col1);
+                                    chagepassworddiv.append(col2);
+
+                                colmd2.append(chagepassworddiv)
+                                
+                            col.append(colmd1);
+                            col.append(colmd2)
+
+                $(changepassword_rowdiv).append(col);
+                form_col.append(changepassword_rowdiv);
+                }
                 form_col.append(row_div_five);
+
                 main_col_div.append(form_row)
                 
                 
@@ -846,20 +898,22 @@ function saveEmployeeData(){
     //     return;
     // }
         var contact_number=$("#contact_numb_input").val();
+        var username=$("#emp_user_name_input").val();
         var gender=$("#gender_input").val();
+        gender=gender.toLowerCase();
         console.log("gender", gender);
         var dob=$("#dob_input").val();
         var cnic=$("#cnic_input").val();
         var employee_type=$("#select_emp_type").val();
         console.log("employee_type", employee_type)
-        var qualification=$("#emp_qualif_input").val();
+        var qualification=$("#emp_qualif_input").val().toLowerCase();
         var emial_id=$("#email_id_input").val();
         if( !validateEmail(emial_id)) { 
             alert("Invalid Email")
             return;
         }
 
-        var address=$("#emp_address_input").val();
+        var address=$("#emp_address_input").val().toLowerCase();
         console.log("emial_id",emial_id);
         $('.modal-loading').show();
 
@@ -874,23 +928,33 @@ function saveEmployeeData(){
                 "phone_number":JSON.stringify(contact_number),
                 "address":JSON.stringify(address),
                 "qualification":JSON.stringify(qualification),
-
+                "username":JSON.stringify(username),
                 'email_address':JSON.stringify(emial_id),
                 "cnic":JSON.stringify(cnic),
             },
             url: '/save_employee_data',
             success: function(data){
-                console.log(data['status_info']);
+                if (data['data']==="InValid"){
+                    alert("Remove Special Characters Or Space From User Name Field")
+                    $('.modal-loading').hide();
+                    return
+                }
+                if (data['cnpn_data']==="InValid"){
+                    alert("Remove Special Characters Or Space Or Aplhabets")
+                    $('.modal-loading').hide();
+                    return
+                }
                 status_info=data['status_info'];
                 if (status_info=="New Person"){
                     alert("Employee Registered!")
                     $("#emp_name_input").val("")
+                    $("#emp_user_name_input").val("");
                     $("#contact_numb_input").val("");
                     $("#gender_input").val("");
                     $("#dob_input").val("");
                     $("#cnic_input").val("");
                     // $("#emp_address_input").val("");
-                    $("#select_emp_type").val("");
+                    // $("#select_emp_type").val("");
                     $("#emp_qualif_input").val("");
                     $("#email_id_input").val("");
                     $('.modal-loading').hide();
@@ -912,16 +976,18 @@ function saveEmployeeData(){
 }
 function updateEmployeeData(){
     var employee_id=emp_id_selected;
-    var emplyee_name=$("#emp_name_input").val();
+    var emplyee_name=$("#emp_name_input").val().toLowerCase();
     var contact_number=$("#contact_numb_edit").val();
-    var gender=$("#gender_input").val();
+    var gender=$("#gender_input").val().toLowerCase();
     var dob=$("#dob_input").val();
     var cnic=$("#cnic_edit").val();
-    var employee_type=$("#employee_type_input").val();
-    var address=$("#emp_address_input").val();
-    var qualification=$("#emp_qualif_input").val();
+    var employee_type=$("#employee_type_input").val().toLowerCase();
+    var address=$("#emp_address_input").val().toLowerCase() ;
+    var qualification=$("#emp_qualif_input").val().toLowerCase();
     var emial_id=$("#email_id_input").val();
+   
     $('.modal-loading').show();
+
 
     $.ajax({
         type: 'POST',
@@ -1122,7 +1188,7 @@ function createAllEmployeeDataTable(){
                                         var colmd1=$("<div class='col-md-4 text-right'></div>")
                                         var colmd2=$("<div class='col-md-4'></div>")
                                             var emp_name_label=$("<label for='emp_name_tag' class='custom_label_css font-weight-bold'>Employee Name</label>");
-                                            var emp_name_input=$("<label id='emp_name_input'class='custom_label_css' >"+all_employee_dict[employee_id_selected]['name']+"</label>")
+                                            var emp_name_input=$("<label id='emp_name_input'class='custom_label_css text-capitalize' >"+all_employee_dict[employee_id_selected]['name']+"</label>")
                                         colmd1.append(emp_name_label)
                                         colmd2.append(emp_name_input)
                                     row__col_one__subrow_one.append(colmd1);
@@ -1134,7 +1200,7 @@ function createAllEmployeeDataTable(){
                                         var colmd1=$("<div class='col-md-4 text-right'></div>")
                                         var colmd2=$("<div class='col-md-4'></div>")
                                             var empID_label=$("<label class='custom_label_css font-weight-bold'>Employee ID</label>");
-                                            var empID_input=$("<label class='custom_label_css'>"+employee_id_selected+"</label>")
+                                            var empID_input=$("<label class='custom_label_css '>"+employee_id_selected+"</label>")
                                         colmd1.append(empID_label);
                                         colmd2.append(empID_input);
                                     row__col_two__subrow_one.append(colmd1);
@@ -1153,7 +1219,7 @@ function createAllEmployeeDataTable(){
                                         var colmd2=$("<div class='col-md-4'></div>")
                                             var emp_gender_label=$("<label class='custom_label_css font-weight-bold'>Gender</label>");
                                         colmd1.append(emp_gender_label)
-                                            var emp_gender_input=$("<label class='custom_label_css'>"+all_employee_dict[employee_id_selected]['gender']+"</label>")
+                                            var emp_gender_input=$("<label class='custom_label_css text-capitalize'>"+all_employee_dict[employee_id_selected]['gender']+"</label>")
                                         colmd2.append(emp_gender_input) 
                                     row__col_one__subrow_two.append(colmd1);
                                     row__col_one__subrow_two.append(colmd2);
@@ -1193,7 +1259,7 @@ function createAllEmployeeDataTable(){
                                         colmd1=$("<div class='col-md-4 text-right'></div>")
                                         colmd2=$("<div class='col-md-4'></div>")
                                             var address_label=$("<label for='pat_address_tag' class='custom_label_css font-weight-bold'>Address</label>");
-                                            var pat_address_input=$("<label class='custom_label_css'' id='pat_address_input'>"+all_employee_dict[employee_id_selected]['address']+"</label>")
+                                            var pat_address_input=$("<label class='custom_label_css text-capitalize' id='pat_address_input'>"+all_employee_dict[employee_id_selected]['address']+"</label>")
                                         colmd1.append(address_label)
                                         colmd2.append(pat_address_input)
                                     row__col_two__subrow_three.append(colmd1);
@@ -1209,7 +1275,7 @@ function createAllEmployeeDataTable(){
                                         var colmd1=$("<div class='col-md-4 text-right'></div>")
                                         var colmd2=$("<div class='col-md-4'></div>")
                                             phone_label=$("<label for='phone_label' class='custom_label_css font-weight-bold'>Contact Number</label>");
-                                            phone_input=$("<label class='custom_label_css' id='phone_input'>"+all_employee_dict[employee_id_selected]['phone']+"</label>")
+                                            phone_input=$("<label class='custom_label_css ' id='phone_input'>"+all_employee_dict[employee_id_selected]['phone']+"</label>")
                                         colmd1.append(phone_label)
                                         colmd2.append(phone_input) 
                                     row__col_one__subrow_four.append(colmd1)
@@ -1221,7 +1287,7 @@ function createAllEmployeeDataTable(){
                                         var colmd1=$("<div class='col-md-4 text-right'></div>")
                                         var colmd2=$("<div class='col-md-4'></div>")
                                             var email_id_label=$("<label class='custom_label_css font-weight-bold'>Email Address</label>");
-                                            var email_id_input=$("<label class='custom_label_css' id='email_id_input'>"+all_employee_dict[employee_id_selected]['email']+"</label>")
+                                            var email_id_input=$("<label class='custom_label_css ' id='email_id_input'>"+all_employee_dict[employee_id_selected]['email']+"</label>")
                                         colmd1.append(email_id_label);
                                         colmd2.append(email_id_input);
                                     row__col_two__subrow_four.append(colmd1)
@@ -1237,7 +1303,7 @@ function createAllEmployeeDataTable(){
                                         var colmd1=$("<div class='col-md-4 text-right'></div>")
                                         var colmd2=$("<div class='col-md-4'></div>")
                                             var qualification_label=$("<label class='custom_label_css font-weight-bold'>Qualification</label>");
-                                            var qualification_input=$("<label class='custom_label_css' id='contact_input'>"+all_employee_dict[employee_id_selected]['qualification']+"</label>")
+                                            var qualification_input=$("<label class='custom_label_css text-capitalize' id='contact_input'>"+all_employee_dict[employee_id_selected]['qualification']+"</label>")
                                         colmd1.append(qualification_label);
                                         colmd2.append(qualification_input);
                                     row__col_one__subrow_five.append(colmd1)
@@ -1249,7 +1315,7 @@ function createAllEmployeeDataTable(){
                                         var colmd1=$("<div class='col-md-4 text-right'></div>")
                                         var colmd2=$("<div class='col-md-4'></div>")
                                             var empType_label=$("<label class='custom_label_css font-weight-bold'>Employee Type</label>");
-                                            var empType_input=$("<label class='custom_label_css' id='empType_input'>"+all_employee_dict[employee_id_selected]['employee_type']+"</label>")
+                                            var empType_input=$("<label class='custom_label_css text-capitalize' id='empType_input'>"+all_employee_dict[employee_id_selected]['employee_type']+"</label>")
                                         colmd1.append(empType_label);
                                         colmd2.append(empType_input);
                                     row__col_two__subrow_five.append(colmd1)
@@ -1282,7 +1348,7 @@ function createAllEmployeeDataTable(){
                                 var col_one__subrow_seven=$("<div class='col-md-12'></div>");
                                     var row__col_one__subrow_seven=$("<div class='row'></div>");
                                         var colmd1=$("<div class='col-md-6 offset-md-2'></div>")
-                                            var print_button=$('<button class="btn btn-success btn-block fa fa-print" id="printEmployee" onclick="printAllEmployeeData()">Print</button>')
+                                            var print_button=$('<button class="save_btn fas  fa-print" id="printEmployee" onclick="printAllEmployeeData()"> Print</button>')
                                         colmd1.append(print_button)
                                     row__col_one__subrow_seven.append(colmd1)
                                 col_one__subrow_seven.append(row__col_one__subrow_seven)
@@ -1313,7 +1379,7 @@ function createAllEmployeeDataTable(){
 
         });
         $('.dataTables_filter  input[type="search"]').
-        attr('placeholder','Search employee ....').
+        attr('placeholder','Search Employee ....').
         css({'width':'200px','display':'inline-block'});
         $('.dataTables_filter input').addClass('form-control-custom');
     });
@@ -1350,6 +1416,29 @@ function printAllEmployeeData(){
     $('#foot_details').hide();
     $('#sidebar').show();
     $('#printEmployee').show();
+}
+function togglePasswordDiv(){
+    $( "#change_password_fields_div" ).toggle();
+
+}
+function changePassword(id){
+    passwordstr=$("#change_password_input").val()
+    $.ajax({
+        type: 'POST',
+        dataType: "json",
+        'data': {
+            "empid":id,
+            "passwordstr":passwordstr,
+        },
+        url: '/change_staffuser_password',
+        success: function(data){
+            console.log("Success");
+            alert("Password Changed");
+            passwordstr=$("#change_password_input").val("")
+
+        }
+    });
+
 }
 
 function getCookie(name) {

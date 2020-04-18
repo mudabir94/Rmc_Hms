@@ -148,6 +148,8 @@ function addMedicineForm(){
 
         var row_div_four=$("<div class='row'></div>");
         var weight_div_row=$("<div class='row' id='weight_div_row'></div>");
+        var litre_div_row=$("<div class='row' id='litre_div_row'></div>");
+
 
             col_one__row_div_one=$("<div class='col-md-6'></div>");
             row_div_one__col_one__row_div_one=$("<div class='row'></div>");
@@ -193,10 +195,10 @@ function addMedicineForm(){
             package_info_row_div.append(col_one__package_info_row_div)
             package_info_row_div.append(col_two__package_info_row_div)
             // HTML of row2 completed
-            col_one__row_div_three=$("<div class='col-md-6' style=' padding-top:10px'></div>");
+            col_one__row_div_three=$("<div class='col-md-2' style=' padding-top:10px'></div>");
                 p__col_one__row_div_three=$("<label class='custom_label_css'>Add Charge Status</label>");
             col_one__row_div_three.append(p__col_one__row_div_three);
-            col_two__row_div_three=$("<div class='col-md-6' style=' padding-top:10px'></div>");
+            col_two__row_div_three=$("<div class='col-md-3' style=' padding-top:10px'></div>");
                 p__col_two__row_div_three1=$("<input type='radio' name='YES_NO' value='YES' >YES</input>");
                 p__col_two__row_div_three2=$("<input type='radio'  name='YES_NO' value='No' checked >No</input>");
 
@@ -208,17 +210,35 @@ function addMedicineForm(){
 
 
 
-            col_one__weight_div_row=$("<div  class='col-md-6' style=' padding-top:10px'></div>");
+            col_one__weight_div_row=$("<div  class='col-md-2' style=' padding-top:10px'></div>");
             p__col_one__weight_div_row=$("<label class='custom_label_css'>Weight (mg)</label>");
             col_one__weight_div_row.append(p__col_one__weight_div_row);
 
-            col_two__weight_div_row=$("<div class='col-md-6' style=' padding-top:10px'></div>");
+            col_two__weight_div_row=$("<div class='col-md-3' style=' padding-top:10px'></div>");
                 p__col_two__weight_div_row=$("<input class='form-control-custom' type='number' min=0 id='med_weight_input'></input>");
 
             col_two__weight_div_row.append(p__col_two__weight_div_row);
 
             $(weight_div_row).append(col_one__weight_div_row)
             $(weight_div_row).append(col_two__weight_div_row)
+
+            
+
+
+            col_one=$("<div  class='col-md-2' style=' padding-top:10px'></div>");
+                p__col_one=$("<label class='custom_label_css'>Litre (ml)</label>");
+            col_one.append(p__col_one);
+
+            col_two=$("<div class='col-md-3' style=' padding-top:10px'></div>");
+                p__col_two=$("<input class='form-control-custom' type='number' min=0 id='med_litre_input'></input>");
+
+            col_two.append(p__col_two);
+
+            $(litre_div_row).append(col_one)
+            $(litre_div_row).append(col_two)
+            
+
+
             
 
             col_one__row_div_four=$("<div class='col-md-4'></div>");
@@ -240,10 +260,12 @@ function addMedicineForm(){
     $(main_col_div).append(package_info_row_div)
     $(main_col_div).append(row_div_three)
     $(main_col_div).append(weight_div_row)
+    $(main_col_div).append(litre_div_row)
 
     $(main_col_div).append("<hr>")
     $(main_col_div).append(row_div_four);
 
+    $("#litre_div_row").hide();
     medicineDataTableGenerator(medicine_name_type_list)
 
 }
@@ -251,16 +273,33 @@ function addMedicineForm(){
 function checkMedTypeReg(ele){
     console.log("value",ele.val())
     value=ele.val();
-    $("#weight_div_row").show()
-    if (value!=="Tablet" )
+    if (value=="Tablet" ){
+        $("#weight_div_row").show();
+
+    }
+    if (value!=="Tablet"  )
     {
         $("#weight_div_row").hide()
     }
+    if (value=="Syrup" ){
+        $("#litre_div_row").show();
+
+    }
+    if (value!=="Syrup"  )
+    {
+        $("#litre_div_row").hide()
+    }
 }
 function saveMedicineToDb(){
-    med_weight=$("#med_weight_input").val()
+    med_weight=$("#med_weight_input").val();
+    med_litre=$("#med_litre_input").val()
+
     if (med_weight=="" && $('#weight_div_row').css('display') !== 'none'){
-        alert("Please enter weight")
+        alert("Please Enter Weight")
+        return
+    }
+    if (med_litre=="" && $('#litre_div_row').css('display') !== 'none'){
+        alert("Please Enter Litres")
         return
     }
     // alert($("#med_name_input").val().toLowerCase())
@@ -316,12 +355,17 @@ function saveMedicineToDb(){
                     // get Radio Button Value and Send it for Save
                     add_charge_status=$("input[name='YES_NO']:checked").val();
                     med_weight=$("#med_weight_input").val()
-                    
+                    med_litre=$("#med_litre_input").val()
+
                     if($('#weight_div_row').css('display') == 'none')
                     {
                         med_weight=-1;
                     }
-                    sendAjaxReqToSaveMedicineToDb(medicine_name,selected_type,med_details,add_charge_status,med_weight);
+                    if($('#litre_div_row').css('display') == 'none')
+                    {
+                        med_litre=-1;
+                    }
+                    sendAjaxReqToSaveMedicineToDb(medicine_name,selected_type,med_details,add_charge_status,med_weight,med_litre);
 
                     $( this ).dialog( "close" );
                     medicine_name_type_list=[]
@@ -337,7 +381,7 @@ function saveMedicineToDb(){
     
     
 }
-function sendAjaxReqToSaveMedicineToDb(medicine_name,selected_type,med_details,add_charge_status,med_weight){
+function sendAjaxReqToSaveMedicineToDb(medicine_name,selected_type,med_details,add_charge_status,med_weight,med_litre){
     console.log("selected_type",selected_type)
     $('.modal-loading').show();
 
@@ -353,10 +397,18 @@ function sendAjaxReqToSaveMedicineToDb(medicine_name,selected_type,med_details,a
             "med_details":JSON.stringify(med_details),
             "add_charge_status":JSON.stringify(add_charge_status),
             "med_weight":JSON.stringify(med_weight),
-            
+            "med_litre":JSON.stringify(med_litre),
         },
         
         success: function(data){
+            if (data['data']==="InValid"){
+                alert("Please Remove Special Characters")
+                medicine_name_type_list=data['medicine_name_type_list']
+                addMedicineForm();
+
+                $('.modal-loading').hide();
+                return
+            }
             medicine_name_type_list=JSON.parse(JSON.stringify(data['medicine_name_type_list']))
             console.log("PPPPPPPPP",medicine_name_type_list)
             addMedicineForm();
@@ -2458,7 +2510,296 @@ function SaveToDespStock(){
 function focusOut_medicineNameAddMedForm(element){
     $("#empty_name_check_div").remove()
 }
+var update_med_table_datatable;
+var medicine_name_dict_update={}
+function updateMedicineForm(){
+    $.ajax({
+        type:"GET",
+        dataType:"json",
+        'data':{},
+        url:"/update_med_to_db",
+        success:function (data){
+            update_medicine_name_type_list=data['medicine_name_type_list']
+            medicine_name_dict_update=JSON.parse(data['medicine_name_dict_update'])
 
+        $('#main_page_content').empty();
+        var main_page_content= $('#main_page_content').append('<div class="container-fluid" id="container-update-medinfo"></div>');
+
+        $("#container-update-medinfo").append("<h2 class='center_h_tag_forms'>Update Medicine To Inventory</h2>");
+        $("#container-update-medinfo").append("<hr>");
+        var main_row_div1= $("<div class='row removerowmargins_div' id='update_med_info_mr1'></div>");
+        var main_row_div2= $("<div class='row removerowmargins_div' id='update_med_info_mr2'></div>");
+
+        $("#container-update-medinfo").append(main_row_div1);
+        $("#container-update-medinfo").append(main_row_div2);
+
+            var main_col_div1=$("<div class='col-md-12 genformdiv2'  id='update_med_info_mc1' ></div>");
+                var table=$('<table id="update_med_table" width="100%"  class="datatablecss_med" ></table>')
+            $(main_col_div1).append(table);
+        $(main_row_div1).append(main_col_div1);
+            var main_col_div2=$("<div class='col-md-12 genformdiv1' id='update_med_info_mc2' ></div>");
+
+
+        $(main_row_div2).append(main_col_div2);
+
+
+        updateMedicineDataTable(update_medicine_name_type_list)
+    }
+    });
+
+}
+function updateMedicineDataTable(list){
+    $('#update_med_table').empty();
+    $(function(){
+        $('#update_med_table').append('<caption style="caption-side: top;text-align: center;" class="datatable_heading_label">Registered Medicines</caption>');
+        update_med_table_datatable=$("#update_med_table").DataTable({
+            
+            data: list,
+            columns: [
+                { title:" No"},
+                { title: "Medicine" },
+                { title: "Type" },
+                { title: "Weights (mg)" },
+                { title: "Litres (ml)" },
+                { title: "Medicine Details" },
+                { title: "Additional Charge" },
+
+                ],
+                paging: false,
+                scrollY: 200,
+                scrollX: true,
+                ordering: false,
+                info:false,
+                searching:true,
+    
+
+            });
+            $('#update_med_table tbody').on( 'click', 'tr', function () {
+                if ( $(this).hasClass('selected') ) {
+                }
+                else{
+                    medid=$(this).find('td').eq(0).text()
+                    update_med_table_datatable.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                   
+                    createMedicineUpdateForm(medid);
+                    $('html,body').animate({
+                        scrollTop: $("#update_med_info_mc2").offset().top},
+                        'slow');
+                    
+                }
+            });
+            $('.dataTables_filter  input[type="search"]').
+            attr('placeholder','Search...').
+            css({'width':'200px','display':'inline-block'});
+            $('.dataTables_filter input').addClass('form-control-custom');
+        });
+    }
+
+function createMedicineUpdateForm(medid){
+    $("#update_med_info_mc2").empty();
+    var row_div_one=$("<div class='row medid' id='"+medid+"'></div>");
+    var package_info_row_div=$("<div class='row'></div>");
+    var row_div_three=$("<div class='row'></div>");
+
+    var row_div_four=$("<div class='row'></div>");
+    var weight_litre_div_row=$("<div class='row' id='update_weight_litre_div_row'></div>");
+
+        col_one__row_div_one=$("<div class='col-md-6'></div>");
+        row_div_one__col_one__row_div_one=$("<div class='row'></div>");
+        $(col_one__row_div_one).append(row_div_one__col_one__row_div_one);
+        col_one__row_div_one__col_one__row_div_one=$("<div class='col-md-4' style=' padding-top:10px'><label class='custom_label_css'>Medicine</label></div>");
+        
+        col_two__row_div_one__col_one__row_div_one=$("<div class='col-md-8 ' style=' padding-top:10px' id='update_med_name_input_div'><input value='"+medicine_name_dict_update[medid]['name'].toUpperCase()+"' type='text' id='update_med_name_input' class='form-control-custom'></input></div>");
+
+        $(row_div_one__col_one__row_div_one).append(col_one__row_div_one__col_one__row_div_one);
+        $(row_div_one__col_one__row_div_one).append(col_two__row_div_one__col_one__row_div_one);
+
+        col_two__row_div_one=$("<div class='col-md-6' style=' padding-top:10px'></div>");
+        row_div_one__col_two__row_div_one=$("<div class='row'></div>");
+        $(col_two__row_div_one).append(row_div_one__col_two__row_div_one);
+        col_one__row_div_one__col_two__row_div_one=$("<div class='col-md-4' style=' padding-top:10px'><label class='custom_label_css float-right'>Medicine Type</label></div>");
+        col_two__row_div_one__col_two__row_div_one=$("<div class='col-md-8 '><input value='"+medicine_name_dict_update[medid]['type']+"' type='text' id='update_med_type_input' class='form-control-custom' disabled></input></div>");
+        $(row_div_one__col_two__row_div_one).append(col_one__row_div_one__col_two__row_div_one);
+        $(row_div_one__col_two__row_div_one).append(col_two__row_div_one__col_two__row_div_one);
+    
+        $(row_div_one).append(col_one__row_div_one);
+        $(row_div_one).append(col_two__row_div_one);
+    
+        // Html of row 2 starting. 
+        
+        col_one__package_info_row_div=$("<div class='col-md-2' style=' padding-top:10px'></div>");
+        p__col_one__package_info_row_div=$("<label class='custom_label_css'>Medicine Details</label>");
+        col_one__package_info_row_div.append(p__col_one__package_info_row_div);
+        col_two__package_info_row_div=$("<div class='col-md-8' style=' padding-top:10px'></div>");
+        p__col_two__package_info_row_div=$("<input type='textarea' value='"+medicine_name_dict_update[medid]['med_det']+"' class='form-control-custom' id='update_med_details'></input>");
+        col_two__package_info_row_div.append(p__col_two__package_info_row_div);
+        package_info_row_div.append(col_one__package_info_row_div)
+        package_info_row_div.append(col_two__package_info_row_div)
+        // HTML of row2 completed
+        col_one__row_div_three=$("<div class='col-md-2' style=' padding-top:10px'></div>");
+            p__col_one__row_div_three=$("<label class='custom_label_css'>Add Charge Status</label>");
+        col_one__row_div_three.append(p__col_one__row_div_three);
+        col_two__row_div_three=$("<div class='col-md-3' style=' padding-top:10px'></div>");
+        med_charge=medicine_name_dict_update[medid]['med_charge']
+            if (med_charge=="YES"){
+                p__col_two__row_div_three1=$("<input type='radio' name='YES_NO' value='YES' checked>YES</input>");
+                p__col_two__row_div_three2=$("<input type='radio'  name='YES_NO' value='No'  >No</input>");
+
+            }
+            else{
+                p__col_two__row_div_three1=$("<input type='radio' name='YES_NO' value='YES' >YES</input>");
+                p__col_two__row_div_three2=$("<input type='radio'  name='YES_NO' value='No' checked >No</input>");
+            }
+
+        col_two__row_div_three.append(p__col_two__row_div_three1);
+        col_two__row_div_three.append(p__col_two__row_div_three2);
+
+        $(row_div_three).append(col_one__row_div_three)
+        $(row_div_three).append(col_two__row_div_three)
+
+        if (medicine_name_dict_update[medid]['type']==="Tablet"){
+            col_one__weight_div_row=$("<div  class='col-md-2' style=' padding-top:10px'></div>");
+        
+            p__col_one__weight_div_row=$("<label class='custom_label_css'>Weight (Mg)</label>");
+            col_one__weight_div_row.append(p__col_one__weight_div_row);
+    
+            col_two__weight_div_row=$("<div class='col-md-3' style=' padding-top:10px'></div>");
+                p__col_two__weight_div_row=$("<input class='form-control-custom weight_litre_class' value='"+medicine_name_dict_update[medid]['weight']+"' type='number' min=0 id='update_med_weight_input'></input>");
+    
+            col_two__weight_div_row.append(p__col_two__weight_div_row);
+    
+            $(weight_litre_div_row).append(col_one__weight_div_row)
+            $(weight_litre_div_row).append(col_two__weight_div_row)
+        }
+        else if (medicine_name_dict_update[medid]['type']==="Syrup"){
+            col_one=$("<div  class='col-md-2' style=' padding-top:10px'></div>");
+        
+            p__col_one=$("<label class='custom_label_css'>Litres (ml)</label>");
+            col_one.append(p__col_one);
+    
+            col_two=$("<div class='col-md-3' style=' padding-top:10px'></div>");
+                p__col_two=$("<input class='form-control-custom weight_litre_class' value='"+medicine_name_dict_update[medid]['litre']+"' type='number' min=0 id='update_med_litre_input'></input>");
+    
+            col_two.append(p__col_two);
+    
+            $(weight_litre_div_row).append(col_one);
+            $(weight_litre_div_row).append(col_two);
+        }
+        
+        
+
+        col_one__row_div_four=$("<div class='col-md-4'></div>");
+        col_two__row_div_four=$("<div class='col-md-4'></div>");
+        col_third__row_div_four=$("<div class='col-md-4'></div>");
+
+                save_btn_label=$("<button class='save_btn fa fa-save' style='width:inherit' onclick='UpdateMedicineToDb()'>  Update</button>");
+            col_two__row_div_four.append(save_btn_label);
+
+        row_div_four.append(col_one__row_div_four)
+        row_div_four.append(col_two__row_div_four)
+        row_div_four.append(col_third__row_div_four)
+
+
+main_col_div2=$("#update_med_info_mc2")
+$(main_col_div2).append(row_div_one)
+$(main_col_div2).append(package_info_row_div)
+$(main_col_div2).append(row_div_three)
+
+$(main_col_div2).append(weight_litre_div_row)
+
+$(main_col_div2).append("<hr>")
+$(main_col_div2).append(row_div_four);
+}
+function UpdateMedicineToDb(){
+    $( function() {
+        $( "#dialog-confirm" ).show()
+        $( "#dialog-confirm" ).dialog({
+        resizable: false,
+        height: "auto",
+        width: 400,
+        modal: true,
+        buttons: {
+            "Update": function() {
+           
+    
+                medicine_name=$("#update_med_name_input").val().toLowerCase();
+                type=$("#update_med_type_input").val()
+                med_details=$("#update_med_details").val();
+                console.log("med_details",med_details);
+                add_charge_status=$("input[name='YES_NO']:checked").val();
+                weight_litre_class_id=$(".weight_litre_class").attr('id')
+                if (weight_litre_class_id==='update_med_weight_input'){
+                    med_weight=$("#update_med_weight_input").val();
+                    med_litre=-1
+                }
+                else{
+                    med_weight=-1
+                    med_litre=$("#update_med_litre_input").val();
+                }
+                medid=$(".medid").attr('id')
+                
+               
+                sendAjaxReqToUpdateMedicineToDb(medid,medicine_name,type,med_details,add_charge_status,med_weight,med_litre);
+
+                $( this ).dialog( "close" );
+            },
+            "Cancel": function() {
+            $( this ).dialog( "close" );
+            }
+        }
+        });
+    } );
+}
+function sendAjaxReqToUpdateMedicineToDb(medid,medicine_name,type,med_details,add_charge_status,med_weight,med_litre){
+    $('.modal-loading').show();
+
+    $.ajax({
+        type: 'POST',
+        dataType: "json",
+        // the ajax call is sent to  url name in the post function.  
+        url: '/update_med_to_db',
+        'data': {
+            'medid':JSON.stringify(medid),
+            "medicine_name":JSON.stringify(medicine_name),
+            "selected_type":JSON.stringify(type),
+            "med_details":JSON.stringify(med_details),
+            "add_charge_status":JSON.stringify(add_charge_status),
+            "med_weight":JSON.stringify(med_weight),
+            "med_litre":JSON.stringify(med_litre),
+
+            
+        },
+        
+        success: function(data){
+            if (data['iddata']==="InValid"){
+                alert("Please Remove Character From Id Field")
+                $('.modal-loading').hide();
+                return;
+            }
+            if (data['namedata']==="InValid"){
+                alert("Please Remove Digits Or Special Character From Name Field")
+                $('.modal-loading').hide();
+                return;
+            } if (data['message']==="InValid"){
+                alert("Id Not Found")
+                $('.modal-loading').hide();
+                return;
+            }
+            alert("Updated")
+            $('.modal-loading').hide();
+            medicine_list=data['medicine_list']
+            console.log("medicine_list",medicine_list)
+            update_med_table_datatable.clear().draw();
+            for (var i in medicine_list){
+              
+                update_med_table_datatable.row.add( medicine_list[i] ).draw();
+               
+            } 
+
+        }
+        });
+}
 
 function getCookie(name) {
     var cookieValue = null;

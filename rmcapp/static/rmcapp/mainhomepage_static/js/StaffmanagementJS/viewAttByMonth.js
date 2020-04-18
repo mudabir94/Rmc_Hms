@@ -1,5 +1,5 @@
 var view_att_databymonth_datatable;
-var monthlist=['Jan','Feb','March',"April","May","June","July","August","September","October","November","December"];
+var monthlist=['January','February','March',"April","May","June","July","August","September","October","November","December"];
 $(function(){
     row_view_att_by_month__table_div=$("#row_view_att_by_month__table_div");
         var table=$("<table id='view_att_bymonth_table' class='datatable_upload_att_file' width='100%' >")
