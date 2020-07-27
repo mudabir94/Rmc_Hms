@@ -779,7 +779,7 @@ function printSurgProcBill(){
     
     $('#surg_proc_bill_div').empty();
     $('#patient_dash_first_div').show();
-    saveSurgProcBill();
+    // saveSurgProcBill();
 
 
 }
@@ -808,6 +808,7 @@ function saveSurgProcBill(){
         },
         url: '/save_surg_proc_bill',
         success: function(data){
+            alert("Saved")
 
         }
     });

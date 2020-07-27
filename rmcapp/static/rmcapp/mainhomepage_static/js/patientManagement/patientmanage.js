@@ -3409,7 +3409,7 @@ function printPrescriptionForm(){
     if (amountdue_input===""){
         $("#empty_name_check_div_amountdue_input").remove();
 
-        var div=$("<div class='empty_name_check_div' id='empty_name_check_div_"+ $("#amountdue_input").attr('id')+"'><span  class='glyphicon' style='color:red'>&#x2a;Required</span></div>")
+        var div=$("<div class='empty_name_check_div' id='empty_name_check_div_"+ $("#amountdue_input").attr('id')+"'><span  class='glyphicon' style='font-size:1rem;color:red'>&#x2a;Required</span></div>")
         $("#amountdue_input").parent().append(div);
         required_fields_left=true
 
@@ -3420,7 +3420,7 @@ function printPrescriptionForm(){
     }
     if (doctor==="--"){
         $("#empty_name_check_div_selecteddoctor").remove();
-        var div=$("<div class='empty_name_check_div' id='empty_name_check_div_"+ $("#selecteddoctor").attr('id')+"'><span  class='glyphicon' style='color:red'>&#x2a;Required</span></div>")
+        var div=$("<div class='empty_name_check_div' id='empty_name_check_div_"+ $("#selecteddoctor").attr('id')+"'><span  class='glyphicon' style='font-size:1rem;color:red'>&#x2a;Required</span></div>")
         $("#selecteddoctor").parent().append(div);
         required_fields_left=true;
     }else{
@@ -3430,7 +3430,7 @@ function printPrescriptionForm(){
     }
     if (totalamount_input=="" || totalamount_input==0){
         $("#empty_name_check_div_totalamount_input").remove();
-        var div=$("<div class='empty_name_check_div' id='empty_name_check_div_"+ $("#totalamount_input").attr('id')+"'><span  class='glyphicon' style='color:red'>&#x2a;Required</span></div>")
+        var div=$("<div class='empty_name_check_div' id='empty_name_check_div_"+ $("#totalamount_input").attr('id')+"'><span  class='glyphicon' style='font-size:1rem;color:red'>&#x2a;Required</span></div>")
         $("#totalamount_input").parent().append(div);
         required_fields_left=true;
     }
@@ -3441,7 +3441,7 @@ function printPrescriptionForm(){
     }
     if (amount_recieved_input===""){
         $("#empty_name_check_div_selecteddoctor").remove();
-        var div=$("<div class='empty_name_check_div' id='empty_name_check_div_"+ $("#amount_recieved_input").attr('id')+"'><span  class='glyphicon' style='color:red'>&#x2a;Required</span></div>")
+        var div=$("<div class='empty_name_check_div' id='empty_name_check_div_"+ $("#amount_recieved_input").attr('id')+"'><span  class='glyphicon' style='font-size:1rem;color:red'>&#x2a;Required</span></div>")
         $("#amount_recieved_input").parent().append(div);
         required_fields_left=true;
     }else{

@@ -69,20 +69,22 @@ function retrieveRoomWardBill(pres_id){
         },
         url: '/retrieve_room_ward_bill',
         success: function(data){
-            
+            billstatus= data['billstatus']
+
             if (data['pres_id']===""){
                 alert("Please Insert Valid Pres id");
                 $('.modal-loading').hide();
 
                 return
             }
-            if (data['data']!=='Valid'){
+            if (data['data']=='InValid'){
                 alert("Input Not Valid")
 
                 $('.modal-loading').hide();
 
                 return;
             }
+           
             roomBill_dict={}
             wardBill_dict={}
             roomBill_dict=JSON.parse(data["roomBill_dict"])
@@ -133,10 +135,12 @@ function retrieveRoomWardBill(pres_id){
                     templist.push(roomBill_dict[roombill]['checkin'])
                     templist.push(roomBill_dict[roombill]['id'])
                     roomBill_list.push(templist)
+                   
                 }
                 console.log("roomBill_dict>>>>>>",roomBill_dict);
                 console.log(roomBill_list);
-                createBillDetailsRoomBill();
+               
+                createBillDetailsRoomBill(billstatus);
 
             }
             else{
@@ -149,12 +153,14 @@ function retrieveRoomWardBill(pres_id){
                     templist.push(wardBill_dict[wardbill]['bed_no'])
                     templist.push(wardBill_dict[wardbill]['charge_per_day'])
                     templist.push(wardBill_dict[wardbill]['checkin'])
+                    
                     templist.push(wardBill_dict[wardbill]['id'])
                     wardBill_list.push(templist)
+                    
                 }
                 console.log("wardBill_dic>>>>>>>>",wardBill_dict);
                 console.log(wardBill_list);
-                createBillDetailsWardBill();
+                createBillDetailsWardBill(billstatus);
             }
             var subrow_three=$("<div class='row div_for_print_page' style='padding-top: 5px;padding-bottom: 5px; '></div>")
 
@@ -202,7 +208,7 @@ function retrieveRoomWardBill(pres_id){
         }
     }); 
 }
-function createBillDetailsRoomBill(){
+function createBillDetailsRoomBill(billstatus){
     $("#row_div_two").remove()
     $("#row_div_three").remove()
 
@@ -312,8 +318,8 @@ function createBillDetailsRoomBill(){
                         row__col_one__subrow_four.append(colmd1);
                         row__col_one__subrow_four.append(colmd2);
                     col_one__subrow_four.append(row__col_one__subrow_four);
-
-                    var col_two__subrow_four=$("<div class='col-md-5'></div>");
+                    if (billstatus!=="done"){
+                        var col_two__subrow_four=$("<div class='col-md-5'></div>");
                         var row__col_two__subrow_four=$("<div class='row'></div>");
                             var colmd1=$("<div class='col-md-5'></div>")
                             var colmd2=$("<div class='col-md-5' ></div>")
@@ -325,37 +331,94 @@ function createBillDetailsRoomBill(){
                         row__col_two__subrow_four.append(colmd1)
                         row__col_two__subrow_four.append(colmd2)
                     col_two__subrow_four.append(row__col_two__subrow_four)
-
-                    // var col_three__subrow_four=$("<div class='col-md-2'></div>");
-                    //     var row__col_three__subrow_four=$("<div class='row'></div>");
-                    //         var colmd1=$("<div class='col-md-12'></div>")
-                    //             var Calculate_bttn=$('<button class="btn btn-block fa fa-calculator"  id="calc_bttn" onclick="calculateRoomBill()">  Calculate Room Bill</button>')
-                    //         colmd1.append(Calculate_bttn)
-                    //     row__col_three__subrow_four.append(colmd1)
-                    // col_three__subrow_four.append(row__col_three__subrow_four)
+                    }
+                    else{
+                        var col_two__subrow_four=$("<div class='col-md-5'></div>");
+                        var row__col_two__subrow_four=$("<div class='row'></div>");
+                            var colmd1=$("<div class='col-md-5'></div>")
+                            var colmd2=$("<div class='col-md-5' ></div>")
+                                var checkout_label=$("<label class='custom_label_css'>Discharge Date</label>");
+                                var checkout_input=$("<input id='checkout_input' value='"+roomBill_dict['checkout']+"' autocomplete='off' style='background: transparent;border: none;border-bottom: 1px solid #000000;-webkit-box-shadow: none;box-shadow: none;border-radius: 0;' disable></input>")
+                            colmd1.append(checkout_label);
+                            colmd2.append(checkout_input);
+        
+                        row__col_two__subrow_four.append(colmd1)
+                        row__col_two__subrow_four.append(colmd2)
+                    col_two__subrow_four.append(row__col_two__subrow_four)
+                    }
+                    
 
                 subrow_four.append(col_one__subrow_four)
                 subrow_four.append(col_two__subrow_four)
                 // subrow_four.append(col_three__subrow_four)
+                main_subcol.append(subrow_one)
+                main_subcol.append(subrow_two)
+                main_subcol.append(subrow_three)
+                main_subcol.append(subrow_four)
+                    if (billstatus!=="done"){
 
-                var subrow_six=$("<div class='row ' id='subrow_six'></div>");
-                    var colmd1=$("<div class='col-md-12'></div>")
-                        var Calculate_bttn=$('<button class="btn btn-block fa fa-calculator"  id="calc_bttn" onclick="calculateRoomBill()">  Calculate Room Bill</button>')
-                    colmd1.append(Calculate_bttn)
-                subrow_six.append(colmd1);
+                            var subrow_six=$("<div class='row ' id='subrow_six'></div>");
+                                var colmd1=$("<div class='col-md-12'></div>")
+                                    var Calculate_bttn=$('<button class="calbtn fa fa-calculator"  id="calc_bttn" onclick="calculateRoomBill()">  Calculate Room Bill</button>')
+                                colmd1.append(Calculate_bttn)
+                            subrow_six.append(colmd1);
 
-                var subrow_five=$("<div class='row' id='subrow_five'></div>");
-                var subrow_seven=$("<div class='row' id='subrow_seven'></div>");
-
-            main_subcol.append(subrow_one)
-            main_subcol.append(subrow_two)
-            main_subcol.append(subrow_three)
-            main_subcol.append(subrow_four)
-            main_subcol.append(subrow_six);
+                            var subrow_five=$("<div class='row' id='subrow_five'></div>");
+                            var subrow_seven=$("<div class='row' id='subrow_seven'></div>");
+                        main_subcol.append(subrow_six);
+                        main_subcol.append(subrow_five)
+                        main_subcol.append(subrow_seven)
+                    }
+                    else{
+                        
+                            $("#subrow_five").remove();
+                            var subrow_five=$("<div class='row' style='padding-top: 5px;padding-bottom: 5px;' id='subrow_five'></div>");
             
+                            var col_one__subrow_five=$("<div class='col-md-5'></div>");
+                                row__col_one__subrow_five=$("<div class='row'></div>");
+                                    var colmd1=$("<div class='col-md-5'></div>")
+                                    var colmd2=$("<div class='col-md-6'></div>")
+                                        var totaldays_label=$("<label for='total_tag' class='custom_label_css'>Days Stayed</label>")
+                                        var totaldays_input=$("<label id='total_days' class='roomwardforminputlabels'>"+roomBill_dict['total_days']+"</label>")
+                                    colmd1.append(totaldays_label)
+                                    colmd2.append(totaldays_input)
+                                row__col_one__subrow_five.append(colmd1);
+                                row__col_one__subrow_five.append(colmd2);
+                            col_one__subrow_five.append(row__col_one__subrow_five);
+            
+                            var col_two__subrow_five=$("<div class='col-md-5'></div>");
+                                var row__col_two__subrow_five=$("<div class='row'></div>");
+                                var colmd1=$("<div class='col-md-5'></div>")
+                                var colmd2=$("<div class='col-md-6'></div>")
+                                    var totalAmount_label=$("<label for='total_tag' class='custom_label_css'>Total Charges</label>")
+                                    var totalAmount_input=$("<label id='net_total' class='roomwardforminputlabels'>"+roomBill_dict['net_total']+"</label>")
+                                colmd1.append(totalAmount_label)
+                                colmd2.append(totalAmount_input)
+                
+                                row__col_two__subrow_five.append(colmd1)
+                                row__col_two__subrow_five.append(colmd2)
+                            col_two__subrow_five.append(row__col_two__subrow_five)
+            
+                          
+            
+                            var col_four__subrow_five=$("<div class='col-md-2'></div>");
+                                var row__col_four__subrow_five=$("<div class='row'></div>");
+                                    var colmd1=$("<div class='col-md-12'></div>")
+                                        var print_bttn=$('<button class="add_btn fa fa-print" id="print_btn" onclick="printRoomBill()">  Print Bill</button>')
+                                    colmd1.append(print_bttn)
+                                row__col_four__subrow_five.append(colmd1)
+                            col_four__subrow_five.append(row__col_four__subrow_five)
+            
+                        subrow_five.append(col_one__subrow_five)
+                        subrow_five.append(col_two__subrow_five)
+                        subrow_five.append(col_four__subrow_five)
+            
+                        main_subcol.append(subrow_five)
+                        }
+            
+                    
            
-            main_subcol.append(subrow_five)
-            main_subcol.append(subrow_seven)
+           
 
             row_div_two.append(main_subcol)
         var main_col_div=$("#main_col_div");
@@ -377,10 +440,10 @@ function createBillDetailsRoomBill(){
         }
     });
 }
-function createBillDetailsWardBill(){
+function createBillDetailsWardBill(billstatus){
     $("#row_div_two").remove()
     $("#row_div_three").remove()
-        var row_div_two=$("<div class='row' id='row_div_two'></div>");
+        var row_div_two=$("<div class='row genformdiv1' id='row_div_two'></div>");
             var main_subcol=$("<div class='col-md-12'></div>");
                 
                 var subrow_one=$("<div class='row' style='padding-top: 5px;padding-bottom: 5px;' ></div>")
@@ -390,7 +453,7 @@ function createBillDetailsWardBill(){
                             var colmd1=$("<div class='col-md-5'></div>")
                             var colmd2=$("<div class='col-md-6'></div>")
                                 var pat_name_label=$("<label for='pat_name_tag' class='custom_label_css'>Patient Name</label>");
-                                var pat_name_input=$("<label id='pat_name_input' class='roomwardforminputlabels'>"+wardBill_dict['patient_name']+"</label>")
+                                var pat_name_input=$("<label id='pat_name_input' class='roomwardforminputlabels'>"+wardBill_dict['patient_name'].toUpperCase()+"</label>")
                             colmd1.append(pat_name_label)
                             colmd2.append(pat_name_input)
                         row__col_one__subrow_one.append(colmd1);
@@ -471,6 +534,7 @@ function createBillDetailsWardBill(){
                         row__col_one__subrow_four.append(colmd1);
                         row__col_one__subrow_four.append(colmd2);
                     col_one__subrow_four.append(row__col_one__subrow_four);
+                if (billstatus!=="done"){
 
                     var col_two__subrow_four=$("<div class='col-md-5'></div>");
                         var row__col_two__subrow_four=$("<div class='row'></div>");
@@ -484,11 +548,34 @@ function createBillDetailsWardBill(){
                         row__col_two__subrow_four.append(colmd1)
                         row__col_two__subrow_four.append(colmd2)
                     col_two__subrow_four.append(row__col_two__subrow_four)
+                }
+                else{
+                    var col_two__subrow_four=$("<div class='col-md-5'></div>");
+                        var row__col_two__subrow_four=$("<div class='row'></div>");
+                            var colmd1=$("<div class='col-md-5'></div>")
+                            var colmd2=$("<div class='col-md-4'></div>")
+                                var checkout_label=$("<label class='custom_label_css'>Discharge Date</label>");
+                                var checkout_input=$("<input id='checkout_input' value='"+wardBill_dict['checkout']+"' style='background: transparent;border: none;border-bottom: 1px solid #000000;-webkit-box-shadow: none;box-shadow: none;border-radius: 0;' disabled></input>")
+                            colmd1.append(checkout_label);
+                            colmd2.append(checkout_input);
+        
+                        row__col_two__subrow_four.append(colmd1)
+                        row__col_two__subrow_four.append(colmd2)
+                    col_two__subrow_four.append(row__col_two__subrow_four)
+                }
+
+
+            main_subcol.append(subrow_one)
+            main_subcol.append(subrow_two)
+            main_subcol.append(subrow_three)
+            main_subcol.append(subrow_four)
+            
+                if (billstatus!=="done"){
 
                     var col_three__subrow_four=$("<div class='col-md-2'></div>");
                         var row__col_three__subrow_four=$("<div class='row'></div>");
                             var colmd1=$("<div class='col-md-12'></div>")
-                                var Calculate_bttn=$('<button class="btn btn-block fa fa-calculator" id="calc_bttn" onclick="calculateWardBill()">  Calculate Ward Bill</button>')
+                                var Calculate_bttn=$('<button class="calbtn fa fa-calculator" id="calc_bttn" onclick="calculateWardBill()">  Calculate Ward Bill</button>')
                             colmd1.append(Calculate_bttn)
                         row__col_three__subrow_four.append(colmd1)
                     col_three__subrow_four.append(row__col_three__subrow_four)
@@ -498,24 +585,77 @@ function createBillDetailsWardBill(){
                 subrow_four.append(col_three__subrow_four)
 
                 var subrow_five=$("<div class='row' id='subrow_five'></div>");
+                main_subcol.append(subrow_five)
 
+            }
+            else{
+                subrow_four.append(col_one__subrow_four)
+                subrow_four.append(col_two__subrow_four)
+                $("#subrow_five").remove();
+                var subrow_five=$("<div class='row' style='padding-top: 5px;padding-bottom: 5px;' id='subrow_five'></div>");
 
-            main_subcol.append(subrow_one)
-            main_subcol.append(subrow_two)
-            main_subcol.append(subrow_three)
-            main_subcol.append(subrow_four)
+                var col_one__subrow_five=$("<div class='col-md-5'></div>");
+                    row__col_one__subrow_five=$("<div class='row'></div>");
+                        var colmd1=$("<div class='col-md-5'></div>")
+                        var colmd2=$("<div class='col-md-6'></div>")
+                            var totaldays_label=$("<label for='total_tag' class='custom_label_css'>Days Stayed</label>")
+                            var totaldays_input=$("<label id='total_days' class='roomwardforminputlabels'>"+wardBill_dict['total_days']+"</label>")
+                        colmd1.append(totaldays_label)
+                        colmd2.append(totaldays_input)
+                    row__col_one__subrow_five.append(colmd1);
+                    row__col_one__subrow_five.append(colmd2);
+                col_one__subrow_five.append(row__col_one__subrow_five);
+
+                var col_two__subrow_five=$("<div class='col-md-5'></div>");
+                    var row__col_two__subrow_five=$("<div class='row'></div>");
+                    var colmd1=$("<div class='col-md-5'></div>")
+                    var colmd2=$("<div class='col-md-6'></div>")
+                        var totalAmount_label=$("<label for='total_tag' class='custom_label_css'>Total Charges</label>")
+                        var totalAmount_input=$("<label id='net_total' class='roomwardforminputlabels'>"+wardBill_dict['net_total']+"</label>")
+                    colmd1.append(totalAmount_label)
+                    colmd2.append(totalAmount_input)
+    
+                    row__col_two__subrow_five.append(colmd1)
+                    row__col_two__subrow_five.append(colmd2)
+                col_two__subrow_five.append(row__col_two__subrow_five)
+
+              
+
+                var col_four__subrow_five=$("<div class='col-md-2'></div>");
+                    var row__col_four__subrow_five=$("<div class='row'></div>");
+                        var colmd1=$("<div class='col-md-12'></div>")
+                            var print_bttn=$('<button class="add_btn fa fa-print" id="print_btn" onclick="printWardBill()">  Print Bill</button>')
+                        colmd1.append(print_bttn)
+                    row__col_four__subrow_five.append(colmd1)
+                col_four__subrow_five.append(row__col_four__subrow_five)
+
+            subrow_five.append(col_one__subrow_five)
+            subrow_five.append(col_two__subrow_five)
+            subrow_five.append(col_four__subrow_five)
+
             main_subcol.append(subrow_five)
+                // calculateWardBill()
+            }
 
 
             row_div_two.append(main_subcol)
         var main_col_div=$("#main_col_div");
     main_col_div.append(row_div_two);
 
-    $( "#checkout_input" ).datepicker({
+    // $( "#checkout_input" ).datepicker({
+    //     changeMonth: true,
+    //     changeYear: true,
+    //     dateFormat: "yy-mm-dd",
+
+    // });
+    $('#checkout_input').datepicker({
+        uiLibrary: 'bootstrap4',
         changeMonth: true,
         changeYear: true,
-        dateFormat: "yy-mm-dd",
-
+        format: "yyyy-mm-dd",
+        icons: {
+            rightIcon: false,
+        }
     });
 }
 function calculateRoomBill(){
@@ -590,11 +730,11 @@ function calculateRoomBill(){
         subrow_five.append(main_subcol);
         var subrow_seven=$("#subrow_seven");
         var col_print=$("<div class='col-md-6'></div>"); 
-            var print_bttn=$('<button class="save_btn fa fa-print" id="print_btn" onclick="printRoomBill()">  Print Bill</button>')
+            var print_bttn=$('<button class="add_btn fa fa-print" id="print_btn" onclick="printRoomBill()">  Print Bill</button>')
         col_print.append(print_bttn)
         var col_save=$("<div class='col-md-6'></div>");
                         
-            var save_bttn=$('<button class="save_btn fa fa-save" id="save_btn" onclick="saveRoomBill()">  Save</button>')
+            var save_bttn=$('<button class="add_btn fa fa-save" id="save_btn" onclick="saveRoomBill()">  Save</button>')
         col_save.append(save_bttn)
                       
         subrow_seven.append(col_save)
@@ -662,7 +802,7 @@ function calculateWardBill(){
                     var col_three__subrow_one=$("<div class='col-md-1'></div>");
                         var row__col_three__subrow_one=$("<div class='row'></div>");
                             var colmd1=$("<div class='col-md-12'></div>")
-                                var save_bttn=$('<button class="btn btn-block fa fa-save" id="save_btn" onclick="saveWardBill()">  Save</button>')
+                                var save_bttn=$('<button class="add_btn fa fa-save" id="save_btn" onclick="saveWardBill()">  Save</button>')
                             colmd1.append(save_bttn)
                         row__col_three__subrow_one.append(colmd1)
                     col_three__subrow_one.append(row__col_three__subrow_one)
@@ -670,7 +810,7 @@ function calculateWardBill(){
                     var col_four__subrow_one=$("<div class='col-md-1'></div>");
                         var row__col_four__subrow_one=$("<div class='row'></div>");
                             var colmd1=$("<div class='col-md-12'></div>")
-                                var print_bttn=$('<button class="btn btn-block fa fa-print" id="print_btn" onclick="printWardBill()">  Print Bill</button>')
+                                var print_bttn=$('<button class="add_btn fa fa-print" id="print_btn" onclick="printWardBill()">  Print Bill</button>')
                             colmd1.append(print_bttn)
                         row__col_four__subrow_one.append(colmd1)
                     col_four__subrow_one.append(row__col_four__subrow_one)
@@ -721,6 +861,7 @@ function saveRoomBill(){
             }
             alert('Saved')
             $('.modal-loading').hide();
+            $("#row_div_two").remove();
 
         },
     });
@@ -761,6 +902,7 @@ function saveWardBill(){
             console.log(data['Success']);
             alert("Saved")
             $('.modal-loading').hide();
+            $("#row_div_two").remove();
 
         },
     });
@@ -807,7 +949,7 @@ function printRoomBill(){
     $('#print_btn').show();
     $('#save_btn').show();
     
-    saveRoomBill();
+    // saveRoomBill();
 
     // var pres_id=$("#prescription_input").text();
     // console.log("pres_id", pres_id);
@@ -877,7 +1019,7 @@ function printWardBill(){
     $('#calc_bttn').show();
     $('#print_btn').show();
     $('#save_btn').show();
-    saveWardBill();
+    // saveWardBill();
     // var pres_id=$("#prescription_input").text();
     // console.log("pres_id", pres_id);
 

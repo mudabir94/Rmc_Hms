@@ -1,164 +1,242 @@
 from django.conf.urls import url, include
 from django.urls import path
-from . import views 
+from . import views
 urlpatterns = [
 
-  path('', views.mainHome.as_view(), name='mainhomepage'),
-  path("maindashboard",views.mainDashBoard.as_view(),name="main_dashboard"),
-  path("inventorydashboard",views.inventoryDashBoard.as_view(),name="inventory_dashboard"),
-  path("staff_dashboard",views.staffDashboard.as_view(),name="staff_dashboard"),
-  path("patient_dashboard",views.patientDashboard.as_view(),name="patient_dashboard"),
+    path('', views.mainHome.as_view(), name='mainhomepage'),
+    path("maindashboard", views.mainDashBoard.as_view(), name="main_dashboard"),
+    path("inventorydashboard", views.inventoryDashBoard.as_view(),
+         name="inventory_dashboard"),
+    path("staff_dashboard", views.staffDashboard.as_view(), name="staff_dashboard"),
+    path("patient_dashboard", views.patientDashboard.as_view(),
+         name="patient_dashboard"),
 
-  path("medicinedashboard",views.medicineDashBoard.as_view(),name="medicine_dashboard"),
-  path("addmedtostorage",views.addMedToStorage,name="addmedtostorage"),
-  path("addmedtodispensory",views.addMedToDispensory,name="addmedtodispensory"),
+    path("medicinedashboard", views.medicineDashBoard.as_view(),
+         name="medicine_dashboard"),
+    path("addmedtostorage", views.addMedToStorage, name="addmedtostorage"),
+    path("addmedtodispensory", views.addMedToDispensory, name="addmedtodispensory"),
 
-  path('checkmedin_medicineBatches',views.checkMedicineInmedicineBatches,name="checkmedin_medicineBatches"),
-  path("save_medicine_to_wh_stock",views.saveMedicineToWhStock,name="save_medicine_to_wh_stock"),
-  path("save_medicine_to_wh_stock_bottle",views.saveMedicineToWhStockBottle,name="save_medicine_to_wh_stock_bottle"),
-  path('save_med_to_db',views.sendAjaxReqToSaveMedicineToDb,name="save_med_to_db"),
-  path("update_med_to_db",views.updateMedToDb.as_view(),name="update_med_to_db"),
+    path('checkmedin_medicineBatches', views.checkMedicineInmedicineBatches,
+         name="checkmedin_medicineBatches"),
+    path("save_medicine_to_wh_stock", views.saveMedicineToWhStock,
+         name="save_medicine_to_wh_stock"),
+    path("save_medicine_to_wh_stock_bottle", views.saveMedicineToWhStockBottle,
+         name="save_medicine_to_wh_stock_bottle"),
+    path('save_med_to_db', views.sendAjaxReqToSaveMedicineToDb,
+         name="save_med_to_db"),
+    path("update_med_to_db", views.updateMedToDb.as_view(), name="update_med_to_db"),
 
-  path('save_to_desp_stock',views.saveToDespStock,name="save_to_desp_stock"),
-  
-  path('save_employee_data',views.saveEmployeeData,name="save_employee_data"),
-  path("save_patient_data",views.savePatientData,name="save_patient_data"),
-  
-  path('retrieve_medicine_type',views.retrieveMedicineType,name="retrieve_medicine_type"),
-  path('retrieve_medicine_name',views.retrieveMedicineName,name="retrieve_medicine_name"),
-  path('retrieve_package_types',views.retrievePackageTypes,name="retrieve_package_types"),
+    path('save_to_desp_stock', views.saveToDespStock, name="save_to_desp_stock"),
 
-  path("retrieve_medicine_gen_data_from_stock",views.retrieveMedicineGenDataFromStock,name="retrieve_medicine_gen_data_from_stock"),
-  path("retrieve_medicine_stock_data_from_stock",views.retrieveMedicineStockDataFromStock,name="retrieve_medicine_stock_data_from_stock"),
+    path('save_employee_data', views.saveEmployeeData, name="save_employee_data"),
+    path("save_patient_data", views.savePatientData, name="save_patient_data"),
 
-  path("retrieve_all_med_stock_info",views.retrieveAllMedStockInfo,name="retrieve_all_med_stock_info"),
-  path("retrieve_all_med_stock_info_for_edit",views.retrieveAllMedStockInfoForEdit,name="retrieve_all_med_stock_info_for_edit"),
-  path("update_all_med_stock_info_from_edit",views.updateAllMedStockInfoForEdit,name="update_all_med_stock_info_from_edit"),
+    path('retrieve_medicine_type', views.retrieveMedicineType,
+         name="retrieve_medicine_type"),
+    path('retrieve_medicine_name', views.retrieveMedicineName,
+         name="retrieve_medicine_name"),
+    path('retrieve_package_types', views.retrievePackageTypes,
+         name="retrieve_package_types"),
 
-  
-  path("retrieve_all_med_desp_info",views.retrieveAllMedDespInfo,name="retrieve_all_med_desp_info"),
+    path("retrieve_medicine_gen_data_from_stock", views.retrieveMedicineGenDataFromStock,
+         name="retrieve_medicine_gen_data_from_stock"),
+    path("retrieve_medicine_stock_data_from_stock", views.retrieveMedicineStockDataFromStock,
+         name="retrieve_medicine_stock_data_from_stock"),
 
-  
-  path("retrieve_medicine_tempstock_from_tempstock",views.retrieveMedicineTempStockFromTempStock,name="retrieve_medicine_tempstock_from_tempstock"),
-  path('retrieve_employee_type',views.retrieveEmployeeType,name="retrieve_employee_type"),
-  path('retireve_patient_info',views.retirevePatientInfo,name="retireve_patient_info"),
-  path('retireve_patient_med_history',views.retirevePatientMedHistory,name="retireve_patient_med_history"),
-
-  path('retrieve_medicine_from_desp',views.retrieveMedicineFromDesp,name="retrieve_medicine_from_desp"),
-
-  path('retrieve_employee_info',views.retrieveEmployeeInfo,name="retrieve_employee_info"),
-  
-  path("retireve_all_desp_med",views.retireveAllDespMed,name='retireve_all_desp_med'),
-  
-  path('view_patient_history',views.viewPatientHistory,name="view_patient_history"),
-  
-  path('update_patient_data',views.updatePatientData,name="update_patient_data"),
-  
-  path('view_patient_history',views.viewPatientHistory,name="view_patient_history"),
-  
-  path('print_patient_prescription',views.printPatientPrescription,name="print_patient_prescription"),
-  
-  path('update_prescription_record',views.updatePrescriptionRecord,name="update_prescription_record"),
-  path("pres_upload_files",views.presUploadFiles, name="pres_upload_files"),
-  path("pres_rec_deletefiles",views.presRecDeleteFiles, name="pres_rec_deletefiles"),
+    path("retrieve_all_med_stock_info", views.retrieveAllMedStockInfo,
+         name="retrieve_all_med_stock_info"),
+    path("retrieve_all_med_stock_info_for_edit", views.retrieveAllMedStockInfoForEdit,
+         name="retrieve_all_med_stock_info_for_edit"),
+    path("update_all_med_stock_info_from_edit", views.updateAllMedStockInfoForEdit,
+         name="update_all_med_stock_info_from_edit"),
 
 
-  path('generate_prescription',views.generatePrescription,name="generate_prescription"),
-
-  path('update_employee_data',views.updateEmployeeData,name="update_employee_data"),
-  path('retrieve_all_employee_info',views.retrieveAllEmployeeInfo,name="retrieve_all_employee_info"),
-
-  
-  path('retireve_patient_info_in_pres_form',views.retrievePatientInfoInPresForm,name='retireve_patient_info_in_pres_form'),
-  path('retrieve_patient_info_in_createbill',views.retrievePatientInfoInPatientBill,name='retrieve_patient_info_in_createbill'),
-  path('retrieve_patient_info_in_vital_record',views.retrievePatientInfoInVitalRecord,name='retrieve_patient_info_in_vital_record'),
-
-  path('retrieve_all_patient_info',views.retrieveAllPatientInfo,name='retrieve_all_patient_info'),
-
-  path('retireve_room_info_in_room_ward',views.retrieveRoomInfoInRoomWard,name='retireve_room_info_in_room_ward'),
-  path('retireve_ward_info_in_room_ward',views.retrieveWardInfoInRoomWard,name='retireve_ward_info_in_room_ward'),
-  path('save_patient_bill',views.savePatientBill,name='save_patient_bill' ),
-
-  path('retireve_ward_info_in_room_ward',views.retrieveWardInfoInRoomWard,name='retireve_ward_info_in_room_ward'),
-  path('retrieve_pat_type_fee',views.retrievePatTypeFee,name='retrieve_pat_type_fee'),
-  path('retrieve_procedure_details',views.retrieveProcedureDetails,name='retrieve_procedure_details'),
-  path('retrieve_pres_info_surg_proc_bill',views.retrievePresInfoSurgProcBill,name='retrieve_pres_info_surg_proc_bill'),
-
-  path('proc_surg_form',views.procSurgForm,name='proc_surg_form'),
-  path('retrieve_all_surg_info',views.retrieveAllSurgInfo,name='retrieve_all_surg_info'),
-  path('retrieve_all_proc_info',views.retrieveAllProcInfo,name='retrieve_all_proc_info'),
-  path('update_surg_data',views.updateSurgData,name="update_surg_data"),
-  path('delete_surg_data',views.deleteSurgData,name="delete_surg_data"),
-  path('update_proc_data',views.updateProcData,name="update_proc_data"),
-  path('delete_proc_data',views.deleteProcData,name="delete_proc_data"),
-
-  
-  path('add_procedure',views.addProcedure,name="add_procedure"),
-  path('add_surgery',views.addSurgery,name="add_surgery"),
-  
-  path('room_ward_form',views.roomWardForm,name='room_ward_form'),
-  path('retireve_all_room_info_in_room_ward',views.retrieveAllRoomInfoInRoomWard,name='retireve_all_room_info_in_room_ward'),
-  path('retireve_all_ward_info_in_room_ward',views.retrieveAllWardInfoInRoomWard,name='retireve_all_ward_info_in_room_ward'),
-  path('retrieve_room_ward_bill',views.retrieveRoomWardBill,name='retrieve_room_ward_bill'),
-  path('update_room_data',views.updateRoomData,name="update_room_data"),
-  path('update_ward_data',views.updateWardData,name="update_ward_data"),
-  path('print_room_bill',views.printRoomBill,name='print_room_bill'),
-  path('print_ward_bill',views.printWardBill,name='print_ward_bill'),
-  path('save_room_bill',views.saveRoomBill,name='save_room_bill'),
-  path('save_ward_bill',views.saveWardBill,name='save_ward_bill'),
-  path('save_surg_proc_bill',views.saveSurgProcBill,name='save_surg_proc_bill'),
+    path("retrieve_all_med_desp_info", views.retrieveAllMedDespInfo,
+         name="retrieve_all_med_desp_info"),
 
 
-  path('retrieve_invoice_bill_record',views.retrieveInvoiceBillRecord,name='retrieve_invoice_bill_record'),
-  path('retrieve_invoice_bill_record_for_view',views.retrieveInvoiceBillRecordForView,name='retrieve_invoice_bill_record_for_view'),
+    path("retrieve_medicine_tempstock_from_tempstock", views.retrieveMedicineTempStockFromTempStock,
+         name="retrieve_medicine_tempstock_from_tempstock"),
+    path('retrieve_employee_type', views.retrieveEmployeeType,
+         name="retrieve_employee_type"),
+    path('retireve_patient_info', views.retirevePatientInfo,
+         name="retireve_patient_info"),
+    path('retireve_patient_med_history', views.retirevePatientMedHistory,
+         name="retireve_patient_med_history"),
 
-  path('update_invoice',views.updateInvoice,name="update_invoice"),
+    path('retrieve_medicine_from_desp', views.retrieveMedicineFromDesp,
+         name="retrieve_medicine_from_desp"),
 
-  # path("remove_med_for_internal_use",views.removeMedForInternalUse,name="remove_med_for_internal_use"),
-  path("retrieve_medicine_from_desp_for_internal_use",views.retrieveMedicineFromDespForInternalUse,name="retrieve_medicine_from_desp_for_internal_use"),
-  path("save_desp_after_removal",views.saveDespAfterRemoval,name="save_desp_after_removal"),
-  path("update_pat_medical_hist",views.updatePatMedicalHist,name="update_pat_medical_hist"),
+    path('retrieve_employee_info', views.retrieveEmployeeInfo,
+         name="retrieve_employee_info"),
 
-  path("retrieve_patient_info_id_name",views.retrievePatientInfoIdName,name="retrieve_patient_info_id_name"),
-  path("view_prescription_list",views.viewPrescriptionList,name="view_prescription_list"),
-  path("add_ward_form",views.addWardForm,name="add_ward_form"),
-  path("add_room_form",views.addRoomForm,name="add_room_form"),
-  path("room_ward_data_info",views.RoomWardDataInfo,name="room_ward_data_info"),
-  path("get_proc_surg_info",views.GetProcSurgInfo,name="get_proc_surg_info"),
+    path("retireve_all_desp_med", views.retireveAllDespMed,
+         name='retireve_all_desp_med'),
 
+    path('view_patient_history', views.viewPatientHistory,
+         name="view_patient_history"),
 
-  path("view_token_records",views.viewTokenRecords,name="view_token_records"),
-  path("view_token_generator_table",views.viewTokenGeneratorTable,name="view_token_generator_table"),
-  path("reset_tokens",views.resetTokens,name="reset_tokens"),
-  path("save_add_charge_exist_pres",views.saveAddChargeExisPres,name="save_add_charge_exist_pres"),
-  path("print_pres_ajax",views.printPresAjax,name="print_pres_ajax"),
+    path('update_patient_data', views.updatePatientData,
+         name="update_patient_data"),
 
-  path("consulatation_records",views.consulatationRecordsView,name="consulatation_records"),
-  path("retrieve_patient_info_and_consultationdata",views.retrievePatientInfoAndConsultationData,name="consulatation_records"),
-  path('retrieve_patient_info_createconsultationdata',views.retrievePatientInfoCreateConsultationData,name='retrieve_patient_info_createconsultationdata'),
+    path('view_patient_history', views.viewPatientHistory,
+         name="view_patient_history"),
 
-  path("update_consulatation_records",views.updateConsulatationRecords,name="update_consulatation_records"),
-  path("view_consultation_slip_records",views.viewConsultationSlipRecords,name="view_consultation_slip_records"),
+    path('print_patient_prescription', views.printPatientPrescription,
+         name="print_patient_prescription"),
 
-  url(r'^basic_upload/$', views.BasicUploadView.as_view(), name='basic_upload'),
-  path("delete_file",views.deleteFile,name="delete_file"),
-
-  path("load_attendance_sheet",views.loadAttendanceSheet.as_view(),name="load_attendance_sheet"),
-  path("delete_raw_attendance_sheet",views.loadAttendanceSheet.deleteUploadFile,name="delete_raw_attendance_sheet"),
-  path("process_attendance_sheet",views.processAttendanceSheet.as_view(),name="process_attendance_sheet"),
-  path("ajax_get_process_attendance_sheet",views.processAttendanceSheet.ajaxGetProcessAttendanceSheet,name="ajax_get_process_attendance_sheet"),
-  path("view_attendance_by_month",views.viewAttendanceByMonth.as_view(),name="view_attendance_by_month"),
-  path("ajax_get_all_attendance_data",views.viewAttendanceByMonth.ajaxGetAllAttendanceData,name="ajax_get_all_attendance_data"),
-  path("ajax_specific_attendance_bymonth_data",views.viewAttendanceByMonth.ajaxGetAllAttendanceByMonthData,name="ajax_specific_attendance_bymonth_data"),
-  path("view_attendance_by_day",views.viewAttendanceByDay.as_view(),name="view_attendance_by_day"),
-  path("ajax_specific_attendance_byday_data",views.viewAttendanceByDay.ajaxGetAllAttendanceByDayData,name="ajax_specific_attendance_byday_data"),
+    path('update_prescription_record', views.updatePrescriptionRecord,
+         name="update_prescription_record"),
+    path("pres_upload_files", views.presUploadFiles, name="pres_upload_files"),
+    path("pres_rec_deletefiles", views.presRecDeleteFiles,
+         name="pres_rec_deletefiles"),
 
 
+    path('generate_prescription', views.generatePrescription,
+         name="generate_prescription"),
 
-  path("run_script",views.runScript,name="run_script"),
-  path("change_staffuser_password",views.changeStaffuserPassword,name="change_staffuser_password"),
-  path("retrieve_all_med_temp_desp_stock",views.retrieveAllMedTempDespStock,name="retrieve_all_med_temp_desp_stock"),
-  path("retrieve_all_med_temp_main_stock",views.retrieveAllMedTempMainStock,name="retrieve_all_med_temp_main_stock"),
+    path('update_employee_data', views.updateEmployeeData,
+         name="update_employee_data"),
+    path('retrieve_all_employee_info', views.retrieveAllEmployeeInfo,
+         name="retrieve_all_employee_info"),
+
+
+    path('retireve_patient_info_in_pres_form', views.retrievePatientInfoInPresForm,
+         name='retireve_patient_info_in_pres_form'),
+    path('retrieve_patient_info_in_createbill', views.retrievePatientInfoInPatientBill,
+         name='retrieve_patient_info_in_createbill'),
+    path('retrieve_patient_info_in_vital_record', views.retrievePatientInfoInVitalRecord,
+         name='retrieve_patient_info_in_vital_record'),
+
+    path('retrieve_all_patient_info', views.retrieveAllPatientInfo,
+         name='retrieve_all_patient_info'),
+
+    path('retireve_room_info_in_room_ward', views.retrieveRoomInfoInRoomWard,
+         name='retireve_room_info_in_room_ward'),
+    path('retireve_ward_info_in_room_ward', views.retrieveWardInfoInRoomWard,
+         name='retireve_ward_info_in_room_ward'),
+    path('save_patient_bill', views.savePatientBill, name='save_patient_bill'),
+
+    path('retireve_ward_info_in_room_ward', views.retrieveWardInfoInRoomWard,
+         name='retireve_ward_info_in_room_ward'),
+    path('retrieve_pat_type_fee', views.retrievePatTypeFee,
+         name='retrieve_pat_type_fee'),
+    path('retrieve_procedure_details', views.retrieveProcedureDetails,
+         name='retrieve_procedure_details'),
+    path('retrieve_pres_info_surg_proc_bill', views.retrievePresInfoSurgProcBill,
+         name='retrieve_pres_info_surg_proc_bill'),
+
+    path('proc_surg_form', views.procSurgForm, name='proc_surg_form'),
+    path('retrieve_all_surg_info', views.retrieveAllSurgInfo,
+         name='retrieve_all_surg_info'),
+    path('retrieve_all_proc_info', views.retrieveAllProcInfo,
+         name='retrieve_all_proc_info'),
+    path('update_surg_data', views.updateSurgData, name="update_surg_data"),
+    path('delete_surg_data', views.deleteSurgData, name="delete_surg_data"),
+    path('update_proc_data', views.updateProcData, name="update_proc_data"),
+    path('delete_proc_data', views.deleteProcData, name="delete_proc_data"),
+
+
+    path('add_procedure', views.addProcedure, name="add_procedure"),
+    path('add_surgery', views.addSurgery, name="add_surgery"),
+
+    path('room_ward_form', views.roomWardForm, name='room_ward_form'),
+    path('retireve_all_room_info_in_room_ward', views.retrieveAllRoomInfoInRoomWard,
+         name='retireve_all_room_info_in_room_ward'),
+    path('retireve_all_ward_info_in_room_ward', views.retrieveAllWardInfoInRoomWard,
+         name='retireve_all_ward_info_in_room_ward'),
+    path('retrieve_room_ward_bill', views.retrieveRoomWardBill,
+         name='retrieve_room_ward_bill'),
+    path('update_room_data', views.updateRoomData, name="update_room_data"),
+    path('update_ward_data', views.updateWardData, name="update_ward_data"),
+    path('print_room_bill', views.printRoomBill, name='print_room_bill'),
+    path('print_ward_bill', views.printWardBill, name='print_ward_bill'),
+    path('save_room_bill', views.saveRoomBill, name='save_room_bill'),
+    path('save_ward_bill', views.saveWardBill, name='save_ward_bill'),
+    path('save_surg_proc_bill', views.saveSurgProcBill,
+         name='save_surg_proc_bill'),
+
+
+    path('retrieve_invoice_bill_record', views.retrieveInvoiceBillRecord,
+         name='retrieve_invoice_bill_record'),
+    path('retrieve_invoice_bill_record_for_view', views.retrieveInvoiceBillRecordForView,
+         name='retrieve_invoice_bill_record_for_view'),
+
+    path('update_invoice', views.updateInvoice, name="update_invoice"),
+
+    # path("remove_med_for_internal_use",views.removeMedForInternalUse,name="remove_med_for_internal_use"),
+    path("retrieve_medicine_from_desp_for_internal_use", views.retrieveMedicineFromDespForInternalUse,
+         name="retrieve_medicine_from_desp_for_internal_use"),
+    path("save_desp_after_removal", views.saveDespAfterRemoval,
+         name="save_desp_after_removal"),
+    path("update_pat_medical_hist", views.updatePatMedicalHist,
+         name="update_pat_medical_hist"),
+
+    path("retrieve_patient_info_id_name", views.retrievePatientInfoIdName,
+         name="retrieve_patient_info_id_name"),
+    path("view_prescription_list", views.viewPrescriptionList,
+         name="view_prescription_list"),
+    path("add_ward_form", views.addWardForm, name="add_ward_form"),
+    path("add_room_form", views.addRoomForm, name="add_room_form"),
+    path("room_ward_data_info", views.RoomWardDataInfo,
+         name="room_ward_data_info"),
+    path("get_proc_surg_info", views.GetProcSurgInfo, name="get_proc_surg_info"),
+
+
+    path("view_token_records", views.viewTokenRecords, name="view_token_records"),
+    path("view_token_generator_table", views.viewTokenGeneratorTable,
+         name="view_token_generator_table"),
+    path("reset_tokens", views.resetTokens, name="reset_tokens"),
+    path("save_add_charge_exist_pres", views.saveAddChargeExisPres,
+         name="save_add_charge_exist_pres"),
+    path("print_pres_ajax", views.printPresAjax, name="print_pres_ajax"),
+
+    path("consulatation_records", views.consulatationRecordsView,
+         name="consulatation_records"),
+    path("retrieve_patient_info_and_consultationdata",
+         views.retrievePatientInfoAndConsultationData, name="consulatation_records"),
+    path('retrieve_patient_info_createconsultationdata', views.retrievePatientInfoCreateConsultationData,
+         name='retrieve_patient_info_createconsultationdata'),
+
+    path("update_consulatation_records", views.updateConsulatationRecords,
+         name="update_consulatation_records"),
+    path("view_consultation_slip_records", views.viewConsultationSlipRecords,
+         name="view_consultation_slip_records"),
+
+    url(r'^basic_upload/$', views.BasicUploadView.as_view(), name='basic_upload'),
+    path("delete_file", views.deleteFile, name="delete_file"),
+
+    path("load_attendance_sheet", views.loadAttendanceSheet.as_view(),
+         name="load_attendance_sheet"),
+    path("delete_raw_attendance_sheet", views.loadAttendanceSheet.deleteUploadFile,
+         name="delete_raw_attendance_sheet"),
+    path("process_attendance_sheet", views.processAttendanceSheet.as_view(),
+         name="process_attendance_sheet"),
+    path("ajax_get_process_attendance_sheet", views.processAttendanceSheet.ajaxGetProcessAttendanceSheet,
+         name="ajax_get_process_attendance_sheet"),
+    path("view_attendance_by_month", views.viewAttendanceByMonth.as_view(),
+         name="view_attendance_by_month"),
+    path("ajax_get_all_attendance_data", views.viewAttendanceByMonth.ajaxGetAllAttendanceData,
+         name="ajax_get_all_attendance_data"),
+    path("ajax_specific_attendance_bymonth_data", views.viewAttendanceByMonth.ajaxGetAllAttendanceByMonthData,
+         name="ajax_specific_attendance_bymonth_data"),
+    path("view_attendance_by_day", views.viewAttendanceByDay.as_view(),
+         name="view_attendance_by_day"),
+    path("ajax_specific_attendance_byday_data", views.viewAttendanceByDay.ajaxGetAllAttendanceByDayData,
+         name="ajax_specific_attendance_byday_data"),
+
+
+
+    path("run_script", views.runScript, name="run_script"),
+    path("change_staffuser_password", views.changeStaffuserPassword,
+         name="change_staffuser_password"),
+    path("retrieve_all_med_temp_desp_stock", views.retrieveAllMedTempDespStock,
+         name="retrieve_all_med_temp_desp_stock"),
+    path("retrieve_all_med_temp_main_stock", views.retrieveAllMedTempMainStock,
+         name="retrieve_all_med_temp_main_stock"),
+
+    path("update_medicine_batches_barcode", views.updateMdicineBatchesBarcode.as_view(),
+         name="update_medicine_batches_barcode"),
 
 
 
