@@ -1,47 +1,41 @@
 {% extends "rmcapp/staff_dashboard_template/attendance_base.html" %}
-{% block content %}
-{%load static from staticfiles%}
-    <main class="page-content" id="main_page_content">
-        <div > <h1 class='heading_att'>VIEW ATTENDANCE BY DAY</h1></div>
+ {% block content %} {%load static from staticfiles%}
+<main class="page-content" id="main_page_content">
+  <div><h1 class="heading_att">VIEW ATTENDANCE BY DAY</h1></div>
 
-        <div class='row' id='row_view_att_by_month__form_div' style='padding-top:10px;padding-bottom:20px;'>
-            <div class='col-md-2' id='month-div'>
-                <div class='selector_head_div' id='year-heading-div'>Year</div>
+  <div
+    class="row"
+    id="row_view_att_by_month__form_div"
+    style="padding-top: 10px; padding-bottom: 20px;"
+  >
+    <div class="col-md-2" id="month-div">
+      <div class="selector_head_div" id="year-heading-div">Month</div>
+    </div>
+    <div class="col-md-2" id="year-div">
+      <div class="selector_head_div" id="year-heading-div">Year</div>
+    </div>
+    <div class="col-md-2" id="day-div">
+      <div class="selector_head_div" id="day-heading-div">Day</div>
+      <div id="day-selector-div"></div>
+    </div>
+    <div class="col-md-2" id="emp-div">
+      <div class="selector_head_div" id="emp-heading-div">
+        Employee
+      </div>
+    </div>
 
-            </div>
-            <div class='col-md-2' id="year-div">
-               <div class='selector_head_div' id='year-heading-div'>Month</div>
-            </div>
-            <div class='col-md-2' id="day-div">
-                <div class='selector_head_div' id='day-heading-div'>Day</div>
-                <div  id='day-selector-div'></div>
+    <div class="col-md-2">
+      <button onclick="SendQuery()" class="search_att_query_btn">Search</button>
+    </div>
+  </div>
+  <div class="row" style="padding-top: 10px; padding-bottom: 20px;">
+    <div class="col-md-12" id="row_view_att_by_month__table_div"></div>
+  </div>
+</main>
+{% endblock %} {% block javascript %}
 
- 
-            </div>
-            <div class='col-md-2' id="emp-div">
-                <div class='selector_head_div' id='emp-heading-div'>
-                    Employee
-                </div>
-
-            </div>
-          
-            <div class='col-md-2'>
-                <button onclick='SendQuery()' class='search_att_query_btn'>Search</button>
-            </div>
-        </div>
-        <div class='row'  style='padding-top:10px;padding-bottom:20px;'>
-            <div class='col-md-12' id='row_view_att_by_month__table_div'>
-
-            </div>
-        </div>
-    </main>
-{% endblock %}
-
-
-{% block javascript %}
-    
-    <script src="{% static 'rmcapp/mainhomepage_static/js/fileuploadfiles/jquery.ui.widget.js' %}"></script>
-    <script src="{% static 'rmcapp/mainhomepage_static/js/fileuploadfiles/jquery.iframe-transport.js' %}"></script>
-    <script src="{% static 'rmcapp/mainhomepage_static/js/fileuploadfiles/jquery.fileupload.js' %}"></script>
-    <script src="{% static 'rmcapp/mainhomepage_static/js/StaffmanagementJS/viewAttByDay.js' %}"></script>
+<script src="{% static 'rmcapp/mainhomepage_static/js/fileuploadfiles/jquery.ui.widget.js' %}"></script>
+<script src="{% static 'rmcapp/mainhomepage_static/js/fileuploadfiles/jquery.iframe-transport.js' %}"></script>
+<script src="{% static 'rmcapp/mainhomepage_static/js/fileuploadfiles/jquery.fileupload.js' %}"></script>
+<script src="{% static 'rmcapp/mainhomepage_static/js/StaffmanagementJS/viewAttByDay.js' %}"></script>
 {% endblock %}
